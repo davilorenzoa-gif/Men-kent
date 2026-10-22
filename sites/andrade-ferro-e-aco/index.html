@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Andrade Ferro e Aço | Armação na medida da sua obra">
 <meta property="og:description" content="Corte, dobra e armação de aço conforme projeto. Desde 1989 no Jardim Helena. Entrega na Capital e Grande SP.">
-<meta property="og:image" content="img/og-andrade.jpg">
+<meta property="og:image" content="https://www.ferroeacoandrade.com.br/img/og-andrade.jpg">
 <meta property="og:locale" content="pt_BR">
 <meta name="theme-color" content="#030923">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -133,6 +133,12 @@ button{background:none;border:0;cursor:pointer}
 /* serviços */
 .serv{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(28px,5vw,80px);align-items:start;margin-top:48px}
 .video{position:relative;border-radius:6px;overflow:hidden;background:#111;box-shadow:0 0 0 1px rgba(13,13,13,.08),0 30px 60px -30px rgba(3,9,35,.5)}
+.video .serra{display:none}
+.serra-pre .video video{clip-path:inset(0 100% 0 0)}
+.serra-pre .video .serra{display:block;position:absolute;top:0;bottom:0;left:0;width:3px;background:#FFE066;box-shadow:0 0 16px 4px rgba(255,194,26,.75);opacity:0;pointer-events:none}
+.serra-pre .video.on video{clip-path:inset(0);transition:clip-path 1.1s cubic-bezier(.6,.05,.3,1)}
+.serra-pre .video.on .serra{animation:serra 1.1s cubic-bezier(.6,.05,.3,1) forwards}
+@keyframes serra{0%{left:0;opacity:1}88%{opacity:1}100%{left:100%;opacity:0}}
 .video video{width:100%;aspect-ratio:640/352;object-fit:cover}
 .legenda{font-family:var(--fm);font-size:13px;margin-top:12px;opacity:.7;max-width:60ch}
 .slista{list-style:none}
@@ -148,7 +154,12 @@ button{background:none;border:0;cursor:pointer}
 /* produtos */
 .prod{background:var(--branco)}
 .grupos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,48px);margin-top:48px}
-.grupos h3{font-family:var(--fm);font-weight:600;font-size:14px;color:var(--azul);padding-bottom:12px;border-bottom:3px solid var(--noite2)}
+.grupos h3{position:relative;font-family:var(--fm);font-weight:600;font-size:14px;color:var(--azul);padding-bottom:16px}
+.grupos h3:after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;border-radius:2px;background:repeating-linear-gradient(90deg,#041A53 0 5px,#43527c 5px 7px)}
+.barra-pre .grupos h3:after{clip-path:inset(0 100% 0 0);transition:clip-path 1s var(--ease)}
+.barra-pre .grupos.on h3:after{clip-path:inset(0)}
+.barra-pre .grupos.on > div:nth-child(2) h3:after{transition-delay:.15s}
+.barra-pre .grupos.on > div:nth-child(3) h3:after{transition-delay:.3s}
 .grupos ul{list-style:none}
 .grupos li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(13,13,13,.12)}
 .grupos li b{font-weight:700;font-size:17px;line-height:1.3}
@@ -208,6 +219,8 @@ button{background:none;border:0;cursor:pointer}
 .hist-frase span.on{color:var(--branco)}
 .hist-txt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,48px)}
 .hist-txt p{max-width:40ch;color:rgba(250,250,250,.85)}
+.hist-exp{margin-top:clamp(56px,7vw,96px);max-width:34ch;font-weight:700;font-stretch:108%;font-size:clamp(21px,2.3vw,32px);line-height:1.3}
+.hist-exp span{display:block;margin-top:14px;font-weight:400;font-stretch:100%;font-size:clamp(17px,1.4vw,20px);line-height:1.55;max-width:48ch;color:rgba(250,250,250,.82)}
 .hist-num{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:clamp(48px,7vw,96px);padding-top:28px;border-top:1px solid rgba(201,210,222,.16)}
 .hist-num b{display:block;font-weight:900;font-stretch:125%;font-size:clamp(44px,6vw,88px);line-height:1;color:var(--amarelo);font-variant-numeric:tabular-nums}
 .hist-num span{display:block;margin-top:10px;max-width:30ch;color:rgba(250,250,250,.8)}
@@ -270,8 +283,14 @@ button{background:none;border:0;cursor:pointer}
 
 /* entrega + contato */
 .entrega{background:var(--noite2)}
-.foto-cam{margin-top:40px;border-radius:6px;overflow:hidden;max-width:1080px}
-.foto-cam img{width:100%;aspect-ratio:1080/600;object-fit:cover}
+.foto-cam{position:relative;margin-top:40px;border-radius:6px;overflow:hidden;max-width:1080px}
+.foto-cam img{width:100%;aspect-ratio:1080/600;object-fit:cover;transform:scale(var(--z,1));transform-origin:50% 65%}
+.porta{position:absolute;inset:0;z-index:1;display:grid;place-items:center;background:repeating-linear-gradient(180deg,#a3aec0 0 20px,#7c889b 20px 22px,#c6cfdb 22px 24px,#8f9bad 24px 26px);box-shadow:0 12px 26px rgba(0,0,0,.5);will-change:transform}
+.porta:after{content:"";position:absolute;left:0;right:0;bottom:0;height:18px;background:linear-gradient(#5d687a,#353f50)}
+.porta:before{content:"";position:absolute;left:50%;bottom:6px;z-index:1;width:76px;height:6px;margin-left:-38px;border-radius:3px;background:#1a2232}
+.porta span{display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(4,26,83,.62);font-weight:900;font-stretch:125%;font-size:clamp(26px,6vw,74px);letter-spacing:.02em;line-height:1}
+.porta svg{width:clamp(60px,12vw,150px);height:auto}
+.embed .porta,.sem-porta .porta{display:none}
 .contato{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,4vw,64px);margin-top:56px;align-items:start}
 .dados{list-style:none}
 .dados li{padding:16px 0;border-top:1px solid rgba(201,210,222,.16)}
@@ -298,7 +317,7 @@ button{background:none;border:0;cursor:pointer}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary:after{content:"+";flex:none;font-family:var(--fm);font-size:24px;font-weight:400;color:var(--azul);transition:transform .3s}
 .faq details[open] summary:after{transform:rotate(45deg)}
-.faq details p{padding:0 0 22px;max-width:62ch;opacity:.82}
+.faq details p{padding:0 0 22px;max-width:62ch;opacity:.82;overflow:hidden}
 
 /* final */
 .fim{padding:clamp(80px,11vw,150px) 0;text-align:center;background:radial-gradient(60% 60% at 50% 100%,rgba(3,86,197,.35),transparent 70%),var(--noite)}
@@ -437,7 +456,7 @@ dialog .btn{margin-top:20px}
     <h2 class="h2" style="color:var(--noite2);max-width:16ch">A armação sai do nosso galpão pronta pra usar</h2>
     <div class="serv">
       <div>
-        <div class="video">
+        <div class="video" id="videoBox"><span class="serra" aria-hidden="true"></span>
           <video id="vid" muted loop playsinline preload="none" poster="img/galpao-poster.jpg" aria-label="Vídeo do galpão da Andrade: colunas e vigas armadas, com a etiqueta de medida de cada peça">
             <source src="img/galpao-armacoes.mp4" type="video/mp4">
           </video>
@@ -468,6 +487,8 @@ dialog .btn{margin-top:20px}
       <p>Por isso a gente trata cada peça com cuidado: cortada e dobrada conforme o projeto, nas normas ABNT, e etiquetada com a medida antes de sair do galpão.</p>
       <p>Seja um pequeno reparo ou um grande empreendimento, o jeito de trabalhar é o mesmo há mais de 35 anos: parceria, qualidade e negociação, do primeiro orçamento até a última entrega.</p>
     </div>
+    <p class="hist-exp">Nossa rede de fornecedores de primeira linha garante não apenas produtos de alta performance, mas a melhor experiência que uma obra pode ter.
+      <span>É a peça que chega na medida, o caminhão que aparece no dia combinado e aquele alívio de ver a sua casa subir firme, do jeito que você sonhou. Isso não se explica: se vive na obra.</span></p>
     <div class="hist-num">
       <div><b data-n="35" data-pre="+" data-suf="">+35</b><span>anos no mercado de ferragens pra construção civil</span></div>
       <div><b data-n="95" data-pre="+" data-suf=" mil">+95 mil</b><span>projetos entregues na Capital e na Grande São Paulo</span></div>
@@ -484,7 +505,7 @@ dialog .btn{margin-top:20px}
   <div class="wrap">
     <h2 class="h2" style="color:var(--noite2);max-width:18ch">Do aço à madeira da forma, tudo num lugar só</h2>
     <p class="lead" style="margin-top:18px">Materiais certificados e de procedência garantida, pra pequenos reparos e grandes obras.</p>
-    <div class="grupos">
+    <div class="grupos" id="grupos">
       <div>
         <h3>Aço e armações</h3>
         <ul>
@@ -622,7 +643,7 @@ dialog .btn{margin-top:20px}
   <div class="wrap">
     <h2 class="h2" style="max-width:15ch">Do Jardim Helena pra sua obra</h2>
     <p class="lead" style="margin-top:18px">Entregamos na Capital e em toda a Grande São Paulo. Manda o endereço da obra no WhatsApp que a gente combina a entrega.</p>
-    <figure class="foto-cam"><img src="img/caminhao-andrade.jpg" width="1080" height="600" loading="lazy" alt="Caminhão de entregas da Andrade Ferro e Aço, branco e azul com o logo no capô, dentro do galpão com armações"></figure>
+    <figure class="foto-cam" id="fotoCam"><div class="porta" id="porta" aria-hidden="true"><span><svg viewBox="0 0 120 64"><use href="#i-marca"/></svg>ANDRADE</span></div><img src="img/caminhao-andrade.jpg" width="1080" height="600" loading="lazy" alt="Caminhão de entregas da Andrade Ferro e Aço, branco e azul com o logo no capô, dentro do galpão com armações"></figure>
     <div class="contato">
       <div>
         <ul class="dados">
@@ -1112,6 +1133,43 @@ dialog .btn{margin-top:20px}
     nums.forEach(function(b){ ioH.observe(b); }); ioH.observe(histVg);
   } else histVg.classList.add("on");
 
+  // ---------- acabamento: porta de enrolar, serra no vídeo, régua nos produtos, FAQ macio, botões magnéticos ----------
+  var fotoCam = $("fotoCam"), porta = $("porta"), fotoImg = fotoCam.querySelector("img"), heroSvg = $("heroSvg");
+  var animaPorta = !embed && !reduz;
+  if (!animaPorta) document.documentElement.classList.add("sem-porta");
+  function portaLe(){
+    if (!animaPorta) return;
+    var r = fotoCam.getBoundingClientRect();
+    if (r.bottom < -40 || r.top > vhC + 40) return;
+    var p = eio(cl((vhC*.92 - r.top) / (vhC*.55), 0, 1));   // a porta sobe conforme a foto entra na tela
+    porta.style.transform = "translate3d(0," + fx(-p*102) + "%,0)";
+    fotoImg.style.setProperty("--z", (1.08 - .08*p).toFixed(3));
+  }
+  if (!embed && !reduz && "IntersectionObserver" in window){
+    document.documentElement.classList.add("serra-pre", "barra-pre");
+    var ioA = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add("on"); ioA.unobserve(e.target); } }); }, { threshold: .35 });
+    ioA.observe($("videoBox")); ioA.observe($("grupos"));
+  }
+  document.querySelectorAll(".faq details").forEach(function(d){
+    var c = d.querySelector("p"), s = d.querySelector("summary");
+    s.addEventListener("click", function(e){
+      if (reduz || !c.animate) return;
+      e.preventDefault();
+      if (d.open){
+        var a = c.animate([{ height: c.offsetHeight + "px", paddingBottom: "22px", opacity: .82 }, { height: "0px", paddingBottom: "0px", opacity: 0 }], { duration: 240, easing: "ease-in" });
+        a.onfinish = function(){ d.open = false; };
+      } else {
+        d.open = true;
+        c.animate([{ height: "0px", paddingBottom: "0px", opacity: 0 }, { height: c.offsetHeight + "px", paddingBottom: "22px", opacity: .82 }], { duration: 340, easing: "cubic-bezier(.2,.7,.1,1)" });
+      }
+    });
+  });
+  if (!toque && !reduz && !embed) document.querySelectorAll(".btn.am:not(.jg-corta)").forEach(function(b){
+    b.addEventListener("pointermove", function(e){ var r = b.getBoundingClientRect();
+      b.style.transform = "translate(" + fx(cl((e.clientX - r.left - r.width/2)*.16, -8, 8)) + "px," + fx(cl((e.clientY - r.top - r.height/2)*.3, -5, 5)) + "px)"; });
+    b.addEventListener("pointerleave", function(){ b.style.transform = ""; });
+  });
+
   // ---------- laço de rolagem: uma fonte só ----------
   var nav = $("nav"), zap = $("zap"), hero = $("topo"), pedido = false, visV = false;
   function quadro(){
@@ -1121,6 +1179,8 @@ dialog .btn{margin-top:20px}
     zap.classList.toggle("on", y > hero.offsetHeight*.6);
     procLe();
     histLe();
+    portaLe();
+    if (!embed && !reduz && y < vhC*1.2){ heroSvg.style.transform = "translate3d(0," + fx(y*.22) + "px,0)"; heroSvg.style.opacity = (1 - Math.min(.6, y/vhC*.7)).toFixed(3); }   // o logo fica pra trás ao rolar
   }
   function pede(){ if (!pedido){ pedido = true; requestAnimationFrame(quadro); } }
   addEventListener("scroll", pede, { passive: true });

@@ -38,6 +38,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - uma barra de aço entra reta, dobra e vira a treliça do logo, com as diagonais "soldando";
   - "do vergalhão à armação pronta": a rolagem corta, dobra, amarra e etiqueta uma viga em 3D que gira;
   - "Monte o pedido da sua armação": escolhe a peça, digita as medidas, a peça se desenha (gira arrastando) e a lista vai pro WhatsApp.
+  - extras: porta de enrolar de aço que sobe com a rolagem e revela a foto do caminhão; vídeo revelado por uma "serra" amarela; frase que acende palavra por palavra; minigame "Corte na medida".
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
