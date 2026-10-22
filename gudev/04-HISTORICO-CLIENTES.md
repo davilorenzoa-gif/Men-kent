@@ -44,6 +44,17 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - WhatsApp: 5579999100181.
 - **Andamento:** pediu prévia em 19/10 e a prévia foi enviada. Pediram "cara de 10k".
 
+## Andrade Ferro e Aço, Jardim Helena, São Paulo (Zona Leste) · lead do Davi (é o padrinho dele)
+- **Dados (do site atual deles e do Instagram @ferroeacoandrade):**
+  - Desde 1989. Endereço: Av. Dr. José Arthur Nova, 1.829, Jd. Helena.
+  - WhatsApp de vendas: (11) 99804-1251. Fixos: (11) 2581-4404 e (11) 2584-2313. E-mail: vendas@ferroeacoandrade.com.br.
+  - Seg a sex, 8h às 18h. Um post antigo do Instagram fala em sábado 8h às 12h: confirmar.
+  - Corte, dobra e armação (normas ABNT), armação pronta (vigas, sapatas, brocas, pilares), plotagem do projeto sem custo ao fechar. Entrega na Capital e Grande SP.
+  - Também vende telas, treliças, lajes, madeirite, caibro, pinus e pregos.
+- **Atenção:** eles **já têm site** em WordPress (ferroeacoandrade.com.br, de 2025/2026). O argumento é o pedido de armação que vai pronto pro WhatsApp, não "ter um site".
+- **Andamento:** em 22/10 montamos o site em `sites/andrade-ferro-e-aco/`. O Davi vai mostrar e trazer o retorno.
+- **Falta:** avaliações reais do Google, geo do Maps e permissão pra usar as fotos e o vídeo do Instagram.
+
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.
 - O site dele virou **a régua mínima de qualidade**: fotos reais recortadas, slogan real, cardápio real e carrinho pro WhatsApp.
