@@ -54,7 +54,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Atenção:** eles **já têm site** em WordPress (ferroeacoandrade.com.br, de 2025/2026). O argumento é o pedido de armação que vai pronto pro WhatsApp, não "ter um site".
 - **Andamento:** em 22/10 montamos o site em `sites/andrade-ferro-e-aco/`. O Davi vai mostrar e trazer o retorno.
 - **Falta:** avaliações reais do Google, geo do Maps e permissão pra usar as fotos e o vídeo do Instagram.
-- **Aba "Nossa história"** (pedido do Davi em 22/10): texto emocional feito só com dados reais (1989, +35 anos, +95 mil projetos entregues, segundo o site deles). Termina com a frase do Davi: "Há décadas estruturando sonhos." Se o padrinho contar como o depósito começou (quem fundou, o primeiro galpão), dá pra enriquecer.
+- **Aba "Nossa história"** (pedido do Davi em 22/10): texto emocional feito só com dados reais (1989, +35 anos, +95 mil projetos entregues, confirmado pelo Davi em 22/10). Termina com a frase do Davi: "Há décadas estruturando sonhos." Se o padrinho contar como o depósito começou (quem fundou, o primeiro galpão), dá pra enriquecer.
 - **Minigame "Corte na medida"** (pedido do Davi em 22/10): 100 pontos dão 5% de desconto, só 1 vez por compra. **O padrinho precisa aprovar os 5%** e o atendente controla o uso do código no WhatsApp (o site não valida).
 
 ## General Jonas Burger
