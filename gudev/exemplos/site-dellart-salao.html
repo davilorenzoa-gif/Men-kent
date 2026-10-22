@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Studio Dellart · Cabelo &amp; Estética na Ponte Rasa</title>
+<meta name="description" content="Studio Dellart Cabelo & Estética, no Jardim Ponte Rasa (Zona Leste de SP). Corte, manicure e pedicure, maquiagem, penteado, estética e Dia da Noiva. 4,8 estrelas no Google. Agende pelo WhatsApp.">
+<meta property="og:title" content="Studio Dellart · Cabelo & Estética">
+<meta property="og:description" content="Cabelo, unhas, maquiagem, estética e Dia da Noiva no Jardim Ponte Rasa. Agende pelo WhatsApp.">
+<meta property="og:image" content="img/salao.jpg">
+<meta name="theme-color" content="#1d2742">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BeautySalon","name":"Studio Dellart Cabelo & Estética","telephone":"+55 11 99920-8130","sameAs":["https://www.instagram.com/dellart_cabeloestetica/"],
+ "address":{"@type":"PostalAddress","streetAddress":"R. Ponte Rasa, 884B","addressLocality":"São Paulo","addressRegion":"SP","postalCode":"03896-000","addressCountry":"BR"},
+ "geo":{"@type":"GeoCoordinates","latitude":-23.5136058,"longitude":-46.4827103},
+ "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"100"}}
+</script>
+<style>
+:root{--navy:#1d2742;--navy2:#141b30;--creme:#f6f1e9;--creme2:#ece4d6;--ouro:#b8925a;--ouro2:#d8b47c;--tx:#2a2f3f;--cinza:#6d6a66;--cor:#b3263a;
+  --m:clamp(18px,4vw,64px);--fs:"Cormorant Garamond",Georgia,serif;--fb:"Jost",system-ui,sans-serif;--ease:cubic-bezier(.2,.7,.1,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--creme)}
+body{background:var(--creme);color:var(--tx);font-family:var(--fb);font-weight:400;font-size:clamp(15px,1.05vw,17px);line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ouro);outline-offset:3px}
+.it{font-family:var(--fs);font-style:italic;font-weight:400}
+.k{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ouro);font-weight:500}
+.h2{font-family:var(--fs);font-weight:500;font-size:clamp(40px,5.4vw,88px);line-height:.98;letter-spacing:-.01em;color:var(--navy)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 28px;border-radius:99px;background:var(--navy);color:var(--creme);font-weight:500;letter-spacing:.04em;transition:background .3s,transform .3s var(--ease)}
+.btn:hover{background:#27355a;transform:translateY(-2px)}
+.btn.ouro{background:var(--ouro);color:#fff}.btn.ouro:hover{background:#a5824d}
+.btn.ln{background:transparent;color:var(--navy);box-shadow:inset 0 0 0 1px rgba(29,39,66,.3)}
+.rv{opacity:0;transform:translate3d(0,26px,0);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.rv.on{opacity:1;transform:none}
+
+.top{position:fixed;left:0;right:0;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px var(--m);transition:background .4s,box-shadow .4s}
+.top.solid{background:rgba(246,241,233,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(29,39,66,.08)}
+.marca{display:flex;flex-direction:column;line-height:1;color:var(--navy)}
+.marca b{font-family:var(--fs);font-style:italic;font-weight:500;font-size:26px}
+.marca span{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--ouro);margin-top:4px}
+.top nav{display:flex;gap:30px;font-size:14px;color:var(--navy)}
+.top nav a{position:relative}
+.top nav a:after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--ouro);transform:scaleX(0);transition:transform .4s var(--ease)}
+.top nav a:hover:after{transform:scaleX(1)}
+.top .btn{height:44px;padding:0 20px;font-size:14px}
+@media(max-width:900px){.top nav{display:none}}
+
+/* ===== WOW 1: as asas se desenham e abrem ===== */
+.hero{position:relative;min-height:100svh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(20px,4vw,70px);padding:120px var(--m) 70px;overflow:hidden}
+.hero h1{font-family:var(--fs);font-weight:500;font-size:clamp(50px,7vw,118px);line-height:.92;letter-spacing:-.015em;color:var(--navy)}
+.hero h1 .l{display:block;overflow:hidden;padding-bottom:.08em}
+.hero h1 .l>span{display:inline-block;transform:translate3d(0,110%,0);transition:transform 1.2s var(--ease)}
+.on-hero .hero h1 .l>span{transform:none}
+.hero h1 .l:nth-child(2)>span{transition-delay:.12s}.hero h1 .l:nth-child(3)>span{transition-delay:.24s}
+.hero .sub{margin:24px 0 32px;max-width:38ch;color:var(--cinza);font-size:clamp(16px,1.25vw,19px)}
+.hero .acts{display:flex;gap:12px;flex-wrap:wrap}
+.hero .fade{opacity:0;transform:translate3d(0,16px,0);transition:opacity 1s .7s var(--ease),transform 1s .7s var(--ease)}
+.on-hero .hero .fade{opacity:1;transform:none}
+.palco{position:relative;height:min(78svh,720px);display:grid;place-items:center}
+.arco{position:relative;width:min(100%,460px);height:100%;border-radius:999px 999px 24px 24px;overflow:hidden;clip-path:inset(100% 0 0 0 round 999px 999px 24px 24px);transition:clip-path 1.6s .5s var(--ease)}
+.on-hero .arco{clip-path:inset(0 0 0 0 round 999px 999px 24px 24px)}
+.arco img{width:100%;height:100%;object-fit:cover;transform:scale(1.2);transition:transform 2.4s .5s var(--ease)}
+.on-hero .arco img{transform:scale(1)}
+.asas{position:absolute;inset:-6% -14%;width:128%;height:112%;pointer-events:none;overflow:visible}
+.asas path{fill:none;stroke:var(--ouro);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.2s var(--ease)}
+.on-hero .asas path{stroke-dashoffset:0}
+.asas .ae{transform-origin:50% 92%;transition:transform 1.8s 1.2s var(--ease)}
+.asas .ad{transform-origin:50% 92%;transition:transform 1.8s 1.2s var(--ease)}
+.on-hero .asas .ae{transform:rotate(-7deg)}.on-hero .asas .ad{transform:rotate(7deg)}
+.nota-h{position:absolute;left:-4%;bottom:12%;background:var(--creme);border-radius:18px;padding:14px 18px;box-shadow:0 20px 40px -18px rgba(29,39,66,.35);display:flex;gap:12px;align-items:center;opacity:0;transform:translate3d(-20px,0,0);transition:opacity .9s 1.6s,transform .9s 1.6s var(--ease)}
+.on-hero .nota-h{opacity:1;transform:none}
+.nota-h b{font-family:var(--fs);font-size:40px;font-weight:500;line-height:1;color:var(--navy)}
+.nota-h span{font-size:12px;color:var(--cinza);line-height:1.3}.nota-h i{font-style:normal;color:var(--ouro);letter-spacing:2px;display:block}
+@media(max-width:860px){
+  .hero{grid-template-columns:minmax(0,1fr);padding-top:100px;gap:28px}
+  .palco{height:56svh;order:-1}.arco{width:min(78vw,360px)}
+  .nota-h{left:0;bottom:6%}
+}
+
+.selos{display:flex;justify-content:center;gap:clamp(14px,4vw,60px);flex-wrap:wrap;padding:26px var(--m);background:var(--navy);color:var(--creme);font-size:14px;letter-spacing:.06em}
+.selos span{display:flex;align-items:center;gap:10px}
+.selos svg{color:var(--ouro2)}
+
+/* ===== WOW 3: serviços em lista editorial, foto segue o mouse ===== */
+.serv{padding:clamp(90px,11vw,160px) var(--m);position:relative}
+.serv .h2{margin:12px 0 44px;max-width:14ch}
+.linha{border-top:1px solid rgba(29,39,66,.15)}
+.linha:last-child{border-bottom:1px solid rgba(29,39,66,.15)}
+.linha button{width:100%;display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:20px;padding:26px 0;text-align:left;color:var(--navy)}
+.linha .n{font-family:var(--fs);font-style:italic;font-size:20px;color:var(--ouro)}
+.linha h3{font-family:var(--fs);font-weight:500;font-size:clamp(34px,4.4vw,72px);line-height:1;transition:transform .6s var(--ease),color .4s}
+.linha .mais{width:44px;height:44px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(29,39,66,.25);display:grid;place-items:center;transition:transform .5s var(--ease),background .3s}
+.linha:hover h3{transform:translate3d(18px,0,0);color:var(--ouro)}
+.linha.aberta .mais{transform:rotate(45deg);background:var(--navy);color:var(--creme)}
+.linha .corpo{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s var(--ease)}
+.linha.aberta .corpo{grid-template-rows:1fr}
+.linha .corpo>div{overflow:hidden}
+.linha .in{display:grid;grid-template-columns:70px 1fr 1fr;gap:20px;padding-bottom:30px}
+.linha .in p{color:var(--cinza);max-width:46ch}
+.linha .in ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.linha .in li{font-size:13px;padding:6px 14px;border-radius:99px;background:var(--creme2);color:var(--navy)}
+.linha .in img{width:100%;height:220px;object-fit:cover;border-radius:16px;display:none}
+.segue{position:fixed;left:0;top:0;width:300px;height:380px;border-radius:200px 200px 18px 18px;overflow:hidden;pointer-events:none;z-index:30;opacity:0;transform:translate3d(-50%,-50%,0) scale(.6);transition:opacity .35s,transform .45s var(--ease)}
+.segue.on{opacity:1}
+.segue img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+.segue img.on{opacity:1}
+@media(max-width:860px),(pointer:coarse){.segue{display:none}.linha .in{grid-template-columns:1fr}.linha .in img{display:block}.linha button{grid-template-columns:44px 1fr auto;gap:12px}.linha .n{font-size:16px}}
+
+/* ===== WOW 2: escolha sua cor ===== */
+.cores{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);background:var(--navy);color:var(--creme);overflow:hidden;--cor:#b3263a}
+.cores:before{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 30% 50%,color-mix(in srgb,var(--cor) 38%,transparent),transparent 70%);transition:background .8s}
+.cores .tx{position:relative;padding:clamp(70px,9vw,130px) var(--m)}
+.cores .h2{color:var(--creme);margin:12px 0 16px}
+.cores p.d{color:rgba(246,241,233,.72);max-width:40ch}
+.leque{position:relative;width:min(100%,460px);aspect-ratio:1.55;margin:18px 0 0}
+.leque svg{width:100%;height:100%;overflow:visible}
+.ponta .tinta{transition:transform .9s var(--ease);transform-box:fill-box;transform-origin:50% 100%}
+.vidros{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;max-width:560px}
+.vidro{position:relative;aspect-ratio:.62;border-radius:10px 10px 14px 14px;background:var(--c);box-shadow:inset 6px 0 10px rgba(255,255,255,.18),inset -6px -6px 12px rgba(0,0,0,.2);transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.vidro:before{content:"";position:absolute;left:22%;right:22%;top:-38%;height:40%;border-radius:4px 4px 2px 2px;background:linear-gradient(90deg,#c9a46a,#f0d9a8,#b08848)}
+.vidro:hover{transform:translateY(-6px)}
+.vidro.on{transform:translateY(-10px) scale(1.06);outline:2px solid var(--ouro2);outline-offset:4px}
+.vidros-wrap{padding-top:22px}
+.cor-nome{margin-top:26px;font-family:var(--fs);font-size:30px;font-style:italic}
+.cor-nome small{display:block;font-family:var(--fb);font-style:normal;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--ouro2)}
+.cores .btn{margin-top:22px}
+.cores .ft{position:relative;min-height:520px}
+.cores .ft img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cores .ft:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--navy),transparent 30%)}
+.cores .ft span{position:absolute;right:20px;bottom:20px;z-index:1;background:rgba(20,27,48,.75);padding:10px 16px;border-radius:99px;font-size:13px}
+@media(max-width:860px){.cores{grid-template-columns:minmax(0,1fr)}.cores .ft{min-height:340px;order:-1}.cores .ft:after{background:linear-gradient(0deg,var(--navy),transparent 40%)}.vidros{grid-template-columns:repeat(6,1fr);gap:12px 10px;max-width:300px}}
+
+/* galeria: imagens que se abrem pela máscara, rolagem de lado com o dedo */
+.espaco{padding:clamp(90px,11vw,160px) 0}
+.espaco .cab{padding:0 var(--m);display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:40px}
+.espaco .cab p{max-width:36ch;color:var(--cinza)}
+.gal{display:flex;gap:18px;overflow-x:auto;width:100%;scroll-padding-inline:var(--m);scroll-snap-type:x mandatory;padding:0 var(--m) 20px;scrollbar-width:none;cursor:grab}
+.gal::-webkit-scrollbar{display:none}
+.gal figure{flex:0 0 auto;scroll-snap-align:start;width:clamp(240px,26vw,380px)}
+.gal figure:nth-child(even){margin-top:60px}
+.gal .ph{height:clamp(320px,36vw,500px);border-radius:16px;overflow:hidden;clip-path:inset(0 0 100% 0 round 16px);transition:clip-path 1.2s var(--ease)}
+.gal figure.on .ph{clip-path:inset(0 0 0 0 round 16px)}
+.gal img{width:100%;height:100%;object-fit:cover;transform:scale(1.15);transition:transform 1.6s var(--ease)}
+.gal figure.on img{transform:scale(1)}
+.gal figcaption{margin-top:12px;font-family:var(--fs);font-style:italic;font-size:20px;color:var(--navy)}
+.arraste{padding:0 var(--m);font-size:13px;color:var(--cinza);display:flex;align-items:center;gap:10px}
+
+/* avaliações */
+.vozes{background:var(--creme2);padding:clamp(90px,11vw,150px) var(--m)}
+.vozes .topo{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:46px}
+.grande{display:flex;align-items:center;gap:16px}
+.grande b{font-family:var(--fs);font-size:clamp(80px,9vw,140px);font-weight:500;line-height:.8;color:var(--navy)}
+.grande span{color:var(--ouro);letter-spacing:4px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--creme);border-radius:22px;padding:30px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+.card q{font-family:var(--fs);font-size:clamp(22px,1.8vw,28px);line-height:1.25;color:var(--navy);quotes:"“" "”"}
+.card cite{font-style:normal;font-size:13px;color:var(--cinza)}
+.card cite b{display:block;color:var(--navy);font-weight:500}
+@media(max-width:860px){.cards{grid-template-columns:1fr}}
+
+/* agenda */
+.agenda{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);padding:clamp(90px,11vw,150px) var(--m);align-items:center}
+.agenda .h2{margin:12px 0 16px}
+.agenda p{color:var(--cinza);max-width:40ch}
+.form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;background:#fff;border-radius:26px;padding:clamp(22px,3vw,40px);box-shadow:0 30px 60px -30px rgba(29,39,66,.3)}
+.form label{display:grid;gap:6px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cinza)}
+.form .cheio{grid-column:1/-1}
+.form input,.form select{width:100%;min-width:0;font:inherit;font-size:16px;letter-spacing:0;text-transform:none;color:var(--tx);background:var(--creme);border:1px solid transparent;border-radius:12px;height:52px;padding:0 14px}
+.form input:focus,.form select:focus{border-color:var(--ouro);outline:0}
+.periodos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.periodos label{position:relative}.periodos input{position:absolute;left:0;top:0;width:1px!important;height:1px!important;opacity:0;pointer-events:none}
+.periodos span{display:grid;place-items:center;height:48px;border-radius:12px;background:var(--creme);font-size:14px;letter-spacing:0;text-transform:none;color:var(--navy);cursor:pointer;transition:background .25s,color .25s}
+.periodos input:checked+span{background:var(--navy);color:var(--creme)}
+.form .btn{grid-column:1/-1}
+@media(max-width:860px){.agenda{grid-template-columns:minmax(0,1fr)}}
+
+/* visite */
+.visite{display:grid;grid-template-columns:.9fr 1.1fr;background:var(--navy);color:var(--creme)}
+.visite .ft{position:relative;min-height:540px}
+.visite .ft img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.visite .tx{padding:clamp(60px,8vw,120px) var(--m)}
+.visite .h2{color:var(--creme);margin:12px 0 20px}
+.visite .end{font-family:var(--fs);font-size:clamp(24px,2.2vw,32px);line-height:1.25}
+.visite .acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.visite .btn.ln{color:var(--creme);box-shadow:inset 0 0 0 1px rgba(246,241,233,.35)}
+.mapa{position:relative;height:260px;border-radius:18px;overflow:hidden;margin-top:30px;background:var(--navy2)}
+.mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media(max-width:860px){.visite{grid-template-columns:minmax(0,1fr)}.visite .ft{min-height:380px}}
+
+footer{padding:50px var(--m) 28px;text-align:center;background:var(--navy2);color:rgba(246,241,233,.6);font-size:13px}
+footer .nome{font-family:var(--fs);font-style:italic;font-size:clamp(56px,11vw,180px);line-height:1;color:var(--creme);white-space:nowrap}
+footer .nome span{color:var(--ouro2)}
+footer .base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:26px;padding-top:18px;border-top:1px solid rgba(246,241,233,.12)}
+
+.zap{position:fixed;right:18px;bottom:18px;z-index:40;width:60px;height:60px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.25);transform:scale(0);transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.zap.on{transform:scale(1)}
+
+.embed .zap,.embed .segue,.dentro .zap{display:none}
+.embed .rv,.embed .gal figure .ph{opacity:1;transform:none;clip-path:none}
+.embed .gal img{transform:none}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <a class="marca" href="#inicio"><b>Studio Dellart</b><span>cabelo &amp; estética</span></a>
+  <nav aria-label="Seções"><a href="#servicos">Serviços</a><a href="#cores">Cores</a><a href="#espaco">O espaço</a><a href="#agendar">Agendar</a><a href="#visite">Visite</a></nav>
+  <a class="btn" href="#agendar">Agendar</a>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div>
+    <p class="k fade">Jardim Ponte Rasa · Zona Leste</p>
+    <h1><span class="l"><span>Seu momento,</span></span><span class="l"><span class="it">do seu jeito,</span></span><span class="l"><span>com carinho.</span></span></h1>
+    <p class="sub fade">Cabelo, unhas, maquiagem, estética e Dia da Noiva num salão completo e acolhedor, feito por mulheres empreendedoras.</p>
+    <div class="acts fade">
+      <a class="btn" href="#agendar">Agendar horário</a>
+      <a class="btn ln" href="#servicos">Ver serviços</a>
+    </div>
+  </div>
+  <div class="palco">
+    <svg class="asas" viewBox="0 0 600 700" aria-hidden="true">
+      <g class="ae">
+        <path pathLength="1" d="M300 640 C 200 600, 90 520, 60 380 C 40 280, 70 170, 140 90"/>
+        <path pathLength="1" d="M300 640 C 215 590, 120 500, 100 380 C 86 300, 104 220, 160 150"/>
+        <path pathLength="1" d="M300 640 C 232 585, 160 490, 145 390 C 136 330, 146 270, 182 215"/>
+      </g>
+      <g class="ad">
+        <path pathLength="1" d="M300 640 C 400 600, 510 520, 540 380 C 560 280, 530 170, 460 90"/>
+        <path pathLength="1" d="M300 640 C 385 590, 480 500, 500 380 C 514 300, 496 220, 440 150"/>
+        <path pathLength="1" d="M300 640 C 368 585, 440 490, 455 390 C 464 330, 454 270, 418 215"/>
+      </g>
+    </svg>
+    <div class="arco"><img src="img/salao.jpg" alt="Salão do Studio Dellart com cadeiras, espelhos, lavatórios e parede de esmaltes" width="1400" height="1050" fetchpriority="high"></div>
+    <div class="nota-h"><b>4,8</b><span><i>★★★★★</i>100 avaliações<br>no Google</span></div>
+  </div>
+</section>
+
+<div class="selos">
+  <span><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9.2 8.6 2 9.3l5.5 4.8L5.8 21 12 17.3 18.2 21l-1.7-6.9L22 9.3l-7.2-.7Z"/></svg>4,8 no Google</span>
+  <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Empresa de empreendedoras</span>
+  <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11Z"/></svg>Acolhe a comunidade LGBTQ+</span>
+</div>
+
+<section class="serv" id="servicos">
+  <p class="k">Serviços</p>
+  <h2 class="h2 rv">Tudo num só lugar, <span class="it">com cuidado.</span></h2>
+  <div class="lista" id="lista"></div>
+  <div class="segue" id="segue" aria-hidden="true"></div>
+</section>
+
+<section class="cores" id="cores">
+  <div class="tx">
+    <p class="k">Experimente</p>
+    <h2 class="h2">Escolha <span class="it">sua cor.</span></h2>
+    <p class="d">Toque num esmalte e veja nas unhas. Gostou? Já agenda a manicure com a cor escolhida.</p>
+    <div class="leque"><svg viewBox="0 0 520 340" id="leque" aria-label="Unhas pintadas com a cor escolhida"></svg></div>
+    <div class="vidros-wrap"><div class="vidros" id="vidros" role="radiogroup" aria-label="Cores de esmalte"></div></div>
+    <div class="cor-nome"><small>Cor escolhida</small><span id="corNome">Vermelho clássico</span></div>
+    <a class="btn ouro" id="corWa" target="_blank" rel="noopener">Agendar manicure com essa cor</a>
+  </div>
+  <div class="ft"><img src="img/esmaltes.jpg" alt="Parede de esmaltes do Studio Dellart, com dezenas de cores" width="1280" height="2842" loading="lazy"><span>Uma parede inteira de cores te esperando</span></div>
+</section>
+
+<section class="espaco" id="espaco">
+  <div class="cab"><div><p class="k">O espaço</p><h2 class="h2 rv">Feito pra <span class="it">ficar à vontade.</span></h2></div><p class="rv">Salão amplo, salas reservadas para estética e um cantinho do café pra esperar com conforto.</p></div>
+  <div class="gal" id="gal">
+    <figure><div class="ph"><img src="img/salao.jpg" alt="Salão principal com cadeiras e espelhos" width="1400" height="1050" loading="lazy"></div><figcaption>O salão</figcaption></figure>
+    <figure><div class="ph"><img src="img/espera.jpg" alt="Sala de espera com poltronas azuis e cantinho do café" width="1400" height="1050" loading="lazy"></div><figcaption>Cantinho do café</figcaption></figure>
+    <figure><div class="ph"><img src="img/estetica.jpg" alt="Sala de estética com maca" width="1400" height="1050" loading="lazy"></div><figcaption>Sala de estética</figcaption></figure>
+    <figure><div class="ph"><img src="img/esmaltes.jpg" alt="Parede de esmaltes" width="1280" height="2842" loading="lazy"></div><figcaption>A parede de cores</figcaption></figure>
+    <figure><div class="ph"><img src="img/maca.jpg" alt="Sala reservada com maca" width="1050" height="1400" loading="lazy"></div><figcaption>Salas reservadas</figcaption></figure>
+    <figure><div class="ph"><img src="img/produtos.jpg" alt="Produtos profissionais na prateleira" width="1400" height="1050" loading="lazy"></div><figcaption>Produtos profissionais</figcaption></figure>
+    <figure><div class="ph"><img src="img/cadeira.jpg" alt="Cadeira de cabeleireiro" width="1400" height="630" loading="lazy"></div><figcaption>Seu lugar</figcaption></figure>
+  </div>
+  <p class="arraste"><svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h20M16 1l5 5-5 5"/></svg>Arraste para o lado</p>
+</section>
+
+<section class="vozes">
+  <div class="topo"><div><p class="k">Quem já veio</p><h2 class="h2 rv">O carinho <span class="it">que fica.</span></h2></div><div class="grande rv"><b>4,8</b><div><span>★★★★★</span><br>100 avaliações no Google</div></div></div>
+  <div class="cards">
+    <figure class="card rv"><q>Experiência impecável. O salão é super completo. A manicure Alyne arrasa muito.</q><cite><b>Amanda Garcia</b>Avaliação no Google</cite></figure>
+    <figure class="card rv"><q>Salão maravilhoso, não troco por nenhum outro. Sempre sou muito bem atendida, indico muito!</q><cite><b>Gabriella Francisca Dias</b>Avaliação no Google</cite></figure>
+    <figure class="card rv"><q>Ótimo atendimento. Profissionais excelentes! Trabalho impecável.</q><cite><b>Bruna Marquesini</b>Avaliação no Google</cite></figure>
+  </div>
+</section>
+
+<section class="agenda" id="agendar">
+  <div>
+    <p class="k">Agendamento</p>
+    <h2 class="h2 rv">Reserve <span class="it">seu horário.</span></h2>
+    <p class="rv">Escolha o serviço e o melhor período. A gente confirma pelo WhatsApp em seguida.</p>
+  </div>
+  <form class="form rv" id="fAgenda">
+    <label class="cheio">Seu nome<input name="nome" required autocomplete="name"></label>
+    <label class="cheio">Serviço<select name="serv" id="sServ"></select></label>
+    <label>Dia<input name="dia" type="date" required></label>
+    <label>Pessoas<select name="pessoas"><option>Só eu</option><option>2 pessoas</option><option>3 ou mais</option></select></label>
+    <div class="cheio"><label style="margin-bottom:6px">Período</label><div class="periodos">
+      <label><input type="radio" name="per" value="Manhã" checked><span>Manhã</span></label>
+      <label><input type="radio" name="per" value="Tarde"><span>Tarde</span></label>
+      <label><input type="radio" name="per" value="Noite"><span>Noite</span></label></div></div>
+    <button class="btn" type="submit">Enviar pelo WhatsApp</button>
+  </form>
+</section>
+
+<section class="visite" id="visite">
+  <div class="ft"><img src="img/fachada.jpg" alt="Fachada do Studio Dellart Cabelo & Estética" width="1400" height="1050" loading="lazy"></div>
+  <div class="tx">
+    <p class="k">Visite</p>
+    <h2 class="h2 rv">Te esperamos <span class="it">na Ponte Rasa.</span></h2>
+    <p class="end rv">R. Ponte Rasa, 884B<br>Jardim Ponte Rasa · São Paulo, SP</p>
+    <div class="acts rv">
+      <a class="btn ouro" data-wa="Olá! Vim pelo site do Studio Dellart e quero agendar um horário." href="https://wa.me/5511999208130">WhatsApp</a>
+      <a class="btn ln" href="https://www.google.com/maps/dir/?api=1&destination=-23.5136058,-46.4827103" target="_blank" rel="noopener">Como chegar</a>
+      <a class="btn ln" href="https://www.instagram.com/dellart_cabeloestetica/" target="_blank" rel="noopener">@dellart_cabeloestetica</a>
+    </div>
+    <p class="rv" style="margin-top:18px;color:rgba(246,241,233,.7)">WhatsApp (11) 99920-8130 · Fixo (11) 2046-5235</p>
+    <div class="mapa rv"><iframe title="Mapa do Studio Dellart" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=-23.5136058,-46.4827103&z=16&output=embed"></iframe></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="nome">Studio <span>Dellart</span></div>
+  <div class="base"><span>Cabelo &amp; Estética · Jardim Ponte Rasa, SP</span><a href="https://www.instagram.com/dellart_cabeloestetica/" target="_blank" rel="noopener">@dellart_cabeloestetica</a><span>(11) 99920-8130 · (11) 2046-5235</span></div>
+</footer>
+<a class="zap" id="zap" data-wa="Olá! Vim pelo site do Studio Dellart e quero agendar um horário." href="https://wa.me/5511999208130" aria-label="Agendar pelo WhatsApp"><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 5 5.1-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 .9c.3.1.4.2.5.3.1.2.1.7-.1 1.2Z"/></svg></a>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  var WHATS = "5511999208130";
+  var $ = function(s){ return document.querySelector(s); }, $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  var embed = /[?&]embed\b/.test(location.search), dentro = window.parent !== window;   // embed = captura estática; dentro = na proposta (animações ligadas)
+  if (embed) document.documentElement.classList.add("embed"); if (dentro) document.documentElement.classList.add("dentro");
+  var toque = matchMedia("(pointer: coarse)").matches;
+  var wa = function(t){ return "https://wa.me/" + WHATS + "?text=" + encodeURIComponent(t); };
+  $$("[data-wa]").forEach(function(a){ a.href = wa(a.dataset.wa); a.target = "_blank"; a.rel = "noopener"; });
+
+  /* WOW 1: as asas e o arco entram quando a página abre */
+  var liga = function(){ document.body.classList.add("on-hero"); };
+  if (embed) liga(); else { requestAnimationFrame(function(){ requestAnimationFrame(liga); }); setTimeout(liga, 150); }   // garantia: dentro da proposta o quadro pode atrasar
+
+  /* ---------- serviços ---------- */
+  var SERV = [
+    ["Cabelo", "img/cadeira.jpg", "Do corte à escova, do tratamento à mudança de cor. Atendimento com calma, pra sair do jeito que você imaginou.", ["Corte", "Escova", "Coloração", "Tratamentos"]],
+    ["Unhas", "img/esmaltes.jpg", "Manicure e pedicure com uma parede inteira de cores pra escolher. É o serviço mais elogiado da casa.", ["Manicure", "Pedicure", "Pé e mão"]],
+    ["Maquiagem & Penteado", "img/salao.jpg", "Pra festa, formatura, ensaio ou aquele dia especial. Maquiagem e penteado feitos pra durar a noite toda.", ["Maquiagem", "Penteado", "Eventos"]],
+    ["Estética", "img/estetica.jpg", "Salas reservadas, com privacidade e conforto, para os cuidados de estética. Consulte os procedimentos pelo WhatsApp.", ["Salas reservadas", "Atendimento individual"]],
+    ["Dia da Noiva", "img/sala.jpg", "O dia mais importante merece cuidado do começo ao fim: cabelo, maquiagem e unhas pra noiva chegar pronta e tranquila.", ["Noiva", "Madrinhas", "Pacote completo"]]
+  ];
+  var lista = $("#lista"), segue = $("#segue");
+  SERV.forEach(function(s, i){
+    var d = document.createElement("div"); d.className = "linha rv"; d.dataset.i = i;
+    d.innerHTML = '<button type="button" aria-expanded="false"><span class="n">0' + (i + 1) + '</span><h3>' + s[0] + '</h3><span class="mais"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.5"><path d="M7 0v14M0 7h14"/></svg></span></button>' +
+      '<div class="corpo"><div><div class="in"><span></span><div><p>' + s[2] + '</p><ul>' + s[3].map(function(x){ return "<li>" + x + "</li>"; }).join("") + '</ul></div><img src="' + s[1] + '" alt="" loading="lazy"></div></div></div>';
+    d.querySelector("button").onclick = function(){ var ab = !d.classList.contains("aberta"); $$(".linha").forEach(function(o){ o.classList.remove("aberta"); o.querySelector("button").setAttribute("aria-expanded", "false"); });
+      if (ab) { d.classList.add("aberta"); d.querySelector("button").setAttribute("aria-expanded", "true"); } };
+    lista.appendChild(d);
+    var im = document.createElement("img"); im.src = s[1]; im.alt = ""; im.loading = "lazy"; segue.appendChild(im);
+  });
+  $(".linha").classList.add("aberta"); $(".linha button").setAttribute("aria-expanded", "true");
+  // foto que segue o mouse (só computador)
+  if (!toque && !embed) {
+    var mx = 0, my = 0, sx = 0, sy = 0, ativo = false, fotos = $$("#segue img");
+    lista.addEventListener("mousemove", function(e){ mx = e.clientX; my = e.clientY; });
+    $$(".linha").forEach(function(l){ l.addEventListener("mouseenter", function(){ ativo = true; segue.classList.add("on"); fotos.forEach(function(f, k){ f.classList.toggle("on", k == l.dataset.i); }); }); });
+    lista.addEventListener("mouseleave", function(){ ativo = false; segue.classList.remove("on"); });
+    (function anda(){ sx += (mx - sx) * .14; sy += (my - sy) * .14; var rot = (mx - sx) * .05;
+      segue.style.transform = "translate3d(" + (sx + 40).toFixed(1) + "px," + (sy - 190).toFixed(1) + "px,0) rotate(" + rot.toFixed(2) + "deg) scale(" + (ativo ? 1 : .6) + ")"; requestAnimationFrame(anda); })();
+  }
+
+  /* ---------- WOW 2: escolha sua cor ---------- */
+  var CORES = [["Vermelho clássico", "#b3263a"], ["Nude rosado", "#d9a99a"], ["Rosa chiclete", "#e86a9a"], ["Vinho", "#5e1a2c"], ["Coral", "#f0775e"], ["Lilás", "#a98bd1"],
+               ["Azul noite", "#1f2f5c"], ["Verde esmeralda", "#1f6b55"], ["Caramelo", "#b0723f"], ["Preto", "#1b1b1f"], ["Branco leitoso", "#f1ece6"], ["Dourado", "#c9a24f"]];
+  var NS = "http://www.w3.org/2000/svg", leque = $("#leque");
+  function el(t, a){ var e = document.createElementNS(NS, t); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  var defs = el("defs", {}); leque.appendChild(defs);
+  var unha = "M0 -118 C 26 -118 34 -86 34 -40 L 34 20 C 34 34 24 42 0 42 C -24 42 -34 34 -34 20 L -34 -40 C -34 -86 -26 -118 0 -118 Z";   // formato amendoado
+  var tintas = [];
+  for (var i = 0; i < 5; i++) {
+    var ang = -32 + i * 16, g = el("g", { "class": "ponta", transform: "translate(260 300) rotate(" + ang + ") translate(0 -120)" });
+    var cp = el("clipPath", { id: "u" + i }); cp.appendChild(el("path", { d: unha })); defs.appendChild(cp);
+    g.appendChild(el("path", { d: unha, fill: "#efe4d6", stroke: "rgba(246,241,233,.5)", "stroke-width": 1.5 }));
+    var gc = el("g", { "clip-path": "url(#u" + i + ")" });
+    var tinta = el("rect", { "class": "tinta", x: -40, y: -122, width: 80, height: 168, fill: CORES[0][1] }); gc.appendChild(tinta);
+    gc.appendChild(el("path", { d: "M-16 -96 C -10 -108 4 -108 8 -100", stroke: "rgba(255,255,255,.55)", "stroke-width": 6, fill: "none", "stroke-linecap": "round" }));   // brilho
+    g.appendChild(gc); leque.appendChild(g); tintas.push(tinta);
+  }
+  var vidros = $("#vidros"), atual = 0;
+  function pinta(k){
+    atual = k; var c = CORES[k];
+    $$(".vidro").forEach(function(v, j){ v.classList.toggle("on", j === k); v.setAttribute("aria-checked", j === k); });
+    $("#cores").style.setProperty("--cor", c[1]); $("#corNome").textContent = c[0];
+    $("#corWa").href = wa("Olá! Quero agendar uma manicure com a cor " + c[0] + ". Vim pelo site do Studio Dellart.");
+    tintas.forEach(function(t, j){
+      // a cor nova sobe de baixo pra cima, uma unha depois da outra
+      t.style.transition = "none"; t.style.transform = "scaleY(0)"; t.getBoundingClientRect();
+      t.setAttribute("fill", c[1]); t.style.transition = "transform .8s cubic-bezier(.2,.7,.1,1) " + (j * 90) + "ms"; t.style.transform = "scaleY(1)";
+    });
+  }
+  CORES.forEach(function(c, k){ var b = document.createElement("button"); b.type = "button"; b.className = "vidro"; b.style.setProperty("--c", c[1]); b.setAttribute("role", "radio"); b.setAttribute("aria-label", c[0]); b.title = c[0]; b.onclick = function(){ pinta(k); }; vidros.appendChild(b); });
+  pinta(0);
+
+  /* ---------- agenda vai pro WhatsApp ---------- */
+  var sel = $("#sServ"); SERV.forEach(function(s){ var o = document.createElement("option"); o.textContent = s[0]; sel.appendChild(o); });
+  var f = $("#fAgenda"); f.dia.min = new Date().toISOString().slice(0, 10);
+  f.addEventListener("submit", function(e){ e.preventDefault();
+    var d = f.dia.value ? f.dia.value.split("-").reverse().join("/") : "";
+    window.open(wa("Olá! Gostaria de agendar no Studio Dellart.\n• Nome: " + f.nome.value + "\n• Serviço: " + f.serv.value + "\n• Dia: " + d + "\n• Período: " + f.per.value + "\n• " + f.pessoas.value), "_blank"); });
+
+  /* ---------- galeria: arrastar com o mouse ---------- */
+  var gal = $("#gal"), arr = false, x0 = 0, s0 = 0;
+  gal.addEventListener("pointerdown", function(e){ if (e.pointerType !== "mouse") return; arr = true; x0 = e.clientX; s0 = gal.scrollLeft; gal.style.scrollSnapType = "none"; gal.style.cursor = "grabbing"; });
+  addEventListener("pointermove", function(e){ if (arr) gal.scrollLeft = s0 - (e.clientX - x0); });
+  addEventListener("pointerup", function(){ if (!arr) return; arr = false; gal.style.scrollSnapType = ""; gal.style.cursor = ""; });
+
+  /* ---------- laço de rolagem: entradas + máscaras da galeria ---------- */
+  var topo = $("#top"), zap = $("#zap"), alvos = $$(".rv,.gal figure");
+  var pedido = false;
+  function quadro(){
+    pedido = false;
+    topo.classList.toggle("solid", scrollY > 40); zap.classList.toggle("on", scrollY > innerHeight * .8);
+    for (var i = alvos.length - 1; i >= 0; i--) { var r = alvos[i].getBoundingClientRect();
+      if (r.top < innerHeight * .9 && r.bottom > 0 && r.left < innerWidth && r.right > 0) { alvos[i].classList.add("on"); alvos.splice(i, 1); } }
+  }
+  function pede(){ if (!pedido) { pedido = true; requestAnimationFrame(quadro); } }
+  addEventListener("scroll", pede, { passive: true }); gal.addEventListener("scroll", pede, { passive: true }); addEventListener("resize", pede);
+  setInterval(pede, 500); pede();
+
+  if (!embed && !dentro && !toque && window.Lenis) {
+    var lenis = new Lenis({ lerp: .09 });
+    lenis.on("scroll", pede);
+    (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+    $$('a[href^="#"]').forEach(function(a){ a.addEventListener("click", function(e){ var t = document.getElementById(a.getAttribute("href").slice(1)); if (!t) return; e.preventDefault(); lenis.scrollTo(t, { duration: 1.5 }); }); });
+  }
+})();
+</script>
+</body>
+</html>

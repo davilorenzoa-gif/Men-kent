@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Açaí Happy · Diversão e gosto de felicidade · Campinas</title>
+<meta name="description" content="Açaí Happy no Parque Prado, Campinas: açaí, cremes e sorvetes a R$ 5,90 cada 100g, espaço kids com camas elásticas e 4,8 estrelas no Google. Monte o seu e peça pelo WhatsApp.">
+<meta property="og:title" content="Açaí Happy · Diversão e gosto de felicidade!">
+<meta property="og:description" content="Açaí, cremes e sorvetes a R$ 5,90 cada 100g. Parque Prado, Campinas.">
+<meta property="og:image" content="img/copos-logo.jpg">
+<meta name="theme-color" content="#2a0750">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"IceCreamShop","name":"Açaí Happy · Parque Prado","telephone":"+55 19 99522-4004",
+ "address":{"@type":"PostalAddress","streetAddress":"Av. Washington Luís, 1220","addressLocality":"Campinas","addressRegion":"SP","postalCode":"13042-105","addressCountry":"BR"},
+ "geo":{"@type":"GeoCoordinates","latitude":-22.9272417,"longitude":-47.055793},
+ "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"701"}}
+</script>
+<style>
+:root{--roxo:#5a1aa8;--roxo2:#3a0b78;--deep:#1a0436;--amarelo:#ffc61a;--rosa:#ff2e93;--verde:#8ed12a;--creme:#fff6e9;--tx:#fff;
+  --m:clamp(16px,3vw,44px);--ease:cubic-bezier(.2,.7,.1,1);--bounce:cubic-bezier(.34,1.56,.64,1);
+  --fd:"Fredoka",system-ui,sans-serif;--fs:"Pacifico",cursive}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--deep)}
+body{background:var(--deep);color:var(--tx);font-family:var(--fd);font-size:clamp(16px,1.1vw,18px);line-height:1.5;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+:focus-visible{outline:3px solid var(--amarelo);outline-offset:3px}
+.sc{font-family:var(--fs);font-weight:400;color:var(--amarelo)}
+.h2{font-size:clamp(40px,6vw,92px);line-height:.95;font-weight:700;letter-spacing:-.02em}
+.btn{display:inline-flex;align-items:center;gap:10px;height:58px;padding:0 28px;border-radius:99px;background:var(--amarelo);color:#2a0750;font-weight:700;font-size:17px;
+  box-shadow:0 6px 0 #c79300;transition:transform .25s var(--bounce),box-shadow .25s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 9px 0 #c79300}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #c79300}
+.btn.rosa{background:var(--rosa);color:#fff;box-shadow:0 6px 0 #b0105f}
+.btn.rosa:hover{box-shadow:0 9px 0 #b0105f}
+.btn.gh{background:rgba(255,255,255,.12);color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.3)}
+.rise{opacity:0;transform:translateY(34px)}
+.no-js .rise,.embed .rise{opacity:1;transform:none}
+
+/* ================= WOW 1: a tela enche de açaí ================= */
+.abre{position:fixed;inset:0;z-index:100;background:var(--deep);overflow:hidden;pointer-events:none}
+.abre .liq{position:absolute;left:-5%;right:-5%;bottom:0;height:115%;transform:translateY(100%)}
+.abre .liq svg{position:absolute;left:0;top:-58px;width:220%;height:70px}
+.abre .liq .w1{animation:onda 3.2s linear infinite}
+.abre .liq .w2{animation:onda 4.6s linear infinite reverse;opacity:.6;top:-46px}
+.abre .liq .corpo{position:absolute;inset:0;background:linear-gradient(180deg,var(--roxo),var(--roxo2))}
+@keyframes onda{to{transform:translateX(-50%)}}
+.abre .mascote{position:absolute;left:50%;top:50%;width:min(62vw,340px);transform:translate(-50%,-50%) scale(0)}
+.abre .gota{position:absolute;width:16px;height:22px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--roxo);opacity:0}
+
+/* ================= topo ================= */
+.top{position:fixed;left:0;right:0;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:12px var(--m);transition:background .35s,padding .35s}
+.top.solid{background:rgba(26,4,54,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding-block:8px}
+.top .lg img{width:64px;transition:width .35s}
+.top.solid .lg img{width:50px}
+.top nav{display:flex;gap:26px;font-weight:600}
+.top nav a{position:relative}
+.top nav a:after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:3px;border-radius:3px;background:var(--amarelo);transform:scaleX(0);transition:transform .35s var(--bounce)}
+.top nav a:hover:after{transform:scaleX(1)}
+.top .btn{height:46px;padding:0 20px;font-size:15px;box-shadow:0 4px 0 #c79300}
+@media(max-width:900px){.top nav{display:none}.top .btn span{display:none}}
+
+/* ================= hero ================= */
+.hero{position:relative;min-height:100svh;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:20px;padding:110px var(--m) 140px;
+  background:radial-gradient(70% 80% at 72% 45%,#7d2bd6 0%,var(--roxo) 38%,var(--roxo2) 75%);overflow:hidden}
+.hero h1{font-size:clamp(46px,6.8vw,112px);line-height:.92;font-weight:700;letter-spacing:-.025em}
+.hero h1 .sc{display:block;font-size:.78em;line-height:1.25;margin-top:.08em}
+.hero .sub{font-size:clamp(17px,1.4vw,21px);margin:22px 0 30px;max-width:30ch;color:#f1e6ff}
+.hero .acts{display:flex;gap:12px;flex-wrap:wrap}
+.hero .local{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border-radius:99px;padding:7px 14px 7px 10px;font-weight:600;font-size:14px;margin-bottom:18px}
+.hero .local svg{color:var(--amarelo)}
+.apps{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.app{display:inline-flex;align-items:center;height:56px;padding:0 24px;border-radius:16px;font-weight:700;font-size:18px;line-height:1.05;transition:transform .25s var(--bounce)}
+.app:hover{transform:translateY(-3px)}
+.app.ifood{background:#ea1d2c;color:#fff;box-shadow:0 5px 0 #a8101b}
+.app.nn{background:#ffdd00;color:#1a1a1a;box-shadow:0 5px 0 #c9ad00}
+.app small{display:block;font-size:11px;font-weight:600;opacity:.85}
+.hero .nota{display:inline-flex;align-items:center;gap:10px;margin-top:28px;background:rgba(0,0,0,.2);border-radius:99px;padding:8px 16px 8px 10px;font-size:14px}
+.hero .nota b{background:var(--amarelo);color:#2a0750;border-radius:99px;padding:3px 10px;font-size:15px}
+.palco{position:relative;height:min(68vh,640px)}
+.palco .bola{position:absolute;left:0;right:0;top:0;margin:0 auto;height:100%;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 40px 50px rgba(20,0,50,.55))}
+.palco .bowl{position:absolute;right:0;bottom:0;width:min(44%,300px);filter:drop-shadow(0 24px 30px rgba(20,0,50,.5))}
+.preco{position:absolute;left:4%;bottom:10%;width:150px;height:150px;border-radius:50%;background:var(--amarelo);color:#2a0750;display:grid;place-items:center;text-align:center;
+  font-weight:700;line-height:1;transform:rotate(-12deg);box-shadow:0 8px 0 #c79300,0 20px 40px rgba(0,0,0,.3)}
+.preco small{display:block;font-size:13px;font-weight:600}.preco b{display:block;font-size:44px;letter-spacing:-.03em}
+.hero .borda{position:absolute;left:0;right:0;bottom:-2px;height:110px;pointer-events:none}
+.hero .borda svg{width:200%;height:100%;animation:onda 9s linear infinite}
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;padding-top:96px;text-align:left}
+  .palco{height:88vw;order:-1;margin:0 -10px}
+  .palco .bola{height:auto;width:68%;left:16%;right:auto;top:2%;margin:0}.palco .bowl{width:40%;right:0;bottom:4%}
+  .preco{width:112px;height:112px;left:0;bottom:2%}.preco b{font-size:32px}
+}
+
+/* ================= faixa ================= */
+.faixa{background:var(--creme);color:var(--roxo2);overflow:hidden;padding:22px 0}
+.fx{display:flex;width:max-content;will-change:transform}
+.fx span{font-size:clamp(26px,3.6vw,52px);font-weight:700;padding-right:.6em;white-space:nowrap}
+.fx span i{font-style:normal;color:var(--rosa);padding-right:.6em}
+
+/* ================= WOW 2: sabores, o fundo muda de cor ================= */
+@property --sb{syntax:'<color>';inherits:true;initial-value:#5a1aa8}
+.sabores{position:relative;height:340svh;--sb:#5a1aa8;background:var(--sb);transition:--sb .9s var(--ease)}
+.sab-pin{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;grid-template-columns:1fr minmax(0,.9fr) 1fr;align-items:center;gap:20px;padding:80px var(--m) 40px}
+.sab-pin:before{content:"";position:absolute;inset:0;background:radial-gradient(50% 60% at 50% 55%,rgba(255,255,255,.22),transparent 70%)}
+.sab-pin>*{position:relative}
+.sab-txt .k{font-weight:600;opacity:.85;margin-bottom:8px}
+.sab-txt h2{font-size:clamp(40px,5.4vw,84px);line-height:.95;font-weight:700}
+.sab-txt h2 .sc{display:block;font-size:.72em;line-height:1.3}
+.sab-txt p{margin-top:16px;max-width:30ch;opacity:.9}
+.sab-copo{position:relative;height:min(68vh,600px);display:grid;place-items:center}
+.sab-copo .card{position:absolute;height:100%;max-width:100%;border-radius:30px;overflow:hidden;box-shadow:0 40px 70px -20px rgba(0,0,0,.55);will-change:transform,opacity}
+.sab-copo .card img{height:100%;width:auto;max-width:100%;object-fit:contain;background:#2a0750}
+.sab-lado{display:grid;gap:12px;justify-items:end}
+.sab-lado .chip{background:rgba(255,255,255,.18);border-radius:99px;padding:10px 18px;font-weight:600}
+.sab-dots{display:flex;gap:8px;margin-top:16px}
+.sab-dots i{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.35);transition:transform .4s var(--bounce),background .3s}
+.sab-dots i.on{background:#fff;transform:scale(1.4)}
+.sab-num{font-size:clamp(90px,14vw,220px);font-weight:700;line-height:.8;opacity:.16;position:absolute;right:var(--m);bottom:4vh}
+@media(max-width:860px){
+  .sabores{height:320svh}
+  .sab-pin{grid-template-columns:1fr;grid-template-rows:auto 1fr auto;padding:84px var(--m) 24px;gap:10px;text-align:left}
+  .sab-copo{height:min(50vh,82vw * 1.75)}
+  .sab-lado{justify-items:start;grid-auto-flow:column;justify-content:start;overflow-x:auto}
+  .sab-lado .chip{white-space:nowrap;font-size:14px;padding:8px 14px}
+  .sab-num{display:none}
+}
+.embed .sabores{height:auto}
+.embed .sab-pin{position:relative;height:auto;min-height:100vh}
+
+/* ================= WOW 3: monte do seu jeito ================= */
+.monte{position:relative;background:var(--creme);color:var(--roxo2);padding:clamp(90px,12vw,150px) var(--m);display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);align-items:center}
+.monte .h2 .sc{color:var(--rosa)}
+.monte .intro{margin:30px 0 26px;max-width:42ch;font-size:18px;color:#5b3f7c}
+.grupo{margin-bottom:22px}
+.grupo h4{font-size:15px;font-weight:600;color:#7d5fa0;margin-bottom:10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{padding:12px 18px;border-radius:99px;background:#fff;font-weight:600;color:var(--roxo2);box-shadow:inset 0 0 0 2px #e8dcf5,0 3px 0 #e8dcf5;transition:transform .25s var(--bounce),background .25s,color .25s,box-shadow .25s}
+.opt:hover{transform:translateY(-2px)}
+.opt.on{background:var(--roxo);color:#fff;box-shadow:0 4px 0 var(--roxo2)}
+.opt .dt{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+.total{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:#fff;border-radius:24px;padding:18px 20px;box-shadow:0 4px 0 #e8dcf5;margin-top:8px}
+.total b{font-size:34px;letter-spacing:-.02em;color:var(--roxo)}
+.total small{display:block;font-size:13px;color:#7d5fa0}
+.copo-wrap{position:relative;display:grid;place-items:center;min-height:560px}
+.copo-wrap .halo{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#ffd9f0,transparent 68%)}
+#copo{position:relative;width:min(100%,360px);height:auto;overflow:visible}
+#copo .camada{transform-box:fill-box}
+.mini-mascote{position:absolute;right:2%;top:4%;width:120px;transform:rotate(10deg)}
+@media(max-width:860px){.monte{grid-template-columns:1fr}.copo-wrap{min-height:0;order:-1}#copo{width:62vw}.mini-mascote{width:76px}}
+
+/* ================= o lugar ================= */
+.lugar{background:var(--roxo2);padding:clamp(90px,12vw,150px) var(--m);display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,70px);align-items:center}
+.lugar .foto{border-radius:32px;overflow:hidden;aspect-ratio:4/5;transform:rotate(-2deg);box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.lugar .foto img{width:100%;height:115%;object-fit:cover}
+.fatos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+.fato{background:rgba(255,255,255,.08);border-radius:22px;padding:18px;transition:transform .3s var(--bounce),background .3s}
+.fato:hover{transform:translateY(-4px) rotate(-1deg);background:rgba(255,255,255,.13)}
+.fato .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;margin-bottom:12px;background:var(--amarelo);color:var(--roxo2)}
+.fato b{display:block;font-size:19px}
+.fato span{font-size:14px;color:#e2d3f7}
+.aval{display:flex;gap:16px;align-items:center;margin-top:26px;flex-wrap:wrap}
+.aval .n{font-size:64px;font-weight:700;line-height:1;color:var(--amarelo)}
+.aval .st{color:var(--amarelo);letter-spacing:3px}
+@media(max-width:860px){.lugar{grid-template-columns:1fr}.lugar .foto{aspect-ratio:4/4.4}}
+
+.deps{background:var(--roxo2);padding:0 var(--m) clamp(90px,10vw,130px);display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.dep{background:var(--creme);color:var(--roxo2);border-radius:26px;padding:26px;position:relative}
+.dep q{display:block;font-size:clamp(19px,1.5vw,23px);line-height:1.35;font-weight:500;quotes:"“" "”"}
+.dep cite{display:block;margin-top:14px;font-style:normal;font-size:14px;color:#7d5fa0}
+.dep cite b{color:var(--roxo2)}
+@media(max-width:760px){.deps{grid-template-columns:1fr}}
+
+/* ================= cardápio ================= */
+.card-sec{background:var(--deep);padding:clamp(90px,12vw,150px) var(--m)}
+.card-sec .hd{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:34px}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tri{border-radius:28px;padding:28px;min-height:250px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;transition:transform .35s var(--bounce)}
+.tri:hover{transform:translateY(-6px) rotate(-1deg)}
+.tri h3{font-size:36px;line-height:1}
+.tri p{margin-top:10px;font-size:15px;opacity:.92;max-width:26ch}
+.tri .pr{font-size:15px;font-weight:600}
+.tri.a{background:var(--roxo)}.tri.b{background:var(--rosa)}.tri.c{background:#ff8a1f}
+.banner{margin-top:16px;border-radius:28px;overflow:hidden}
+@media(max-width:860px){.trio{grid-template-columns:1fr}}
+
+/* ================= franquia ================= */
+.franq{position:relative;background:linear-gradient(180deg,var(--deep),#0d0120);padding:clamp(100px,13vw,170px) var(--m);overflow:hidden}
+.franq .h2{max-width:13ch}
+.franq .giro{position:absolute;right:4%;top:90px;width:min(34vw,440px);filter:drop-shadow(0 30px 40px rgba(0,0,0,.5))}
+.franq .giro-anel{position:absolute;right:calc(4% - 40px);top:50px;width:min(40vw,520px);aspect-ratio:1;border-radius:50%;border:2px dashed rgba(255,198,26,.35);animation:gira 30s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+@media(max-width:900px){.franq .giro{position:relative;right:auto;top:auto;width:62vw;margin:0 auto 20px}.franq .giro-anel{display:none}}
+.franq .lead{font-size:clamp(18px,1.5vw,22px);color:#e2d3f7;max-width:46ch;margin:20px 0 30px}
+.kit{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:50px}
+.kit figure{border-radius:24px;overflow:hidden;background:#1d0640;position:relative;aspect-ratio:3/4}
+.kit figure img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.kit figure:hover img{transform:scale(1.06)}
+.kit figcaption{position:absolute;left:12px;bottom:12px;background:rgba(26,4,54,.8);border-radius:99px;padding:6px 12px;font-size:13px;font-weight:600}
+.kit .bw{display:grid;place-items:center;background:radial-gradient(circle at 50% 60%,#4a1590,#1d0640)}
+.kit .bw img{object-fit:contain;padding:12%}
+.pilares{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+.pilar{border-radius:20px;padding:18px;background:rgba(255,255,255,.06)}
+.pilar b{display:block;color:var(--amarelo);font-size:18px}
+.pilar span{font-size:14px;color:#cdb9ea}
+@media(max-width:900px){.kit{grid-template-columns:1fr 1fr}.pilares{grid-template-columns:1fr 1fr}}
+
+/* ================= visite ================= */
+.visite{background:var(--creme);color:var(--roxo2);padding:clamp(90px,12vw,150px) var(--m);display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(30px,5vw,70px);align-items:center}
+.visite .end{font-size:clamp(20px,1.8vw,26px);font-weight:600;margin:18px 0}
+.visite .acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.visite .btn.gh{color:var(--roxo2);box-shadow:inset 0 0 0 2px #d9c6f0}
+.mapa{border-radius:30px;overflow:hidden;min-height:420px;position:relative;box-shadow:0 6px 0 #e8dcf5;background:#efe3fb url(img/logo.png) center/140px no-repeat}
+.mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media(max-width:860px){.visite{grid-template-columns:1fr}.mapa{min-height:320px}}
+
+footer{background:var(--roxo2);padding:70px var(--m) 30px;text-align:center;overflow:hidden}
+footer .grande{font-family:var(--fs);color:var(--amarelo);font-size:clamp(60px,13vw,220px);line-height:1.1}
+footer .base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:30px;font-size:14px;color:#cdb9ea;border-top:1px solid rgba(255,255,255,.12);padding-top:18px}
+
+.zap{position:fixed;right:18px;bottom:18px;z-index:40;width:62px;height:62px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.35);transform:scale(0);transition:transform .45s var(--bounce)}
+.zap.on{transform:scale(1)}
+.embed .zap{display:none}
+.embed .top{background:rgba(26,4,54,.92)}
+</style>
+</head>
+<body class="no-js">
+
+<div class="abre" id="abre" aria-hidden="true">
+  <div class="liq"><svg class="w2" viewBox="0 0 1200 70" preserveAspectRatio="none"><path d="M0 35 Q 75 0 150 35 T 300 35 T 450 35 T 600 35 T 750 35 T 900 35 T 1050 35 T 1200 35 V70 H0Z" fill="#7d2bd6"/></svg><svg class="w1" viewBox="0 0 1200 70" preserveAspectRatio="none"><path d="M0 40 Q 75 10 150 40 T 300 40 T 450 40 T 600 40 T 750 40 T 900 40 T 1050 40 T 1200 40 V70 H0Z" fill="#5a1aa8"/></svg><div class="corpo"></div></div>
+  <img class="mascote" src="img/logo.png" alt="">
+</div>
+
+<header class="top" id="top">
+  <a class="lg" href="#inicio" aria-label="Açaí Happy, início"><img src="img/logo.png" alt="Açaí Happy" width="900" height="900"></a>
+  <nav aria-label="Seções"><a href="#sabores">Sabores</a><a href="#monte">Monte o seu</a><a href="#lugar">O lugar</a><a href="#franquia">Franquia</a><a href="#visite">Visite</a></nav>
+  <a class="btn" data-wa="Oi! Vim pelo site da Açaí Happy e quero fazer um pedido." href="#visite"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 5 5.1-1.3A10 10 0 1 0 12 2Z"/></svg><span>Pedir agora</span></a>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div>
+    <div class="local hi"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>Parque Prado · Campinas</div>
+    <h1 class="hi">Açaí de verdade, <span class="sc">com gosto de felicidade.</span></h1>
+    <p class="sub hi">Açaí, cremes e sorvetes do jeito que você quiser, num lugar feito pra família inteira. No Parque Prado, em Campinas.</p>
+    <div class="acts hi">
+      <a class="btn" href="#monte">Montar meu açaí <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn gh" href="#franquia">Seja franqueado</a>
+    </div>
+    <div class="nota hi"><b>4,8 ★</b> 701 avaliações no Google</div>
+  </div>
+  <div class="palco">
+    <img class="bola" src="img/bola.png" alt="Bola de açaí cremoso com morangos frescos por cima" width="826" height="900">
+    <img class="bowl" src="img/bowl.png" alt="Bowl da Açaí Happy com açaí, kiwi, granola e leite condensado" width="900" height="600">
+    <div class="preco"><div><small>cada 100g</small><b>R$ 5,90</b><small>self-service</small></div></div>
+  </div>
+  <div class="borda" aria-hidden="true"><svg viewBox="0 0 1200 110" preserveAspectRatio="none"><path d="M0 60 Q 75 20 150 60 T 300 60 T 450 60 T 600 60 T 750 60 T 900 60 T 1050 60 T 1200 60 V110 H0Z" fill="#fff6e9"/></svg></div>
+</section>
+
+<div class="faixa" aria-hidden="true"><div class="fx" id="fx"></div></div>
+
+<!-- WOW 2 -->
+<section class="sabores" id="sabores" aria-label="Sabores">
+  <div class="sab-pin">
+    <div class="sab-txt">
+      <div class="k" id="sK">Os favoritos da casa</div>
+      <h2 id="sNome">Banana <span class="sc">&amp; granola</span></h2>
+      <p id="sDesc">Açaí cremoso em camadas com banana fresquinha e granola crocante.</p>
+      <div class="sab-dots" id="sDots"><i class="on"></i><i></i><i></i></div>
+    </div>
+    <div class="sab-copo" id="sCopo"></div>
+    <div class="sab-lado" id="sChips"></div>
+    <div class="sab-num" id="sNum">01</div>
+  </div>
+</section>
+
+<!-- WOW 3 -->
+<section class="monte" id="monte">
+  <div>
+    <h2 class="h2 rise">Monte <span class="sc">do seu jeito!</span></h2>
+    <p class="intro rise">Escolha o tamanho, a base e os adicionais. O copo vai montando aqui do lado e o pedido sai pronto pro WhatsApp.</p>
+    <div class="grupo rise"><h4>Tamanho</h4><div class="opts" id="oTam"></div></div>
+    <div class="grupo rise"><h4>Base</h4><div class="opts" id="oBase"></div></div>
+    <div class="grupo rise"><h4>Adicionais (toque pra pôr e tirar)</h4><div class="opts" id="oAdd"></div></div>
+    <div class="total rise"><div><small>Estimativa pelo peso (R$ 5,90 cada 100g)</small><b id="tVal">R$ 0,00</b></div><a class="btn rosa" id="tWa" target="_blank" rel="noopener">Pedir esse no WhatsApp</a></div>
+  </div>
+  <div class="copo-wrap">
+    <div class="halo"></div>
+    <svg id="copo" viewBox="0 0 300 420" aria-label="Copo sendo montado">
+      <defs><clipPath id="dentro"><path d="M42 70 L258 70 L232 396 Q230 410 216 410 L84 410 Q70 410 68 396 Z"/></clipPath>
+        <pattern id="pGranola" width="18" height="14" patternUnits="userSpaceOnUse"><rect width="18" height="14" fill="#d9a35b"/><circle cx="4" cy="4" r="3" fill="#b07a32"/><circle cx="13" cy="9" r="3.4" fill="#f0c27a"/><circle cx="9" cy="2" r="1.6" fill="#8a5a20"/></pattern>
+        <pattern id="pBanana" width="40" height="30" patternUnits="userSpaceOnUse"><rect width="40" height="30" fill="#f7e7a6"/><circle cx="12" cy="15" r="10" fill="#fff4c8" stroke="#e8cf7a" stroke-width="2"/><circle cx="12" cy="15" r="2" fill="#c9a94a"/></pattern>
+        <pattern id="pMorango" width="30" height="24" patternUnits="userSpaceOnUse"><rect width="30" height="24" fill="#ffd6e6"/><path d="M8 4 Q16 2 18 10 Q14 20 8 18 Q2 12 8 4Z" fill="#e8243c"/><circle cx="11" cy="9" r=".9" fill="#ffd36a"/><circle cx="13" cy="13" r=".9" fill="#ffd36a"/></pattern>
+        <pattern id="pNinho" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#fffaf0"/><circle cx="5" cy="6" r="2.2" fill="#f1e6cf"/><circle cx="12" cy="11" r="1.8" fill="#efe1c4"/></pattern>
+        <pattern id="pKiwi" width="34" height="28" patternUnits="userSpaceOnUse"><rect width="34" height="28" fill="#d8f0a8"/><circle cx="12" cy="14" r="10" fill="#8ccf3a"/><circle cx="12" cy="14" r="3" fill="#f4fbd9"/><circle cx="8" cy="10" r=".9" fill="#222"/><circle cx="16" cy="18" r=".9" fill="#222"/></pattern>
+        <pattern id="pChoco" width="20" height="16" patternUnits="userSpaceOnUse"><rect width="20" height="16" fill="#5a2d17"/><path d="M0 8 Q5 4 10 8 T20 8" stroke="#7a4325" stroke-width="3" fill="none"/></pattern>
+        <linearGradient id="vidro" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".2" stop-color="#fff" stop-opacity=".08"/><stop offset=".8" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#fff" stop-opacity=".4"/></linearGradient>
+      </defs>
+      <g clip-path="url(#dentro)"><g id="camadas"></g></g>
+      <g id="topo"></g>
+      <path d="M42 70 L258 70 L232 396 Q230 410 216 410 L84 410 Q70 410 68 396 Z" fill="url(#vidro)" stroke="rgba(90,26,168,.35)" stroke-width="3"/>
+      <rect x="34" y="58" width="232" height="16" rx="8" fill="rgba(255,255,255,.7)" stroke="rgba(90,26,168,.3)" stroke-width="2"/>
+      <image href="img/logo.png" x="95" y="250" width="110" height="110" opacity=".95"/>
+    </svg>
+    <img class="mini-mascote" src="img/logo.png" alt="" width="900" height="900">
+  </div>
+</section>
+
+<section class="lugar" id="lugar">
+  <div class="foto rise"><img src="img/familia.jpg" alt="Família sorrindo atrás de um copo de açaí com morango e leite condensado" width="720" height="1279" loading="lazy"></div>
+  <div>
+    <h2 class="h2 rise">Feito pra <span class="sc">família toda</span></h2>
+    <p class="rise" style="margin-top:16px;max-width:44ch;color:#e2d3f7;font-size:18px">Não é só passar e levar. É sentar, jogar uma partida, deixar a criançada pular e pedir mais uma rodada.</p>
+    <div class="fatos">
+      <div class="fato rise"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 20h16M7 20l2-8h6l2 8M9 12l3-8 3 8"/></svg></div><b>Espaço kids</b><span>Duas camas elásticas pra criançada</span></div>
+      <div class="fato rise"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div><b>Mesas de xadrez</b><span>Pra jogar enquanto toma o açaí</span></div>
+      <div class="fato rise"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 21V9l9-6 9 6v12M9 21v-6h6v6"/></svg></div><b>Dentro e fora</b><span>Ambiente interno e área externa</span></div>
+      <div class="fato rise"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="7" width="18" height="10" rx="3"/><circle cx="7.5" cy="17" r="2"/><circle cx="16.5" cy="17" r="2"/></svg></div><b>Estacionamento</b><span>Bem na frente da loja</span></div>
+    </div>
+    <div class="aval rise"><div class="n">4,8</div><div><div class="st">★★★★★</div><div>701 avaliações no Google</div></div></div>
+  </div>
+</section>
+<div class="deps">
+  <figure class="dep rise"><q>Ambiente amplo, com inúmeras opções de sorvete e açaí, além de coberturas e adicionais com preço bom. Várias mesas, inclusive com xadrez, e espaço kids com duas camas elásticas.</q><cite><b>Pri Smaile Fusco</b> · avaliação no Google</cite></figure>
+  <figure class="dep rise"><q>Ambiente familiar, açaí de qualidade e com variedade. Tem brinquedos para crianças, copos gigantes que adorei!</q><cite><b>Glaucio Minarro</b> · avaliação no Google</cite></figure>
+</div>
+
+<section class="card-sec" id="cardapio">
+  <div class="hd"><h2 class="h2 rise">Três jeitos de <span class="sc">ser feliz</span></h2><p class="rise" style="max-width:34ch;color:#cdb9ea">Tudo no self-service, você paga pelo peso: <b style="color:#fff">R$ 5,90 cada 100g</b>.</p></div>
+  <div class="trio">
+    <div class="tri a rise"><div><h3>Açaí</h3><p>Puro e irresistível, com uma montanha de adicionais pra escolher.</p></div><span class="pr">R$ 5,90 / 100g</span></div>
+    <div class="tri b rise"><div><h3>Cremes</h3><p>Sabores que surpreendem, em camadas com o que você mais gosta.</p></div><span class="pr">R$ 5,90 / 100g</span></div>
+    <div class="tri c rise"><div><h3>Sorvetes</h3><p>Cremosos, de vários sabores, pra montar junto com o açaí.</p></div><span class="pr">R$ 5,90 / 100g</span></div>
+  </div>
+  <div class="banner rise"><img src="img/cardapio.jpg" alt="Cartaz Açaí Happy: açaí, cremes e sorvetes por R$ 5,90 cada 100g" width="1400" height="933" loading="lazy"></div>
+</section>
+
+<section class="franq" id="franquia">
+  <div class="giro-anel" aria-hidden="true"></div>
+  <img class="giro" src="img/logo.png" alt="Mascote da Açaí Happy" width="900" height="900" loading="lazy">
+  <h2 class="h2 rise">Nasceu pra <span class="sc">virar rede.</span></h2>
+  <p class="lead rise">A Açaí Happy já tem cara de marca grande: mascote, copos, bowls e uniformes com a mesma identidade. Quer levar a felicidade pra sua cidade? A gente conversa.</p>
+  <a class="btn rise" data-wa="Olá! Tenho interesse em abrir uma franquia da Açaí Happy. Pode me passar mais informações?" href="#visite">Quero ser franqueado</a>
+  <div class="kit">
+    <figure class="rise"><img src="img/copo-neon.jpg" alt="Copo Açaí Happy com morango e leite condensado" width="932" height="1400" loading="lazy"><figcaption>Copos</figcaption></figure>
+    <figure class="rise bw"><img src="img/bowl.png" alt="Bowl personalizado Açaí Happy" width="900" height="600" loading="lazy"><figcaption>Bowls</figcaption></figure>
+    <figure class="rise"><img src="img/camisa-costas.jpg" alt="Uniforme Açaí Happy, costas" width="724" height="794" loading="lazy"><figcaption>Uniformes</figcaption></figure>
+    <figure class="rise"><img src="img/morango-post.jpg" alt="Arte de redes sociais da Açaí Happy" width="1254" height="1254" loading="lazy"><figcaption>Redes sociais</figcaption></figure>
+  </div>
+  <div class="pilares">
+    <div class="pilar rise"><b>100% natural</b><span>Fruta de verdade</span></div>
+    <div class="pilar rise"><b>Antioxidantes</b><span>Açaí é energia</span></div>
+    <div class="pilar rise"><b>Energia que contagia</b><span>Do atendimento ao copo</span></div>
+    <div class="pilar rise"><b>Feito com amor</b><span>Pra família toda</span></div>
+  </div>
+</section>
+
+<section class="visite" id="visite">
+  <div>
+    <h2 class="h2 rise">Bora tomar <span class="sc" style="color:var(--rosa)">um açaí?</span></h2>
+    <p class="end rise">Av. Washington Luís, 1220<br>Parque Prado, Campinas · SP</p>
+    <p class="rise" style="color:#5b3f7c">Aberto até as 22h50. Prefere receber em casa? Peça pelo app:</p>
+    <div class="apps rise">
+      <a class="app ifood" href="https://www.ifood.com.br/delivery/campinas-sp/acai-heaven-parque-prado-vila-marieta/148d7ac4-27ed-498f-a065-259ed2c59ed4" target="_blank" rel="noopener"><span><small>Peça no</small>iFood</span></a>
+      <a class="app nn" href="https://99app.com/99food/campinas/aai-heaven-prado/5764608456754201837/" target="_blank" rel="noopener"><span><small>Peça no</small>99Food</span></a>
+    </div>
+    <div class="acts rise">
+      <a class="btn" data-wa="Oi! Vim pelo site da Açaí Happy e quero fazer um pedido." href="https://wa.me/5519995224004">WhatsApp</a>
+      <a class="btn gh" href="https://www.google.com/maps/dir/?api=1&destination=-22.9272417,-47.055793" target="_blank" rel="noopener">Como chegar</a>
+    </div>
+  </div>
+  <div class="mapa rise"><iframe title="Mapa da Açaí Happy no Parque Prado" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=-22.9272417,-47.055793&z=16&output=embed"></iframe></div>
+</section>
+</main>
+
+<footer>
+  <div class="grande">Açaí Happy</div>
+  <div style="font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#e2d3f7;margin-top:clamp(24px,4.6vw,72px)">Parque Prado</div>
+  <div class="base"><span>Açaí Happy Parque Prado · Campinas</span><span><a href="https://www.ifood.com.br/delivery/campinas-sp/acai-heaven-parque-prado-vila-marieta/148d7ac4-27ed-498f-a065-259ed2c59ed4" target="_blank" rel="noopener">iFood</a> · <a href="https://99app.com/99food/campinas/aai-heaven-prado/5764608456754201837/" target="_blank" rel="noopener">99Food</a></span><span>@acai.happy</span><span>(19) 99522-4004</span></div>
+</footer>
+<a class="zap" id="zap" data-wa="Oi! Vim pelo site da Açaí Happy e quero fazer um pedido." href="https://wa.me/5519995224004" aria-label="Pedir pelo WhatsApp"><svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 5 5.1-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 .9c.3.1.4.2.5.3.1.2.1.7-.1 1.2Z"/></svg></a>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var WHATS = "5519995224004";
+  var $ = function(s, r){ return (r || document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var embed = window.parent !== window || /[?&]embed\b/.test(location.search);
+  var G = window.gsap && window.ScrollTrigger;
+  document.body.classList.remove("no-js");
+  if (embed) document.documentElement.classList.add("embed");
+  var wa = function(t){ return "https://wa.me/" + WHATS + "?text=" + encodeURIComponent(t); };
+  $$("[data-wa]").forEach(function(a){ a.href = wa(a.dataset.wa); a.target = "_blank"; a.rel = "noopener"; });
+  var brl = function(v){ return "R$ " + v.toFixed(2).replace(".", ","); };
+
+  /* ---------- faixa ---------- */
+  var pil = ["100% natural", "Rico em antioxidantes", "Energia que contagia", "Feito com amor", "Diversão e gosto de felicidade"];
+  var fx = $("#fx"), row = pil.map(function(w){ return "<span>" + w + "<i> ✦</i></span>"; }).join("");
+  fx.innerHTML = row + row;
+
+  /* ================= WOW 3: monte do seu jeito ================= */
+  var TAM = [["300 ml", 300], ["500 ml", 500], ["770 ml", 770]];
+  var BASE = [["Açaí", "#4a1150"], ["Creme de ninho", "#f7efe2"], ["Sorvete de morango", "#f7a8c6"]];
+  var ADD = [["Banana", "url(#pBanana)", "#f7e7a6"], ["Morango", "url(#pMorango)", "#e8243c"], ["Granola", "url(#pGranola)", "#d9a35b"],
+             ["Leite Ninho", "url(#pNinho)", "#fffaf0"], ["Kiwi", "url(#pKiwi)", "#8ccf3a"], ["Calda de chocolate", "url(#pChoco)", "#5a2d17"]];
+  var DRIZ = "Leite condensado";
+  var st = { tam: 1, base: 0, add: [], driz: false };
+  function chips(box, items, isOn, onTap, dot){
+    box.innerHTML = ""; items.forEach(function(it, k){ var b = document.createElement("button"); b.type = "button"; b.className = "opt" + (isOn(k) ? " on" : "");
+      b.innerHTML = (dot ? '<span class="dt" style="background:' + dot(it) + '"></span>' : "") + it[0]; b.setAttribute("aria-pressed", isOn(k)); b.onclick = function(){ onTap(k); }; box.appendChild(b); }); }
+  function controles(){
+    chips($("#oTam"), TAM, function(k){ return st.tam === k; }, function(k){ st.tam = k; montar("tam"); });
+    chips($("#oBase"), BASE, function(k){ return st.base === k; }, function(k){ st.base = k; montar("base"); }, function(it){ return it[1]; });
+    chips($("#oAdd"), ADD.concat([[DRIZ, "", "#fff3d6"]]), function(k){ return k === ADD.length ? st.driz : st.add.indexOf(k) >= 0; },
+      function(k){ if (k === ADD.length) st.driz = !st.driz; else { var i = st.add.indexOf(k); if (i >= 0) st.add.splice(i, 1); else if (st.add.length < 5) st.add.push(k); } montar("add", k); },
+      function(it){ return it[2]; });
+  }
+  var NS = "http://www.w3.org/2000/svg";
+  function el(t, a){ var e = document.createElementNS(NS, t); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  function montar(oQue, k){
+    controles();
+    var g = $("#camadas"), topo = $("#topo"); g.innerHTML = ""; topo.innerHTML = "";
+    var nivel = [300, 230, 150][st.tam];                      // altura até onde o copo enche (y do topo)
+    var base = BASE[st.base][1], fundo = 410, alt = fundo - nivel;
+    // camadas alternadas: base, adicional, base, adicional... (igual às fotos dos copos)
+    var seq = [], adds = st.add.slice();
+    if (!adds.length) seq.push(["b", alt]);
+    else { var nb = adds.length + 1, ha = Math.min(34, alt * .45 / adds.length), hb = (alt - ha * adds.length) / nb;
+      for (var i = 0; i < nb; i++) { seq.push(["b", hb]); if (adds[i] != null) seq.push(["a", ha, adds[i]]); } }
+    var y = fundo, novas = [];
+    seq.forEach(function(s){ y -= s[1]; var r = el("rect", { x: 0, y: y, width: 300, height: s[1] + 1, fill: s[0] === "b" ? base : ADD[s[2]][1], "class": "camada" });
+      g.appendChild(r); if (s[0] === "a" && s[2] === k && oQue === "add") novas.push(r); });
+    // brilho de vidro molhado nas bordas das camadas
+    g.appendChild(el("rect", { x: 0, y: nivel, width: 300, height: alt, fill: "url(#vidro)", opacity: .35 }));
+    // topo: montinho da base + o último adicional por cima
+    var cor = st.add.length ? ADD[st.add[st.add.length - 1]][1] : base;
+    var bx = 42 + (nivel - 70) * 26 / 326 + 4, L = bx, R = 300 - bx;
+    var monte = el("path", { d: "M" + L + " " + (nivel + 6) + " C " + L + " " + (nivel - 40) + " " + (150 - 60) + " " + (nivel - 58) + " 150 " + (nivel - 58) + " C " + (150 + 60) + " " + (nivel - 58) + " " + R + " " + (nivel - 40) + " " + R + " " + (nivel + 6) + " Z", fill: base });
+    topo.appendChild(monte);
+    if (st.add.length) topo.appendChild(el("path", { d: "M" + (L + 22) + " " + (nivel - 14) + " C " + (L + 30) + " " + (nivel - 46) + " 110 " + (nivel - 56) + " 150 " + (nivel - 56) + " C 190 " + (nivel - 56) + " " + (R - 30) + " " + (nivel - 46) + " " + (R - 22) + " " + (nivel - 14) + " Q 150 " + (nivel - 4) + " " + (L + 22) + " " + (nivel - 14) + " Z", fill: cor }));
+    if (st.driz) { var d = "M70 " + (nivel - 22) + " Q 110 " + (nivel - 56) + " 150 " + (nivel - 50) + " Q 190 " + (nivel - 58) + " 232 " + (nivel - 20);
+      topo.appendChild(el("path", { d: d, stroke: "#fff7e0", "stroke-width": 9, fill: "none", "stroke-linecap": "round" }));
+      [100, 150, 200].forEach(function(x, i){ topo.appendChild(el("path", { d: "M" + x + " " + (nivel - 36 - i * 4) + " q 3 " + (26 + i * 8) + " 0 " + (40 + i * 10), stroke: "#fff7e0", "stroke-width": 7, fill: "none", "stroke-linecap": "round" })); }); }
+    // animações: camada nova cai do alto, o copo balança
+    if (window.gsap && !embed) {
+      novas.forEach(function(r){ gsap.from(r, { y: -260, duration: .7, ease: "bounce.out" }); });
+      if (oQue) gsap.fromTo("#copo", { rotation: 0 }, { keyframes: [{ rotation: -3, duration: .1 }, { rotation: 2.5, duration: .12 }, { rotation: -1, duration: .12 }, { rotation: 0, duration: .15 }], transformOrigin: "50% 100%" });
+      if (oQue === "tam" || oQue === "base") gsap.from(g.children, { scaleY: 0, transformOrigin: "50% 100%", duration: .6, ease: "power3.out", stagger: .04 });
+      gsap.from(topo.children, { y: -30, opacity: 0, duration: .5, ease: "back.out(2)", stagger: .05 });
+    }
+    var peso = TAM[st.tam][1], val = peso / 100 * 5.9;
+    $("#tVal").textContent = brl(val);
+    var nomes = st.add.map(function(i){ return ADD[i][0]; }).concat(st.driz ? [DRIZ] : []);
+    $("#tWa").href = wa("Oi! Montei meu açaí no site da Açaí Happy:\n• Tamanho: " + TAM[st.tam][0] + "\n• Base: " + BASE[st.base][0] +
+      "\n• Adicionais: " + (nomes.length ? nomes.join(", ") : "nenhum") + "\nEstimativa pelo peso: " + brl(val) + ". Pode preparar?");
+  }
+  st.add = [0, 2]; montar();
+
+  /* ================= WOW 2: sabores (dados) ================= */
+  var SAB = [
+    { nome: 'Banana <span class="sc">&amp; granola</span>', k: "Os favoritos da casa", d: "Açaí cremoso em camadas com banana fresquinha e granola crocante.", img: "img/copo-banana.jpg", cor: "#5a1aa8", chips: ["Banana", "Granola", "Calda de chocolate"] },
+    { nome: 'Morango <span class="sc">&amp; Ninho</span>', k: "O queridinho da galera", d: "Morangos inteiros, Leite Ninho em camadas e calda de chocolate escorrendo.", img: "img/copo-morango.jpg", cor: "#c4134f", chips: ["Morango", "Leite Ninho", "Calda de chocolate"] },
+    { nome: 'Frutas <span class="sc">vermelhas</span>', k: "Pra quem ama sorvete", d: "Sorvete de frutas vermelhas com morango, cereja e granola por cima.", img: "img/copo-frutas.jpg", cor: "#e8459a", chips: ["Frutas vermelhas", "Cereja", "Granola"] }
+  ];
+  // uma troca por vez: se a rolagem pedir outro sabor no meio da animação, ele entra logo depois
+  var sAtual = -1, sCard = null, sAlvo = 0, sOcupado = false, toque = matchMedia("(pointer: coarse)").matches;
+  function pedirSabor(i){ sAlvo = i; if (!sOcupado) sabor(sAlvo); }
+  function sabor(i){
+    if (i === sAtual) return; var dir = i > sAtual ? 1 : -1, s = SAB[i]; sAtual = i;
+    $("#sabores").style.setProperty("--sb", s.cor);
+    $("#sNome").innerHTML = s.nome; $("#sK").textContent = s.k; $("#sDesc").textContent = s.d; $("#sNum").textContent = "0" + (i + 1);
+    $$("#sDots i").forEach(function(d, k){ d.classList.toggle("on", k === i); });
+    $("#sChips").innerHTML = s.chips.map(function(c){ return '<span class="chip">' + c + "</span>"; }).join("");
+    var c = document.createElement("div"); c.className = "card"; c.innerHTML = '<img src="' + s.img + '" alt="Copo Açaí Happy de ' + s.nome.replace(/<[^>]+>/g, "") + '">';
+    $("#sCopo").appendChild(c);
+    $$("#sCopo .card").forEach(function(o){ if (o !== c && o !== sCard) o.remove(); });   // nunca sobra copo velho
+    if (sCard && c.animate && !embed) { var v = sCard, dur = toque ? 520 : 750;
+      sOcupado = true;
+      v.animate([{ transform: "none", opacity: 1 }, { transform: "translate3d(0," + (-18 * dir) + "%,0) scale(.92)", opacity: 0 }], { duration: dur * .7, easing: "cubic-bezier(.6,0,.4,1)", fill: "forwards" }).onfinish = function(){ v.remove(); };
+      var libera = function(){ if (!sOcupado) return; sOcupado = false; if (v.parentNode) v.remove(); if (sAlvo !== sAtual) sabor(sAlvo); };
+      c.animate([{ transform: "translate3d(0," + (22 * dir) + "%,0) scale(.92)", opacity: 0 }, { transform: "none", opacity: 1 }], { duration: dur, delay: dur * .15, easing: "cubic-bezier(.2,.8,.2,1)", fill: "backwards" }).onfinish = libera;
+      setTimeout(libera, dur * 1.4);   // garantia: se o celular atrasar a animação, libera mesmo assim
+      [$("#sNome"), $("#sDesc"), $("#sChips")].forEach(function(e, k){ e.animate([{ opacity: 0, transform: "translate3d(0,14px,0)" }, { opacity: 1, transform: "none" }], { duration: dur * .8, delay: 100 + k * 60, easing: "cubic-bezier(.2,.7,.1,1)", fill: "backwards" }); });
+    } else if (sCard) sCard.remove();
+    sCard = c;
+  }  sabor(0);
+
+  if (!G || embed) {
+    var a0 = $("#abre"); a0 && a0.parentNode.removeChild(a0);
+    $$(".rise").forEach(function(e){ e.style.opacity = 1; e.style.transform = "none"; });
+    return;
+  }
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });   // a barra do navegador do celular aparecendo/sumindo não recalcula tudo
+
+  /* ---------- rolagem macia ---------- */
+  var lenis = null;
+  if (window.Lenis) {
+    lenis = new Lenis({ lerp: .09, smoothWheel: true });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(function(t){ lenis.raf(t * 1000); }); gsap.ticker.lagSmoothing(0);
+    $$('a[href^="#"]').forEach(function(a){ a.addEventListener("click", function(e){ var t = document.getElementById(a.getAttribute("href").slice(1)); if (!t) return; e.preventDefault(); lenis.scrollTo(t, { duration: 1.6 }); }); });
+  }
+
+  /* ================= WOW 1: a tela enche de açaí ================= */
+  var heroIn = gsap.timeline({ paused: true })
+    .from(".hero .bola", { y: 160, rotation: -25, scale: .6, opacity: 0, duration: 1.4, ease: "elastic.out(1,.6)" }, 0)
+    .from(".hero .bowl", { x: 140, rotation: 20, opacity: 0, duration: 1.1, ease: "back.out(1.6)" }, .25)
+    .from(".hero .preco", { scale: 0, rotation: -120, duration: .9, ease: "back.out(2)" }, .55)
+    .from(".hero .hi", { y: 40, opacity: 0, duration: .9, ease: "expo.out", stagger: .1 }, .15)
+    .from(".top", { y: -40, opacity: 0, duration: .8, ease: "expo.out" }, .4);
+  var abre = $("#abre"), visto = false;
+  try { visto = sessionStorage.getItem("happy-abre") === "1"; } catch(e){}
+  var tira = function(){ if (abre && abre.parentNode) abre.parentNode.removeChild(abre); };
+  if (visto) { tira(); heroIn.play(); }
+  else {
+    if (lenis) lenis.stop(); document.documentElement.style.overflow = "hidden";
+    // gotas que espirram quando o mascote cai
+    var gotas = []; for (var q = 0; q < 14; q++) { var gg = document.createElement("i"); gg.className = "gota"; gg.style.left = "50%"; gg.style.top = "50%"; abre.appendChild(gg); gotas.push(gg); }
+    var tl = gsap.timeline({ onComplete: function(){ tira(); document.documentElement.style.overflow = ""; if (lenis) lenis.start(); try { sessionStorage.setItem("happy-abre", "1"); } catch(e){} } });
+    tl.to(".abre .liq", { yPercent: -100, duration: 1.7, ease: "power2.inOut" }, .1)           // o açaí sobe em ondas
+      .to(".abre .mascote", { scale: 1, duration: 1, ease: "elastic.out(1,.5)" }, 1.25)         // o mascote pula pra dentro
+      .add(function(){ gotas.forEach(function(g, k){ var ang = (k / gotas.length) * Math.PI * 2, r = 140 + Math.random() * 160;
+          gsap.fromTo(g, { x: 0, y: 0, opacity: 1, scale: .6 + Math.random() }, { x: Math.cos(ang) * r, y: Math.sin(ang) * r - 60, opacity: 0, duration: 1.1, ease: "power2.out" }); }); }, 1.3)
+      .to(".abre .mascote", { rotation: 360, duration: .9, ease: "back.inOut(1.4)" }, 2.25)
+      .to(".abre .mascote", { scale: .2, opacity: 0, duration: .45, ease: "power3.in" }, 2.9)
+      .to(".abre", { opacity: 0, duration: .55, ease: "power2.out" }, 3.05)
+      .add(function(){ heroIn.play(); }, 3.05);
+    var pula = function(){ if (tl.progress() < .85) tl.progress(.85); };
+    addEventListener("pointerdown", pula, { once: true }); addEventListener("keydown", pula, { once: true });
+  }
+
+  /* ---------- hero flutuando + profundidade ---------- */
+  gsap.to(".hero .bola", { y: -16, rotation: 3, duration: 2.6, yoyo: true, repeat: -1, ease: "sine.inOut", delay: 2 });
+  gsap.to(".hero .bowl", { y: -10, rotation: -3, duration: 3.1, yoyo: true, repeat: -1, ease: "sine.inOut", delay: 2.2 });
+  gsap.to(".palco", { yPercent: 18, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+  var topo = $("#top"), zap = $("#zap"), solido = function(){ topo.classList.toggle("solid", scrollY > 60); zap.classList.toggle("on", scrollY > innerHeight * .8); };
+  addEventListener("scroll", solido, { passive: true }); solido();
+
+  /* ---------- faixa anda e acelera com a rolagem ---------- */
+  var mx = 0, dir = -1, boost = 0;
+  gsap.ticker.add(function(){ var half = fx.scrollWidth / 2; if (!half) return; mx += (dir * 1.1 + boost) * gsap.ticker.deltaRatio(); boost *= .93;
+    if (mx <= -half) mx += half; if (mx > 0) mx -= half; fx.style.transform = "translate3d(" + mx + "px,0,0)"; });
+  ScrollTrigger.create({ trigger: ".faixa", start: "top bottom", end: "bottom top", onUpdate: function(s){ var v = s.getVelocity(); dir = v > 0 ? -1 : 1; boost = gsap.utils.clamp(-26, 26, -v / 80); } });
+
+  /* ---------- WOW 2: a rolagem troca o sabor (sticky, sem pin) ---------- */
+  // uma conta só (a do ScrollTrigger) + folga de 8% em cada fronteira: parar no meio não fica trocando
+  ScrollTrigger.create({ trigger: "#sabores", start: "top top", end: "bottom bottom",
+    onUpdate: function(s){ var p = s.progress * SAB.length, i = Math.min(SAB.length - 1, Math.floor(p * .999));
+      if (i !== sAlvo && Math.abs(p - Math.round(p)) < .08 && Math.round(p) > 0 && Math.round(p) < SAB.length) return;
+      pedirSabor(i); } });
+  /* ---------- entradas ---------- */
+  $$(".rise").forEach(function(e){ gsap.to(e, { opacity: 1, y: 0, duration: 1, ease: "expo.out", scrollTrigger: { trigger: e, start: "top 90%", once: true } }); });
+  gsap.fromTo(".lugar .foto img", { yPercent: -10 }, { yPercent: 0, ease: "none", scrollTrigger: { trigger: ".lugar", start: "top bottom", end: "bottom top", scrub: true } });
+  gsap.from(".mini-mascote", { scale: 0, rotation: -60, duration: 1, ease: "elastic.out(1,.5)", scrollTrigger: { trigger: ".monte", start: "top 60%", once: true } });
+  gsap.to(".franq .giro", { y: -18, rotation: 5, duration: 2.4, yoyo: true, repeat: -1, ease: "sine.inOut" });
+  gsap.to(".mini-mascote", { y: -12, rotation: 4, duration: 1.8, yoyo: true, repeat: -1, ease: "sine.inOut" });
+
+  /* ---------- botões magnéticos ---------- */
+  if (matchMedia("(pointer:fine)").matches) $$(".btn").forEach(function(b){
+    var bx = gsap.quickTo(b, "x", { duration: .4, ease: "power3" }), by = gsap.quickTo(b, "y", { duration: .4, ease: "power3" });
+    b.addEventListener("mousemove", function(e){ var r = b.getBoundingClientRect(); bx((e.clientX - r.left - r.width / 2) * .25); by((e.clientY - r.top - r.height / 2) * .35); });
+    b.addEventListener("mouseleave", function(){ bx(0); by(0); });
+  });
+  addEventListener("load", function(){ ScrollTrigger.refresh(); });
+})();
+</script>
+</body>
+</html>
