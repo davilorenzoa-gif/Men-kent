@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>911 GT3 RS | Projeto conceito GuDev</title>
+<meta name="description" content="Projeto conceito da GuDev sobre o Porsche 911 GT3 RS: role, escolha a pintura e tente bater o 0 a 200 km/h de fábrica.">
+<meta name="theme-color" content="#141416">
+<meta property="og:title" content="911 GT3 RS | Projeto conceito GuDev">
+<meta property="og:description" content="Escolha a pintura e tente bater o 0 a 200 km/h de fábrica.">
+<meta property="og:image" content="img/gt3-tunel.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Michroma&display=swap" rel="stylesheet">
+<style>
+@property --tinta { syntax: '<color>'; inherits: true; initial-value: #D5001C; }
+@property --tinta-txt { syntax: '<color>'; inherits: true; initial-value: #ffffff; }
+:root{
+  --asfalto:#141416; --giz:#ECECEA; --grafite:#6B6E73; --ouro:#C9A24A;
+  --tinta:#D5001C; --tinta-txt:#ffffff;
+  transition: --tinta .7s ease, --tinta-txt .7s ease;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--asfalto);color:var(--giz);font-family:'Archivo',system-ui,sans-serif;font-size:17px;line-height:1.5;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--tinta);outline-offset:3px}
+.largo{font-family:'Michroma',sans-serif;font-weight:400;letter-spacing:.04em}
+.cond{font-variation-settings:'wdth' 62;font-weight:900}
+.miolo{width:min(1080px,100% - 32px);margin-inline:auto}
+h2{font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(26px,5vw,48px);line-height:1.1;letter-spacing:.01em;max-width:18ch}
+p.lead{max-width:56ch;color:inherit;opacity:.82;margin-top:16px}
+
+/* topo */
+.topo{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;mix-blend-mode:difference;color:#fff;font-size:11px;pointer-events:none}
+.topo > *{pointer-events:auto}
+.topo .marca{font-family:'Michroma',sans-serif;letter-spacing:.12em;text-decoration:none}
+.topo .acoes{display:flex;gap:18px;align-items:center}
+.topo button,.topo a.pint{font-family:'Michroma',sans-serif;font-size:11px;letter-spacing:.06em;text-decoration:none;display:flex;gap:8px;align-items:center;min-height:32px}
+.ponto{width:12px;height:12px;border-radius:50%;background:#fff}
+
+/* WOW 1: ignição */
+#ignicao{height:270vh;position:relative}
+#ignicao .palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center;background:radial-gradient(120% 80% at 50% 60%,#232327 0%,var(--asfalto) 70%)}
+.num{position:relative;font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 62;font-weight:900;font-size:min(70vw,62svh);line-height:.78;letter-spacing:-.02em;will-change:transform;user-select:none;padding:.06em 0}
+.num .camada{display:block;white-space:nowrap}
+.num-solida span{display:inline-block;color:var(--giz);transform:translateY(110%);transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.num-solida{overflow:hidden;clip-path:inset(0)}
+.ligado .num-solida span{transform:none}
+.ligado .num-solida span:nth-child(2){transition-delay:.08s}
+.ligado .num-solida span:nth-child(3){transition-delay:.16s}
+.num-foto{position:absolute;inset:0;padding:.06em 0;color:transparent;background:url(img/gt3-tunel-carro.jpg) center 55%/cover;-webkit-background-clip:text;background-clip:text;opacity:0;transition:opacity 1.1s ease}
+.foto-on .num-foto{opacity:1}
+.foto-on .num-solida{opacity:0;transition:opacity 1.1s ease}
+.giro{position:absolute;left:50%;bottom:calc(50% - min(70vw,62svh)*.36 - 46px);transform:translateX(-50%);width:min(74vw,520px);display:flex;align-items:center;gap:14px;font-family:'Michroma',sans-serif;font-size:12px;color:var(--grafite)}
+.giro .barra{flex:1;height:3px;background:#2a2a2e;position:relative;overflow:hidden}
+.giro .barra i{position:absolute;inset:0;background:var(--tinta);transform-origin:left;transform:scaleX(0)}
+.giro b{font-weight:400;color:var(--giz);min-width:9ch;text-align:right}
+.lema{position:absolute;left:16px;right:16px;bottom:max(28px,env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.lema .gt{font-family:'Michroma',sans-serif;font-size:clamp(20px,3.4vw,34px);letter-spacing:.08em}
+.lema p{max-width:30ch;font-size:15px;color:#b9b9bd}
+.lema .rolar{font-family:'Michroma',sans-serif;font-size:10px;letter-spacing:.1em;color:var(--grafite);display:flex;align-items:center;gap:10px}
+.lema .rolar i{display:block;width:1px;height:34px;background:linear-gradient(var(--tinta),transparent);animation:pulso 1.6s ease-in-out infinite}
+@keyframes pulso{0%,100%{transform:scaleY(.4);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
+.inunda{position:absolute;inset:0;background:var(--tinta);opacity:0;pointer-events:none}
+
+/* faixa de transição */
+.faixa{background:var(--tinta);color:var(--tinta-txt);padding:clamp(64px,12vw,140px) 0 clamp(56px,9vw,110px)}
+.faixa h2{max-width:14ch;font-size:clamp(30px,6.4vw,64px)}
+
+/* WOW 2: cortes */
+#cortes{height:300vh;position:relative;background:var(--giz);color:var(--asfalto)}
+#cortes .palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:clamp(14px,3svh,28px)}
+.poster{position:relative;width:min(92vw,760px,105svh);aspect-ratio:736/338}
+.fatia{position:absolute;inset:0;background:url(img/detalhes-poster.jpg) center/100% 100%;will-change:transform}
+.fatia.a{clip-path:polygon(0 0,40% 0,27% 100%,0 100%)}
+.fatia.b{clip-path:polygon(40% 0,73% 0,60% 100%,27% 100%)}
+.fatia.c{clip-path:polygon(73% 0,100% 0,100% 100%,60% 100%)}
+.carro-preto{position:relative;width:min(84vw,660px,88svh);margin-top:calc(min(84vw,660px,88svh) * -.04);mix-blend-mode:multiply;will-change:transform;-webkit-mask-image:linear-gradient(transparent,#000 14%);mask-image:linear-gradient(transparent,#000 14%)}
+.placa{text-align:center;position:relative;width:min(92vw,760px)}
+.placa h3{font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(24px,5.4vw,52px);letter-spacing:.06em;line-height:1;clip-path:inset(0 100% 0 0)}
+.placa .ficha{margin-top:12px;font-size:12px;color:#55575c;font-family:'Michroma',sans-serif;letter-spacing:.04em;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;opacity:0}
+.placa .ficha b{font-weight:400;color:var(--asfalto)}
+.placa .risco{position:absolute;left:0;right:0;top:50%;height:clamp(26px,5vw,52px);transform:translateY(-75%) scaleX(0);background:var(--tinta);transform-origin:left}
+
+/* números */
+.numeros{background:var(--giz);color:var(--asfalto);padding:clamp(40px,8vw,90px) 0 clamp(70px,10vw,120px)}
+.numeros dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+.numeros div{padding:22px 0 22px;border-top:1px solid #c9c9c6}
+.numeros div:nth-child(odd){padding-right:12px}
+.numeros dd{font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 62;font-weight:900;font-size:clamp(56px,11vw,120px);line-height:.9;letter-spacing:-.01em}
+.numeros dd small{font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(12px,1.6vw,16px);letter-spacing:.04em;margin-left:6px;color:var(--tinta)}
+.numeros dt{font-size:15px;color:#55575c;margin-top:6px}
+@media (min-width:860px){.numeros dl{grid-template-columns:repeat(4,minmax(0,1fr))}.numeros div{padding-right:16px}}
+
+/* pintura */
+#pintura{padding:clamp(80px,12vw,150px) 0;background:var(--asfalto)}
+.garagem{margin-top:clamp(36px,6vw,64px);display:grid;gap:28px}
+.carro-cor{position:relative;width:min(100%,620px);margin-inline:auto;border-radius:6px;overflow:hidden}
+.carro-cor img{width:100%}
+.carro-cor .verniz{position:absolute;inset:0;mix-blend-mode:color;pointer-events:none}
+.carro-cor .verniz.nova{clip-path:inset(0 100% 0 0)}
+.carro-cor .verniz.nova.passando{clip-path:inset(0 0 0 0);transition:clip-path .9s cubic-bezier(.6,0,.2,1)}
+.carro-cor .spray{position:absolute;top:-10%;bottom:-10%;width:18%;left:-20%;background:radial-gradient(closest-side,rgba(255,255,255,.35),transparent);filter:blur(6px);pointer-events:none;opacity:0}
+.carro-cor .spray.passando{opacity:1;left:100%;transition:left .9s cubic-bezier(.6,0,.2,1),opacity .2s}
+.nome-cor{text-align:center;font-family:'Michroma',sans-serif;font-size:clamp(22px,4vw,40px);letter-spacing:.06em;color:var(--tinta);min-height:1.3em}
+.amostras{display:flex;justify-content:center;gap:clamp(10px,2.4vw,22px);flex-wrap:wrap}
+.amostra{width:clamp(48px,9vw,64px);aspect-ratio:1;border-radius:50%;position:relative;box-shadow:inset 0 -8px 14px rgba(0,0,0,.35),inset 0 6px 10px rgba(255,255,255,.35);transition:transform .25s}
+.amostra::after{content:'';position:absolute;inset:-7px;border-radius:50%;border:2px solid transparent;transition:border-color .25s}
+.amostra[aria-pressed="true"]::after{border-color:var(--giz)}
+.amostra:hover{transform:translateY(-3px)}
+
+/* WOW 3: largada */
+#largada{padding:clamp(80px,12vw,150px) 0;background:linear-gradient(#141416,#0c0c0e)}
+.cabine{margin-top:clamp(32px,5vw,56px);border:1px solid #2b2b30;border-radius:14px;background:#101012;overflow:hidden;position:relative}
+.cabine.alerta{box-shadow:0 0 0 2px var(--tinta),0 0 60px -10px var(--tinta)}
+.painel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;padding:16px 14px 10px;align-items:center}
+@media (min-width:760px){.painel{grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:32px;padding:28px 32px 12px}}
+.conta-giros{width:min(100%,300px);margin-inline:auto}
+.conta-giros text{font-family:'Michroma',sans-serif;font-size:13px;fill:#9a9aa0}
+.leitura{display:grid;gap:12px;min-width:0}
+.leds{display:flex;gap:8px}
+.leds span{flex:1;height:10px;border-radius:5px;background:#26262a;transition:background .05s}
+.leds.cheio span{animation:pisca .12s steps(2) infinite}
+@keyframes pisca{50%{background:#26262a}}
+.vel{display:flex;align-items:baseline;gap:12px}
+.vel b{font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 62;font-weight:900;font-size:clamp(64px,13vw,150px);line-height:.85;font-variant-numeric:tabular-nums;color:var(--giz)}
+.vel span{font-family:'Michroma',sans-serif;font-size:13px;color:var(--grafite)}
+.dados{display:flex;gap:18px 28px;flex-wrap:wrap;font-family:'Michroma',sans-serif;font-size:12px;color:var(--grafite)}
+.dados b{display:block;font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 62;font-weight:800;font-size:clamp(26px,5vw,34px);color:var(--giz);line-height:1;font-variant-numeric:tabular-nums}
+.pista{position:relative;height:clamp(100px,22vw,190px);overflow:hidden;background:
+  repeating-linear-gradient(90deg,transparent 0 120px,rgba(255,255,255,.05) 120px 122px),
+  linear-gradient(#141416,#1d1d21);border-top:1px solid #222}
+.pista .faixas{position:absolute;left:0;right:0;bottom:14%;height:3px;background:repeating-linear-gradient(90deg,#3a3a40 0 60px,transparent 60px 120px)}
+.pista img{position:absolute;bottom:4%;left:50%;width:min(80%,520px);transform:translateX(-50%);will-change:transform;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.pista .riscos{position:absolute;inset:0;pointer-events:none;opacity:0;background:repeating-linear-gradient(90deg,transparent 0 40px,color-mix(in srgb,var(--tinta) 60%,transparent) 40px 140px);-webkit-mask-image:repeating-linear-gradient(transparent 0 9px,#000 9px 10px);mask-image:repeating-linear-gradient(transparent 0 9px,#000 9px 10px)}
+.comando{padding:16px;display:grid;gap:12px;background:#0c0c0e;border-top:1px solid #222}
+.msg{min-height:3em;font-size:15px;color:#c4c4c8;text-align:center}
+.msg strong{color:var(--giz)}
+#btn-largada{width:100%;min-height:72px;border-radius:10px;background:var(--tinta);color:var(--tinta-txt);font-family:'Michroma',sans-serif;font-size:16px;letter-spacing:.08em;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;transition:transform .08s}
+#btn-largada.apertado{transform:scale(.98)}
+.placar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--grafite)}
+.placar b{color:var(--giz);font-weight:600}
+.resultado{display:none;text-align:center;padding:4px 0 2px}
+.resultado.on{display:block}
+.resultado .tempo{font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 62;font-weight:900;font-size:clamp(60px,12vw,110px);line-height:.9;color:var(--tinta)}
+.resultado p{color:#c4c4c8;font-size:15px;margin-top:6px}
+.treme{animation:treme .09s linear infinite}
+@keyframes treme{25%{translate:0 1px}75%{translate:0 -1px}}
+
+/* de perto */
+#de-perto{background:var(--giz);color:var(--asfalto);padding:clamp(80px,12vw,150px) 0}
+.mural{margin-top:clamp(32px,5vw,56px);display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}
+@media (min-width:820px){.mural{grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:40px}}
+.mural figure{margin:0}
+.mural figcaption{font-size:14px;color:#55575c;margin-top:10px}
+.mural .grande img{border-radius:4px;box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,168px));gap:14px;justify-content:start}
+.trio img{border-radius:4px}
+.mural .lado{display:grid;gap:36px}
+.mural .lado .preto img{mix-blend-mode:multiply;width:min(100%,560px)}
+
+/* ficha + rodapé */
+#ficha{padding:clamp(80px,12vw,140px) 0;background:var(--asfalto)}
+#ficha dl{margin-top:36px;display:grid;grid-template-columns:minmax(0,1fr);max-width:760px}
+#ficha dl div{display:grid;grid-template-columns:minmax(0,13ch) minmax(0,1fr);gap:16px;padding:14px 0;border-top:1px solid #2b2b30}
+#ficha dt{color:var(--grafite);font-size:15px}
+#ficha dd{font-size:16px}
+#ficha .fonte{margin-top:18px;font-size:13px;color:var(--grafite);max-width:60ch}
+footer{background:var(--tinta);color:var(--tinta-txt);padding:clamp(64px,10vw,120px) 0 40px}
+footer h2{max-width:16ch}
+footer .cta{display:inline-flex;align-items:center;min-height:56px;margin-top:28px;padding:0 26px;border-radius:999px;background:var(--tinta-txt);color:var(--tinta);font-family:'Michroma',sans-serif;font-size:13px;letter-spacing:.06em;text-decoration:none}
+footer small{display:block;margin-top:56px;font-size:13px;opacity:.75;max-width:62ch;line-height:1.6}
+
+@media (prefers-reduced-motion: reduce){
+  .num-solida span{transition:opacity .3s;transform:none}
+  .lema .rolar i{animation:none}
+  .treme{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="#ignicao">911 GT3 RS</a>
+  <div class="acoes">
+    <button id="btn-som" type="button" aria-pressed="true">Som ligado</button>
+    <a class="pint" href="#pintura"><span class="ponto" aria-hidden="true"></span>Pintura</a>
+  </div>
+</header>
+
+<main>
+  <!-- WOW 1: o 911 com a foto dentro e o mergulho na haste do 1 -->
+  <section id="ignicao" aria-label="Abertura">
+    <div class="palco">
+      <div class="num" aria-label="911">
+        <span class="camada num-solida" aria-hidden="true"><span>9</span><span>1</span><span>1</span></span>
+        <span class="camada num-foto" aria-hidden="true">91<span id="alvo">1</span></span>
+      </div>
+      <div class="giro" aria-hidden="true"><div class="barra"><i></i></div><b id="rpm-intro">0 rpm</b></div>
+      <div class="inunda"></div>
+      <div class="lema">
+        <div>
+          <div class="gt">GT3 RS</div>
+          <p>Seis cilindros, nenhum turbo e nove mil giros.</p>
+        </div>
+        <div class="rolar"><i></i>Role pra acelerar</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faixa">
+    <div class="miolo">
+      <h2>Feito pra pista. Emplacado pra rua.</h2>
+      <p class="lead">O 911 mais extremo que a Porsche já colocou na rua, com a aerodinâmica trazida direto do automobilismo.</p>
+    </div>
+  </section>
+
+  <!-- WOW 2: o pôster quebrado em três cortes que se encaixam -->
+  <section id="cortes" aria-label="O pôster se monta">
+    <div class="palco">
+      <div class="poster" role="img" aria-label="Detalhes do 911 GT3 RS preto: asa traseira, lanterna e roda">
+        <div class="fatia a"></div><div class="fatia b"></div><div class="fatia c"></div>
+      </div>
+      <img class="carro-preto" src="img/gt3rs-preto.jpg" width="660" height="260" alt="Porsche 911 GT3 RS preto com rodas douradas, visto de frente em diagonal">
+      <div class="placa">
+        <span class="risco" aria-hidden="true"></span>
+        <h3>911 GT3 RS</h3>
+        <div class="ficha"><span>Motor <b>4.0 flat-six</b></span><span>|</span><span>Potência <b>386 kW / 525 cv</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="numeros" aria-label="Números">
+    <div class="miolo">
+      <dl>
+        <div><dd><span data-conta="525">0</span><small>cv</small></dd><dt>de motor aspirado</dt></div>
+        <div><dd><span data-conta="9000" data-milhar>0</span><small>rpm</small></dd><dt>de giro máximo</dt></div>
+        <div><dd><span data-conta="3.2" data-dec="1">0</span><small>s</small></dd><dt>de 0 a 100 km/h</dt></div>
+        <div><dd><span data-conta="296">0</span><small>km/h</small></dd><dt>de velocidade máxima</dt></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- configurador de pintura -->
+  <section id="pintura">
+    <div class="miolo">
+      <h2>Escolha a pintura.</h2>
+      <p class="lead">Toque numa cor e veja o carro mudar. O site inteiro vai junto.</p>
+      <div class="garagem">
+        <div class="carro-cor">
+          <img src="img/gt3rs-prata.jpg" width="620" height="165" alt="911 GT3 RS de lado, com a pintura escolhida" loading="lazy">
+          <div class="verniz atual"></div>
+          <div class="verniz nova"></div>
+          <div class="spray"></div>
+        </div>
+        <div class="nome-cor" id="nome-cor" aria-live="polite"></div>
+        <div class="amostras" id="amostras" role="group" aria-label="Cores de pintura"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WOW 3: launch control -->
+  <section id="largada">
+    <div class="miolo">
+      <h2>Sua vez de largar.</h2>
+      <p class="lead">Segure o botão pra girar o motor e solte no verde. Depois, toque pra trocar de marcha quando as luzes acenderem. A meta é de 0 a 200 km/h.</p>
+      <div class="cabine" id="cabine">
+        <div class="painel">
+          <svg class="conta-giros" viewBox="0 0 300 300" aria-hidden="true">
+            <g id="escala"></g>
+            <g id="agulha"><line x1="150" y1="150" x2="150" y2="44" stroke="var(--tinta)" stroke-width="4" stroke-linecap="round"/><circle cx="150" cy="150" r="10" fill="#e9e9e9"/></g>
+            <text x="150" y="215" text-anchor="middle" id="rpm-txt">900</text>
+            <text x="150" y="235" text-anchor="middle" style="font-size:10px">x1000 rpm</text>
+          </svg>
+          <div class="leitura">
+            <div class="leds" id="leds"><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="vel"><b id="vel">0</b><span>km/h</span></div>
+            <div class="dados">
+              <div>Marcha<b id="marcha">N</b></div>
+              <div>Tempo<b id="tempo">0,00</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="pista" id="pista">
+          <div class="riscos" id="riscos"></div>
+          <div class="faixas" id="faixas"></div>
+          <img id="carro-jogo" src="img/gt3rs-prata.jpg" width="620" height="165" alt="911 GT3 RS na pista" loading="lazy">
+        </div>
+        <div class="comando">
+          <div class="resultado" id="resultado" aria-live="polite"><div class="tempo" id="res-tempo"></div><p id="res-txt"></p></div>
+          <div class="msg" id="msg" aria-live="polite">Segure o botão pra girar o motor.</div>
+          <button id="btn-largada" type="button">Segure</button>
+          <div class="placar"><span>Fábrica: <b>10,6 s</b></span><span>Seu melhor: <b id="melhor">nenhum ainda</b></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="de-perto">
+    <div class="miolo">
+      <h2>De perto.</h2>
+      <div class="mural">
+        <figure class="grande">
+          <img src="img/gt3-tunel.jpg" width="736" height="840" alt="911 GT3 de corrida azul e dourado num túnel, com o número 911 gigante atrás" loading="lazy">
+          <figcaption>Pôster de referência: Fins&amp;Fenders.</figcaption>
+        </figure>
+        <div class="lado">
+          <figure class="preto">
+            <img src="img/gt3rs-preto.jpg" width="660" height="260" alt="911 GT3 RS preto" loading="lazy">
+            <figcaption>Pôster de referência: ABC.Design.</figcaption>
+          </figure>
+          <figure>
+            <div class="trio">
+              <img src="img/frente.jpg" width="168" height="300" alt="Traseira do GT3 RS prata na pista, com a asa alta" loading="lazy">
+              <img src="img/volante.jpg" width="168" height="300" alt="Volante e painel do 911" loading="lazy">
+              <img src="img/roda.jpg" width="168" height="300" alt="Roda escura do 911" loading="lazy">
+            </div>
+            <figcaption>Traseira, cockpit e roda.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ficha">
+    <div class="miolo">
+      <h2>Ficha técnica.</h2>
+      <dl>
+        <div><dt>Motor</dt><dd>4.0 litros, seis cilindros boxer, aspirado</dd></div>
+        <div><dt>Potência</dt><dd>386 kW (525 cv) a 8.500 rpm</dd></div>
+        <div><dt>Torque</dt><dd>465 Nm a 6.300 rpm</dd></div>
+        <div><dt>Câmbio</dt><dd>PDK de 7 marchas, tração traseira</dd></div>
+        <div><dt>0 a 100 km/h</dt><dd>3,2 s</dd></div>
+        <div><dt>0 a 200 km/h</dt><dd>10,6 s</dd></div>
+        <div><dt>Máxima</dt><dd>296 km/h</dd></div>
+      </dl>
+      <p class="fonte">Dados de fábrica do 911 GT3 RS (geração 992) divulgados pela Porsche. O jogo de largada é uma simulação simplificada.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="miolo">
+    <h2>Quer um site que prende assim?</h2>
+    <a class="cta" href="https://wa.me/5511964650141?text=Oi!%20Vi%20o%20site%20conceito%20do%20911%20e%20quero%20um%20site%20assim%20pro%20meu%20neg%C3%B3cio." target="_blank" rel="noopener">Falar com a GuDev no WhatsApp</a>
+    <small>Projeto conceito feito pela GuDev para portfólio. Não é um site oficial da Porsche nem tem ligação com a marca. Porsche, 911 e GT3 RS são marcas da Dr. Ing. h.c. F. Porsche AG. Pôsteres de referência: ABC.Design e Fins&amp;Fenders.</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+  var vw = innerWidth, vh = innerHeight;
+
+  function clamp(x,a,b){ return x<a?a:x>b?b:x; }
+  function seg(p,a,b){ return clamp((p-a)/(b-a),0,1); }
+  function eio(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+  function eo(t){ return 1-Math.pow(1-t,3); }
+  function progresso(el){
+    var r = el.getBoundingClientRect(), tot = r.height - vh;
+    return tot>0 ? clamp(-r.top/tot,0,1) : 0;
+  }
+  function guardar(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  function ler(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+
+  /* ===== WOW 1: ignição ===== */
+  var hero = document.getElementById('ignicao');
+  var palcoHero = hero.querySelector('.palco');
+  var num = hero.querySelector('.num');
+  var inunda = hero.querySelector('.inunda');
+  var lema = hero.querySelector('.lema');
+  var giro = hero.querySelector('.giro');
+  var barra = giro.querySelector('i');
+  var rpmIntro = document.getElementById('rpm-intro');
+
+  // mira na haste cheia do último "1", nunca num vazio da letra
+  function medir(){
+    num.style.transform = 'none';
+    var a = document.getElementById('alvo').getBoundingClientRect();
+    var n = num.getBoundingClientRect();
+    num.style.transformOrigin = (a.left - n.left + a.width*.58) + 'px ' + (a.top - n.top + a.height*.55) + 'px';
+  }
+
+  function intro(){
+    palcoHero.classList.add('ligado');
+    if(reduz){ palcoHero.classList.add('foto-on'); rpmIntro.textContent = '1.100 rpm'; barra.style.transform = 'scaleX(.12)'; return; }
+    var t0 = null;
+    setTimeout(function(){
+      requestAnimationFrame(function giroLoop(t){
+        if(t0===null) t0 = t;
+        var d = (t - t0)/1000, r;
+        if(d < .75) r = 9000*eo(d/.75);
+        else r = 9000 - (9000-1100)*eo(clamp((d-.75)/.6,0,1));
+        barra.style.transform = 'scaleX(' + (r/9000) + ')';
+        rpmIntro.textContent = (Math.round(r/100)*100).toLocaleString('pt-BR') + ' rpm';
+        if(d < .75 + .6) requestAnimationFrame(giroLoop);
+        else palcoHero.classList.add('foto-on');
+      });
+    }, 650);
+  }
+
+  /* ===== WOW 2: cortes ===== */
+  var cortes = document.getElementById('cortes');
+  var fatias = cortes.querySelectorAll('.fatia');
+  var carroPreto = cortes.querySelector('.carro-preto');
+  var placaH = cortes.querySelector('.placa h3');
+  var risco = cortes.querySelector('.risco');
+  var ficha = cortes.querySelector('.ficha');
+  var desvio = [[-6,-75],[0,70],[6,-120]]; // x%, y% de onde cada corte começa
+
+  function tick(){
+    // abertura
+    var p = progresso(hero);
+    if(!reduz){
+      var z = Math.pow(seg(p,.1,.82),2.4);
+      num.style.transform = 'scale(' + (1 + z*34).toFixed(3) + ')';
+    }
+    inunda.style.opacity = seg(p,.55,.86).toFixed(3);
+    lema.style.opacity = (1 - seg(p,.02,.14)).toFixed(3);
+    giro.style.opacity = (1 - seg(p,.02,.1)).toFixed(3);
+
+    // cortes
+    var q = progresso(cortes);
+    var m = reduz ? 1 : eio(seg(q,.04,.46));
+    for(var i=0;i<3;i++){
+      fatias[i].style.transform = 'translate(' + (desvio[i][0]*(1-m)).toFixed(2) + '%,' + (desvio[i][1]*(1-m)).toFixed(2) + '%)';
+    }
+    var c = reduz ? 1 : eo(seg(q,.42,.72));
+    carroPreto.style.transform = 'translateX(' + ((1-c)*110).toFixed(2) + '%)';
+    carroPreto.style.opacity = reduz ? 1 : seg(q,.42,.5);
+    // placa de box: a faixa passa e deixa o nome
+    var w = seg(q,.66,.9);
+    var entra = clamp(w*2,0,1), sai = clamp(w*2-1,0,1);
+    risco.style.transformOrigin = sai>0 ? 'right' : 'left';
+    risco.style.transform = 'translateY(-75%) scaleX(' + (sai>0 ? 1-sai : entra) + ')';
+    placaH.style.clipPath = 'inset(0 ' + (100 - entra*100) + '% 0 0)';
+    ficha.style.opacity = sai;
+  }
+
+  var pedido = false;
+  function agendar(){ if(!pedido){ pedido = true; requestAnimationFrame(function(){ pedido = false; tick(); }); } }
+  addEventListener('scroll', agendar, {passive:true});
+  setInterval(tick, 300); // garantia
+  addEventListener('resize', function(){
+    if(innerWidth === vw) return; // barra do navegador do celular: ignora
+    vw = innerWidth; vh = innerHeight; medir(); tick();
+  });
+
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function(){ medir(); tick(); intro(); });
+
+  /* ===== números que contam uma vez ===== */
+  var contaObs = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      contaObs.unobserve(e.target);
+      var el = e.target, alvo = parseFloat(el.dataset.conta), dec = +(el.dataset.dec||0), t0 = null;
+      function fmt(v){ return dec ? v.toFixed(dec).replace('.',',') : Math.round(v).toLocaleString('pt-BR'); }
+      if(reduz){ el.textContent = fmt(alvo); return; }
+      requestAnimationFrame(function passo(t){
+        if(t0===null) t0 = t;
+        var k = clamp((t-t0)/1400,0,1);
+        el.textContent = fmt(alvo*eo(k));
+        if(k<1) requestAnimationFrame(passo);
+      });
+    });
+  }, {threshold:.6});
+  document.querySelectorAll('[data-conta]').forEach(function(el){ contaObs.observe(el); });
+
+  /* ===== pintura ===== */
+  var CORES = [
+    {nome:'Guards Red', hex:'#D5001C', txt:'#FFFFFF'},
+    {nome:'Racing Yellow', hex:'#F5C400', txt:'#141416'},
+    {nome:'Miami Blue', hex:'#00A0D6', txt:'#141416'},
+    {nome:'Python Green', hex:'#4FB52E', txt:'#141416'},
+    {nome:'Lava Orange', hex:'#FF5A00', txt:'#141416'}
+  ];
+  var amostras = document.getElementById('amostras');
+  var nomeCor = document.getElementById('nome-cor');
+  var vAtual = document.querySelector('.verniz.atual');
+  var vNova = document.querySelector('.verniz.nova');
+  var spray = document.querySelector('.carro-cor .spray');
+  var ponto = document.querySelector('.topo .ponto');
+  var corAtual = -1, pintando = null;
+
+  CORES.forEach(function(c,i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'amostra';
+    b.style.background = c.hex;
+    b.setAttribute('aria-label', c.nome);
+    b.setAttribute('aria-pressed','false');
+    b.addEventListener('click', function(){ pintar(i, true); });
+    amostras.appendChild(b);
+  });
+
+  function aplicarTema(c){
+    root.style.setProperty('--tinta', c.hex);
+    root.style.setProperty('--tinta-txt', c.txt);
+    ponto.style.background = c.hex;
+    document.querySelector('meta[name=theme-color]').setAttribute('content', c.hex);
+  }
+  function terminarPintura(){
+    if(!pintando) return;
+    clearTimeout(pintando);
+    pintando = null;
+    vAtual.style.background = vNova.style.background;
+    vNova.classList.remove('passando'); spray.classList.remove('passando');
+  }
+  function pintar(i, animar){
+    if(i === corAtual) return;
+    terminarPintura();
+    var c = CORES[i];
+    corAtual = i;
+    amostras.querySelectorAll('.amostra').forEach(function(b,j){ b.setAttribute('aria-pressed', j===i ? 'true':'false'); });
+    nomeCor.textContent = c.nome;
+    aplicarTema(c);
+    guardar('gt3-pintura', String(i));
+    if(!animar || reduz){ vAtual.style.background = c.hex; return; }
+    vNova.style.background = c.hex;
+    void vNova.offsetWidth;
+    vNova.classList.add('passando'); spray.classList.add('passando');
+    pintando = setTimeout(terminarPintura, 950);
+  }
+  var salva = parseInt(ler('gt3-pintura'),10);
+  pintar(salva>=0 && salva<CORES.length ? salva : 0, false);
+
+  /* ===== WOW 3: launch control ===== */
+  var VMAX = [0,62,98,138,178,222,262,296];   // km/h a 9.000 rpm em cada marcha
+  var C = 50, LIMITE = 9000, VERDE = [6000,7200], META = 200;
+  function k(g){ return LIMITE/VMAX[g]; }
+  function torque(r){ if(r<2000) return .4; if(r<6000) return .4+.6*(r-2000)/4000; if(r<=8800) return 1; return .97; }
+
+  var el = {
+    btn: document.getElementById('btn-largada'), msg: document.getElementById('msg'),
+    vel: document.getElementById('vel'), marcha: document.getElementById('marcha'), tempo: document.getElementById('tempo'),
+    rpm: document.getElementById('rpm-txt'), agulha: document.getElementById('agulha'), leds: document.getElementById('leds'),
+    cabine: document.getElementById('cabine'), pista: document.getElementById('pista'), faixas: document.getElementById('faixas'),
+    riscos: document.getElementById('riscos'), carro: document.getElementById('carro-jogo'),
+    res: document.getElementById('resultado'), resTempo: document.getElementById('res-tempo'), resTxt: document.getElementById('res-txt'),
+    melhor: document.getElementById('melhor'), som: document.getElementById('btn-som')
+  };
+  var leds = el.leds.querySelectorAll('span');
+  var LED_COR = ['#2fbf4a','#2fbf4a','#f5c400','#ff3b2f','#ff3b2f'];
+
+  // escala do conta-giros
+  (function(){
+    var g = document.getElementById('escala'), s = '', cx = 150, cy = 150;
+    function pt(a,r){ var t = a*Math.PI/180; return [cx + r*Math.sin(t), cy - r*Math.cos(t)]; }
+    function ang(v){ return -135 + v/10000*270; }
+    function arco(v0,v1,r,cor,w){
+      var a = pt(ang(v0),r), b = pt(ang(v1),r), big = (ang(v1)-ang(v0))>180 ? 1 : 0;
+      return '<path d="M'+a[0].toFixed(1)+' '+a[1].toFixed(1)+' A'+r+' '+r+' 0 '+big+' 1 '+b[0].toFixed(1)+' '+b[1].toFixed(1)+'" fill="none" stroke="'+cor+'" stroke-width="'+w+'"/>';
+    }
+    s += arco(0,10000,128,'#2a2a2e',6);
+    s += arco(VERDE[0],VERDE[1],128,'#2fbf4a',6);
+    s += arco(9000,10000,128,'#ff3b2f',6);
+    for(var i=0;i<=10;i++){
+      var a = pt(ang(i*1000),120), b = pt(ang(i*1000),106), l = pt(ang(i*1000),88);
+      s += '<line x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'" stroke="#8a8a90" stroke-width="2"/>';
+      s += '<text x="'+l[0].toFixed(1)+'" y="'+(l[1]+5).toFixed(1)+'" text-anchor="middle">'+i+'</text>';
+    }
+    g.innerHTML = s; // conteúdo gerado aqui, sem texto de fora
+  })();
+
+  // som: um flat-six sintetizado (3 explosões por volta)
+  var AC = null, o1, o2, filtro, ganho, somLigado = ler('gt3-som') !== '0', visivel = false;
+  function rotuloSom(){ el.som.textContent = somLigado ? 'Som ligado' : 'Som desligado'; el.som.setAttribute('aria-pressed', somLigado ? 'true':'false'); }
+  rotuloSom();
+  el.som.addEventListener('click', function(){ somLigado = !somLigado; guardar('gt3-som', somLigado?'1':'0'); rotuloSom(); if(somLigado) ligarSom(); });
+  function ligarSom(){
+    if(!somLigado) return;
+    if(AC){ if(AC.state === 'suspended') AC.resume(); return; }
+    try{
+      AC = new (window.AudioContext || window.webkitAudioContext)();
+      o1 = AC.createOscillator(); o1.type = 'sawtooth';
+      o2 = AC.createOscillator(); o2.type = 'square';
+      var g2 = AC.createGain(); g2.gain.value = .3;
+      filtro = AC.createBiquadFilter(); filtro.type = 'lowpass'; filtro.Q.value = 5;
+      ganho = AC.createGain(); ganho.gain.value = 0;
+      o1.connect(filtro); o2.connect(g2); g2.connect(filtro); filtro.connect(ganho); ganho.connect(AC.destination);
+      o1.start(); o2.start();
+    }catch(e){ AC = null; }
+  }
+  function som(rpm, carga){
+    if(!AC) return;
+    var now = AC.currentTime, f = rpm/60*3;
+    o1.frequency.setTargetAtTime(f, now, .025);
+    o2.frequency.setTargetAtTime(f/2, now, .025);
+    filtro.frequency.setTargetAtTime(380 + rpm*.22 + carga*700, now, .04);
+    var alvo = (somLigado && visivel) ? .035 + .06*carga : 0;
+    ganho.gain.setTargetAtTime(alvo, now, .06);
+  }
+
+  var J, recorde = parseFloat(ler('gt3-recorde'));
+  function fmtT(t){ return t.toFixed(2).replace('.',','); }
+  if(recorde > 0) el.melhor.textContent = fmtT(recorde) + ' s';
+  function zerar(){
+    J = {estado:'pronto', rpm:900, v:0, g:0, t:0, troca:0, mult:1, multT:0, largadaRpm:0, largada:'', boas:0, trocas:0, dist:0, segurando:false};
+    el.btn.textContent = 'Segure';
+    el.msg.innerHTML = 'Segure o botão pra girar o motor.';
+    el.res.classList.remove('on');
+    el.marcha.textContent = 'N'; el.tempo.textContent = '0,00'; el.vel.textContent = '0';
+  }
+  zerar();
+
+  function apertar(){
+    ligarSom();
+    el.btn.classList.add('apertado');
+    if(J.estado === 'pronto'){
+      var rc = el.cabine.getBoundingClientRect();
+      if(rc.bottom > innerHeight || rc.top < 0) el.cabine.scrollIntoView({block: rc.height < innerHeight ? 'center' : 'end', behavior: reduz ? 'auto' : 'smooth'});
+      J.estado = 'girando'; J.segurando = true;
+      el.btn.textContent = 'Solte no verde';
+      el.msg.innerHTML = 'Segurando... solte quando a agulha estiver no <strong>verde</strong>.';
+    } else if(J.estado === 'correndo'){
+      if(J.g < 7 && J.troca <= 0){
+        J.trocas++; if(J.rpm >= 8300) J.boas++;
+        J.g++; J.troca = .12;
+      }
+    } else if(J.estado === 'fim'){
+      zerar();
+    }
+  }
+  function soltar(){
+    el.btn.classList.remove('apertado');
+    if(J.estado !== 'girando') return;
+    J.segurando = false;
+    J.largadaRpm = J.rpm; J.estado = 'correndo'; J.g = 1; J.t = 0;
+    if(J.rpm < VERDE[0]){ J.largada = 'afogou'; J.mult = .55; J.multT = 1; }
+    else if(J.rpm > VERDE[1]){ J.largada = 'patinou'; J.mult = .62; J.multT = 1.1; }
+    else { J.largada = 'perfeita'; J.mult = 1; J.multT = 0; }
+    var txt = {perfeita:'Largada <strong>perfeita</strong>!', afogou:'Giro baixo, o motor <strong>afogou</strong>.', patinou:'Giro alto, os pneus <strong>patinaram</strong>.'}[J.largada];
+    el.msg.innerHTML = txt + ' Agora toque pra trocar quando as luzes encherem.';
+    el.btn.textContent = 'Trocar marcha';
+  }
+  el.btn.addEventListener('pointerdown', function(e){ e.preventDefault(); try{ el.btn.setPointerCapture(e.pointerId); }catch(_){} apertar(); });
+  el.btn.addEventListener('pointerup', soltar);
+  el.btn.addEventListener('pointercancel', soltar);
+  el.btn.addEventListener('lostpointercapture', soltar);
+  el.btn.addEventListener('keydown', function(e){ if((e.key===' '||e.key==='Enter') && !e.repeat){ e.preventDefault(); apertar(); } });
+  el.btn.addEventListener('keyup', function(e){ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); soltar(); } });
+  el.btn.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+
+  function fim(){
+    J.estado = 'fim';
+    var t = J.t, novo = !(recorde > 0) || t < recorde;
+    if(novo){ recorde = t; guardar('gt3-recorde', String(t)); el.melhor.textContent = fmtT(t) + ' s'; }
+    el.resTempo.textContent = fmtT(t) + ' s';
+    var frase;
+    if(t < 10.6) frase = 'Mais rápido que a fábrica. Respeito.';
+    else if(t < 11.2) frase = 'Quase no tempo de fábrica. Mais uma?';
+    else frase = 'Dá pra tirar mais desse motor.';
+    el.resTxt.textContent = frase + ' Largada ' + J.largada + ', ' + J.boas + ' de ' + J.trocas + ' trocas no ponto.' + (novo ? ' Novo recorde!' : '');
+    el.res.classList.add('on');
+    el.msg.textContent = '';
+    el.btn.textContent = 'Correr de novo';
+  }
+
+  var ultimo = null;
+  function quadro(t){
+    requestAnimationFrame(quadro);
+    if(ultimo === null){ ultimo = t; return; }
+    var dt = Math.min((t-ultimo)/1000, .05); ultimo = t;
+    if(!visivel && J.estado !== 'correndo'){ som(0,0); return; }
+    var carga = 0, a = 0;
+
+    if(J.estado === 'pronto'){
+      J.rpm = 900 + Math.sin(t/90)*25;
+    } else if(J.estado === 'girando'){
+      J.rpm += 7200*dt; carga = .8;
+      if(J.rpm > LIMITE) J.rpm = 8550; // corte do limitador
+    } else if(J.estado === 'correndo'){
+      J.t += dt;
+      if(J.multT > 0){ J.multT -= dt; if(J.multT <= 0) J.mult = 1; }
+      if(J.troca > 0){
+        J.troca -= dt; a = -1; carga = .2;
+        J.rpm += (J.v*k(J.g) - J.rpm) * Math.min(1, dt*30);
+      } else {
+        var r = J.v*k(J.g);
+        if(J.g === 1 && r < J.largadaRpm) r = J.largadaRpm - 300*(1-J.mult); // embreagem patinando
+        if(r >= LIMITE){ r = LIMITE - Math.random()*350; a = 0; carga = .5; }
+        else { a = C*(k(J.g)/k(1))*torque(r)*J.mult - .00012*J.v*J.v; carga = 1; }
+        J.rpm = r;
+      }
+      J.v = Math.max(0, J.v + a*dt);
+      J.dist += J.v*dt;
+      if(J.v >= META){ J.v = META; fim(); }
+      if(J.t > 40) fim();
+    } else if(J.estado === 'fim'){
+      J.v = Math.max(0, J.v - 60*dt); J.dist += J.v*dt;
+      J.rpm += (1100 - J.rpm)*Math.min(1, dt*3);
+    }
+    desenhar(carga);
+    som(J.rpm, carga);
+  }
+
+  function desenhar(carga){
+    var r = J.rpm;
+    el.agulha.setAttribute('transform', 'rotate(' + (-135 + r/10000*270).toFixed(2) + ' 150 150)');
+    el.rpm.textContent = (r/1000).toFixed(1).replace('.',',');
+    el.vel.textContent = Math.round(J.v);
+    if(J.estado === 'correndo'){ el.tempo.textContent = fmtT(J.t); el.marcha.textContent = J.g; }
+    var acesas = r < 7000 ? 0 : Math.min(5, Math.floor((r-7000)/340)+1);
+    for(var i=0;i<5;i++) leds[i].style.background = i < acesas ? LED_COR[i] : '';
+    var cheio = r >= 8700 && J.estado === 'correndo';
+    el.leds.classList.toggle('cheio', cheio);
+    el.cabine.classList.toggle('alerta', cheio);
+    // pista e carro
+    var px = J.dist*7;
+    el.faixas.style.backgroundPosition = (-px % 120) + 'px 0';
+    el.pista.style.backgroundPosition = (-px*.5 % 122) + 'px 0, 0 0';
+    el.riscos.style.opacity = clamp((J.v-60)/140,0,1)*.8;
+    el.riscos.style.backgroundPosition = (-px*2.2 % 140) + 'px 0';
+    var balanco = reduz ? 0 : (J.estado==='girando' ? Math.sin(performance.now()/22)*1.2 : J.estado==='correndo' ? Math.sin(performance.now()/30)*carga*.8 : 0);
+    var agacha = J.estado==='correndo' && J.troca<=0 && carga===1 ? -.6 : 0;
+    el.carro.style.transform = 'translateX(-50%) translateY(' + balanco.toFixed(2) + 'px) rotate(' + agacha + 'deg)';
+    el.cabine.classList.toggle('treme', !reduz && J.estado==='correndo' && J.t < .5 && J.largada!=='afogou');
+  }
+  requestAnimationFrame(quadro);
+
+  new IntersectionObserver(function(es){ visivel = es[0].isIntersecting; }, {threshold:.25}).observe(el.cabine);
+  document.addEventListener('visibilitychange', function(){ if(document.hidden && AC) AC.suspend(); else if(AC && somLigado) AC.resume(); });
+})();
+</script>
+</body>
+</html>
