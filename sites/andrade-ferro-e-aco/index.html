@@ -210,6 +210,11 @@ button{background:none;border:0;cursor:pointer}
 .dados a:hover{border-color:var(--amarelo)}
 .mapa{border-radius:6px;overflow:hidden;background:#0a1638;aspect-ratio:4/3}
 .mapa iframe{width:100%;height:100%;border:0;display:block;filter:saturate(.85)}
+.mapa-off{position:relative;display:grid;place-content:center;justify-items:center;gap:14px;padding:24px;text-align:center;
+  background:repeating-linear-gradient(28deg,transparent 0 46px,rgba(103,186,244,.1) 46px 49px),repeating-linear-gradient(-62deg,transparent 0 70px,rgba(103,186,244,.08) 70px 72px),#0a1638}
+.mapa-off svg{width:44px;height:44px;color:var(--amarelo)}
+.mapa-off b{font-weight:700;font-size:17px;line-height:1.35}
+.mapa-off .btn{min-height:46px;font-size:15px}
 .contato .acoes{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
 @media(max-width:880px){.contato{grid-template-columns:minmax(0,1fr)}.contato .acoes .btn{flex:1 1 100%}}
 
