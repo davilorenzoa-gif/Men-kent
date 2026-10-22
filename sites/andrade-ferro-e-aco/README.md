@@ -4,7 +4,7 @@ Depósito de ferro e aço no Jardim Helena (Zona Leste de SP), desde 1989. **Ain
 Eles já têm um site em WordPress (ferroeacoandrade.com.br); a proposta é trocar por este.
 
 - `index.html` + `img/`: versão pra subir no Netlify (`proposta-andrade` → `andrade`).
-- `preview-andrade.html`: o mesmo site com imagens e vídeo embutidos, pra abrir direto no celular.
+- `preview-andrade.html`: o mesmo site num arquivo só (~380 KB, vídeo cortado em 8s e fotos menores), pra abrir direto no celular.
 - `404.html`, `robots.txt`, `sitemap.xml`. O `_headers` sai do gerador do Gu.
 
 3 WOWs:
