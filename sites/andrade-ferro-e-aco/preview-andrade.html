@@ -62,6 +62,7 @@ button{background:none;border:0;cursor:pointer}
 .nav .cel{display:none}
 @media(max-width:880px){.nav ul{display:none}}
 @media(max-width:600px){.nav .pc{display:none}.nav .cel{display:inline}}
+@media(max-width:400px){.nav .marca small{display:none}}
 
 /* abertura */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:96px 0 48px;overflow:hidden;
@@ -196,6 +197,54 @@ button{background:none;border:0;cursor:pointer}
 @media(max-width:980px){.cfg-grid{grid-template-columns:minmax(0,1fr)}.cfg-grid .vis{order:-1}}
 @media(max-width:420px){.tipos button{font-size:14px}.extra,.campos{grid-template-columns:minmax(0,1fr)}}
 
+/* jogo */
+[hidden]{display:none!important}
+.jg-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(28px,5vw,72px);align-items:center}
+.jg-tab{list-style:none;margin-top:22px;display:grid;gap:8px}
+.jg-tab li{display:flex;gap:12px;align-items:baseline;font-size:15px}
+.jg-tab b{flex:none;width:40px;font-family:var(--fm);font-weight:600;font-size:18px;color:var(--azul)}
+.jg-regra{margin-top:22px;padding:14px 16px;border-left:3px solid var(--amarelo);background:rgba(255,194,26,.16);font-size:15px;max-width:52ch}
+.jg-tem{margin-top:14px;font-size:15px}
+.jg-tem b{font-family:var(--fm);color:var(--azul)}
+.jg{position:relative;background:var(--noite);color:var(--branco);border-radius:8px;padding:clamp(16px,2.4vw,24px);box-shadow:0 30px 60px -30px rgba(3,9,35,.6)}
+.jg-top{display:flex;justify-content:space-between;font-family:var(--fm);font-size:14px}
+.jg-top b{color:var(--amarelo);font-weight:600}
+.jg-prog{height:6px;margin-top:10px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden}
+.jg-prog i{display:block;height:100%;width:0;background:var(--amarelo);transition:width .5s var(--ease)}
+.jg-alvo{margin:16px 0 12px;font-weight:800;font-stretch:115%;font-size:clamp(22px,2.3vw,30px);line-height:1.1}
+.jg-alvo span{font-family:var(--fm);font-weight:600;font-stretch:100%;color:var(--amarelo)}
+.jg-mesa{position:relative;height:clamp(170px,18vw,210px);border-radius:6px;background:linear-gradient(180deg,#0a1638,#06102c);overflow:hidden;touch-action:manipulation;-webkit-user-select:none;user-select:none;cursor:pointer}
+.jg-pista{position:absolute;left:20px;right:20px;top:0;bottom:0}
+.jg-tick{position:absolute;top:0;width:1px;background:rgba(201,210,222,.45)}
+.jg-num{position:absolute;top:22px;transform:translateX(-50%);font-family:var(--fm);font-size:11px;opacity:.7;white-space:nowrap}
+.jg-marca{position:absolute;top:0;bottom:0;left:60%;width:0;border-left:2px dashed var(--amarelo)}
+.jg-marca span{position:absolute;bottom:10px;left:0;transform:translateX(-50%);padding:3px 8px;border-radius:3px;background:var(--amarelo);color:var(--noite);font-family:var(--fm);font-weight:600;font-size:12px;white-space:nowrap}
+.jg-ferro{position:absolute;left:0;top:58%;height:14px;margin-top:-7px;width:40%;border-radius:2px;background:repeating-linear-gradient(90deg,#7F8BA0 0 5px,#C9D2DE 5px 7px);box-shadow:0 0 0 2px #01040c}
+.jg-ferro.cai{transition:transform .6s var(--ease),opacity .6s;transform:translateY(46px);opacity:0}
+.jg-disco{position:absolute;top:58%;left:40%;width:34px;height:34px;margin:-17px 0 0 -17px;color:#C9D2DE;pointer-events:none}
+.jg-disco svg{width:100%;height:100%;animation:gira .5s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.jg-res{position:absolute;top:58%;left:0;transform:translate(-50%,-160%);font-family:var(--fm);font-weight:600;font-size:13px;padding:3px 8px;border-radius:3px;white-space:nowrap;opacity:0;transition:opacity .2s}
+.jg-res.on{opacity:1}
+.g20{background:#FFC21A;color:#030923}.g12{background:#67BAF4;color:#030923}.g5{background:#C9D2DE;color:#030923}.g0{background:#ff6b5a;color:#fff}
+.jg-slots{list-style:none;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;margin-top:12px}
+.jg-slots li{height:30px;border-radius:3px;display:grid;place-items:center;font-family:var(--fm);font-size:13px;font-weight:600;background:rgba(255,255,255,.07)}
+.jg-fb{min-height:24px;margin:12px 0 10px;font-size:15px;text-align:center}
+.jg-corta{width:100%;min-height:60px;font-size:18px}
+.jg-corta:disabled{opacity:.45;cursor:default}
+.jg-corta:disabled:hover{transform:none;background:var(--amarelo)}
+.jg-capa{position:absolute;inset:0;z-index:2;border-radius:8px;background:rgba(3,9,35,.95);display:none;padding:20px 16px}
+.jg-capa.on{display:grid;place-items:center}
+.jg-capa > div{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.jg-capa b{font-weight:800;font-stretch:118%;font-size:clamp(24px,2.6vw,32px);line-height:1.1}
+.jg-capa span{max-width:34ch;opacity:.86}
+.jg-capa .btn{min-width:230px;padding:0 16px;font-size:15px}
+.cupom{padding:10px 18px;border:2px dashed var(--amarelo);border-radius:6px}
+.cupom small{display:block;font-size:12px;opacity:.7}
+.cupom strong{font-family:var(--fm);font-size:22px;color:var(--amarelo);letter-spacing:.04em}
+.jg-mini{font-size:13px;opacity:.75;max-width:38ch}
+@media(max-width:980px){.jg-grid{grid-template-columns:minmax(0,1fr)}}
+
 /* entrega + contato */
 .entrega{background:var(--noite2)}
 .foto-cam{margin-top:40px;border-radius:6px;overflow:hidden;max-width:1080px}
@@ -258,6 +307,7 @@ dialog .btn{margin-top:20px}
 .embed .proc-stick{position:relative;height:auto;min-height:0}
 .embed .passos li{opacity:1}
 .embed .zap,.dentro .zap{display:none}
+.embed .jg-disco svg{animation:none}
 .embed .entra{opacity:1;transform:none;transition:none}
 @media(prefers-reduced-motion:reduce){.entra{transform:none;transition:opacity .5s}.btn,.zap{transition:none}}
 </style>
@@ -416,6 +466,54 @@ dialog .btn{margin-top:20px}
   </div>
 </section>
 
+<section class="claro sec" id="jogo">
+  <div class="wrap jg-grid">
+    <div>
+      <h2 class="h2" style="color:var(--noite2);max-width:16ch;font-size:clamp(30px,3.7vw,56px)">Corte na medida e ganhe 5% de desconto</h2>
+      <p class="lead" style="margin-top:18px">Toque em Cortar quando a ponta da barra chegar na marca amarela. São 8 cortes, e a barra fica mais rápida a cada um. Fez 100 pontos, ganhou.</p>
+      <ul class="jg-tab">
+        <li><b>20</b>Na medida: até 2 cm de diferença</li>
+        <li><b>12</b>Quase: até 6 cm</li>
+        <li><b>5</b>Perto: até 12 cm</li>
+      </ul>
+      <p class="jg-regra"><strong>Só dá pra ganhar 1 vez por compra.</strong> O desconto de 5% vale pra compra em que você mandar o código, e a equipe da Andrade aplica no fechamento do orçamento pelo WhatsApp.</p>
+      <p class="jg-tem" id="jgTem" hidden>Você já ganhou. Seu código: <b id="jgTemCod"></b></p>
+    </div>
+    <div class="jg" id="jg">
+      <div class="jg-top"><span id="jgCorte">Corte 1 de 8</span><span><b id="jgPts">0</b> de 100 pontos</span></div>
+      <div class="jg-prog"><i id="jgProg"></i></div>
+      <p class="jg-alvo">Corte em <span id="jgAlvoTx">2,40 m</span></p>
+      <div class="jg-mesa" id="jgMesa">
+        <div class="jg-pista" id="jgPista">
+          <div class="jg-marca" id="jgMarca"><span id="jgMarcaTx">2,40 m</span></div>
+          <div class="jg-ferro" id="jgFerro"></div>
+          <div class="jg-disco" id="jgDisco"><svg viewBox="0 0 40 40" aria-hidden="true"><path fill="currentColor" d="M20 2l3 5 5-3 1 6 6-1-2 6 6 2-5 4 5 4-6 2 2 6-6-1-1 6-5-3-3 5-3-5-5 3-1-6-6 1 2-6-6-2 5-4-5-4 6-2-2-6 6 1 1-6 5 3z"/><circle cx="20" cy="20" r="5" fill="#0a1638"/></svg></div>
+          <div class="jg-res" id="jgRes"></div>
+        </div>
+      </div>
+      <ol class="jg-slots" id="jgSlots" aria-label="Pontos de cada corte"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <p class="jg-fb" id="jgFb" aria-live="polite"></p>
+      <button class="btn am jg-corta" id="jgCorta" type="button" disabled>Cortar</button>
+      <div class="jg-capa on" id="jgCapa">
+        <div id="capaIni">
+          <b>Corte na medida</b>
+          <span>8 cortes. Faça 100 pontos e ganhe 5% de desconto na sua compra.</span>
+          <button class="btn am" type="button" id="jgIni">Começar</button>
+          <small class="jg-mini">No computador, dá pra cortar com a barra de espaço.</small>
+        </div>
+        <div id="capaFim" hidden>
+          <b id="fimT"></b>
+          <span id="fimS"></span>
+          <div class="cupom" id="fimCupom" hidden><small>Seu código de desconto</small><strong id="fimCod"></strong></div>
+          <a class="btn am" id="fimUsar" href="#" target="_blank" rel="noopener" hidden><svg aria-hidden="true"><use href="#i-zap"/></svg>Usar meu desconto no WhatsApp</a>
+          <button class="btn ln" type="button" id="jgDeNovo">Jogar de novo</button>
+          <small class="jg-mini" id="fimRegra" hidden>Só dá pra ganhar 1 vez por compra. Vale pra compra em que você mandar o código.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="cfg sec" id="orcamento">
   <div class="wrap">
     <h2 class="h2" style="max-width:16ch">Monte o pedido da sua armação</h2>
@@ -502,6 +600,7 @@ dialog .btn{margin-top:20px}
       <details><summary>Preciso ter o projeto estrutural?</summary><p>Com o projeto o orçamento fica mais preciso. Pode mandar em PDF ou foto pelo WhatsApp. E se fechar o serviço, a plotagem do projeto sai sem custo.</p></details>
       <details><summary>Vocês vendem só ferro?</summary><p>Não. Também temos telas soldadas, treliças, lajes treliçadas, madeirite resinado e plastificado, caibro 6x6, tábua de pinus e pregos.</p></details>
       <details><summary>Qual é o horário de atendimento?</summary><p>De segunda a sexta, das 8h às 18h. Fora desse horário, pode deixar a mensagem no WhatsApp que a gente responde no próximo atendimento.</p></details>
+      <details><summary>Como funciona o desconto do jogo?</summary><p>Faça 100 pontos no Corte na medida e ganhe um código de 5% de desconto. Só dá pra ganhar 1 vez por compra: mande o código no WhatsApp quando for fechar o orçamento e a equipe aplica o desconto nessa compra.</p></details>
       <details><summary>Como eu peço um orçamento?</summary><p>Pelo WhatsApp (11) 99804-1251, pelos telefones (11) 2581-4404 e (11) 2584-2313 ou pelo e-mail vendas@ferroeacoandrade.com.br. Se quiser adiantar, monte a lista de peças aqui no site e mande direto.</p></details>
     </div>
   </div>
@@ -540,6 +639,7 @@ dialog .btn{margin-top:20px}
   <h2 id="privT">Política de privacidade</h2>
   <p>Este site não tem cadastro, login nem guarda os dados que você digita. A lista de peças, o bairro da obra e o seu nome só servem pra montar a mensagem que abre no seu WhatsApp. Nada é enviado pra gente antes de você tocar em enviar na conversa.</p>
   <p>Usamos uma contagem de visitas anônima (GoatCounter), sem cookies e sem identificar você.</p>
+  <p>Se você ganhar o desconto no jogo, o código fica salvo só no seu navegador, pra você não perder. Ele não é enviado pra ninguém até você mandar no WhatsApp.</p>
   <p>Os dados que você manda pelo WhatsApp, telefone ou e-mail são usados só pra responder o seu orçamento, conforme a Lei Geral de Proteção de Dados (LGPD). Pra pedir a exclusão, escreva pra vendas@ferroeacoandrade.com.br.</p>
   <form method="dialog"><button class="btn az">Fechar</button></form>
 </dialog>
@@ -842,6 +942,7 @@ dialog .btn{margin-top:20px}
     var obra = $("obra").value.trim(), nome = $("nome").value.trim();
     if (obra) t += "\nObra em: " + obra;
     if (nome) t += "\nMeu nome: " + nome;
+    if (cupom) t += "\nTenho o desconto do jogo do site: " + cupom + " (5%).";
     var url = wa(t); $("reabrir").href = url;
     window.open(url, "_blank", "noopener");
     $("obrigado").classList.add("on");
@@ -852,6 +953,89 @@ dialog .btn{margin-top:20px}
   addEventListener("pointermove", function(e){ if (!arr) return; camV.yaw = alvoYaw = arr.yaw + (e.clientX - arr.x)*.012; mexeu = Date.now(); desenhaV(); });
   addEventListener("pointerup", function(){ arr = null; }); addEventListener("pointercancel", function(){ arr = null; });
   poeTipo("coluna");
+
+  // ---------- Jogo: corte na medida ----------
+  var CHAVE = "andrade-desconto";
+  function le(k){ try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function guarda(k, v){ try { localStorage.setItem(k, v); } catch (e) {} }
+  var cupom = le(CHAVE);
+  if (cupom && !/^ANDRADE5-[A-Z0-9]{4}$/.test(cupom)) cupom = null;   // só aceita o formato que o próprio site gera
+  var pista = $("jgPista"), mesa = $("jgMesa"), ferro = $("jgFerro"), disco = $("jgDisco"), res = $("jgRes"), marca = $("jgMarca"), corta = $("jgCorta"), capa = $("jgCapa"), slots = $("jgSlots").children, fb = $("jgFb");
+  var NC = 8, META = 100, MAXM = 4, jgVis = false;
+  var NOTAS = [[2, 20, "Na medida!"], [6, 12, "Quase lá."], [12, 5, "Perto."]];
+  (function(){   // régua de 0 a 4 m, risco a cada 10 cm
+    for (var i = 0; i <= 40; i++){
+      var t = document.createElement("i"); t.className = "jg-tick"; t.style.left = (i/40*100) + "%"; t.style.height = (i % 10 ? (i % 5 ? 7 : 12) : 18) + "px"; pista.insertBefore(t, marca);
+      if (i % 10 === 0){ var n = document.createElement("span"); n.className = "jg-num"; n.textContent = (i/10) + (i % 40 ? "" : " m"); n.style.left = (i/40*100) + "%"; pista.insertBefore(n, marca); }
+    }
+  })();
+  var J = { e: "capa", k: 0, pts: 0, alvo: 2.4, ini: 0, v: 1, t0: 0 };
+  function m2(n){ return br(n, 2) + " m"; }
+  function poeL(L){ var x = cl(L/MAXM, 0, 1)*100 + "%"; ferro.style.width = x; disco.style.left = x; }
+  function placar(){ $("jgPts").textContent = J.pts; $("jgProg").style.width = Math.min(100, J.pts/META*100) + "%"; $("jgCorte").textContent = "Corte " + Math.min(J.k + 1, NC) + " de " + NC; }
+  function temCupom(){ $("jgTem").hidden = !cupom; $("jgTemCod").textContent = cupom || ""; }
+  function gera(){
+    var A = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", r = new Uint8Array(4), s = "ANDRADE5-", i;
+    if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(r); else for (i = 0; i < 4; i++) r[i] = Math.floor(Math.random()*256);
+    for (i = 0; i < 4; i++) s += A[r[i] % A.length];
+    return s;
+  }
+  function proximo(){
+    J.alvo = (12 + Math.floor(Math.random()*25))/10;                 // de 1,20 m a 3,60 m
+    J.ini = Math.max(0, J.alvo - 1 - Math.random()*.6);               // começa a 1 a 1,6 m da marca
+    J.v = (.75 + J.k*.12) * (.92 + Math.random()*.16);                // m/s, mais rápido a cada corte
+    $("jgAlvoTx").textContent = m2(J.alvo); $("jgMarcaTx").textContent = m2(J.alvo); marca.style.left = J.alvo/MAXM*100 + "%";
+    ferro.classList.remove("cai"); res.classList.remove("on"); poeL(J.ini); disco.style.visibility = "visible";
+    placar(); fb.textContent = "Prepara..."; J.e = "pronto"; corta.disabled = false;
+    setTimeout(function(){ if (J.e !== "pronto") return; J.e = "correndo"; J.t0 = performance.now(); fb.textContent = ""; requestAnimationFrame(roda); }, 700);
+  }
+  function roda(now){
+    if (J.e !== "correndo") return;
+    var L = J.ini + J.v*(now - J.t0)/1000;
+    if (L >= MAXM){ cortar(null); return; }
+    poeL(L); requestAnimationFrame(roda);
+  }
+  function cortar(t){
+    if (J.e !== "correndo") return;
+    J.e = "cortou"; corta.disabled = true;
+    if (t !== null && (!(t > 0) || Math.abs(t - performance.now()) > 1000)) t = performance.now();   // navegador com relógio de evento diferente
+    var L = t === null ? MAXM : cl(J.ini + J.v*(t - J.t0)/1000, 0, MAXM);
+    var erro = Math.round((L - J.alvo)*100), ab = Math.abs(erro), p = 0, txt = t === null ? "Passou do ponto." : "Fora da medida.";
+    if (t !== null) for (var i = 0; i < NOTAS.length; i++){ if (ab <= NOTAS[i][0]){ p = NOTAS[i][1]; txt = NOTAS[i][2]; break; } }
+    poeL(L); disco.style.visibility = "hidden";
+    res.className = "jg-res on g" + p; res.style.left = cl(L/MAXM, 0, 1)*100 + "%";
+    res.textContent = t === null ? "passou" : erro === 0 ? "exato" : (erro > 0 ? "+" : "-") + ab + " cm";
+    fb.textContent = (t === null ? "" : "Você cortou em " + m2(L) + ". ") + txt + (p ? " +" + p + " pontos" : "");
+    slots[J.k].textContent = p; slots[J.k].className = "g" + p;
+    J.pts += p; J.k++; placar();
+    if (p && navigator.vibrate) try { navigator.vibrate(p === 20 ? [25, 40, 25] : 15); } catch (e) {}
+    setTimeout(function(){ ferro.classList.add("cai"); }, 450);
+    setTimeout(function(){ if (J.k >= NC) fim(); else proximo(); }, 1300);
+  }
+  function fim(){
+    J.e = "fim"; corta.disabled = true; fb.textContent = "";
+    var ganhou = J.pts >= META, ja = !!cupom;
+    if (ganhou && !cupom){ cupom = gera(); guarda(CHAVE, cupom); }
+    $("fimT").textContent = ganhou ? (ja ? "Mandou bem de novo!" : "Você ganhou 5% de desconto!") : "Você fez " + J.pts + " pontos";
+    $("fimS").textContent = ganhou ? (ja ? "Seu código continua o mesmo, porque só dá pra ganhar 1 vez por compra." : J.pts + " pontos. Mande o código no WhatsApp quando for pedir o orçamento.")
+      : "Faltaram " + (META - J.pts) + " pontos pros 5% de desconto." + (ja ? " Seu código de antes continua valendo." : "");
+    $("fimCupom").hidden = $("fimUsar").hidden = $("fimRegra").hidden = !cupom;
+    if (cupom){ $("fimCod").textContent = cupom; $("fimUsar").href = wa("Ganhei 5% de desconto no jogo do site. Meu código: " + cupom + ". Quero usar no meu orçamento."); }
+    $("capaIni").hidden = true; $("capaFim").hidden = false; capa.classList.add("on");
+    temCupom();
+  }
+  function comeca(){
+    J.k = 0; J.pts = 0;
+    for (var i = 0; i < NC; i++){ slots[i].textContent = ""; slots[i].className = ""; }
+    capa.classList.remove("on"); proximo();
+    try { corta.focus({ preventScroll: true }); } catch (e) {}
+  }
+  $("jgIni").addEventListener("click", comeca); $("jgDeNovo").addEventListener("click", comeca);
+  function toqueCorta(e){ if (J.e === "correndo"){ e.preventDefault(); cortar(e.timeStamp); } }
+  corta.addEventListener("pointerdown", toqueCorta); mesa.addEventListener("pointerdown", toqueCorta);
+  addEventListener("keydown", function(e){ if ((e.key === " " || e.key === "Enter") && J.e === "correndo" && jgVis){ e.preventDefault(); cortar(e.timeStamp); } });
+  if ("IntersectionObserver" in window) new IntersectionObserver(function(es){ jgVis = es[0].isIntersecting; }, { threshold: .3 }).observe($("jg"));
+  temCupom();
 
   // ---------- laço de rolagem: uma fonte só ----------
   var nav = $("nav"), zap = $("zap"), hero = $("topo"), pedido = false, visV = false;

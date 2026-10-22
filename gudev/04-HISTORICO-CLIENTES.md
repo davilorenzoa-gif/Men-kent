@@ -54,6 +54,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Atenção:** eles **já têm site** em WordPress (ferroeacoandrade.com.br, de 2025/2026). O argumento é o pedido de armação que vai pronto pro WhatsApp, não "ter um site".
 - **Andamento:** em 22/10 montamos o site em `sites/andrade-ferro-e-aco/`. O Davi vai mostrar e trazer o retorno.
 - **Falta:** avaliações reais do Google, geo do Maps e permissão pra usar as fotos e o vídeo do Instagram.
+- **Minigame "Corte na medida"** (pedido do Davi em 22/10): 100 pontos dão 5% de desconto, só 1 vez por compra. **O padrinho precisa aprovar os 5%** e o atendente controla o uso do código no WhatsApp (o site não valida).
 
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.
