@@ -57,10 +57,11 @@ button{background:none;border:0;cursor:pointer}
 .marca b{font-weight:800;font-stretch:120%;font-size:17px;letter-spacing:.01em;line-height:1}
 .marca small{display:block;font-family:var(--fm);font-size:11px;opacity:.7;margin-top:3px;white-space:nowrap}
 .nav ul{display:flex;gap:28px;list-style:none;font-size:15px}
-.nav ul a{opacity:.78;transition:opacity .2s}.nav ul a:hover{opacity:1}
+.nav ul a{opacity:.78;transition:opacity .2s;white-space:nowrap}.nav ul a:hover{opacity:1}
 .nav .btn{min-height:42px;padding:0 16px;font-size:14px}
 .nav .cel{display:none}
-@media(max-width:880px){.nav ul{display:none}}
+@media(max-width:1180px){.nav ul{gap:18px;font-size:14px}.nav .marca small{display:none}}
+@media(max-width:980px){.nav ul{display:none}}
 @media(max-width:600px){.nav .pc{display:none}.nav .cel{display:inline}}
 @media(max-width:400px){.nav .marca small{display:none}}
 
@@ -197,6 +198,28 @@ button{background:none;border:0;cursor:pointer}
 @media(max-width:980px){.cfg-grid{grid-template-columns:minmax(0,1fr)}.cfg-grid .vis{order:-1}}
 @media(max-width:420px){.tipos button{font-size:14px}.extra,.campos{grid-template-columns:minmax(0,1fr)}}
 
+/* nossa história */
+.hist{background:linear-gradient(180deg,var(--noite) 0%,var(--noite2) 100%);padding:clamp(80px,11vw,150px) 0}
+.hist-ab{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(20px,5vw,72px);align-items:end}
+.hist-ab .hist-ano{margin:0;max-width:none;font-weight:900;font-stretch:125%;font-size:clamp(84px,10vw,160px);line-height:.8;letter-spacing:-.03em;color:rgba(142,154,173,.38);white-space:nowrap}
+.hist-ab p{margin-top:18px;max-width:52ch;color:rgba(250,250,250,.85)}
+.hist-frase{margin:clamp(64px,9vw,120px) 0 clamp(48px,6vw,80px);font-weight:800;font-stretch:112%;font-size:clamp(28px,4.2vw,60px);line-height:1.12;max-width:22ch}
+.hist-frase span{color:rgba(250,250,250,.16);transition:color .35s}
+.hist-frase span.on{color:var(--branco)}
+.hist-txt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,48px)}
+.hist-txt p{max-width:40ch;color:rgba(250,250,250,.85)}
+.hist-num{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:clamp(48px,7vw,96px);padding-top:28px;border-top:1px solid rgba(201,210,222,.16)}
+.hist-num b{display:block;font-weight:900;font-stretch:125%;font-size:clamp(44px,6vw,88px);line-height:1;color:var(--amarelo);font-variant-numeric:tabular-nums}
+.hist-num span{display:block;margin-top:10px;max-width:30ch;color:rgba(250,250,250,.8)}
+.hist-fim{margin-top:clamp(72px,10vw,140px);text-align:center}
+.hist-fim h3{font-weight:900;font-stretch:125%;font-size:clamp(38px,7vw,104px);line-height:.95;letter-spacing:-.02em;max-width:13ch;margin:0 auto;text-wrap:balance}
+.hist-vg{height:14px;width:min(560px,80%);margin:30px auto 0;border-radius:2px;background:repeating-linear-gradient(90deg,#7F8BA0 0 6px,#C9D2DE 6px 8px);box-shadow:0 0 0 2px #01040c;clip-path:inset(0 100% 0 0);transition:clip-path 1.3s var(--ease)}
+.hist-vg.on{clip-path:inset(0 -4px)}
+.hist-fim .btn{margin-top:36px}
+.embed .hist-frase span{color:var(--branco)}
+.embed .hist-vg{clip-path:inset(0 -4px);transition:none}
+@media(max-width:880px){.hist-ab,.hist-txt{grid-template-columns:minmax(0,1fr)}.hist-num{grid-template-columns:minmax(0,1fr)}}
+
 /* jogo */
 [hidden]{display:none!important}
 .jg-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(28px,5vw,72px);align-items:center}
@@ -327,6 +350,7 @@ dialog .btn{margin-top:20px}
     </a>
     <ul>
       <li><a href="#processo">Como trabalhamos</a></li>
+      <li><a href="#historia">Nossa história</a></li>
       <li><a href="#produtos">Produtos</a></li>
       <li><a href="#orcamento">Montar armação</a></li>
       <li><a href="#contato">Contato</a></li>
@@ -425,6 +449,33 @@ dialog .btn{margin-top:20px}
         <li><h3>Armação pronta pra uso</h3><p>Vigas, sapatas, brocas e pilares fabricados sob medida. Chegam prontos pra usar, com menos desperdício.</p><a data-wa="Quero orçamento de armação pronta (vigas, sapatas, brocas ou pilares)." href="#"><svg aria-hidden="true"><use href="#i-zap"/></svg>Pedir orçamento</a></li>
         <li><h3>Plotagem do projeto</h3><p>Fechou o serviço, a plotagem do seu projeto sai sem custo. Fica mais fácil conferir tudo antes de executar.</p><a data-wa="Tenho um projeto e quero orçamento. Vi que a plotagem sai sem custo ao fechar." href="#"><svg aria-hidden="true"><use href="#i-zap"/></svg>Pedir orçamento</a></li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section class="hist" id="historia" aria-labelledby="histT">
+  <div class="wrap">
+    <div class="hist-ab">
+      <p class="hist-ano" aria-hidden="true">1989</p>
+      <div>
+        <h2 class="h2" id="histT">Nossa história</h2>
+        <p>Foi em 1989 que a Andrade começou. De lá pra cá, muita coisa mudou na cidade, nas obras e nas ferramentas. O compromisso, não: ferro de qualidade, atendimento de perto e entrega no dia combinado.</p>
+      </div>
+    </div>
+    <p class="hist-frase" id="histFrase">Quando a casa fica pronta, ninguém vê o ferro. Ele fica escondido na coluna, na viga, na laje. Mas é ele que segura tudo.</p>
+    <div class="hist-txt">
+      <p>Segura o quarto das crianças, a cozinha do almoço de domingo, a loja que vai sustentar a família. Segura o sonho de quem juntou dinheiro por anos pra ver a obra de pé.</p>
+      <p>Por isso a gente trata cada peça com cuidado: cortada e dobrada conforme o projeto, nas normas ABNT, e etiquetada com a medida antes de sair do galpão.</p>
+      <p>Seja um pequeno reparo ou um grande empreendimento, o jeito de trabalhar é o mesmo há mais de 35 anos: parceria, qualidade e negociação, do primeiro orçamento até a última entrega.</p>
+    </div>
+    <div class="hist-num">
+      <div><b data-n="35" data-pre="+" data-suf="">+35</b><span>anos no mercado de ferragens pra construção civil</span></div>
+      <div><b data-n="95" data-pre="+" data-suf=" mil">+95 mil</b><span>projetos entregues na Capital e na Grande São Paulo</span></div>
+    </div>
+    <div class="hist-fim">
+      <h3>Há décadas estruturando sonhos.</h3>
+      <div class="hist-vg" id="histVg" aria-hidden="true"></div>
+      <a class="btn am" data-wa="Quero um orçamento." href="#"><svg aria-hidden="true"><use href="#i-zap"/></svg>Pedir orçamento pelo WhatsApp</a>
     </div>
   </div>
 </section>
@@ -1037,6 +1088,30 @@ dialog .btn{margin-top:20px}
   if ("IntersectionObserver" in window) new IntersectionObserver(function(es){ jgVis = es[0].isIntersecting; }, { threshold: .3 }).observe($("jg"));
   temCupom();
 
+  // ---------- Nossa história: a frase acende com a rolagem e os números contam ----------
+  var frase = $("histFrase"), palavras = [], acesas = -1, vhC = innerHeight;
+  (function(){
+    var ws = frase.textContent.trim().split(/\s+/); frase.textContent = "";
+    ws.forEach(function(w, i){ var sp = document.createElement("span"); sp.textContent = w + (i < ws.length - 1 ? " " : ""); frase.appendChild(sp); palavras.push(sp); });
+  })();
+  function histLe(){
+    if (embed) return;
+    var r = frase.getBoundingClientRect(), p = cl((vhC*.85 - r.top) / (vhC*.35 + r.height), 0, 1), n = Math.round(p*palavras.length);
+    if (n === acesas) return;
+    acesas = n; palavras.forEach(function(sp, i){ sp.classList.toggle("on", i < n); });
+  }
+  var nums = document.querySelectorAll(".hist-num b[data-n]"), histVg = $("histVg");
+  if (!embed && "IntersectionObserver" in window){
+    nums.forEach(function(b){ b.textContent = b.getAttribute("data-pre") + "0" + b.getAttribute("data-suf"); });
+    var ioH = new IntersectionObserver(function(es){ es.forEach(function(e){
+      if (!e.isIntersecting) return; ioH.unobserve(e.target);
+      if (e.target === histVg){ histVg.classList.add("on"); return; }
+      var b = e.target, n = +b.getAttribute("data-n"), t0 = performance.now(), dur = reduz ? 1 : 1400;
+      (function conta(now){ var k = cl((now - t0)/dur, 0, 1); b.textContent = b.getAttribute("data-pre") + Math.round(n*eo(k)) + b.getAttribute("data-suf"); if (k < 1) requestAnimationFrame(conta); })(t0);
+    }); }, { threshold: .6 });
+    nums.forEach(function(b){ ioH.observe(b); }); ioH.observe(histVg);
+  } else histVg.classList.add("on");
+
   // ---------- laço de rolagem: uma fonte só ----------
   var nav = $("nav"), zap = $("zap"), hero = $("topo"), pedido = false, visV = false;
   function quadro(){
@@ -1045,11 +1120,12 @@ dialog .btn{margin-top:20px}
     nav.classList.toggle("solida", y > 40);
     zap.classList.toggle("on", y > hero.offsetHeight*.6);
     procLe();
+    histLe();
   }
   function pede(){ if (!pedido){ pedido = true; requestAnimationFrame(quadro); } }
   addEventListener("scroll", pede, { passive: true });
   setInterval(pede, 250);   // garantia
-  var larg = innerWidth; addEventListener("resize", function(){ if (innerWidth !== larg){ larg = innerWidth; ultP = -1; pede(); } });   // ignora a barra do navegador do celular
+  var larg = innerWidth; addEventListener("resize", function(){ if (innerWidth !== larg){ larg = innerWidth; vhC = innerHeight; ultP = -1; pede(); } });   // ignora a barra do navegador do celular
   quadro();
   // balanço leve da peça quando ninguém mexe
   (function balanca(){
