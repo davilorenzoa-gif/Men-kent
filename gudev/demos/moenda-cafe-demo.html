@@ -1,0 +1,662 @@
+<title>Moenda Café</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Moenda Café: café torrado no bairro e moído na hora pro jeito que você passa em casa. Pedido pelo WhatsApp. (Site de demonstração da GuDev.)">
+<meta property="og:title" content="Moenda Café">
+<meta property="og:description" content="Café torrado no bairro e moído na hora. Peça pelo WhatsApp.">
+<!-- og:image, robots.txt, sitemap, 404, analytics e JSON-LD entram na publicação no Netlify (Gu). JSON-LD só com dados reais. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: bule de ágata azul (pontinhos de esmalte) abre; faixas alternam azul e branco-esmalte; ousadia só nos 3 momentos (grãos, torra, moedor). */
+:root{
+  --agata:#1F3E94;        /* azul do bule esmaltado: cor dominante */
+  --agata-fundo:#132A6B;  /* azul mais fundo pras sombras */
+  --esmalte:#F5F7FB;      /* branco frio do esmalte */
+  --tinta:#0F1733;        /* texto */
+  --cafe:#5B3320;         /* grão torrado */
+  --chama:#FF7A2F;        /* chama do fogão: só em botão e gráfico */
+  --tinta-suave:rgba(15,23,51,.66);
+  --linha:rgba(15,23,51,.14);
+  --branco-suave:rgba(245,247,251,.72);
+  --f-titulo:"Bricolage Grotesque", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --f-texto:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-dado:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme:light;
+}
+html{scroll-behavior:auto}
+body{background:var(--esmalte);color:var(--tinta);font:400 17px/1.6 var(--f-texto);overflow-x:clip;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--f-titulo);font-weight:800;line-height:1.02;letter-spacing:-.02em;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--chama);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* aviso de demo */
+.demo{background:var(--tinta);color:var(--esmalte);font:500 13px/1.4 var(--f-texto)}
+.demo .wrap{padding-block:9px;text-align:center}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;font:600 16px/1 var(--f-texto);text-decoration:none;border:0;cursor:pointer;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-chama{background:var(--chama);color:var(--tinta)}
+.btn-claro{background:var(--esmalte);color:var(--agata)}
+.btn-agata{background:var(--agata);color:var(--esmalte)}
+.btn svg{width:20px;height:20px;flex:none}
+
+/* WOW 1: abertura */
+.hero{background:var(--agata);color:var(--esmalte)}
+.hero .wrap{padding-block:18px 56px}
+.topo{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.marca{font:800 26px/1 var(--f-titulo);letter-spacing:-.03em;text-decoration:none}
+.topo .btn{min-height:42px;padding:0 16px;font-size:15px}
+#graos{display:block;width:100%;height:clamp(170px,31vw,400px);margin-block:18px 8px;touch-action:pan-y;cursor:crosshair}
+.hero-base{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:end}
+.hero h1{font-size:clamp(34px,5vw,64px)}
+.hero p{color:var(--branco-suave);max-width:46ch}
+.acoes{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:22px}
+.link-sub{font-weight:600;text-underline-offset:5px}
+
+/* WOW 2: a torra */
+.torra{position:relative;height:340vh;background:var(--esmalte)}
+.torra-fixo{position:sticky;top:0;height:100vh;height:100svh;display:flex;align-items:center;overflow:hidden}
+.torra-fixo .wrap{width:100%;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:48px;align-items:center}
+.torra h2{font-size:clamp(30px,4vw,52px);margin-bottom:22px}
+.grao-box{display:flex;align-items:center;gap:26px}
+.grao{width:clamp(110px,15vw,190px);height:auto;flex:none;overflow:visible}
+#graoG{transform-origin:100px 120px;transform:rotate(-18deg)}
+#graoG.estala{animation:estala .55s ease}
+@keyframes estala{30%{transform:rotate(-14deg) scale(1.06)}60%{transform:rotate(-20deg) scale(.98)}}
+#estalos line{stroke:var(--chama);stroke-width:4;stroke-linecap:round;opacity:0}
+.estala-on #estalos line{animation:faisca .55s ease}
+@keyframes faisca{20%{opacity:1}100%{opacity:0}}
+.etapa-nome{font:800 clamp(26px,3vw,38px)/1.05 var(--f-titulo);letter-spacing:-.02em}
+.etapa-texto{color:var(--tinta-suave);margin-top:8px;max-width:34ch;min-height:5em}
+.etapa-nome,.etapa-texto{transition:opacity .18s,transform .18s}
+.trocando .etapa-nome,.trocando .etapa-texto{opacity:0;transform:translateY(6px)}
+.grafico{width:100%;height:auto;display:block;max-height:46vh}
+.grafico text{font:400 11px var(--f-dado);fill:var(--tinta-suave)}
+.grafico .grade{stroke:var(--linha);stroke-width:1}
+.grafico .crack{stroke:var(--cafe);stroke-dasharray:4 5;stroke-width:1.2;opacity:.6}
+#curvaFundo{stroke:var(--linha);stroke-width:3;fill:none}
+#curva{stroke:var(--chama);stroke-width:4;fill:none;stroke-linecap:round}
+#ponto{fill:var(--tinta)}
+.leitura{display:flex;gap:28px;margin-top:10px;font-family:var(--f-dado)}
+.leitura div{display:flex;flex-direction:column}
+.leitura small{font-size:12px;color:var(--tinta-suave)}
+.leitura b{font-size:clamp(22px,2.4vw,30px);font-weight:600;font-variant-numeric:tabular-nums}
+.etapas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:18px 0 0;padding:0;list-style:none}
+.etapas li{font:500 13px/1.25 var(--f-texto);color:var(--tinta-suave);border-top:3px solid var(--linha);padding-top:8px;transition:color .3s,border-color .3s}
+.etapas li.on{color:var(--tinta);border-color:var(--chama)}
+.etapas li.feita{border-color:var(--cafe)}
+
+/* cafés da semana */
+.cafes{background:var(--agata);color:var(--esmalte)}
+.cafes .wrap{padding-block:88px}
+.cab{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px 40px;margin-bottom:28px}
+.cab h2{font-size:clamp(30px,4vw,52px)}
+.cab p{color:var(--branco-suave);max-width:40ch}
+.lista{list-style:none;margin:0;padding:0}
+.lista li{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.4fr) auto auto;gap:12px 28px;align-items:center;padding-block:22px;border-top:1px solid rgba(245,247,251,.18)}
+.lista h3{font-size:clamp(22px,2.4vw,30px)}
+.lista .origem{display:block;font:400 13px var(--f-dado);color:var(--branco-suave);margin-top:6px}
+.lista .notas{color:var(--branco-suave)}
+.lista .preco{font:600 18px var(--f-dado);font-variant-numeric:tabular-nums;white-space:nowrap}
+.lista .preco small{font-weight:400;font-size:12px;color:var(--branco-suave)}
+.lista .btn{min-height:44px}
+.nota-demo{font-size:13px;color:var(--branco-suave);margin-top:18px}
+
+/* WOW 3: moedor */
+.moedor .wrap{padding-block:96px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+.moedor h2{font-size:clamp(30px,4vw,52px);margin-bottom:12px}
+.moedor .intro{color:var(--tinta-suave);max-width:44ch;margin-bottom:28px}
+.campo{margin-bottom:22px}
+.campo>label,.campo>.rotulo{display:block;font-weight:600;margin-bottom:10px}
+.metodos{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--linha);background:transparent;color:var(--tinta);font:500 15px var(--f-texto);cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.chip[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:var(--esmalte)}
+.passo{display:inline-flex;align-items:center;border:1.5px solid var(--linha);border-radius:999px}
+.passo button{width:46px;height:44px;border:0;background:transparent;font:600 22px var(--f-texto);color:var(--tinta);cursor:pointer;border-radius:999px}
+.passo output{min-width:88px;text-align:center;font:600 16px var(--f-dado)}
+select{max-width:100%;min-height:46px;padding:0 14px;border-radius:12px;border:1.5px solid var(--linha);background:var(--esmalte);color:var(--tinta);font:500 16px var(--f-texto)}
+.painel{background:var(--agata);color:var(--esmalte);border-radius:28px;padding:28px;display:grid;gap:22px;justify-items:center;text-align:center}
+.dial{width:min(240px,62vw);height:auto}
+#agulha{transform-origin:110px 110px;transition:transform .7s cubic-bezier(.3,1.4,.5,1)}
+.dial text{font:500 11px var(--f-dado);fill:var(--branco-suave)}
+#po{width:100%;max-width:300px;height:84px;display:block;border-radius:14px;background:var(--esmalte)}
+.resultado{display:flex;gap:28px;justify-content:center;font-family:var(--f-dado)}
+.resultado div{display:flex;flex-direction:column}
+.resultado b{font-size:clamp(28px,3.4vw,40px);font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.resultado small{font-size:12px;color:var(--branco-suave)}
+.moagem{font-weight:600}
+.moagem span{color:var(--chama)}
+
+/* balcão + dúvidas */
+.balcao{border-top:1px solid var(--linha)}
+.balcao .wrap{padding-block:88px;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px}
+.balcao h2{font-size:clamp(28px,3.4vw,44px);margin-bottom:18px}
+.info{display:grid;gap:16px;margin-bottom:26px}
+.info dt{font-weight:600}
+.info dd{margin:0;color:var(--tinta-suave)}
+.botoes{display:flex;flex-wrap:wrap;gap:10px}
+.btn-borda{background:transparent;color:var(--tinta);border:1.5px solid var(--tinta)}
+details{border-top:1px solid var(--linha)}
+details:last-of-type{border-bottom:1px solid var(--linha)}
+summary{cursor:pointer;list-style:none;padding:18px 36px 18px 0;font-weight:600;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:4px;top:12px;font:500 24px var(--f-dado);color:var(--agata);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--tinta-suave);padding-bottom:18px;max-width:60ch}
+
+/* rodapé */
+.rodape{background:var(--tinta);color:var(--branco-suave);font-size:14px}
+.rodape .wrap{padding-block:40px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 32px}
+.rodape strong{color:var(--esmalte);font:800 22px var(--f-titulo)}
+.rodape p{max-width:52ch}
+
+/* botão flutuante (celular) + aviso de "obrigado" */
+.flutua{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;width:58px;height:58px;border-radius:50%;background:var(--chama);color:var(--tinta);display:none;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(15,23,51,.3)}
+.flutua svg{width:28px;height:28px}
+.aviso{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);z-index:30;width:min(420px,calc(100% - 32px));background:var(--tinta);color:var(--esmalte);padding:14px 18px;border-radius:16px;font-size:15px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+.aviso.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:860px){
+  .hero-base,.moedor .wrap,.balcao .wrap{grid-template-columns:minmax(0,1fr);gap:28px}
+  .torra-fixo .wrap{grid-template-columns:minmax(0,1fr);gap:14px}
+  .torra h2{font-size:26px;margin-bottom:12px}
+  .grao{width:96px}
+  .etapa-texto{min-height:4.8em;font-size:15px}
+  .grafico{max-height:30vh}
+  .leitura{margin-top:4px}
+  .etapas li{font-size:12px}
+  .lista li{grid-template-columns:minmax(0,1fr) auto;gap:8px 16px}
+  .lista .notas{grid-column:1 / -1;grid-row:2}
+  .lista .btn{grid-column:1 / -1}
+  .flutua{display:flex}
+  html.dentro .flutua,html.embed .flutua{display:none}
+}
+/* modo prévia/captura: tudo no estado final */
+html.embed .torra{height:auto}
+html.embed .torra-fixo{position:static;height:auto;padding-block:80px}
+@media (prefers-reduced-motion:reduce){
+  .btn,#agulha,.etapa-nome,.etapa-texto{transition-duration:.15s}
+  #graoG.estala,.estala-on #estalos line{animation:none}
+}
+</style>
+
+<div class="demo"><div class="wrap">Site de demonstração da GuDev. A Moenda é um café fictício e os preços são exemplos.</div></div>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="topo" aria-label="Principal">
+      <a class="marca" href="#">moenda</a>
+      <a class="btn btn-claro" data-wa="Oi! Vim pelo site e quero fazer um pedido.">Pedir pelo WhatsApp</a>
+    </nav>
+    <canvas id="graos" role="img" aria-label="A palavra moenda formada por pontinhos brancos, como o esmalte de um bule azul"></canvas>
+    <div class="hero-base">
+      <h1>Café torrado no bairro e moído pro seu jeito de passar.</h1>
+      <div>
+        <p>Você escolhe o grão e conta como faz café em casa. A gente mói na medida certa e separa pra você buscar no balcão.</p>
+        <div class="acoes">
+          <a class="btn btn-chama" data-wa="Oi! Vim pelo site e quero fazer um pedido.">Pedir pelo WhatsApp</a>
+          <a class="link-sub" href="#moedor">Descobrir a moagem certa</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="torra" id="torra" aria-labelledby="torra-t">
+    <div class="torra-fixo">
+      <div class="wrap">
+        <div>
+          <h2 id="torra-t">Do verde ao ponto em onze minutos</h2>
+          <div class="grao-box" id="graoBox">
+            <svg class="grao" viewBox="0 0 200 240" aria-hidden="true">
+              <g id="graoG">
+                <ellipse id="graoCorpo" cx="100" cy="120" rx="70" ry="94" fill="#8FA66A"/>
+                <path id="graoSulco" d="M100 34 C 70 84, 132 150, 100 206" fill="none" stroke="#5E6E43" stroke-width="8" stroke-linecap="round"/>
+                <ellipse cx="74" cy="88" rx="14" ry="30" fill="#FFFFFF" opacity=".18"/>
+              </g>
+              <g id="estalos">
+                <line x1="18" y1="60" x2="2" y2="48"/><line x1="182" y1="70" x2="198" y2="58"/>
+                <line x1="20" y1="180" x2="4" y2="192"/><line x1="180" y1="176" x2="196" y2="190"/>
+              </g>
+            </svg>
+            <div id="etapaBox" aria-live="polite">
+              <p class="etapa-nome" id="etapaNome">Secagem</p>
+              <p class="etapa-texto" id="etapaTexto">O grão verde entra no tambor quente, perde água e vai ficando cor de palha. Cheiro de pão.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <svg class="grafico" viewBox="0 0 400 262" role="img" aria-label="Curva de temperatura da torra: começa em 200 graus, cai até 95 no primeiro minuto e sobe até 208 graus aos 11 minutos, com o primeiro crack em 196 graus.">
+            <g id="grade"></g>
+            <line class="crack" x1="40" x2="380" y1="64.3" y2="64.3"/>
+            <text x="44" y="58">1º crack, 196 °C</text>
+            <path id="curvaFundo"/>
+            <path id="curva"/>
+            <circle id="ponto" r="6" cx="40" cy="58.6"/>
+          </svg>
+          <div class="leitura">
+            <div><small>tempo</small><b id="lTempo">0,0 min</b></div>
+            <div><small>grão</small><b id="lTemp">200 °C</b></div>
+          </div>
+          <ol class="etapas" id="etapas">
+            <li class="on">Secagem</li><li>Maillard</li><li>1º crack</li><li>Desenvolvimento</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cafes" id="cafes" aria-labelledby="cafes-t">
+    <div class="wrap">
+      <div class="cab">
+        <h2 id="cafes-t">Cafés desta semana</h2>
+        <p>Três grãos, torrados aqui. Pacote de 250 g, em grão ou moído na hora.</p>
+      </div>
+      <ul class="lista" id="lista"></ul>
+      <p class="nota-demo">Origens e preços de exemplo, só pra demonstração.</p>
+    </div>
+  </section>
+
+  <section class="moedor" id="moedor" aria-labelledby="moedor-t">
+    <div class="wrap">
+      <div>
+        <h2 id="moedor-t">Como você passa café?</h2>
+        <p class="intro">Escolha o método e quantas xícaras você faz. A gente mostra quanto pó usar e mói o pacote no ponto certo.</p>
+        <div class="campo">
+          <span class="rotulo" id="metodo-r">Método</span>
+          <div class="metodos" role="group" aria-labelledby="metodo-r" id="metodos"></div>
+        </div>
+        <div class="campo">
+          <span class="rotulo" id="xic-r">Xícaras por vez</span>
+          <div class="passo" role="group" aria-labelledby="xic-r">
+            <button type="button" id="menos" aria-label="Menos uma xícara">−</button>
+            <output id="xic" aria-live="polite">2 xícaras</output>
+            <button type="button" id="mais" aria-label="Mais uma xícara">+</button>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="cafeSel">Café</label>
+          <select id="cafeSel"></select>
+        </div>
+        <a class="btn btn-agata" id="pedirMoido" data-wa="">Pedir moído pra coado</a>
+      </div>
+      <div class="painel">
+        <svg class="dial" viewBox="0 0 220 220" aria-hidden="true">
+          <circle cx="110" cy="110" r="104" fill="#132A6B"/>
+          <g id="marcas"></g>
+          <text x="38" y="196">fino</text><text x="150" y="196">grosso</text>
+          <circle cx="110" cy="110" r="62" fill="#F5F7FB"/>
+          <g id="agulha"><rect x="106" y="40" width="8" height="74" rx="4" fill="#FF7A2F"/></g>
+          <circle cx="110" cy="110" r="12" fill="#0F1733"/>
+        </svg>
+        <p class="moagem">Moagem: <span id="moagem">média-fina</span></p>
+        <canvas id="po" aria-label="Amostra do tamanho do pó" role="img"></canvas>
+        <div class="resultado">
+          <div><b id="rCafe">20 g</b><small>de café</small></div>
+          <div><b id="rAgua">300 ml</b><small>de água</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aqui entram as avaliações reais do Google (com nome de quem escreveu) quando for cliente de verdade. -->
+
+  <section class="balcao" id="balcao" aria-labelledby="balcao-t">
+    <div class="wrap">
+      <div>
+        <h2 id="balcao-t">No balcão</h2>
+        <dl class="info">
+          <div><dt>Endereço</dt><dd>Rua de Exemplo, 100, Centro (endereço fictício)</dd></div>
+          <div><dt>Horário</dt><dd>Terça a sábado, das 8h às 18h (exemplo)</dd></div>
+          <div><dt>WhatsApp</dt><dd>(11) 96465-0141</dd></div>
+          <div><dt>Resposta</dt><dd>Respondemos no horário do balcão. Pedido feito até as 16h fica pronto no mesmo dia.</dd></div>
+        </dl>
+        <div class="botoes">
+          <a class="btn btn-chama" data-wa="Oi! Quero separar um pacote pra buscar no balcão.">Separar pra buscar</a>
+          <a class="btn btn-borda" href="https://www.google.com/maps/search/?api=1&amp;query=caf%C3%A9" target="_blank" rel="noopener">Como chegar</a>
+        </div>
+      </div>
+      <div>
+        <h2>Dúvidas</h2>
+        <details><summary>Vocês moem na hora mesmo?</summary><p>Sim. O pacote é moído quando você pede, no ponto do seu método. Se preferir, leva em grão.</p></details>
+        <details><summary>Quanto tempo dura o café moído?</summary><p>O sabor fica melhor nas primeiras duas semanas. Guarde no pacote fechado, longe da luz e fora da geladeira.</p></details>
+        <details><summary>Qual moagem uso na minha cafeteira elétrica?</summary><p>Use a do coado: média-fina. No simulador acima, escolha "Coado" que a gente mói nesse ponto.</p></details>
+        <details><summary>Vocês entregam?</summary><p>Nesta demonstração, só retirada no balcão. Num site real, aqui entra a regra de entrega do cliente.</p></details>
+        <details><summary>Como eu pago?</summary><p>Pix, cartão ou dinheiro na retirada (exemplo).</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <div><strong>moenda</strong><p>Demonstração feita pela GuDev, sites que vendem.</p></div>
+    <p>Privacidade: este site não guarda seus dados. O pedido acontece na conversa do WhatsApp.</p>
+  </div>
+</footer>
+
+<a class="flutua" data-wa="Oi! Vim pelo site e quero fazer um pedido." aria-label="Pedir pelo WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.2z"/></svg>
+</a>
+<div class="aviso" id="aviso" role="status"></div>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  var embed = /[?&]embed\b/.test(location.search);
+  // dentro da proposta da GuDev (proposta-<nome>.netlify.app); outro iframe qualquer conta como site normal
+  var dentro = window.parent !== window && /proposta/i.test(document.referrer || '');
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+  if (embed) root.classList.add('embed');
+  if (dentro) root.classList.add('dentro');
+
+  var WA = '5511964650141';
+  function linkWa(msg){ return 'https://wa.me/' + WA + '?text=' + encodeURIComponent('[Demo Moenda] ' + msg); }
+  function clamp(v,a,b){ return v < a ? a : v > b ? b : v; }
+
+  /* ---------- WhatsApp + "obrigado" ---------- */
+  var aviso = document.getElementById('aviso'), avisoT;
+  function prepWa(el){
+    el.href = linkWa(el.getAttribute('data-wa'));
+    el.target = '_blank'; el.rel = 'noopener';
+  }
+  document.querySelectorAll('[data-wa]').forEach(prepWa);
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('[data-wa]');
+    if (!a) return;
+    aviso.textContent = 'Mensagem pronta no WhatsApp. Se não abriu, chama no (11) 96465-0141.';
+    aviso.classList.add('on');
+    clearTimeout(avisoT); avisoT = setTimeout(function(){ aviso.classList.remove('on'); }, 4200);
+  });
+
+  /* ---------- Lenis só no computador ---------- */
+  var lenis = null;
+  if (!embed && !dentro && !reduz && matchMedia('(pointer:fine)').matches && window.Lenis) {
+    lenis = new Lenis({ lerp: 0.1 });
+    (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(0);
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var id = a.getAttribute('href'); if (id.length < 2) return;
+        var alvo = document.querySelector(id); if (!alvo) return;
+        e.preventDefault(); lenis.scrollTo(alvo, { offset: -10 });
+      });
+    });
+  }
+
+  /* ---------- WOW 1: pontinhos de esmalte formam "moenda" ---------- */
+  var cv = document.getElementById('graos'), ctx = cv.getContext('2d');
+  var pts = [], W = 0, H = 0, mouse = { x: -9999, y: -9999 }, heroVisivel = true, rodando = false;
+
+  function montar(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var off = document.createElement('canvas'); off.width = W; off.height = H;
+    var o = off.getContext('2d');
+    var fs = Math.min(H * 1.05, W / 3.75);
+    o.font = '800 ' + fs + 'px "Bricolage Grotesque", sans-serif';
+    o.textAlign = 'center'; o.textBaseline = 'middle'; o.fillStyle = '#fff';
+    o.fillText('moenda', W / 2, H * 0.5);
+    var d = o.getImageData(0, 0, W, H).data, cand = [], passo = W < 700 ? 2 : 3;
+    for (var y = 0; y < H; y += passo) for (var x = 0; x < W; x += passo)
+      if (d[(y * W + x) * 4 + 3] > 140) cand.push(x, y);
+    // densidade pela área da letra: o nome tem que ser legível; teto pra não pesar no celular
+    var naLetra = Math.min(cand.length / 2 * 0.8, W < 700 ? 1700 : 3600) | 0;
+    var livres = Math.round(naLetra * 0.1), total = naLetra + livres, velhos = pts;
+    pts = [];
+    for (var i = 0; i < total; i++) {
+      var p = velhos[i] || { x: Math.random() * W, y: Math.random() * H, vx: 0, vy: 0,
+        r: 0.7 + Math.random() * 1.5, a: 0.45 + Math.random() * 0.55, f: Math.random() * 6.28,
+        chama: Math.random() < 0.035 };
+      if (i >= naLetra || !cand.length) { p.hx = Math.random() * W; p.hy = Math.random() * H; p.livre = true; }
+      else { var k = (Math.random() * cand.length / 2 | 0) * 2; p.hx = cand[k]; p.hy = cand[k + 1]; p.livre = false; }
+      if (embed || reduz) { p.x = p.hx; p.y = p.hy; }
+      pts.push(p);
+    }
+    desenhar(0);
+  }
+
+  function desenhar(t){
+    ctx.clearRect(0, 0, W, H);
+    var R = W < 700 ? 55 : 80, R2 = R * R, anim = !embed && !reduz;
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      if (anim) {
+        var hx = p.hx + Math.sin(t * 0.0012 + p.f) * (p.livre ? 6 : 0.7);
+        var hy = p.hy + Math.cos(t * 0.001 + p.f) * (p.livre ? 6 : 0.7);
+        p.vx += (hx - p.x) * 0.014; p.vy += (hy - p.y) * 0.014;
+        var mx = p.x - mouse.x, my = p.y - mouse.y, d2 = mx * mx + my * my;
+        if (d2 < R2) { var dd = Math.sqrt(d2) || 1, f = (R - dd) / R * 2.4; p.vx += mx / dd * f; p.vy += my / dd * f; }
+        p.vx *= 0.87; p.vy *= 0.87; p.x += p.vx; p.y += p.vy;
+      }
+      ctx.globalAlpha = p.livre ? p.a * 0.45 : p.a;
+      ctx.fillStyle = p.chama ? '#FF7A2F' : '#F5F7FB';
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function loop(t){
+    if (!heroVisivel || embed || reduz) { rodando = false; return; }
+    desenhar(t); requestAnimationFrame(loop);
+  }
+  function ligar(){ if (!rodando && heroVisivel && !embed && !reduz) { rodando = true; requestAnimationFrame(loop); } }
+
+  cv.addEventListener('pointermove', function(e){ var r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
+  cv.addEventListener('pointerleave', function(){ mouse.x = mouse.y = -9999; });
+  cv.addEventListener('pointerup', function(e){ if (e.pointerType !== 'mouse') { mouse.x = mouse.y = -9999; } });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ heroVisivel = es[0].isIntersecting; ligar(); }).observe(cv);
+  }
+
+  var fontePronta = document.fonts && document.fonts.load ? document.fonts.load('800 100px "Bricolage Grotesque"') : Promise.resolve();
+  Promise.race([fontePronta, new Promise(function(r){ setTimeout(r, 1500); })]).then(function(){ montar(); ligar(); });
+
+  /* ---------- WOW 2: a torra pela rolagem ---------- */
+  var torra = document.getElementById('torra');
+  var curva = document.getElementById('curva'), fundo = document.getElementById('curvaFundo'), ponto = document.getElementById('ponto');
+  var corpo = document.getElementById('graoCorpo'), sulco = document.getElementById('graoSulco'), graoG = document.getElementById('graoG');
+  var graoBox = document.getElementById('graoBox'), etapaBox = document.getElementById('etapaBox');
+  var lTempo = document.getElementById('lTempo'), lTemp = document.getElementById('lTemp');
+  var lis = document.querySelectorAll('#etapas li');
+
+  function X(t){ return 40 + t / 12 * 340; }
+  function Y(T){ return 230 - (T - 80) / 140 * 200; }
+  // curva típica de torra média: carga a 200 °C, ponto de virada ~95 °C, 1º crack ~196 °C
+  var dados = [[0,200],[1,95],[2,110],[4,140],[6,165],[8,188],[8.6,196],[10,204],[11,208]];
+  var P = dados.map(function(d){ return [X(d[0]), Y(d[1])]; });
+  var dPath = 'M' + P[0][0] + ' ' + P[0][1];
+  for (var i = 0; i < P.length - 1; i++) {
+    var p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2;
+    dPath += ' C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(1) + ' ' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(1) + ' ' +
+      (p2[0] - (p3[0] - p1[0]) / 6).toFixed(1) + ' ' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(1) + ' ' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1);
+  }
+  curva.setAttribute('d', dPath); fundo.setAttribute('d', dPath);
+  var LEN = curva.getTotalLength();
+  curva.style.strokeDasharray = LEN;
+
+  var grade = '';
+  [0,4,8,12].forEach(function(t){ grade += '<line class="grade" x1="' + X(t) + '" x2="' + X(t) + '" y1="20" y2="230"/><text x="' + (X(t) - 6) + '" y="250">' + t + '</text>'; });
+  [100,150,200].forEach(function(T){ grade += '<line class="grade" x1="40" x2="380" y1="' + Y(T) + '" y2="' + Y(T) + '"/><text x="4" y="' + (Y(T) + 4) + '">' + T + '</text>'; });
+  grade += '<text x="352" y="250">min</text>';
+  document.getElementById('grade').innerHTML = grade;
+
+  var cores = [[0,[143,166,106]],[0.32,[217,194,122]],[0.58,[176,122,69]],[0.8,[107,59,34]],[1,[78,42,24]]];
+  function corEm(p){
+    for (var i = 1; i < cores.length; i++) if (p <= cores[i][0]) {
+      var a = cores[i - 1], b = cores[i], k = (p - a[0]) / (b[0] - a[0]);
+      return a[1].map(function(v, j){ return Math.round(v + (b[1][j] - v) * k); });
+    }
+    return cores[cores.length - 1][1];
+  }
+
+  var etapas = [
+    ['Secagem', 'O grão verde entra no tambor quente, perde água e vai ficando cor de palha. Cheiro de pão.'],
+    ['Maillard', 'Açúcares e proteínas reagem. É aqui que nascem as notas de caramelo e castanha.'],
+    ['1º crack', 'O grão estala como pipoca. Daqui pra frente, cada segundo muda o sabor.'],
+    ['Desenvolvimento', 'A gente tira no ponto da torra média: doce, corpo redondo e pouca acidez.']
+  ];
+  var limites = [4.5, 8.5, 9.4], folga = 0.25, etapa = 0, trocando = false, pendente = null;
+  var nomeEl = document.getElementById('etapaNome'), textoEl = document.getElementById('etapaTexto');
+
+  function mostrarEtapa(n){
+    if (trocando) { pendente = n; return; }
+    trocando = true;
+    etapaBox.classList.add('trocando');
+    var feito = false;
+    function fim(){
+      if (feito) return; feito = true;
+      nomeEl.textContent = etapas[n][0]; textoEl.textContent = etapas[n][1];
+      etapaBox.classList.remove('trocando');
+      setTimeout(function(){
+        trocando = false;
+        if (pendente !== null) { var q = pendente; pendente = null; if (q !== n) mostrarEtapa(q); }
+      }, 200);
+    }
+    setTimeout(fim, reduz ? 60 : 190);
+    setTimeout(fim, 450); // garantia
+    lis.forEach(function(li, i){ li.className = i === n ? 'on' : i < n ? 'feita' : ''; });
+    if (n === 2 && !reduz) {
+      graoG.classList.remove('estala'); graoBox.classList.remove('estala-on');
+      void graoG.getBoundingClientRect();
+      graoG.classList.add('estala'); graoBox.classList.add('estala-on');
+      setTimeout(function(){ graoG.classList.remove('estala'); graoBox.classList.remove('estala-on'); }, 600);
+    }
+  }
+
+  function progresso(){
+    if (embed) return 1;
+    var r = torra.getBoundingClientRect(), total = r.height - innerHeight;
+    return total > 0 ? clamp(-r.top / total, 0, 1) : 1;
+  }
+
+  var ultimoP = -1;
+  function atualizarTorra(){
+    var p = progresso();
+    if (Math.abs(p - ultimoP) < 0.0005) return;
+    ultimoP = p;
+    curva.style.strokeDashoffset = LEN * (1 - p);
+    var pt = curva.getPointAtLength(LEN * p);
+    ponto.setAttribute('cx', pt.x.toFixed(1)); ponto.setAttribute('cy', pt.y.toFixed(1));
+    var t = (pt.x - 40) / 340 * 12, T = 80 + (230 - pt.y) / 200 * 140;
+    lTempo.textContent = t.toFixed(1).replace('.', ',') + ' min';
+    lTemp.textContent = Math.round(T) + ' °C';
+    var c = corEm(p);
+    corpo.setAttribute('fill', 'rgb(' + c + ')');
+    sulco.setAttribute('stroke', 'rgb(' + c.map(function(v){ return Math.round(v * 0.62); }) + ')');
+    if (!graoG.classList.contains('estala')) graoG.style.transform = 'rotate(-18deg) scale(' + (1 + p * 0.14).toFixed(3) + ')';
+    // uma fonte de progresso só, com folga perto de cada troca
+    var alvo = etapa;
+    while (alvo < 3 && t > limites[alvo] + folga) alvo++;
+    while (alvo > 0 && t < limites[alvo - 1] - folga) alvo--;
+    if (alvo !== etapa) { etapa = alvo; mostrarEtapa(etapa); }
+  }
+  // no modo captura vai direto pro fim
+  if (embed) { etapa = 3; nomeEl.textContent = etapas[3][0]; textoEl.textContent = etapas[3][1]; lis.forEach(function(li, i){ li.className = i === 3 ? 'on' : 'feita'; }); }
+
+  var agendado = false;
+  function pedir(){ if (!agendado) { agendado = true; requestAnimationFrame(function(){ agendado = false; atualizarTorra(); }); } }
+  addEventListener('scroll', pedir, { passive: true });
+  setInterval(pedir, 300);
+  atualizarTorra();
+
+  /* ---------- cafés (dados de exemplo) ---------- */
+  var cafes = [
+    { nome: 'Mantiqueira', origem: 'Sul de Minas, 1.100 m', notas: 'Caramelo, laranja e corpo médio.', preco: 'R$ 39' },
+    { nome: 'Cerrado', origem: 'Cerrado Mineiro, 1.000 m', notas: 'Chocolate ao leite e castanha. O mais pedido pra coador de pano.', preco: 'R$ 34' },
+    { nome: 'Chapada', origem: 'Chapada Diamantina, 1.200 m', notas: 'Frutas amarelas e mel. Bom na prensa.', preco: 'R$ 46' }
+  ];
+  var lista = document.getElementById('lista'), sel = document.getElementById('cafeSel');
+  cafes.forEach(function(c){
+    var li = document.createElement('li');
+    li.innerHTML = '<div><h3>' + c.nome + '</h3><span class="origem">' + c.origem + '</span></div>' +
+      '<p class="notas">' + c.notas + '</p>' +
+      '<p class="preco">' + c.preco + ' <small>250 g</small></p>' +
+      '<a class="btn btn-claro" data-wa="Oi! Quero 250 g do café ' + c.nome + '.">Pedir esse</a>';
+    lista.appendChild(li); prepWa(li.querySelector('[data-wa]'));
+    var o = document.createElement('option'); o.value = c.nome; o.textContent = c.nome + ' (' + c.preco + ', 250 g)'; sel.appendChild(o);
+  });
+  // os cafés acima são exemplo; a frase "o mais pedido" também — num cliente real só entra se for verdade
+
+  /* ---------- WOW 3: o moedor ---------- */
+  var metodos = [
+    { id: 'coado', nome: 'Coado', msg: 'coado (V60 ou Melitta)', ml: 150, prop: 15, moagem: 'média-fina', dial: 0.4, grao: 2.6 },
+    { id: 'pano', nome: 'Coador de pano', msg: 'coador de pano', ml: 150, prop: 12, moagem: 'fina', dial: 0.24, grao: 1.9 },
+    { id: 'prensa', nome: 'Prensa francesa', msg: 'prensa francesa', ml: 200, prop: 14, moagem: 'grossa', dial: 0.9, grao: 5.2 },
+    { id: 'moka', nome: 'Moka', msg: 'moka (cafeteira italiana)', ml: 50, prop: 7, moagem: 'fina, sem virar pó', dial: 0.14, grao: 1.5 }
+  ];
+  var estado = { m: metodos[0], xic: 2 };
+  var boxM = document.getElementById('metodos');
+  metodos.forEach(function(m, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip'; b.id = 'm-' + m.id; b.textContent = m.nome;
+    b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+    b.addEventListener('click', function(){
+      boxM.querySelectorAll('.chip').forEach(function(x){ x.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true'); estado.m = m; calcular(true);
+    });
+    boxM.appendChild(b);
+  });
+
+  var marcas = '';
+  for (var k = 0; k <= 24; k++) {
+    var ang = (-135 + k * 270 / 24) * Math.PI / 180, r1 = k % 6 === 0 ? 80 : 86, r2 = 96;
+    marcas += '<line x1="' + (110 + Math.sin(ang) * r1).toFixed(1) + '" y1="' + (110 - Math.cos(ang) * r1).toFixed(1) +
+      '" x2="' + (110 + Math.sin(ang) * r2).toFixed(1) + '" y2="' + (110 - Math.cos(ang) * r2).toFixed(1) +
+      '" stroke="#F5F7FB" stroke-opacity="' + (k % 6 === 0 ? .9 : .4) + '" stroke-width="2" stroke-linecap="round"/>';
+  }
+  document.getElementById('marcas').innerHTML = marcas;
+
+  var po = document.getElementById('po'), pctx = po.getContext('2d');
+  function desenharPo(tam){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), w = po.clientWidth, h = po.clientHeight;
+    po.width = w * dpr; po.height = h * dpr; pctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    pctx.clearRect(0, 0, w, h);
+    var n = Math.round(w * h / (tam * tam * 5.5)), tons = ['#5B3320', '#6E3F27', '#4A2716', '#7A4A2E'];
+    var semente = 7;
+    function rnd(){ semente = (semente * 9301 + 49297) % 233280; return semente / 233280; }
+    for (var i = 0; i < n; i++) {
+      var x = rnd() * w, y = rnd() * h, s = tam * (0.6 + rnd() * 0.8), lados = 5;
+      pctx.fillStyle = tons[i % 4]; pctx.beginPath();
+      for (var j = 0; j < lados; j++) {
+        var a = j / lados * 6.283 + rnd(), rr = s * (0.6 + rnd() * 0.5);
+        j ? pctx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr) : pctx.moveTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr);
+      }
+      pctx.fill();
+    }
+  }
+
+  var xicOut = document.getElementById('xic'), pedirBtn = document.getElementById('pedirMoido');
+  function calcular(){
+    var m = estado.m, n = estado.xic, agua = m.ml * n, g = Math.round(agua / m.prop);
+    xicOut.textContent = n + (n === 1 ? ' xícara' : ' xícaras');
+    document.getElementById('rCafe').textContent = g + ' g';
+    document.getElementById('rAgua').textContent = agua + ' ml';
+    document.getElementById('moagem').textContent = m.moagem;
+    document.getElementById('agulha').style.transform = 'rotate(' + (-135 + 270 * m.dial) + 'deg)';
+    desenharPo(m.grao);
+    pedirBtn.textContent = 'Pedir moído pra ' + m.nome.toLowerCase();
+    pedirBtn.setAttribute('data-wa', 'Oi! Quero 250 g do café ' + sel.value + ' moído pra ' + m.msg + '. Faço ' + n + (n === 1 ? ' xícara' : ' xícaras') + ' por vez (uns ' + g + ' g de pó pra ' + agua + ' ml).');
+    prepWa(pedirBtn);
+  }
+  document.getElementById('menos').addEventListener('click', function(){ estado.xic = clamp(estado.xic - 1, 1, 8); calcular(); });
+  document.getElementById('mais').addEventListener('click', function(){ estado.xic = clamp(estado.xic + 1, 1, 8); calcular(); });
+  sel.addEventListener('change', calcular);
+  calcular();
+
+  /* ---------- resize: só quando a largura muda (ignora a barra do navegador) ---------- */
+  var largura = innerWidth, rt;
+  addEventListener('resize', function(){
+    if (innerWidth === largura) return;
+    largura = innerWidth; clearTimeout(rt);
+    rt = setTimeout(function(){ montar(); desenharPo(estado.m.grao); ultimoP = -1; atualizarTorra(); }, 150);
+  });
+})();
+</script>
