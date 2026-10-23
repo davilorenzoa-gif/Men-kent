@@ -67,6 +67,7 @@ Depois pergunte: **"isso ficaria igual pra qualquer pizzaria ou salão?"** Se fi
 - Antes de entregar, revisar e **tirar um enfeite**.
 
 ## Referências (olhar antes de criar)
+- **Primeiro:** `07-REFERENCIAS-DESIGN.md` (destaques por nicho e ideias de WOW ainda não usadas).
 - motionsites.ai: composição de hero e acabamento.
 - naocodei.com/free-code: animações em JS puro (cartas empilhando, galeria horizontal, máscara, texto que preenche, cursor magnético).
 - codepen.io/collection/BNMEYN: efeitos de rolagem limpos.
