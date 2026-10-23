@@ -35,6 +35,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "PAI & FILHO" converge na rolagem;
   - uma comanda de serviços que vai pro WhatsApp.
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
+- **Fornalha** (demo de padaria, `demos/fornalha/`): pincelada que revela o pão + vapor subindo; "a noite do pão" (relógio 22h→6h, céu amanhece e a massa vira pão pela rolagem); "Monte sua cesta" com cartas pra arrastar (direita quero, esquerda passa) e comanda pro WhatsApp. Extras: painel de fornadas com letras que viram e selo giratório.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.

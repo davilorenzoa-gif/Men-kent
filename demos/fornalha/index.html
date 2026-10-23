@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fornalha Padaria</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Fornalha: pão de fermentação natural assado de madrugada. Monte sua cesta e encomende pelo WhatsApp. Site demonstração GuDev.">
+<meta property="og:title" content="Fornalha Padaria">
+<meta property="og:description" content="Pão de fermentação natural assado de madrugada. Monte sua cesta e encomende pelo WhatsApp.">
+<meta property="og:image" content="img/hero-pao.jpg">
+<meta name="theme-color" content="#d4b48a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: saco de papel kraft no topo, painel de fornadas, noite escura que amanhece com a rolagem, cesta de cartas pra arrastar. Um visual só (kraft + carimbo azul), sem tema escuro alternativo. */
+:root{
+  --kraft:#d4b48a;
+  --kraft-escuro:#bd9867;
+  --papel:#f1e6d3;
+  --tinta:#1f3b8c;
+  --tinta-clara:#3d5bb5;
+  --fuligem:#1c1712;
+  --fuligem-2:#3a3027;
+  --brasa:#e0692e;
+  --noite:#0f1424;
+  --f-display:"Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --f-texto:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "Courier New", monospace;
+  --gutter:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+  --raio:6px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{
+  margin:0;background:var(--kraft);color:var(--fuligem);
+  font-family:var(--f-texto);font-size:17px;line-height:1.55;
+  overflow-x:clip;
+}
+/* textura de papel kraft */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.28;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .33 0 0 0 0 .2 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--tinta);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:.95}
+p{margin:0}
+.wrap{max-width:1180px;margin-inline:auto;padding-left:var(--gutter);padding-right:var(--gutter-r)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.rotulo{font-family:var(--f-mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* botões: preenchimento que desliza (Slide Fill) */
+.btn{
+  --c:var(--tinta);
+  position:relative;display:inline-flex;align-items:center;gap:.6em;
+  font:600 16px/1 var(--f-texto);text-decoration:none;cursor:pointer;
+  padding:16px 22px;border-radius:999px;border:2px solid var(--c);
+  color:var(--papel);background:var(--c);overflow:hidden;isolation:isolate;
+  transition:color .35s ease;
+}
+.btn::before{
+  content:"";position:absolute;inset:0;z-index:-1;background:var(--papel);
+  transform:translateY(101%);transition:transform .38s cubic-bezier(.7,0,.2,1);
+}
+.btn:hover{color:var(--c)}
+.btn:hover::before{transform:translateY(0)}
+.btn--linha{background:transparent;color:var(--c)}
+.btn--linha::before{background:var(--c)}
+.btn--linha:hover{color:var(--papel)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+
+/* ---------- topo ---------- */
+.topo{position:relative;z-index:3}
+.topo .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:18px;gap:12px}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 20px/1 var(--f-display);font-stretch:80%;letter-spacing:.02em;color:var(--tinta)}
+.marca-selo{width:34px;height:34px;border:2px solid var(--tinta);border-radius:50%;display:grid;place-items:center;font-size:17px}
+.demo-pill{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;border:1.5px dashed var(--fuligem-2);padding:7px 10px;border-radius:999px;color:var(--fuligem-2)}
+.topo .btn{padding:12px 18px;font-size:15px}
+
+/* ---------- WOW 1: abertura ---------- */
+.hero{position:relative;z-index:2}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,5vw,72px);align-items:center;padding-block:clamp(12px,3vw,40px) clamp(56px,8vw,110px)}
+.hero-texto{display:grid;gap:26px;min-width:0}
+.titulo{
+  font-weight:800;font-stretch:75%;font-size:clamp(64px,12.5vw,176px);letter-spacing:-.01em;line-height:.86;
+  color:var(--tinta);filter:url(#tinta);text-transform:uppercase;
+}
+.titulo .palavra{display:inline-flex;overflow:clip;padding-block:.04em .02em}
+.titulo .l{display:inline-block;transform:translateY(105%);animation:sobe .9s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(.35s + var(--i) * 60ms)}
+@keyframes sobe{to{transform:none}}
+.lead{font-size:clamp(18px,1.6vw,21px);max-width:34ch;color:var(--fuligem)}
+.lead strong{font-weight:700}
+.hero-acoes{display:flex;flex-wrap:wrap;gap:12px}
+.hero-nota{display:flex;gap:18px;flex-wrap:wrap;color:var(--fuligem-2)}
+
+.saco{position:relative;justify-self:center;width:min(100%,460px)}
+.saco-papel{
+  position:relative;aspect-ratio:4/5;background:var(--papel);
+  clip-path:polygon(0.00% 0%, 4.17% 2.4%, 8.33% 0%, 12.50% 2.4%, 16.67% 0%, 20.83% 2.4%, 25.00% 0%, 29.17% 2.4%, 33.33% 0%, 37.50% 2.4%, 41.67% 0%, 45.83% 2.4%, 50.00% 0%, 54.17% 2.4%, 58.33% 0%, 62.50% 2.4%, 66.67% 0%, 70.83% 2.4%, 75.00% 0%, 79.17% 2.4%, 83.33% 0%, 87.50% 2.4%, 91.67% 0%, 95.83% 2.4%, 100.00% 0%, 100% 100%, 0% 100%);
+  box-shadow:0 30px 60px -30px rgba(28,23,18,.6);
+}
+.saco-papel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.saco canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.saco .pincel{transition:opacity .6s ease}
+.saco-sombra{position:absolute;inset:auto 6% -18px;height:30px;background:radial-gradient(closest-side,rgba(28,23,18,.35),transparent);z-index:-1}
+/* selo giratório (Text Ring) */
+.selo{position:absolute;width:132px;height:132px;left:-46px;bottom:9%;color:var(--tinta);filter:url(#tinta)}
+.selo svg{width:100%;height:100%;overflow:visible}
+.selo .anel{transform-origin:50% 50%;animation:gira 22s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.selo text{font:600 11px var(--f-mono);fill:currentColor;text-transform:uppercase}
+
+/* ---------- painel de fornadas (Mechanical Flip) ---------- */
+.fornadas{position:relative;z-index:2;padding-block:clamp(40px,7vw,90px)}
+.fornadas .wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,5vw,64px);align-items:center}
+.fornadas h2{font-size:clamp(40px,5.5vw,72px);font-stretch:80%;font-weight:800}
+.fornadas .intro{display:grid;gap:16px;max-width:36ch}
+.painel{
+  background:var(--fuligem);color:var(--papel);border-radius:10px;padding:clamp(14px,2.4vw,26px);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 24px 50px -28px rgba(28,23,18,.8);
+  display:grid;gap:10px;min-width:0;
+}
+.painel-cab{display:flex;justify-content:space-between;color:#b9a888;font:500 12px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;padding-bottom:6px;border-bottom:1px dashed rgba(241,230,211,.18)}
+.linha{display:flex;gap:clamp(10px,2vw,22px);align-items:center;min-width:0}
+.flaps{display:flex;gap:2px;flex-wrap:nowrap;min-width:0}
+.flap{
+  position:relative;display:inline-grid;place-items:center;width:1.02em;height:1.5em;
+  font:600 clamp(12px,1.55vw,19px)/1 var(--f-mono);background:#2b241d;border-radius:2px;color:var(--papel);
+}
+.flap::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.55)}
+.flap.vira{animation:vira .09s linear}
+@keyframes vira{50%{transform:scaleY(.15)}}
+.linha .hora .flap{color:#f2b56b}
+.painel-pe{font:500 12px var(--f-mono);color:#9c8d73;letter-spacing:.06em}
+
+/* ---------- WOW 2: a noite do pão ---------- */
+.noite{position:relative;z-index:2;height:420vh;background:var(--noite)}
+.noite-palco{
+  position:sticky;top:0;height:100vh;height:100svh;overflow:clip;
+  color:var(--tinta-noite,#f1e6d3);transition:color .5s ease;
+}
+.noite-ceu{position:absolute;inset:0;background:var(--ceu,#0f1424)}
+.noite-brasa{position:absolute;inset:auto -10% -40% -10%;height:90%;background:radial-gradient(closest-side,rgba(224,105,46,.85),rgba(224,105,46,0));opacity:var(--brasa-op,0);pointer-events:none}
+.noite-grade{position:relative;height:100%;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,4vw,64px);align-items:center}
+.noite-info{display:grid;gap:22px;align-content:center;min-width:0}
+.relogio-linha{display:flex;align-items:center;gap:18px}
+.relogio{width:clamp(80px,9vw,120px);height:auto;flex:none}
+.relogio .face{fill:none;stroke:currentColor;stroke-width:2;opacity:.7}
+.relogio .tick{stroke:currentColor;stroke-width:2;opacity:.6}
+.relogio .ponteiro{stroke:currentColor;stroke-linecap:round}
+.hora-digital{font:600 clamp(34px,4.6vw,58px)/1 var(--f-mono);letter-spacing:-.02em}
+.etapa{min-height:9.5em;display:grid;gap:12px;align-content:start}
+.etapa h2{font-size:clamp(40px,5.6vw,78px);font-stretch:78%;font-weight:800}
+.etapa p{max-width:34ch;font-size:clamp(16px,1.4vw,19px);opacity:.88}
+.etapa.troca{animation:troca .45s ease}
+@keyframes troca{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:none}}
+.passos{display:flex;gap:8px;list-style:none;padding:0;margin:0}
+.passos li{height:4px;flex:1;max-width:56px;background:currentColor;opacity:.25;border-radius:4px;transition:opacity .3s}
+.passos li.on{opacity:1}
+.comparar{position:relative;aspect-ratio:4/3;border-radius:var(--raio);overflow:hidden;max-width:100%;box-shadow:0 30px 70px -30px rgba(0,0,0,.8)}
+.comparar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.comparar .massa{filter:brightness(var(--luz,.55)) saturate(.85)}
+.comparar .pao{clip-path:inset(0 calc(100% - var(--corte,0%)) 0 0)}
+.comparar .fio{position:absolute;top:0;bottom:0;left:var(--corte,0%);width:3px;margin-left:-1.5px;background:#ffd29a;box-shadow:0 0 18px 6px rgba(224,105,46,.85),0 0 60px 18px rgba(224,105,46,.45);opacity:var(--fio-op,0)}
+.comparar .legenda{position:absolute;left:12px;bottom:12px;font:600 12px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;background:rgba(28,23,18,.75);color:var(--papel);padding:6px 9px;border-radius:4px}
+.noite-dica{position:absolute;left:50%;bottom:max(18px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);font:500 12px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;opacity:var(--dica-op,.7);transition:opacity .4s}
+
+/* ---------- WOW 3: monte sua cesta (Swipe Stack) ---------- */
+.cesta{position:relative;z-index:2;padding-block:clamp(56px,9vw,120px);background:var(--papel)}
+.cesta-cab{display:grid;gap:14px;margin-bottom:clamp(28px,4vw,48px);max-width:40ch}
+.cesta-cab h2{font-size:clamp(44px,6.5vw,92px);font-stretch:78%;font-weight:800;color:var(--tinta)}
+.cesta-grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:clamp(28px,5vw,72px);align-items:start}
+.baralho{display:grid;justify-items:center;gap:22px}
+.pilha{position:relative;width:min(320px,82vw);aspect-ratio:3/4.15;touch-action:pan-y}
+.carta{
+  position:absolute;inset:0;background:#fffaf1;border-radius:14px;overflow:hidden;
+  box-shadow:0 1px 0 rgba(28,23,18,.08),0 18px 36px -18px rgba(28,23,18,.55);
+  display:grid;grid-template-rows:minmax(0,1fr) auto;user-select:none;-webkit-user-select:none;
+  transform-origin:50% 90%;will-change:transform;
+}
+.carta.topo-carta{cursor:grab}
+.carta.topo-carta:active{cursor:grabbing}
+.carta img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.carta-txt{padding:14px 16px 16px;display:grid;gap:4px}
+.carta-nome{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.carta-nome h3{font-size:24px;font-stretch:85%;font-weight:750;line-height:1.05}
+.carta-nome .preco{font:600 16px var(--f-mono);color:var(--tinta);white-space:nowrap}
+.carta-txt p{font-size:14.5px;color:var(--fuligem-2);line-height:1.4}
+.carimbo{
+  position:absolute;top:22px;padding:6px 12px;border:4px solid currentColor;border-radius:6px;
+  font:800 30px/1 var(--f-display);font-stretch:80%;letter-spacing:.04em;text-transform:uppercase;opacity:0;pointer-events:none;filter:url(#tinta)
+}
+.carimbo.quero{left:18px;color:var(--tinta);transform:rotate(-14deg)}
+.carimbo.passa{right:18px;color:#7a2a1a;transform:rotate(12deg)}
+.pilha-fim{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:14px;text-align:center;border:2px dashed var(--kraft-escuro);border-radius:14px;padding:24px}
+.pilha-fim h3{font-size:30px;font-stretch:85%}
+.acoes-carta{display:flex;gap:14px}
+.acoes-carta button{
+  width:64px;height:64px;border-radius:50%;border:2px solid var(--fuligem);background:transparent;cursor:pointer;
+  display:grid;place-items:center;color:var(--fuligem);transition:transform .2s,background .2s,color .2s
+}
+.acoes-carta button:hover{transform:scale(1.06)}
+.acoes-carta .sim{border-color:var(--tinta);background:var(--tinta);color:var(--papel)}
+.acoes-carta svg{width:26px;height:26px}
+.dica-carta{font:500 13px var(--f-mono);color:var(--fuligem-2);letter-spacing:.04em;text-align:center}
+
+.comanda{
+  background:#fffdf8;border-radius:4px;padding:26px 22px 22px;position:relative;min-width:0;
+  box-shadow:0 20px 40px -26px rgba(28,23,18,.5);
+  font-family:var(--f-mono);
+}
+.comanda::before{content:"";position:absolute;left:0;right:0;top:-10px;height:10px;background:radial-gradient(circle at 7px 10px,#fffdf8 6px,transparent 6.5px) 0 0/14px 10px repeat-x}
+.comanda h3{font-family:var(--f-display);font-size:30px;font-stretch:85%;margin-bottom:4px}
+.comanda .sub{font-size:13px;color:var(--fuligem-2);margin-bottom:16px}
+.itens{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:15px}
+.itens li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding-bottom:10px;border-bottom:1px dashed #cdbb9c}
+.itens .nome{min-width:0;overflow-wrap:anywhere}
+.qtd{display:inline-flex;align-items:center;gap:6px}
+.qtd button{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--fuligem);background:transparent;cursor:pointer;font:600 16px/1 var(--f-mono);color:var(--fuligem)}
+.qtd span{min-width:1.4em;text-align:center}
+.vazia{font-size:14px;color:var(--fuligem-2);padding:14px 0;border-bottom:1px dashed #cdbb9c}
+.total{display:flex;justify-content:space-between;font-weight:600;font-size:18px;margin:16px 0 18px}
+.comanda .btn{width:100%;justify-content:center;font-family:var(--f-texto)}
+.obrigado{margin-top:14px;font-size:13.5px;color:var(--tinta);font-family:var(--f-texto)}
+
+/* ---------- info + dúvidas ---------- */
+.info{position:relative;z-index:2;padding-block:clamp(56px,8vw,110px)}
+.info .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,90px)}
+.info h2{font-size:clamp(40px,5vw,68px);font-stretch:80%;font-weight:800;margin-bottom:22px}
+.dados{display:grid;gap:18px;margin:0}
+.dados div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;border-top:1.5px solid var(--fuligem);padding-top:12px}
+.dados dt{font:500 13px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding-top:3px}
+.dados dd{margin:0}
+.info .acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+details{border-top:1.5px solid var(--fuligem)}
+details:last-of-type{border-bottom:1.5px solid var(--fuligem)}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;padding:16px 0;font-weight:600;font-size:18px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:500 24px/1 var(--f-mono);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 0 18px;max-width:58ch;color:var(--fuligem-2)}
+
+/* ---------- rodapé ---------- */
+.rodape{position:relative;z-index:2;background:var(--fuligem);color:var(--papel);padding-block:48px calc(48px + env(safe-area-inset-bottom,0px))}
+.rodape .wrap{display:grid;gap:20px}
+.rodape .grande{font:800 clamp(56px,14vw,190px)/.85 var(--f-display);font-stretch:75%;text-transform:uppercase;color:var(--kraft);filter:url(#tinta)}
+.rodape p{max-width:62ch;color:#cbbda4;font-size:15px}
+.rodape a{color:var(--papel)}
+
+/* botão flutuante do WhatsApp (só celular) */
+.zap{
+  position:fixed;z-index:20;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  width:58px;height:58px;border-radius:50%;background:var(--tinta);color:var(--papel);display:none;place-items:center;
+  box-shadow:0 12px 26px -10px rgba(28,23,18,.7);
+}
+.zap svg{width:28px;height:28px}
+
+/* ---------- celular ---------- */
+@media (max-width:860px){
+  .hero .wrap,.fornadas .wrap,.cesta-grade,.info .wrap{grid-template-columns:minmax(0,1fr)}
+  .saco{width:min(86%,400px)}
+  .selo{width:104px;height:104px;left:-30px}
+  .noite-grade{grid-template-columns:minmax(0,1fr);align-content:center;gap:18px;padding-block:max(20px,env(safe-area-inset-top,0px)) 54px}
+  .noite-info{gap:12px}
+  .etapa{min-height:8.4em;gap:8px}
+  .relogio-linha{gap:12px}
+  .comparar{aspect-ratio:4/3;max-height:38svh;width:100%}
+  .demo-pill{display:none}
+  .zap{display:grid}
+  body.dentro .zap{display:none}
+  .dados div{grid-template-columns:minmax(0,1fr);gap:4px}
+}
+@media (max-width:420px){
+  .flap{font-size:11px}
+  .topo .btn{padding:10px 14px;font-size:14px}
+}
+
+/* modo prévia (captura estática da proposta) */
+.embed .titulo .l{animation:none;transform:none}
+.embed .saco canvas,.embed .noite-dica{display:none}
+.embed .noite{height:auto}
+.embed .noite-palco{position:relative;height:auto;padding-block:60px}
+.embed .selo .anel{animation:none}
+
+/* reduzir movimento: fade curto no lugar do movimento */
+@media (prefers-reduced-motion:reduce){
+  .titulo .l{transform:none;opacity:0;animation:aparece .5s ease forwards;animation-delay:.1s}
+  @keyframes aparece{to{opacity:1}}
+  .selo .anel{animation:none}
+  .etapa.troca{animation:aparece .3s ease}
+  .btn::before{transition:none}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="tinta" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="r"/>
+    <feDisplacementMap in="SourceGraphic" in2="r" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<header class="topo">
+  <div class="wrap">
+    <a class="marca" href="#inicio" aria-label="Fornalha, início"><span class="marca-selo" aria-hidden="true">F</span>FORNALHA</a>
+    <span class="demo-pill">Demo GuDev</span>
+    <a class="btn js-zap" data-msg="Oi! Quero fazer uma encomenda na Fornalha." href="#cesta">Encomendar</a>
+  </div>
+</header>
+
+<main id="inicio">
+  <!-- WOW 1 -->
+  <section class="hero" aria-labelledby="titulo">
+    <div class="wrap">
+      <div class="hero-texto">
+        <p class="rotulo">Padaria de fermentação natural</p>
+        <h1 class="titulo" id="titulo" aria-label="Fornalha"><span class="palavra" aria-hidden="true"><span class="l" style="--i:0">F</span><span class="l" style="--i:1">o</span><span class="l" style="--i:2">r</span><span class="l" style="--i:3">n</span><span class="l" style="--i:4">a</span><span class="l" style="--i:5">l</span><span class="l" style="--i:6">h</span><span class="l" style="--i:7">a</span></span></h1>
+        <p class="lead">Pão de casca grossa, assado de madrugada no forno de lastro. <strong>Encomende até as 18h</strong> e busque quentinho às 7h.</p>
+        <div class="hero-acoes">
+          <a class="btn" href="#cesta">Montar minha cesta
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn--linha js-zap" data-msg="Oi! Vi o site da Fornalha e queria saber o que tem hoje." href="#">Pedir pelo WhatsApp</a>
+        </div>
+        <p class="hero-nota mono"><span>Ter a sáb, 7h às 19h</span><span>Dom, 7h às 12h</span></p>
+      </div>
+
+      <figure class="saco" style="margin:0">
+        <div class="saco-papel">
+          <img id="hero-img" src="img/hero-pao.jpg" alt="Mãos segurando um pão de fermentação natural redondo, enrolado num pano de algodão" width="1600" height="1067" fetchpriority="high">
+          <canvas class="vapor" aria-hidden="true"></canvas>
+          <canvas class="pincel" aria-hidden="true"></canvas>
+        </div>
+        <div class="saco-sombra" aria-hidden="true"></div>
+        <div class="selo" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <defs><path id="circ" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs>
+            <circle cx="60" cy="60" r="58" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <g class="anel"><text><textPath href="#circ" textLength="286" lengthAdjust="spacing">assado hoje • de madrugada • </textPath></text></g>
+            <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M60 78V44"/><path d="M60 52c-6-2-9-7-9-12 6 1 9 6 9 12zM60 52c6-2 9-7 9-12-6 1-9 6-9 12zM60 64c-6-2-9-7-9-12 6 1 9 6 9 12zM60 64c6-2 9-7 9-12-6 1-9 6-9 12z"/>
+            </g>
+          </svg>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- painel de fornadas -->
+  <section class="fornadas" aria-labelledby="t-fornadas">
+    <div class="wrap">
+      <div class="intro">
+        <p class="rotulo">Hoje no forno</p>
+        <h2 id="t-fornadas">Cada pão tem sua hora de sair.</h2>
+        <p>Chegou depois? Encomende e a gente separa o seu.</p>
+      </div>
+      <div class="painel" id="painel" role="table" aria-label="Horários das fornadas">
+        <div class="painel-cab" role="row"><span role="columnheader">Sai às</span><span role="columnheader">Fornada</span></div>
+        <div class="linha" role="row"><span class="flaps hora" role="cell" data-txt="06:00"></span><span class="flaps" role="cell" data-txt="FERMENTAÇÃO NATURAL"></span></div>
+        <div class="linha" role="row"><span class="flaps hora" role="cell" data-txt="06:40"></span><span class="flaps" role="cell" data-txt="CROISSANT"></span></div>
+        <div class="linha" role="row"><span class="flaps hora" role="cell" data-txt="07:30"></span><span class="flaps" role="cell" data-txt="PÃO DE FORMA"></span></div>
+        <div class="linha" role="row"><span class="flaps hora" role="cell" data-txt="10:00"></span><span class="flaps" role="cell" data-txt="ROLINHO DE CANELA"></span></div>
+        <div class="linha" role="row"><span class="flaps hora" role="cell" data-txt="16:00"></span><span class="flaps" role="cell" data-txt="CENTEIO"></span></div>
+        <p class="painel-pe">Horários de exemplo</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WOW 2 -->
+  <section class="noite" id="noite" aria-labelledby="t-etapa">
+    <div class="noite-palco">
+      <div class="noite-ceu" aria-hidden="true"></div>
+      <div class="noite-brasa" aria-hidden="true"></div>
+      <div class="wrap noite-grade">
+        <div class="noite-info">
+          <div class="relogio-linha">
+            <svg class="relogio" viewBox="0 0 100 100" aria-hidden="true">
+              <circle class="face" cx="50" cy="50" r="46"/>
+              <g id="ticks"></g>
+              <line class="ponteiro" id="p-hora" x1="50" y1="50" x2="50" y2="27" stroke-width="5"/>
+              <line class="ponteiro" id="p-min" x1="50" y1="50" x2="50" y2="14" stroke-width="3"/>
+              <circle cx="50" cy="50" r="4" fill="currentColor"/>
+            </svg>
+            <span class="hora-digital" id="hora">22:00</span>
+          </div>
+          <div class="etapa" id="etapa" aria-live="polite">
+            <h2 id="t-etapa">A massa dorme</h2>
+            <p>Modelada e no cesto, ela passa a noite na geladeira. É aí que nasce o azedinho.</p>
+          </div>
+          <ol class="passos" id="passos" aria-hidden="true"><li class="on"></li><li></li><li></li><li></li></ol>
+        </div>
+        <div class="comparar" id="comparar">
+          <img class="massa" src="img/massa.jpg" alt="Mãos sovando a massa crua sobre a bancada enfarinhada" loading="lazy" width="1400" height="1050">
+          <img class="pao" src="img/pao-assado.jpg" alt="Pão de fermentação natural assado, com casca dourada e farinha por cima" loading="lazy" width="1400" height="1050">
+          <span class="fio" aria-hidden="true"></span>
+          <span class="legenda" id="legenda">Massa crua</span>
+        </div>
+      </div>
+      <p class="noite-dica" aria-hidden="true">Role pra virar a noite</p>
+    </div>
+  </section>
+
+  <!-- WOW 3 -->
+  <section class="cesta" id="cesta" aria-labelledby="t-cesta">
+    <div class="wrap">
+      <div class="cesta-cab">
+        <p class="rotulo">Encomenda pra retirar</p>
+        <h2 id="t-cesta">Monte sua cesta</h2>
+        <p>Arraste pra direita o que você quer e pra esquerda o que fica pra próxima. A comanda vai pronta pro WhatsApp.</p>
+      </div>
+      <div class="cesta-grade">
+        <div class="baralho">
+          <div class="pilha" id="pilha" tabindex="0" aria-label="Pães da vitrine. Use as setas: direita quero, esquerda passa."></div>
+          <div class="acoes-carta">
+            <button type="button" id="b-passa" aria-label="Passa">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <button type="button" id="b-quero" class="sim" aria-label="Quero">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></button>
+          </div>
+          <p class="dica-carta">Preços de exemplo</p>
+        </div>
+
+        <div class="comanda" aria-labelledby="t-comanda">
+          <h3 id="t-comanda">Sua comanda</h3>
+          <p class="sub">Retirada no balcão a partir das 7h</p>
+          <ul class="itens" id="itens"></ul>
+          <div class="total"><span>Total</span><span id="total">R$ 0,00</span></div>
+          <a class="btn" id="b-pedir" href="#" aria-disabled="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5 0-1 .3-3.5-.7-3-1.2-4.9-4.2-5-4.4-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.2.2-.3.4-.1.7.2.4.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.7 1.6.3.2.5.1.7-.1l1-1.2c.2-.3.5-.3.7-.2l2 1c.3.1.5.2.6.3.1.2.1.8-.1 1.5z"/></svg>
+            Encomendar pelo WhatsApp</a>
+          <p class="obrigado" id="obrigado" hidden>Comanda montada! Se o WhatsApp não abriu, toque no botão de novo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info" aria-labelledby="t-info">
+    <div class="wrap">
+      <div>
+        <h2 id="t-info">Passa aqui</h2>
+        <dl class="dados">
+          <div><dt>Horário</dt><dd>Terça a sábado, das 7h às 19h<br>Domingo, das 7h às 12h</dd></div>
+          <div><dt>Encomenda</dt><dd>Até as 18h do dia anterior, pelo WhatsApp</dd></div>
+          <div><dt>Endereço</dt><dd>Rua Exemplo, 123, Vila Mariana, São Paulo</dd></div>
+          <div><dt>Pagamento</dt><dd>Pix, cartão ou dinheiro no balcão</dd></div>
+        </dl>
+        <div class="acoes">
+          <a class="btn js-zap" data-msg="Oi! Queria tirar uma dúvida sobre a Fornalha." href="#">Pedir pelo WhatsApp</a>
+          <a class="btn btn--linha" href="https://www.google.com/maps/search/?api=1&amp;query=Vila+Mariana+S%C3%A3o+Paulo" target="_blank" rel="noopener">Como chegar</a>
+        </div>
+      </div>
+      <div>
+        <h2>Dúvidas</h2>
+        <details><summary>Preciso encomendar ou posso só passar aí?</summary><p>Pode passar. Mas o pão de fermentação natural costuma acabar cedo. Encomendando até as 18h do dia anterior, ele fica separado no seu nome.</p></details>
+        <details><summary>O que é fermentação natural?</summary><p>É o pão feito com levain, um fermento de farinha e água que a gente alimenta todo dia, sem fermento de pacote. A massa cresce devagar, por isso tem casca grossa, miolo aberto e aquele azedinho.</p></details>
+        <details><summary>Quanto tempo o pão dura?</summary><p>De 3 a 4 dias num saco de pano ou de papel, fora da geladeira. Pra durar mais, fatie e congele: vai direto do freezer pra torradeira.</p></details>
+        <details><summary>Vocês entregam?</summary><p>Por enquanto é só retirada no balcão, a partir das 7h.</p></details>
+        <details><summary>Tem opção sem leite?</summary><p>O de fermentação natural, o de centeio e o integral não levam leite nem manteiga. Pergunte no WhatsApp sobre os outros.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <p class="grande" aria-hidden="true">Fornalha</p>
+    <p><strong>Site demonstração da GuDev.</strong> A Fornalha é uma padaria fictícia: endereço, preços e horários são de exemplo, e as fotos são ilustrativas (Unsplash). Os pedidos deste demo chegam no WhatsApp da GuDev.</p>
+    <p>Quer um site assim pro seu negócio? Chama a GuDev no WhatsApp: <a class="js-zap" data-msg="Oi! Vi o demo da Fornalha e quero um site assim." href="#">(11) 96465-0141</a></p>
+  </div>
+</footer>
+
+<a class="zap js-zap" data-msg="Oi! Quero fazer uma encomenda na Fornalha." href="#" aria-label="Pedir pelo WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5 0-1 .3-3.5-.7-3-1.2-4.9-4.2-5-4.4-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.2.2-.3.4-.1.7.2.4.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.7 1.6.3.2.5.1.7-.1l1-1.2c.2-.3.5-.3.7-.2l2 1c.3.1.5.2.6.3.1.2.1.8-.1 1.5z"/></svg>
+</a>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
+<script>
+(function(){
+  "use strict";
+  var ZAP = "5511964650141";
+  var embed = /[?&]embed\b/.test(location.search);
+  var dentro = window.parent !== window;
+  var reduz = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var pc = window.matchMedia("(pointer:fine) and (min-width:900px)").matches;
+  var root = document.documentElement;
+  if (embed) root.classList.add("embed");
+  if (dentro) document.body.classList.add("dentro");
+
+  function linkZap(msg){ return "https://wa.me/" + ZAP + "?text=" + encodeURIComponent(msg); }
+  function reais(n){ return "R$ " + n.toFixed(2).replace(".", ","); }
+  function clamp(v,a,b){ return Math.min(b, Math.max(a, v)); }
+
+  document.querySelectorAll(".js-zap").forEach(function(a){
+    a.href = linkZap(a.dataset.msg);
+    a.target = "_blank"; a.rel = "noopener";
+  });
+
+  /* rolagem macia só no computador, fora da proposta */
+  var lenis = null;
+  if (pc && !dentro && !embed && !reduz && window.Lenis){
+    lenis = new Lenis({ lerp: 0.11 });
+    (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(0);
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener("click", function(e){
+        var alvo = document.querySelector(a.getAttribute("href"));
+        if (alvo && a.getAttribute("href").length > 1){ e.preventDefault(); lenis.scrollTo(alvo, { offset: -10 }); }
+      });
+    });
+  }
+
+  /* largura só muda de verdade quando gira o celular ou redimensiona a janela */
+  var larg = window.innerWidth, altura = window.innerHeight;
+  window.addEventListener("resize", function(){
+    if (window.innerWidth === larg) return;
+    larg = window.innerWidth; altura = window.innerHeight;
+    document.dispatchEvent(new Event("largura"));
+  });
+
+  /* ================= WOW 1: pincelada revela o pão + vapor ================= */
+  var saco = document.querySelector(".saco-papel");
+  var heroImg = document.getElementById("hero-img");
+  var cvPincel = saco.querySelector(".pincel");
+  var cvVapor = saco.querySelector(".vapor");
+
+  function pincelada(){
+    var r = saco.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = cvPincel.width = Math.round(r.width * dpr), H = cvPincel.height = Math.round(r.height * dpr);
+    var ctx = cvPincel.getContext("2d");
+    if (!ctx || !W) return;
+    ctx.fillStyle = "#f1e6d3"; ctx.fillRect(0, 0, W, H);
+    if (reduz){ cvPincel.style.opacity = "0"; return; }
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.lineCap = "round";
+    var passadas = 6, larguraPincel = H / passadas * 1.55, dur = 1500, t0 = null;
+    var cerdas = [];
+    for (var k = 0; k < passadas; k++){
+      var lista = [];
+      for (var b = 0; b < 26; b++){
+        lista.push({ off: (Math.random() - .5) * larguraPincel, w: (2 + Math.random() * 9) * dpr, a: .55 + Math.random() * .45, fim: .82 + Math.random() * .3, lx: null, ly: null });
+      }
+      cerdas.push(lista);
+    }
+    function ponto(k, u, c){
+      var ida = k % 2 === 0;
+      var x = (ida ? -0.08 + u * 1.16 : 1.08 - u * 1.16) * W;
+      var y = (k + .5) / passadas * H + (ida ? -1 : 1) * (u - .5) * H * .07 + c.off + Math.sin(u * 9 + c.off) * 2 * dpr;
+      return [x, y];
+    }
+    function quadro(t){
+      if (t0 === null) t0 = t;
+      var g = clamp((t - t0) / dur, 0, 1);
+      for (var k = 0; k < passadas; k++){
+        var u = clamp(g * passadas - k, 0, 1);
+        u = 1 - Math.pow(1 - u, 2);
+        cerdas[k].forEach(function(c){
+          var uu = Math.min(u, c.fim);
+          if (uu <= 0) return;
+          var p = ponto(k, uu, c);
+          if (c.lx !== null){
+            ctx.globalAlpha = c.a; ctx.lineWidth = c.w;
+            ctx.beginPath(); ctx.moveTo(c.lx, c.ly); ctx.lineTo(p[0], p[1]); ctx.stroke();
+          }
+          c.lx = p[0]; c.ly = p[1];
+        });
+      }
+      if (g < 1) requestAnimationFrame(quadro);
+      else setTimeout(function(){ cvPincel.style.opacity = "0"; }, 120);
+    }
+    setTimeout(function(){ requestAnimationFrame(quadro); }, 250);
+    setTimeout(function(){ cvPincel.style.opacity = "0"; }, dur + 1600); /* garantia */
+  }
+
+  function vapor(){
+    var ctx = cvVapor.getContext("2d"), W, H, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var parts = [], visivel = true, max = pc ? 34 : 18;
+    function medir(){ var r = saco.getBoundingClientRect(); W = cvVapor.width = Math.round(r.width * dpr); H = cvVapor.height = Math.round(r.height * dpr); }
+    medir(); document.addEventListener("largura", medir);
+    function nasce(){
+      return { x: W * (.3 + Math.random() * .4), y: H * (.24 + Math.random() * .04), r: W * (.03 + Math.random() * .03),
+               vx: (Math.random() - .5) * .25 * dpr, vy: -(.35 + Math.random() * .45) * dpr, vida: 0, max: 140 + Math.random() * 120, fase: Math.random() * 6 };
+    }
+    new IntersectionObserver(function(e){ visivel = e[0].isIntersecting; }).observe(saco);
+    function quadro(){
+      requestAnimationFrame(quadro);
+      if (!visivel || !ctx) return;
+      ctx.clearRect(0, 0, W, H);
+      if (parts.length < max && Math.random() < .35) parts.push(nasce());
+      for (var i = parts.length - 1; i >= 0; i--){
+        var p = parts[i];
+        p.vida++; p.y += p.vy; p.x += p.vx + Math.sin(p.vida / 28 + p.fase) * .35 * dpr; p.r *= 1.006;
+        if (p.vida > p.max || p.y < -p.r){ parts.splice(i, 1); continue; }
+        var a = Math.sin(Math.PI * p.vida / p.max) * .16;
+        var g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+        g.addColorStop(0, "rgba(255,250,240," + a + ")"); g.addColorStop(1, "rgba(255,250,240,0)");
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill();
+      }
+    }
+    requestAnimationFrame(quadro);
+  }
+
+  if (!embed){
+    var iniciaHero = function(){ pincelada(); if (!reduz) vapor(); };
+    if (heroImg.complete) iniciaHero();
+    else { heroImg.addEventListener("load", iniciaHero, { once: true }); heroImg.addEventListener("error", function(){}, { once: true }); }
+  }
+
+  /* ================= painel de fornadas (letras que viram) ================= */
+  var ALFA = "ABCDEFGHIJKLMNOPRSTUVZ0123456789";
+  var flapsTodos = [];
+  document.querySelectorAll("#painel .flaps").forEach(function(box){
+    var txt = box.dataset.txt;
+    box.setAttribute("aria-label", txt);
+    for (var i = 0; i < txt.length; i++){
+      var s = document.createElement("span");
+      s.className = "flap"; s.setAttribute("aria-hidden", "true");
+      s.textContent = txt[i] === " " ? "" : txt[i];
+      s.dataset.alvo = s.textContent;
+      box.appendChild(s);
+      flapsTodos.push(s);
+    }
+  });
+  function giraPainel(){
+    if (reduz || embed) return;
+    var passo = 0, voltas = flapsTodos.map(function(_, i){ return 4 + (i % 9) + Math.floor(Math.random() * 6); });
+    var id = setInterval(function(){
+      passo++;
+      var faltam = 0;
+      flapsTodos.forEach(function(s, i){
+        if (!s.dataset.alvo) return;
+        if (passo < voltas[i]){ faltam++; s.textContent = ALFA[(Math.random() * ALFA.length) | 0]; }
+        else if (s.textContent !== s.dataset.alvo){ s.textContent = s.dataset.alvo; }
+        else return;
+        s.classList.remove("vira"); void s.offsetWidth; s.classList.add("vira");
+      });
+      if (!faltam){ clearInterval(id); flapsTodos.forEach(function(s){ s.textContent = s.dataset.alvo; }); }
+    }, 70);
+    setTimeout(function(){ clearInterval(id); flapsTodos.forEach(function(s){ s.textContent = s.dataset.alvo; }); }, 3000);
+  }
+  var obsPainel = new IntersectionObserver(function(e){
+    if (e[0].isIntersecting){ obsPainel.disconnect(); giraPainel(); }
+  }, { threshold: .45 });
+  obsPainel.observe(document.getElementById("painel"));
+
+  /* ================= WOW 2: a noite do pão ================= */
+  var noite = document.getElementById("noite");
+  var palco = noite.querySelector(".noite-palco");
+  var etapaEl = document.getElementById("etapa");
+  var passosEl = document.querySelectorAll("#passos li");
+  var horaEl = document.getElementById("hora");
+  var legendaEl = document.getElementById("legenda");
+  var pHora = document.getElementById("p-hora"), pMin = document.getElementById("p-min");
+  var ticks = document.getElementById("ticks");
+  for (var t = 0; t < 12; t++){
+    var ln = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    ln.setAttribute("class", "tick"); ln.setAttribute("x1", 50); ln.setAttribute("y1", 8); ln.setAttribute("x2", 50); ln.setAttribute("y2", t % 3 ? 12 : 15);
+    ln.setAttribute("transform", "rotate(" + t * 30 + " 50 50)"); ticks.appendChild(ln);
+  }
+  var ETAPAS = [
+    { de: 0,   t: "A massa dorme",   p: "Modelada e no cesto, ela passa a noite na geladeira. É aí que nasce o azedinho." },
+    { de: .30, t: "O forno acorda",  p: "O forno de lastro esquenta até 250 °C. A pedra leva uma hora pra ficar no ponto." },
+    { de: .56, t: "Pestana e vapor", p: "Um corte de lâmina na massa, a pestana, e vapor no forno pra casca abrir bonita." },
+    { de: .82, t: "Casca estalando", p: "Sai do forno e estala enquanto esfria. Às 7h já está no balcão esperando você." }
+  ];
+  /* progresso → minutos do relógio (22:00 → 06:30) */
+  var HORAS = [[0, 1320], [.30, 1650], [.56, 1710], [.82, 1800], [1, 1830]];
+  /* progresso → cor do céu: noite, madrugada, forno, amanhecer, kraft */
+  var CEU = [[0, [15,20,36]], [.30, [24,22,44]], [.56, [52,28,36]], [.82, [150,74,40]], [1, [212,180,138]]];
+  function interp(tab, p){
+    for (var i = 1; i < tab.length; i++){
+      if (p <= tab[i][0]){
+        var a = tab[i-1], b = tab[i], u = (p - a[0]) / (b[0] - a[0] || 1);
+        if (Array.isArray(a[1])) return a[1].map(function(v, j){ return Math.round(v + (b[1][j] - v) * u); });
+        return a[1] + (b[1] - a[1]) * u;
+      }
+    }
+    return tab[tab.length - 1][1];
+  }
+  var idxAtual = 0, idxFila = null, trocando = false;
+  function mostraEtapa(i){
+    if (trocando){ idxFila = i; return; }
+    if (i === idxAtual) return;
+    trocando = true; idxAtual = i;
+    etapaEl.querySelector("h2").textContent = ETAPAS[i].t;
+    etapaEl.querySelector("p").textContent = ETAPAS[i].p;
+    passosEl.forEach(function(li, k){ li.classList.toggle("on", k <= i); });
+    etapaEl.classList.remove("troca"); void etapaEl.offsetWidth; etapaEl.classList.add("troca");
+    var fim = function(){
+      if (!trocando) return;
+      trocando = false;
+      if (idxFila !== null){ var n = idxFila; idxFila = null; mostraEtapa(n); }
+    };
+    etapaEl.addEventListener("animationend", fim, { once: true });
+    setTimeout(fim, 600); /* garantia */
+  }
+  function etapaPara(p){
+    /* folga de 4% pra cada lado da troca: parado no meio não fica piscando */
+    var folga = .04, i = idxFila !== null ? idxFila : idxAtual;
+    while (i < ETAPAS.length - 1 && p > ETAPAS[i + 1].de + folga) i++;
+    while (i > 0 && p < ETAPAS[i].de - folga) i--;
+    return i;
+  }
+  var ultimoP = -1;
+  function pintaNoite(p){
+    if (Math.abs(p - ultimoP) < .0005) return;
+    ultimoP = p;
+    var m = interp(HORAS, p) % 1440, h = Math.floor(m / 60), mi = Math.floor(m % 60 / 10) * 10;
+    horaEl.textContent = (h < 10 ? "0" : "") + h + ":" + (mi < 10 ? "0" : "") + mi;
+    pHora.setAttribute("transform", "rotate(" + ((m / 60) % 12) * 30 + " 50 50)");
+    pMin.setAttribute("transform", "rotate(" + (m % 60) * 6 + " 50 50)");
+    var c = interp(CEU, p);
+    palco.style.setProperty("--ceu", "rgb(" + c.join(",") + ")");
+    palco.style.setProperty("--tinta-noite", p > .93 ? "#1c1712" : "#f1e6d3");
+    var brasa = p < .45 ? 0 : p < .7 ? (p - .45) / .25 : p < .9 ? 1 - (p - .7) / .2 * .7 : .3 - (p - .9) * 3;
+    palco.style.setProperty("--brasa-op", clamp(brasa, 0, 1).toFixed(3));
+    var corte = clamp((p - .56) / .3, 0, 1);
+    palco.style.setProperty("--corte", (corte * 100).toFixed(2) + "%");
+    palco.style.setProperty("--fio-op", corte > 0 && corte < 1 ? 1 : 0);
+    palco.style.setProperty("--luz", (.5 + clamp(p / .56, 0, 1) * .45).toFixed(3));
+    palco.style.setProperty("--dica-op", p < .05 ? .7 : 0);
+    legendaEl.textContent = corte >= 1 ? "Pão assado" : corte > 0 ? "No forno" : "Massa crua";
+    mostraEtapa(etapaPara(p));
+  }
+  function progressoNoite(){
+    var r = noite.getBoundingClientRect();
+    var curso = r.height - altura;
+    return curso > 0 ? clamp(-r.top / curso, 0, 1) : 1;
+  }
+  if (embed){
+    pintaNoite(1);
+  } else {
+    var pedido = false;
+    var tick = function(){ pedido = false; pintaNoite(progressoNoite()); };
+    var pede = function(){ if (!pedido){ pedido = true; requestAnimationFrame(tick); } };
+    window.addEventListener("scroll", pede, { passive: true });
+    if (lenis) lenis.on("scroll", pede);
+    document.addEventListener("largura", pede);
+    setInterval(function(){ pintaNoite(progressoNoite()); }, 250); /* garantia */
+    pintaNoite(progressoNoite());
+  }
+
+  /* ================= WOW 3: monte sua cesta ================= */
+  var PRODUTOS = [
+    { id: "natural",  nome: "Fermentação natural", preco: 28, img: "img/natural.jpg",  alt: "Pão redondo de fermentação natural com corte em cruz", txt: "Casca grossa, miolo aberto e aquele azedinho. 800 g." },
+    { id: "croissant",nome: "Croissant",          preco: 12, img: "img/croissant.jpg",alt: "Croissants dourados numa assadeira", txt: "Folhado na manteiga, estala na primeira mordida." },
+    { id: "centeio",  nome: "Rústico de centeio",  preco: 32, img: "img/centeio.jpg",  alt: "Pão rústico de centeio fatiado numa tábua", txt: "Centeio e trigo. Fatiamos na hora se você pedir." },
+    { id: "canela",   nome: "Rolinho de canela",   preco: 14, img: "img/canela.jpg",   alt: "Rolinhos de canela vistos de cima", txt: "Enrolado com canela e açúcar mascavo." },
+    { id: "forma",    nome: "Pão de forma da casa",preco: 22, img: "img/forma.jpg",    alt: "Pão de forma fatiado, com miolo branco e macio", txt: "Macio, pra torrada e sanduíche. Sem conservante." },
+    { id: "integral", nome: "Integral com sementes",preco: 26, img: "img/integral.jpg", alt: "Pães integrais com sementes e ramos de trigo", txt: "Integral com girassol, linhaça e gergelim." },
+    { id: "cookie",   nome: "Cookie de chocolate", preco: 9,  img: "img/cookie.jpg",   alt: "Cookies de chocolate num cesto com papel", txt: "Borda crocante e meio mole no centro." }
+  ];
+  var porId = {}; PRODUTOS.forEach(function(p){ porId[p.id] = p; });
+  var fila = PRODUTOS.map(function(p){ return p.id; });
+  var cesta = {}; /* id → quantidade */
+  var pilha = document.getElementById("pilha");
+  var itensEl = document.getElementById("itens"), totalEl = document.getElementById("total");
+  var bPedir = document.getElementById("b-pedir"), obrigado = document.getElementById("obrigado");
+  var ocupado = false;
+
+  function criaCarta(p){
+    var c = document.createElement("article");
+    c.className = "carta"; c.dataset.id = p.id;
+    var img = document.createElement("img");
+    img.src = p.img; img.alt = p.alt; img.loading = "lazy"; img.width = 800; img.height = 1000; img.draggable = false;
+    var tx = document.createElement("div"); tx.className = "carta-txt";
+    var nm = document.createElement("div"); nm.className = "carta-nome";
+    var h = document.createElement("h3"); h.textContent = p.nome;
+    var pr = document.createElement("span"); pr.className = "preco"; pr.textContent = reais(p.preco);
+    nm.appendChild(h); nm.appendChild(pr);
+    var d = document.createElement("p"); d.textContent = p.txt;
+    tx.appendChild(nm); tx.appendChild(d);
+    var q = document.createElement("span"); q.className = "carimbo quero"; q.textContent = "Quero"; q.setAttribute("aria-hidden", "true");
+    var s = document.createElement("span"); s.className = "carimbo passa"; s.textContent = "Passa"; s.setAttribute("aria-hidden", "true");
+    c.appendChild(img); c.appendChild(tx); c.appendChild(q); c.appendChild(s);
+    return c;
+  }
+
+  function montaPilha(){
+    pilha.textContent = "";
+    if (!fila.length){
+      var fim = document.createElement("div"); fim.className = "pilha-fim";
+      var h = document.createElement("h3"); h.textContent = "Vitrine vista!";
+      var p = document.createElement("p"); p.textContent = Object.keys(cesta).length ? "Confira a comanda e mande pelo WhatsApp." : "Nada na cesta ainda. Quer ver de novo?";
+      var b = document.createElement("button"); b.type = "button"; b.className = "btn btn--linha"; b.textContent = "Ver a vitrine de novo";
+      b.addEventListener("click", function(){ fila = PRODUTOS.map(function(x){ return x.id; }); montaPilha(); pilha.focus(); });
+      fim.appendChild(h); fim.appendChild(p); fim.appendChild(b); pilha.appendChild(fim);
+      return;
+    }
+    var mostra = fila.slice(0, 3);
+    for (var i = mostra.length - 1; i >= 0; i--){
+      var c = criaCarta(porId[mostra[i]]);
+      c.style.transform = "translateY(" + i * 12 + "px) scale(" + (1 - i * .045) + ")";
+      c.style.zIndex = 10 - i;
+      if (i === 0){ c.classList.add("topo-carta"); arrasta(c); }
+      else c.setAttribute("aria-hidden", "true");
+      pilha.appendChild(c);
+    }
+  }
+
+  function arrasta(c){
+    var x0 = 0, y0 = 0, dx = 0, dy = 0, ativo = false, horizontal = null;
+    var q = c.querySelector(".quero"), s = c.querySelector(".passa");
+    function pos(){
+      c.style.transform = "translate(" + dx + "px," + dy * .25 + "px) rotate(" + dx * .06 + "deg)";
+      q.style.opacity = clamp(dx / 90, 0, 1); s.style.opacity = clamp(-dx / 90, 0, 1);
+    }
+    c.addEventListener("pointerdown", function(e){
+      if (ocupado) return;
+      ativo = true; horizontal = null; x0 = e.clientX; y0 = e.clientY; dx = dy = 0;
+      c.style.transition = "none";
+    });
+    c.addEventListener("pointermove", function(e){
+      if (!ativo) return;
+      var mx = e.clientX - x0, my = e.clientY - y0;
+      if (horizontal === null && (Math.abs(mx) > 6 || Math.abs(my) > 6)){
+        horizontal = Math.abs(mx) > Math.abs(my);
+        if (horizontal) { try { c.setPointerCapture(e.pointerId); } catch (_){} }
+        else { ativo = false; return; }
+      }
+      if (horizontal){ dx = mx; dy = my; pos(); }
+    });
+    function solta(){
+      if (!ativo) return;
+      ativo = false;
+      if (dx > 95) decide(true, c);
+      else if (dx < -95) decide(false, c);
+      else {
+        c.style.transition = "transform .45s cubic-bezier(.2,1.4,.4,1)";
+        dx = dy = 0; pos();
+      }
+    }
+    c.addEventListener("pointerup", solta);
+    c.addEventListener("pointercancel", solta);
+  }
+
+  function decide(quer, carta){
+    if (ocupado || !fila.length) return;
+    carta = carta || pilha.querySelector(".topo-carta");
+    if (!carta) return;
+    ocupado = true;
+    var id = fila.shift();
+    if (quer){ cesta[id] = (cesta[id] || 0) + 1; atualizaComanda(); }
+    var sinal = quer ? 1 : -1;
+    carta.querySelector(quer ? ".quero" : ".passa").style.opacity = 1;
+    carta.style.transition = reduz ? "opacity .25s ease" : "transform .42s cubic-bezier(.5,0,.75,0), opacity .42s";
+    if (reduz) carta.style.opacity = 0;
+    else carta.style.transform = "translate(" + sinal * 140 + "%, -4%) rotate(" + sinal * 24 + "deg)";
+    var pronto = false;
+    var segue = function(){ if (pronto) return; pronto = true; ocupado = false; montaPilha(); };
+    carta.addEventListener("transitionend", segue, { once: true });
+    setTimeout(segue, 520); /* garantia */
+  }
+
+  function atualizaComanda(){
+    itensEl.textContent = "";
+    var total = 0, linhas = [];
+    PRODUTOS.forEach(function(p){
+      var n = cesta[p.id]; if (!n) return;
+      total += n * p.preco;
+      linhas.push(n + "x " + p.nome + " (" + reais(n * p.preco) + ")");
+      var li = document.createElement("li");
+      var nm = document.createElement("span"); nm.className = "nome"; nm.textContent = p.nome;
+      var q = document.createElement("span"); q.className = "qtd";
+      var menos = document.createElement("button"); menos.type = "button"; menos.textContent = "−"; menos.setAttribute("aria-label", "Tirar um " + p.nome);
+      var num = document.createElement("span"); num.textContent = n;
+      var mais = document.createElement("button"); mais.type = "button"; mais.textContent = "+"; mais.setAttribute("aria-label", "Mais um " + p.nome);
+      menos.addEventListener("click", function(){ cesta[p.id]--; if (cesta[p.id] <= 0) delete cesta[p.id]; atualizaComanda(); });
+      mais.addEventListener("click", function(){ cesta[p.id]++; atualizaComanda(); });
+      q.appendChild(menos); q.appendChild(num); q.appendChild(mais);
+      var v = document.createElement("span"); v.textContent = reais(n * p.preco);
+      li.appendChild(nm); li.appendChild(q); li.appendChild(v);
+      itensEl.appendChild(li);
+    });
+    if (!linhas.length){
+      var vz = document.createElement("li"); vz.className = "vazia"; vz.textContent = "Ainda vazia. Arraste um pão pra direita.";
+      itensEl.appendChild(vz);
+      bPedir.setAttribute("aria-disabled", "true"); bPedir.href = "#";
+      obrigado.hidden = true;
+    } else {
+      bPedir.removeAttribute("aria-disabled");
+      bPedir.href = linkZap("Oi! Quero encomendar na Fornalha pra retirar:\n" + linhas.join("\n") + "\nTotal: " + reais(total) + "\nQue horas posso buscar?");
+      bPedir.target = "_blank"; bPedir.rel = "noopener";
+    }
+    totalEl.textContent = reais(total);
+  }
+  bPedir.addEventListener("click", function(e){
+    if (bPedir.getAttribute("aria-disabled") === "true"){ e.preventDefault(); return; }
+    obrigado.hidden = false;
+  });
+
+  document.getElementById("b-quero").addEventListener("click", function(){ decide(true); });
+  document.getElementById("b-passa").addEventListener("click", function(){ decide(false); });
+  pilha.addEventListener("keydown", function(e){
+    if (e.key === "ArrowRight"){ e.preventDefault(); decide(true); }
+    if (e.key === "ArrowLeft"){ e.preventDefault(); decide(false); }
+  });
+
+  montaPilha();
+  atualizaComanda();
+})();
+</script>
+</body>
+</html>
