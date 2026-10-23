@@ -71,6 +71,28 @@ Depois pergunte: **"isso ficaria igual pra qualquer pizzaria ou salão?"** Se fi
 - codepen.io/collection/BNMEYN: efeitos de rolagem limpos.
 - 21st.dev: componentes. Eles são em React, então reescreva em HTML/JS puro.
 
+### Sites "premium" (analisados em 23/10/2026)
+Os três usam GSAP + Lenis, igual a gente. Os dois que usam 3D (Three.js) são pesados demais pra comércio local: pegar a **ideia**, não a técnica.
+- **nfinitepaper.com/#technology** (o mais aproveitável):
+  - partículas que formam o produto (camadas de papel feitas de pontinhos) e mudam conforme rola;
+  - título gigante sobre fundo escuro, com a 2ª parte da frase em cinza ("Hundreds of layers / *by Spatial…*");
+  - **uma palavra-chave na cor de acento** dentro de um título branco ("**water-based** dispersion coatings");
+  - números grandes com legenda curta embaixo (">1000x / Thinner than a human hair");
+  - corte de seção escura → creme (#FFFAF6) com diagrama de linhas finas em órbita.
+  - Pra GuDev: versão leve em `<canvas>` 2D (pontinhos formando o logo, uma pizza, um copo de açaí, ~1500 pontos, menos no celular).
+- **aether1.ai**:
+  - fundo azul-noite quase preto (#050D15), muita sobra de espaço, título branco pequeno pro tamanho da tela (Manrope);
+  - texto técnico em fonte mono, entre colchetes: `[ DISCOVER SPECS ]`, `[ 100 ]`;
+  - título que aparece letra por letra, do apagado pro branco;
+  - menu em pílula no topo e um botão flutuante embaixo, no centro.
+  - Pra GuDev: o detalhe mono + colchetes e o menu em pílula servem em barbearia, estúdio, tattoo. O 3D e o som, não.
+- **alche.studio**:
+  - abertura com o logo desenhado em linhas finas de construção (grade, círculos, diagonais), preto puro e branco;
+  - frase pequena em mono no centro;
+  - lista de trabalhos com data, título e tags.
+  - Pra GuDev: logo do cliente "se desenhando" em SVG (`stroke-dasharray`) como intro curta (até 1,5 s, pular no `embed`).
+- **Não copiar:** tela "ativar som?", intro que trava a rolagem e 3D pesado. Comércio local é acessado no 4G pelo celular.
+
 ## Tipografia e cor
 - Sempre um par com personalidade, que combine com o negócio. Exemplos:
   - Pizzaria italiana: Playfair Display + Inter Tight.
