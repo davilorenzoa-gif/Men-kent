@@ -70,6 +70,7 @@ Depois pergunte: **"isso ficaria igual pra qualquer pizzaria ou salão?"** Se fi
 - naocodei.com/free-code: animações em JS puro (cartas empilhando, galeria horizontal, máscara, texto que preenche, cursor magnético).
 - codepen.io/collection/BNMEYN: efeitos de rolagem limpos.
 - 21st.dev: componentes. Eles são em React, então reescreva em HTML/JS puro.
+- originkit.dev: 700+ efeitos animados (texto, galeria, foto, fundo). Também em React. Licença e lista dos que valem a pena: `06-REFERENCIA-ORIGINKIT.md`.
 
 ## Tipografia e cor
 - Sempre um par com personalidade, que combine com o negócio. Exemplos:
