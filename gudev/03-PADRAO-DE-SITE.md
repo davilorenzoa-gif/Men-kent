@@ -66,7 +66,10 @@ Depois pergunte: **"isso ficaria igual pra qualquer pizzaria ou salão?"** Se fi
 - Antes de entregar, revisar e **tirar um enfeite**.
 
 ## Referências (olhar antes de criar)
-- motionsites.ai: composição de hero e acabamento.
+- motionsites.ai: composição de hero e acabamento. Olhar os previews é grátis. Copiar o prompt é pago (a partir de US$ 49), então não vale assinar.
+- cta.gallery: grátis. Botões e chamadas finais (filtros "Call-to-Buy", "Form", "Button"). Tem comida (pizza-amici, eatsnackish). Usar pra melhorar o bloco "Pedir pelo WhatsApp" e o fechamento da página.
+- unsection.com: grátis com cadastro. Seções separadas por tipo (Hero, Testimonials, Pricing, FAQs, Contact, Footer, Navbar). Usar quando travar numa seção específica. É quase tudo SaaS, então pegar a estrutura, não o visual.
+- 60fps.design: grátis pra explorar (o PRO custa US$ 15/mês e não precisa). Microanimações de apps: filtros "Effects" (Parallax, Blur, Morph, Spring) e "Elements" (Button, Toast, Tabs, Bottom Sheet). Boa fonte de ideia de WOW pequeno pro celular, mas recriar em JS puro.
 - naocodei.com/free-code: animações em JS puro (cartas empilhando, galeria horizontal, máscara, texto que preenche, cursor magnético).
 - codepen.io/collection/BNMEYN: efeitos de rolagem limpos.
 - 21st.dev: componentes. Eles são em React, então reescreva em HTML/JS puro.
