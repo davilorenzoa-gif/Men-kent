@@ -35,6 +35,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "PAI & FILHO" converge na rolagem;
   - uma comanda de serviços que vai pro WhatsApp.
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
+- **Faixa Vermelha** (demo de garagem de seminovos, `sites/faixa-vermelha`):
+  - portão de aço que sobe e fluorescentes que piscam até acender;
+  - vitrine com placa Mercosul trocando letra por letra e odômetro de tambor;
+  - alavanca de câmbio em H que monta a proposta pro WhatsApp.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
