@@ -39,3 +39,9 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 
 ## Manter atualizado
 Quando algo mudar (cliente fechou, preço mudou), atualizar o arquivo correspondente em `gudev/` e o resumo acima.
+
+## Fora da GuDev: `Vídeos Davi/`
+- Edições de vídeo pessoais do Davi. Não é GuDev: nunca usar como case nem divulgar pela GuDev.
+- Quando o Davi pedir edição de vídeo, ler primeiro `Vídeos Davi/README.md`. Lá estão o passo a passo e as ferramentas pra recriar uma edição estilo TikTok a partir de um vídeo de referência: recorte de fundo das fotos, fontes, transições e sincronia com a música.
+- Cada edição nova ganha uma pasta própria lá dentro, com vídeo final, recortes, script e README.
+- Pode servir no futuro pros vídeos de 15s de prospecção da GuDev.
