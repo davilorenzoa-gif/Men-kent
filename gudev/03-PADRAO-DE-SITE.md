@@ -73,6 +73,9 @@ Depois pergunte: **"isso ficaria igual pra qualquer pizzaria ou salão?"** Se fi
 - naocodei.com/free-code: animações em JS puro (cartas empilhando, galeria horizontal, máscara, texto que preenche, cursor magnético).
 - codepen.io/collection/BNMEYN: efeitos de rolagem limpos.
 - 21st.dev: componentes. Eles são em React, então reescreva em HTML/JS puro.
+- gsap.com: o GSAP ficou 100% grátis em 2025, depois da compra pelo Webflow, incluindo os plugins que eram pagos. Os principais são SplitText (texto que entra letra por letra ou linha por linha), MorphSVG (uma forma vira outra) e ScrollSmoother. Estão no cdnjs na versão 3.13.0. Se usar plugin, carregar o `gsap` e o `ScrollTrigger` da mesma 3.13.0, nunca misturando com a 3.12.5. A vitrine (gsap.com/showcase) é boa fonte de ideia de WOW de rolagem.
+- motion.dev: grátis, funciona em HTML puro (`animate`, `scroll`, `inView`) e é bem leve. Não precisa, porque o GSAP já cobre tudo. Não colocar as duas bibliotecas no mesmo site. Serve pra olhar exemplos de animação de blocos.
+- threejs.org: 3D grátis. Pesa e esquenta celular fraco. Comida nunca em 3D (ver abaixo). Só vale pra um fundo abstrato leve, e mesmo assim desligado no celular. Na prática, quase nunca.
 
 ## Tipografia e cor
 - Sempre um par com personalidade, que combine com o negócio. Exemplos:
