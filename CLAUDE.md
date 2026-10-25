@@ -12,6 +12,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `gudev/03-PADRAO-DE-SITE.md` — 3 WOWs, filtro anti-"cara de IA", regras de celular, segurança, checklist de 19 itens
 - `gudev/04-HISTORICO-CLIENTES.md` — cada lead e cliente até agora
 - `gudev/05-LICOES-E-BUGS.md` — erros que já aconteceram
+- `gudev/06-CANVA-TRUQUES.md` — Canva: transições Combinar/Fluxo, efeito vidro, o que o conector faz vs. clique manual
 - `gudev/exemplos/*.html` — sites reais (Açaí Happy, Chersoni, Dellart): nível mínimo de qualidade
 
 ## Resumo rápido
