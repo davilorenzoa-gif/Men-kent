@@ -1,4 +1,4 @@
-# Histórico de leads e clientes (atualizado em 20/10/2026)
+# Histórico de leads e clientes (atualizado em 27/10/2026)
 
 Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o primeiro fechar, ele entra lá.
 
@@ -43,6 +43,18 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - Agendamento pelo AppBarber, com 40 serviços e uma equipe de 8.
   - WhatsApp: 5579999100181.
 - **Andamento:** pediu prévia em 19/10 e a prévia foi enviada. Pediram "cara de 10k".
+
+## Santo Mimo By Hanna, Vila Matilde, São Paulo (Zona Leste) · lead do Davi
+- **Dados:** cafeteria, $$ no Google. Nota 4,9 no Google segundo o Restaurant Guru (**conferir no Maps**).
+  - Endereço: Rua José Mascarenhas, 1063, CEP 03515-000.
+  - WhatsApp: (11) 97430-8633 ("responde rapidamente" no Google).
+  - Instagram: @santomimobyhanna (~5 mil seguidores). Faz "doces inclusivos" e entrega pelo iFood.
+  - Horário: terça 8h30 às 18h45 (Maps). Segunda 10h às 18h (Instagram). O resto a confirmar.
+  - Logo: selo redondo branco, "Santo" dourado em letra de mão, "Mimo" rosado, batedor com asinhas, "Um doce para você".
+- **O negócio:** café com doces, sobremesas, donuts e tortas salgadas. Clientes elogiam ambiente pequeno e aconchegante, bolos e atendimento.
+- **Site (27/10/2026):** `sites/santo-mimo/`. Caixinha que se abre, zoom-out da xícara pra vitrine, "Mande um mimo".
+  - Fotos de produto ainda são ilustrativas (Pexels). Pedir as fotos da casa pra trocar (lista no README do site).
+- **Andamento:** prévia pronta, ainda não enviada.
 
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.

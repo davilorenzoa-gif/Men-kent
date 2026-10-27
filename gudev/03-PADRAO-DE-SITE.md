@@ -35,6 +35,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "PAI & FILHO" converge na rolagem;
   - uma comanda de serviços que vai pro WhatsApp.
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
+- **Santo Mimo by Hanna** (cafeteria/confeitaria):
+  - o site abre como uma caixinha de presente: o laço dourado se desfaz, a tampa sobe e o selo (logo) voa pro topo;
+  - zoom-out da xícara: começa com um café em tela cheia e a câmera se afasta até mostrar a vitrine (grade 3x3);
+  - "Mande um mimo": bilhete escrito à mão ao vivo + doces + ocasião (cor da fita) que vira pedido no WhatsApp.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
