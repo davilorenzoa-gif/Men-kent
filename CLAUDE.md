@@ -20,7 +20,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - WhatsApp comercial (Davi): (11) 96465-0141. Venda 100% pelo WhatsApp.
 - Hospedagem no Netlify da GuDev (`proposta-<nome>.netlify.app` → `<nome>.netlify.app`); domínio no nome do cliente no registro.br.
 - Prospecção: até 20 mensagens novas/dia por pessoa, blocos de 5 a cada ~30 min. Nunca disparo em massa. 1º contato manda vídeo de 15s, não link.
-- Nenhum cliente fechou ainda (20/10/2026) → seção de cases vazia. Prumo e Peçaí são demos, nunca case.
+- Nenhum cliente fechou ainda (20/10/2026) → seção de cases vazia. Prumo, Peçaí e Lustro são demos, nunca case.
 
 ## Regras que nunca quebram
 - Nunca inventar avaliação, depoimento, cliente, número ou caso. Só dados reais (Google Maps, Instagram, cardápio).

@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lustro Estúdio Automotivo</title>
+<meta name="description" content="Projeto conceito GuDev: estúdio de estética automotiva. Role a tela pra lavar o carro, veja a pintura de perto e monte seu agendamento pelo WhatsApp.">
+<meta name="theme-color" content="#15181B">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lustro Estúdio Automotivo">
+<meta property="og:description" content="Role a tela pra lavar o carro e monte seu agendamento pelo WhatsApp.">
+<meta property="og:image" content="https://proposta-lustro.netlify.app/img/og.jpg">
+<meta property="og:url" content="https://proposta-lustro.netlify.app/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://proposta-lustro.netlify.app/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2315181B'/%3E%3Crect x='14' y='5' width='4' height='22' rx='2' fill='%23F4F7F9'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="preload" as="image" href="img/lavagem/001.webp">
+<!-- Analytics: o Gu liga o GoatCounter aqui quando subir no Netlify -->
+<style>
+:root{
+  /* Layout: estúdio de lavagem. Faixas escuras com vídeo alternam com faixas claras cor de espuma;
+     o tubo de LED que lava o carro no topo é o fio que guia a página (dica de rolagem, linha dos serviços, gaveta). */
+  --grafite:#15181B;      /* parede do estúdio */
+  --asfalto:#22272C;      /* gaveta e superfícies */
+  --espuma:#E7EBED;       /* faixas claras */
+  --nevoa:#8B949B;        /* texto de apoio no escuro */
+  --ambar:#F2A33A;        /* pôr do sol da garagem: só nas ações */
+  --ambar-claro:#FFB95C;
+  --led:#F4F7F9;          /* luz do tubo e texto no escuro */
+  --tinta:#15181B;        /* texto no claro */
+  --tinta-2:#3E464D;
+  --linha:rgba(21,24,27,.16);
+  --zap:#1FAF5A;
+  --f-titulo:"Big Shoulders Display","Arial Narrow","Roboto Condensed",Impact,sans-serif;
+  --f-texto:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --gut-l:max(20px,env(safe-area-inset-left,0px));
+  --gut-r:max(20px,env(safe-area-inset-right,0px));
+  --topo:72px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--grafite);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--grafite);color:var(--led);font:400 1rem/1.55 var(--f-texto);overflow-x:clip;-webkit-font-smoothing:antialiased}
+img,video,canvas{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--ambar);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.miolo{padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.titulo{font-family:var(--f-titulo);font-weight:900;text-transform:uppercase;line-height:.86;letter-spacing:-.003em;margin:0;text-wrap:balance}
+
+/* topo */
+.topo{position:fixed;inset:0 0 auto;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:calc(env(safe-area-inset-top,0px) + 14px) var(--gut-r) 14px var(--gut-l);transition:background-color .3s}
+.topo.solido{background:rgba(21,24,27,.74);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.marca{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:900 1.7rem/1 var(--f-titulo);letter-spacing:.1em;color:var(--led)}
+.marca i{width:4px;height:26px;border-radius:2px;background:var(--led);box-shadow:0 0 10px 2px rgba(244,247,249,.65)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 1.4em;border-radius:999px;border:0;
+  font:600 1rem/1 var(--f-texto);text-decoration:none;cursor:pointer;transition:background-color .2s,transform .2s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn.ambar{background:var(--ambar);color:var(--tinta)}
+.btn.ambar:hover{background:var(--ambar-claro)}
+.topo .btn{min-height:42px;padding:0 1.1em;font-size:.92rem}
+
+/* WOW 1: a rolagem lava o carro */
+.alta{position:relative}
+#lavagem{height:400vh}
+.palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--grafite)}
+.tela{position:absolute;inset:0}
+.tela canvas{position:absolute;inset:0;width:100%;height:100%;transition:opacity .3s}
+.tela::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(21,24,27,.8) 0%,rgba(21,24,27,.3) 42%,rgba(21,24,27,0) 66%),linear-gradient(0deg,rgba(21,24,27,.72) 0%,rgba(21,24,27,0) 42%)}
+.legendas{position:absolute;left:var(--gut-l);right:var(--gut-r);bottom:12vh;max-width:46rem;margin-left:max(0px,calc(6vw - 20px))}
+.leg{position:absolute;left:0;right:0;bottom:0}
+.leg .titulo{font-size:clamp(3.4rem,8.4vw,8.6rem)}
+.leg p{max-width:30rem;margin:18px 0 0;font-size:clamp(1rem,1.25vw,1.15rem);color:rgba(244,247,249,.84)}
+.leg .btn{margin-top:26px}
+#c2,#c3{opacity:0;visibility:hidden}
+.tarja{display:inline-block;background:var(--ambar);color:var(--tinta);padding:.04em .12em .07em;transform:rotate(-2deg);margin-left:.05em}
+.dica{display:flex;align-items:center;gap:12px;margin-top:26px;font-size:.92rem;color:var(--nevoa)}
+.dica i{position:relative;width:4px;height:40px;border-radius:2px;background:rgba(244,247,249,.14);overflow:hidden}
+.dica i::after{content:"";position:absolute;left:0;right:0;top:-40%;height:40%;border-radius:2px;background:var(--led);box-shadow:0 0 8px var(--led);animation:desce 1.8s ease-in-out infinite}
+@keyframes desce{to{top:100%}}
+.ilus{position:absolute;right:var(--gut-r);bottom:calc(14px + env(safe-area-inset-bottom,0px));font-size:.72rem;color:rgba(244,247,249,.5);pointer-events:none}
+
+/* serviços */
+.claro{background:var(--espuma);color:var(--tinta)}
+.bloco{padding-block:clamp(72px,11vw,140px)}
+.cab{display:grid;gap:16px;max-width:1180px;margin:0 auto clamp(36px,5vw,56px)}
+.cab .titulo{font-size:clamp(2.9rem,6.4vw,5.8rem)}
+.cab p{margin:0;max-width:34rem;font-size:1.08rem;color:var(--tinta-2)}
+.servicos{list-style:none;margin:0 auto;padding:0;max-width:1180px}
+.servicos li{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px 40px;padding:30px 0 30px 26px;border-top:1px solid var(--linha)}
+.servicos li:last-child{border-bottom:1px solid var(--linha)}
+.servicos li::before{content:"";position:absolute;left:0;top:32px;bottom:32px;width:4px;border-radius:2px;background:var(--linha);transition:background-color .3s,box-shadow .3s}
+.servicos li:hover::before,.servicos li:focus-within::before{background:var(--ambar);box-shadow:0 0 14px rgba(242,163,58,.75)}
+.problema{font:800 clamp(1.9rem,3.5vw,3rem)/.95 var(--f-titulo);text-transform:uppercase;margin:0;text-wrap:balance}
+.solucao h3{font:600 1.12rem/1.3 var(--f-texto);margin:0 0 6px}
+.solucao p{margin:0 0 16px;color:var(--tinta-2);max-width:32rem}
+.add{min-height:44px;padding:0 1.15em;border-radius:999px;border:1.5px solid var(--tinta);background:transparent;color:var(--tinta);font:600 .92rem/1 var(--f-texto);cursor:pointer;transition:background-color .2s,color .2s}
+.add:hover{background:var(--tinta);color:var(--espuma)}
+
+/* WOW 2: lupa que abre na pintura */
+#perto{height:280vh}
+.fundo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:brightness(.5) saturate(.9)}
+.lente{position:absolute;inset:0;clip-path:circle(0px at 50% 50%);transition:opacity .35s}
+.lente video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lente::after{content:"";position:absolute;inset:0;opacity:var(--escuro,0);
+  background:linear-gradient(90deg,rgba(21,24,27,.82) 0%,rgba(21,24,27,.35) 45%,rgba(21,24,27,0) 70%),linear-gradient(0deg,rgba(21,24,27,.6),rgba(21,24,27,0) 45%)}
+.anel{position:absolute;left:0;top:0;width:0;height:0;border-radius:50%;border:2px solid rgba(244,247,249,.92);pointer-events:none;
+  box-shadow:0 0 0 1px rgba(21,24,27,.35),0 0 34px rgba(244,247,249,.35)}
+.pt{position:absolute;left:var(--gut-l);right:var(--gut-r);bottom:11vh;max-width:46rem;margin-left:max(0px,calc(6vw - 20px))}
+.pt .titulo{font-size:clamp(3.2rem,7.6vw,7.6rem)}
+.pt p{max-width:28rem;margin:16px 0 0;font-size:clamp(1rem,1.25vw,1.15rem);color:rgba(244,247,249,.84)}
+#p2{opacity:0;visibility:hidden}
+.etapas{list-style:none;display:grid;gap:12px;margin:24px 0 0;padding:0;max-width:31rem}
+.etapas li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;color:rgba(244,247,249,.86)}
+.etapas b{font:800 1.25rem/1.25 var(--f-titulo);color:var(--ambar)}
+.etapas strong{color:var(--led);font-weight:600}
+
+/* WOW 3: garagem + gaveta de agendamento */
+.cena{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;background:var(--grafite)}
+.midia{position:absolute;inset:0}
+.midia video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.midia::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(21,24,27,.86) 0%,rgba(21,24,27,.4) 40%,rgba(21,24,27,0) 64%),linear-gradient(0deg,rgba(21,24,27,.7) 0%,rgba(21,24,27,0) 40%)}
+.cena-texto{position:relative;width:100%;padding-block:0 13vh}
+.cena-texto>div{max-width:44rem;margin-left:max(0px,calc(6vw - 20px))}
+.cena-texto .titulo{font-size:clamp(3.2rem,7.4vw,7.4rem)}
+.cena-texto p{max-width:29rem;margin:18px 0 0;font-size:clamp(1rem,1.25vw,1.15rem);color:rgba(244,247,249,.86)}
+.cena-texto .btn{margin-top:26px}
+.passos{list-style:none;display:flex;flex-wrap:wrap;gap:10px 28px;padding:0;margin:30px 0 0}
+.passos li{display:flex;align-items:baseline;gap:9px;font-size:.96rem;color:rgba(244,247,249,.86)}
+.passos b{font:800 1.3rem/1 var(--f-titulo);color:var(--ambar)}
+.cena .ilus{bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+
+.veu{position:fixed;inset:0;z-index:40;background:rgba(8,10,12,.58);opacity:0;transition:opacity .35s}
+.veu.on{opacity:1}
+.gaveta{position:fixed;z-index:50;top:0;right:0;bottom:0;width:min(460px,100%);display:flex;flex-direction:column;background:var(--asfalto);color:var(--led);
+  box-shadow:-30px 0 80px rgba(0,0,0,.45);transform:translateX(104%);visibility:hidden;
+  transition:transform .55s cubic-bezier(.2,.8,.2,1),visibility 0s linear .55s}
+.gaveta.on{transform:none;visibility:visible;transition:transform .55s cubic-bezier(.2,.8,.2,1),visibility 0s}
+.tubo{position:absolute;left:14px;top:26px;bottom:26px;width:4px;border-radius:2px;background:rgba(244,247,249,.1)}
+.tubo i{position:absolute;left:0;right:0;top:0;height:0;border-radius:2px;background:var(--led);box-shadow:0 0 12px 2px rgba(244,247,249,.55);transition:height .5s cubic-bezier(.2,.8,.2,1),background-color .3s,box-shadow .3s}
+.tubo.cheio i{background:var(--ambar);box-shadow:0 0 14px 3px rgba(242,163,58,.6)}
+.g-cab{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 24px) max(22px,env(safe-area-inset-right,0px)) 10px 38px}
+.g-cab .titulo{font-size:2.3rem;line-height:.9}
+.fechar{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid rgba(244,247,249,.24);background:transparent;color:var(--led);font-size:1.5rem;line-height:1;cursor:pointer}
+.rolagem{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:8px max(22px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 24px) 38px}
+fieldset{border:0;margin:0 0 24px;padding:0;min-width:0}
+legend{font:800 1.3rem/1 var(--f-titulo);text-transform:uppercase;letter-spacing:.02em;margin:0 0 12px;padding:0}
+fieldset.erro legend{color:var(--ambar)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips+.chips{margin-top:10px}
+.chips button{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid rgba(244,247,249,.26);background:transparent;color:var(--led);font:500 .95rem/1 var(--f-texto);cursor:pointer;transition:background-color .2s,color .2s,border-color .2s}
+.chips button:hover{border-color:var(--led)}
+.chips button[aria-pressed="true"]{background:var(--led);color:var(--tinta);border-color:var(--led)}
+.dias button{display:grid;place-items:center;gap:3px;min-width:60px;padding:8px 10px;border-radius:14px}
+.dias small{font-size:.74rem;opacity:.75}
+.campo{display:grid;gap:6px;margin-top:14px}
+.campo span{font-size:.86rem;color:var(--nevoa)}
+.campo input{width:100%;min-height:48px;padding:0 14px;border-radius:12px;border:1px solid rgba(244,247,249,.22);background:rgba(0,0,0,.2);color:var(--led);font:500 1rem var(--f-texto)}
+.campo input::placeholder{color:rgba(244,247,249,.38)}
+.resumo{margin:4px 0 0;padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.2);font-size:.95rem;color:rgba(244,247,249,.88)}
+.falta{min-height:1.5em;margin:10px 0 8px;font-size:.92rem;color:var(--ambar)}
+.enviar{width:100%}
+.nota{display:block;margin-top:12px;font-size:.78rem;color:var(--nevoa)}
+.feito{display:grid;justify-items:center;align-content:center;text-align:center;gap:14px;min-height:100%;padding-bottom:40px}
+.feito svg{width:96px;height:96px}
+.feito circle,.feito path{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.feito circle{stroke:rgba(244,247,249,.2)}
+.feito path{stroke:var(--ambar);stroke-dasharray:60;stroke-dashoffset:0}
+.feito.anima path{animation:risca .7s .15s cubic-bezier(.6,0,.2,1) both}
+@keyframes risca{from{stroke-dashoffset:60}}
+.feito .titulo{font-size:3rem}
+.feito p{margin:0;max-width:22rem;color:rgba(244,247,249,.86)}
+.feito a{color:var(--ambar);font-weight:600}
+.link{background:none;border:0;padding:0;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:inherit}
+
+/* dúvidas */
+.faq{max-width:860px;margin:0 auto}
+.faq details{border-top:1px solid var(--linha)}
+.faq details:last-child{border-bottom:1px solid var(--linha)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;font:600 1.12rem/1.35 var(--f-texto)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;font:400 1.7rem/1 var(--f-texto);transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:0 0 24px;max-width:40rem;color:var(--tinta-2)}
+#duvidas .cab{max-width:860px}
+
+/* rodapé */
+.rodape{padding-block:56px calc(40px + env(safe-area-inset-bottom,0px));display:grid;gap:22px;max-width:1240px;margin:0 auto}
+.rodape p{margin:0;max-width:44rem;font-size:.86rem;color:var(--nevoa)}
+.rodape .links{display:flex;flex-wrap:wrap;gap:12px 26px;font-size:.92rem}
+.rodape .links a{text-underline-offset:3px}
+dialog{max-width:min(520px,calc(100% - 32px));border:0;border-radius:18px;padding:28px;background:var(--asfalto);color:var(--led)}
+dialog::backdrop{background:rgba(8,10,12,.6)}
+dialog .titulo{font-size:2.2rem;margin-bottom:12px}
+dialog p{margin:0 0 14px;color:rgba(244,247,249,.86)}
+dialog .btn{margin-top:6px}
+
+.zap{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:25;width:58px;height:58px;border-radius:50%;
+  background:var(--zap);display:none;place-items:center;box-shadow:0 10px 26px rgba(0,0,0,.4)}
+
+/* celular e telas em pé: o vídeo vira uma faixa e o texto vem embaixo */
+@media (max-width:760px),(max-aspect-ratio:1/1){
+  :root{--topo:64px}
+  .topo{padding-top:calc(env(safe-area-inset-top,0px) + 10px);padding-bottom:10px}
+  .marca{font-size:1.5rem}
+  #lavagem{height:330vh}
+  /* faixa do vídeo + legenda centralizadas na altura da tela (sem sobrar buraco embaixo) */
+  .tela{inset:auto 0;height:auto;aspect-ratio:3/2;
+    top:max(calc(env(safe-area-inset-top,0px) + var(--topo) + 4px),calc((100vh - 66.7vw - 250px) / 2));
+    top:max(calc(env(safe-area-inset-top,0px) + var(--topo) + 4px),calc((100svh - 66.7vw - 250px) / 2))}
+  .tela::after{background:linear-gradient(180deg,var(--grafite) 0%,rgba(21,24,27,0) 14%,rgba(21,24,27,0) 78%,var(--grafite) 100%)}
+  .legendas{bottom:auto;margin-left:0;
+    top:calc(max(calc(env(safe-area-inset-top,0px) + var(--topo) + 4px),calc((100vh - 66.7vw - 250px) / 2)) + 66.7vw + 18px);
+    top:calc(max(calc(env(safe-area-inset-top,0px) + var(--topo) + 4px),calc((100svh - 66.7vw - 250px) / 2)) + 66.7vw + 18px)}
+  .leg{top:0;bottom:auto}
+  .leg .titulo{font-size:clamp(3rem,14vw,5.4rem)}
+  .leg p{margin-top:12px}
+  .leg .btn,.dica{margin-top:20px}
+  #lavagem .ilus{bottom:auto;
+    top:calc(max(calc(env(safe-area-inset-top,0px) + var(--topo) + 4px),calc((100vh - 66.7vw - 250px) / 2)) + 66.7vw - 26px);
+    top:calc(max(calc(env(safe-area-inset-top,0px) + var(--topo) + 4px),calc((100svh - 66.7vw - 250px) / 2)) + 66.7vw - 26px)}
+  .lente::after{background:linear-gradient(0deg,rgba(21,24,27,.9) 0%,rgba(21,24,27,.6) 48%,rgba(21,24,27,0) 78%)}
+  .rodape{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  .servicos li{grid-template-columns:minmax(0,1fr);padding-left:22px}
+  #perto{height:240vh}
+  .fundo{object-position:34% 50%}
+  .pt .titulo{font-size:clamp(2.8rem,13vw,5rem)}
+  .cena{display:block;min-height:0}
+  .midia{position:relative;aspect-ratio:16/11}
+  .midia::after{background:linear-gradient(180deg,rgba(21,24,27,0) 55%,var(--grafite) 100%)}
+  .cena-texto{padding-block:6px 72px}
+  .cena-texto>div{margin-left:0}
+  .cena-texto .titulo{font-size:clamp(2.8rem,13vw,5rem)}
+  .cena .ilus{bottom:auto;top:12px}
+  .gaveta{top:auto;left:0;width:100%;height:min(92svh,100%);border-radius:22px 22px 0 0;transform:translateY(104%);box-shadow:0 -20px 60px rgba(0,0,0,.45)}
+  .g-cab{padding-top:22px}
+  .zap{display:grid}
+}
+@media (max-width:420px){ .topo .btn{padding:0 .9em;font-size:.86rem} }
+
+html.g-aberta{overflow:hidden}
+html.g-aberta .zap{display:none}
+.dentro .zap,.embed .zap{display:none!important}
+
+/* captura estática da proposta */
+.embed .alta{height:auto!important}
+.embed .palco{position:relative}
+.embed .dica i::after{animation:none;top:30%}
+
+@media (prefers-reduced-motion:reduce){
+  .dica i::after{animation:none;top:30%}
+  .gaveta,.gaveta.on{transform:none;opacity:0;transition:opacity .25s,visibility 0s linear .25s}
+  .gaveta.on{opacity:1;transition:opacity .25s,visibility 0s}
+  .feito.anima path{animation:none}
+  .tubo i{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="topo" id="topo">
+  <a class="marca" href="#lavagem" aria-label="Lustro, voltar ao início"><i aria-hidden="true"></i>LUSTRO</a>
+  <a class="btn ambar" href="#agendar" data-abre>Montar agendamento</a>
+</header>
+
+<main>
+  <!-- WOW 1: a rolagem passa o tubo de luz e lava o carro -->
+  <section class="alta" id="lavagem" aria-label="Antes e depois da lavagem">
+    <div class="palco">
+      <div class="tela"><canvas id="quadro" role="img" aria-label="Porsche 911 vermelho coberto de barro sendo lavado por um tubo de luz até ficar brilhando"></canvas></div>
+      <div class="legendas">
+        <div class="leg" id="c1">
+          <h1 class="titulo"><span class="sr">Lustro Estúdio Automotivo. </span>Chegou sujo?</h1>
+          <p>Barro de estrada, poeira, marca de chuva. Pode trazer do jeito que está.</p>
+          <div class="dica"><i aria-hidden="true"></i>Role a tela</div>
+        </div>
+        <div class="leg" id="c2">
+          <h2 class="titulo">Role pra <span class="tarja">lavar.</span></h2>
+          <p>Espuma, pincel nos vãos e secagem com toalha, feito à mão.</p>
+        </div>
+        <div class="leg" id="c3">
+          <h2 class="titulo">Saiu assim.</h2>
+          <p>Lavagem detalhada, polimento e vitrificação em estúdio, com luz pra enxergar cada detalhe da pintura.</p>
+          <a class="btn ambar" href="#agendar" data-abre>Montar agendamento</a>
+        </div>
+      </div>
+      <span class="ilus">Vídeo ilustrativo gerado por IA</span>
+    </div>
+  </section>
+
+  <section class="claro bloco miolo" id="servicos" aria-labelledby="t-servicos">
+    <div class="cab">
+      <h2 class="titulo" id="t-servicos">Escolha pelo problema.</h2>
+      <p>Você não precisa saber o nome do serviço. Diga o que está incomodando no carro e a gente resolve.</p>
+    </div>
+    <ul class="servicos">
+      <li>
+        <p class="problema">Tá sujo de verdade.</p>
+        <div class="solucao">
+          <h3>Lavagem detalhada</h3>
+          <p>Espuma, pincel nos vãos, roda limpa por dentro e secagem com toalha, sem marca de água.</p>
+          <button class="add" type="button" data-abre data-servico="Lavagem detalhada">Incluir no agendamento</button>
+        </div>
+      </li>
+      <li>
+        <p class="problema">A pintura perdeu o brilho.</p>
+        <div class="solucao">
+          <h3>Polimento técnico</h3>
+          <p>Tira micro-riscos e marcas de lavagem e devolve a cor e o reflexo da pintura.</p>
+          <button class="add" type="button" data-abre data-servico="Polimento técnico">Incluir no agendamento</button>
+        </div>
+      </li>
+      <li>
+        <p class="problema">Quero que o brilho dure.</p>
+        <div class="solucao">
+          <h3>Vitrificação</h3>
+          <p>Uma camada que protege a pintura, faz a água escorrer e deixa a próxima lavagem bem mais fácil.</p>
+          <button class="add" type="button" data-abre data-servico="Vitrificação">Incluir no agendamento</button>
+        </div>
+      </li>
+      <li>
+        <p class="problema">Por dentro tem cheiro de lanche.</p>
+        <div class="solucao">
+          <h3>Higienização interna</h3>
+          <p>Bancos, carpete, teto e saídas de ar limpos a fundo, do painel ao porta-malas.</p>
+          <button class="add" type="button" data-abre data-servico="Higienização interna">Incluir no agendamento</button>
+        </div>
+      </li>
+      <li>
+        <p class="problema">O farol ficou amarelado.</p>
+        <div class="solucao">
+          <h3>Revitalização de faróis</h3>
+          <p>Lixa, polimento e proteção pra tirar o amarelado e devolver a luz na estrada.</p>
+          <button class="add" type="button" data-abre data-servico="Revitalização de faróis">Incluir no agendamento</button>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- WOW 2: uma lupa abre na pintura e vira a tela inteira -->
+  <section class="alta" id="perto" aria-label="A pintura de perto">
+    <div class="palco">
+      <img class="fundo" id="fundo" src="img/limpo.jpg" width="1280" height="720" loading="lazy" alt="Porsche 911 vermelho limpo dentro do estúdio, com luzes de LED na parede">
+      <div class="lente" id="lente">
+        <video data-auto muted playsinline loop preload="metadata" poster="img/macro-poster.jpg" aria-label="Close na pintura vermelha com reflexos de luz e uma gota de água">
+          <source src="video/macro.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="anel" id="anel" aria-hidden="true"></div>
+      <div class="pt" id="p1">
+        <h2 class="titulo">Olha de perto.</h2>
+        <p>Pintura limpa não é pintura corrigida. A diferença aparece no reflexo.</p>
+      </div>
+      <div class="pt" id="p2">
+        <h2 class="titulo">Micro-risco sai. Brilho de vidro fica.</h2>
+        <ol class="etapas">
+          <li><b>1</b><span><strong>Descontaminação.</strong> Tira piche, resina e o pó de freio que a lavagem comum não tira.</span></li>
+          <li><b>2</b><span><strong>Correção.</strong> Polimento em etapas tira os micro-riscos e as marcas de lavagem.</span></li>
+          <li><b>3</b><span><strong>Proteção.</strong> A vitrificação sela o brilho e faz a água escorrer.</span></li>
+        </ol>
+      </div>
+      <span class="ilus">Vídeo ilustrativo gerado por IA</span>
+    </div>
+  </section>
+
+  <!-- WOW 3: a garagem no pôr do sol e a gaveta de agendamento -->
+  <section class="cena" id="agendar" aria-labelledby="t-agendar">
+    <div class="midia">
+      <video data-auto muted playsinline loop preload="metadata" poster="img/garagem-poster.jpg" aria-label="Porsche 911 vermelho brilhando na garagem com o pôr do sol entrando pelo portão">
+        <source src="video/garagem.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="cena-texto miolo">
+      <div>
+        <h2 class="titulo" id="t-agendar">Devolve a chave.<br>Cai o queixo.</h2>
+        <p>Monte o pedido aqui. A gente confirma o horário com você pelo WhatsApp.</p>
+        <a class="btn ambar" href="#agendar" data-abre>Montar agendamento</a>
+        <ol class="passos">
+          <li><b>1</b>Monte o pedido</li>
+          <li><b>2</b>Confirme o horário no WhatsApp</li>
+          <li><b>3</b>Deixe o carro e busque pronto</li>
+        </ol>
+      </div>
+    </div>
+    <span class="ilus">Vídeo ilustrativo gerado por IA</span>
+  </section>
+
+  <section class="claro bloco miolo" id="duvidas" aria-labelledby="t-duvidas">
+    <div class="cab">
+      <h2 class="titulo" id="t-duvidas">Antes de trazer o carro.</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Quanto custa?</summary>
+        <p>Depende do tamanho do carro, do estado da pintura e dos serviços. Monte o agendamento e a gente manda o valor no WhatsApp antes de começar. Você só confirma se concordar.</p>
+      </details>
+      <details>
+        <summary>Quanto tempo o carro fica aí?</summary>
+        <p>Depende do serviço e de como o carro chegou. Quando a gente confirmar o horário, já te passa o tempo certo pra você se programar.</p>
+      </details>
+      <details>
+        <summary>O polimento tira qualquer risco?</summary>
+        <p>Tira micro-riscos e marcas de lavagem. Risco fundo, daqueles em que a unha engancha, passou do verniz e precisa de retoque de pintura. A gente olha o carro e avisa antes de começar.</p>
+      </details>
+      <details>
+        <summary>A vitrificação substitui a lavagem?</summary>
+        <p>Não. Ela protege a pintura e faz a sujeira sair mais fácil, mas o carro continua precisando ser lavado. Só fica bem mais rápido.</p>
+      </details>
+      <details>
+        <summary>Preciso tirar alguma coisa do carro?</summary>
+        <p>Leve os objetos de valor e o que for pessoal. Se for fazer higienização interna, esvazie também o porta-malas.</p>
+      </details>
+      <details>
+        <summary>E se eu precisar remarcar?</summary>
+        <p>Avise pelo WhatsApp assim que souber e a gente procura outro horário com você.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="cena" id="saida" aria-labelledby="t-saida">
+    <div class="midia">
+      <video data-auto muted playsinline loop preload="metadata" poster="img/saida-poster.jpg" aria-label="Porsche 911 vermelho saindo da garagem em direção ao pôr do sol">
+        <source src="video/saida.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="cena-texto miolo">
+      <div>
+        <h2 class="titulo" id="t-saida">Pode buscar.</h2>
+        <p>Escolha o carro, o serviço e o dia. O resto a gente combina no WhatsApp.</p>
+        <a class="btn ambar" href="#agendar" data-abre>Montar agendamento</a>
+      </div>
+    </div>
+    <span class="ilus">Vídeo ilustrativo gerado por IA</span>
+  </section>
+</main>
+
+<footer class="rodape miolo">
+  <a class="marca" href="#lavagem"><i aria-hidden="true"></i>LUSTRO</a>
+  <p>Projeto conceito da GuDev para portfólio. A Lustro é um nome fictício, não um negócio real, e os vídeos são ilustrativos, gerados por IA. Porsche e 911 são marcas da Dr. Ing. h.c. F. Porsche AG, sem ligação com este projeto.</p>
+  <div class="links">
+    <button class="link" type="button" id="abre-priv">Privacidade</button>
+    <a data-wa="Oi! Vi o site conceito da Lustro e quero um site assim pro meu negócio." href="https://wa.me/5511964650141" target="_blank" rel="noopener">Quero um site assim (GuDev)</a>
+  </div>
+</footer>
+
+<a class="zap" id="zap" data-wa="Oi! Vim pelo site da Lustro e quero agendar uma lavagem." href="https://wa.me/5511964650141" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp"><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 5 5.1-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 .9c.3.1.4.2.5.3.1.2.1.7-.1 1.2Z"/></svg></a>
+
+<div class="veu" id="veu" hidden></div>
+<aside class="gaveta" id="gaveta" role="dialog" aria-modal="true" aria-labelledby="g-titulo" aria-hidden="true">
+  <div class="tubo" aria-hidden="true"><i id="tubo-luz"></i></div>
+  <div class="g-cab">
+    <h2 class="titulo" id="g-titulo">Monte seu agendamento</h2>
+    <button class="fechar" type="button" id="fechar" aria-label="Fechar">&times;</button>
+  </div>
+  <div class="rolagem">
+    <form id="pedido" novalidate>
+      <fieldset data-grupo="carro">
+        <legend>Qual é o carro?</legend>
+        <div class="chips" data-unico="carro">
+          <button type="button" aria-pressed="false" data-v="Hatch">Hatch</button>
+          <button type="button" aria-pressed="false" data-v="Sedã">Sedã</button>
+          <button type="button" aria-pressed="false" data-v="SUV">SUV</button>
+          <button type="button" aria-pressed="false" data-v="Picape">Picape</button>
+          <button type="button" aria-pressed="false" data-v="Esportivo">Esportivo</button>
+        </div>
+        <label class="campo" for="modelo"><span>Modelo e ano (opcional)</span><input id="modelo" type="text" maxlength="40" placeholder="Ex.: Onix 2020" autocomplete="off"></label>
+      </fieldset>
+      <fieldset data-grupo="servicos">
+        <legend>O que ele precisa?</legend>
+        <div class="chips" data-multi="servicos">
+          <button type="button" aria-pressed="false" data-v="Lavagem detalhada">Lavagem detalhada</button>
+          <button type="button" aria-pressed="false" data-v="Polimento técnico">Polimento técnico</button>
+          <button type="button" aria-pressed="false" data-v="Vitrificação">Vitrificação</button>
+          <button type="button" aria-pressed="false" data-v="Higienização interna">Higienização interna</button>
+          <button type="button" aria-pressed="false" data-v="Revitalização de faróis">Revitalização de faróis</button>
+        </div>
+      </fieldset>
+      <fieldset data-grupo="dia">
+        <legend>Melhor dia pra deixar</legend>
+        <div class="chips dias" data-unico="dia" id="dias"></div>
+        <div class="chips" data-unico="periodo">
+          <button type="button" aria-pressed="false" data-v="Manhã">Manhã</button>
+          <button type="button" aria-pressed="false" data-v="Tarde">Tarde</button>
+        </div>
+      </fieldset>
+      <label class="campo" for="nome"><span>Seu nome (opcional)</span><input id="nome" type="text" maxlength="40" autocomplete="given-name"></label>
+      <p class="resumo" id="resumo" aria-live="polite"></p>
+      <p class="falta" id="falta" role="alert"></p>
+      <button class="btn ambar enviar" type="submit">Enviar pelo WhatsApp</button>
+      <small class="nota">Demo da GuDev: a mensagem vai para o WhatsApp da GuDev.</small>
+    </form>
+    <div class="feito" id="feito" hidden>
+      <svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="44"/><path d="M30 49l12 12 25-26"/></svg>
+      <h3 class="titulo" id="obrigado" tabindex="-1">Pedido montado.</h3>
+      <p id="ola">A mensagem está pronta no WhatsApp. Confira e toque em enviar que a gente confirma o horário.</p>
+      <p><a id="reabre" href="https://wa.me/5511964650141" target="_blank" rel="noopener">Abrir o WhatsApp de novo</a></p>
+      <button class="link" type="button" id="outro">Montar outro pedido</button>
+    </div>
+  </div>
+</aside>
+
+<dialog id="priv" aria-labelledby="t-priv">
+  <h2 class="titulo" id="t-priv">Privacidade</h2>
+  <p>Este site não tem cadastro e não guarda o que você escolhe no agendamento. O formulário só monta uma mensagem, que abre no seu WhatsApp pra você conferir e enviar.</p>
+  <p>A contagem de visitas é anônima e não usa cookies.</p>
+  <button class="btn ambar" type="button" id="fecha-priv">Fechar</button>
+</dialog>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
+<script>
+(function(){
+  "use strict";
+  var embed = /[?&]embed\b/.test(location.search), dentro = window.parent !== window;   // embed = captura estática; dentro = na proposta (animações ligadas)
+  var H = document.documentElement;
+  if (embed) H.classList.add("embed"); if (dentro) H.classList.add("dentro");
+  var calmo = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var toque = window.matchMedia && matchMedia("(pointer: coarse)").matches;
+  var estreito = matchMedia("(max-width: 760px), (max-aspect-ratio: 1/1)");
+  var WHATS = "5511964650141";
+
+  function $(s, c){ return (c || document).querySelector(s); }
+  function $$(s, c){ return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  function wa(t){ return "https://wa.me/" + WHATS + "?text=" + encodeURIComponent(t); }
+  function lim(v, a, b){ return v < a ? a : v > b ? b : v; }
+  function janela(p, a, b, c, d){ if (p <= a || p >= d) return 0; if (p < b) return (p - a) / (b - a); if (p <= c) return 1; return 1 - (p - c) / (d - c); }
+  function mostra(el, o){
+    el.style.opacity = o.toFixed(3);
+    el.style.transform = calmo ? "none" : "translateY(" + ((1 - o) * 22).toFixed(1) + "px)";
+    var vis = o > .02; if (el._vis !== vis){ el._vis = vis; el.style.visibility = vis ? "visible" : "hidden"; }
+  }
+  $$("[data-wa]").forEach(function(a){ a.href = wa(a.getAttribute("data-wa")); });
+
+  // uma fonte de progresso só; a altura da tela só é relida quando a largura muda (barra do navegador do celular não conta)
+  var vw = innerWidth, vh = innerHeight;
+  function prog(sec){ var r = sec.getBoundingClientRect(), d = r.height - vh; if (d <= 1) return r.top <= 0 ? 1 : 0; return lim(-r.top / d, 0, 1); }
+  function naTela(sec){ var r = sec.getBoundingClientRect(); return r.bottom > -vh * .5 && r.top < vh * 1.5; }
+
+  /* WOW 1: quadros do vídeo de lavagem desenhados no canvas conforme a rolagem */
+  var secL = $("#lavagem"), cv = $("#quadro"), ctx = cv.getContext("2d"), N = 96, imgs = [], ok = [], cw = 0, ch = 0, ultimo = -2, alvo = 0, alvoCalmo = -1;
+  var legs = [$("#c1"), $("#c2"), $("#c3")];
+  function srcQ(i){ return "img/lavagem/" + ("00" + (i + 1)).slice(-3) + ".webp"; }
+  function desenha(i){
+    var j = -1;
+    for (var k = 0; k < N; k++){ if (i - k >= 0 && ok[i - k]){ j = i - k; break; } if (i + k < N && ok[i + k]){ j = i + k; break; } }
+    if (j < 0 || j === ultimo || !cw) return;
+    ultimo = j;
+    var im = imgs[j], iw = im.naturalWidth, ih = im.naturalHeight, s = Math.max(cw / iw, ch / ih), w = iw * s, h = ih * s;
+    ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
+  }
+  function carrega(i){
+    if (imgs[i]) return;
+    var im = new Image(); im.decoding = "async";
+    im.onload = function(){ ok[i] = true; ultimo = -2; desenha(alvo); };
+    im.src = srcQ(i); imgs[i] = im;
+  }
+  function medeTela(){
+    var r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
+    cw = Math.max(1, Math.round(r.width * d)); ch = Math.max(1, Math.round(r.height * d));
+    cv.width = cw; cv.height = ch; ultimo = -2; desenha(alvo);
+  }
+  if (embed){ alvo = N - 1; carrega(N - 1); }
+  else if (calmo){ carrega(0); carrega(N - 1); }
+  else {
+    carrega(0);
+    var ordem = [];
+    [24, 12, 6, 3, 1].forEach(function(st){ for (var i = 0; i < N; i += st) if (ordem.indexOf(i) < 0) ordem.push(i); });
+    ordem.push(N - 1);
+    ordem.forEach(carrega);
+  }
+  function heroi(p){
+    if (calmo){
+      var a = p < .5 ? 0 : N - 1;   // reduzir movimento: troca com fade curto em vez de rolar quadro a quadro
+      if (a !== alvoCalmo){
+        alvoCalmo = a; alvo = a; clearTimeout(cv._t); cv.style.opacity = 0;
+        cv._t = setTimeout(function(){ ultimo = -2; desenha(alvo); cv.style.opacity = 1; }, 200);
+      }
+    } else {
+      alvo = Math.round(lim((p - .05) / .8, 0, 1) * (N - 1));
+      desenha(alvo);
+    }
+    mostra(legs[0], janela(p, -1, -.5, .07, .13));
+    mostra(legs[1], janela(p, .15, .21, .55, .62));
+    mostra(legs[2], janela(p, .72, .8, 2, 3));
+  }
+
+  /* WOW 2: lupa na pintura que cresce até virar a tela */
+  var secP = $("#perto"), palcoP = $(".palco", secP), lente = $("#lente"), anel = $("#anel"), p1 = $("#p1"), p2 = $("#p2");
+  var W = 0, Hh = 0, X0 = 0, Y0 = 0, R0 = 70, RM = 1000;
+  function medeLente(){
+    W = palcoP.clientWidth; Hh = palcoP.clientHeight;
+    var e = estreito.matches, px = e ? .34 : .5, s = Math.max(W / 1280, Hh / 720), iw = 1280 * s, ih = 720 * s;
+    X0 = (W - iw) * px + .36 * iw; Y0 = (Hh - ih) * .5 + .44 * ih;   // para-lama dianteiro, logo acima da roda
+    R0 = e ? 52 : 74; RM = Math.hypot(W, Hh) * .62 + 10;
+  }
+  function lupa(p){
+    var e = lim((p - .16) / .5, 0, 1), ee = e * e * e;
+    if (calmo){
+      lente.style.clipPath = "none"; anel.style.opacity = 0;
+      var on = p > .4; if (lente._on !== on){ lente._on = on; lente.style.opacity = on ? 1 : 0; }
+    } else {
+      var x = X0 + (W / 2 - X0) * e, y = Y0 + (Hh / 2 - Y0) * e, r = R0 + (RM - R0) * ee;
+      lente.style.clipPath = "circle(" + r.toFixed(1) + "px at " + x.toFixed(1) + "px " + y.toFixed(1) + "px)";
+      anel.style.width = anel.style.height = (2 * r).toFixed(1) + "px";
+      anel.style.transform = "translate(" + (x - r).toFixed(1) + "px," + (y - r).toFixed(1) + "px)";
+      anel.style.opacity = lim(1 - e * 2.2, 0, 1).toFixed(3);
+    }
+    lente.style.setProperty("--escuro", lim((p - .6) / .12, 0, 1).toFixed(3));
+    mostra(p1, janela(p, -1, -.5, .16, .24));
+    mostra(p2, janela(p, .68, .76, 2, 3));
+  }
+
+  var topo = $("#topo"), pedido = false;
+  function tick(){
+    pedido = false;
+    if (embed){ heroi(1); lupa(1); return; }
+    if (naTela(secL)) heroi(prog(secL));
+    if (naTela(secP)) lupa(prog(secP));
+    topo.classList.toggle("solido", (window.scrollY || H.scrollTop) > 10);
+  }
+  function pede(){ if (!pedido){ pedido = true; requestAnimationFrame(tick); } }
+  function mede(){ medeTela(); medeLente(); pede(); }
+  addEventListener("scroll", pede, { passive: true });
+  addEventListener("resize", function(){
+    if (innerWidth !== vw || (!toque && innerHeight !== vh)){ vw = innerWidth; vh = innerHeight; mede(); }
+  });
+  setInterval(pede, 300);   // garantia
+  mede();
+  addEventListener("load", mede);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(mede);
+
+  /* vídeos tocam só quando aparecem */
+  var vids = $$("video[data-auto]");
+  if (!embed && !calmo && "IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        var v = en.target;
+        if (en.isIntersecting){ v.muted = true; var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); }
+        else v.pause();
+      });
+    }, { rootMargin: "120px" });
+    vids.forEach(function(v){ io.observe(v); });
+  }
+
+  /* rolagem macia só no computador */
+  var lenis = null;
+  if (!embed && !dentro && !calmo && !toque && window.Lenis && innerWidth > 900){
+    lenis = new Lenis({ lerp: .1 });
+    lenis.on("scroll", pede);
+    (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+    $$('a[href^="#"]:not([data-abre])').forEach(function(a){
+      a.addEventListener("click", function(e){ var t = document.getElementById(a.getAttribute("href").slice(1)); if (!t) return; e.preventDefault(); lenis.scrollTo(t, { duration: 1.4 }); });
+    });
+  }
+
+  /* WOW 3: gaveta de agendamento que monta a mensagem do WhatsApp */
+  var gav = $("#gaveta"), veu = $("#veu"), form = $("#pedido"), feito = $("#feito"), tubo = $(".tubo", gav), tuboLuz = $("#tubo-luz");
+  var resumo = $("#resumo"), falta = $("#falta"), nome = $("#nome"), modelo = $("#modelo"), reabre = $("#reabre"), quemAbriu = null, fechaT = 0;
+  var DS = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"], DC = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+  (function(){
+    var dias = $("#dias"), hoje = new Date();
+    for (var k = 1, n = 0; n < 6 && k < 14; k++){
+      var d = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() + k);
+      if (d.getDay() === 0) continue;   // domingo fora
+      n++;
+      var dd = ("0" + d.getDate()).slice(-2), mm = ("0" + (d.getMonth() + 1)).slice(-2);
+      var b = document.createElement("button"); b.type = "button"; b.setAttribute("aria-pressed", "false");
+      b.setAttribute("data-v", DS[d.getDay()] + ", " + dd + "/" + mm);
+      b.setAttribute("aria-label", DS[d.getDay()] + ", " + dd + "/" + mm);
+      var s1 = document.createElement("span"); s1.textContent = DC[d.getDay()];
+      var s2 = document.createElement("small"); s2.textContent = dd + "/" + mm;
+      b.appendChild(s1); b.appendChild(s2); dias.appendChild(b);
+    }
+  })();
+  function sel(chave){
+    return $$('[data-unico="' + chave + '"] button[aria-pressed="true"], [data-multi="' + chave + '"] button[aria-pressed="true"]', form)
+      .map(function(b){ return b.getAttribute("data-v"); });
+  }
+  function lista(a){ return a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " e " + a[a.length - 1]; }
+  function le(){
+    var s = { carro: sel("carro")[0] || "", sv: sel("servicos"), dia: sel("dia")[0] || "", per: sel("periodo")[0] || "", nm: nome.value.trim(), md: modelo.value.trim() };
+    var feitos = (s.carro ? 1 : 0) + (s.sv.length ? 1 : 0) + (s.dia ? 1 : 0) + (s.nm ? 1 : 0);
+    tuboLuz.style.height = (feitos * 25) + "%";
+    tubo.classList.toggle("cheio", feitos === 4);
+    if (!s.carro && !s.sv.length && !s.dia){ resumo.textContent = "Escolha o carro, o serviço e o dia. O resumo do pedido aparece aqui."; }
+    else {
+      var t = s.carro ? s.carro + (s.md ? " (" + s.md + ")" : "") : "Carro a escolher";
+      t += s.sv.length ? " com " + lista(s.sv).toLowerCase() : ", serviço a escolher";
+      t += s.dia ? ", " + s.dia + (s.per ? " de " + s.per.toLowerCase() : "") : ", dia a escolher";
+      resumo.textContent = t + ".";
+    }
+    if (s.carro) $('[data-grupo="carro"]').classList.remove("erro");
+    if (s.sv.length) $('[data-grupo="servicos"]').classList.remove("erro");
+    if (s.dia) $('[data-grupo="dia"]').classList.remove("erro");
+    if (!$$("fieldset.erro", form).length) falta.textContent = "";
+    return s;
+  }
+  form.addEventListener("click", function(ev){
+    var b = ev.target.closest(".chips button"); if (!b) return;
+    var g = b.parentNode;
+    if (g.hasAttribute("data-multi")) b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true");
+    else $$("button", g).forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    le();
+  });
+  nome.addEventListener("input", le); modelo.addEventListener("input", le);
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var s = le(), f = [];
+    if (!s.carro) f.push(["carro", "o carro"]);
+    if (!s.sv.length) f.push(["servicos", "o serviço"]);
+    if (!s.dia) f.push(["dia", "o dia"]);
+    if (f.length){
+      f.forEach(function(x){ $('[data-grupo="' + x[0] + '"]').classList.add("erro"); });
+      falta.textContent = "Falta escolher " + lista(f.map(function(x){ return x[1]; })) + ".";
+      var pri = $('[data-grupo="' + f[0][0] + '"] button'); if (pri) pri.focus();
+      return;
+    }
+    var msg = "Oi! Vim pelo site da Lustro e quero agendar.\n\nCarro: " + s.carro + (s.md ? " (" + s.md + ")" : "") +
+      "\nServiços: " + s.sv.join(", ") + "\nDia: " + s.dia + (s.per ? ", de " + s.per.toLowerCase() : "") + (s.nm ? "\nNome: " + s.nm : "");
+    var url = wa(msg);
+    reabre.href = url;
+    var a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener";
+    document.body.appendChild(a); a.click(); a.remove();
+    $("#ola").textContent = (s.nm ? "Valeu, " + s.nm + "! " : "") + "A mensagem está pronta no WhatsApp. Confira e toque em enviar que a gente confirma o horário.";
+    form.hidden = true; feito.hidden = false;
+    feito.classList.remove("anima"); void feito.offsetWidth; feito.classList.add("anima");
+    $("#obrigado").focus();
+  });
+  $("#outro").addEventListener("click", function(){
+    form.reset();
+    $$(".chips button", form).forEach(function(b){ b.setAttribute("aria-pressed", "false"); });
+    feito.hidden = true; form.hidden = false; le();
+    var f = $(".chips button", form); if (f) f.focus();
+  });
+  function abre(servico){
+    clearTimeout(fechaT);
+    if (servico) $$('[data-multi="servicos"] button', form).forEach(function(b){ if (b.getAttribute("data-v") === servico) b.setAttribute("aria-pressed", "true"); });
+    if (!feito.hidden && servico){ feito.hidden = true; form.hidden = false; }
+    le();
+    quemAbriu = document.activeElement;
+    veu.hidden = false; gav.setAttribute("aria-hidden", "false"); H.classList.add("g-aberta");
+    if (lenis) lenis.stop();
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ veu.classList.add("on"); gav.classList.add("on"); }); });
+    setTimeout(function(){ var f = form.hidden ? $("#obrigado") : $(".chips button", form); if (f) f.focus({ preventScroll: true }); }, 360);
+  }
+  function fecha(){
+    veu.classList.remove("on"); gav.classList.remove("on"); gav.setAttribute("aria-hidden", "true"); H.classList.remove("g-aberta");
+    if (lenis) lenis.start();
+    fechaT = setTimeout(function(){ veu.hidden = true; }, 360);
+    if (quemAbriu && quemAbriu.focus) quemAbriu.focus({ preventScroll: true });
+  }
+  $$("[data-abre]").forEach(function(b){ b.addEventListener("click", function(e){ e.preventDefault(); abre(b.getAttribute("data-servico")); }); });
+  $("#fechar").addEventListener("click", fecha);
+  veu.addEventListener("click", fecha);
+  addEventListener("keydown", function(e){ if (e.key === "Escape" && gav.classList.contains("on")) fecha(); });
+  gav.addEventListener("keydown", function(e){
+    if (e.key !== "Tab") return;
+    var fs = $$("button, input, a[href]", gav).filter(function(x){ return x.offsetParent !== null; });
+    if (!fs.length) return;
+    var a = fs[0], z = fs[fs.length - 1];
+    if (e.shiftKey && document.activeElement === a){ e.preventDefault(); z.focus(); }
+    else if (!e.shiftKey && document.activeElement === z){ e.preventDefault(); a.focus(); }
+  });
+  le();
+
+  /* privacidade */
+  var dlg = $("#priv");
+  $("#abre-priv").addEventListener("click", function(){ if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); });
+  $("#fecha-priv").addEventListener("click", function(){ if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); });
+})();
+</script>
+</body>
+</html>
