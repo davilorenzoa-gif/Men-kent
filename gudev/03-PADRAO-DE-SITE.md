@@ -52,6 +52,7 @@ Depois pergunte: **"isso ficaria igual pra qualquer pizzaria ou salão?"** Se fi
 - Rótulo em CAIXA ALTA espaçada em cima de cada seção.
 - Textos ligados com " · " (ex.: "Pizzeria · Jundiaí").
 - Seta "→" no fim de botões e links.
+- Travessão "—" no texto. É a marca nº 1 de texto de IA. Troque por vírgula, ponto ou dois-pontos.
 - Números 01/02/03 quando o conteúdo não é sequência de verdade. Só use em passo a passo ou linha do tempo.
 - Todas as seções entrando com fade de baixo pra cima. Escolha poucos momentos de entrada e deixe o resto quieto.
 - Os padrões batidos: fundo creme + serifa + terracota; fundo quase preto + um acento só (vermelho ou verde-limão); cards todos iguais com a mesma sombra; layout de jornal.
@@ -136,6 +137,34 @@ Os sites são estáticos: não têm servidor, banco de dados, login nem chave de
 17. Schema LocalBusiness em JSON-LD: nome, endereço, telefone, geo, e nota só se for real.
 18. Política de privacidade (LGPD).
 19. Analytics (GoatCounter ou GA4).
+
+## UX que a gente aplica (leis de UX, só as que servem pra site de comércio)
+- **Hick:** poucas escolhas. Uma ação principal (WhatsApp), menu com no máximo 5 itens.
+- **Fitts:** tudo que se toca tem pelo menos 44×44px, com espaço entre um e outro. O CTA fica onde o polegar alcança (embaixo, no celular).
+- **Jakob:** o básico no lugar de sempre. Logo em cima à esquerda e **clicável (volta pro topo)**, telefone e endereço no rodapé. A ousadia fica no WOW, não na navegação.
+- **Von Restorff:** a cor de acento é do botão de WhatsApp. Se tudo tem acento, nada se destaca.
+- **Posição serial + pico-fim:** o mais importante no começo e no fim da página. O fim é o "obrigado" depois do pedido: caprichar nele.
+- **Doherty:** todo toque responde em menos de 0,4s (botão muda de estado na hora, mesmo que a animação venha depois).
+- **Proximidade / Miller:** preço junto do item, horário junto do endereço; cardápio longo dividido em grupos.
+- **Gradiente de meta / Zeigarnik:** no WOW interativo (montar pedido), mostrar o progresso ("2 de 3"), dá vontade de terminar.
+- **Postel:** formulário aceita telefone com ou sem traço, parêntese e DDD; quem limpa é o código.
+
+## Polimento antes de entregar (além dos 19 itens)
+- **Favicon** (logo do cliente, `.png` 32px + `apple-touch-icon` 180px). Os 3 sites de `exemplos/` não têm: corrigir quando mexer neles.
+- **Todo botão e link testado:** WhatsApp com a mensagem certa, telefone (`tel:`), mapa, Instagram. Nenhum `href="#"` sobrando.
+- **Títulos:** `text-wrap:balance` e `clamp()` no tamanho, pra não sobrar uma palavra sozinha na linha nem estourar no celular.
+- **Imagens:** WebP, no tamanho que aparece na tela (nada de 3000px num card de 400px), `width`/`height` no HTML pra não pular o layout.
+- **Velocidade:** `preconnect` nas fontes, `font-display:swap`, só os pesos que usa, scripts com `defer`. Abrir no 4G do celular antes de mandar.
+- **Contraste** de pelo menos 4.5:1 no texto (testar no webaim.org/resources/contrastchecker).
+- **Teclado:** dá pra chegar em todo botão com Tab, na ordem certa, e o WOW interativo funciona com Enter/Espaço.
+
+## Lado jurídico (pra não dar problema pro cliente)
+- **Política de privacidade** (item 18) diz o que o site coleta: nada fica guardado, o formulário só abre o WhatsApp, e qual analytics usa.
+- **Analytics sem cookie (GoatCounter)** = não precisa de banner de cookies. Se usar GA4 ou Pixel do Meta, aí precisa do aviso com opção de recusar. Por isso, preferir GoatCounter.
+- **Formulário só pede o necessário** (nome e o pedido). Nada de CPF, e-mail ou data de nascimento sem motivo.
+- **Dados da empresa no rodapé:** nome, endereço e, se o cliente tiver, CNPJ.
+- **Imagens com direito de uso:** do próprio cliente (com permissão), banco grátis com licença (Unsplash/Pexels) ou IA marcada como "foto ilustrativa". Nunca foto de outro restaurante ou do Google Imagens.
+- Termos de uso e política de reembolso **só se o site vender online** (não é o caso do Site Essencial).
 
 ## Fotos
 - **De onde vêm:** Google Maps (fotos do dono), Instagram, iFood/Saipos. **Sempre pedir permissão antes de baixar.**
