@@ -809,6 +809,20 @@ dialog .btn{margin-top:22px}
   var vit = $("#vitrine"), palco = $(".palco", vit), cen = $(".centro", vit), gra = $(".grade", vit), capA = $(".capA", vit), capB = $(".capB", vit);
   var estatico = embed || reduz, L = null, larg = 0, pendente = false;
   if (estatico) vit.classList.add("estatico");
+  // fotos da vitrine começam a carregar antes do zoom chegar nelas (dentro da grade ampliada o lazy do navegador atrasa)
+  var fotosVit = $$("img", vit);
+  function carregaVit(){ fotosVit.forEach(function(im){ im.loading = "eager"; }); }
+  if ("IntersectionObserver" in window) {
+    var ioV = new IntersectionObserver(function(en){ if (en[0].isIntersecting) { carregaVit(); ioV.disconnect(); } }, { rootMargin:"150% 0px" });
+    ioV.observe(vit);
+  } else carregaVit();
+  // se uma foto falhar (rede ruim), tenta de novo uma vez
+  $$("img").forEach(function(im){
+    im.addEventListener("error", function f(){
+      im.removeEventListener("error", f);
+      setTimeout(function(){ var s = im.getAttribute("src"); if (s && s.indexOf("data:") !== 0) im.src = s + (s.indexOf("?") < 0 ? "?r=1" : "&r=1"); }, 800);
+    });
+  });
 
   function mede(){
     var vw = palco.clientWidth, vh = palco.clientHeight, cel = vw < 900;
