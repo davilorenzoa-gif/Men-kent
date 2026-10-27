@@ -35,7 +35,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "PAI & FILHO" converge na rolagem;
   - uma comanda de serviços que vai pro WhatsApp.
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
-- **Lustro** (demo de estética automotiva): a rolagem lava o carro quadro a quadro; uma lupa abre na pintura e vira a tela; gaveta de agendamento com tubo de LED que acende conforme preenche.
+- **Lustro** (demo de estética automotiva): luzes do estúdio acendendo na abertura; a rolagem lava o carro quadro a quadro; lanterna de inspeção que mostra os micro-riscos e abre na pintura corrigida; cartão na cena que abre a gaveta de agendamento com tubo de LED.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.

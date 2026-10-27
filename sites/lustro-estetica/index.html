@@ -86,6 +86,13 @@ button{font:inherit}
 .dica i::after{content:"";position:absolute;left:0;right:0;top:-40%;height:40%;border-radius:2px;background:var(--led);box-shadow:0 0 8px var(--led);animation:desce 1.8s ease-in-out infinite}
 @keyframes desce{to{top:100%}}
 .ilus{position:absolute;right:var(--gut-r);bottom:calc(14px + env(safe-area-inset-bottom,0px));font-size:.72rem;color:rgba(244,247,249,.5);pointer-events:none}
+/* abertura: as luzes do estúdio acendem piscando, como tubo de LED ligando */
+html.intro .legendas,html.intro .topo{opacity:0}
+html.acende .tela canvas{animation:acende 1.3s linear both}
+html.acende .topo{animation:surge .6s .65s ease both}
+html.acende .legendas{animation:surge .8s .8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes acende{0%,15%{filter:brightness(.03)}17%{filter:brightness(.8)}20%{filter:brightness(.07)}32%{filter:brightness(.1)}34%{filter:brightness(1)}37%{filter:brightness(.35)}45%,100%{filter:brightness(1)}}
+@keyframes surge{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
 /* serviços */
 .claro{background:var(--espuma);color:var(--tinta)}
@@ -108,7 +115,9 @@ button{font:inherit}
 #perto{height:280vh}
 .fundo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:brightness(.5) saturate(.9)}
 .lente{position:absolute;inset:0;clip-path:circle(0px at 50% 50%);transition:opacity .35s}
-.lente video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lente canvas,.lente video{position:absolute;inset:0;width:100%;height:100%}
+.lente video{object-fit:cover;opacity:0}
+.palco.mira{cursor:none}
 .lente::after{content:"";position:absolute;inset:0;opacity:var(--escuro,0);
   background:linear-gradient(90deg,rgba(21,24,27,.82) 0%,rgba(21,24,27,.35) 45%,rgba(21,24,27,0) 70%),linear-gradient(0deg,rgba(21,24,27,.6),rgba(21,24,27,0) 45%)}
 .anel{position:absolute;left:0;top:0;width:0;height:0;border-radius:50%;border:2px solid rgba(244,247,249,.92);pointer-events:none;
@@ -137,6 +146,15 @@ button{font:inherit}
 .passos li{display:flex;align-items:baseline;gap:9px;font-size:.96rem;color:rgba(244,247,249,.86)}
 .passos b{font:800 1.3rem/1 var(--f-titulo);color:var(--ambar)}
 .cena .ilus{bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+/* o primeiro passo do agendamento já entra na cena, como o painel do vídeo de referência */
+#agendar .cena-texto>div{max-width:min(44rem,calc(100% - 430px))}
+.pre{position:absolute;right:max(var(--gut-r),4vw);bottom:13vh;width:360px;padding:22px 22px 22px 36px;border-radius:20px;
+  background:rgba(34,39,44,.84);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(244,247,249,.12);
+  box-shadow:0 30px 70px rgba(0,0,0,.45);transform:translateX(calc(100% + 8vw));transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.pre.on{transform:none}
+.pre::before{content:"";position:absolute;left:16px;top:22px;bottom:22px;width:4px;border-radius:2px;background:var(--led);box-shadow:0 0 12px 2px rgba(244,247,249,.55)}
+.pre h3{font:800 1.6rem/1 var(--f-titulo);text-transform:uppercase;margin:0 0 6px}
+.pre p{margin:0 0 16px;font-size:.92rem;color:var(--nevoa)}
 
 .veu{position:fixed;inset:0;z-index:40;background:rgba(8,10,12,.58);opacity:0;transition:opacity .35s}
 .veu.on{opacity:1}
@@ -229,6 +247,7 @@ dialog .btn{margin-top:6px}
     top:calc(max(calc(env(safe-area-inset-top,0px) + var(--topo) + 4px),calc((100svh - 66.7vw - 250px) / 2)) + 66.7vw - 26px)}
   .lente::after{background:linear-gradient(0deg,rgba(21,24,27,.9) 0%,rgba(21,24,27,.6) 48%,rgba(21,24,27,0) 78%)}
   .rodape{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  #perto .ilus{right:calc(var(--gut-r) + 72px)}
   .servicos li{grid-template-columns:minmax(0,1fr);padding-left:22px}
   #perto{height:240vh}
   .fundo{object-position:34% 50%}
@@ -239,6 +258,8 @@ dialog .btn{margin-top:6px}
   .cena-texto{padding-block:6px 72px}
   .cena-texto>div{margin-left:0}
   .cena-texto .titulo{font-size:clamp(2.8rem,13vw,5rem)}
+  #agendar .cena-texto>div{max-width:none}
+  .pre{position:relative;right:auto;bottom:auto;width:auto;margin-top:24px;transform:none;transition:none}
   .cena .ilus{bottom:auto;top:12px}
   .gaveta{top:auto;left:0;width:100%;height:min(92svh,100%);border-radius:22px 22px 0 0;transform:translateY(104%);box-shadow:0 -20px 60px rgba(0,0,0,.45)}
   .g-cab{padding-top:22px}
@@ -254,6 +275,7 @@ html.g-aberta .zap{display:none}
 .embed .alta{height:auto!important}
 .embed .palco{position:relative}
 .embed .dica i::after{animation:none;top:30%}
+.embed .pre{transform:none}
 
 @media (prefers-reduced-motion:reduce){
   .dica i::after{animation:none;top:30%}
@@ -261,6 +283,8 @@ html.g-aberta .zap{display:none}
   .gaveta.on{opacity:1;transition:opacity .25s,visibility 0s}
   .feito.anima path{animation:none}
   .tubo i{transition:none}
+  .pre{transform:none;opacity:0;transition:opacity .3s}
+  .pre.on{opacity:1}
 }
 </style>
 </head>
@@ -350,14 +374,16 @@ html.g-aberta .zap{display:none}
     <div class="palco">
       <img class="fundo" id="fundo" src="img/limpo.jpg" width="1280" height="720" loading="lazy" alt="Porsche 911 vermelho limpo dentro do estúdio, com luzes de LED na parede">
       <div class="lente" id="lente">
-        <video data-auto muted playsinline loop preload="metadata" poster="img/macro-poster.jpg" aria-label="Close na pintura vermelha com reflexos de luz e uma gota de água">
+        <canvas id="lupa" aria-hidden="true"></canvas>
+        <video id="macro" muted playsinline preload="metadata" poster="img/macro-fim.jpg" aria-label="Close na pintura vermelha corrigida, com reflexos de luz e uma gota de água">
           <source src="video/macro.mp4" type="video/mp4">
         </video>
       </div>
       <div class="anel" id="anel" aria-hidden="true"></div>
       <div class="pt" id="p1">
         <h2 class="titulo">Olha de perto.</h2>
-        <p>Pintura limpa não é pintura corrigida. A diferença aparece no reflexo.</p>
+        <p>Passe a lanterna na pintura. Os círculos em volta da luz são micro-riscos, e lavagem nenhuma tira.</p>
+        <div class="dica"><i aria-hidden="true"></i><span id="dica-lupa">Mexa o mouse pela pintura</span></div>
       </div>
       <div class="pt" id="p2">
         <h2 class="titulo">Micro-risco sai. Brilho de vidro fica.</h2>
@@ -367,14 +393,14 @@ html.g-aberta .zap{display:none}
           <li><b>3</b><span><strong>Proteção.</strong> A vitrificação sela o brilho e faz a água escorrer.</span></li>
         </ol>
       </div>
-      <span class="ilus">Vídeo ilustrativo gerado por IA</span>
+      <span class="ilus">Imagens de IA, riscos simulados</span>
     </div>
   </section>
 
   <!-- WOW 3: a garagem no pôr do sol e a gaveta de agendamento -->
   <section class="cena" id="agendar" aria-labelledby="t-agendar">
     <div class="midia">
-      <video data-auto muted playsinline loop preload="metadata" poster="img/garagem-poster.jpg" aria-label="Porsche 911 vermelho brilhando na garagem com o pôr do sol entrando pelo portão">
+      <video data-auto muted playsinline preload="metadata" poster="img/garagem-poster.jpg" aria-label="Porsche 911 vermelho brilhando na garagem com o pôr do sol entrando pelo portão">
         <source src="video/garagem.mp4" type="video/mp4">
       </video>
     </div>
@@ -382,7 +408,17 @@ html.g-aberta .zap{display:none}
       <div>
         <h2 class="titulo" id="t-agendar">Devolve a chave.<br>Cai o queixo.</h2>
         <p>Monte o pedido aqui. A gente confirma o horário com você pelo WhatsApp.</p>
-        <a class="btn ambar" href="#agendar" data-abre>Montar agendamento</a>
+        <div class="pre" id="pre" aria-labelledby="t-pre" role="group">
+          <h3 id="t-pre">Qual é o carro?</h3>
+          <p>Toque no tipo pra começar o agendamento.</p>
+          <div class="chips">
+            <button type="button" data-v="Hatch">Hatch</button>
+            <button type="button" data-v="Sedã">Sedã</button>
+            <button type="button" data-v="SUV">SUV</button>
+            <button type="button" data-v="Picape">Picape</button>
+            <button type="button" data-v="Esportivo">Esportivo</button>
+          </div>
+        </div>
         <ol class="passos">
           <li><b>1</b>Monte o pedido</li>
           <li><b>2</b>Confirme o horário no WhatsApp</li>
@@ -427,7 +463,7 @@ html.g-aberta .zap{display:none}
 
   <section class="cena" id="saida" aria-labelledby="t-saida">
     <div class="midia">
-      <video data-auto muted playsinline loop preload="metadata" poster="img/saida-poster.jpg" aria-label="Porsche 911 vermelho saindo da garagem em direção ao pôr do sol">
+      <video data-auto muted playsinline preload="metadata" poster="img/saida-poster.jpg" aria-label="Porsche 911 vermelho saindo da garagem em direção ao pôr do sol">
         <source src="video/saida.mp4" type="video/mp4">
       </video>
     </div>
@@ -558,23 +594,40 @@ html.g-aberta .zap{display:none}
   function carrega(i){
     if (imgs[i]) return;
     var im = new Image(); im.decoding = "async";
-    im.onload = function(){ ok[i] = true; ultimo = -2; desenha(alvo); };
+    im.onload = function(){ ok[i] = true; ultimo = -2; desenha(alvo); if (i === 0){ acende(); carregaResto(); } };
     im.src = srcQ(i); imgs[i] = im;
   }
+  // abertura: as luzes do estúdio acendem quando o primeiro quadro chega (com garantia, pra nunca ficar escuro)
+  var intro = !embed && !calmo && (window.scrollY || 0) < 40, acendeu = false;
+  if (intro) H.classList.add("intro");
+  function acende(){
+    if (acendeu) return; acendeu = true;
+    if (!intro) return;
+    H.classList.remove("intro"); H.classList.add("acende");
+    setTimeout(function(){ H.classList.remove("acende"); }, 2400);
+  }
+  setTimeout(acende, 1600);
+  // o resto dos quadros só desce depois do primeiro aparecer; com economia de dados ou 3G, 1 a cada 3 (~1 MB em vez de ~3 MB)
+  var conn = navigator.connection || {}, economia = !!conn.saveData || /(^|-)(2g|3g)$/.test(conn.effectiveType || ""), resto = false;
+  function carregaResto(){
+    if (resto || embed) return; resto = true;
+    if (calmo){ carrega(N - 1); return; }
+    var ordem = [];
+    [24, 12, 6, 3, 1].forEach(function(st){
+      if (economia && st < 3) return;
+      for (var i = 0; i < N; i += st) if (ordem.indexOf(i) < 0) ordem.push(i);
+    });
+    ordem.push(N - 1);
+    ordem.forEach(carrega);
+  }
+  setTimeout(carregaResto, 2500);
   function medeTela(){
     var r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
     cw = Math.max(1, Math.round(r.width * d)); ch = Math.max(1, Math.round(r.height * d));
     cv.width = cw; cv.height = ch; ultimo = -2; desenha(alvo);
   }
   if (embed){ alvo = N - 1; carrega(N - 1); }
-  else if (calmo){ carrega(0); carrega(N - 1); }
-  else {
-    carrega(0);
-    var ordem = [];
-    [24, 12, 6, 3, 1].forEach(function(st){ for (var i = 0; i < N; i += st) if (ordem.indexOf(i) < 0) ordem.push(i); });
-    ordem.push(N - 1);
-    ordem.forEach(carrega);
-  }
+  else carrega(0);
   function heroi(p){
     if (calmo){
       var a = p < .5 ? 0 : N - 1;   // reduzir movimento: troca com fade curto em vez de rolar quadro a quadro
@@ -591,38 +644,113 @@ html.g-aberta .zap{display:none}
     mostra(legs[2], janela(p, .72, .8, 2, 3));
   }
 
-  /* WOW 2: lupa na pintura que cresce até virar a tela */
+  /* WOW 2: lanterna de inspeção. A lupa segue o mouse (no celular passeia sozinha, e o toque leva ela) e mostra os
+     micro-riscos em anéis em volta da luz, do jeito que o detalhador enxerga. Rolando, ela abre no vídeo da pintura corrigida. */
   var secP = $("#perto"), palcoP = $(".palco", secP), lente = $("#lente"), anel = $("#anel"), p1 = $("#p1"), p2 = $("#p2");
-  var W = 0, Hh = 0, X0 = 0, Y0 = 0, R0 = 70, RM = 1000;
+  var fundo = $("#fundo"), lupaCv = $("#lupa"), lctx = lupaCv.getContext("2d"), macro = $("#macro");
+  var W = 0, Hh = 0, X0 = 0, Y0 = 0, R0 = 110, RM = 1000, sF = 1, oxF = 0, oyF = 0, ld = 1, ZOOM = 1.6;
+  var mx = 0, my = 0, cxL = 0, cyL = 0, mexeu = false, pP = 0, viva = false, ultimaLupa = "";
+  var ARCOS = (function(){   // anéis de micro-risco com semente fixa: sempre o mesmo desenho
+    var a = [], sem = 7;
+    function rnd(){ sem = (sem * 16807) % 2147483647; return (sem - 1) / 2147483646; }
+    for (var i = 0; i < 230; i++){
+      var r = .06 + Math.pow(rnd(), .8) * .9;
+      a.push({ r: r, a0: rnd() * 6.2832, len: .12 + rnd() * .6, w: .5 + rnd() * .9, al: (.08 + .5 * Math.pow(1 - r, 1.4)) * (.5 + rnd() * .5) });
+    }
+    return a;
+  })();
   function medeLente(){
     W = palcoP.clientWidth; Hh = palcoP.clientHeight;
-    var e = estreito.matches, px = e ? .34 : .5, s = Math.max(W / 1280, Hh / 720), iw = 1280 * s, ih = 720 * s;
-    X0 = (W - iw) * px + .36 * iw; Y0 = (Hh - ih) * .5 + .44 * ih;   // para-lama dianteiro, logo acima da roda
-    R0 = e ? 52 : 74; RM = Math.hypot(W, Hh) * .62 + 10;
+    var e = estreito.matches, px = e ? .34 : .5;
+    sF = Math.max(W / 1280, Hh / 720);
+    var iw = 1280 * sF, ih = 720 * sF;
+    oxF = (W - iw) * px; oyF = (Hh - ih) * .5;
+    X0 = oxF + .36 * iw; Y0 = oyF + .44 * ih;   // para-lama dianteiro, logo acima da roda
+    R0 = e ? 80 : 112; RM = Math.hypot(W, Hh) * .62 + 10;
+    if (!mexeu){ mx = cxL = X0; my = cyL = Y0; }
+    ld = Math.min(window.devicePixelRatio || 1, 2);
+    lupaCv.width = Math.max(1, Math.round(W * ld)); lupaCv.height = Math.max(1, Math.round(Hh * ld));
+    ultimaLupa = "";
+  }
+  function liso(a, b, v){ var t = lim((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
+  function limpaLupa(){ lctx.setTransform(1, 0, 0, 1, 0, 0); lctx.clearRect(0, 0, lupaCv.width, lupaCv.height); }
+  function pintaLupa(x, y, r, forca){
+    var chave = x.toFixed(1) + "," + y.toFixed(1) + "," + r.toFixed(1) + "," + forca.toFixed(2);
+    if (chave === ultimaLupa) return;
+    if (!(fundo.complete && fundo.naturalWidth)) return;
+    ultimaLupa = chave;
+    var c = lctx;
+    limpaLupa();
+    c.setTransform(ld, 0, 0, ld, 0, 0);
+    c.save();
+    c.beginPath(); c.arc(x, y, r, 0, 6.2832); c.clip();
+    c.translate(x, y); c.scale(ZOOM, ZOOM); c.translate(-x, -y);
+    c.drawImage(fundo, oxF, oyF, 1280 * sF, 720 * sF);
+    c.restore();
+    var g = c.createRadialGradient(x, y, 0, x, y, r);   // o reflexo da lanterna na pintura
+    g.addColorStop(0, "rgba(255,255,255,.95)"); g.addColorStop(.06, "rgba(255,255,255,.6)");
+    g.addColorStop(.25, "rgba(255,236,226,.14)"); g.addColorStop(1, "rgba(255,255,255,0)");
+    c.fillStyle = g; c.beginPath(); c.arc(x, y, r, 0, 6.2832); c.fill();
+    if (forca > .01){
+      c.lineCap = "round";
+      for (var i = 0; i < ARCOS.length; i++){
+        var a = ARCOS[i];
+        c.strokeStyle = "rgba(255,255,255," + (a.al * forca).toFixed(3) + ")";
+        c.lineWidth = a.w;
+        c.beginPath(); c.arc(x, y, a.r * r * .95, a.a0, a.a0 + a.len); c.stroke();
+      }
+    }
+  }
+  function posAnel(x, y, r){
+    anel.style.width = anel.style.height = (2 * r).toFixed(1) + "px";
+    anel.style.transform = "translate(" + (x - r).toFixed(1) + "px," + (y - r).toFixed(1) + "px)";
   }
   function lupa(p){
-    var e = lim((p - .16) / .5, 0, 1), ee = e * e * e;
-    if (calmo){
-      lente.style.clipPath = "none"; anel.style.opacity = 0;
-      var on = p > .4; if (lente._on !== on){ lente._on = on; lente.style.opacity = on ? 1 : 0; }
-    } else {
-      var x = X0 + (W / 2 - X0) * e, y = Y0 + (Hh / 2 - Y0) * e, r = R0 + (RM - R0) * ee;
-      lente.style.clipPath = "circle(" + r.toFixed(1) + "px at " + x.toFixed(1) + "px " + y.toFixed(1) + "px)";
-      anel.style.width = anel.style.height = (2 * r).toFixed(1) + "px";
-      anel.style.transform = "translate(" + (x - r).toFixed(1) + "px," + (y - r).toFixed(1) + "px)";
-      anel.style.opacity = lim(1 - e * 2.2, 0, 1).toFixed(3);
+    var e = lim((p - .16) / .5, 0, 1), ee = e * e * e, vo;
+    if (!mexeu && !calmo && toque){   // no celular a lanterna passeia sozinha até a pessoa tocar
+      var t = performance.now() / 1000;
+      mx = X0 + Math.sin(t * .6) * W * .08; my = Y0 + Math.sin(t * 1.3) * Hh * .04;
     }
+    if (calmo){ cxL = mx; cyL = my; } else { cxL += (mx - cxL) * .2; cyL += (my - cyL) * .2; }
+    if (calmo){   // reduzir movimento: a lupa não cresce; o vídeo entra com fade curto
+      vo = p > .4 ? 1 : 0;
+      lente.style.clipPath = vo ? "none" : "circle(" + R0 + "px at " + cxL.toFixed(1) + "px " + cyL.toFixed(1) + "px)";
+      posAnel(cxL, cyL, R0); anel.style.opacity = vo ? 0 : 1;
+      if (!vo) pintaLupa(cxL, cyL, R0, 1);
+    } else {
+      var x = cxL + (W / 2 - cxL) * e, y = cyL + (Hh / 2 - cyL) * e, r = R0 + (RM - R0) * ee;
+      vo = liso(.06, .42, e);
+      lente.style.clipPath = "circle(" + r.toFixed(1) + "px at " + x.toFixed(1) + "px " + y.toFixed(1) + "px)";
+      posAnel(x, y, r); anel.style.opacity = lim(1 - e * 2.2, 0, 1).toFixed(3);
+      if (vo < .99) pintaLupa(x, y, r, 1 - liso(0, .3, e));
+      else if (ultimaLupa){ limpaLupa(); ultimaLupa = ""; }
+      // o vídeo toca uma vez quando a lupa começa a abrir e para na gota; volta pro começo se a pessoa subir
+      if (vo > .01 && !macro._tocou){ macro._tocou = true; macro.muted = true; try { macro.currentTime = 0; } catch (_){} var pr = macro.play(); if (pr && pr.catch) pr.catch(function(){}); }
+      else if (p < .04 && macro._tocou){ macro._tocou = false; macro.pause(); }
+    }
+    macro.style.opacity = vo.toFixed(3);
+    palcoP.classList.toggle("mira", !toque && e < .04);
     lente.style.setProperty("--escuro", lim((p - .6) / .12, 0, 1).toFixed(3));
     mostra(p1, janela(p, -1, -.5, .16, .24));
     mostra(p2, janela(p, .68, .76, 2, 3));
   }
+  function apontaLupa(ev){
+    var b = palcoP.getBoundingClientRect();
+    mx = lim(ev.clientX - b.left, 0, W); my = lim(ev.clientY - b.top, 0, Hh); mexeu = true;
+  }
+  palcoP.addEventListener("pointermove", function(ev){ if (ev.pointerType === "mouse") apontaLupa(ev); });
+  palcoP.addEventListener("click", function(ev){ if (!ev.target.closest("a, button")) apontaLupa(ev); });   // toque leva a lanterna (sem atrapalhar a rolagem)
+  if (toque) $("#dica-lupa").textContent = "Toque na pintura pra mover a lanterna";
+  fundo.addEventListener("load", function(){ ultimaLupa = ""; });
+  function laco(){ if (!viva) return; lupa(pP); requestAnimationFrame(laco); }
+  function ligaLupa(on){ if (on === viva) return; viva = on; if (on) requestAnimationFrame(laco); }
 
   var topo = $("#topo"), pedido = false;
   function tick(){
     pedido = false;
     if (embed){ heroi(1); lupa(1); return; }
     if (naTela(secL)) heroi(prog(secL));
-    if (naTela(secP)) lupa(prog(secP));
+    if (naTela(secP)){ pP = prog(secP); ligaLupa(true); } else ligaLupa(false);
     topo.classList.toggle("solido", (window.scrollY || H.scrollTop) > 10);
   }
   function pede(){ if (!pedido){ pedido = true; requestAnimationFrame(tick); } }
@@ -636,16 +764,19 @@ html.g-aberta .zap{display:none}
   addEventListener("load", mede);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(mede);
 
-  /* vídeos tocam só quando aparecem */
+  /* vídeos tocam uma vez quando aparecem e param no último quadro (sem o "pulo" do loop); se a pessoa sair e voltar, recomeçam */
   var vids = $$("video[data-auto]");
   if (!embed && !calmo && "IntersectionObserver" in window){
     var io = new IntersectionObserver(function(es){
       es.forEach(function(en){
         var v = en.target;
-        if (en.isIntersecting){ v.muted = true; var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); }
-        else v.pause();
+        if (en.intersectionRatio >= .35){
+          v.muted = true;
+          if (v._voltou){ v._voltou = false; try { v.currentTime = 0; } catch (_){} }
+          var pr = v.play(); if (pr && pr.catch) pr.catch(function(){});
+        } else if (!en.isIntersecting){ v.pause(); if (v.currentTime > 0) v._voltou = true; }
       });
-    }, { rootMargin: "120px" });
+    }, { threshold: [0, .35] });
     vids.forEach(function(v){ io.observe(v); });
   }
 
@@ -739,16 +870,30 @@ html.g-aberta .zap{display:none}
     feito.hidden = true; form.hidden = false; le();
     var f = $(".chips button", form); if (f) f.focus();
   });
-  function abre(servico){
+  function abre(servico, carro){
     clearTimeout(fechaT);
     if (servico) $$('[data-multi="servicos"] button', form).forEach(function(b){ if (b.getAttribute("data-v") === servico) b.setAttribute("aria-pressed", "true"); });
-    if (!feito.hidden && servico){ feito.hidden = true; form.hidden = false; }
+    if (carro) $$('[data-unico="carro"] button', form).forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-v") === carro ? "true" : "false"); });
+    if (!feito.hidden && (servico || carro)){ feito.hidden = true; form.hidden = false; }
     le();
     quemAbriu = document.activeElement;
     veu.hidden = false; gav.setAttribute("aria-hidden", "false"); H.classList.add("g-aberta");
     if (lenis) lenis.stop();
     requestAnimationFrame(function(){ requestAnimationFrame(function(){ veu.classList.add("on"); gav.classList.add("on"); }); });
-    setTimeout(function(){ var f = form.hidden ? $("#obrigado") : $(".chips button", form); if (f) f.focus({ preventScroll: true }); }, 360);
+    setTimeout(function(){
+      var f = form.hidden ? $("#obrigado") : carro ? $('[data-multi="servicos"] button', form) : $(".chips button", form);
+      if (f) f.focus({ preventScroll: true });
+    }, 360);
+  }
+  // cartão "Qual é o carro?" da garagem: entra deslizando quando a cena aparece e já abre a gaveta com o carro marcado
+  var pre = $("#pre");
+  pre.addEventListener("click", function(ev){ var b = ev.target.closest("button[data-v]"); if (b) abre(null, b.getAttribute("data-v")); });
+  if (embed || !("IntersectionObserver" in window)) pre.classList.add("on");
+  else {
+    var ioPre = new IntersectionObserver(function(es){
+      if (es[0].intersectionRatio >= .3){ pre.classList.add("on"); ioPre.disconnect(); }
+    }, { threshold: [.3] });
+    ioPre.observe($("#agendar"));
   }
   function fecha(){
     veu.classList.remove("on"); gav.classList.remove("on"); gav.setAttribute("aria-hidden", "true"); H.classList.remove("g-aberta");
