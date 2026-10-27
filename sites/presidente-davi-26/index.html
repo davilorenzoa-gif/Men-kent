@@ -12,9 +12,9 @@
 <meta property="og:image" content="img/santinho.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Hanken+Grotesk:wght@400;500;700&family=Knewave&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Hanken+Grotesk:wght@400;500;700&family=Knewave&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
 <style>
-/* Layout: cartaz de campanha que ganha vida. Nome gigante + retrato na abertura, o globo da bandeira com as 5 propostas, uma urna de verdade pra treinar o voto e o fecho no Cristo. */
+/* Layout: cartaz de campanha que ganha vida. Nome gigante + retrato na abertura, a Constituição que abre com a rolagem, o globo com as 5 frentes (cada proposta com seu artigo), o caminho da lei, a urna, o juramento de posse e o fecho no Cristo. */
 :root{
   --mata:#05261A;        /* fundo, verde-mata profundo */
   --mata-2:#0A3A27;      /* superfície um tom acima */
@@ -29,6 +29,9 @@
   --giz:#F6F3E8;         /* texto principal */
   --nevoa:#A9C6B5;       /* texto secundário */
   --sombra:#000000;
+  --papel:#F5EFDD; --papel-2:#E4DBC0; --tinta-papel:#25231C; --tinta-verde:#0B6B37;
+  --couro:#0E4D33; --couro-2:#072E1F; --couro-3:#041D13;
+  --pedra:#3B403A; --pedra-2:#1F231D;
   --urna-casco:#DAD3C1; --urna-casco-2:#BDB39C; --urna-tela:#EEF0EA; --urna-moldura:#2A2A2A;
   --urna-tecla:#141414; --urna-tecla-2:#3A3A3A; --urna-branco:#F4F3EE; --urna-laranja:#EC6A2C; --urna-verde:#1F9D4C; --urna-tinta:#111111; --urna-rotulo:#4A4536;
 
@@ -36,6 +39,8 @@
   --f-pincel:'Knewave','Brush Script MT','Segoe Script',cursive;
   --f-texto:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --f-urna:Arial,Helvetica,sans-serif;
+  --f-lei:Georgia,'Times New Roman',Times,serif;
+  --f-assina:'Mrs Saint Delafield','Segoe Script','Brush Script MT',cursive;
   color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -181,7 +186,7 @@ section[id]{scroll-margin-top:64px}
 .p-lista{list-style:none;margin-top:24px}
 .p-lista li{display:grid;gap:4px;padding-block:16px;border-top:1px solid color-mix(in srgb,var(--giz) 15%,transparent)}
 .p-lista b{font-family:var(--f-titulo);font-weight:800;font-size:25px;line-height:1.05;text-transform:uppercase;letter-spacing:.01em;color:var(--ouro)}
-.p-lista span{max-width:50ch;color:color-mix(in srgb,var(--giz) 88%,transparent)}
+.p-lista li > span{max-width:50ch;color:color-mix(in srgb,var(--giz) 88%,transparent)}
 .painel.entra > *,.painel.entra li{animation:subir .6s cubic-bezier(.2,.8,.2,1) both}
 .painel.entra h3{animation-delay:.05s}
 .painel.entra .p-lead{animation-delay:.1s}
@@ -286,6 +291,154 @@ section[id]{scroll-margin-top:64px}
 .rodape .miolo{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 30px}
 .rodape b{color:var(--giz)}
 
+
+/* ---------- efeitos gerais ---------- */
+.progresso{position:absolute;left:0;right:0;bottom:0;height:3px;transform-origin:0 50%;transform:scaleX(var(--p,0));background:linear-gradient(90deg,var(--folha),var(--ouro));pointer-events:none}
+.cursor{position:fixed;left:0;top:0;z-index:80;width:38px;height:38px;margin:-19px 0 0 -19px;border:1.5px solid var(--ouro);border-radius:50%;pointer-events:none;opacity:0;transition:opacity .3s,width .25s,height .25s,margin .25s,background-color .25s}
+.cursor.on{opacity:.85}
+.cursor.grande{width:66px;height:66px;margin:-33px 0 0 -33px;background:color-mix(in srgb,var(--ouro) 16%,transparent)}
+.hw{display:inline-block;overflow:hidden;vertical-align:top;padding:.16em .03em .12em;margin:-.16em -.03em -.12em}
+.hw > span{display:inline-block;transition:transform .95s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i,0) * 70ms)}
+h2.espera .hw > span{transform:translateY(115%)}
+.abertura-fundo{animation:respira 26s ease-in-out infinite alternate}
+@keyframes respira{from{transform:scale(1)}to{transform:scale(1.12) translate(-1.5%,1%)}}
+
+/* ---------- WOW: a Constituição que abre ---------- */
+.constituicao{background:linear-gradient(180deg,var(--mata),var(--mata-2) 55%,var(--mata))}
+.livro-trilho{position:relative;height:250vh}
+.livro-palco{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-rows:auto minmax(0,1fr);gap:18px;padding-top:calc(76px + env(safe-area-inset-top,0px));padding-bottom:24px;overflow:hidden}
+.livro-texto p{color:var(--nevoa);margin-top:14px;max-width:44ch;font-size:18px}
+.livro-dica{display:inline-flex;align-items:center;gap:8px;font-size:14px!important;color:var(--ouro)!important}
+.livro-dica::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);animation:quica 1.4s ease-in-out infinite}
+@keyframes quica{50%{transform:translateY(4px) rotate(45deg)}}
+.livro-cena{display:grid;place-items:center;perspective:1800px;min-height:0}
+.livro{--abre:1;--entra:1;--pw:min(340px,calc(100vw - 32px));--ph:min(calc(var(--pw) * .64),calc((100vh - 330px) / 2));position:relative;width:var(--pw);height:calc(var(--ph) * 2);transform-style:preserve-3d;transform:translateY(calc((1 - var(--abre)) * -25%)) rotateX(calc((1 - var(--entra)) * 26deg)) rotateZ(calc((1 - var(--entra)) * -7deg)) scale(calc(.84 + var(--entra) * .16))}
+.pagina,.capa{position:absolute;left:0;top:50%;width:100%;height:50%}
+.capa{z-index:2;transform-style:preserve-3d;transform-origin:50% 0;transform:rotateX(calc(var(--abre) * 180deg))}
+.capa-frente,.capa-verso{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:6px}
+.capa-verso{transform:rotateX(180deg)}
+.pagina,.capa-verso{background:linear-gradient(180deg,var(--papel-2),var(--papel) 9%,var(--papel));color:var(--tinta-papel);font-family:var(--f-lei);font-size:clamp(11px,3.1vw,13.5px);line-height:1.42;padding:5.5% 7%;overflow:hidden;border-radius:6px;box-shadow:0 22px 40px -20px color-mix(in srgb,var(--sombra) 80%,transparent)}
+.pagina p + p,.capa-verso p + p{margin-top:.45em}
+.pg-titulo{font-family:var(--f-titulo);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:.85em;color:var(--tinta-verde);text-align:center}
+.livro mark{color:inherit;background:linear-gradient(transparent 50%,color-mix(in srgb,var(--ouro) 80%,transparent) 50%) 0 0/100% 100% no-repeat;transition:background-size .9s cubic-bezier(.6,0,.3,1)}
+.js .livro:not(.marcado) mark{background-size:0% 100%}
+.pagina mark{transition-delay:.45s}
+.nota-margem{position:absolute;right:6%;bottom:7%;font-family:var(--f-pincel);font-size:1.25em;color:var(--tinta-verde);transform:rotate(-5deg);transition:opacity .5s ease .9s}
+.js .livro:not(.marcado) .nota-margem{opacity:0}
+.capa-frente{display:grid;align-content:center;justify-items:center;gap:4px;text-align:center;padding:8%;color:var(--ouro);background:radial-gradient(120% 90% at 30% 15%,var(--couro),var(--couro-2) 65%,var(--couro-3));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ouro) 35%,transparent),inset 10px 0 18px color-mix(in srgb,var(--sombra) 45%,transparent),0 30px 50px -22px var(--sombra)}
+.capa-frente::before{content:"";position:absolute;inset:10px;border:1.5px solid color-mix(in srgb,var(--ouro) 70%,transparent);border-radius:3px}
+.capa-estrelas{font-size:11px;letter-spacing:.45em}
+.capa-titulo{font-family:var(--f-titulo);font-weight:900;text-transform:uppercase;font-size:clamp(30px,8vw,44px);line-height:.9;letter-spacing:.04em}
+.capa-sub{font-family:var(--f-titulo);font-weight:700;text-transform:uppercase;letter-spacing:.18em;font-size:11px;color:var(--giz);opacity:.85}
+.capa-ano{font-family:var(--f-titulo);font-weight:800;font-size:20px;letter-spacing:.32em;margin-top:6px}
+.livro-trilho.estatico{height:auto}
+.livro-trilho.estatico .livro-palco{position:relative;height:auto;overflow:visible;padding-block:96px 40px}
+.livro-trilho.estatico .livro-cena{padding-block:20px}
+.livro-trilho.estatico .livro-dica{display:none}
+@media (min-width:900px){
+  .livro-palco{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);grid-template-rows:none;align-items:center;gap:48px}
+  .livro{--pw:min(320px,23vw);--ph:calc(var(--pw) * 1.36);width:calc(var(--pw) * 2);height:var(--ph);transform:translateX(calc((1 - var(--abre)) * -25%)) rotateX(calc((1 - var(--entra)) * 24deg)) rotateZ(calc((1 - var(--entra)) * -8deg)) scale(calc(.84 + var(--entra) * .16))}
+  .pagina,.capa{left:50%;top:0;width:50%;height:100%}
+  .capa{transform-origin:0 50%;transform:rotateY(calc(var(--abre) * -180deg))}
+  .capa-verso{transform:rotateY(180deg)}
+  .pagina,.capa-verso{font-size:14px;padding:9% 9%;background:linear-gradient(90deg,var(--papel-2),var(--papel) 9%,var(--papel))}
+  .capa-verso{background:linear-gradient(270deg,var(--papel-2),var(--papel) 9%,var(--papel))}
+  .pagina p + p,.capa-verso p + p{margin-top:.8em}
+  .pg-titulo{margin-bottom:1.2em}
+  .capa-titulo{font-size:clamp(34px,3.2vw,46px)}
+  .capa-sub{font-size:12px}
+}
+.marcos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin-bottom:clamp(80px,10vw,120px);border-radius:18px;overflow:hidden;background:color-mix(in srgb,var(--giz) 14%,transparent)}
+@media (min-width:900px){.marcos{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.marco{display:grid;align-content:start;gap:6px;padding:22px 20px;background:var(--mata)}
+.marco b{font-family:var(--f-titulo);font-weight:900;font-size:clamp(48px,6vw,74px);line-height:.9;color:var(--ouro);font-variant-numeric:tabular-nums}
+.marco span{font-size:15px;line-height:1.35}
+.marco small{font-size:13px;color:var(--nevoa)}
+.marco b span{font-size:inherit;line-height:inherit}
+
+/* ---------- base constitucional de cada proposta ---------- */
+.painel-area{position:relative}
+.base{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 10px;margin-top:8px}
+.base details{flex:1 1 230px;min-width:0}
+.base summary{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:4px 12px 4px 10px;border-radius:8px;cursor:pointer;list-style:none;font-size:14px;font-weight:700;background:color-mix(in srgb,var(--giz) 8%,transparent);border:1px solid color-mix(in srgb,var(--giz) 18%,transparent);transition:background-color .2s,border-color .2s}
+.base summary::-webkit-details-marker{display:none}
+.base summary:hover{border-color:var(--ouro)}
+.base summary i{font-style:normal;font-family:var(--f-lei);font-size:17px;color:var(--ouro)}
+.base summary::after{content:"+";color:var(--nevoa);font-weight:500;transition:transform .25s}
+.base details[open] summary::after{transform:rotate(45deg)}
+.base blockquote{margin-top:10px;padding:12px 14px;border-left:3px solid var(--ouro);border-radius:0 8px 8px 0;background:color-mix(in srgb,var(--papel) 7%,transparent);font-family:var(--f-lei);font-style:italic;font-size:15px;line-height:1.5;color:color-mix(in srgb,var(--giz) 92%,transparent);animation:desdobra .45s cubic-bezier(.2,.8,.2,1)}
+.base blockquote cite{display:block;margin-top:8px;font-family:var(--f-texto);font-style:normal;font-size:12.5px;color:var(--nevoa)}
+@keyframes desdobra{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.como{display:inline-flex;align-items:center;min-height:36px;padding:0 11px;border-radius:8px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;color:var(--mata);background:var(--folha)}
+.como.como-pec{background:var(--ouro)}
+.carimbo{position:absolute;right:0;top:-12px;z-index:2;display:grid;place-items:center;align-content:center;width:86px;height:86px;border-radius:50%;text-align:center;color:var(--ouro);font-family:var(--f-titulo);font-weight:800;text-transform:uppercase;font-size:10.5px;line-height:1;letter-spacing:.08em;border:2.5px solid var(--ouro);box-shadow:inset 0 0 0 4px var(--mata),inset 0 0 0 5.5px var(--ouro);transform:rotate(-14deg);opacity:.92;pointer-events:none}
+.carimbo b{display:block;font-size:24px;font-weight:900;letter-spacing:.02em;margin-block:2px}
+.carimbo.bate{animation:bate .55s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes bate{0%{opacity:0;transform:rotate(-34deg) scale(2.6)}60%{opacity:1;transform:rotate(-11deg) scale(.9)}100%{opacity:.92;transform:rotate(-14deg) scale(1)}}
+.painel-area.espera .carimbo{opacity:0}
+.painel-area.treme{animation:treme .32s ease .28s}
+@keyframes treme{25%{transform:translate(2px,1px)}50%{transform:translate(-2px,-1px)}75%{transform:translate(1px,-1px)}}
+@media (min-width:980px){.carimbo{width:104px;height:104px;top:-30px;font-size:12px}.carimbo b{font-size:30px}}
+
+/* ---------- do papel pra lei ---------- */
+.caminho{padding-block:clamp(84px,11vw,140px);background:var(--mata-2)}
+.caminho-grade{display:grid;gap:44px;margin-top:44px}
+@media (min-width:980px){.caminho-grade{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:start}}
+.trilha{--p:1;position:relative;list-style:none;display:grid;gap:30px;padding-left:52px}
+.trilha::before,.trilha::after{content:"";position:absolute;left:17px;top:10px;bottom:10px;width:3px;border-radius:3px}
+.trilha::before{background:color-mix(in srgb,var(--giz) 14%,transparent)}
+.trilha::after{background:linear-gradient(var(--folha),var(--ouro));transform-origin:50% 0;transform:scaleY(var(--p))}
+.trilha li{position:relative;transition:opacity .4s}
+.bola{position:absolute;left:-52px;top:-3px;z-index:1;width:37px;height:37px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-titulo);font-weight:900;font-size:19px;color:var(--mata);background:var(--ouro);border:2px solid var(--ouro);transition:background-color .35s,border-color .35s,color .35s,transform .35s}
+.trilha.ativo li:not(.acesa){opacity:.45}
+.trilha.ativo li:not(.acesa) .bola{background:var(--mata-2);border-color:color-mix(in srgb,var(--giz) 28%,transparent);color:var(--nevoa);transform:scale(.88)}
+.trilha h3{font-family:var(--f-titulo);font-weight:800;font-size:28px;line-height:1;text-transform:uppercase}
+.trilha p{margin-top:6px;max-width:44ch;color:color-mix(in srgb,var(--giz) 86%,transparent)}
+.art{display:inline-block;margin-top:8px;font-size:13px;font-weight:700;letter-spacing:.02em;color:var(--ouro)}
+.pec{padding:26px 24px;border-radius:18px;background:var(--mata);border:1px solid color-mix(in srgb,var(--ouro) 30%,transparent)}
+.pec h3{font-family:var(--f-titulo);font-weight:800;font-size:32px;line-height:1;text-transform:uppercase}
+.pec > p{margin-top:12px;color:color-mix(in srgb,var(--giz) 86%,transparent)}
+.votacao{display:grid;gap:18px;margin-top:22px}
+.casa-topo{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px;font-size:15px}
+.casa-topo b{font-family:var(--f-titulo);font-weight:900;font-size:24px;color:var(--ouro);font-variant-numeric:tabular-nums}
+.barra{position:relative;height:14px;border-radius:99px;background:color-mix(in srgb,var(--giz) 12%,transparent)}
+.barra i{position:absolute;left:0;top:0;bottom:0;width:var(--w);border-radius:99px;background:linear-gradient(90deg,var(--folha),var(--ouro));transform-origin:0 50%;transition:transform 1.5s cubic-bezier(.2,.8,.2,1) .2s}
+.pec.espera .barra i{transform:scaleX(0)}
+.barra em{position:absolute;left:60%;top:-7px;bottom:-7px;width:2px;border-radius:2px;background:var(--giz)}
+.barra-legenda{font-size:13px;color:var(--nevoa)}
+.petreas{margin-top:clamp(64px,9vw,100px)}
+.petreas-topo{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 30px}
+.petreas-topo h3{font-family:var(--f-titulo);font-weight:900;font-size:clamp(36px,4.8vw,58px);line-height:.9;text-transform:uppercase;max-width:15ch;text-wrap:balance}
+.petreas-topo p{max-width:40ch;color:var(--nevoa)}
+.pedras{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:28px}
+@media (min-width:900px){.pedras{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.pedra{position:relative;overflow:hidden;min-width:0;padding:20px 18px 22px;border-radius:14px;background:radial-gradient(circle at 18% 8%,color-mix(in srgb,var(--giz) 12%,transparent),transparent 42%),repeating-radial-gradient(circle at 70% 80%,color-mix(in srgb,var(--sombra) 10%,transparent) 0 2px,transparent 2px 7px),linear-gradient(160deg,var(--pedra),var(--pedra-2));box-shadow:inset 0 1px 0 color-mix(in srgb,var(--giz) 14%,transparent),0 18px 30px -18px var(--sombra)}
+.pedra::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,color-mix(in srgb,var(--ouro) 35%,transparent) 50%,transparent 65%);transform:translateX(-120%);pointer-events:none}
+.pedras.visto .pedra::after{transform:translateX(120%);transition:transform 1.3s ease calc(var(--i) * 150ms + .5s)}
+.cadeado{width:30px;height:30px;color:var(--ouro)}
+.cadeado .arco{transition:transform .5s cubic-bezier(.3,1.7,.5,1) calc(var(--i) * 150ms)}
+.pedras.espera .cadeado .arco{transform:translateY(-5px)}
+.pedra small{display:block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ouro)}
+.pedra b{display:block;margin-top:4px;font-family:var(--f-titulo);font-weight:800;font-size:23px;line-height:1.02;text-transform:uppercase}
+.pedra span{display:block;margin-top:8px;font-size:14px;color:color-mix(in srgb,var(--giz) 72%,transparent)}
+
+/* ---------- juramento de posse ---------- */
+.lei-nota{font-size:15px!important;color:var(--nevoa)!important}
+.posse{padding-block:clamp(96px,12vw,150px);background:radial-gradient(60% 60% at 50% 40%,color-mix(in srgb,var(--ouro) 9%,transparent),transparent 70%),var(--mata)}
+.posse .miolo{max-width:1000px}
+.posse-rotulo{display:flex;align-items:center;gap:14px;font-family:var(--f-titulo);font-weight:800;font-size:16px;letter-spacing:.32em;text-transform:uppercase;color:var(--ouro)}
+.posse-rotulo i{display:block;width:34px;height:3px;background:linear-gradient(90deg,var(--folha) 50%,var(--ouro) 50%)}
+.juramento{margin-top:24px;font-family:var(--f-lei);font-size:clamp(26px,3.7vw,46px);line-height:1.3;text-wrap:pretty}
+.jw{display:inline-block;transition:opacity .55s ease,transform .55s ease;transition-delay:calc(var(--i) * 75ms)}
+.posse-bloco.espera .jw{opacity:.08;transform:translateY(10px)}
+.assina{display:grid;justify-items:start;gap:4px;margin-top:38px}
+.assinatura{font-family:var(--f-assina);font-weight:400;font-size:clamp(72px,10vw,118px);line-height:1;color:var(--ouro);padding:.12em .35em .2em .05em;margin:-.12em 0 -.3em;clip-path:inset(0 0 0 0);transition:clip-path 1.8s cubic-bezier(.6,0,.3,1) var(--atraso,0s)}
+.posse-bloco.espera .assinatura{clip-path:inset(0 100% 0 0)}
+.assina-linha{width:min(360px,80%);height:2px;background:color-mix(in srgb,var(--giz) 55%,transparent)}
+.assina-cargo{font-size:14px;color:var(--nevoa)}
+.posse-fonte{margin-top:30px;max-width:60ch;font-size:15px;color:var(--nevoa)}
+.rodape a{color:var(--giz)}
+
 @media (min-width:1180px){.num-fantasma{display:block;left:-64%;bottom:-6%;width:100%}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -293,6 +446,8 @@ section[id]{scroll-margin-top:64px}
   .num-fantasma text{animation:none;stroke-dashoffset:0;fill:color-mix(in srgb,var(--ouro) 20%,transparent)}
   .faixa-trilho,.santinho-carta,.estrela.ativa::after,.globo-svg .estrelinha{animation:none}
   .painel.entra > *,.painel.entra li{animation:aparece .3s ease both}
+  .abertura-fundo,.carimbo.bate,.painel-area.treme,.livro-dica::after{animation:none}
+  .cursor{display:none}
 }
 </style>
 </head>
@@ -306,12 +461,14 @@ section[id]{scroll-margin-top:64px}
     </a>
     <nav aria-label="Seções">
       <a href="#manifesto">Manifesto</a>
+      <a href="#constituicao">Constituição</a>
       <a href="#propostas">Propostas</a>
+      <a href="#caminho">Como vira lei</a>
       <a href="#urna">Urna</a>
-      <a href="#santinho">Santinho</a>
     </nav>
     <a class="btn-topo" href="#urna">Votar na urna</a>
   </div>
+  <span class="progresso" id="progresso" aria-hidden="true"></span>
 </header>
 
 <main>
@@ -356,6 +513,51 @@ section[id]{scroll-margin-top:64px}
     <div class="manifesto-texto">
       <h2>Garra de onça.</h2>
       <p class="preenche" id="preenche">A onça-pintada é a dona da mata brasileira. Ela não pede licença pra defender o que é dela. Eu também não vou pedir. Vou defender <em>o seu bolso</em>, <em>a sua escola</em> e <em>a sua rua</em>. Menos Estado no seu caminho, mais liberdade pra você construir a sua vida.</p>
+    </div>
+  </div>
+</section>
+
+<section class="constituicao" id="constituicao">
+  <div class="livro-trilho">
+    <div class="livro-palco miolo">
+      <div class="livro-texto">
+        <h2>A Constituição do meu lado.</h2>
+        <p>A Constituição de 1988 é a lei mais importante do Brasil. Cada proposta deste plano mostra o artigo que dá base pra ela.</p>
+        <p class="livro-dica" aria-hidden="true">Role pra abrir</p>
+      </div>
+      <div class="livro-cena">
+        <div class="livro" id="livro">
+          <div class="pagina">
+            <p><b>Art. 3º</b> Constituem objetivos fundamentais da República Federativa do Brasil:</p>
+            <p>I - <mark>construir uma sociedade livre, justa e solidária</mark>;</p>
+            <p>II - garantir o desenvolvimento nacional;</p>
+            <p>(...)</p>
+            <p class="nota-margem" aria-hidden="true">daqui saiu o nosso lema</p>
+          </div>
+          <div class="capa">
+            <div class="capa-frente" aria-hidden="true">
+              <span class="capa-estrelas">★ ★ ★ ★ ★</span>
+              <span class="capa-titulo">Constituição</span>
+              <span class="capa-sub">da República Federativa do Brasil</span>
+              <span class="capa-ano">1988</span>
+            </div>
+            <div class="capa-verso">
+              <p class="pg-titulo">Título I<br>Dos Princípios Fundamentais</p>
+              <p><b>Art. 1º</b> A República Federativa do Brasil (...) tem como fundamentos:</p>
+              <p>IV - os valores sociais do trabalho e da <mark>livre iniciativa</mark>;</p>
+              <p>Parágrafo único. <mark>Todo o poder emana do povo</mark>, que o exerce por meio de representantes eleitos ou diretamente (...).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="miolo">
+    <div class="marcos">
+      <div class="marco"><b class="conta" data-alvo="1988">1988</b><span>A Constituição Cidadã foi promulgada em 5 de outubro de 1988.</span></div>
+      <div class="marco"><b class="conta" data-alvo="35">35</b><span>anos de idade mínima pra ser presidente.</span><small>Art. 14, § 3º, VI, a</small></div>
+      <div class="marco"><b class="conta" data-alvo="4">4</b><span>anos de mandato, começando em 5 de janeiro.</span><small>Art. 82</small></div>
+      <div class="marco"><b><span class="conta" data-alvo="3">3</span>/5</b><span>dos votos no Congresso pra mudar a Constituição.</span><small>Art. 60, § 2º</small></div>
     </div>
   </div>
 </section>
@@ -406,14 +608,18 @@ section[id]{scroll-margin-top:64px}
       </div>
 
       <div class="painel-area">
+        <div class="carimbo" id="carimbo" aria-hidden="true">Com base na<b>CF/88</b>Constituição</div>
         <article class="painel" id="painel-0" role="tabpanel" aria-labelledby="aba-0">
           <div class="painel-icone"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20v-5M10 20v-8M16 20V9M3 10l6-5 4 3 7-6M16 2h4v4"/></svg></div>
           <h3>Menos Estado, mais liberdade</h3>
           <p class="p-lead">O governo sai do caminho de quem quer trabalhar, estudar e empreender.</p>
           <ul class="p-lista">
-            <li><b>Empresa aberta em 1 dia</b><span>Abrir CNPJ 100% pelo celular, sem cartório e sem pilha de papel.</span></li>
-            <li><b>Esplanada enxuta</b><span>Juntar ministérios que fazem a mesma coisa e cortar cargos de indicação política.</span></li>
-            <li><b>Governo no celular</b><span>Todo serviço federal resolvido online, com prazo de resposta e sem fila.</span></li>
+            <li><b>Empresa aberta em 1 dia</b><span>Abrir CNPJ 100% pelo celular, sem cartório e sem pilha de papel.</span>
+              <div class="base"><details><summary><i>§</i>Art. 170, parágrafo único</summary><blockquote>“É assegurado a todos o livre exercício de qualquer atividade econômica, independentemente de autorização de órgãos públicos, salvo nos casos previstos em lei.”<cite>Constituição Federal, art. 170, parágrafo único</cite></blockquote></details><span class="como">Por lei</span></div></li>
+            <li><b>Esplanada enxuta</b><span>Juntar ministérios que fazem a mesma coisa e cortar cargos de indicação política.</span>
+              <div class="base"><details><summary><i>§</i>Art. 88</summary><blockquote>“A lei disporá sobre a criação e extinção de Ministérios e órgãos da administração pública.”<cite>Constituição Federal, art. 88</cite></blockquote></details><span class="como">Por lei</span></div></li>
+            <li><b>Governo no celular</b><span>Todo serviço federal resolvido online, com prazo de resposta e sem fila.</span>
+              <div class="base"><details><summary><i>§</i>Art. 37, caput</summary><blockquote>“A administração pública direta e indireta de qualquer dos Poderes da União, dos Estados, do Distrito Federal e dos Municípios obedecerá aos princípios de legalidade, impessoalidade, moralidade, publicidade e eficiência (...)”<cite>Constituição Federal, art. 37. Aqui vale o princípio da eficiência.</cite></blockquote></details><span class="como">Ação do governo</span></div></li>
           </ul>
         </article>
         <article class="painel" id="painel-1" role="tabpanel" aria-labelledby="aba-1">
@@ -421,9 +627,12 @@ section[id]{scroll-margin-top:64px}
           <h3>Economia forte e empregos</h3>
           <p class="p-lead">Imposto mais simples e mais vaga pra quem está começando.</p>
           <ul class="p-lista">
-            <li><b>Imposto que cabe numa página</b><span>Menos taxas, uma guia só, e a nota fiscal mostrando quanto você pagou de imposto.</span></li>
-            <li><b>Primeiro emprego sem medo</b><span>Empresa que contrata jovem de 16 a 24 anos paga menos encargo no primeiro ano.</span></li>
-            <li><b>MEI que cresce junto</b><span>Limite de faturamento do MEI maior, pra quem cresce não ser punido por isso.</span></li>
+            <li><b>Imposto que cabe numa página</b><span>Menos taxas, uma guia só, e a nota fiscal mostrando quanto você pagou de imposto.</span>
+              <div class="base"><details><summary><i>§</i>Art. 145, § 3º e art. 150, § 5º</summary><blockquote>“O Sistema Tributário Nacional deve observar os princípios da simplicidade, da transparência, da justiça tributária, da cooperação e da defesa do meio ambiente.”<cite>Constituição Federal, art. 145, § 3º. E o art. 150, § 5º manda a lei esclarecer o consumidor sobre os impostos que incidem sobre mercadorias e serviços.</cite></blockquote></details><span class="como">Por lei complementar</span></div></li>
+            <li><b>Primeiro emprego sem medo</b><span>Empresa que contrata jovem de 16 a 24 anos paga menos encargo no primeiro ano.</span>
+              <div class="base"><details><summary><i>§</i>Art. 170, VIII</summary><blockquote>“A ordem econômica, fundada na valorização do trabalho humano e na livre iniciativa, (...) observados os seguintes princípios: (...) VIII - busca do pleno emprego;”<cite>Constituição Federal, art. 170. O art. 227 também garante ao jovem o direito à profissionalização.</cite></blockquote></details><span class="como">Por lei</span></div></li>
+            <li><b>MEI que cresce junto</b><span>Limite de faturamento do MEI maior, pra quem cresce não ser punido por isso.</span>
+              <div class="base"><details><summary><i>§</i>Art. 179</summary><blockquote>“A União, os Estados, o Distrito Federal e os Municípios dispensarão às microempresas e às empresas de pequeno porte, assim definidas em lei, tratamento jurídico diferenciado, visando a incentivá-las pela simplificação de suas obrigações administrativas, tributárias, previdenciárias e creditícias (...)”<cite>Constituição Federal, art. 179</cite></blockquote></details><span class="como">Por lei complementar</span></div></li>
           </ul>
         </article>
         <article class="painel" id="painel-2" role="tabpanel" aria-labelledby="aba-2">
@@ -431,9 +640,12 @@ section[id]{scroll-margin-top:64px}
           <h3>Educação de qualidade</h3>
           <p class="p-lead">Escola que prepara pra vida real, não só pra prova.</p>
           <ul class="p-lista">
-            <li><b>Ensino médio com profissão</b><span>Curso técnico dentro da escola pública, com estágio em empresas da região.</span></li>
-            <li><b>Aula de dinheiro e de código</b><span>Educação financeira e programação no currículo de todas as escolas.</span></li>
-            <li><b>Professor valorizado</b><span>Bônus pra escola que melhora o aprendizado e formação paga pelo governo.</span></li>
+            <li><b>Ensino médio com profissão</b><span>Curso técnico dentro da escola pública, com estágio em empresas da região, em parceria com os estados.</span>
+              <div class="base"><details><summary><i>§</i>Art. 205</summary><blockquote>“A educação, direito de todos e dever do Estado e da família, será promovida e incentivada com a colaboração da sociedade, visando ao pleno desenvolvimento da pessoa, seu preparo para o exercício da cidadania e sua qualificação para o trabalho.”<cite>Constituição Federal, art. 205</cite></blockquote></details><span class="como">Por lei</span></div></li>
+            <li><b>Aula de dinheiro e de código</b><span>Educação financeira e programação como matéria de verdade, com aula toda semana.</span>
+              <div class="base"><details><summary><i>§</i>Art. 218</summary><blockquote>“O Estado promoverá e incentivará o desenvolvimento científico, a pesquisa, a capacitação científica e tecnológica e a inovação.”<cite>Constituição Federal, art. 218</cite></blockquote></details><span class="como">Por lei</span></div></li>
+            <li><b>Professor valorizado</b><span>Plano de carreira, bônus pra escola que melhora o aprendizado e formação paga pelo governo.</span>
+              <div class="base"><details><summary><i>§</i>Art. 206, V</summary><blockquote>“O ensino será ministrado com base nos seguintes princípios: (...) V - valorização dos profissionais da educação escolar, garantidos, na forma da lei, planos de carreira (...)”<cite>Constituição Federal, art. 206, V</cite></blockquote></details><span class="como">Por lei</span></div></li>
           </ul>
         </article>
         <article class="painel" id="painel-3" role="tabpanel" aria-labelledby="aba-3">
@@ -441,9 +653,12 @@ section[id]{scroll-margin-top:64px}
           <h3>Segurança com justiça</h3>
           <p class="p-lead">Quem cumpre a lei anda tranquilo. Quem não cumpre responde rápido.</p>
           <ul class="p-lista">
-            <li><b>Fronteira fechada pro crime</b><span>Drones, radares e polícias integradas contra o tráfico de armas e drogas.</span></li>
-            <li><b>Polícia com tecnologia</b><span>Câmera no uniforme, dados ligados entre os estados e boletim de ocorrência online.</span></li>
-            <li><b>Justiça rápida</b><span>Prazo máximo pra julgar crime violento e mutirão pra zerar processo parado.</span></li>
+            <li><b>Fronteira fechada pro crime</b><span>Drones, radares e mais Polícia Federal na fronteira contra o tráfico de armas e drogas.</span>
+              <div class="base"><details><summary><i>§</i>Art. 144, § 1º, II e III</summary><blockquote>“A polícia federal (...) destina-se a: (...) II - prevenir e reprimir o tráfico ilícito de entorpecentes e drogas afins, o contrabando e o descaminho (...); III - exercer as funções de polícia marítima, aeroportuária e de fronteiras;”<cite>Constituição Federal, art. 144, § 1º</cite></blockquote></details><span class="como">Ação do governo</span></div></li>
+            <li><b>Polícia com tecnologia</b><span>Câmera no uniforme, dados ligados entre os estados e boletim de ocorrência online.</span>
+              <div class="base"><details><summary><i>§</i>Art. 144, § 7º</summary><blockquote>“A lei disciplinará a organização e o funcionamento dos órgãos responsáveis pela segurança pública, de maneira a garantir a eficiência de suas atividades.”<cite>Constituição Federal, art. 144, § 7º</cite></blockquote></details><span class="como">Por lei</span></div></li>
+            <li><b>Justiça rápida</b><span>Prazo máximo, definido em lei, pra julgar crime violento.</span>
+              <div class="base"><details><summary><i>§</i>Art. 5º, LXXVIII</summary><blockquote>“a todos, no âmbito judicial e administrativo, são assegurados a razoável duração do processo e os meios que garantam a celeridade de sua tramitação.”<cite>Constituição Federal, art. 5º, LXXVIII</cite></blockquote></details><span class="como">Por lei</span></div></li>
           </ul>
         </article>
         <article class="painel" id="painel-4" role="tabpanel" aria-labelledby="aba-4">
@@ -451,9 +666,12 @@ section[id]{scroll-margin-top:64px}
           <h3>Um Brasil sem corrupção</h3>
           <p class="p-lead">Cada real do seu imposto aparece na tela.</p>
           <ul class="p-lista">
-            <li><b>Gasto ao vivo</b><span>Todo pagamento do governo publicado na hora, com busca por cidade e por obra.</span></li>
-            <li><b>Fim do foro privilegiado</b><span>Político acusado é julgado como qualquer cidadão.</span></li>
-            <li><b>Ficha limpa em tudo</b><span>Quem foi condenado não assume cargo de confiança em nenhum ministério.</span></li>
+            <li><b>Gasto ao vivo</b><span>Todo pagamento do governo publicado no mesmo dia, com busca por cidade e por obra.</span>
+              <div class="base"><details><summary><i>§</i>Art. 5º, XXXIII e art. 37</summary><blockquote>“todos têm direito a receber dos órgãos públicos informações de seu interesse particular, ou de interesse coletivo ou geral, que serão prestadas no prazo da lei (...)”<cite>Constituição Federal, art. 5º, XXXIII. E o art. 37 coloca a publicidade como princípio da administração pública.</cite></blockquote></details><span class="como">Ação do governo</span></div></li>
+            <li><b>Fim do foro privilegiado</b><span>Político acusado de crime comum é julgado como qualquer cidadão.</span>
+              <div class="base"><details><summary><i>§</i>Art. 5º, caput</summary><blockquote>“Todos são iguais perante a lei, sem distinção de qualquer natureza (...)”<cite>Constituição Federal, art. 5º. A PEC mudaria o art. 53, § 1º e o art. 102, I, b e c, que hoje mandam julgar essas autoridades no STF.</cite></blockquote></details><span class="como como-pec">Por PEC</span></div></li>
+            <li><b>Ficha limpa em tudo</b><span>Quem foi condenado por corrupção não assume cargo de confiança no governo federal.</span>
+              <div class="base"><details><summary><i>§</i>Art. 37, caput e V</summary><blockquote>“A administração pública (...) obedecerá aos princípios de legalidade, impessoalidade, moralidade, publicidade e eficiência (...)”<cite>Constituição Federal, art. 37. O inciso V trata dos cargos em comissão e funções de confiança.</cite></blockquote></details><span class="como">Por lei</span></div></li>
           </ul>
         </article>
         <div class="painel-nav" hidden>
@@ -466,11 +684,51 @@ section[id]{scroll-margin-top:64px}
   </div>
 </section>
 
+<section class="caminho" id="caminho">
+  <div class="miolo">
+    <div class="sec-topo">
+      <h2>Do papel pra lei.</h2>
+      <p>Presidente não faz lei sozinho. Cada proposta passa pelo Congresso, do jeito que a Constituição manda.</p>
+    </div>
+    <div class="caminho-grade">
+      <ol class="trilha">
+        <li><span class="bola" aria-hidden="true">1</span><h3>O projeto sai do Planalto</h3><p>O presidente envia o projeto de lei ao Congresso e pode pedir urgência.</p><span class="art">Art. 61 e art. 64, § 1º</span></li>
+        <li><span class="bola" aria-hidden="true">2</span><h3>Câmara dos Deputados</h3><p>Projeto do presidente começa a ser votado pela Câmara.</p><span class="art">Art. 64</span></li>
+        <li><span class="bola" aria-hidden="true">3</span><h3>Senado Federal</h3><p>A outra Casa revisa o texto, em um só turno de votação.</p><span class="art">Art. 65</span></li>
+        <li><span class="bola" aria-hidden="true">4</span><h3>Sanção ou veto</h3><p>O texto aprovado volta pro presidente, que sanciona ou veta.</p><span class="art">Art. 66</span></li>
+        <li><span class="bola" aria-hidden="true">5</span><h3>Vira lei</h3><p>Publicada, a regra passa a valer pra todo mundo.</p></li>
+      </ol>
+      <aside class="pec" id="pec">
+        <h3>E pra mudar a Constituição?</h3>
+        <p>Aí é uma PEC. O presidente pode propor (art. 60, II), mas ela só passa com 3/5 dos votos, em dois turnos, na Câmara e no Senado (art. 60, § 2º).</p>
+        <div class="votacao">
+          <div class="casa"><div class="casa-topo"><span>Câmara dos Deputados</span><b>308 de 513</b></div><div class="barra" style="--w:60.04%"><i></i><em></em></div></div>
+          <div class="casa"><div class="casa-topo"><span>Senado Federal</span><b>49 de 81</b></div><div class="barra" style="--w:60.49%"><i></i><em></em></div></div>
+          <p class="barra-legenda">A linha branca marca os 3/5. O fim do foro privilegiado precisa passar por aqui.</p>
+        </div>
+      </aside>
+    </div>
+    <div class="petreas">
+      <div class="petreas-topo">
+        <h3>O que nem uma PEC pode abolir.</h3>
+        <p>São as cláusulas pétreas do art. 60, § 4º. Liberdade de verdade começa respeitando esses limites.</p>
+      </div>
+      <ul class="pedras" id="pedras">
+        <li class="pedra" style="--i:0"><svg class="cadeado ico" viewBox="0 0 24 24" aria-hidden="true"><path class="arco" d="M8 11V8a4 4 0 018 0v3"/><rect x="5" y="11" width="14" height="10" rx="2"/></svg><small>Inciso I</small><b>Federação</b><span>a forma federativa de Estado</span></li>
+        <li class="pedra" style="--i:1"><svg class="cadeado ico" viewBox="0 0 24 24" aria-hidden="true"><path class="arco" d="M8 11V8a4 4 0 018 0v3"/><rect x="5" y="11" width="14" height="10" rx="2"/></svg><small>Inciso II</small><b>Seu voto</b><span>o voto direto, secreto, universal e periódico</span></li>
+        <li class="pedra" style="--i:2"><svg class="cadeado ico" viewBox="0 0 24 24" aria-hidden="true"><path class="arco" d="M8 11V8a4 4 0 018 0v3"/><rect x="5" y="11" width="14" height="10" rx="2"/></svg><small>Inciso III</small><b>Três Poderes</b><span>a separação dos Poderes</span></li>
+        <li class="pedra" style="--i:3"><svg class="cadeado ico" viewBox="0 0 24 24" aria-hidden="true"><path class="arco" d="M8 11V8a4 4 0 018 0v3"/><rect x="5" y="11" width="14" height="10" rx="2"/></svg><small>Inciso IV</small><b>Seus direitos</b><span>os direitos e garantias individuais</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <section class="urna-sec" id="urna">
   <div class="miolo urna-grade">
     <div class="urna-intro">
       <h2>Treine seu voto.</h2>
       <p>Digite <kbd>2</kbd> e <kbd>6</kbd>, confira a foto e aperte <kbd>CONFIRMA</kbd>. No computador, dá pra usar o teclado também.</p>
+      <p class="lei-nota">O voto é direto e secreto, com valor igual para todos (art. 14). E com 16 anos você já pode votar: entre 16 e 17 é facultativo (art. 14, § 1º).</p>
       <p class="placar">Votos no 26 neste aparelho: <b id="placar-n">0</b></p>
       <button type="button" class="som" id="som" aria-pressed="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="onda-som" d="M16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11"/></svg><span>Som ligado</span></button>
     </div>
@@ -524,6 +782,19 @@ section[id]{scroll-margin-top:64px}
   </div>
 </section>
 
+<section class="posse" id="posse">
+  <div class="miolo posse-bloco" id="posse-bloco">
+    <p class="posse-rotulo"><i></i>Compromisso de posse</p>
+    <p class="juramento" id="juramento">“Prometo manter, defender e cumprir a Constituição, observar as leis, promover o bem geral do povo brasileiro, sustentar a união, a integridade e a independência do Brasil.”</p>
+    <div class="assina">
+      <span class="assinatura" aria-hidden="true">Davi Lorenzo</span>
+      <span class="assina-linha" aria-hidden="true"></span>
+      <span class="assina-cargo">Davi Lorenzo, Presidente da República (na simulação)</span>
+    </div>
+    <p class="posse-fonte">Esse é o compromisso que todo presidente faz ao tomar posse, em sessão do Congresso Nacional (art. 78). O mandato dura 4 anos e começa em 5 de janeiro do ano seguinte à eleição (art. 82).</p>
+  </div>
+</section>
+
 <section class="final" id="santinho">
   <div class="final-cristo">
     <img src="img/cristo.jpg" width="736" height="1104" loading="lazy" alt="Cristo Redentor de braços abertos sobre o Rio de Janeiro ao pôr do sol">
@@ -546,7 +817,8 @@ section[id]{scroll-margin-top:64px}
 <footer class="rodape">
   <div class="miolo">
     <p><b>Davi Lorenzo 26</b>, para presidente pelo Partido da Liberdade.</p>
-    <p>Candidatura fictícia, feita para um trabalho escolar. Imagens ilustrativas.</p>
+    <p>Candidatura fictícia, feita para um trabalho escolar. Pela Constituição, presidente precisa ter pelo menos 35 anos (art. 14, § 3º, VI, a). Imagens ilustrativas.</p>
+    <p>Artigos citados conforme o texto oficial da Constituição Federal de 1988, no <a href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm" target="_blank" rel="noopener">site do Planalto</a>.</p>
   </div>
 </footer>
 
@@ -556,6 +828,7 @@ section[id]{scroll-margin-top:64px}
 </div>
 
 <canvas id="confete" aria-hidden="true"></canvas>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
 
 <script>
 (function(){
@@ -685,9 +958,129 @@ section[id]{scroll-margin-top:64px}
     for (var i = 0; i < pals.length; i++) pals[i].classList.toggle('acesa', i < n);
   }
 
+
+  /* ---------- efeitos gerais ---------- */
+  var barraProg = $('#progresso');
+  var cursor = $('#cursor');
+  if (cursor && mouseFino && !reduz){
+    var cx = -100, cy = -100, tx = -100, ty = -100, seguindo = false;
+    var seguir = function(){
+      cx += (tx - cx) * .22; cy += (ty - cy) * .22;
+      cursor.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
+      if (Math.abs(tx - cx) + Math.abs(ty - cy) > .3) requestAnimationFrame(seguir); else seguindo = false;
+    };
+    document.addEventListener('pointermove', function(e){
+      if (e.pointerType !== 'mouse') return;
+      tx = e.clientX; ty = e.clientY;
+      cursor.classList.add('on');
+      cursor.classList.toggle('grande', !!(e.target.closest && e.target.closest('a, button, summary')));
+      if (!seguindo){ seguindo = true; requestAnimationFrame(seguir); }
+    });
+    document.documentElement.addEventListener('mouseleave', function(){ cursor.classList.remove('on'); });
+  }
+  if (mouseFino && !reduz){
+    $$('.btn, .btn-topo').forEach(function(b){
+      b.addEventListener('pointermove', function(e){
+        var r = b.getBoundingClientRect();
+        b.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * .22).toFixed(1) + 'px,' + ((e.clientY - r.top - r.height / 2) * .3).toFixed(1) + 'px)';
+      });
+      b.addEventListener('pointerleave', function(){ b.style.transform = ''; });
+    });
+  }
+
+  /* aparece ao ver: só o que está abaixo da dobra no carregamento espera a vez */
+  var ioVer = ('IntersectionObserver' in window) ? new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (!e.isIntersecting) return;
+      var el = e.target; ioVer.unobserve(el);
+      el.classList.remove('espera'); el.classList.add('visto');
+      if (el._aoVer) el._aoVer(el._esperava);
+    });
+  }, { threshold: .2, rootMargin: '0px 0px -6% 0px' }) : null;
+  function quandoVer(el, fn){
+    if (!el) return;
+    el._aoVer = fn || null;
+    if (reduz || !ioVer){ el.classList.add('visto'); if (fn) fn(false); return; }
+    el._esperava = el.getBoundingClientRect().top > window.innerHeight * .9;
+    if (el._esperava) el.classList.add('espera');
+    ioVer.observe(el);
+  }
+  if (!reduz){
+    $$('h2').forEach(function(h){
+      var palavras = h.textContent.trim().split(/\s+/);
+      h.textContent = '';
+      palavras.forEach(function(p, i){
+        var o = document.createElement('span'), d = document.createElement('span');
+        o.className = 'hw'; d.textContent = p; d.style.setProperty('--i', i);
+        o.appendChild(d); h.appendChild(o);
+        if (i < palavras.length - 1) h.appendChild(document.createTextNode(' '));
+      });
+      quandoVer(h);
+    });
+  }
+  var marcos = $('.marcos');
+  quandoVer(marcos, function(esperava){
+    if (!esperava) return;
+    $$('.conta', marcos).forEach(function(c){
+      var alvo = +c.getAttribute('data-alvo'), t0 = performance.now();
+      (function f(t){
+        var k = Math.min(1, (t - t0) / 1600);
+        c.textContent = Math.round(alvo * (1 - Math.pow(1 - k, 3)));
+        if (k < 1) requestAnimationFrame(f);
+      })(t0);
+    });
+  });
+  if (marcos && marcos.classList.contains('espera')) $$('.conta', marcos).forEach(function(c){ c.textContent = '0'; });
+  quandoVer($('#pec'));
+  quandoVer($('#pedras'));
+  var jur = $('#juramento'), posseBloco = $('#posse-bloco');
+  if (jur && !reduz){
+    var ps = jur.textContent.trim().split(/\s+/);
+    jur.textContent = '';
+    ps.forEach(function(p, i){
+      var w = document.createElement('span'); w.className = 'jw'; w.textContent = p; w.style.setProperty('--i', i);
+      jur.appendChild(w);
+      if (i < ps.length - 1) jur.appendChild(document.createTextNode(' '));
+    });
+    posseBloco.style.setProperty('--atraso', (ps.length * 75 + 250) + 'ms');
+    quandoVer(posseBloco);
+  }
+
+  /* ---------- a Constituição que abre com a rolagem ---------- */
+  var livroTrilho = $('.livro-trilho'), livro = $('#livro'), livroMarcado = false;
+  if (livro && reduz){ livroTrilho.classList.add('estatico'); livro.classList.add('marcado'); }
+  function atualizarLivro(){
+    if (!livro || reduz) return;
+    var r = livroTrilho.getBoundingClientRect(), vh = window.innerHeight;
+    var p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
+    var entra = Math.min(1, (p + .12) / .38), abre = Math.min(1, Math.max(0, (p - .26) / .42));
+    abre = abre < .5 ? 2 * abre * abre : 1 - Math.pow(-2 * abre + 2, 2) / 2;
+    livro.style.setProperty('--entra', entra.toFixed(3));
+    livro.style.setProperty('--abre', abre.toFixed(3));
+    var marcar = livroMarcado ? p > .64 : p > .72; // folga pra não piscar quando a pessoa para no meio
+    if (marcar !== livroMarcado){ livroMarcado = marcar; livro.classList.toggle('marcado', marcar); }
+  }
+
+  /* ---------- trilha do papel pra lei ---------- */
+  var trilha = $('.trilha'), passos = trilha ? $$('li', trilha) : [];
+  if (trilha && !reduz) trilha.classList.add('ativo');
+  function atualizarTrilha(){
+    if (!trilha || reduz) return;
+    var r = trilha.getBoundingClientRect(), vh = window.innerHeight;
+    var p = Math.min(1, Math.max(0, (vh * .62 - r.top) / Math.max(1, r.height)));
+    trilha.style.setProperty('--p', p.toFixed(3));
+    passos.forEach(function(li){ li.classList.toggle('acesa', p >= (li.offsetTop + 18) / r.height); });
+  }
+
   /* ---------- rolagem: uma fonte só ---------- */
   var pedido = false;
-  function quadro(){ pedido = false; topo.classList.toggle('rolou', window.scrollY > 30); atualizarManifesto(); }
+  function quadro(){
+    pedido = false;
+    topo.classList.toggle('rolou', window.scrollY > 30);
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    if (barraProg) barraProg.style.setProperty('--p', max > 0 ? Math.min(1, window.scrollY / max).toFixed(4) : '0');
+    atualizarManifesto(); atualizarLivro(); atualizarTrilha();
+  }
   function pedir(){ if (!pedido){ pedido = true; requestAnimationFrame(quadro); } }
   window.addEventListener('scroll', pedir, { passive: true });
   window.addEventListener('resize', pedir);
@@ -716,7 +1109,13 @@ section[id]{scroll-margin-top:64px}
       gEst.appendChild(c); feitas++;
     }
   }
-  var atual = 0, ocupado = false, fila = null;
+  var atual = 0, ocupado = false, fila = null, carimbo = $('#carimbo'), areaP = $('.painel-area');
+  function bater(){
+    if (!carimbo || reduz) return;
+    carimbo.classList.remove('bate'); areaP.classList.remove('treme');
+    void carimbo.offsetWidth;
+    carimbo.classList.add('bate'); areaP.classList.add('treme');
+  }
   function marcar(i){
     abas.forEach(function(a, k){ a.setAttribute('aria-selected', k === i ? 'true' : 'false'); a.tabIndex = k === i ? 0 : -1; });
     estrelas.forEach(function(e, k){ e.classList.toggle('ativa', k === i); });
@@ -736,7 +1135,7 @@ section[id]{scroll-margin-top:64px}
     i = (i + paineis.length) % paineis.length;
     if (ocupado){ fila = i; return; }
     if (i === atual) return;
-    ocupado = true; atual = i; marcar(i);
+    ocupado = true; atual = i; marcar(i); bater();
     var nome = abas[i].getAttribute('data-faixa');
     var liberar = function(){ ocupado = false; if (fila !== null){ var f = fila; fila = null; ir(f); } };
     if (reduz || !faixaTxt){ if (faixaTxt) faixaTxt.textContent = nome; setTimeout(liberar, 60); return; }
@@ -748,6 +1147,7 @@ section[id]{scroll-margin-top:64px}
   }
   if (paineis.length){
     marcar(0);
+    quandoVer(areaP, function(esperava){ if (esperava) bater(); });
     var navP = $('.painel-nav'); if (navP) navP.hidden = false;
     abas.forEach(function(a, k){ a.addEventListener('click', function(){ ir(k); }); });
     estrelas.forEach(function(e, k){ e.addEventListener('click', function(){ ir(k); }); });
