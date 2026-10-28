@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Malibu Vieiralves | Burger de costela Angus em Manaus</title>
+<meta name="description" content="Malibu Vieiralves: hamburgueria de costela Angus na Rua Rio Javari, 43, em Manaus. Alphadog, Oceanside, Long Beach e mais. De terça a domingo, a partir das 17h45. Peça pelo WhatsApp.">
+<meta property="og:title" content="Malibu Vieiralves">
+<meta property="og:description" content="Burger de costela Angus na Vieiralves, Manaus. Peça pelo WhatsApp.">
+<meta property="og:image" content="img/og-burger.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#171514">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Rubik+Dirt&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/burger/001.webp">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Restaurant","name":"Malibu Vieiralves","servesCuisine":"Hambúrguer","telephone":"+55 92 99213-6850","priceRange":"R$ 20 a R$ 62",
+ "address":{"@type":"PostalAddress","streetAddress":"Rua Rio Javari, 43","addressLocality":"Manaus","addressRegion":"AM","postalCode":"69053-110","addressCountry":"BR"},
+ "openingHours":"Tu-Su 17:45-23:59",
+ "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","reviewCount":"577"}}
+</script>
+<!-- Analytics (GU: criar o site no GoatCounter e tirar o comentário)
+<script data-goatcounter="https://malibu-vieiralves.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+-->
+<style>
+/* Layout: a noite da Vieiralves. Asfalto da foto domina; o laranja da palmeira do logo é o acento;
+   o azul do Pacífico só aparece no mapa da costa; a areia só na prancha do pedido. */
+:root{
+  --asf:#171514;      /* asfalto, igual ao fundo do vídeo */
+  --asf2:#221e1b;
+  --areia:#f2e6d0;
+  --areia2:#d9c8aa;
+  --laranja:#e8833a;  /* palmeira do logo */
+  --pac:#1d5862;      /* Pacífico */
+  --pac2:#153f47;
+  --sol:#f6b93b;      /* cheddar */
+  --tinta:#1b1715;
+  --fd:"Rubik Dirt","Arial Black",Impact,sans-serif;   /* marca, o mesmo traço gasto do logo */
+  --fb:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --m:max(18px,4vw);
+  --ease:cubic-bezier(.2,.7,.1,1);
+  color-scheme:dark;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--asf)}
+body{background:var(--asf);color:var(--areia);font-family:var(--fb);font-size:clamp(15px,1.05vw,17px);line-height:1.55;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--sol);outline-offset:3px;border-radius:4px}
+.cond{font-stretch:68%;font-weight:800;letter-spacing:-.01em;text-transform:uppercase;line-height:.92}
+.h2{font-family:var(--fb);font-stretch:68%;font-weight:850;text-transform:uppercase;font-size:clamp(40px,6.4vw,104px);line-height:.88;letter-spacing:-.01em;text-wrap:balance}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 26px;border-radius:99px;background:var(--laranja);color:var(--tinta);font-weight:700;letter-spacing:.01em;transition:background .3s,transform .3s var(--ease)}
+.btn:hover{background:#f2944e;transform:translateY(-2px)}
+.btn svg{width:20px;height:20px;flex:none}
+.btn.ln{background:transparent;color:var(--areia);box-shadow:inset 0 0 0 1.5px rgba(242,230,208,.4)}
+.btn.ln:hover{background:rgba(242,230,208,.08)}
+
+/* topo */
+.top{position:fixed;left:0;right:0;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px var(--m);padding-top:max(12px,env(safe-area-inset-top));transition:background .4s}
+.top.solid{background:rgba(23,21,20,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.marca img{width:46px;height:46px;border-radius:50%}
+.top nav{display:flex;gap:28px;font-size:14px;font-weight:600;color:rgba(242,230,208,.8)}
+.top nav a:hover{color:var(--areia)}
+.top .btn{height:44px;padding:0 20px;font-size:14px}
+@media(max-width:900px){.top nav{display:none}.top .btn{height:40px;padding:0 16px;font-size:13px}}
+
+/* ===== WOW 1: o burger desmonta com a rolagem ===== */
+.hero{position:relative;height:430svh}
+.hero .pin{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--asf)}
+#cv{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity 1.2s ease}
+#cv.on{opacity:1}
+.hero .txt{position:absolute;left:var(--m);bottom:9svh;width:min(40vw,560px);z-index:2;will-change:transform,opacity}
+.nome{font-family:var(--fd);font-weight:400;font-size:clamp(96px,13vw,230px);line-height:.8;letter-spacing:-.01em;color:var(--areia);text-shadow:0 10px 40px rgba(0,0,0,.5)}
+.nome span{display:block;white-space:nowrap}
+.nome i{display:inline-block;font-style:normal;animation:cai .9s var(--ease) both;animation-delay:calc(var(--i) * 70ms + .2s)}
+.nome .palma{display:inline-block;width:.62em;height:.8em;vertical-align:-.04em;margin-left:.02em;animation:balanca 5s ease-in-out 1.4s infinite;transform-origin:50% 100%}
+@keyframes cai{from{transform:translate3d(0,-60%,0) rotate(-6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes balanca{0%,100%{transform:rotate(0)}50%{transform:rotate(-5deg)}}
+.hero .txt p{margin:20px 0 24px;max-width:34ch;font-size:clamp(16px,1.3vw,20px);color:var(--areia2);animation:cai .9s .7s var(--ease) backwards}
+.hero .acts{display:flex;gap:10px;flex-wrap:wrap;animation:cai .9s .85s var(--ease) backwards}
+.dica{position:absolute;right:var(--m);bottom:9svh;z-index:2;display:flex;align-items:center;gap:12px;font-size:13px;font-weight:600;color:var(--areia2)}
+.dica i{display:block;width:1.5px;height:44px;background:linear-gradient(var(--areia),transparent);animation:desce 1.8s ease-in-out infinite}
+@keyframes desce{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.camadas{position:absolute;inset:0;list-style:none;z-index:3;pointer-events:none}
+.camadas li{position:absolute;display:flex;align-items:center;gap:10px;white-space:nowrap;font-weight:700;font-stretch:80%;font-size:clamp(14px,1.15vw,18px);text-transform:uppercase;letter-spacing:.02em;opacity:0;transform:translate3d(var(--dx,14px),0,0);transition:opacity .45s,transform .6s var(--ease)}
+.camadas li:before{content:"";width:clamp(30px,4vw,64px);height:1.5px;background:var(--sol);transform:scaleX(0);transition:transform .5s .1s var(--ease)}
+.camadas li.esq{flex-direction:row-reverse;--dx:-14px}
+.camadas li.esq:before{transform-origin:right}
+.camadas li.dir:before{transform-origin:left}
+.camadas li b{display:block;background:var(--asf);color:var(--areia);padding:6px 12px;border-radius:99px;box-shadow:inset 0 0 0 1px rgba(246,185,59,.5)}
+.camadas li.on{opacity:1;transform:none}
+.camadas li.on:before{transform:scaleX(1)}
+.hero .fim{position:absolute;left:var(--m);bottom:9svh;width:min(34vw,500px);z-index:2;opacity:0;transform:translate3d(0,30px,0);transition:opacity .6s,transform .8s var(--ease);pointer-events:none}
+.hero .fim.on{opacity:1;transform:none;pointer-events:auto}
+.hero .fim h2{font-size:clamp(46px,5.8vw,96px)}
+.hero .fim p{margin:16px 0 22px;color:var(--areia2);max-width:38ch}
+.ilu{position:absolute;right:var(--m);top:84px;z-index:2;font-size:11px;color:rgba(242,230,208,.45)}
+.carregando{position:absolute;left:0;bottom:0;height:2px;background:var(--laranja);width:0;transition:width .3s,opacity .6s;z-index:4}
+@media(max-width:760px){
+  .hero{height:380svh}
+  .hero .txt,.hero .fim{left:var(--m);right:var(--m);width:auto;top:calc(var(--fb,58svh) - 4px);bottom:auto}
+  .nome{font-size:clamp(78px,25vw,120px)}
+  .hero .txt p{margin:12px 0 16px;font-size:15px}
+  .dica{display:none}
+  .camadas{inset:auto var(--m) auto var(--m);top:var(--fb,58svh);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+  .camadas li{position:static;--dx:0;transform:translate3d(0,10px,0);font-size:13px}
+  .camadas li:before,.camadas li.esq:before{display:none}
+  .camadas li b{width:100%;text-align:center}
+  .hero .fim h2{font-size:clamp(40px,12vw,58px)}
+  .hero .fim p{font-size:15px;margin:10px 0 16px}
+  .ilu{top:auto;bottom:calc(100svh - var(--fb,58svh) + 8px)}
+}
+
+/* faixa de fatos */
+.fatos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid rgba(242,230,208,.12)}
+.fatos>div{padding:30px var(--m);border-right:1px solid rgba(242,230,208,.12)}
+.fatos>div:last-child{border-right:0}
+.fatos b{display:block;font-stretch:68%;font-weight:850;font-size:clamp(30px,3.4vw,54px);line-height:1;text-transform:uppercase}
+.fatos span{font-size:14px;color:var(--areia2)}
+.fatos .st{display:inline-flex;align-items:center;gap:8px}
+.fatos .st:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--cor,#7a7a7a);box-shadow:0 0 0 4px color-mix(in srgb,var(--cor,#7a7a7a) 25%,transparent)}
+@media(max-width:760px){.fatos{grid-template-columns:minmax(0,1fr)}.fatos>div{border-right:0;border-bottom:1px solid rgba(242,230,208,.12);padding:22px var(--m)}.fatos>div:last-child{border-bottom:0}}
+
+/* ===== WOW 2: rota pela costa ===== */
+.rota{position:relative;height:520svh;background:var(--pac2)}
+.rota .pin{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--pac)}
+.mapa-svg{position:absolute;right:0;top:0;width:66%;height:100%}
+.mapa-svg svg{width:100%;height:100%;display:block}
+.terra{fill:var(--areia)}
+.onda{fill:none;stroke:rgba(242,230,208,.14);stroke-width:1.5}
+.estrada-base{fill:none;stroke:rgba(27,23,21,.18);stroke-width:5;stroke-linecap:round;stroke-dasharray:2 10}
+.estrada{fill:none;stroke:var(--laranja);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.parada circle{fill:var(--areia);stroke:var(--tinta);stroke-width:3;transition:fill .4s}
+.parada.ok circle{fill:var(--laranja)}
+.parada text{font-family:var(--fb);font-weight:800;font-stretch:75%;font-size:21px;paint-order:stroke;stroke:var(--areia);stroke-width:5px;fill:var(--tinta);text-transform:uppercase;opacity:.55;transition:opacity .4s}
+.parada.ok text{opacity:1}
+.oceano-txt{font-family:var(--fb);font-style:italic;font-weight:500;font-size:26px;fill:rgba(242,230,208,.35);letter-spacing:.3em}
+.carro{transition:none}
+.carro .c1{fill:var(--tinta)}.carro .c2{fill:var(--laranja)}
+.rota .ttl{position:absolute;left:var(--m);top:max(96px,12svh);width:min(36vw,500px);z-index:2}
+.rota .ttl .h2{font-size:clamp(36px,4.2vw,70px)}
+.rota .ttl p{margin-top:12px;color:var(--areia2);max-width:38ch;font-size:15px}
+.cartao{position:absolute;left:var(--m);bottom:7svh;width:min(36vw,500px);z-index:2;display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center}
+.cartao .ft{width:clamp(120px,12vw,190px);aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 0 0 5px var(--areia),0 24px 50px -16px rgba(0,0,0,.6);background:var(--asf);transition:transform .5s var(--ease),opacity .3s}
+.cartao .ft img{width:100%;height:100%;object-fit:cover}
+.cartao .ft .sem{display:grid;place-items:center;height:100%;padding:14px;text-align:center;font-family:var(--fd);font-size:clamp(20px,2vw,30px);line-height:.9;color:var(--sol);background:var(--asf)}
+.cartao .tx{transition:opacity .3s,transform .45s var(--ease)}
+.cartao .onde{font-size:13px;font-weight:700;color:var(--sol)}
+.cartao h3{font-family:var(--fd);font-weight:400;font-size:clamp(38px,4vw,64px);line-height:.9;margin:6px 0 10px}
+.cartao p{font-size:15px;color:var(--areia2);max-width:40ch}
+.cartao .preco{display:flex;align-items:center;gap:16px;margin-top:14px;flex-wrap:wrap}
+.cartao .preco b{font-stretch:70%;font-weight:850;font-size:34px;line-height:1}
+.cartao .preco a{font-size:14px;font-weight:700;border-bottom:2px solid var(--laranja);padding-bottom:2px}
+.cartao.troca .ft{transform:scale(.6) rotate(-30deg);opacity:0}
+.cartao.troca .tx{opacity:0;transform:translate3d(0,14px,0)}
+.passos{position:absolute;right:var(--m);bottom:7svh;z-index:2;display:flex;gap:6px}
+.passos i{width:28px;height:4px;border-radius:2px;background:rgba(242,230,208,.25);transition:background .3s}
+.passos i.on{background:var(--laranja)}
+@media(max-width:860px){
+  .mapa-svg{left:0;right:0;width:100%;top:max(140px,17svh);height:44svh}
+  .rota .ttl{top:max(78px,10svh);right:var(--m);width:auto}
+  .rota .ttl .h2{font-size:clamp(30px,8.6vw,44px)}
+  .rota .ttl p{display:none}
+  .cartao{right:var(--m);width:auto;bottom:5svh;gap:16px;grid-template-columns:auto minmax(0,1fr)}
+  .cartao .ft{width:clamp(96px,27vw,130px)}
+  .cartao h3{font-size:clamp(32px,9vw,44px);margin:2px 0 6px}
+  .cartao p{font-size:13.5px;line-height:1.45}
+  .cartao .preco{margin-top:8px}.cartao .preco b{font-size:26px}
+  .passos{top:calc(max(140px,17svh) + 44svh + 4px);bottom:auto}
+  .parada text{font-size:30px;stroke-width:8px}
+  .oceano-txt{font-size:40px}
+}
+
+/* ===== WOW 3: cardápio + prancha ===== */
+.cardapio{background:var(--areia);color:var(--tinta);padding-block:clamp(80px,10vw,140px);padding-inline:var(--m)}
+.cardapio .cab{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.cardapio .cab p{max-width:42ch;color:#5d5249}
+.loja{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr);gap:clamp(24px,5vw,80px);align-items:start}
+.grupo{margin-bottom:34px}
+.grupo h3{font-stretch:68%;font-weight:850;text-transform:uppercase;font-size:24px;padding-bottom:10px;border-bottom:2px solid var(--tinta)}
+.item{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 16px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(27,23,21,.14)}
+.item .th{width:58px;height:58px;border-radius:50%;overflow:hidden;background:var(--tinta);grid-row:span 2}
+.item .th img{width:100%;height:100%;object-fit:cover}
+.item .th.vazio{display:grid;place-items:center;font-family:var(--fd);font-size:22px;color:var(--sol)}
+.item .nm{font-stretch:75%;font-weight:800;font-size:21px;text-transform:uppercase;line-height:1.05;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.item .nm em{font-style:normal;font-stretch:100%;font-weight:700;font-size:16px;text-transform:none;color:var(--tinta)}
+.item .ds{grid-column:2;font-size:14px;color:#5d5249;line-height:1.45}
+.qt{grid-row:span 2;display:flex;align-items:center;gap:4px;background:#fff;border-radius:99px;padding:4px;box-shadow:0 0 0 1px rgba(27,23,21,.12)}
+.qt button{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:20px;font-weight:700;line-height:1}
+.qt .mais{background:var(--laranja);color:var(--tinta)}
+.qt .menos{display:none}
+.qt span{min-width:20px;text-align:center;font-weight:800;display:none;font-variant-numeric:tabular-nums}
+.qt.tem .menos,.qt.tem span{display:grid}
+.qt.tem span{display:block}
+.combo{margin:0 0 34px;padding:22px 24px;border-radius:20px;background:var(--laranja);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;align-items:center}
+.combo b{font-family:var(--fd);font-weight:400;font-size:clamp(26px,2.6vw,38px);line-height:.95}
+.combo p{font-size:14px;grid-column:1}
+.combo .qt{grid-row:1/span 2;grid-column:2}
+.combo .qt .mais{background:var(--tinta);color:var(--areia)}
+@media(max-width:600px){.item{grid-template-columns:auto minmax(0,1fr)}.item .qt{grid-row:auto;grid-column:2;justify-self:start;margin-top:6px}.item .th{grid-row:span 3;align-self:start}}
+
+/* a prancha */
+.lado{position:sticky;top:90px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:start}
+.prancha{position:relative;width:clamp(150px,13vw,200px);aspect-ratio:300/820}
+.prancha svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.prancha .hz{display:none}
+.adesivos{position:absolute;inset:0}
+.ad{position:absolute;left:calc(50% + var(--v) * 26%);top:calc(14% + var(--u) * 72%);width:42%;transform:translate(-50%,-50%) rotate(var(--r))}
+.ad .in{display:block;animation:cola .55s cubic-bezier(.3,1.6,.5,1) both}
+.ad.foto .in{aspect-ratio:1;border-radius:50%;overflow:hidden;border:5px solid #fff;box-shadow:0 8px 18px -6px rgba(0,0,0,.45)}
+.ad.foto img{width:100%;height:100%;object-fit:cover}
+.ad.txt{width:auto}
+.ad.txt .in{padding:7px 12px;border-radius:12px;border:3px solid #fff;font-family:var(--fd);font-size:clamp(14px,1.2vw,18px);line-height:1;white-space:nowrap;box-shadow:0 8px 18px -6px rgba(0,0,0,.45);background:var(--bgc);color:var(--fgc)}
+.ad.sai .in{animation:descola .35s ease-in forwards}
+@keyframes cola{0%{transform:scale(1.9) rotate(-25deg) translateY(-30px);opacity:0;filter:blur(2px)}60%{opacity:1;filter:none}100%{transform:none;opacity:1}}
+@keyframes descola{to{transform:translate(40px,-70px) rotate(40deg) scale(.6);opacity:0}}
+.prancha .vazia{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg);white-space:nowrap;font-family:var(--fd);font-size:clamp(18px,2vw,26px);color:rgba(27,23,21,.35);transition:opacity .3s;pointer-events:none}
+.prancha.cheia .vazia{opacity:0}
+.conta{background:var(--tinta);color:var(--areia);border-radius:22px;padding:20px}
+.conta .tot{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.conta .tot span{font-size:14px;color:var(--areia2)}
+.conta .tot b{font-stretch:70%;font-weight:850;font-size:40px;line-height:1;font-variant-numeric:tabular-nums}
+.conta .campos{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin:14px 0}
+.conta input,.conta textarea{width:100%;min-width:0;font:inherit;font-size:16px;color:var(--areia);background:var(--asf2);border:1px solid rgba(242,230,208,.15);border-radius:12px;padding:12px 14px}
+.conta textarea{grid-column:1/-1;resize:vertical;min-height:48px;height:48px}
+.conta .modo{grid-column:1/-1;display:flex;gap:6px}
+.conta .modo label{flex:1;min-width:0;position:relative}
+.conta .modo input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.conta .modo span{display:block;text-align:center;padding:11px 8px;border-radius:12px;background:var(--asf2);font-size:14px;font-weight:600;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(242,230,208,.15)}
+.conta .modo input:checked+span{background:var(--areia);color:var(--tinta)}
+.conta .modo input:focus-visible+span{outline:2px solid var(--sol);outline-offset:2px}
+.conta .btn{width:100%}
+.conta .btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.conta small{display:block;margin-top:10px;font-size:12px;color:var(--areia2);text-align:center}
+.valeu{position:absolute;inset:0;display:grid;place-items:center;text-align:center;z-index:3;opacity:0;pointer-events:none;transition:opacity .4s}
+.valeu div{background:var(--tinta);color:var(--areia);padding:16px 16px;border-radius:18px;transform:rotate(-4deg);width:230px;font-size:14px;box-shadow:0 20px 40px -10px rgba(0,0,0,.5)}
+.valeu b{display:block;font-family:var(--fd);font-weight:400;font-size:28px;line-height:.95;margin-bottom:6px;color:var(--sol)}
+.valeu.on{opacity:1}
+@media(max-width:900px){
+  .loja{grid-template-columns:minmax(0,1fr)}
+  .lado{display:block;position:sticky;top:64px;z-index:5;order:-1;background:var(--areia);padding:8px 0 10px;margin-inline:calc(-1 * var(--m));padding-inline:var(--m);box-shadow:0 14px 20px -18px rgba(0,0,0,.4)}
+  .prancha{width:100%;max-width:520px;aspect-ratio:820/250}
+  .prancha .vt{display:none}.prancha .hz{display:block}
+  .ad{left:calc(12% + var(--u) * 76%);top:calc(50% + var(--v) * 24%);width:auto;height:46%}
+  .ad.foto .in{height:100%;border-width:3px}
+  .ad.txt{height:auto}
+  .ad.txt .in{font-size:13px;padding:5px 9px;border-width:2px}
+  .prancha .vazia{transform:translate(-50%,-50%)}
+  .lado .conta{display:none}
+}
+.mini{display:none;align-items:center;justify-content:space-between;gap:12px;margin-top:8px}
+.mini b{font-stretch:70%;font-weight:850;font-size:26px;font-variant-numeric:tabular-nums}
+.mini .btn{height:44px;padding:0 18px;font-size:14px}
+.conta-cel{display:none}
+@media(max-width:900px){.lado .mini{display:flex}.conta-cel{display:block;margin-top:24px}}
+
+/* horário + avaliações */
+.noite{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(30px,5vw,80px);padding-block:clamp(80px,10vw,130px);padding-inline:var(--m);align-items:center}
+.noite .h2 span{display:block;color:var(--laranja)}
+.noite .hor{margin-top:22px;display:grid;gap:8px;max-width:420px;font-variant-numeric:tabular-nums}
+.noite .hor div{display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid rgba(242,230,208,.12)}
+.noite .hor div.hoje{color:var(--sol);font-weight:700}
+.nota{background:var(--asf2);border-radius:28px;padding:clamp(26px,4vw,48px)}
+.nota .num{display:flex;align-items:flex-end;gap:16px}
+.nota .num b{font-stretch:68%;font-weight:850;font-size:clamp(90px,10vw,150px);line-height:.8}
+.estrelas{display:flex;gap:4px;margin-bottom:8px}
+.estrelas svg{width:22px;height:22px;fill:var(--sol)}
+.nota p{margin:18px 0 22px;color:var(--areia2);max-width:40ch}
+@media(max-width:860px){.noite{grid-template-columns:minmax(0,1fr)}}
+
+/* faq */
+.faq{padding-block:clamp(70px,9vw,120px);padding-inline:var(--m);border-top:1px solid rgba(242,230,208,.1);display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(30px,5vw,80px)}
+.faq details{border-bottom:1px solid rgba(242,230,208,.14)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:20px 0;font-weight:700;font-size:clamp(17px,1.4vw,20px)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";font-size:26px;font-weight:400;color:var(--laranja);transition:transform .3s}
+.faq details[open] summary:after{transform:rotate(45deg)}
+.faq details p{padding:0 0 20px;color:var(--areia2);max-width:60ch}
+@media(max-width:860px){.faq{grid-template-columns:minmax(0,1fr)}}
+
+/* visite */
+.visite{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(30px,5vw,80px);padding-block:clamp(70px,9vw,120px);padding-inline:var(--m);align-items:center;background:var(--asf2)}
+.visite .end{font-stretch:75%;font-weight:700;font-size:clamp(24px,2.4vw,36px);line-height:1.15;margin:18px 0 10px}
+.visite .fone{color:var(--areia2);font-variant-numeric:tabular-nums}
+.visite .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.mapa{position:relative;min-height:420px;border-radius:24px;overflow:hidden;background:var(--pac)}
+.mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.3) contrast(1.05)}
+@media(max-width:860px){.visite{grid-template-columns:minmax(0,1fr)}.mapa{min-height:320px}}
+
+footer{padding:56px var(--m) calc(30px + env(safe-area-inset-bottom));overflow:hidden}
+footer .gde{font-family:var(--fd);font-size:clamp(80px,22vw,360px);line-height:.8;color:var(--asf2);white-space:nowrap;-webkit-text-stroke:1px rgba(242,230,208,.18)}
+footer .base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:28px;font-size:13px;color:rgba(242,230,208,.55)}
+footer .base a{text-decoration:underline;text-underline-offset:3px}
+
+.zap{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:40;width:60px;height:60px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.4);transform:scale(0);transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.zap.on{transform:scale(1)}
+.zap svg{width:30px;height:30px;fill:#fff}
+
+/* reduzir movimento: troca por fade curto */
+.reduz .nome i,.reduz .hero .txt p,.reduz .hero .acts{animation:fade .5s both}
+.reduz .ad .in{animation:fade .3s both}
+.reduz .ad.sai .in{animation:fade .2s reverse forwards}
+.reduz .cartao.troca .ft,.reduz .cartao.troca .tx{transform:none}
+.reduz .camadas li{transform:none}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* modo prévia (captura da proposta): sem rolagem presa, tudo no estado final */
+.embed .hero{height:auto}.embed .hero .pin{position:relative;height:100vh}
+.embed .nome i,.embed .hero .txt p,.embed .hero .acts{animation:none}
+.embed #cv{opacity:1;transition:none}
+.embed .hero .txt{display:none}.embed .hero .fim{opacity:1;transform:none}.embed .dica{display:none}
+.embed .rota{height:auto}.embed .rota .pin{position:relative}
+.embed .lado{position:relative;top:auto}
+.embed .zap,.dentro .zap{display:none}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <a class="marca" href="#inicio" aria-label="Malibu Vieiralves, voltar ao início"><img src="img/logo.png" alt="Logo Malibu" width="335" height="335"></a>
+  <nav aria-label="Seções"><a href="#rota">Os burgers</a><a href="#cardapio">Cardápio</a><a href="#horario">Horário</a><a href="#visite">Como chegar</a></nav>
+  <a class="btn" data-wa="Olá, Malibu! Vim pelo site e quero fazer um pedido." href="#cardapio">Pedir pelo WhatsApp</a>
+</header>
+
+<main>
+<!-- WOW 1: o burger desmonta camada por camada com a rolagem (vídeo do Google Flow em quadros) -->
+<section class="hero" id="inicio" aria-label="Início">
+  <div class="pin" id="heroPin">
+    <canvas id="cv" role="img" aria-label="Hambúrguer subindo e se separando em camadas: pão, cheddar, carne, bacon, tomate, cebola roxa e alface"></canvas>
+    <div class="txt" id="heroTxt">
+      <h1 class="nome" aria-label="Malibu Vieiralves">
+        <span><i style="--i:0">M</i><i style="--i:1">A</i><i style="--i:2">L</i><i style="--i:3">I</i></span>
+        <span><i style="--i:4">B</i><i style="--i:5">U</i><svg class="palma" viewBox="0 0 60 80" aria-hidden="true"><g fill="#e8833a"><path d="M29 78c1-14 2-30 0-44l5-1c2 15 1 31-1 45z"/><path d="M31 34C24 20 12 14 1 17c9 0 18 6 24 16z"/><path d="M31 34c2-14 10-24 24-27-9 5-15 14-18 25z"/><path d="M31 34C38 24 50 22 59 27 49 26 41 29 34 36z"/><path d="M31 34C24 28 12 29 4 36c8-3 17-3 24 2z"/><path d="M31 33c-4-12-2-24 6-32-3 9-3 20 0 30z"/></g></svg></span>
+      </h1>
+      <p>Burger de costela Angus na Vieiralves, Manaus. De terça a domingo, a partir das 17h45.</p>
+      <div class="acts">
+        <a class="btn" data-wa="Olá, Malibu! Vim pelo site e quero fazer um pedido." href="#cardapio"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-zap"/></svg>Pedir pelo WhatsApp</a>
+        <a class="btn ln" href="#cardapio">Ver o cardápio</a>
+      </div>
+    </div>
+    <div class="dica" aria-hidden="true">Role pra desmontar<i></i></div>
+    <ul class="camadas" id="camadas" aria-label="Camadas do burger">
+      <li class="dir"><b>Pão delícia</b></li>
+      <li class="esq"><b>Cheddar derretido</b></li>
+      <li class="dir"><b>180g de costela Angus</b></li>
+      <li class="esq"><b>Bacon</b></li>
+      <li class="dir"><b>Tomate e cebola roxa</b></li>
+      <li class="esq"><b>Alface americana</b></li>
+    </ul>
+    <div class="fim" id="heroFim">
+      <h2 class="h2">Cada camada no lugar certo.</h2>
+      <p>Costela Angus de 180g, pão delícia ou australiano, e o que você escolher por cima. O combo com refri e batata sai por mais R$ 22.</p>
+      <a class="btn" data-wa="Olá, Malibu! Vim pelo site e quero fazer um pedido." href="#cardapio" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-zap"/></svg>Pedir pelo WhatsApp</a>
+    </div>
+    <small class="ilu">Imagem ilustrativa</small>
+    <i class="carregando" id="carregando"></i>
+  </div>
+</section>
+
+<div class="fatos">
+  <div><b>4,7 no Google</b><span>577 avaliações</span></div>
+  <div><b>Costela Angus</b><span>180g na maioria dos burgers da casa</span></div>
+  <div><b id="stTit">Terça a domingo</b><span class="st" id="stTxt">das 17h45 à meia-noite</span></div>
+</div>
+
+<!-- WOW 2: rota pela costa da Califórnia (os burgers têm nome de praia) -->
+<section class="rota" id="rota" aria-label="Os burgers com nome de praia">
+  <div class="pin">
+    <div class="mapa-svg" aria-hidden="true">
+      <svg id="mapaSvg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
+        <path class="onda" d="M40 420c40-14 80 14 120 0s80-14 120 0M90 520c40-14 80 14 120 0s80-14 120 0M300 600c40-14 80 14 120 0s80-14 120 0M40 300c30-10 60 10 90 0"/>
+        <path class="terra" d="M-1000 -1000H3000V1700H1000L880 700C850 650 815 605 780 572C735 525 690 480 640 452C600 430 556 402 515 392C490 386 462 386 440 394C418 402 400 418 386 410C372 402 372 386 370 366C366 330 352 296 334 270C320 250 305 236 290 230C240 214 180 205 128 202C88 200 46 210 0 222L-1000 262Z"/>
+                <text class="oceano-txt" x="400" y="630">PACÍFICO</text>
+        <path class="estrada-base" id="estradaBase" d="M118 178C180 184 240 194 288 208C318 220 334 248 348 280C362 318 372 352 402 362C432 354 462 352 492 356C544 364 594 398 634 430C690 478 736 526 772 550"/>
+        <path class="estrada" id="estrada" d="M118 178C180 184 240 194 288 208C318 220 334 248 348 280C362 318 372 352 402 362C432 354 462 352 492 356C544 364 594 398 634 430C690 478 736 526 772 550"/>
+        <g class="parada" data-p="0"><circle cx="118" cy="178" r="11"/><text x="104" y="150">Malibu</text></g>
+        <g class="parada" data-p="1"><circle cx="300" cy="214" r="11"/><text x="318" y="200">Santa Mônica</text></g>
+        <g class="parada" data-p="2"><circle cx="492" cy="356" r="11"/><text x="506" y="338">Long Beach</text></g>
+        <g class="parada" data-p="3"><circle cx="772" cy="550" r="11"/><text x="790" y="540">Oceanside</text></g>
+        <g class="carro" id="carro"><circle class="c1" r="20"/><circle class="c2" r="12"/></g>
+      </svg>
+    </div>
+    <div class="ttl">
+      <h2 class="h2">Uma praia da Califórnia em cada burger.</h2>
+      <p>Os nomes vêm da costa, de Malibu até Oceanside. A carne é a mesma em todos: costela Angus.</p>
+    </div>
+    <div class="cartao" id="cartao" aria-live="polite">
+      <div class="ft" id="cFt"></div>
+      <div class="tx">
+        <p class="onde" id="cOnde"></p>
+        <h3 id="cNome"></h3>
+        <p id="cDesc"></p>
+        <div class="preco"><b id="cPreco"></b><a id="cPedir" href="#cardapio">Pedir pelo WhatsApp</a></div>
+      </div>
+    </div>
+    <div class="passos" id="passos" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </div>
+</section>
+
+<!-- WOW 3: cardápio que cola adesivo na prancha -->
+<section class="cardapio" id="cardapio">
+  <div class="cab">
+    <h2 class="h2">Monte o pedido na prancha.</h2>
+    <p>Cada item que você escolhe vira um adesivo na prancha. Quando terminar, o pedido vai prontinho pro WhatsApp do Malibu.</p>
+  </div>
+  <div class="loja">
+    <div id="lista"></div>
+    <aside class="lado" aria-label="Seu pedido">
+      <div class="prancha" id="prancha">
+        <svg class="vt" viewBox="0 0 300 820" aria-hidden="true">
+          <path d="M150 8C232 60 268 220 270 420C272 620 240 762 150 812C60 762 28 620 30 420C32 220 68 60 150 8Z" fill="#fffaf0" stroke="#1b1715" stroke-width="4"/>
+          <path d="M150 8C190 34 214 80 230 130H70C86 80 110 34 150 8Z" fill="#e8833a"/>
+          <path d="M66 150H234" stroke="#1d5862" stroke-width="10"/><path d="M60 172H240" stroke="#1d5862" stroke-width="4"/>
+          <path d="M150 190V790" stroke="#1b1715" stroke-width="2" opacity=".25"/>
+          <path d="M150 812C120 796 104 778 96 760H204C196 778 180 796 150 812Z" fill="#1d5862"/>
+        </svg>
+        <svg class="hz" viewBox="0 0 820 250" aria-hidden="true">
+          <path d="M8 125C60 48 220 18 420 16C620 14 762 44 812 125C762 206 620 236 420 234C220 232 60 202 8 125Z" fill="#fffaf0" stroke="#1b1715" stroke-width="4"/>
+          <path d="M8 125C34 85 80 62 130 48V202C80 188 34 165 8 125Z" fill="#e8833a"/>
+          <path d="M150 46V204" stroke="#1d5862" stroke-width="10"/><path d="M172 42V208" stroke="#1d5862" stroke-width="4"/>
+          <path d="M190 125H790" stroke="#1b1715" stroke-width="2" opacity=".25"/>
+          <path d="M812 125C796 150 778 162 760 168V82C778 88 796 100 812 125Z" fill="#1d5862"/>
+        </svg>
+        <div class="adesivos" id="adesivos"></div>
+        <span class="vazia">Sua prancha está vazia</span>
+        <div class="valeu" id="valeu"><div><b>Pedido no WhatsApp!</b>Agora é só enviar a mensagem lá. O Malibu costuma responder rápido.</div></div>
+      </div>
+      <div class="mini"><div><b id="totCel">R$ 0</b></div><a class="btn" id="irConta" href="#contaCel">Fechar pedido</a></div>
+      <div class="conta" id="conta"></div>
+    </aside>
+  </div>
+  <div class="conta-cel" id="contaCel"></div>
+</section>
+
+<section class="noite" id="horario">
+  <div>
+    <h2 class="h2">A chapa liga no fim da tarde.<span id="agora">De terça a domingo.</span></h2>
+    <div class="hor" id="hor"></div>
+  </div>
+  <div class="nota">
+    <div class="num"><b>4,7</b><div><div class="estrelas" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></div>no Google, com 577 avaliações</div></div>
+    <p>Quem já comeu deixou a nota lá. Leia o que o pessoal fala antes de escolher o seu.</p>
+    <!-- GU: colar aqui 3 avaliações reais do Google, com o nome de quem escreveu -->
+    <a class="btn ln" href="https://www.google.com/maps/search/?api=1&query=Malibu+Vieiralves+Rua+Rio+Javari+43+Manaus" target="_blank" rel="noopener">Ler as avaliações no Google</a>
+  </div>
+</section>
+
+<section class="faq" id="duvidas">
+  <h2 class="h2">Antes de pedir.</h2>
+  <div>
+    <details><summary>Onde fica o Malibu?</summary><p>Na Rua Rio Javari, 43, em Nossa Senhora das Graças, na região da Vieiralves, em Manaus.</p></details>
+    <details><summary>Que horas abre?</summary><p>De terça a domingo, das 17h45 à meia-noite. Segunda a casa fecha.</p></details>
+    <details><summary>Como faço o pedido?</summary><p>Monte o pedido na prancha aqui no site e toque em "Pedir pelo WhatsApp". A mensagem já vai pronta com os itens e o total. O Malibu costuma responder rápido.</p></details>
+    <details><summary>Quanto custa o combo?</summary><p>Qualquer burger vira combo por mais R$ 22: vem um refrigerante e uma batata frita.</p></details>
+    <details><summary>Tem opção sem carne vermelha?</summary><p>Tem. O Burger Vegetariano (R$ 42) e o Chicken Neto, de frango crocante (R$ 34).</p></details>
+    <details><summary>Dá pra pedir carne extra?</summary><p>Dá. O hambúrguer extra de costela sai por R$ 24.</p></details>
+  </div>
+</section>
+
+<section class="visite" id="visite">
+  <div>
+    <h2 class="h2">Vem pra Vieiralves.</h2>
+    <p class="end">Rua Rio Javari, 43<br>Nossa Senhora das Graças, Manaus</p>
+    <p class="fone">WhatsApp e telefone: (92) 99213-6850</p>
+    <div class="acts">
+      <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=Malibu+Vieiralves+Rua+Rio+Javari+43+Manaus" target="_blank" rel="noopener">Como chegar</a>
+      <a class="btn ln" data-wa="Olá, Malibu! Vim pelo site e tenho uma dúvida." href="#cardapio">Chamar no WhatsApp</a>
+    </div>
+  </div>
+  <div class="mapa"><iframe title="Mapa do Malibu Vieiralves" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Rua+Rio+Javari,+43,+Manaus,+AM&z=16&output=embed"></iframe></div>
+</section>
+</main>
+
+<footer>
+  <div class="gde" aria-hidden="true">MALIBU</div>
+  <div class="base">
+    <span>Malibu Vieiralves, Rua Rio Javari, 43, Manaus</span>
+    <span><a href="privacidade.html">Política de privacidade</a></span>
+  </div>
+</footer>
+
+<a class="zap" id="zap" data-wa="Olá, Malibu! Vim pelo site e quero fazer um pedido." href="#cardapio" aria-label="Pedir pelo WhatsApp"><svg viewBox="0 0 24 24"><use href="#i-zap"/></svg></a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-zap" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7.2.7-5.4 4.8 1.6 7.1L12 17.6 5.6 21.2l1.6-7.1L1.8 9.3 9 8.6z"/></symbol>
+</svg>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
+<script>
+(function(){
+  "use strict";
+  var embed = /[?&]embed\b/.test(location.search), dentro = window.parent !== window;   // embed = captura estática; dentro = janelinha da proposta (animações ligadas)
+  var raiz = document.documentElement;
+  if (embed) raiz.classList.add("embed"); if (dentro) raiz.classList.add("dentro");
+  var reduz = matchMedia("(prefers-reduced-motion: reduce)").matches; if (reduz) raiz.classList.add("reduz");
+  var toque = matchMedia("(hover: none)").matches;
+  function $(s, c){ return (c || document).querySelector(s); }
+  function $$(s, c){ return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  function clamp(v, a, b){ return v < a ? a : v > b ? b : v; }
+  function ease(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; }
+  function real(n){ return "R$ " + n.toLocaleString("pt-BR"); }
+
+  /* WhatsApp: toda mensagem já sai pronta */
+  var FONE = "5592992136850";
+  function wa(msg){ return "https://wa.me/" + FONE + "?text=" + encodeURIComponent(msg); }
+  $$("[data-wa]").forEach(function(a){ a.href = wa(a.getAttribute("data-wa")); a.target = "_blank"; a.rel = "noopener"; });
+
+  /* medidas: só recalcula quando a LARGURA muda (a barra do celular não conta) */
+  var W = innerWidth, VH = innerHeight;
+  function prog(sec){ var r = sec.getBoundingClientRect(); return clamp(-r.top / (r.height - VH), 0, 1); }
+  function perto(sec){ var r = sec.getBoundingClientRect(); return r.top < VH * 1.5 && r.bottom > -VH * .5; }
+
+  /* ================= WOW 1: burger em quadros no canvas ================= */
+  var secHero = $("#inicio"), pin = $("#heroPin"), cv = $("#cv"), ctx = cv.getContext("2d");
+  var N = 96, FW = 880, FH = 496, PICO = 53, quadros = [], prontos = 0;
+  var FONTES = window.MALIBU_QUADROS || null;   // a prévia com imagens embutidas preenche isso
+  function src(i){ return FONTES ? FONTES[i] : "img/burger/" + ("00" + (i + 1)).slice(-3) + ".webp"; }
+  function carrega(i){
+    if (quadros[i]) return; var im = new Image(); quadros[i] = im;
+    im.onload = function(){ im.ok = 1; prontos++; $("#carregando").style.width = (prontos / N * 100) + "%"; if (prontos >= N) $("#carregando").style.opacity = 0; precisa = 1; };
+    im.src = src(i);
+  }
+  function ordem(){   // primeiro o essencial, depois vai preenchendo
+    var ids = embed ? [PICO] : [0, PICO];
+    if (!embed) [8, 4, 2, 1].forEach(function(p){ for (var i = 0; i < N; i += p) if (ids.indexOf(i) < 0) ids.push(i); });
+    var k = 0; (function vai(){ for (var n = 0; n < 6 && k < ids.length; n++) carrega(ids[k++]); if (k < ids.length) setTimeout(vai, 60); })();
+  }
+  function perto_ok(i){ for (var d = 0; d < N; d++){ if (quadros[i - d] && quadros[i - d].ok) return quadros[i - d]; if (quadros[i + d] && quadros[i + d].ok) return quadros[i + d]; } return null; }
+
+  var R = {x:0, y:0, w:0, h:0, s:1}, cel = false, dpr = 1;
+  var ANC = [[600, 52, 1], [298, 132, 0], [592, 168, 1], [252, 252, 0], [600, 306, 1], [234, 342, 0]];   // onde cada camada está no quadro do pico
+  var labels = $$("#camadas li");
+  function geoHero(){
+    var w = pin.clientWidth, h = pin.clientHeight;
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    cel = w < 761;
+    var s;
+    if (cel){ s = Math.min(w * 1.95 / FW, h * .62 / FH); R.w = FW * s; R.h = FH * s; R.x = (w - R.w) / 2; R.y = Math.max(0, h * .05); }
+    else { s = Math.max(h / FH, w * .8 / FW); R.w = FW * s; R.h = FH * s; R.x = Math.max(w * .56 - R.w / 2, w - R.w); R.y = 0; }
+    R.s = s;
+    $("#mapaSvg").setAttribute("viewBox", w < 861 ? "60 100 920 520" : "0 0 1000 700");
+    pin.style.setProperty("--fb", Math.round(R.y + R.h * .9) + "px");
+    labels.forEach(function(li, i){
+      if (cel){ li.style.left = li.style.top = li.style.right = ""; return; }
+      var a = ANC[i], x = R.x + a[0] * s, y = R.y + a[1] * s;
+      li.style.top = (y - 16) + "px";
+      if (a[2]){ li.style.right = ""; li.style.left = Math.min(x + 6, w - 16 - li.offsetWidth) + "px"; } else { li.style.left = ""; li.style.right = Math.min(w - x + 6, w - 16 - li.offsetWidth) + "px"; }
+    });
+    precisa = 1;
+  }
+  var COR = "#171514";
+  function desenha(i){
+    var im = perto_ok(i); if (!im) return;
+    var c = ctx, k = dpr; c.setTransform(k, 0, 0, k, 0, 0);
+    var w = cv.width / k, h = cv.height / k;
+    c.fillStyle = COR; c.fillRect(0, 0, w, h);
+    c.drawImage(im, R.x, R.y, R.w, R.h);
+    var g;
+    if (R.x > 0){ g = c.createLinearGradient(R.x, 0, R.x + R.w * .2, 0); g.addColorStop(0, COR); g.addColorStop(1, "rgba(23,21,20,0)"); c.fillStyle = g; c.fillRect(R.x - 1, R.y, R.w * .2 + 1, R.h); }
+    if (R.x + R.w < w){ g = c.createLinearGradient(R.x + R.w, 0, R.x + R.w * .82, 0); g.addColorStop(0, COR); g.addColorStop(1, "rgba(23,21,20,0)"); c.fillStyle = g; c.fillRect(R.x + R.w * .82, R.y, R.w * .18 + 1, R.h); }
+    var b0 = R.y + R.h * (cel ? .7 : .72), b1 = Math.min(R.y + R.h, h);
+    g = c.createLinearGradient(0, b0, 0, b1); g.addColorStop(0, "rgba(23,21,20,0)"); g.addColorStop(1, COR); c.fillStyle = g; c.fillRect(0, b0, w, b1 - b0 + 1);
+    if (!cel){ g = c.createLinearGradient(0, 0, w * .5, 0); g.addColorStop(0, "rgba(23,21,20,.75)"); g.addColorStop(1, "rgba(23,21,20,0)"); c.fillStyle = g; c.fillRect(0, 0, w * .5, h); }
+  }
+
+  var alvo = 0, atual = 0, precisa = 1, heroP = -1;
+  var txt = $("#heroTxt"), fim = $("#heroFim"), fimBtn = $("#heroFim .btn");
+  function hero(p){
+    // 0-6%: parado | 6-52%: sobe e desmonta | 52-70%: segura com as camadas | 70-94%: monta de novo
+    if (p < .06) alvo = 0;
+    else if (p < .52) alvo = ease((p - .06) / .46) * PICO;
+    else if (p < .70) alvo = PICO + (p - .52) / .18 * 4;
+    else alvo = PICO + 4 + ease(clamp((p - .70) / .24, 0, 1)) * (N - 1 - PICO - 4);
+    if (reduz) alvo = p < .3 ? 0 : p < .75 ? PICO : N - 1;
+    var t = clamp(1 - (p - .015) / .07, 0, 1);
+    txt.style.opacity = t; txt.style.transform = "translate3d(0," + ((1 - t) * -40) + "px,0)";
+    txt.style.visibility = t < .01 ? "hidden" : "";
+    labels.forEach(function(li, i){ li.classList.toggle("on", p > .40 + i * .025 && p < .72); });
+    var f = p > .86; fim.classList.toggle("on", f); fimBtn.tabIndex = f ? 0 : -1;
+  }
+  function loopHero(){
+    var d = alvo - atual;
+    if (Math.abs(d) > .05 || precisa){ atual += reduz ? d : d * .18; desenha(Math.round(atual)); precisa = 0; }
+  }
+
+  /* ================= WOW 2: rota pela costa ================= */
+  var PARADAS = [
+    { onde:"Saída, Rua Rio Javari, 43", nome:"Malibu", desc:"A casa fica na Vieiralves. Daqui saem os burgers de costela Angus com nome de praia.", preco:"", foto:"img/logo.png", alt:"Logo do Malibu Vieiralves", acao:"Ver o cardápio", link:"#cardapio" },
+    { onde:"Parada 1", nome:"Santa Mônica", desc:"180g de costela Angus, muçarela derretida e salada coleslaw crocante no pão delícia.", preco:"R$ 48", id:"santamonica" },
+    { onde:"Parada 2", nome:"Long Beach", desc:"180g de costela Angus, gorgonzola e bacon caramelizado no pão delícia.", preco:"R$ 54", foto:"img/longbeach.jpg", alt:"Burger Long Beach com gorgonzola e bacon caramelizado", id:"longbeach" },
+    { onde:"Parada 3", nome:"Oceanside", desc:"180g de costela Angus, queijo prato, alface americana, cebola roxa e tomate fresco no pão delícia.", preco:"R$ 50", foto:"img/oceanside.jpg", alt:"Burger Oceanside com alface, cebola roxa e queijo", id:"oceanside" }
+  ];
+  var secRota = $("#rota"), estrada = $("#estrada"), carro = $("#carro"), L = estrada.getTotalLength(), stopL = [];
+  estrada.style.strokeDasharray = L + " " + L;
+  $$(".parada").forEach(function(g){
+    var c = g.querySelector("circle"), x = +c.getAttribute("cx"), y = +c.getAttribute("cy"), best = 0, bd = 1e9;
+    for (var l = 0; l <= L; l += 2){ var pt = estrada.getPointAtLength(l), d = (pt.x - x) * (pt.x - x) + (pt.y - y) * (pt.y - y); if (d < bd){ bd = d; best = l; } }
+    stopL.push(best);
+  });
+  stopL[0] = 0; stopL[3] = L;
+  var paradas = $$(".parada"), passos = $$("#passos i"), cartao = $("#cartao");
+  var cAtual = -1, cFila = null, cAnim = false;
+  function poeCartao(n){
+    var d = PARADAS[n], ft = $("#cFt");
+    ft.textContent = "";
+    if (d.foto){ var im = new Image(); im.src = d.foto; im.alt = d.alt; im.width = 300; im.height = 300; ft.appendChild(im); }
+    else { var s = document.createElement("div"); s.className = "sem"; s.textContent = d.nome; ft.appendChild(s); }
+    $("#cOnde").textContent = d.onde; $("#cNome").textContent = d.nome; $("#cDesc").textContent = d.desc;
+    $("#cPreco").textContent = d.preco;
+    var a = $("#cPedir");
+    if (d.id){ a.textContent = "Pedir o " + d.nome; a.href = wa("Olá, Malibu! Vim pelo site e quero pedir um " + d.nome + "."); a.target = "_blank"; a.rel = "noopener"; }
+    else { a.textContent = d.acao; a.href = d.link; a.removeAttribute("target"); }
+    passos.forEach(function(p, i){ p.classList.toggle("on", i <= n); });
+  }
+  function trocaCartao(n){
+    if (n === cAtual) return;
+    if (cAnim){ cFila = n; return; }
+    cAtual = n;
+    if (embed || !$("#cNome").textContent){ poeCartao(n); return; }
+    cAnim = true; cartao.classList.add("troca");
+    var feito = false;
+    function fase2(){ if (feito) return; feito = true; poeCartao(n); requestAnimationFrame(function(){ cartao.classList.remove("troca"); });
+      setTimeout(function(){ cAnim = false; if (cFila !== null && cFila !== cAtual){ var f = cFila; cFila = null; trocaCartao(f); } else cFila = null; }, 420); }
+    setTimeout(fase2, 300);
+  }
+  var rotaIdx = 0;
+  function rota(p){
+    var k = p * 4, i = Math.min(3, Math.floor(k)), f = k - i, l;
+    if (i >= 3) l = stopL[3];
+    else l = f < .5 ? stopL[i] : stopL[i] + (stopL[i + 1] - stopL[i]) * ease((f - .5) / .5);
+    estrada.style.strokeDashoffset = L - l;
+    var pt = estrada.getPointAtLength(l); carro.setAttribute("transform", "translate(" + pt.x.toFixed(1) + " " + pt.y.toFixed(1) + ")");
+    paradas.forEach(function(g, j){ g.classList.toggle("ok", l >= stopL[j] - 1); });
+    // cartão troca quando o carro chega, com folga pra não ficar piscando
+    var raw = k + .1, cand = clamp(Math.floor(raw), 0, 3);
+    if (cand > rotaIdx && raw >= cand + .04) rotaIdx = cand;
+    else if (cand < rotaIdx && raw <= rotaIdx - .04) rotaIdx = cand;
+    trocaCartao(rotaIdx);
+  }
+
+  /* ================= WOW 3: cardápio + prancha ================= */
+  // Preços e descrições lidos da foto do cardápio no WhatsApp do Malibu (GU: conferir com o dono)
+  var CARD = [
+    { g:"Burgers", itens:[
+      { id:"alphadog", nome:"Alphadog", preco:52, desc:"180g de costela Angus, cheddar derretido, bacon em tiras, cebola caramelizada e molho da casa no pão australiano.", foto:"img/alphadog.jpg" },
+      { id:"oceanside", nome:"Oceanside", preco:50, desc:"180g de costela Angus, queijo prato, alface americana, cebola roxa e tomate fresco no pão delícia.", foto:"img/oceanside.jpg" },
+      { id:"longbeach", nome:"Long Beach", preco:54, desc:"180g de costela Angus, gorgonzola e bacon caramelizado no pão delícia.", foto:"img/longbeach.jpg" },
+      { id:"santamonica", tag:"Santa Mônica", nome:"Santa Mônica", preco:48, desc:"180g de costela Angus, muçarela derretida e salada coleslaw crocante no pão delícia." },
+      { id:"pastrami", tag:"Pastrami", nome:"Pastrami Burger", preco:62, desc:"180g de costela Angus, pastrami desfiado, cheddar e maionese de picles no pão delícia." },
+      { id:"dolce", tag:"Dolce", nome:"Dolce Gabbana", preco:54, desc:"180g de costela Angus, cheddar, Catupiry original e bacon caramelizado." },
+      { id:"smash", tag:"Smash", nome:"Smash", preco:34, desc:"100g de smash Angus com cheddar no pão delícia." },
+      { id:"chicken", nome:"Chicken Neto", preco:34, desc:"100g de frango crocante com muçarela e maionese trufada no pão delícia.", foto:"img/chicken.jpg" },
+      { id:"veg", tag:"Veggie", nome:"Burger Vegetariano", preco:42, desc:"Burger vegetariano com muçarela, alface americana e tomate no pão delícia." }
+    ]},
+    { g:"Pra acompanhar", itens:[
+      { id:"batata", tag:"Batata", nome:"Batata frita", preco:20, desc:"Porção pra beliscar." },
+      { id:"extra", tag:"+ Carne", nome:"Hambúrguer extra", preco:24, desc:"Mais um de costela Angus no seu burger." }
+    ]}
+  ];
+  var COMBO = { id:"combo", tag:"Combo", nome:"Combo", preco:22, desc:"Refri + batata frita" };
+  var TODOS = {}; CARD.forEach(function(g){ g.itens.forEach(function(it){ TODOS[it.id] = it; }); }); TODOS.combo = COMBO;
+  var qtd = {}, ordemAd = [];
+  var CORES = [["#e8833a","#1b1715"],["#1d5862","#f2e6d0"],["#f6b93b","#1b1715"],["#1b1715","#f6b93b"]];
+  var SLOTS = [[.08,-.3],[.2,.35],[.34,-.25],[.46,.3],[.58,-.32],[.7,.28],[.84,-.2],[.12,.05],[.3,.08],[.52,0],[.66,-.05],[.78,.36],[.92,.1],[.4,-.4],[.24,-.45],[.62,.45]];
+
+  function qtControle(it){
+    var q = document.createElement("div"); q.className = "qt"; q.dataset.id = it.id;
+    var m = document.createElement("button"); m.type = "button"; m.className = "menos"; m.textContent = "−"; m.setAttribute("aria-label", "Tirar um " + it.nome);
+    var n = document.createElement("span"); n.textContent = "0"; n.setAttribute("aria-live", "polite");
+    var p = document.createElement("button"); p.type = "button"; p.className = "mais"; p.textContent = "+"; p.setAttribute("aria-label", "Adicionar " + it.nome);
+    m.onclick = function(){ muda(it.id, -1); }; p.onclick = function(){ muda(it.id, 1); };
+    q.appendChild(m); q.appendChild(n); q.appendChild(p); return q;
+  }
+  function montaLista(){
+    var box = $("#lista");
+    var cb = document.createElement("div"); cb.className = "combo";
+    var b = document.createElement("b"); b.textContent = "Que tal o combo?";
+    var p = document.createElement("p"); p.textContent = "Por mais R$ 22, leve um refrigerante e uma batata frita. Um por burger.";
+    cb.appendChild(b); cb.appendChild(p); cb.appendChild(qtControle(COMBO));
+    CARD.forEach(function(g, gi){
+      var gr = document.createElement("div"); gr.className = "grupo";
+      var h = document.createElement("h3"); h.textContent = g.g; gr.appendChild(h);
+      g.itens.forEach(function(it){
+        var row = document.createElement("div"); row.className = "item";
+        var th = document.createElement("div"); th.className = "th";
+        if (it.foto){ var im = new Image(); im.src = it.foto; im.alt = "Burger " + it.nome; im.loading = "lazy"; im.width = 300; im.height = 300; th.appendChild(im); }
+        else { th.classList.add("vazio"); th.textContent = it.nome.charAt(0); th.setAttribute("aria-hidden", "true"); }
+        var nm = document.createElement("div"); nm.className = "nm"; nm.textContent = it.nome;
+        var pr = document.createElement("em"); pr.textContent = real(it.preco); nm.appendChild(pr);
+        var ds = document.createElement("p"); ds.className = "ds"; ds.textContent = it.desc;
+        row.appendChild(th); row.appendChild(nm); row.appendChild(qtControle(it)); row.appendChild(ds);
+        gr.appendChild(row);
+      });
+      box.appendChild(gr);
+      if (gi === 0) box.appendChild(cb);
+    });
+  }
+  function adesivo(id){
+    var it = TODOS[id], n = ordemAd.length, s = SLOTS[n % SLOTS.length], j = Math.floor(n / SLOTS.length);
+    var el = document.createElement("div"); el.dataset.id = id;
+    el.style.setProperty("--u", clamp(s[0] + j * .03, 0, 1)); el.style.setProperty("--v", clamp(s[1] + j * .05, -.5, .5));
+    el.style.setProperty("--r", (Math.round((Math.random() * 36 - 18))) + "deg");
+    el.style.zIndex = 10 + n;
+    var inn = document.createElement("span"); inn.className = "in";
+    if (it.foto){ el.className = "ad foto"; var im = new Image(); im.src = it.foto; im.alt = ""; inn.appendChild(im); }
+    else { el.className = "ad txt"; var c = CORES[n % CORES.length]; el.style.setProperty("--bgc", c[0]); el.style.setProperty("--fgc", c[1]); inn.textContent = it.tag || it.nome; }
+    el.appendChild(inn); $("#adesivos").appendChild(el); ordemAd.push(el);
+  }
+  function tiraAdesivo(id){
+    for (var i = ordemAd.length - 1; i >= 0; i--) if (ordemAd[i].dataset.id === id){
+      var el = ordemAd.splice(i, 1)[0]; el.classList.add("sai"); setTimeout(function(){ el.remove(); }, 400); return;
+    }
+  }
+  function total(){ var t = 0; for (var k in qtd) t += qtd[k] * TODOS[k].preco; return t; }
+  function muda(id, d){
+    var q = (qtd[id] || 0) + d; if (q < 0) return;
+    if (q > 20) return;
+    qtd[id] = q; if (!q) delete qtd[id];
+    if (d > 0) adesivo(id); else tiraAdesivo(id);
+    $$('.qt[data-id="' + id + '"]').forEach(function(c){ c.classList.toggle("tem", q > 0); c.querySelector("span").textContent = q; });
+    atualiza();
+  }
+  var mostrado = 0;
+  function animaTotal(v){
+    var de = mostrado, t0 = performance.now(); mostrado = v;
+    (function f(t){ var k = clamp((t - t0) / 400, 0, 1), n = Math.round(de + (v - de) * ease(k)); $$(".totv").forEach(function(e){ e.textContent = real(n); }); $("#totCel").textContent = real(n); if (k < 1) requestAnimationFrame(f); })(t0);
+  }
+  function mensagem(form){
+    var linhas = ["Olá, Malibu! Vim pelo site e quero fazer um pedido:", ""];
+    for (var k in qtd) linhas.push(qtd[k] + "x " + TODOS[k].nome + " (" + real(qtd[k] * TODOS[k].preco) + ")");
+    linhas.push("", "Total: " + real(total()));
+    var nome = form.querySelector('[name="nome"]').value.trim(), obs = form.querySelector('[name="obs"]').value.trim();
+    var modo = form.querySelector('[name="modo-' + form.dataset.k + '"]:checked');
+    if (modo) linhas.push(modo.value);
+    if (nome) linhas.push("Nome: " + nome);
+    if (obs) linhas.push("Observação: " + obs);
+    return linhas.join("\n");
+  }
+  function atualiza(){
+    var t = total(), tem = t > 0;
+    $("#prancha").classList.toggle("cheia", ordemAd.length > 0);
+    animaTotal(t);
+    $$(".conta form").forEach(function(f){ var b = f.querySelector(".btn"); b.setAttribute("aria-disabled", tem ? "false" : "true"); b.href = tem ? wa(mensagem(f)) : "#cardapio"; });
+  }
+  function montaConta(box, k){
+    var f = document.createElement("form"); f.dataset.k = k; f.className = "contaf"; f.setAttribute("aria-label", "Fechar pedido");
+    f.innerHTML =
+      '<div class="tot"><span>Total do pedido</span><b class="totv">R$ 0</b></div>' +
+      '<div class="campos">' +
+        '<input id="nome-' + k + '" name="nome" autocomplete="given-name" placeholder="Seu nome" aria-label="Seu nome">' +
+        '<div class="modo" role="radiogroup" aria-label="Retirada ou entrega" style="grid-column:auto">' +
+          '<label><input type="radio" id="ret-' + k + '" name="modo-' + k + '" value="Vou retirar no local" checked><span>Retirar</span></label>' +
+          '<label><input type="radio" id="ent-' + k + '" name="modo-' + k + '" value="Quero entrega (me passa a taxa?)"><span>Entrega</span></label>' +
+        '</div>' +
+        '<textarea id="obs-' + k + '" name="obs" rows="1" placeholder="Observação (ex.: sem cebola)" aria-label="Observação"></textarea>' +
+      '</div>' +
+      '<a class="btn" aria-disabled="true" href="#cardapio" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-zap"/></svg>Pedir pelo WhatsApp</a>' +
+      '<small>O Malibu costuma responder rápido no WhatsApp.</small>';
+    f.addEventListener("input", atualiza); f.addEventListener("change", atualiza);
+    f.addEventListener("submit", function(e){ e.preventDefault(); });
+    f.querySelector(".btn").addEventListener("click", function(){ if (!total()) return; var v = $("#valeu"); v.classList.add("on"); clearTimeout(v.t); v.t = setTimeout(function(){ v.classList.remove("on"); }, 6000); });
+    box.appendChild(f);
+  }
+  montaLista();
+  var cc = $("#contaCel"); cc.className = "conta-cel conta"; montaConta($("#conta"), "a"); montaConta(cc, "b");
+  atualiza();
+  if (embed){ ["alphadog", "longbeach", "combo", "oceanside", "batata"].forEach(function(id){ muda(id, 1); }); }
+
+  /* ================= horário ao vivo (Manaus, UTC-4) ================= */
+  var DIAS = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+  var ABRE = 17 * 60 + 45;   // GU: confirmar horário de todos os dias com o dono (no Zap aparece terça 17h45 às 00h)
+  function status(){
+    var m = new Date(Date.now() - 4 * 3600e3), dia = m.getUTCDay(), min = m.getUTCHours() * 60 + m.getUTCMinutes();
+    var hor = $("#hor"); hor.textContent = "";
+    [2,3,4,5,6,0,1].forEach(function(d){
+      var r = document.createElement("div"); if (d === dia) r.className = "hoje";
+      var a = document.createElement("span"); a.textContent = DIAS[d] + (d === dia ? " (hoje)" : "");
+      var b = document.createElement("span"); b.textContent = d === 1 ? "Fechado" : "17h45 às 00h";
+      r.appendChild(a); r.appendChild(b); hor.appendChild(r);
+    });
+    var aberto = dia !== 1 && min >= ABRE, tit, sub, cor;
+    if (aberto){ tit = "Aberto agora"; sub = "até a meia-noite"; cor = "#3ecf6a"; }
+    else if (dia === 1){ tit = "Hoje é folga"; sub = "abre amanhã às 17h45"; cor = "#e8833a"; }
+    else { tit = "Abre hoje às 17h45"; sub = "fecha à meia-noite"; cor = "#f6b93b"; }
+    $("#stTit").textContent = tit; $("#stTxt").textContent = sub; $("#stTxt").style.setProperty("--cor", cor);
+    $("#agora").textContent = aberto ? "E agora tá ligada." : dia === 1 ? "Segunda é folga." : "Hoje às 17h45.";
+  }
+  status(); setInterval(status, 60000);
+
+  /* ================= laço único de rolagem ================= */
+  var topo = $("#top"), zap = $("#zap"), pedido = false;
+  function quadro(){
+    pedido = false;
+    if (perto(secHero)) hero(embed ? .64 : prog(secHero));
+    if (perto(secRota)) rota(embed ? .58 : prog(secRota));
+    topo.classList.toggle("solid", scrollY > VH * .3);
+    zap.classList.toggle("on", scrollY > VH * .8 && !dentroDe(secRota) && !dentroDe(secCard));
+  }
+  var secCard = $("#cardapio");
+  function dentroDe(sec){ var r = sec.getBoundingClientRect(); return r.top < VH * .5 && r.bottom > VH * .5; }
+  function pede(){ if (!pedido){ pedido = true; requestAnimationFrame(quadro); } }
+  (function anima(){ loopHero(); requestAnimationFrame(anima); })();
+  addEventListener("scroll", pede, { passive:true });
+  setInterval(pede, 250);   // garantia
+  addEventListener("resize", function(){
+    if (innerWidth !== W || (!toque && innerHeight !== VH)){ W = innerWidth; VH = innerHeight; geoHero(); pede(); }
+  });
+
+  geoHero(); ordem(); pede();
+  cv.classList.add("on");
+  if (embed){ alvo = atual = PICO; hero(.64); }
+
+  /* rolagem macia só no computador, fora da proposta */
+  if (!embed && !dentro && !toque && !reduz && window.Lenis){
+    var lenis = new Lenis({ lerp: .09 });
+    lenis.on("scroll", pede);
+    (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+    $$('a[href^="#"]').forEach(function(a){ a.addEventListener("click", function(e){ var id = a.getAttribute("href").slice(1); var t = id && document.getElementById(id); if (!t) return; e.preventDefault(); lenis.scrollTo(t, { duration: 1.6, offset: -70 }); }); });
+  }
+})();
+</script>
+</body>
+</html>
