@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vértice | Aluguel de carros premium</title>
+<meta name="description" content="Esportivos e carros premium para alugar. Escolha o carro, os dias e a retirada, e a reserva já sai pronta no WhatsApp.">
+<meta name="theme-color" content="#08080a">
+<meta property="og:title" content="Vértice | Aluguel de carros premium">
+<meta property="og:description" content="Dirija o que você só via passar. Reserve pelo WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/poster.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!--
+PLANO (demo GuDev, locadora de carros premium)
+Princípio: o site é uma volta em torno do carro. Você começa vendo só a traseira
+e a rolagem dá a volta nele até a lateral. Tudo em volta fica quieto.
+
+Paleta (a cor vem do próprio vídeo do carro):
+  Noite     #08080a  fundo, igual ao chão molhado do vídeo
+  Grafite   #17181b  superfícies
+  Osso      #f2f0ec  o branco do carro, texto
+  Cinza     #8b8e94  texto de apoio
+  Lanterna  #e0262f  o vermelho da lanterna traseira, só em 2 detalhes
+
+Fontes:
+  Bodoni Moda     títulos grandes (contraste de serifa fina com a máquina)
+  Hanken Grotesk  texto e botões
+
+WOWs:
+  1 Abertura: dois faróis acendem no escuro e a luz abre a tela.
+  2 Meio: a rolagem gira o carro (vídeo ligado ao scroll) e o título
+    inverte a cor onde cruza o carro branco.
+  3 Interativo: "Monte sua reserva", a mensagem do WhatsApp se escreve ao vivo.
+
+CONFIRMAR COM O CLIENTE antes de publicar: nome, WhatsApp, cidade/endereço,
+categorias de carro, respostas do FAQ, e trocar o vídeo ilustrativo por fotos/vídeos reais da frota.
+-->
+
+<style>
+:root{
+  --noite:#08080a; --grafite:#17181b; --osso:#f2f0ec; --cinza:#8b8e94; --lanterna:#e0262f;
+  --gut:clamp(18px,4vw,56px);
+  --serif:'Bodoni Moda','Didot','Times New Roman',serif;
+  --sans:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+html.lock{overflow:hidden}
+body{background:var(--noite);color:var(--osso);font:400 16px/1.55 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--osso);outline-offset:3px}
+img,video{display:block;max-width:100%;height:auto}
+
+/* ---------- abertura ---------- */
+.intro{position:fixed;inset:0;z-index:100;background:#000;--a:0;--r:-22;
+  -webkit-mask-image:radial-gradient(circle at 50% 58%,transparent calc(var(--r)*1vmax),#000 calc(var(--r)*1vmax + 22vmax));
+          mask-image:radial-gradient(circle at 50% 58%,transparent calc(var(--r)*1vmax),#000 calc(var(--r)*1vmax + 22vmax))}
+.intro .farol{position:absolute;top:58%;width:calc(var(--a)*15vmin);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);
+  opacity:var(--a);background:radial-gradient(circle,#fff 0,rgba(255,255,255,.6) 22%,rgba(255,255,255,.12) 48%,transparent 70%)}
+.intro .f1{left:calc(50% - 10vmin)} .intro .f2{left:calc(50% + 10vmin)}
+.intro .raio{position:absolute;top:58%;left:50%;height:1px;width:calc(var(--a)*70vmin);transform:translate(-50%,-50%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);opacity:var(--a)}
+.intro .marca{position:absolute;top:calc(58% - 20vmin);left:50%;transform:translateX(-50%);font:italic 400 clamp(20px,3vw,30px)/1 var(--serif);
+  letter-spacing:-.01em;opacity:calc(var(--a)*.8)}
+
+/* ---------- navegação ---------- */
+.nav{position:fixed;z-index:50;top:max(14px,env(safe-area-inset-top));left:var(--gut);right:var(--gut);display:flex;align-items:center;justify-content:space-between;gap:16px;pointer-events:none}
+.nav>*{pointer-events:auto}
+.nav::before{content:"";position:absolute;z-index:-1;inset:-16px -100vw -34px;background:linear-gradient(var(--noite) 45%,transparent);opacity:0;transition:opacity .3s;pointer-events:none}
+.past .nav::before{opacity:1}
+.logo{font:italic 400 28px/1 var(--serif);letter-spacing:-.02em;text-decoration:none}
+.nav .pill{display:flex;align-items:center;gap:6px;padding:6px 6px 6px 22px;border-radius:999px;background:rgba(23,24,27,.55);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(242,240,236,.1)}
+.nav .links{display:flex;gap:22px;margin-right:14px}
+.nav .links a{font-size:14px;color:rgba(242,240,236,.75);text-decoration:none;transition:color .2s}
+.nav .links a:hover{color:var(--osso)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 24px;border-radius:999px;background:var(--osso);color:var(--noite);
+  font:600 15px/1 var(--sans);text-decoration:none;white-space:nowrap;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .2s}
+.btn:hover{transform:translateY(-2px);background:#fff}
+.btn:active{transform:translateY(0)}
+
+/* ---------- a volta (hero com rolagem) ---------- */
+.turn{position:relative;height:340vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.car{position:absolute;left:50%;top:54%;width:min(112vw,calc(72svh*2.8));aspect-ratio:1280/458;transform:translate(-50%,-50%);
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 16%,#000 78%,transparent),linear-gradient(to right,transparent,#000 9%,#000 91%,transparent);
+  -webkit-mask-composite:source-in;
+          mask-image:linear-gradient(to bottom,transparent,#000 16%,#000 78%,transparent),linear-gradient(to right,transparent,#000 9%,#000 91%,transparent);
+          mask-composite:intersect}
+.car video{width:100%;height:100%;object-fit:cover}
+.title{position:absolute;z-index:3;left:var(--gut);right:var(--gut);top:clamp(84px,15svh,140px);color:#fff;mix-blend-mode:difference;pointer-events:none;
+  font:400 clamp(40px,8.4vw,136px)/.95 var(--serif);letter-spacing:-.035em;will-change:transform,opacity}
+.title .ln{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+.title .ln>span{display:block;transform:translateY(112%)}
+.title .l2{padding-left:clamp(0px,11vw,200px)}
+.ready .title .ln>span{transform:none;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.ready .title .l2>span{transition-delay:.14s}
+.caps{position:absolute;z-index:3;left:var(--gut);bottom:calc(clamp(24px,7svh,72px) + 70px);width:min(30ch,72vw);height:6em;font-size:clamp(17px,1.5vw,22px);line-height:1.35}
+.caps p{position:absolute;left:0;top:0;opacity:0;transform:translateY(14px);transition:opacity .6s,transform .7s cubic-bezier(.2,.8,.2,1)}
+.caps p.on{opacity:1;transform:none}
+.stage .btn{position:absolute;z-index:4;right:var(--gut);bottom:clamp(24px,7svh,72px)}
+.ilus{position:absolute;z-index:3;left:var(--gut);bottom:max(10px,env(safe-area-inset-bottom));font-size:11px;color:var(--cinza)}
+.orbit{position:absolute;z-index:3;right:var(--gut);top:50%;width:46px;height:46px;transform:translateY(-50%) rotate(-90deg)}
+.orbit circle{fill:none;stroke-width:2}
+.orbit .tr{stroke:rgba(242,240,236,.18)}
+.orbit .pr{stroke:var(--lanterna);stroke-linecap:round;stroke-dasharray:113.1;stroke-dashoffset:113.1}
+
+/* ---------- seções ---------- */
+.sec{padding:clamp(88px,16vh,170px) var(--gut)}
+.sec h2{font:400 clamp(36px,6vw,92px)/1 var(--serif);letter-spacing:-.03em;max-width:14ch}
+.lead{max-width:46ch;color:rgba(242,240,236,.7);margin-top:20px;font-size:18px}
+
+.how .steps{margin-top:clamp(40px,8vh,90px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,5vw,72px);position:relative}
+.how .steps::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:rgba(242,240,236,.22);transform:scaleX(0);transform-origin:left;transition:transform 1.6s cubic-bezier(.2,.8,.2,1)}
+.how .steps.go::before{transform:scaleX(1)}
+.how .step{padding-top:28px}
+.how .num{font:italic 400 clamp(64px,9vw,128px)/.9 var(--serif);color:transparent;-webkit-text-stroke:1px rgba(242,240,236,.45);letter-spacing:-.04em}
+.how h3{font:600 20px/1.25 var(--sans);margin:22px 0 10px}
+.how p{color:rgba(242,240,236,.68);max-width:32ch}
+
+.build{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(32px,6vw,96px);align-items:start}
+.build h2{max-width:11ch}
+.ctrl{margin-top:44px;display:grid;gap:34px}
+.ctrl fieldset{border:0;min-width:0}
+.ctrl legend{font-size:15px;color:var(--cinza);margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{min-height:48px;padding:0 22px;border-radius:999px;border:1px solid rgba(242,240,236,.25);font-size:16px;transition:background .2s,color .2s,border-color .2s,transform .2s}
+.chip:hover{border-color:var(--osso)}
+.chip[aria-checked="true"]{background:var(--osso);color:var(--noite);border-color:var(--osso)}
+.chip:active{transform:scale(.97)}
+.step-n{display:flex;align-items:center;gap:22px}
+.step-n button{width:52px;height:52px;border-radius:50%;border:1px solid rgba(242,240,236,.25);font-size:26px;line-height:1;transition:background .2s,color .2s}
+.step-n button:hover{background:var(--osso);color:var(--noite)}
+.step-n output{font:400 clamp(64px,9vw,104px)/1 var(--serif);min-width:2ch;text-align:center;letter-spacing:-.04em}
+.step-n .u{color:var(--cinza)}
+
+.phone{position:sticky;top:96px;background:var(--grafite);border-radius:28px;padding:22px;border:1px solid rgba(242,240,236,.08)}
+.phone .top{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid rgba(242,240,236,.08);margin-bottom:18px}
+.phone .av{width:38px;height:38px;border-radius:50%;background:var(--noite);display:grid;place-items:center;font:italic 400 20px/1 var(--serif)}
+.phone .top b{font-weight:600;display:block;line-height:1.2}
+.phone .top span{font-size:13px;color:var(--cinza)}
+.bolha{background:#222428;border-radius:18px 18px 18px 4px;padding:16px 18px;font-size:16px;line-height:1.5;min-height:9.5em;transition:opacity .25s,transform .25s}
+.bolha.troca{opacity:.35;transform:translateY(4px)}
+.phone .btn{width:100%;margin-top:18px}
+.phone small{display:block;margin-top:12px;color:var(--cinza);font-size:13px;text-align:center}
+
+.faq{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,6vw,96px)}
+.faq details{border-top:1px solid rgba(242,240,236,.16)}
+.faq details:last-child{border-bottom:1px solid rgba(242,240,236,.16)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;font:500 clamp(18px,1.6vw,22px)/1.3 var(--sans)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:300 30px/1 var(--sans);color:var(--cinza);transition:transform .3s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 26px;max-width:56ch;color:rgba(242,240,236,.7)}
+
+footer{padding:clamp(60px,12vh,120px) var(--gut) 40px;overflow:hidden}
+footer .big{font:italic 400 clamp(80px,24vw,380px)/.8 var(--serif);letter-spacing:-.05em;color:rgba(242,240,236,.07);white-space:nowrap}
+footer .row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;margin-top:40px;color:var(--cinza);font-size:14px}
+footer .row a{color:var(--osso)}
+
+.zap{position:fixed;z-index:60;right:16px;bottom:max(16px,env(safe-area-inset-bottom));box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity .3s,transform .3s}
+.zap.on{opacity:1;transform:none;pointer-events:auto}
+
+/* ---------- celular ---------- */
+@media (max-width:820px){
+  .nav .links{display:none}
+  .nav .pill{padding:4px}
+  .build,.faq{grid-template-columns:minmax(0,1fr)}
+  .how .steps{grid-template-columns:minmax(0,1fr)}
+  .how .steps::before{display:none}
+  .how .step{border-top:1px solid rgba(242,240,236,.18)}
+  .phone{position:static}
+}
+@media (max-width:700px){
+  .car{width:140vw;top:50%}
+  .title{font-size:clamp(38px,11.2vw,64px);top:clamp(76px,13svh,110px)}
+  .title .l2{padding-left:0}
+  .stage .btn{left:var(--gut);right:var(--gut);bottom:calc(max(10px,env(safe-area-inset-bottom)) + 30px)}
+  .caps{bottom:calc(max(10px,env(safe-area-inset-bottom)) + 100px);width:min(26ch,90vw)}
+  .orbit{display:none}
+  .zap{display:inline-flex}
+  footer{padding-bottom:96px}
+}
+@media (min-width:821px){ .zap{display:none} }
+
+/* ---------- prévia / reduzir movimento ---------- */
+.embed .turn{height:auto}
+.embed .intro{display:none}
+.embed .title .ln>span{transform:none}
+.embed .caps p:first-child{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .title .ln>span{transition-duration:.3s!important}
+  .how .steps::before{transition-duration:.4s}
+}
+</style>
+</head>
+<body>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="marca">Vértice</div>
+  <div class="raio"></div>
+  <div class="farol f1"></div><div class="farol f2"></div>
+</div>
+
+<header class="nav">
+  <a class="logo" href="#topo" aria-label="Vértice, início">Vértice</a>
+  <div class="pill">
+    <nav class="links" aria-label="Seções">
+      <a href="#como">Como funciona</a>
+      <a href="#reservar">Reservar</a>
+      <a href="#duvidas">Dúvidas</a>
+    </nav>
+    <a class="btn" data-wa="Olá! Vi o site da Vértice e quero alugar um carro. Pode me ajudar?" href="https://wa.me/5511964650141" target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
+  </div>
+</header>
+
+<main id="topo">
+
+  <section class="turn" id="turn" aria-label="Apresentação">
+    <div class="stage">
+      <h1 class="title" id="title">
+        <span class="ln"><span>Dirija o que</span></span>
+        <span class="ln l2"><span>você só via passar.</span></span>
+      </h1>
+
+      <div class="car">
+        <video id="vid" muted playsinline preload="auto" poster="img/poster.jpg" aria-label="Esportivo branco visto de trás, girando devagar sobre o piso molhado" tabindex="-1"></video>
+      </div>
+
+      <div class="caps" id="caps" aria-live="off">
+        <p class="on">Esportivos e carros premium para alugar.</p>
+        <p>Escolha o carro, os dias e a retirada.</p>
+        <p>Sem formulário. A conversa começa no WhatsApp.</p>
+      </div>
+
+      <svg class="orbit" viewBox="0 0 40 40" aria-hidden="true"><circle class="tr" cx="20" cy="20" r="18"/><circle class="pr" id="pr" cx="20" cy="20" r="18"/></svg>
+
+      <a class="btn" data-wa="Olá! Vi o site da Vértice e quero alugar um carro. Pode me ajudar?" href="https://wa.me/5511964650141" target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
+      <span class="ilus">Imagem ilustrativa</span>
+    </div>
+  </section>
+
+  <section class="sec how" id="como">
+    <h2>Do WhatsApp à chave.</h2>
+    <p class="lead">Três passos, todos na mesma conversa.</p>
+    <div class="steps" id="steps">
+      <div class="step"><div class="num" aria-hidden="true">1</div><h3>Diga o que você procura</h3><p>A categoria do carro, quantos dias e quando quer retirar.</p></div>
+      <div class="step"><div class="num" aria-hidden="true">2</div><h3>A gente responde no WhatsApp</h3><p>Você recebe os carros disponíveis e os valores direto na conversa.</p></div>
+      <div class="step"><div class="num" aria-hidden="true">3</div><h3>Combine a retirada e dirija</h3><p>Confirmando, é só acertar o dia e o horário com a gente.</p></div>
+    </div>
+  </section>
+
+  <section class="sec build" id="reservar">
+    <div>
+      <h2>Monte sua reserva.</h2>
+      <p class="lead">Escolha abaixo. A mensagem já sai escrita pro nosso WhatsApp.</p>
+      <div class="ctrl">
+        <fieldset>
+          <legend id="l-cat">Que tipo de carro?</legend>
+          <div class="chips" role="radiogroup" aria-labelledby="l-cat" data-k="cat">
+            <button type="button" class="chip" role="radio" aria-checked="true">Esportivo</button>
+            <button type="button" class="chip" role="radio" aria-checked="false">SUV premium</button>
+            <button type="button" class="chip" role="radio" aria-checked="false">Executivo</button>
+            <button type="button" class="chip" role="radio" aria-checked="false">Ainda não sei</button>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend id="l-dias">Por quantos dias?</legend>
+          <div class="step-n" role="group" aria-labelledby="l-dias">
+            <button type="button" id="menos" aria-label="Menos um dia">&minus;</button>
+            <output id="dias" aria-live="polite">2</output>
+            <button type="button" id="mais" aria-label="Mais um dia">+</button>
+            <span class="u" id="du">dias</span>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend id="l-q">Quando retira?</legend>
+          <div class="chips" role="radiogroup" aria-labelledby="l-q" data-k="quando">
+            <button type="button" class="chip" role="radio" aria-checked="false">Hoje</button>
+            <button type="button" class="chip" role="radio" aria-checked="false">Amanhã</button>
+            <button type="button" class="chip" role="radio" aria-checked="true">No fim de semana</button>
+            <button type="button" class="chip" role="radio" aria-checked="false">Outra data</button>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <aside class="phone" aria-label="Prévia da mensagem">
+      <div class="top"><div class="av" aria-hidden="true">V</div><div><b>Vértice</b><span>WhatsApp</span></div></div>
+      <div class="bolha" id="bolha"></div>
+      <a class="btn" id="enviar" href="https://wa.me/5511964650141" target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
+      <small>Você confere a mensagem antes de enviar.</small>
+    </aside>
+  </section>
+
+  <!-- CONFIRMAR COM O CLIENTE: as respostas abaixo são genéricas e precisam das regras reais dele -->
+  <section class="sec faq" id="duvidas">
+    <h2>Dúvidas.</h2>
+    <div>
+      <details><summary>Quais documentos eu preciso?</summary><p>Em geral, CNH válida e um documento com foto. A gente confirma tudo no atendimento, antes de fechar.</p></details>
+      <details><summary>Como funciona o pagamento?</summary><p>Combinamos a forma de pagamento na conversa, junto com os valores do carro que você escolher.</p></details>
+      <details><summary>Posso reservar para um fim de semana?</summary><p>Pode. Escolha "No fim de semana" na reserva acima e a gente responde com o que está disponível.</p></details>
+      <details><summary>Como é a retirada e a devolução?</summary><p>Você combina o dia e o horário direto com a gente no WhatsApp.</p></details>
+      <details><summary>Os carros das fotos são os que vou receber?</summary><p>As imagens deste site são ilustrativas. Na conversa, você vê o carro disponível antes de decidir.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="big" aria-hidden="true">Vértice</div>
+  <div class="row">
+    <span>Atendimento pelo WhatsApp</span>
+    <a data-wa="Olá! Vi o site da Vértice e quero alugar um carro. Pode me ajudar?" href="https://wa.me/5511964650141" target="_blank" rel="noopener">Falar com a Vértice</a>
+    <span>Site de demonstração feito pela GuDev. Imagens ilustrativas geradas por IA.</span>
+  </div>
+</footer>
+
+<a class="btn zap" id="zap" data-wa="Olá! Vi o site da Vértice e quero alugar um carro. Pode me ajudar?" href="https://wa.me/5511964650141" target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
+
+<script>
+(function(){
+  /* ===== troque aqui pro cliente ===== */
+  var CFG = { nome:'Vértice', whats:'5511964650141' };
+
+  var embed  = /[?&]embed\b/.test(location.search);
+  var dentro = window.parent !== window;
+  var reduz  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var doc = document.documentElement, body = document.body;
+  function clamp(x,a,b){ return x<a?a:x>b?b:x; }
+  function ease(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+  function wa(msg){ return 'https://wa.me/'+CFG.whats+'?text='+encodeURIComponent(msg); }
+
+  if (embed) doc.classList.add('embed');
+
+  /* links do WhatsApp com mensagem pronta */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-wa]'), function(a){ a.href = wa(a.getAttribute('data-wa')); });
+
+  /* ===== vídeo ligado à rolagem ===== */
+  var v = document.getElementById('vid');
+  var turn = document.getElementById('turn');
+  var title = document.getElementById('title');
+  var caps = document.querySelectorAll('#caps p');
+  var pr = document.getElementById('pr');
+  var mobile = window.matchMedia('(max-width: 700px)').matches;
+  var dur = 0, ready = false, lastT = -1, cur = 0, raf = 0, chap = 0;
+  var B = [.36,.74], SLACK = .03;
+
+  v.addEventListener('loadedmetadata', function(){ dur = v.duration || 0; });
+  v.addEventListener('loadeddata', function(){ ready = true; dur = v.duration || dur; kick(); });
+  v.addEventListener('error', function(){ ready = true; });
+  v.src = mobile ? 'video/carro-m.mp4' : 'video/carro.mp4';
+  v.load();
+
+  function progress(){
+    if (embed) return 1;
+    var r = turn.getBoundingClientRect();
+    var h = r.height - window.innerHeight;
+    return h > 0 ? clamp(-r.top / h, 0, 1) : 1;
+  }
+  function chapOf(p){
+    var c = chap;
+    while (c < 2 && p > B[c] + SLACK) c++;
+    while (c > 0 && p < B[c-1] - SLACK) c--;
+    return c;
+  }
+  function render(p){
+    if (dur){
+      var t = p * (dur - 0.03);
+      if (Math.abs(t - lastT) > 1/150){ try{ v.currentTime = t; }catch(e){} lastT = t; }
+    }
+    var out = mobile ? 0 : clamp((p - .16) / .22, 0, 1);
+    title.style.opacity = String(1 - out);
+    title.style.transform = mobile ? 'none' : 'translate3d(0,' + (-p * 60) + 'px,0)';
+    doc.classList.toggle('past', turn.getBoundingClientRect().bottom < window.innerHeight * .5);
+    pr.style.strokeDashoffset = String(113.1 * (1 - p));
+    var c = chapOf(p);
+    if (c !== chap){
+      chap = c;
+      for (var i = 0; i < caps.length; i++) caps[i].classList.toggle('on', i === c);
+    }
+  }
+  function tick(){
+    raf = 0;
+    var target = progress();
+    cur += (target - cur) * (reduz ? 1 : .14);
+    if (Math.abs(target - cur) < .0005) cur = target;
+    render(cur);
+    if (cur !== target) raf = requestAnimationFrame(tick);
+  }
+  function kick(){ if (!raf) raf = requestAnimationFrame(tick); }
+  window.addEventListener('scroll', kick, {passive:true});
+  /* só recalcula quando a largura muda (a barra do navegador do celular dispara resize) */
+  var lastW = window.innerWidth;
+  window.addEventListener('resize', function(){ if (window.innerWidth !== lastW){ lastW = window.innerWidth; kick(); } });
+  setInterval(kick, 300);
+  render(embed ? 1 : 0);
+
+  /* ===== abertura: dois faróis abrem a tela ===== */
+  var intro = document.getElementById('intro');
+  function fim(){
+    if (intro.parentNode) intro.parentNode.removeChild(intro);
+    doc.classList.remove('lock');
+    kick();
+  }
+  if (embed){
+    body.classList.add('ready'); fim();
+  } else {
+    doc.classList.add('lock');
+    var t0 = performance.now(), reveal = null;
+    (function passo(now){
+      var t = now - t0;
+      intro.style.setProperty('--a', ease(clamp(t / 900, 0, 1)).toFixed(3));
+      if (reveal === null && t >= 1000 && (ready || t > 3000)) reveal = now;
+      if (reveal !== null){
+        var k = clamp((now - reveal) / (reduz ? 400 : 1100), 0, 1);
+        intro.style.setProperty('--r', (-22 + ease(k) * 175).toFixed(2));
+        if (k > .2) body.classList.add('ready');
+        if (k >= 1){ fim(); return; }
+      }
+      requestAnimationFrame(passo);
+    })(performance.now());
+  }
+
+  /* ===== linha dos 3 passos desenha quando aparece ===== */
+  var steps = document.getElementById('steps');
+  if ('IntersectionObserver' in window && !embed){
+    new IntersectionObserver(function(es, o){
+      es.forEach(function(e){ if (e.isIntersecting){ steps.classList.add('go'); o.disconnect(); } });
+    }, {threshold:.3}).observe(steps);
+  } else steps.classList.add('go');
+
+  /* ===== monte sua reserva ===== */
+  var st = { cat:'Esportivo', dias:2, quando:'No fim de semana' };
+  var bolha = document.getElementById('bolha');
+  var enviar = document.getElementById('enviar');
+  var outDias = document.getElementById('dias');
+  var du = document.getElementById('du');
+  var tmr = 0;
+  function msg(){
+    var carro = st.cat === 'Ainda não sei' ? 'um carro' : (st.cat === 'SUV premium' ? 'um SUV premium' : 'um ' + st.cat.toLowerCase());
+    var q = st.quando === 'Hoje' ? 'hoje' : st.quando === 'Amanhã' ? 'amanhã' : st.quando === 'No fim de semana' ? 'no fim de semana' : 'em outra data, que combino com vocês';
+    return 'Olá! Vi o site da ' + CFG.nome + ' e quero alugar ' + carro + ' por ' + st.dias + (st.dias === 1 ? ' dia' : ' dias') + ', retirando ' + q + '. Quais carros estão disponíveis e quais os valores?';
+  }
+  function atualiza(animar){
+    var m = msg();
+    outDias.textContent = String(st.dias);
+    du.textContent = st.dias === 1 ? 'dia' : 'dias';
+    enviar.href = wa(m);
+    if (animar && !reduz){
+      bolha.classList.add('troca');
+      clearTimeout(tmr);
+      tmr = setTimeout(function(){ bolha.textContent = m; bolha.classList.remove('troca'); }, 140);
+    } else { bolha.textContent = m; }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.chips'), function(g){
+    var k = g.getAttribute('data-k');
+    var btns = g.querySelectorAll('.chip');
+    Array.prototype.forEach.call(btns, function(b){
+      b.addEventListener('click', function(){
+        Array.prototype.forEach.call(btns, function(o){ o.setAttribute('aria-checked', o === b ? 'true' : 'false'); });
+        st[k] = b.textContent;
+        atualiza(true);
+      });
+    });
+  });
+  document.getElementById('menos').addEventListener('click', function(){ st.dias = clamp(st.dias - 1, 1, 30); atualiza(true); });
+  document.getElementById('mais').addEventListener('click', function(){ st.dias = clamp(st.dias + 1, 1, 30); atualiza(true); });
+  atualiza(false);
+
+  /* ===== botão fixo no celular ===== */
+  var zap = document.getElementById('zap');
+  if (embed || dentro){ zap.style.display = 'none'; }
+  else {
+    var zl = function(){ zap.classList.toggle('on', window.scrollY > window.innerHeight * 3.2); };
+    window.addEventListener('scroll', zl, {passive:true}); zl();
+  }
+})();
+</script>
+</body>
+</html>

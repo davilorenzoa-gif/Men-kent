@@ -35,6 +35,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "PAI & FILHO" converge na rolagem;
   - uma comanda de serviços que vai pro WhatsApp.
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
+- **Vértice** (demo de locadora de carros premium, `exemplos/locadora-demo/`): dois faróis acendem e abrem a tela; a rolagem gira o carro (vídeo de IA ligado ao scroll) com o título invertendo a cor onde cruza o carro; "Monte sua reserva" escreve a mensagem do WhatsApp ao vivo.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.

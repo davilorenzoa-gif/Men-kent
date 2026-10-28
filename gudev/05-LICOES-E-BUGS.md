@@ -8,6 +8,11 @@
 - **Zoom "atravessando" uma letra:** mire numa parte cheia da letra, nunca no buraco do "O". Senão a tela vai pro fundo escuro e a foto "brota do nada".
 - **Texto com a cor da marca em cima de fundo da mesma cor some.** Exemplo: o nome roxo do açaí sobre a prévia roxa. Teste o contraste.
 
+## Vídeo de IA (Google Flow, Veo)
+- **Peça só o carro.** Se o prompt falar de site (menu, botão, título), o Veo desenha a interface dentro do vídeo, com texto torto. Prompt de vídeo é só cena: carro, câmera, luz, chão.
+- **Vídeo na rolagem:** exporte com todos os frames como keyframe (`ffmpeg -g 1`) e sirva num host com suporte a Range (o Netlify tem). O `python -m http.server` não tem, e o vídeo não anda.
+- Um clipe de 8s costuma ter só ~2s úteis de giro. Corte esse pedaço e use.
+
 ## Celular
 - **Proposta travando no celular do Davi:** o site rodando dentro da proposta pesava demais. A solução foi mostrar a prévia como imagem no celular, mais o botão "Ver o site animado", que abre numa gaveta dentro da proposta, travada nos 50%.
 - **O preço que mudava com a rolagem:** quem parava pra ler não via acontecer. Agora anima sozinho quando aparece na tela.
