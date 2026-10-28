@@ -10,6 +10,7 @@
 <meta property="og:description" content="Um site que faz o cliente parar de rolar.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="img/frente.jpg">
+<script>document.documentElement.classList.add('intro');document.documentElement.lang='pt-BR';</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
@@ -42,6 +43,7 @@ WOWs:
   --gut:clamp(16px,4vw,56px);
   --sans:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
   --serif:'Instrument Serif',Georgia,serif;
+  color-scheme:dark;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
@@ -166,7 +168,7 @@ footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:fle
 }
 </style>
 </head>
-<body class="intro">
+<body>
 
 <header class="bar">
   <a class="marca" href="#topo">VÉRTICE</a>
@@ -255,12 +257,12 @@ footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:fle
   });
 
   /* ===== abertura ===== */
-  if (embed){ doc.classList.add('embed'); body.classList.remove('intro'); doc.classList.add('on-bar'); }
+  if (embed){ doc.classList.add('embed'); doc.classList.remove('intro'); doc.classList.add('on-bar'); }
   else {
     var img = $('frente');
     var start = function(){
-      if (body.classList.contains('go')) return;
-      body.classList.add('go');
+      if (doc.classList.contains('go')) return;
+      doc.classList.add('go');
       setTimeout(function(){ doc.classList.add('on-bar'); }, reduz ? 300 : 2800);
     };
     if (img.complete) start(); else { img.addEventListener('load', start); img.addEventListener('error', start); }
