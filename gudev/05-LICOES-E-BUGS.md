@@ -12,6 +12,8 @@
 - **Peça só o carro.** Se o prompt falar de site (menu, botão, título), o Veo desenha a interface dentro do vídeo, com texto torto. Prompt de vídeo é só cena: carro, câmera, luz, chão.
 - **Vídeo na rolagem:** exporte com todos os frames como keyframe (`ffmpeg -g 1`) e sirva num host com suporte a Range (o Netlify tem). O `python -m http.server` não tem, e o vídeo não anda.
 - Um clipe de 8s costuma ter só ~2s úteis de giro. Corte esse pedaço e use.
+- **Texto atrás do carro:** `mix-blend-mode: lighten` só funciona onde o carro é claro; nas partes pretas (traseira, vidro, pneu) o texto aparece por cima. O jeito certo: recortar o carro quadro a quadro com o `rembg` (u2net) e desenhar em 2 canvas, o quadro inteiro embaixo e o carro recortado em cima, com o texto no meio. Erro de recorte não aparece, porque embaixo está o mesmo pixel.
+- Quadros como imagem (WebP) em canvas sincronizam melhor que vídeo com `currentTime`: o fundo e o recorte sempre mostram o mesmo quadro.
 
 ## Celular
 - **Proposta travando no celular do Davi:** o site rodando dentro da proposta pesava demais. A solução foi mostrar a prévia como imagem no celular, mais o botão "Ver o site animado", que abre numa gaveta dentro da proposta, travada nos 50%.

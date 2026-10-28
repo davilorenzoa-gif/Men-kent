@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vértice | Conceito GuDev</title>
+<meta name="description" content="Site conceito de uma locadora de carros premium, feito pela GuDev. Sites que vendem.">
+<meta name="theme-color" content="#060607">
+<meta property="og:title" content="Vértice | Conceito GuDev">
+<meta property="og:description" content="Um site que faz o cliente parar de rolar.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/frente.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+
+<!--
+PLANO (conceito GuDev pro Instagram, marca fictícia "Vértice")
+Princípio: o texto mora ATRÁS do carro. Toda tipografia grande passa por trás
+da máquina (mix-blend-mode: lighten), como se estivesse pintada no cenário.
+
+Paleta (saiu do vídeo):
+  Asfalto  #060607  fundo
+  Chumbo   #141518  superfícies
+  Prata    #8e9096  texto que fica atrás do carro
+  Osso     #f1efea  texto e botões
+  Lanterna #e3262f  só o que já é vermelho no vídeo
+
+Fontes:
+  Archivo (variável, largura 62 a 125)  tudo; a largura estica com a velocidade
+  Instrument Serif itálico              uma assinatura só, no fim
+
+WOWs:
+  1 Abertura: chuva no escuro, faróis piscam e acendem, VÉRTICE se estica atrás do carro.
+  2 Meio: a rolagem gira o carro; a frase gigante passa por trás dele e estica com a velocidade.
+  3 Interativo: carrossel 3D de detalhes, de arrastar.
+-->
+
+<style>
+:root{
+  --asfalto:#060607; --chumbo:#141518; --prata:#8e9096; --osso:#f1efea; --lanterna:#e3262f;
+  --gut:clamp(16px,4vw,56px);
+  --sans:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Instrument Serif',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--asfalto);color:var(--osso);font:400 16px/1.5 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--osso);outline-offset:3px}
+img,video{display:block;max-width:100%;height:auto}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;border-radius:999px;background:var(--osso);color:var(--asfalto);
+  font:600 15px/1 var(--sans);text-decoration:none;white-space:nowrap;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .2s}
+.btn:hover{transform:translateY(-2px);background:#fff}
+
+/* ---------- barra fixa ---------- */
+.bar{position:fixed;z-index:50;left:0;right:0;top:0;padding:max(14px,env(safe-area-inset-top)) var(--gut) 14px;display:flex;align-items:center;justify-content:space-between;
+  opacity:0;transform:translateY(-10px);transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.bar::before{content:"";position:absolute;inset:0 0 -30px;z-index:-1;background:linear-gradient(var(--asfalto) 30%,transparent);opacity:0;transition:opacity .4s}
+.on-bar .bar{opacity:1;transform:none}
+.past .bar::before{opacity:1}
+.marca{font:800 15px/1 var(--sans);font-stretch:125%;letter-spacing:.04em;text-decoration:none}
+
+/* ---------- 1. chegada ---------- */
+.hero{position:relative;height:100vh;height:100svh;overflow:hidden;background:#000;isolation:isolate}
+.word{position:absolute;left:0;right:0;top:50%;transform:translateY(-58%);text-align:center;white-space:nowrap;color:var(--prata);
+  font:900 clamp(56px,16.5vw,300px)/1 var(--sans);letter-spacing:-.02em;will-change:transform,opacity}
+.word span{display:inline-block;font-variation-settings:'wdth' 125;opacity:1}
+.scene{position:absolute;left:50%;top:50%;width:max(100vw,177.78svh);aspect-ratio:16/9;transform:translate(-50%,-50%);mix-blend-mode:lighten}
+.scene img{width:100%;height:100%;object-fit:cover;transform-origin:49% 54%;will-change:transform}
+.farol{position:absolute;top:52.4%;width:9%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(255,255,255,.95) 0,rgba(255,255,255,.35) 22%,rgba(220,230,255,.08) 50%,transparent 70%)}
+.farol.e{left:43.6%} .farol.d{left:55.3%}
+#chuva{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;pointer-events:none}
+.hero::after{content:"";position:absolute;z-index:2;left:0;right:0;bottom:0;height:26%;background:linear-gradient(transparent,rgba(0,0,0,.8));pointer-events:none}
+.hero .pe{position:absolute;z-index:3;left:var(--gut);right:var(--gut);bottom:max(18px,env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
+  font-size:14px;color:rgba(241,239,234,.75)}
+.role{display:flex;align-items:center;gap:10px}
+.role i{display:block;width:1px;height:34px;background:linear-gradient(var(--osso),transparent);transform-origin:top;animation:pinga 1.8s ease-in-out infinite}
+@keyframes pinga{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+/* abertura */
+.intro .scene{opacity:0}
+.intro .farol{opacity:0}
+.intro .word span{opacity:0;font-variation-settings:'wdth' 62;filter:blur(14px)}
+.intro .hero .pe{opacity:0}
+.go .farol{animation:acende 1.1s steps(1,end) .5s both}
+@keyframes acende{0%{opacity:0}12%{opacity:1}22%{opacity:.15}34%{opacity:1}46%{opacity:.35}58%,100%{opacity:1}}
+.go .scene{animation:surge 2s cubic-bezier(.3,.6,.2,1) 1.2s both}
+@keyframes surge{from{opacity:0}to{opacity:1}}
+.go .word span{animation:estica 1.5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(1.7s + var(--i)*70ms)}
+@keyframes estica{from{opacity:0;font-variation-settings:'wdth' 62;filter:blur(14px)}to{opacity:1;font-variation-settings:'wdth' 125;filter:blur(0)}}
+.go .hero .pe{animation:surge 1s ease 2.9s both}
+
+/* ---------- 2. a volta ---------- */
+.volta{position:relative;height:320vh}
+.palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--asfalto);isolation:isolate}
+.mq{position:absolute;left:0;top:50%;white-space:nowrap;color:var(--prata);font:800 clamp(90px,19vw,330px)/1 var(--sans);letter-spacing:-.03em;
+  transform:translate3d(30vw,-62%,0);will-change:transform;font-variation-settings:'wdth' 100}
+.carro{position:absolute;left:50%;top:52%;width:min(112vw,calc(74svh*2.8));aspect-ratio:1280/458;transform:translate(-50%,-50%);
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 14%,#000 80%,transparent),linear-gradient(to right,transparent,#000 8%,#000 92%,transparent);
+  -webkit-mask-composite:source-in;
+          mask-image:linear-gradient(to bottom,transparent,#000 14%,#000 80%,transparent),linear-gradient(to right,transparent,#000 8%,#000 92%,transparent);
+          mask-composite:intersect}
+.carro canvas{display:block;width:100%;height:100%}
+.carro.fundo{background:url(img/volta.jpg) center/cover}
+
+/* ---------- 3. detalhes ---------- */
+.det{padding:clamp(80px,14vh,150px) 0 clamp(60px,10vh,110px);overflow:hidden}
+.det h2{padding:0 var(--gut);font:700 clamp(40px,7vw,104px)/.95 var(--sans);font-stretch:112%;letter-spacing:-.03em}
+.det .sub{padding:0 var(--gut);margin-top:14px;color:rgba(241,239,234,.6)}
+.cf{--cw:min(64vw,330px);position:relative;height:calc(var(--cw)*1.25 + 60px);margin-top:clamp(28px,6vh,60px);perspective:1100px;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.cf.arrasta{cursor:grabbing}
+.card{position:absolute;left:50%;top:50%;width:var(--cw);aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--chumbo);
+  box-shadow:0 30px 70px rgba(0,0,0,.65);will-change:transform}
+.card img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.card .sombra{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+.card .brilho{position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.32) 50%,transparent 62%);background-size:260% 100%;background-position:130% 0}
+.card.ativo .brilho{animation:passa 1.2s cubic-bezier(.3,.6,.2,1) .15s both}
+@keyframes passa{from{background-position:130% 0}to{background-position:-30% 0}}
+.card b{position:absolute;left:16px;bottom:14px;font:700 13px/1 var(--sans);font-stretch:125%;letter-spacing:.06em;text-transform:uppercase}
+.legenda{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 var(--gut);margin-top:8px}
+.legenda p{font-size:clamp(17px,1.6vw,21px);max-width:30ch;transition:opacity .3s,transform .3s}
+.legenda p.troca{opacity:0;transform:translateY(6px)}
+.setas{display:flex;gap:10px}
+.setas button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(241,239,234,.25);display:grid;place-items:center;transition:background .2s,color .2s}
+.setas button:hover{background:var(--osso);color:var(--asfalto)}
+.setas svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
+.barras{display:flex;gap:6px;padding:0 var(--gut);margin-top:22px}
+.barras i{height:2px;flex:1;max-width:60px;background:rgba(241,239,234,.18);border-radius:2px;transition:background .3s}
+.barras i.on{background:var(--osso)}
+.det small{display:block;padding:0 var(--gut);margin-top:16px;font-size:12px;color:var(--prata)}
+
+/* ---------- 4. final GuDev ---------- */
+.fim{position:relative;padding-bottom:clamp(60px,10vh,110px);overflow:hidden}
+.faixa{position:relative;width:max(100vw,150vw);margin-left:50%;transform:translateX(-50%);aspect-ratio:1280/464;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 15%,#000 70%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 15%,#000 70%,transparent)}
+.faixa video{width:100%;height:100%;object-fit:cover;transform-origin:50% 60%;will-change:transform}
+.fim .txt{position:relative;z-index:2;margin-top:clamp(-140px,-9vw,-40px);padding:0 var(--gut);text-align:center}
+.fim .eyebrow{color:rgba(241,239,234,.6);font-size:15px}
+.fim h2{margin:14px auto 0;max-width:14ch;font:800 clamp(38px,6.6vw,100px)/.95 var(--sans);font-stretch:108%;letter-spacing:-.035em}
+.fim .ass{display:block;margin-top:18px;font:italic 400 clamp(30px,4vw,56px)/1 var(--serif);color:var(--prata)}
+.fim .btn{margin-top:30px;min-height:54px;padding:0 30px;font-size:16px}
+footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;font-size:13px;color:var(--prata);border-top:1px solid rgba(241,239,234,.08)}
+
+@media (max-width:700px){
+  .word{font-size:15.4vw}
+  .mq{font-size:32vw;top:42%}
+  .fim .txt{margin-top:-28px}
+  .carro{width:150vw;top:50%}
+  .legenda{flex-direction:column;align-items:flex-start}
+  .setas{display:none}
+  .hero .pe .r2{display:none}
+  .bar .btn{min-height:40px;padding:0 16px;font-size:14px}
+}
+
+/* ---------- prévia / reduzir movimento ---------- */
+.embed .volta{height:auto}
+.embed .scene,.embed .farol,.embed .word span,.embed .hero .pe{opacity:1!important;animation:none!important;filter:none!important;font-variation-settings:'wdth' 125!important}
+@media (prefers-reduced-motion:reduce){
+  .go .farol,.go .scene,.go .word span,.go .hero .pe{animation-duration:.5s;animation-delay:0s}
+  .go .farol{animation-name:surge}
+  .role i{animation:none}
+}
+</style>
+</head>
+<body class="intro">
+
+<header class="bar">
+  <a class="marca" href="#topo">VÉRTICE</a>
+  <a class="btn" data-wa href="https://wa.me/5511964650141" target="_blank" rel="noopener">Quero um site assim</a>
+</header>
+
+<main id="topo">
+  <!-- 1. chegada -->
+  <section class="hero" id="hero" aria-label="Vértice">
+    <h1 class="word" id="word" aria-label="Vértice"><span style="--i:3">V</span><span style="--i:2">É</span><span style="--i:1">R</span><span style="--i:0">T</span><span style="--i:1">I</span><span style="--i:2">C</span><span style="--i:3">E</span></h1>
+    <div class="scene" id="scene">
+      <img id="frente" src="img/frente.jpg" alt="Esportivo branco parado na chuva, de frente, com os faróis acesos" fetchpriority="high">
+      <div class="farol e"></div><div class="farol d"></div>
+    </div>
+    <canvas id="chuva" aria-hidden="true"></canvas>
+    <div class="pe">
+      <span>Aluguel de carros premium</span>
+      <span class="role"><i></i>Role pra dar a volta</span>
+    </div>
+  </section>
+
+  <!-- 2. a volta -->
+  <section class="volta" id="volta" aria-label="O carro gira com a rolagem">
+    <div class="palco">
+      <!-- o texto passa entre o fundo e o carro recortado -->
+      <div class="carro fundo"><canvas id="cFundo" role="img" aria-label="O esportivo branco gira devagar, mostrando a traseira e a lateral"></canvas></div>
+      <div class="mq" id="mq" aria-hidden="true">Dirija o que você só via passar.</div>
+      <div class="carro"><canvas id="cCarro" aria-hidden="true"></canvas></div>
+    </div>
+  </section>
+
+  <!-- 3. detalhes -->
+  <section class="det" id="det" aria-label="Detalhes">
+    <h2>Chegue mais perto.</h2>
+    <p class="sub">Arraste pro lado.</p>
+    <div class="cf" id="cf" role="group" aria-roledescription="carrossel" aria-label="Detalhes do carro">
+      <figure class="card"><img src="img/d-farois.jpg" alt="Os dois faróis acesos refletindo no chão molhado" draggable="false"><div class="sombra"></div><div class="brilho"></div><b>Faróis</b></figure>
+      <figure class="card"><img src="img/d-perfil.jpg" alt="Lateral dianteira com retrovisor e roda escura" draggable="false" loading="lazy"><div class="sombra"></div><div class="brilho"></div><b>Perfil</b></figure>
+      <figure class="card"><img src="img/d-roda.jpg" alt="Roda traseira escura com pinça de freio vermelha" draggable="false" loading="lazy"><div class="sombra"></div><div class="brilho"></div><b>Roda</b></figure>
+      <figure class="card"><img src="img/d-lanterna.jpg" alt="Traseira com a lanterna em linha acesa de ponta a ponta" draggable="false" loading="lazy"><div class="sombra"></div><div class="brilho"></div><b>Lanterna</b></figure>
+      <figure class="card"><img src="img/d-reflexo.jpg" alt="Reflexo vermelho da lanterna no asfalto molhado" draggable="false" loading="lazy"><div class="sombra"></div><div class="brilho"></div><b>Reflexo</b></figure>
+    </div>
+    <div class="legenda">
+      <p id="leg" aria-live="polite"></p>
+      <div class="setas">
+        <button type="button" id="ant" aria-label="Detalhe anterior"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" id="prox" aria-label="Próximo detalhe"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+    <div class="barras" id="barras" aria-hidden="true"></div>
+    <small>Imagens ilustrativas geradas por IA.</small>
+  </section>
+
+  <!-- 4. final GuDev -->
+  <section class="fim" id="fim" aria-label="Feito pela GuDev">
+    <div class="faixa"><video id="fum" muted playsinline loop preload="metadata" poster="img/fumaca.jpg" aria-hidden="true" tabindex="-1"></video></div>
+    <div class="txt">
+      <p class="eyebrow">Vértice é um conceito. Quem fez foi a GuDev.</p>
+      <h2>Um site que faz o cliente parar de rolar.</h2>
+      <span class="ass">Sites que vendem.</span>
+      <a class="btn" data-wa href="https://wa.me/5511964650141" target="_blank" rel="noopener">Quero um site assim</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>GuDev, sites para comércios locais</span>
+  <span>Vértice é uma marca fictícia. Imagens geradas por IA.</span>
+</footer>
+
+<script>
+(function(){
+  var WHATS = '5511964650141';
+  var MSG = 'Oi! Vi o site conceito da Vértice e quero um site assim pro meu negócio.';
+
+  var embed  = /[?&]embed\b/.test(location.search);
+  var dentro = window.parent !== window;
+  var reduz  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mobile = window.matchMedia('(max-width: 700px)').matches;
+  var doc = document.documentElement, body = document.body;
+  function clamp(x,a,b){ return x<a?a:x>b?b:x; }
+  function $(id){ return document.getElementById(id); }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-wa]'), function(a){
+    a.href = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent(MSG);
+  });
+
+  /* ===== abertura ===== */
+  if (embed){ doc.classList.add('embed'); body.classList.remove('intro'); doc.classList.add('on-bar'); }
+  else {
+    var img = $('frente');
+    var start = function(){
+      if (body.classList.contains('go')) return;
+      body.classList.add('go');
+      setTimeout(function(){ doc.classList.add('on-bar'); }, reduz ? 300 : 2800);
+    };
+    if (img.complete) start(); else { img.addEventListener('load', start); img.addEventListener('error', start); }
+    setTimeout(start, 2500);
+  }
+
+  /* ===== chuva ===== */
+  var cv = $('chuva'), cx = cv.getContext('2d'), hero = $('hero');
+  var gotas = [], W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  var farois = [];
+  function medeChuva(){
+    W = hero.clientWidth; H = hero.clientHeight;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cx.setTransform(dpr,0,0,dpr,0,0);
+    /* posição dos faróis na tela (a cena cobre a tela como object-fit: cover) */
+    var sw = Math.max(W, H * 16/9), sh = sw * 9/16, ox = (W - sw)/2, oy = (H - sh)/2;
+    farois = [[ox + sw*.436, oy + sh*.524], [ox + sw*.553, oy + sh*.524]];
+    var n = reduz ? 0 : (mobile ? 170 : 340);
+    gotas = [];
+    for (var i = 0; i < n; i++) gotas.push(novaGota(true));
+  }
+  function novaGota(qualquer){
+    return { x: Math.random() * (W + 80) - 40, y: qualquer ? Math.random() * H : -20 - Math.random() * 80,
+             v: 9 + Math.random() * 9, l: 10 + Math.random() * 18, a: .05 + Math.random() * .12 };
+  }
+  function chove(){
+    cx.clearRect(0,0,W,H);
+    cx.lineWidth = 1;
+    for (var i = 0; i < gotas.length; i++){
+      var g = gotas[i];
+      g.y += g.v; g.x -= g.v * .12;
+      if (g.y > H + 20) { gotas[i] = novaGota(false); continue; }
+      /* gota acende quando passa no facho dos faróis */
+      var luz = 0;
+      for (var k = 0; k < 2; k++){
+        var dx = g.x - farois[k][0], dy = g.y - farois[k][1];
+        var d = Math.sqrt(dx*dx + dy*dy) / (H * .45);
+        if (d < 1) luz = Math.max(luz, 1 - d);
+      }
+      cx.strokeStyle = 'rgba(225,232,245,' + Math.min(.85, g.a + luz * .7).toFixed(3) + ')';
+      cx.beginPath(); cx.moveTo(g.x, g.y); cx.lineTo(g.x + g.l * .12, g.y - g.l); cx.stroke();
+    }
+  }
+
+  /* ===== a volta: dois quadros por vez (fundo + carro recortado) ligados à rolagem ===== */
+  var volta = $('volta'), mq = $('mq'), word = $('word'), scImg = $('frente');
+  var cur = 0, vel = 0, lastY = window.scrollY;
+  var NQ = 76, pasta = mobile ? 'quadros/m/' : 'quadros/d/';
+  var cF = $('cFundo'), cC = $('cCarro'), xF = cF.getContext('2d'), xC = cC.getContext('2d');
+  var qF = [], qC = [], pronto = [], desenhado = -1;
+  function nn(i){ return (i < 10 ? '0' : '') + i; }
+  function carrega(i){
+    var n = 0, fim = function(){ if (++n === 2) pronto[i] = true; };
+    qF[i] = new Image(); qF[i].onload = fim; qF[i].src = pasta + 'f' + nn(i) + '.webp';
+    qC[i] = new Image(); qC[i].onload = fim; qC[i].src = pasta + 'c' + nn(i) + '.webp';
+  }
+  /* primeiro e último quadro antes, depois o resto em ordem */
+  carrega(0); carrega(NQ - 1);
+  for (var q = 1; q < NQ - 1; q++) carrega(q);
+  function desenha(i){
+    /* usa o quadro pronto mais perto, sempre o mesmo pro fundo e pro carro */
+    var j = -1;
+    for (var k = 0; k < NQ; k++){
+      if (i - k >= 0 && pronto[i - k]){ j = i - k; break; }
+      if (i + k < NQ && pronto[i + k]){ j = i + k; break; }
+    }
+    if (j < 0 || j === desenhado) return;
+    var a = qF[j], b = qC[j];
+    if (cF.width !== a.naturalWidth){ cF.width = cC.width = a.naturalWidth; cF.height = cC.height = a.naturalHeight; }
+    xF.drawImage(a, 0, 0);
+    xC.clearRect(0, 0, cC.width, cC.height); xC.drawImage(b, 0, 0);
+    desenhado = j;
+  }
+
+  function progVolta(){
+    if (embed) return 1;
+    var r = volta.getBoundingClientRect(), h = r.height - window.innerHeight;
+    return h > 0 ? clamp(-r.top / h, 0, 1) : 1;
+  }
+
+  /* ===== fumaça: só toca quando aparece ===== */
+  var fum = $('fum'), fim = $('fim'), fumOk = false;
+  fum.src = mobile ? 'video/fumaca-m.mp4' : 'video/fumaca.mp4';
+
+  /* ===== laço único ===== */
+  function laco(){
+    var y = window.scrollY, ih = window.innerHeight;
+    vel += ((y - lastY) - vel) * .2; lastY = y;
+
+    /* 1. chegada: o carro vem pra cima de você */
+    var hr = hero.getBoundingClientRect();
+    if (hr.bottom > 0){
+      var h = clamp(-hr.top / ih, 0, 1);
+      scImg.style.transform = 'scale(' + (1 + h * .35).toFixed(4) + ')';
+      word.style.transform = 'translateY(-58%) scale(' + (1 + h * .15).toFixed(4) + ')';
+      word.style.opacity = String(1 - h * 1.3);
+      if (gotas.length) chove();
+    }
+
+    /* 2. a volta */
+    var alvo = progVolta();
+    cur += (alvo - cur) * (reduz ? 1 : .14);
+    if (Math.abs(alvo - cur) < .0005) cur = alvo;
+    var vr = volta.getBoundingClientRect();
+    if (embed || (vr.top < ih && vr.bottom > 0)) desenha(Math.round(cur * (NQ - 1)));
+    var estica = reduz ? 0 : clamp(Math.abs(vel) * .9, 0, 25);
+    mq.style.transform = 'translate3d(' + (30 - cur * (mobile ? 330 : 190)).toFixed(2) + 'vw,-62%,0) skewX(' + (reduz ? 0 : clamp(-vel * .06, -8, 8)).toFixed(2) + 'deg)';
+    mq.style.fontVariationSettings = "'wdth' " + (100 + estica).toFixed(1);
+
+    /* 4. fumaça entra com zoom lento */
+    var fr = fim.getBoundingClientRect();
+    var visivel = fr.top < ih && fr.bottom > 0;
+    if (visivel){
+      if (!fumOk && !embed){ fumOk = true; var pp = fum.play(); if (pp && pp.catch) pp.catch(function(){}); }
+      var f = clamp(1 - fr.top / ih, 0, 1.4);
+      fum.style.transform = 'scale(' + (1.18 - f * .13).toFixed(4) + ')';
+    } else if (fumOk){ fum.pause(); fumOk = false; }
+
+    doc.classList.toggle('past', y > ih * .6);
+    carrossel();
+    requestAnimationFrame(laco);
+  }
+
+  /* ===== 3. carrossel 3D ===== */
+  var cf = $('cf'), cards = cf.querySelectorAll('.card'), N = cards.length;
+  var LEG = [
+    'A primeira coisa que aparece na chuva.',
+    'Retrovisor, entrada de ar e roda escura.',
+    'Pinça vermelha atrás do aro escuro.',
+    'Uma linha de luz de ponta a ponta.',
+    'Até o chão molhado entra na foto.'
+  ];
+  var pos = 0, alvoC = 0, drag = null, ultimoToque = 0, ultimoAuto = 0, ativo = -1;
+  var leg = $('leg'), barras = $('barras');
+  for (var b = 0; b < N; b++) barras.appendChild(document.createElement('i'));
+  function wrap(d){ d = ((d % N) + N) % N; return d > N/2 ? d - N : d; }
+  function passo(){ return cards[0].offsetWidth * .62; }
+  function carrossel(){
+    if (!drag){
+      pos += (alvoC - pos) * (reduz ? .35 : .1);
+      if (Math.abs(alvoC - pos) < .001) pos = alvoC;
+      var agora = performance.now();
+      var cr = cf.getBoundingClientRect();
+      var aparece = cr.top < window.innerHeight * .85 && cr.bottom > window.innerHeight * .15;
+      if (aparece && !reduz && !embed && agora - ultimoToque > 4500 && agora - ultimoAuto > 2800){
+        ultimoAuto = agora; alvoC = Math.round(alvoC) + 1;
+      }
+      if (!aparece) ultimoAuto = agora;
+    }
+    var sp = passo();
+    for (var i = 0; i < N; i++){
+      var d = wrap(i - pos), ad = Math.abs(d), c = clamp(d, -2, 2);
+      cards[i].style.transform = 'translate(-50%,-50%) translateX(' + (d * sp).toFixed(1) + 'px) translateZ(' + (-ad * 170).toFixed(1) + 'px) rotateY(' + (-c * 32).toFixed(2) + 'deg)';
+      cards[i].style.zIndex = String(100 - Math.round(ad * 10));
+      cards[i].style.opacity = ad > 2.3 ? '0' : '1';
+      cards[i].firstElementChild.nextElementSibling.style.opacity = String(Math.min(.75, ad * .42));
+    }
+    var a = ((Math.round(pos) % N) + N) % N;
+    if (a !== ativo){
+      if (ativo >= 0) cards[ativo].classList.remove('ativo');
+      ativo = a;
+      void cards[a].offsetWidth;
+      cards[a].classList.add('ativo');
+      leg.classList.add('troca');
+      setTimeout(function(){ leg.textContent = LEG[ativo]; leg.classList.remove('troca'); }, 180);
+      for (var j = 0; j < N; j++) barras.children[j].classList.toggle('on', j === a);
+      for (var k = 0; k < N; k++) cards[k].setAttribute('aria-hidden', k === a ? 'false' : 'true');
+    }
+  }
+  cf.addEventListener('pointerdown', function(e){
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    drag = { x: e.clientX, y: e.clientY, p0: pos, t: performance.now(), lx: e.clientX, v: 0, ok: false, id: e.pointerId, alvo: e.target.closest('.card') };
+    ultimoToque = performance.now();
+  });
+  cf.addEventListener('pointermove', function(e){
+    if (!drag || e.pointerId !== drag.id) return;
+    var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.ok){
+      if (Math.abs(dx) < 6) return;
+      if (Math.abs(dy) > Math.abs(dx)){ drag = null; return; }
+      drag.ok = true; cf.classList.add('arrasta');
+      try{ cf.setPointerCapture(e.pointerId); }catch(er){}
+    }
+    var now = performance.now(), dt = Math.max(1, now - drag.t);
+    drag.v = (e.clientX - drag.lx) / dt; drag.lx = e.clientX; drag.t = now;
+    pos = drag.p0 - dx / passo();
+    alvoC = pos;
+  });
+  function solta(){
+    if (!drag) return;
+    if (drag.ok){
+      alvoC = Math.round(pos - drag.v * 260 / passo());
+    } else if (drag.alvo){
+      var i = Array.prototype.indexOf.call(cards, drag.alvo);
+      alvoC = Math.round(pos) + Math.round(wrap(i - pos));
+    }
+    drag = null; cf.classList.remove('arrasta'); ultimoToque = performance.now();
+  }
+  cf.addEventListener('pointerup', solta);
+  cf.addEventListener('pointercancel', solta);
+  $('ant').addEventListener('click', function(){ alvoC = Math.round(alvoC) - 1; ultimoToque = performance.now(); });
+  $('prox').addEventListener('click', function(){ alvoC = Math.round(alvoC) + 1; ultimoToque = performance.now(); });
+  cf.tabIndex = 0;
+  cf.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight'){ alvoC = Math.round(alvoC) + 1; ultimoToque = performance.now(); }
+    if (e.key === 'ArrowLeft'){ alvoC = Math.round(alvoC) - 1; ultimoToque = performance.now(); }
+  });
+
+  /* ===== início ===== */
+  var lastW = window.innerWidth;
+  medeChuva();
+  window.addEventListener('resize', function(){
+    if (window.innerWidth === lastW) return;   /* ignora a barra do navegador do celular */
+    lastW = window.innerWidth; medeChuva();
+  });
+  requestAnimationFrame(laco);
+})();
+</script>
+</body>
+</html>
