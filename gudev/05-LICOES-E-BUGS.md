@@ -12,8 +12,13 @@
 - **Peça só o carro.** Se o prompt falar de site (menu, botão, título), o Veo desenha a interface dentro do vídeo, com texto torto. Prompt de vídeo é só cena: carro, câmera, luz, chão.
 - **Vídeo na rolagem:** exporte com todos os frames como keyframe (`ffmpeg -g 1`) e sirva num host com suporte a Range (o Netlify tem). O `python -m http.server` não tem, e o vídeo não anda.
 - Um clipe de 8s costuma ter só ~2s úteis de giro. Corte esse pedaço e use.
-- **Texto atrás do carro:** `mix-blend-mode: lighten` só funciona onde o carro é claro; nas partes pretas (traseira, vidro, pneu) o texto aparece por cima. O jeito certo: recortar o carro quadro a quadro com o `rembg` (u2net) e desenhar em 2 canvas, o quadro inteiro embaixo e o carro recortado em cima, com o texto no meio. Erro de recorte não aparece, porque embaixo está o mesmo pixel.
+- **Texto atrás do carro:** `mix-blend-mode: lighten` só funciona onde o carro é claro; nas partes pretas (traseira, vidro, pneu) o texto aparece por cima. O jeito certo: recortar o carro quadro a quadro e desenhar o quadro inteiro embaixo, o texto no meio e o carro recortado em cima.
+- **Letras "bugadas" atrás do carro (reclamação do Davi):** o recorte do u2net deixava manchas meio transparentes de fumaça embaixo do carro, mudando de quadro pra quadro, e o texto piscava. O que resolveu: recorte com **BiRefNet** (`birefnet-general-lite` no rembg, imagem num quadrado preto), mediana entre quadros vizinhos, só o maior pedaço, tapar buracos (vidro e roda), borda guiada pela imagem; e o texto só na altura da carroceria, nunca na parte de baixo (fumaça, sombra, reflexo).
+- **Não esticar a fonte com a velocidade da rolagem:** no celular a velocidade vem aos trancos e as letras pulam.
 - Quadros como imagem (WebP) em canvas sincronizam melhor que vídeo com `currentTime`: o fundo e o recorte sempre mostram o mesmo quadro.
+- Em vez de guardar o carro recortado em cor, guarde só a **máscara** (WebP sem perda, só alfa, ~10 KB) e recorte no navegador com `destination-in`. Fica bem mais leve.
+- **Vídeo de IA em 720p pixela no celular** (tela de 3x). Antes de usar em tela cheia: upscale com Real-ESRGAN (`realesr-general-x4v3` pros quadros, rápido; `RealESRGAN_x4plus` pra foto parada, mais nítido). Roda no PC do Gu ou aqui com torch + spandrel.
+- **Chuva (referência do Davi):** gotas retas (sem inclinação), finas, com rastro que some em cima; 3 camadas (fundo pequenas e apagadas, meio, poucas grandes e borradas na frente); só aparecem onde tem luz (mais forte em cima, some embaixo). Desenhar no canvas na resolução da tela (até 2x), senão pixela.
 
 ## Celular
 - **Proposta travando no celular do Davi:** o site rodando dentro da proposta pesava demais. A solução foi mostrar a prévia como imagem no celular, mais o botão "Ver o site animado", que abre numa gaveta dentro da proposta, travada nos 50%.
