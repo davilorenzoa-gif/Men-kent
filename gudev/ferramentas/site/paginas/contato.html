@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js">
+<head>
+<!--CABECA-->
+<title>Solicitar projeto | GuDev</title>
+<meta name="description" content="Conte sobre o seu negócio e a mensagem sai pronta pro WhatsApp da GuDev. Respondemos em até 24h. WhatsApp (11) 96465-0141.">
+<meta property="og:title" content="Solicitar projeto | GuDev">
+<meta property="og:description" content="Conte sobre o seu negócio. A gente responde em até 24h pelo WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/og.jpg">
+</head>
+<body data-pagina="contato">
+<!--TOPO-->
+
+<main id="conteudo" tabindex="-1">
+  <section class="capa contato wrap" aria-labelledby="t-contato" style="padding-bottom:var(--sec)">
+    <div class="contato__grade">
+      <div class="contato__lado">
+        <h1 class="t1" id="t-contato" data-parte="entrada">Vamos fazer o seu.</h1>
+        <p class="lead entra">Conte um pouco do seu negócio. A mensagem sai pronta pro nosso WhatsApp e a gente responde em até 24h.</p>
+        <div class="direto entra entra--2">
+          <p class="rotulo">Prefere falar direto?</p>
+          <p class="numero">(11) 96465-0141</p>
+          <a class="btn" data-wa="Oi! Vim pelo site da GuDev." href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#zap"/></svg>Chamar no WhatsApp</a>
+        </div>
+        <p class="rotulo entra entra--3">Este formulário não guarda nada. Ele só monta a mensagem e abre o seu WhatsApp. <a class="link" href="privacidade.html">Privacidade</a></p>
+      </div>
+
+      <div class="cartao-form entra entra--2">
+        <noscript><p class="aviso-form"><span>Sem JavaScript o formulário não consegue montar a mensagem. Chame direto no WhatsApp: (11) 96465-0141.</span></p></noscript>
+        <form class="form" id="form" novalidate>
+          <div class="form__linha">
+            <div class="campo">
+              <label for="f-nome">Seu nome</label>
+              <input id="f-nome" name="nome" type="text" autocomplete="name" required maxlength="80" aria-describedby="e-nome">
+              <p class="campo__erro" id="e-nome"></p>
+            </div>
+            <div class="campo">
+              <label for="f-negocio">Nome do negócio</label>
+              <input id="f-negocio" name="negocio" type="text" autocomplete="organization" required maxlength="100" aria-describedby="e-negocio">
+              <p class="campo__erro" id="e-negocio"></p>
+            </div>
+          </div>
+          <div class="form__linha">
+            <div class="campo">
+              <label for="f-cidade">Cidade <span class="opc">opcional</span></label>
+              <input id="f-cidade" name="cidade" type="text" autocomplete="address-level2" maxlength="80">
+            </div>
+            <div class="campo">
+              <label for="f-link">Instagram ou Google Maps <span class="opc">opcional</span></label>
+              <input id="f-link" name="link" type="text" inputmode="url" maxlength="200" placeholder="@seunegocio">
+            </div>
+          </div>
+          <fieldset class="campo">
+            <legend class="legenda-campo">O que você precisa?</legend>
+            <div class="opcoes" id="f-tipo" role="radiogroup" aria-describedby="e-tipo">
+              <label class="opcao"><input type="radio" name="tipo" value="Site Essencial"><span>Site Essencial</span></label>
+              <label class="opcao"><input type="radio" name="tipo" value="Plano mensal"><span>Plano mensal</span></label>
+              <label class="opcao"><input type="radio" name="tipo" value="Projeto sob medida"><span>Projeto sob medida</span></label>
+              <label class="opcao"><input type="radio" name="tipo" value="Ainda não sei"><span>Ainda não sei</span></label>
+            </div>
+            <p class="campo__erro" id="e-tipo"></p>
+          </fieldset>
+          <div class="campo">
+            <label for="f-orcamento">Quanto pensa em investir <span class="opc">opcional</span></label>
+            <select id="f-orcamento" name="orcamento">
+              <option value="">Prefiro conversar</option>
+              <option>Até R$ 300</option>
+              <option>De R$ 300 a R$ 600</option>
+              <option>Mais de R$ 600</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="f-mensagem">Conte como é o negócio</label>
+            <textarea id="f-mensagem" name="mensagem" required minlength="10" maxlength="800" aria-describedby="e-mensagem a-mensagem" placeholder="O que você vende, como os clientes pedem hoje e o que gostaria de ter no site."></textarea>
+            <div class="campo__ajuda"><p class="campo__erro" id="e-mensagem"></p><span id="a-mensagem">0 de 800</span></div>
+          </div>
+          <div class="aviso-form" id="aviso" role="alert" hidden><svg class="ic" aria-hidden="true"><use href="img/icones.svg#alerta"/></svg><p>Faltou preencher alguns campos. Eles estão marcados acima.</p></div>
+          <button class="btn btn--bloco" type="submit" id="enviar"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#zap"/></svg><span>Montar mensagem pro WhatsApp</span></button>
+          <p class="rotulo">Você confere a mensagem antes de mandar. Nada é enviado sem você tocar em enviar no WhatsApp.</p>
+        </form>
+
+        <div class="pronto" id="pronto" hidden>
+          <div class="pronto__topo">
+            <span class="pronto__ok"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#check"/></svg></span>
+            <div><h2 class="t3" id="t-pronto" tabindex="-1">Sua mensagem está pronta.</h2><p class="texto">Falta só um passo: abrir no WhatsApp e tocar em enviar.</p></div>
+          </div>
+          <p class="bolha bolha--eu" id="previa"></p>
+          <div class="pronto__acoes">
+            <a class="btn" id="abrirZap" href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#zap"/></svg>Abrir no WhatsApp</a>
+            <button class="btn btn--linha" type="button" id="copiar"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#copiar"/></svg>Copiar mensagem</button>
+            <button class="btn btn--linha" type="button" id="editar"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#lapis"/></svg>Editar</button>
+          </div>
+          <p class="estado" id="estado" role="status"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!--RODAPE-->
+<script src="js/contato.js"></script>
+</body>
+</html>

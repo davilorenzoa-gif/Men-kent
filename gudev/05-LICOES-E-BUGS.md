@@ -20,6 +20,15 @@
 - **Vídeo de IA em 720p pixela no celular** (tela de 3x). Antes de usar em tela cheia: upscale com Real-ESRGAN (`realesr-general-x4v3` pros quadros, rápido; `RealESRGAN_x4plus` pra foto parada, mais nítido). Roda no PC do Gu ou aqui com torch + spandrel.
 - **Chuva (referência do Davi):** gotas retas (sem inclinação), finas, com rastro que some em cima; 3 camadas (fundo pequenas e apagadas, meio, poucas grandes e borradas na frente); só aparecem onde tem luz (mais forte em cima, some embaixo). Desenhar no canvas na resolução da tela (até 2x), senão pixela.
 
+## Site da GuDev (29/10/2026)
+- **Título `h1` dentro de um bloco que o JS mede herda o `2em` do navegador.** O texto ficava o dobro do calculado e, no celular em pé, a 2ª linha ("vendem.") sumia atrás do carro. Zere com `font-size:1em` e posicione pela altura real do texto, não por conta de cabeça.
+- **Celular em pé tem mil formatos (320x568 até tablet).** Título + carro têm que ser centralizados entre o topo e o texto de baixo, e o carro diminui se não couber. Testar pelo menos 320, 360, 390, 768 e 1024 em pé.
+- **Sem JavaScript, a abertura deixava a tela preta:** classe de abertura no `<html>` sempre com `.js` na frente (`.js.cena-intro`).
+- **"Pular para o conteúdo" não levava o foco:** o `<main>` precisa de `tabindex="-1"`.
+- **Troca de página animada (View Transitions) dá erro no console no celular:** a barra do navegador muda a altura entre uma página e outra e o Chrome cancela. Deixe só com mouse (`@media (hover:hover) and (pointer:fine)`) e trate a promessa.
+- **Miniatura de projeto com os botões da própria página** briga com o botão "Ver detalhes" do cartão. Capture a tela sem a interface.
+- **Peso do giro:** os 76 quadros (+ máscaras) dão ~3 MB no celular. Baixe o 1º na hora e o resto só quando a pessoa mexer na página; com economia de dados, um quadro sim, um não.
+
 ## Celular
 - **Proposta travando no celular do Davi:** o site rodando dentro da proposta pesava demais. A solução foi mostrar a prévia como imagem no celular, mais o botão "Ver o site animado", que abre numa gaveta dentro da proposta, travada nos 50%.
 - **O preço que mudava com a rolagem:** quem parava pra ler não via acontecer. Agora anima sozinho quando aparece na tela.

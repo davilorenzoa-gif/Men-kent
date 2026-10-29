@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#060607">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<script>document.documentElement.classList.replace('no-js','js');
+/* troca de página animada: se o navegador desistir dela, a página só aparece normal, sem erro no console */
+['pageswap','pagereveal'].forEach(function(t){addEventListener(t,function(e){var v=e.viewTransition;if(v&&v.ready)v.ready.catch(function(){});});});
+addEventListener('unhandledrejection',function(e){var r=e.reason;if(r&&/InvalidStateError|AbortError/.test(r.name)&&/transition/i.test(r.message))e.preventDefault();});</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/gudev.css">
+<title>Serviços e preços | GuDev</title>
+<meta name="description" content="Site Essencial por R$ 297 nos 3 primeiros clientes, plano mensal opcional de R$ 60 e projetos sob medida. Cardápio com preço, pedido no WhatsApp, mapa e avaliações reais do Google.">
+<meta property="og:title" content="Serviços e preços | GuDev">
+<meta property="og:description" content="Um site completo pro seu comércio, um plano pra manter ele em dia e o que mais você precisar.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/og.jpg">
+</head>
+<body data-pagina="servicos">
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<header class="topo">
+  <div class="wrap topo__barra">
+    <a class="marca" href="index.html" aria-label="GuDev, página inicial">GuDev<span class="ponto" aria-hidden="true"></span></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="projetos.html">Projetos</a>
+      <a href="servicos.html" aria-current="page">Serviços</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+    <div class="topo__acoes">
+      <a class="btn btn--peq" data-wa="Oi! Vim pelo site da GuDev e quero uma prévia grátis do site do meu negócio." href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#zap"/></svg>Pedir prévia grátis</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu"><span class="menu-btn__txt">Menu</span><svg class="ic ic-menu" aria-hidden="true"><use href="img/icones.svg#menu"/></svg><svg class="ic ic-fechar" aria-hidden="true"><use href="img/icones.svg#fechar"/></svg></button>
+    </div>
+  </div>
+</header>
+<nav class="menu" id="menu" aria-label="Menu">
+  <div class="menu__links">
+    <a href="index.html" style="--i:0">Início<span class="ponto" aria-hidden="true"></span></a>
+    <a href="projetos.html" style="--i:1">Projetos<span class="ponto" aria-hidden="true"></span></a>
+    <a href="servicos.html" style="--i:2" aria-current="page">Serviços<span class="ponto" aria-hidden="true"></span></a>
+    <a href="sobre.html" style="--i:3">Sobre<span class="ponto" aria-hidden="true"></span></a>
+    <a href="contato.html" style="--i:4">Contato<span class="ponto" aria-hidden="true"></span></a>
+  </div>
+  <div class="menu__pe">
+    <a class="btn btn--bloco" data-wa="Oi! Vim pelo site da GuDev e quero uma prévia grátis do site do meu negócio." href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#zap"/></svg>Pedir prévia grátis</a>
+    <p class="rotulo">WhatsApp (11) 96465-0141. Respondemos em até 24h.</p>
+  </div>
+</nav>
+
+<main id="conteudo" tabindex="-1">
+  <section class="capa wrap" aria-labelledby="t-capa">
+    <div class="capa__grade">
+      <h1 class="t1" id="t-capa" data-parte="entrada">Serviços</h1>
+      <div class="capa__lado">
+        <p class="lead entra">Um site completo pro seu comércio, um plano pra manter ele em dia e o que mais você precisar, orçado à parte.</p>
+        <nav class="indice entra entra--2" aria-label="Nesta página">
+          <a href="#essencial">Site Essencial</a>
+          <a href="#teste">Teste</a>
+          <a href="#plano">Plano mensal</a>
+          <a href="#sob-medida">Sob medida</a>
+          <a href="#duvidas">Dúvidas</a>
+        </nav>
+      </div>
+    </div>
+    <div class="capa__traco" data-revela="traco"></div>
+  </section>
+
+  <!-- site essencial -->
+  <section class="sec essencial" id="essencial" aria-labelledby="t-essencial" style="padding-top:clamp(2rem,1rem + 3vw,4rem)">
+    <div class="wrap essencial__grade">
+      <div>
+        <p class="rotulo">Pra comércio local</p>
+        <h2 class="t2" id="t-essencial" data-parte="rolagem" style="margin-top:.8rem">Site Essencial</h2>
+        <p class="texto" style="margin-top:1.4rem">Uma página feita do zero com a cara do seu negócio, pensada pra quem chega pelo celular: vê o que você vende, com preço, e chama no seu WhatsApp com a mensagem pronta.</p>
+        <div class="preco-card" data-revela>
+          <p class="rotulo">Preço de lançamento</p>
+          <p class="preco"><s class="de">R$ 500</s> <b><small>R$</small>297</b></p>
+          <p class="rotulo" style="margin-top:.3rem">nos 3 primeiros clientes, uma vez só</p>
+          <ul>
+            <li><svg class="ic" aria-hidden="true"><use href="img/icones.svg#check"/></svg>Prévia grátis antes de fechar</li>
+            <li><svg class="ic" aria-hidden="true"><use href="img/icones.svg#check"/></svg>Pix: metade pra começar, metade quando o site vai pro ar</li>
+            <li><svg class="ic" aria-hidden="true"><use href="img/icones.svg#check"/></svg>Os ajustes que você pede na prévia não são cobrados</li>
+          </ul>
+          <div class="botoes">
+            <a class="btn" data-wa="Oi! Quero o Site Essencial pro meu negócio. Pode montar a prévia?" href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#zap"/></svg>Quero o meu</a>
+            <a class="btn btn--linha" href="contato.html?tipo=essencial">Mandar os detalhes</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="t3" style="margin-bottom:1.6rem">O que vem no site</h3>
+        <ul class="inclui">
+          <li data-revela><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#loja"/></svg></span><div><strong>Feito do zero</strong><span>Cores, fotos e textos do seu negócio. Nada de modelo pronto.</span></div></li>
+          <li data-revela style="--i:1"><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#lista"/></svg></span><div><strong>Cardápio ou serviços com preço</strong><span>Organizado pra achar rápido no celular.</span></div></li>
+          <li data-revela style="--i:2"><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#zap"/></svg></span><div><strong>Pedido ou agendamento no WhatsApp</strong><span>A mensagem chega pronta, sem taxa de aplicativo.</span></div></li>
+          <li data-revela style="--i:3"><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#mapa"/></svg></span><div><strong>Mapa e "Como chegar"</strong><span>Um toque e o GPS já abre no caminho.</span></div></li>
+          <li data-revela style="--i:4"><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#estrela"/></svg></span><div><strong>Avaliações reais do Google</strong><span>Com o nome de quem escreveu. Nada inventado.</span></div></li>
+          <li data-revela style="--i:5"><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#pergunta"/></svg></span><div><strong>Perguntas frequentes</strong><span>As dúvidas que seus clientes sempre mandam.</span></div></li>
+          <li data-revela style="--i:6"><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#busca"/></svg></span><div><strong>Pronto pro Google</strong><span>Título, descrição e os dados do negócio no formato que o Google entende.</span></div></li>
+          <li data-revela style="--i:7"><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#escudo"/></svg></span><div><strong>Página 404 e privacidade</strong><span>Página de erro com a sua marca e política de privacidade.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- teste ao vivo -->
+  <section class="sec sec--noite teste" id="teste" aria-labelledby="t-teste">
+    <div class="wrap teste__grade">
+      <div>
+        <h2 class="t2" id="t-teste" data-parte="rolagem">Teste como o seu cliente pede.</h2>
+        <p class="texto" style="margin-top:1.4rem">Escolha os itens ou o horário e veja a mensagem se montar. No site do seu negócio, ela chega assim no seu WhatsApp, com tudo escrito.</p>
+        <p class="rotulo teste__aviso">Demonstração com itens de exemplo. Nada é enviado daqui.</p>
+      </div>
+      <div>
+        <div class="abas" role="tablist" aria-label="Tipo de demonstração">
+          <button type="button" role="tab" id="aba-pedido" aria-selected="true" aria-controls="testeCaixa" data-tipo="pedido">Pedido</button>
+          <button type="button" role="tab" id="aba-agenda" aria-selected="false" aria-controls="testeCaixa" data-tipo="agenda" tabindex="-1">Agendamento</button>
+        </div>
+        <div id="testeCaixa" role="tabpanel" aria-labelledby="aba-pedido" class="teste__caixa">
+          <p class="texto">A demonstração precisa de JavaScript pra funcionar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- plano mensal -->
+  <section class="sec plano" id="plano" aria-labelledby="t-plano">
+    <div class="wrap plano__grade">
+      <div>
+        <p class="rotulo">Opcional</p>
+        <h2 class="t2" id="t-plano" data-parte="rolagem" style="margin-top:.8rem">Plano mensal</h2>
+        <p class="preco" style="margin-top:1.4rem"><b><small>R$</small>60</b><span class="rotulo">por mês</span></p>
+        <p class="texto" style="margin-top:1.2rem">Pra você não se preocupar com o site depois que ele vai pro ar. Se um dia cancelar, a gente entrega os arquivos e você hospeda onde quiser.</p>
+        <div class="botoes" style="margin-top:1.8rem">
+          <a class="btn btn--linha" data-wa="Oi! Quero saber do plano mensal de R$ 60 da GuDev." href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#zap"/></svg>Perguntar do plano</a>
+        </div>
+      </div>
+      <div class="colunas">
+        <div class="coluna coluna--sim" data-revela>
+          <h3><svg class="ic" aria-hidden="true"><use href="img/icones.svg#check"/></svg>Inclui</h3>
+          <ul>
+            <li><svg class="ic" aria-hidden="true"><use href="img/icones.svg#check"/></svg>Hospedagem</li>
+            <li><svg class="ic" aria-hidden="true"><use href="img/icones.svg#check"/></svg>Manter o site no ar</li>
+            <li><svg class="ic" aria-hidden="true"><use href="img/icones.svg#check"/></svg>Até umas 4 alterações por mês</li>
+            <li><svg class="ic" aria-hidden="true"><use href="img/icones.svg#check"/></svg>Trocar preço, foto, horário, texto, link, sabor ou banner de promoção</li>
+          </ul>
+        </div>
+        <div class="coluna" data-revela style="--i:1">
+          <h3><svg class="ic" aria-hidden="true"><use href="img/icones.svg#camadas"/></svg>Orçado à parte</h3>
+          <ul>
+            <li><svg class="ic" aria-hidden="true"><use href="img/icones.svg#menos"/></svg>Página ou seção nova</li>
+            <li><svg class="ic" aria-hidden="true"><use href="img/icones.svg#menos"/></svg>Refazer o design</li>
+            <li><svg class="ic" aria-hidden="true"><use href="img/icones.svg#menos"/></svg>Página de franquia</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- sob medida -->
+  <section class="sec sec--noite" id="sob-medida" aria-labelledby="t-medida">
+    <div class="wrap">
+      <div class="cab">
+        <div>
+          <h2 class="t2" id="t-medida" data-parte="rolagem">Sob medida</h2>
+          <p class="texto" style="margin-top:1.2rem">Quando o projeto pede mais que uma página. Cada um é orçado à parte, depois de entender o que você precisa.</p>
+        </div>
+        <a class="btn" href="contato.html?tipo=sob-medida">Pedir orçamento</a>
+      </div>
+      <div class="medida">
+        <article class="bloco bloco--a" data-revela><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#raio"/></svg></span><div><h3>Experiências como a Vértice</h3><p>Abertura de cinema, um produto que gira com a rolagem, texto que passa atrás do objeto.</p></div></article>
+        <article class="bloco bloco--b" data-revela style="--i:1"><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#pagina"/></svg></span><div><h3>Páginas e seções novas</h3><p>Quando o negócio cresce: uma página de franquia, um cardápio maior, uma área de eventos.</p></div></article>
+        <article class="bloco bloco--a2" data-revela style="--i:2"><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#lapis"/></svg></span><div><h3>Redesenho</h3><p>Um site novo, do zero, quando a marca muda.</p></div></article>
+        <article class="bloco bloco--b2" data-revela style="--i:3"><span class="selo"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#busca"/></svg></span><div><h3>Anúncio no Google</h3><p>A gente deixa instalado o rastreamento dos cliques no WhatsApp pra você ver o que veio do anúncio. Cuidar da campanha todo mês é serviço à parte.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- domínio -->
+  <section class="sec" id="dominio" aria-labelledby="t-dominio">
+    <div class="wrap dominio__grade">
+      <div>
+        <h2 class="t2" id="t-dominio" data-parte="rolagem">Seu endereço, no seu nome.</h2>
+        <p class="texto" style="margin-top:1.4rem">O domínio fica registrado no seu CPF ou CNPJ, no registro.br, por volta de R$ 40 por ano, pago direto por você. A gente aponta ele pro site e o cadeado de segurança entra sozinho.</p>
+      </div>
+      <div data-revela>
+        <p class="endereco"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#escudo"/></svg><span>https://<em>seunegocio</em>.com.br</span></p>
+        <p class="rotulo endereco__dica">Antes do domínio, o site já fica no ar num endereço provisório, como seunegocio.netlify.app.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- dúvidas -->
+  <section class="sec sec--noite" id="duvidas" aria-labelledby="t-duvidas">
+    <div class="wrap processo__grade">
+      <div>
+        <h2 class="t2" id="t-duvidas" data-parte="rolagem">Dúvidas</h2>
+        <p class="texto" style="margin-top:1.2rem">As perguntas que os donos de comércio mais fazem pra gente.</p>
+      </div>
+      <div class="faq">
+        <details><summary>Quanto custa?<svg class="ic" aria-hidden="true"><use href="img/icones.svg#mais"/></svg></summary><p class="resp">O Site Essencial sai por R$ 297 nos 3 primeiros clientes. Depois, R$ 500. O plano mensal é opcional, R$ 60 por mês. O domínio, se você quiser um, custa por volta de R$ 40 por ano e é pago direto no registro.br.</p></details>
+        <details><summary>Como funciona o pagamento?<svg class="ic" aria-hidden="true"><use href="img/icones.svg#mais"/></svg></summary><p class="resp">Por Pix: metade pra começar e metade quando o site vai pro ar. Antes de qualquer pagamento, você recebe a prévia grátis.</p></details>
+        <details><summary>Já tenho Instagram. Preciso de site?<svg class="ic" aria-hidden="true"><use href="img/icones.svg#mais"/></svg></summary><p class="resp">O Instagram não aparece bem no Google e não mostra o cardápio com preço organizado. O site é a vitrine que recebe quem vem do Google e manda direto pro seu WhatsApp. Os dois funcionam juntos.</p></details>
+        <details><summary>Já uso iFood. Vale a pena?<svg class="ic" aria-hidden="true"><use href="img/icones.svg#mais"/></svg></summary><p class="resp">O app fica com uma parte de cada pedido. Pelo site, o pedido chega direto no seu WhatsApp, sem taxa. Dá pra manter o iFood também e colocar o botão dos apps no site.</p></details>
+        <details><summary>Dá pra fazer anúncio no Google com o site?<svg class="ic" aria-hidden="true"><use href="img/icones.svg#mais"/></svg></summary><p class="resp">Dá. Pra isso você precisa de domínio próprio e da política de privacidade, que já vem no site. A gente instala o rastreamento pra contar quantas pessoas vieram do anúncio e chamaram no WhatsApp. Cuidar da campanha todo mês é serviço à parte.</p></details>
+        <details><summary>E se eu quiser mudar alguma coisa depois?<svg class="ic" aria-hidden="true"><use href="img/icones.svg#mais"/></svg></summary><p class="resp">Com o plano mensal, até umas 4 alterações pequenas por mês já estão incluídas: preço, foto, horário, texto. Coisa grande, como uma página nova, é orçada à parte.</p></details>
+        <details><summary>Preciso mandar arquivos ou entender de site?<svg class="ic" aria-hidden="true"><use href="img/icones.svg#mais"/></svg></summary><p class="resp">Não. A gente pega as informações no seu Google Maps, no seu Instagram e no seu cardápio, com a sua permissão. O site fica com a GuDev e o domínio fica no seu nome.</p></details>
+        <details><summary>Vocês atendem fora de São Paulo?<svg class="ic" aria-hidden="true"><use href="img/icones.svg#mais"/></svg></summary><p class="resp">Sim. Todo o atendimento é pelo WhatsApp, então dá pra fazer o site de um comércio de qualquer cidade do Brasil.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" aria-labelledby="t-final">
+    <div class="final__fundo" aria-hidden="true"><img src="quadros/d/f40.webp" alt="" width="1920" height="687" loading="lazy" decoding="async" data-parallax=".14"></div>
+    <div class="wrap">
+      <h2 class="t2" id="t-final" data-parte="rolagem">Bora montar a sua prévia?</h2>
+      <div class="botoes" data-revela>
+        <a class="btn" data-wa="Oi! Vim pela página de serviços da GuDev e quero uma prévia grátis do site do meu negócio." href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#zap"/></svg>Pedir prévia grátis</a>
+        <a class="btn btn--linha" href="contato.html">Mandar os detalhes</a>
+      </div>
+      <p class="rotulo" data-revela style="--i:1">A prévia fica pronta em até 24h.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <div class="rodape__grade">
+      <div class="rodape__marca">
+        <a class="marca" href="index.html" aria-label="GuDev, página inicial">GuDev<span class="ponto" aria-hidden="true"></span></a>
+        <p>Sites feitos do zero para comércios locais. Atendimento pelo WhatsApp, pra todo o Brasil.</p>
+      </div>
+      <div>
+        <h2 class="rotulo">Páginas</h2>
+        <ul class="rodape__lista">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="projetos.html">Projetos</a></li>
+          <li><a href="servicos.html">Serviços</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="rotulo">Conceitos</h2>
+        <ul class="rodape__lista">
+          <li><a href="projetos/vertice/index.html">Vértice</a></li>
+          <li><a href="projetos/vertice-reserva/index.html">Vértice Reserva</a></li>
+          <li><a href="privacidade.html">Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="rodape__zap">
+        <h2 class="rotulo">WhatsApp</h2>
+        <p class="numero">(11) 96465-0141</p>
+        <a class="btn btn--linha btn--peq" data-wa="Oi! Vim pelo site da GuDev." href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#zap"/></svg>Chamar no WhatsApp</a>
+        <p class="rotulo">Respondemos em até 24h.</p>
+      </div>
+    </div>
+    <p class="rodape__slogan metal" data-encaixa aria-hidden="true">Sites que vendem.</p>
+  </div>
+  <div class="wrap">
+    <div class="rodape__base">
+      <span>© <span data-ano>2026</span> GuDev. Zona Leste, São Paulo.</span>
+      <span>Vértice é uma marca fictícia, criada pela GuDev como conceito.</span>
+    </div>
+  </div>
+</footer>
+<script src="js/gudev.js"></script>
+<script src="js/demos.js"></script>
+<script src="js/servicos.js"></script>
+</body>
+</html>

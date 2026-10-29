@@ -10,6 +10,9 @@
 <meta property="og:description" content="Um site que faz o cliente parar de rolar.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="img/capa.jpg">
+<link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="../../quadros/m/f00.webp" media="(max-width:900px)">
+<link rel="preload" as="image" href="../../quadros/d/f00.webp" media="(min-width:901px)">
 <script>document.documentElement.classList.add('intro');document.documentElement.lang='pt-BR';</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +39,8 @@ WOWs:
   3 Interativo: carrossel 3D de detalhes, de arrastar; e no fim o carro gira sozinho
     como vídeo e você arrasta pra girar.
 
-Quadros: 76 (quadros/d 1920px, quadros/m 1440px). fNN = quadro, mNN = máscara do carro.
+Quadros: 76, os mesmos do site da GuDev (../../quadros/d 1920px, ../../quadros/m 1440px).
+fNN = quadro, mNN = máscara do carro. O motor (fila de download, recorte, chuva) é ../../js/cena.js.
 Upscale com Real-ESRGAN (realesr-general-x4v3).
 -->
 
@@ -50,7 +54,7 @@ Upscale com Real-ESRGAN (realesr-general-x4v3).
   --bw2:min(104vw,calc(66svh*2.795));
   color-scheme:dark;
 }
-@media (max-aspect-ratio:1/1){ :root{ --bw:140vw; --bw2:140vw } .palco .band{top:56%} }
+@media (max-aspect-ratio:1/1){ :root{ --bw:140vw; --bw2:140vw } .palco .band{top:50%} }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
 body{background:var(--asfalto);color:var(--osso);font:400 16px/1.5 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased}
@@ -71,6 +75,10 @@ img{display:block;max-width:100%;height:auto}
 .on-bar .bar{opacity:1;transform:none}
 .past .bar::before{opacity:1}
 .marca{font:800 15px/1 var(--sans);font-stretch:125%;letter-spacing:.04em;text-decoration:none}
+.bar__dir{display:flex;align-items:center;gap:clamp(8px,2vw,24px)}
+.gudev{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-size:14px;color:rgba(241,239,234,.78);text-decoration:none;transition:color .2s}
+.gudev:hover{color:var(--osso)}
+.gudev svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ---------- palco do carro (abertura + volta) ---------- */
 .volta{position:relative;height:430vh}
@@ -92,7 +100,7 @@ img{display:block;max-width:100%;height:auto}
 .veu{position:absolute;inset:0;z-index:5;background:#000;pointer-events:none;opacity:0}
 .luzes{z-index:6;-webkit-mask-image:none;mask-image:none;pointer-events:none}
 .luzes svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.luzes path{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.luzes path{fill:none;stroke-linecap:round;stroke-dasharray:1 2;stroke-dashoffset:1}
 .luzes .l1{stroke:#ff2030;stroke-width:22;opacity:.16}
 .luzes .l2{stroke:var(--lanterna);stroke-width:8;opacity:.5}
 .luzes .l3{stroke:#ffe0dc;stroke-width:2.6}
@@ -140,7 +148,7 @@ img{display:block;max-width:100%;height:auto}
 .barras{display:flex;gap:6px;padding:0 var(--gut);margin-top:22px}
 .barras i{height:2px;flex:1;max-width:60px;background:rgba(241,239,234,.18);border-radius:2px;transition:background .3s}
 .barras i.on{background:var(--osso)}
-.det small{display:block;padding:0 var(--gut);margin-top:16px;font-size:12px;color:var(--prata)}
+.det small{display:block;padding:0 var(--gut);margin-top:16px;font-size:13px;color:var(--prata)}
 
 /* ---------- final: o carro gira sozinho, arraste pra girar ---------- */
 .giro{position:relative;background:var(--asfalto)}
@@ -156,17 +164,24 @@ img{display:block;max-width:100%;height:auto}
 .cta .eyebrow{color:rgba(241,239,234,.6);font-size:15px}
 .cta h2{margin:14px auto 0;max-width:14ch;font:800 clamp(38px,6.6vw,100px)/.95 var(--sans);font-stretch:108%;letter-spacing:-.035em;text-wrap:balance}
 .cta .btn{margin-top:30px;min-height:54px;padding:0 30px;font-size:16px}
-footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;font-size:13px;color:var(--prata);border-top:1px solid rgba(241,239,234,.08)}
+footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;font-size:14px;color:var(--prata);border-top:1px solid rgba(241,239,234,.08)}
+footer a{color:var(--osso);text-underline-offset:3px}
+.cta .eyebrow a{color:var(--osso);text-underline-offset:3px}
 
 @media (max-aspect-ratio:1/1){
-  .palco2{height:76svh;min-height:480px}
+  .palco2{height:min(76svh,124vw);min-height:360px}
   .linha2{font-size:12.2vw}
+  /* em pé, o que sobra embaixo do carro vira a legenda da marca */
+  .pe{flex-direction:column;align-items:center;gap:22px;text-align:center;bottom:max(26px,env(safe-area-inset-bottom))}
+  .pe .tag{font-size:clamp(18px,5.4vw,24px);font-weight:600;font-stretch:108%;letter-spacing:-.01em;color:var(--osso)}
 }
 @media (max-width:700px){
   .legenda{flex-direction:column;align-items:flex-start}
   .setas{display:none}
   .bar .btn{min-height:40px;padding:0 16px;font-size:14px}
+  .gudev__mais{display:none}
 }
+@media (max-width:379px){ .gudev{display:none} }
 
 /* ---------- prévia / reduzir movimento ---------- */
 .embed .volta{height:auto}
@@ -184,7 +199,10 @@ footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:fle
 
 <header class="bar">
   <a class="marca" href="#topo">VÉRTICE</a>
-  <a class="btn" data-wa href="https://wa.me/5511964650141" target="_blank" rel="noopener">Quero um site assim</a>
+  <div class="bar__dir">
+    <a class="gudev" href="../../projetos.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span><span class="gudev__mais">Projetos </span>GuDev</span></a>
+    <a class="btn" data-wa href="https://wa.me/5511964650141" target="_blank" rel="noopener">Quero um site assim</a>
+  </div>
 </header>
 
 <main id="topo">
@@ -206,7 +224,7 @@ footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:fle
         </svg>
       </div>
       <div class="pe">
-        <span>Aluguel de carros premium</span>
+        <span class="tag">Aluguel de carros premium</span>
         <span class="role"><i></i>Role pra dar a volta</span>
       </div>
     </div>
@@ -245,7 +263,7 @@ footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:fle
       <p class="dica"><i></i>Arraste pra girar</p>
     </div>
     <div class="cta">
-      <p class="eyebrow">Vértice é um conceito. Quem fez foi a GuDev.</p>
+      <p class="eyebrow">Vértice é um conceito. Quem fez foi a <a href="../../index.html">GuDev</a>.</p>
       <h2>Um site que faz o cliente parar de rolar.</h2>
       <a class="btn" data-wa href="https://wa.me/5511964650141" target="_blank" rel="noopener">Quero um site assim</a>
     </div>
@@ -253,156 +271,40 @@ footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:fle
 </main>
 
 <footer>
-  <span>GuDev, sites para comércios locais</span>
+  <span><a href="../../index.html">GuDev</a>, sites para comércios locais. <a href="../../projetos.html">Ver outros projetos</a></span>
   <span>Vértice é uma marca fictícia. Imagens geradas por IA.</span>
 </footer>
 
+<script src="../../js/cena.js"></script>
 <script>
 (function(){
+  var C = window.Cena;
+  if (!C) return;
   var WHATS = '5511964650141';
   var MSG = 'Oi! Vi o site conceito da Vértice e quero um site assim pro meu negócio.';
 
   var embed = /[?&]embed\b/.test(location.search);
-  var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduz = C.reduz, NQ = C.NQ, clamp = C.clamp, suave = C.suave, passo = C.passo, retrato = C.retrato;
   var doc = document.documentElement;
   function $(id){ return document.getElementById(id); }
-  function clamp(x,a,b){ return x<a?a:x>b?b:x; }
-  function suave(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
-  function passo(a,b,x){ var t = clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); }
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-wa]'), function(a){
     a.href = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent(MSG);
   });
 
-  /* ===== quadros: fNN = quadro inteiro, mNN = máscara do carro ===== */
-  var NQ = 76;
-  var pasta = Math.min(window.innerWidth, screen.width || 9999) <= 900 ? 'quadros/m/' : 'quadros/d/';
-  var QF = [], QM = [], pronto = [];
-  function nn(i){ return (i < 10 ? '0' : '') + i; }
-  function carrega(i){
-    if (QF[i]) return;
-    var n = 0, fim = function(){ if (++n === 2) pronto[i] = true; };
-    QF[i] = new Image(); QF[i].onload = fim; QF[i].src = pasta + 'f' + nn(i) + '.webp';
-    QM[i] = new Image(); QM[i].onload = fim; QM[i].src = pasta + 'm' + nn(i) + '.webp';
-  }
-  carrega(0); carrega(NQ - 1); carrega(38);
-  for (var q = 1; q < NQ; q++) carrega(q);
-  function perto(i){
-    for (var k = 0; k < NQ; k++){
-      if (i - k >= 0 && pronto[i - k]) return i - k;
-      if (i + k < NQ && pronto[i + k]) return i + k;
-    }
-    return -1;
-  }
-  /* desenha o mesmo quadro no fundo e, recortado pela máscara, na frente */
-  function Palco(cF, cC){ this.cF = cF; this.cC = cC; this.xF = cF.getContext('2d'); this.xC = cC.getContext('2d'); this.ult = -1; }
-  Palco.prototype.desenha = function(i){
-    var j = perto(i);
-    if (j < 0 || j === this.ult) return j;
-    var f = QF[j], m = QM[j], cF = this.cF, cC = this.cC, x = this.xC;
-    if (cF.width !== f.naturalWidth){ cF.width = cC.width = f.naturalWidth; cF.height = cC.height = f.naturalHeight; }
-    this.xF.drawImage(f, 0, 0);
-    x.globalCompositeOperation = 'source-over';
-    x.clearRect(0, 0, cC.width, cC.height);
-    x.drawImage(f, 0, 0);
-    x.globalCompositeOperation = 'destination-in';
-    x.drawImage(m, 0, 0, cC.width, cC.height);
-    x.globalCompositeOperation = 'source-over';
-    this.ult = j;
-    return j;
-  };
-
-  /* ===== chuva: reta, fina, em 3 camadas, só aparece onde tem luz ===== */
-  var CAMADAS = [
-    { d:.00082, max:900, len:[8,15],  w:.9,  blur:0,   a:[.10,.22], v:[600,760] },
-    { d:.00026, max:300, len:[16,30], w:1.3, blur:.3,  a:[.16,.30], v:[950,1150] },
-    { d:.00003, max:34,  len:[40,72], w:2.4, blur:1.6, a:[.14,.26], v:[1500,1850] }
-  ];
-  function gota(c, dpr){
-    var sw = Math.ceil((c.w + c.blur * 4 + 2) * dpr), sh = 96;
-    var cv = document.createElement('canvas'); cv.width = sw; cv.height = sh;
-    var x = cv.getContext('2d'), id = x.createImageData(sw, sh), d = id.data;
-    var sig = Math.max(.35, c.w / 2 + c.blur) * dpr, cx = sw / 2;
-    for (var y = 0; y < sh; y++){
-      var yn = y / (sh - 1), v = Math.pow(yn, 1.7);
-      if (yn > .93) v *= (1 - yn) / .07 * .7 + .3;
-      for (var xx = 0; xx < sw; xx++){
-        var dx = xx + .5 - cx, k = (y * sw + xx) * 4;
-        d[k] = 232; d[k+1] = 238; d[k+2] = 248;
-        d[k+3] = Math.round(v * Math.exp(-dx * dx / (2 * sig * sig)) * 255);
-      }
-    }
-    x.putImageData(id, 0, 0);
-    return cv;
-  }
-  function Chuva(cv){ this.cv = cv; this.x = cv.getContext('2d'); this.luz = 1; this.gotas = []; this.W = 0; }
-  Chuva.prototype.mede = function(){
-    var cv = this.cv, W = cv.clientWidth, H = cv.clientHeight;
-    if (!W || !H) return;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    this.W = W; this.H = H; this.dpr = dpr; this.esc = Math.max(.75, H / 844);
-    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
-    this.spr = CAMADAS.map(function(c){ return gota(c, dpr); });
-    this.gotas = [];
-    for (var L = 0; L < CAMADAS.length; L++){
-      var n = Math.min(CAMADAS[L].max, Math.round(W * H * CAMADAS[L].d));
-      if (reduz) n = Math.round(n * .35);
-      for (var i = 0; i < n; i++) this.gotas.push(this.nova(L, true));
-    }
-  };
-  Chuva.prototype.nova = function(L, qualquer){
-    var c = CAMADAS[L], e = this.esc, len = (c.len[0] + Math.random() * (c.len[1] - c.len[0])) * e;
-    return { L:L, x:Math.random() * this.W, y: qualquer ? Math.random() * (this.H + len) : -Math.random() * this.H * .25,
-             len:len, v:(c.v[0] + Math.random() * (c.v[1] - c.v[0])) * e * (reduz ? .5 : 1), a:c.a[0] + Math.random() * (c.a[1] - c.a[0]) };
-  };
-  Chuva.prototype.passo = function(dt){
-    var x = this.x, W = this.W, H = this.H, dpr = this.dpr;
-    if (!W) return;
-    x.clearRect(0, 0, this.cv.width, this.cv.height);
-    if (this.luz < .002) return;
-    var g = this.gotas, spr = this.spr;
-    for (var i = 0; i < g.length; i++){
-      var p = g[i];
-      p.y += p.v * dt;
-      if (p.y - p.len > H) g[i] = p = this.nova(p.L, false);
-      /* luz vem de cima, no centro: a gota acende ali e some no escuro */
-      var cx = (p.x - W * .5) / (W * .6);
-      var al = p.a * (.32 + .68 * Math.exp(-cx * cx)) * (1 - .72 * Math.max(0, p.y) / H) * this.luz;
-      if (al < .01) continue;
-      var s = spr[p.L];
-      x.globalAlpha = al;
-      x.drawImage(s, p.x * dpr - s.width / 2, (p.y - p.len) * dpr, s.width, p.len * dpr);
-    }
-    x.globalAlpha = 1;
-  };
-
-  /* caixa do carro em cada quadro (esquerda, direita, topo, base, em fração da faixa), medida nas máscaras */
-  var CAIXA = [[0.2642,0.7439,0.1718,0.8795],[0.2669,0.7458,0.1715,0.8798],[0.2696,0.748,0.1721,0.8806],[0.2722,0.7511,0.1729,0.8824],[0.2746,0.7548,0.1741,0.8841],[0.2757,0.7581,0.1755,0.885],[0.275,0.7612,0.1773,0.8853],[0.2742,0.7651,0.1785,0.8844],[0.2731,0.769,0.1796,0.8827],[0.2723,0.7731,0.1805,0.8809],[0.2715,0.7774,0.1811,0.8812],[0.2706,0.7817,0.1817,0.8821],[0.2694,0.7854,0.1825,0.8836],[0.2678,0.7885,0.1831,0.8836],[0.2654,0.7919,0.1843,0.8836],[0.2625,0.7944,0.1857,0.8821],[0.2593,0.7968,0.1872,0.8803],[0.2558,0.7994,0.1881,0.8763],[0.2525,0.8021,0.1889,0.8737],[0.2493,0.8043,0.1898,0.8702],[0.2462,0.8067,0.1904,0.8667],[0.243,0.8091,0.1913,0.8635],[0.24,0.811,0.1921,0.8626],[0.2368,0.8131,0.193,0.8608],[0.2337,0.8149,0.1936,0.86],[0.2307,0.8168,0.1942,0.8594],[0.228,0.8182,0.1945,0.8588],[0.2253,0.8198,0.1948,0.8571],[0.223,0.821,0.1953,0.8559],[0.2208,0.8224,0.1956,0.8544],[0.2186,0.8234,0.1962,0.8524],[0.2165,0.8246,0.1968,0.8498],[0.2143,0.8255,0.1974,0.8483],[0.2122,0.8266,0.198,0.8472],[0.2102,0.8274,0.1985,0.8463],[0.2081,0.8283,0.1991,0.8463],[0.2065,0.8291,0.1997,0.8469],[0.2047,0.8299,0.2003,0.8475],[0.2027,0.8304,0.2006,0.8492],[0.2007,0.8311,0.2009,0.8509],[0.1991,0.8317,0.2009,0.8524],[0.1972,0.8323,0.2009,0.853],[0.1957,0.8327,0.2009,0.8544],[0.1943,0.8332,0.2012,0.8582],[0.193,0.8335,0.2015,0.8623],[0.1916,0.8339,0.2017,0.8661],[0.1902,0.8342,0.202,0.8707],[0.1888,0.8345,0.2023,0.8748],[0.1876,0.8347,0.2023,0.8757],[0.1862,0.8349,0.2023,0.8766],[0.1852,0.8352,0.2023,0.8774],[0.1841,0.8354,0.2023,0.8783],[0.1831,0.8356,0.2023,0.8789],[0.182,0.8358,0.2023,0.8792],[0.1811,0.8359,0.2023,0.8792],[0.1801,0.836,0.2023,0.8789],[0.1794,0.8361,0.2023,0.8786],[0.1785,0.8363,0.2023,0.8783],[0.1779,0.8365,0.2023,0.8783],[0.1771,0.8367,0.2023,0.8783],[0.1766,0.8368,0.2023,0.8786],[0.1757,0.8369,0.2023,0.8789],[0.1751,0.837,0.2023,0.8789],[0.1744,0.837,0.2023,0.8786],[0.1737,0.837,0.2023,0.878],[0.1729,0.837,0.2023,0.8774],[0.1724,0.837,0.2023,0.8771],[0.1717,0.837,0.2023,0.8771],[0.1711,0.837,0.2023,0.8769],[0.1706,0.837,0.2023,0.8769],[0.1702,0.837,0.2023,0.8769],[0.1698,0.837,0.2023,0.8769],[0.1695,0.837,0.2023,0.8769],[0.1692,0.837,0.2023,0.8771],[0.169,0.837,0.2023,0.8774],[0.1689,0.837,0.2023,0.8777]];
-  function retrato(){ return window.innerWidth < window.innerHeight; }
-  /* zoom e deslocamento pro carro ficar centralizado e cheio na tela em qualquer ângulo */
-  function enquadra(k, bw){
-    var f = k * (NQ - 1), i = Math.min(NQ - 2, Math.floor(f)), t = f - i, a = CAIXA[i], b = CAIXA[i + 1];
-    var esq = a[0] + (b[0] - a[0]) * t, dir = a[1] + (b[1] - a[1]) * t, topo = a[2] + (b[2] - a[2]) * t;
-    var vw = window.innerWidth, larg = (dir - esq) * bw;
-    var s = retrato() ? clamp(vw * .94 / larg, .9, 1.5) : clamp(vw * .62 / larg, .96, 1.08);
-    return { s:s, dx:(.5 - (esq + dir) / 2) * bw * s, topo:topo };
-  }
-  function transforma(el, e){ el.style.transform = 'translate(-50%,-50%) translateX(' + e.dx.toFixed(1) + 'px) scale(' + e.s.toFixed(4) + ')'; }
-  /* topo do texto: centro das letras perto da linha do teto (K em frações da fonte) */
-  function yTexto(ph, topoFrac, bw, e, fs, K){
-    var bh = bw / 2.795 * e.s;
-    return ph * topoFrac - bh / 2 + bh * e.topo + fs * K - fs * .56;
-  }
+  /* ===== quadros: fila com prioridade, o primeiro chega antes de tudo ===== */
+  var Q = new C.Quadros('../../quadros/');
+  Q.pede([0], true);
 
   /* ===== 1 + 2. abertura e a volta ===== */
-  var volta = $('volta'), palco = $('palco'), linha = $('linha'), nome = linha.querySelector('.nome');
+  var volta = $('volta'), palco = $('palco'), linha = $('linha'), nome = linha.querySelector('.nome'), role = palco.querySelector('.role');
   var bF = $('bF'), bC = $('bC'), bL = $('bL');
-  var P1 = new Palco($('cF'), $('cC')), chuva1 = new Chuva($('chuva1'));
+  var P1 = new C.Palco($('cF'), $('cC'), Q), chuva1 = new C.Chuva($('chuva1'));
   var cur = 0, x0 = 0, x1 = 0, fs1 = 0, fs2 = 0, x2 = 0, bw1 = 0, bw2 = 0, ph1 = 0, ph2 = 0;
 
   /* ===== 4. final ===== */
   var palco2 = $('palco2'), linha2 = $('linha2'), bF2 = $('bF2'), bC2 = $('bC2');
-  var P2 = new Palco($('cF2'), $('cC2')), chuva2 = new Chuva($('chuva2'));
+  var P2 = new C.Palco($('cF2'), $('cC2'), Q), chuva2 = new C.Chuva($('chuva2'));
   var G = { k:0, u:0, auto:!reduz, drag:null, vel:0, solto:0 }, T_IDA = 3.6;
 
   /* o nome ocupa 90% da largura e "Sites que vendem." 88%, em qualquer tela */
@@ -421,21 +323,25 @@ footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:fle
     chuva1.mede(); chuva2.mede();
   }
 
-
+  /* a barra aparece cedo; quem já começou a rolar não espera nem isso */
+  function barra(){ doc.classList.add('on-bar'); }
   var tGo = 0;
   function abertura(){
     if (embed){
       doc.classList.remove('intro'); doc.classList.add('embed', 'on-bar');
+      Q.todos(0);
       return;
     }
     var vai = function(){
       if (tGo) return;
       tGo = performance.now();
       doc.classList.add('go');
-      setTimeout(function(){ doc.classList.add('on-bar'); }, reduz ? 300 : 2800);
+      Q.depois(0, 2500);
+      setTimeout(barra, reduz ? 0 : 1100);
     };
-    (function espera(){ if (pronto[0]) vai(); else if (!tGo) setTimeout(espera, 50); })();
+    (function espera(){ if (Q.ok[0]) vai(); else if (!tGo) setTimeout(espera, 40); })();
     setTimeout(vai, 3000);
+    window.addEventListener('scroll', barra, { passive:true, once:true });
   }
 
   /* ===== 3. carrossel 3D ===== */
@@ -510,8 +416,8 @@ footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:fle
   $('prox').addEventListener('click', function(){ alvoC = Math.round(alvoC) + 1; ultimoToque = performance.now(); });
   cf.tabIndex = 0;
   cf.addEventListener('keydown', function(e){
-    if (e.key === 'ArrowRight'){ alvoC = Math.round(alvoC) + 1; ultimoToque = performance.now(); }
-    if (e.key === 'ArrowLeft'){ alvoC = Math.round(alvoC) - 1; ultimoToque = performance.now(); }
+    if (e.key === 'ArrowRight'){ e.preventDefault(); alvoC = Math.round(alvoC) + 1; ultimoToque = performance.now(); }
+    if (e.key === 'ArrowLeft'){ e.preventDefault(); alvoC = Math.round(alvoC) - 1; ultimoToque = performance.now(); }
   });
 
   /* ===== final: arraste pra girar ===== */
@@ -542,63 +448,73 @@ footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:fle
   palco2.addEventListener('pointerup', soltaG);
   palco2.addEventListener('pointercancel', soltaG);
 
-  /* ===== laço único ===== */
-  var antes = performance.now();
+  /* ===== cada parte só roda enquanto aparece na tela ===== */
+  function quadroVolta(agora, dt){
+    var ih = window.innerHeight, r = volta.getBoundingClientRect();
+    var alvo = embed ? 0 : clamp(-r.top / Math.max(1, r.height - ih), 0, 1);
+    cur += (alvo - cur) * (reduz ? 1 : .12);
+    if (Math.abs(alvo - cur) < .0004) cur = alvo;
+    var k = clamp((cur - .04) / .88, 0, 1);
+    var j = P1.desenha(Math.round(k * (NQ - 1)));
+    var e = C.enquadra(k, bw1);
+    C.transforma(bF, e); C.transforma(bC, e); C.transforma(bL, e);
+    var x = x0 + (x1 - x0) * suave(clamp((cur - .05) / .93, 0, 1));
+    var subir = passo(0, .18, k);
+    var y = retrato() ? C.yTexto(ph1 * .5, bw1, e, fs1, -.05 - .3 * subir) : C.yTexto(ph1 * .52, bw1, e, fs1, .06 - .2 * subir);
+    linha.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
+    linha.style.opacity = j < 0 ? '0' : '';
+    bL.style.opacity = String(1 - passo(0, .035, cur));
+    role.style.opacity = String(1 - passo(.8, .97, cur));
+    chuva1.luz = embed ? 1 : tGo ? passo(1100, 2600, agora - tGo) : 0;
+    chuva1.passo(dt);
+  }
+  function quadroGiro(agora, dt){
+    if (G.drag && G.drag.ok){ /* o dedo manda */ }
+    else if (!G.auto){
+      G.k = clamp(G.k + G.vel * dt, 0, 1);
+      G.vel *= Math.pow(.03, dt);
+      if (!reduz && agora - G.solto > 1800){
+        G.auto = true;
+        var tri = Math.acos(1 - 2 * G.k) / Math.PI;
+        G.u = G.vel >= 0 ? tri : 2 - tri;
+      }
+    } else {
+      G.u = (G.u + dt / T_IDA) % 2;
+      var t3 = G.u < 1 ? G.u : 2 - G.u;
+      G.k = .5 - .5 * Math.cos(Math.PI * t3);
+    }
+    if (embed) G.k = .5;
+    var j2 = P2.desenha(Math.round(G.k * (NQ - 1)));
+    var e2 = C.enquadra(G.k, bw2);
+    C.transforma(bF2, e2); C.transforma(bC2, e2);
+    var y2 = C.yTexto(ph2 * .5, bw2, e2, fs2, retrato() ? -.3 : -.06);
+    linha2.style.transform = 'translate3d(' + x2.toFixed(1) + 'px,' + y2.toFixed(1) + 'px,0)';
+    linha2.style.opacity = j2 < 0 ? '0' : '';
+    chuva2.passo(dt);
+  }
+
+  var vivo = { volta:true, det:false, giro:false };
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ vivo[e.target === volta ? 'volta' : e.target === palco2 ? 'giro' : 'det'] = e.isIntersecting; });
+      liga();
+    }, { rootMargin:'10% 0px' });
+    io.observe(volta); io.observe($('det')); io.observe(palco2);
+  } else { vivo.det = vivo.giro = true; }
+
+  var rodando = false, antes = 0;
   function laco(agora){
     var dt = Math.min(.05, Math.max(0, (agora - antes) / 1000)); antes = agora;
-    var ih = window.innerHeight;
-
-    /* abertura + volta */
-    var r = volta.getBoundingClientRect();
-    if (r.top < ih && r.bottom > 0){
-      var alvo = embed ? 0 : clamp(-r.top / Math.max(1, r.height - ih), 0, 1);
-      cur += (alvo - cur) * (reduz ? 1 : .12);
-      if (Math.abs(alvo - cur) < .0004) cur = alvo;
-      var k = clamp((cur - .04) / .88, 0, 1);
-      var j = P1.desenha(Math.round(k * (NQ - 1)));
-      var e = enquadra(k, bw1);
-      transforma(bF, e); transforma(bC, e); transforma(bL, e);
-      var x = x0 + (x1 - x0) * suave(clamp((cur - .05) / .93, 0, 1));
-      var subir = passo(0, .18, k);
-      var y = retrato() ? yTexto(ph1, .56, bw1, e, fs1, -.05 - .3 * subir) : yTexto(ph1, .52, bw1, e, fs1, .06 - .2 * subir);
-      linha.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
-      linha.style.opacity = j < 0 ? '0' : '';
-      bL.style.opacity = String(1 - passo(0, .035, cur));
-      chuva1.luz = embed ? 1 : tGo ? passo(1100, 2600, agora - tGo) : 0;
-      chuva1.passo(dt);
-    }
-
-    /* final */
-    var r2 = palco2.getBoundingClientRect();
-    if (embed || (r2.top < ih && r2.bottom > 0)){
-      if (G.drag && G.drag.ok){ /* o dedo manda */ }
-      else if (!G.auto){
-        G.k = clamp(G.k + G.vel * dt, 0, 1);
-        G.vel *= Math.pow(.03, dt);
-        if (!reduz && agora - G.solto > 1800){
-          G.auto = true;
-          var tri = Math.acos(1 - 2 * G.k) / Math.PI;
-          G.u = G.vel >= 0 ? tri : 2 - tri;
-        }
-      } else {
-        G.u = (G.u + dt / T_IDA) % 2;
-        var t3 = G.u < 1 ? G.u : 2 - G.u;
-        G.k = .5 - .5 * Math.cos(Math.PI * t3);
-      }
-      if (embed) G.k = .5;
-      var j2 = P2.desenha(Math.round(G.k * (NQ - 1)));
-      var e2 = enquadra(G.k, bw2);
-      transforma(bF2, e2); transforma(bC2, e2);
-      var y2 = yTexto(ph2, .5, bw2, e2, fs2, retrato() ? -.3 : -.06);
-      linha2.style.transform = 'translate3d(' + x2.toFixed(1) + 'px,' + y2.toFixed(1) + 'px,0)';
-      linha2.style.opacity = j2 < 0 ? '0' : '';
-      chuva2.passo(dt);
-    }
-
-    doc.classList.toggle('past', window.scrollY > ih * .6);
-    carrossel();
-    requestAnimationFrame(laco);
+    if (vivo.volta) quadroVolta(agora, dt);
+    if (vivo.giro) quadroGiro(agora, dt);
+    if (vivo.det) carrossel();
+    if (vivo.volta || vivo.giro || vivo.det) requestAnimationFrame(laco); else rodando = false;
   }
+  function liga(){ if (!rodando){ rodando = true; antes = performance.now(); requestAnimationFrame(laco); } }
+
+  function rolou(){ doc.classList.toggle('past', window.scrollY > window.innerHeight * .6); }
+  window.addEventListener('scroll', rolou, { passive:true });
+  rolou();
 
   var lastW = window.innerWidth;
   window.addEventListener('resize', function(){
@@ -608,7 +524,7 @@ footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:fle
   mede();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(mede);
   abertura();
-  requestAnimationFrame(laco);
+  liga();
 })();
 </script>
 </body>

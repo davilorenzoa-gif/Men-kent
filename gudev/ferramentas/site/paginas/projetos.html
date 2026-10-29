@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js">
+<head>
+<!--CABECA-->
+<title>Projetos | GuDev</title>
+<meta name="description" content="Sites conceito e experimentos da GuDev: o carro que gira com a rolagem, o texto atrás do carro, a chuva que acende na luz e o pedido que chega pronto no WhatsApp.">
+<meta property="og:title" content="Projetos | GuDev">
+<meta property="og:description" content="Sites conceito e experimentos que mostram como a GuDev pensa um site.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/og.jpg">
+</head>
+<body data-pagina="projetos">
+<!--TOPO-->
+
+<main id="conteudo" tabindex="-1">
+  <section class="capa wrap" aria-labelledby="t-capa">
+    <div class="capa__grade">
+      <h1 class="t1" id="t-capa" data-parte="entrada">Projetos</h1>
+      <div class="capa__lado">
+        <p class="lead entra">Sites conceito e experimentos que mostram como a GuDev pensa um site: rápido no celular, cheio de detalhe e sempre levando pro WhatsApp.</p>
+        <p class="rotulo entra entra--2">Todos os projetos aqui são conceitos da GuDev. Os sites de clientes entram nesta página com a autorização deles.</p>
+      </div>
+    </div>
+    <div class="capa__traco" data-revela="traco"></div>
+  </section>
+
+  <section class="wrap" aria-labelledby="t-lista" style="padding-bottom:var(--sec)">
+    <h2 class="sr" id="t-lista">Lista de projetos</h2>
+    <div class="filtros" id="filtros" role="group" aria-label="Filtrar projetos">
+      <span class="filtros__marca" aria-hidden="true"></span>
+      <button type="button" aria-pressed="true" data-filtro="todos">Todos <span class="num">7</span></button>
+      <button type="button" aria-pressed="false" data-filtro="conceito">Conceitos <span class="num">2</span></button>
+      <button type="button" aria-pressed="false" data-filtro="lab">Laboratório <span class="num">5</span></button>
+    </div>
+    <p class="sr" id="filtroStatus" aria-live="polite"></p>
+
+    <ul class="galeria" id="galeria">
+      <li class="largo" data-cat="conceito" style="--c:8;--vt:p1">
+        <article class="projeto" id="vertice">
+          <div class="projeto__midia" data-revela="imagem" style="--ar:16/10">
+            <img class="zoom" src="img/projetos/vertice.webp" alt="Abertura da Vértice: o nome atrás do carro branco na chuva" width="1200" height="750" loading="lazy" decoding="async">
+            <span class="chip chip--luz projeto__selo">Site conceito</span>
+            <span class="projeto__ver" aria-hidden="true">Ver detalhes</span>
+          </div>
+          <div class="projeto__info"><div><h3><button class="estica" type="button" data-abre="vertice" aria-haspopup="dialog">Vértice</button></h3><p>Locadora premium. O carro gira com a rolagem e o texto passa por trás dele.</p></div></div>
+        </article>
+      </li>
+      <li data-cat="conceito" style="--c:4;--vt:p2">
+        <article class="projeto" id="vertice-reserva">
+          <div class="projeto__midia" data-revela="imagem" style="--ar:4/5">
+            <picture>
+              <source media="(min-width:641px) and (max-width:900px)" srcset="img/projetos/reserva-h.webp" width="1200" height="900">
+              <img class="zoom" src="img/projetos/reserva.webp" alt="Vértice Reserva: título em letra serifada e o carro na rolagem" width="960" height="1200" loading="lazy" decoding="async">
+            </picture>
+            <span class="chip projeto__selo">Site conceito</span>
+            <span class="projeto__ver" aria-hidden="true">Ver detalhes</span>
+          </div>
+          <div class="projeto__info"><div><h3><button class="estica" type="button" data-abre="vertice-reserva" aria-haspopup="dialog">Vértice Reserva</button></h3><p>A mesma marca, focada em reservar em poucos toques.</p></div></div>
+        </article>
+      </li>
+      <li data-cat="lab" style="--c:5;--vt:p3">
+        <article class="projeto" id="atras">
+          <div class="projeto__midia" data-revela="imagem" style="--ar:4/3">
+            <img class="zoom" src="img/projetos/atras.webp" alt="A frase Sites que vendem passando atrás do carro" width="1200" height="900" loading="lazy" decoding="async">
+            <span class="chip projeto__selo">Laboratório</span>
+            <span class="projeto__ver" aria-hidden="true">Testar</span>
+          </div>
+          <div class="projeto__info"><div><h3><button class="estica" type="button" data-abre="atras" aria-haspopup="dialog">Texto atrás do carro</button></h3><p>Quadro a quadro, o carro fica na frente das letras.</p></div></div>
+        </article>
+      </li>
+      <li data-cat="lab" style="--c:7;--vt:p4">
+        <article class="projeto" id="chuva">
+          <div class="projeto__midia" data-revela="imagem" style="--ar:16/9">
+            <picture>
+              <source media="(min-width:641px) and (max-width:900px)" srcset="img/projetos/chuva-h.webp" width="1200" height="900">
+              <img class="zoom" src="img/projetos/chuva.webp" alt="Chuva fina caindo no escuro, iluminada por um ponto de luz" width="1200" height="675" loading="lazy" decoding="async">
+            </picture>
+            <span class="chip projeto__selo">Laboratório</span>
+            <span class="projeto__ver" aria-hidden="true">Testar</span>
+          </div>
+          <div class="projeto__info"><div><h3><button class="estica" type="button" data-abre="chuva" aria-haspopup="dialog">Chuva que acende na luz</button></h3><p>A chuva só aparece onde a luz bate. A luz segue o seu dedo.</p></div></div>
+        </article>
+      </li>
+      <li data-cat="lab" style="--c:4;--vt:p5">
+        <article class="projeto" id="lanterna">
+          <div class="projeto__midia" data-revela="imagem" style="--ar:1/1">
+            <img class="zoom" src="img/projetos/lanterna.webp" alt="A lanterna traseira acesa em linha vermelha no escuro" width="1000" height="1000" loading="lazy" decoding="async">
+            <span class="chip projeto__selo">Laboratório</span>
+            <span class="projeto__ver" aria-hidden="true">Testar</span>
+          </div>
+          <div class="projeto__info"><div><h3><button class="estica" type="button" data-abre="lanterna" aria-haspopup="dialog">Lanterna que acende</button></h3><p>Uma abertura de um segundo, desenhada em cima do carro.</p></div></div>
+        </article>
+      </li>
+      <li data-cat="lab" style="--c:4;--vt:p6">
+        <article class="projeto" id="pedido">
+          <div class="projeto__midia" data-revela="imagem" style="--ar:1/1">
+            <img class="zoom" src="img/projetos/pedido.webp" alt="Cardápio de exemplo ao lado da mensagem de pedido montada" width="1000" height="1000" loading="lazy" decoding="async">
+            <span class="chip projeto__selo">Laboratório</span>
+            <span class="projeto__ver" aria-hidden="true">Testar</span>
+          </div>
+          <div class="projeto__info"><div><h3><button class="estica" type="button" data-abre="pedido" aria-haspopup="dialog">Pedido pelo WhatsApp</button></h3><p>O cliente escolhe e a mensagem se escreve sozinha.</p></div></div>
+        </article>
+      </li>
+      <li data-cat="lab" style="--c:4;--vt:p7">
+        <article class="projeto" id="carrossel">
+          <div class="projeto__midia" data-revela="imagem" style="--ar:1/1">
+            <img class="zoom" src="img/projetos/carrossel.webp" alt="Cartões de detalhes do carro em perspectiva" width="1000" height="1000" loading="lazy" decoding="async">
+            <span class="chip projeto__selo">Laboratório</span>
+            <span class="projeto__ver" aria-hidden="true">Testar</span>
+          </div>
+          <div class="projeto__info"><div><h3><button class="estica" type="button" data-abre="carrossel" aria-haspopup="dialog">Carrossel 3D</button></h3><p>Detalhes em cartões que dá vontade de arrastar.</p></div></div>
+        </article>
+      </li>
+    </ul>
+  </section>
+
+  <section class="sec sec--noite" aria-labelledby="t-cta">
+    <div class="wrap cab" style="margin-bottom:0">
+      <div>
+        <h2 class="t2" id="t-cta" data-parte="rolagem">Quer ver o seu negócio aqui?</h2>
+        <p class="texto" style="margin-top:1.2rem">A prévia é grátis e fica pronta em até 24h, com os seus dados reais.</p>
+      </div>
+      <div class="botoes">
+        <a class="btn" data-wa="Oi! Vi os projetos da GuDev e quero uma prévia grátis do site do meu negócio." href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#zap"/></svg>Pedir prévia grátis</a>
+        <a class="btn btn--linha" href="servicos.html">Ver serviços e preços</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- detalhes de cada projeto -->
+<dialog class="modal" id="m-vertice" aria-labelledby="mt-vertice">
+  <button class="modal__fechar" type="button" data-fecha aria-label="Fechar" autofocus><svg class="ic" aria-hidden="true"><use href="img/icones.svg#fechar"/></svg></button>
+  <div class="modal__grade">
+    <div class="modal__midia"><img src="img/projetos/vertice.webp" alt="Abertura da Vértice: o nome atrás do carro branco na chuva" width="1200" height="750" loading="lazy"></div>
+    <div class="modal__texto">
+      <div class="chips"><span class="chip chip--luz">Site conceito</span><span class="chip">Marca fictícia</span></div>
+      <h2 id="mt-vertice">Vértice</h2>
+      <div><h3 class="rotulo">Objetivo</h3><p>Mostrar, no Instagram da GuDev, um site que faz a pessoa parar de rolar, usando uma locadora de carros premium inventada como tema.</p></div>
+      <div><h3 class="rotulo">Solução</h3><p>No escuro, a lanterna traseira acende e o carro aparece na chuva, com o nome atrás dele. A rolagem gira o carro e a frase passa por trás. No fim, ele gira sozinho e dá pra arrastar.</p></div>
+      <div><h3 class="rotulo">Tecnologias</h3><div class="chips"><span class="chip">HTML, CSS e JavaScript puro</span><span class="chip">Canvas 2D</span><span class="chip">Real-ESRGAN</span><span class="chip">BiRefNet</span><span class="chip">Vídeo base gerado por IA</span></div></div>
+      <div class="botoes"><a class="btn" href="projetos/vertice/index.html"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#abrir"/></svg>Abrir o site</a></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal" id="m-vertice-reserva" aria-labelledby="mt-reserva">
+  <button class="modal__fechar" type="button" data-fecha aria-label="Fechar" autofocus><svg class="ic" aria-hidden="true"><use href="img/icones.svg#fechar"/></svg></button>
+  <div class="modal__grade">
+    <div class="modal__midia"><img src="img/projetos/reserva.webp" alt="Vértice Reserva: título em letra serifada e o carro na rolagem" width="960" height="1200" loading="lazy"></div>
+    <div class="modal__texto">
+      <div class="chips"><span class="chip chip--luz">Site conceito</span><span class="chip">Marca fictícia</span></div>
+      <h2 id="mt-reserva">Vértice Reserva</h2>
+      <div><h3 class="rotulo">Objetivo</h3><p>Testar a mesma marca com outro foco: em vez de impressionar, fazer reservar em poucos toques.</p></div>
+      <div><h3 class="rotulo">Solução</h3><p>Dois faróis abrem a tela, o título inverte de cor onde cruza o carro e a seção "Monte sua reserva" escreve a mensagem do WhatsApp enquanto você escolhe o tipo de carro, os dias e a retirada.</p></div>
+      <div><h3 class="rotulo">Tecnologias</h3><div class="chips"><span class="chip">HTML, CSS e JavaScript puro</span><span class="chip">Canvas 2D</span><span class="chip">mix-blend-mode</span><span class="chip">Links do WhatsApp</span></div></div>
+      <div class="botoes"><a class="btn" href="projetos/vertice-reserva/index.html"><svg class="ic" aria-hidden="true"><use href="img/icones.svg#abrir"/></svg>Abrir o site</a></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal" id="m-atras" aria-labelledby="mt-atras">
+  <button class="modal__fechar" type="button" data-fecha aria-label="Fechar" autofocus><svg class="ic" aria-hidden="true"><use href="img/icones.svg#fechar"/></svg></button>
+  <div class="modal__grade">
+    <div class="modal__midia" data-demo="atras"><img src="img/projetos/atras.webp" alt="A frase Sites que vendem passando atrás do carro" width="1200" height="900" loading="lazy"></div>
+    <div class="modal__texto">
+      <div class="chips"><span class="chip chip--luz">Laboratório</span><span class="chip">Usado na Vértice</span></div>
+      <h2 id="mt-atras">Texto atrás do carro</h2>
+      <div><h3 class="rotulo">Objetivo</h3><p>Fazer as letras passarem por trás do carro, como num pôster de cinema, sem perder nitidez e sem piscar.</p></div>
+      <div><h3 class="rotulo">Solução</h3><p>Cada um dos 76 quadros do giro foi ampliado com IA e recortado por um modelo de segmentação. O site desenha o quadro inteiro no fundo, as letras no meio e o mesmo quadro recortado por cima. Como frente e fundo são o mesmo pixel, um erro pequeno de recorte não aparece. Arraste o controle pra girar.</p></div>
+      <div><h3 class="rotulo">Tecnologias</h3><div class="chips"><span class="chip">Canvas 2D</span><span class="chip">Máscaras em WebP</span><span class="chip">Real-ESRGAN</span><span class="chip">BiRefNet</span></div></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal" id="m-chuva" aria-labelledby="mt-chuva">
+  <button class="modal__fechar" type="button" data-fecha aria-label="Fechar" autofocus><svg class="ic" aria-hidden="true"><use href="img/icones.svg#fechar"/></svg></button>
+  <div class="modal__grade">
+    <div class="modal__midia" data-demo="chuva"><img src="img/projetos/chuva.webp" alt="Chuva fina caindo no escuro, iluminada por um ponto de luz" width="1200" height="675" loading="lazy"></div>
+    <div class="modal__texto">
+      <div class="chips"><span class="chip chip--luz">Laboratório</span><span class="chip">Usado na Vértice</span></div>
+      <h2 id="mt-chuva">Chuva que acende na luz</h2>
+      <div><h3 class="rotulo">Objetivo</h3><p>Chuva que parece de verdade, sem pesar no celular.</p></div>
+      <div><h3 class="rotulo">Solução</h3><p>Três camadas de gotas retas e finas, de longe, do meio e de perto, desenhadas na resolução da tela. Cada gota só aparece onde tem luz. Aqui, a luz segue o seu dedo ou o mouse.</p></div>
+      <div><h3 class="rotulo">Tecnologias</h3><div class="chips"><span class="chip">Canvas 2D</span><span class="chip">requestAnimationFrame</span><span class="chip">Gotas pré-desenhadas</span></div></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal" id="m-lanterna" aria-labelledby="mt-lanterna">
+  <button class="modal__fechar" type="button" data-fecha aria-label="Fechar" autofocus><svg class="ic" aria-hidden="true"><use href="img/icones.svg#fechar"/></svg></button>
+  <div class="modal__grade">
+    <div class="modal__midia" data-demo="lanterna"><img src="img/projetos/lanterna.webp" alt="A lanterna traseira acesa em linha vermelha no escuro" width="1000" height="1000" loading="lazy"></div>
+    <div class="modal__texto">
+      <div class="chips"><span class="chip chip--luz">Laboratório</span><span class="chip">Usado na Vértice</span></div>
+      <h2 id="mt-lanterna">Lanterna que acende</h2>
+      <div><h3 class="rotulo">Objetivo</h3><p>Uma abertura que apresenta o carro em um segundo, sem tela de carregamento.</p></div>
+      <div><h3 class="rotulo">Solução</h3><p>A linha de luz foi medida no próprio quadro e redesenhada em SVG, seguindo a curva da lanterna. Ela acende do centro pras pontas e só depois o carro aparece no escuro.</p></div>
+      <div><h3 class="rotulo">Tecnologias</h3><div class="chips"><span class="chip">SVG</span><span class="chip">stroke-dashoffset</span><span class="chip">Animação em CSS</span></div></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal" id="m-pedido" aria-labelledby="mt-pedido">
+  <button class="modal__fechar" type="button" data-fecha aria-label="Fechar" autofocus><svg class="ic" aria-hidden="true"><use href="img/icones.svg#fechar"/></svg></button>
+  <div class="modal__grade">
+    <div class="modal__midia" data-demo="pedido"><img src="img/projetos/pedido.webp" alt="Cardápio de exemplo ao lado da mensagem de pedido montada" width="1000" height="1000" loading="lazy"></div>
+    <div class="modal__texto">
+      <div class="chips"><span class="chip chip--luz">Laboratório</span><span class="chip">Vai em todo site Essencial</span></div>
+      <h2 id="mt-pedido">Pedido pelo WhatsApp</h2>
+      <div><h3 class="rotulo">Objetivo</h3><p>Fazer o cliente pedir sem baixar aplicativo e sem taxa em cima do pedido.</p></div>
+      <div><h3 class="rotulo">Solução</h3><p>O cliente escolhe os itens e a mensagem do pedido se monta sozinha, com o total. No site de verdade, o botão abre o WhatsApp do comércio com tudo escrito. Aqui é uma demonstração com itens de exemplo e nada é enviado.</p></div>
+      <div><h3 class="rotulo">Tecnologias</h3><div class="chips"><span class="chip">JavaScript</span><span class="chip">Links wa.me</span><span class="chip">encodeURIComponent</span></div></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal" id="m-carrossel" aria-labelledby="mt-carrossel">
+  <button class="modal__fechar" type="button" data-fecha aria-label="Fechar" autofocus><svg class="ic" aria-hidden="true"><use href="img/icones.svg#fechar"/></svg></button>
+  <div class="modal__grade">
+    <div class="modal__midia" data-demo="carrossel"><img src="img/projetos/carrossel.webp" alt="Cartões de detalhes do carro em perspectiva" width="1000" height="1000" loading="lazy"></div>
+    <div class="modal__texto">
+      <div class="chips"><span class="chip chip--luz">Laboratório</span><span class="chip">Usado na Vértice</span></div>
+      <h2 id="mt-carrossel">Carrossel 3D</h2>
+      <div><h3 class="rotulo">Objetivo</h3><p>Mostrar detalhes do produto de um jeito que dá vontade de mexer.</p></div>
+      <div><h3 class="rotulo">Solução</h3><p>Cartões em perspectiva que você arrasta com o dedo, com inércia. Também funciona com as setas do teclado e fica mais calmo quando o celular pede pra reduzir movimento.</p></div>
+      <div><h3 class="rotulo">Tecnologias</h3><div class="chips"><span class="chip">CSS 3D</span><span class="chip">Pointer Events</span><span class="chip">Real-ESRGAN nas fotos</span></div></div>
+    </div>
+  </div>
+</dialog>
+
+<!--RODAPE-->
+<script src="js/cena.js"></script>
+<script src="js/demos.js"></script>
+<script src="js/projetos.js"></script>
+</body>
+</html>
