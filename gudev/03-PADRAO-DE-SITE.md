@@ -103,6 +103,14 @@ Depois pergunte: **"isso ficaria igual pra qualquer pizzaria ou salão?"** Se fi
   - foco visível;
   - quando o celular pede "reduzir movimento", trocar por um fade curto. **Não desligar tudo.**
 
+## Objetos 3D e animação (aprendido em 30/10/2026)
+- **GSAP e Anime.js não fazem 3D.** Eles animam (rolagem, vetor, SVG). O 3D de verdade é Three.js.
+- **Já usamos GSAP** (Açaí Happy). **Anime.js: não entra**, o GSAP já cobre e duas bibliotecas de animação só pesam.
+- **3D "falso" (preferido):** CSS `perspective` + `rotateX/rotateY` + `translate3d` e camadas em profundidade (parallax), animados por GSAP/ScrollTrigger. Leve e liso no celular.
+- **3D de verdade (Three.js):** só com o OK do Gu, versão fixa + SRI, só para objeto geométrico ou de marca (logo, forma abstrata, produto simples). Testar no celular do Davi antes. Sempre com fallback em imagem.
+- **Continua valendo:** comida nunca em 3D feito no código; foto real.
+- Ideias que dá pra copiar da referência: texto gigante que reage à rolagem, anel/forma vetorial girando, cena que muda conforme o scroll (sem `pin` no celular).
+
 ## Segurança (revisada em 21/10/2026)
 Os sites são estáticos: não têm servidor, banco de dados, login nem chave de API. Então SQL injection, banco aberto e API exposta **não se aplicam**. Mesmo assim:
 - **Nunca colocar chave, senha ou token no HTML.** Tudo no site é público.
