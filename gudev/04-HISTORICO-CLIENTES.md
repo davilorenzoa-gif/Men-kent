@@ -1,6 +1,21 @@
-# Histórico de leads e clientes (atualizado em 20/10/2026)
+# Histórico de leads e clientes (atualizado em 01/11/2026)
 
 Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o primeiro fechar, ele entra lá.
+
+## ENTRElinhas (Sonia Maria, avó do Davi) · lead do Davi
+- **Dados:**
+  - Instagram: @entrelinhas.porsoniamaria ("onde a linha vira arte"), 26 posts e 114 seguidores em 01/11.
+  - WhatsApp da bio: (11) 99916-6865.
+  - Começou em março de 2026.
+  - Sem Google Maps, sem avaliações e sem loja física. Vende por encomenda.
+- **O negócio:**
+  - Crochê artesanal: santos e anjos com auréola, coroa e base (N. Sra. das Graças, N. Sra. de Fátima, Santa Teresinha, São Carlo Acutis, Sagrada Família).
+  - Amigurumis (anjo, polvo colorido).
+  - Sousplats e decoração.
+- **Andamento:** em 01/11 o Davi pediu um site pra apresentar pessoalmente e fechar.
+  - O site está pronto em `sites/entrelinhas` (veja o README).
+  - **Falta confirmar:** cidade e entrega, o "responde em até 1 dia", se todas as fotos são dela (a da Santa Teresinha parece de catálogo) e as fotos originais em alta.
+- **Se fechar:** vira o 1º case real da GuDev, com autorização dela.
 
 ## Açaí Happy (Açaí Heaven), Parque Prado, Campinas-SP · lead do Davi
 - **Dados:** 4,8 no Google, 701 avaliações.

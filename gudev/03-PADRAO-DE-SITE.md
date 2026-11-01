@@ -35,6 +35,15 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "PAI & FILHO" converge na rolagem;
   - uma comanda de serviços que vai pro WhatsApp.
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
+- **911 GT3 RS** (projeto conceito):
+  - o "911" com a foto dentro e o mergulho na haste do 1;
+  - o pôster quebrado em 3 cortes que se encaixam;
+  - o launch control (jogo de 0 a 200 km/h com ronco sintetizado);
+  - configurador de pintura que muda a cor do site.
+- **ENTRElinhas** (crochê da Sonia Maria):
+  - a linha sai do novelo e escreve o logo; depois a peça é crochetada ponto a ponto (carreiras ovais) e vira a foto, dentro de uma medalha com bico de crochê;
+  - "entre as linhas": um feixe de fios se abre com a rolagem e mostra cada peça entre eles (os fios vibram no toque);
+  - etiqueta de presente: a pessoa digita o nome e a linha escreve ao vivo; o pedido vai pro WhatsApp.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
