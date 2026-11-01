@@ -79,6 +79,9 @@ Depois pergunte: **"isso ficaria igual pra qualquer pizzaria ou salão?"** Se fi
 - naocodei.com/free-code: animações em JS puro (cartas empilhando, galeria horizontal, máscara, texto que preenche, cursor magnético).
 - codepen.io/collection/BNMEYN: efeitos de rolagem limpos.
 - 21st.dev: componentes. Eles são em React, então reescreva em HTML/JS puro.
+- shaders.com: biblioteca de efeitos WebGPU/shader pra fundo e hero (visto num reel em 01/11/2026, ainda não testado). Pesa no celular: só usar com plano B em CSS e nunca no modo `?embed`.
+- ls.graphics: mockups de alta qualidade (celular, branding). Serve pra capa de proposta e posts do Instagram da GuDev. Conferir a licença antes de usar.
+- contentcore.xyz: mockups 3D e templates de motion. Serve pros vídeos de 15s da 1ª mensagem. Conferir a licença antes de usar.
 
 ## Tipografia e cor
 - Sempre um par com personalidade, que combine com o negócio. Exemplos:
