@@ -1,12 +1,12 @@
 """Gera os frames do site Meridiano a partir dos vídeos do Google Flow.
 
-Uso:  python3 gerar-frames.py <pasta-com-c1.mp4-ate-c7.mp4>
-Ordem atual: c1 nuvens, c2 torre, c3 ponte torre->sacada, c4 cobertura, c5 relógio, c6 marina, c7 jato.
+Uso:  python3 gerar-frames.py <pasta-com-c1.mp4-ate-c6.mp4>
+Ordem atual: c1 nuvens, c2 torre, c3 cobertura, c4 relógio, c5 marina, c6 jato.
 Precisa de: ffmpeg, Python 3 com Pillow e numpy.
 
 O que sai em frames/:
-  d-*.webp  computador e tela deitada: 1280x720, todos os 192 frames de cada clipe
-  m-*.webp  celular em pé: recorte central 608x720, 1 a cada 2 frames
+  d-*.webp  computador e tela deitada: 1280x720, todos os 192 frames de cada clipe (qualidade 80)
+  m-*.webp  celular em pé: recorte central 480x720, 1 a cada 2 frames (qualidade 86)
   poster-*.webp  um frame por cena (modo estático e "reduzir movimento")
 
 Os pacotes são WebP animado (cada frame completo, sem depender do anterior).
@@ -23,11 +23,12 @@ from PIL import Image
 AQUI = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(AQUI, "frames")
 W, H, N = 1280, 720, 192
-# frames usados de cada clipe (o resto nem entra no pacote). A ponte termina quando encontra a cobertura.
-CORTES = {3: (0, 150)}
+# frames usados de cada clipe (o resto nem entra no pacote). A cobertura começa já nas portas de vidro,
+# pra câmera "entrar pela janela" da torre sem mostrar a fachada de outro prédio.
+CORTES = {3: (28, 191)}
 SETS = {
-    "d": dict(step=1, crop=(0, 0, 1280, 720), q=72, levels=[8, 4, 2, 1], pack_max=4_600_000),
-    "m": dict(step=2, crop=(336, 0, 944, 720), q=70, levels=[4, 2, 1], pack_max=3_600_000),
+    "d": dict(step=1, crop=(0, 0, 1280, 720), q=80, levels=[8, 4, 2, 1], pack_max=4_600_000),
+    "m": dict(step=2, crop=(400, 0, 880, 720), q=86, levels=[4, 2, 1], pack_max=3_600_000),
 }
 
 
