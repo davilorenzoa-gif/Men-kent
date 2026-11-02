@@ -35,6 +35,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "PAI & FILHO" converge na rolagem;
   - uma comanda de serviços que vai pro WhatsApp.
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
+- **Meridiano** (demo pro Instagram, feita com vídeos do Google Flow, em `sites/meridiano`):
+  - a marca se desfaz na névoa e as nuvens se abrem na torre;
+  - o mostrador do relógio vira um portal, com aro dourado girando;
+  - a rolagem pilota a câmera de um filme só, com lâmina de vidro, sol estourando e o horizonte que se abre na pista.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
