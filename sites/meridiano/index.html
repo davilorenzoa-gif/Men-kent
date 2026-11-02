@@ -827,7 +827,7 @@ function revela(){
   if(TOUR){tour.pronto=true;R.classList.add('tour-pronto');if(AUTO)setTimeout(tourInicia,1600);}
 }
 
-var DBG=/[?&]debug\b/.test(Q)?(W.__dbg={exato:0,aprox:0,vazio:0,s:0,tudo:false}):null;
+var DBG=(/[?&]debug\b/.test(Q)||/debug\b/.test(HASH))?(W.__dbg={exato:0,aprox:0,vazio:0,s:0,tudo:false}):null;
 var desenhou=false,hud=null,hudT=0,hudOk=0,hudAp=0;
 if(DBG){hud=D.createElement('div');hud.style.cssText='position:fixed;left:8px;bottom:8px;z-index:99;font:11px/1.4 ui-monospace,Menlo,monospace;color:#fff;background:rgba(0,0,0,.62);padding:6px 9px;border-radius:7px;pointer-events:none;white-space:pre';D.body.appendChild(hud);}
 function laco(now){

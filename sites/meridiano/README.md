@@ -68,7 +68,8 @@ Assim são 8 downloads no computador (3 no celular) em vez de centenas de imagen
 - Celular com "reduzir movimento" ligado: a mesma versão estática, com fade curto ao aparecer.
 - Sem WebGL: cai na versão estática sozinho.
 - `?debug`: mostra um painel no canto com qps, tamanho da tela do filme, % de frames exatos e % baixado
-  (e expõe `window.__dbg`). Se alguém disser que travou, peça print com `?debug`.
+  (e expõe `window.__dbg`). Também funciona com `#debug` no fim do link (é o jeito no link de prévia do Claude).
+  Se alguém disser que travou, peça print com `#debug`.
 - `?max`: trava na qualidade máxima (sem adaptar). Use pra gravar o Reels num computador bom: `?tour&max`.
 
 ## Trocar os vídeos
