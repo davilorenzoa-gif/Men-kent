@@ -1,6 +1,7 @@
-"""Gera os frames do site Meridiano a partir dos 6 vídeos do Google Flow.
+"""Gera os frames do site Meridiano a partir dos vídeos do Google Flow.
 
-Uso:  python3 gerar-frames.py <pasta-com-c1.mp4-ate-c6.mp4>
+Uso:  python3 gerar-frames.py <pasta-com-c1.mp4-ate-c7.mp4>
+Ordem atual: c1 nuvens, c2 torre, c3 ponte torre->sacada, c4 cobertura, c5 relógio, c6 marina, c7 jato.
 Precisa de: ffmpeg, Python 3 com Pillow e numpy.
 
 O que sai em frames/:
@@ -22,6 +23,8 @@ from PIL import Image
 AQUI = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(AQUI, "frames")
 W, H, N = 1280, 720, 192
+# frames usados de cada clipe (o resto nem entra no pacote). A ponte termina quando encontra a cobertura.
+CORTES = {3: (0, 150)}
 SETS = {
     "d": dict(step=1, crop=(0, 0, 1280, 720), q=72, levels=[8, 4, 2, 1], pack_max=4_600_000),
     "m": dict(step=2, crop=(336, 0, 944, 720), q=70, levels=[4, 2, 1], pack_max=3_600_000),
@@ -77,8 +80,8 @@ def pack(frames, cw, ch):
     return b"RIFF" + struct.pack("<I", len(data)) + data
 
 
-def level_of(i, n, levels):
-    if i == n - 1:
+def level_of(i, n, levels, ultimo=None):
+    if i == (n - 1 if ultimo is None else ultimo):
         return 0
     for lv, s in enumerate(levels):
         if i % s == 0:
@@ -106,17 +109,22 @@ def luma(raws):
 
 
 def main(clips):
+    n_clips = len([f for f in os.listdir(clips) if re.fullmatch(r"c\d+\.mp4", f)])
     os.makedirs(OUT, exist_ok=True)
+    for f in os.listdir(OUT):
+        if f.endswith(".webp"):
+            os.remove(os.path.join(OUT, f))
     enc_frames = {k: {} for k in SETS}
     lum = {"dTop": [], "dNav": [], "mTop": []}
     with Pool(4) as pool:
-        for c in range(1, 7):
+        for c in range(1, n_clips + 1):
             raws = decode(clips, c)
+            a0, a1 = CORTES.get(c, (0, N - 1))
             for k, cfg in SETS.items():
-                idx = list(range(0, N, cfg["step"]))
+                idx = [i for i in range(0, N, cfg["step"]) if a0 <= i <= a1]
                 out = pool.map(enc, [(raws[i], cfg["crop"], cfg["q"]) for i in idx], chunksize=4)
-                for j, b in enumerate(out):
-                    enc_frames[k][(c, j)] = b
+                for i, b in zip(idx, out):
+                    enc_frames[k][(c, i // cfg["step"])] = b
                 print(f"c{c} {k}: {sum(len(b) for b in out) / 1e6:.2f} MB", flush=True)
             t, n, m = luma(raws)
             lum["dTop"].append(t); lum["dNav"].append(n); lum["mTop"].append(m)
@@ -126,8 +134,9 @@ def main(clips):
     manifest = {}
     for k, cfg in SETS.items():
         n = N // cfg["step"]
-        keys = sorted(enc_frames[k], key=lambda cf: (phase(cf[0], level_of(cf[1], n, cfg["levels"])), cf[0],
-                                                     level_of(cf[1], n, cfg["levels"]), cf[1]))
+        ult = {c: max(j for cc, j in enc_frames[k] if cc == c) for c in range(1, n_clips + 1)}
+        lv = lambda cf: level_of(cf[1], n, cfg["levels"], ult[cf[0]])
+        keys = sorted(enc_frames[k], key=lambda cf: (phase(cf[0], lv(cf)), cf[0], lv(cf), cf[1]))
         packs, cur, size = [], [], 0
         for key in keys:
             b = enc_frames[k][key]
