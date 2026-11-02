@@ -12,7 +12,9 @@ Ordem: abertura nas nuvens → I Residências → II Relojoaria → III Marina �
 o céu escurece pra "hora azul" e aparece o bloco da GuDev com o botão do WhatsApp.
 
 ## 3 WOWs
-1. **Abertura:** a marca MERIDIANO se desfaz na névoa enquanto a câmera desce pelas nuvens, e a nuvem abre e mostra a torre.
+1. **Abertura:** enquanto carrega, um meridiano dourado cresce no meio da tela. Pronto, a tela abre em duas portas a partir
+   dessa linha, a luz do sol vaza pela fresta e a câmera recua de dentro do sol até o mar de nuvens. Depois, a marca MERIDIANO
+   se desfaz na névoa enquanto a câmera desce, e a nuvem abre e mostra a torre.
 2. **Meio:** a câmera mergulha no relógio da sala, a lente desfoca e foca nas engrenagens do mecanismo (troca de foco, sem montagem).
 3. **Interativo:** a rolagem é a câmera. A régua da direita leva direto a cada capítulo, e o relógio mostra a hora real de São Paulo.
 
@@ -41,11 +43,14 @@ Dica: grave em tela cheia (F11) no computador. A melhor qualidade é na tela dei
 - `index.html`: o site inteiro (CSS, JS e o shader WebGL das transições).
 - `frames/d-*.webp`: computador e tela deitada. 1280x720, todos os frames, qualidade 80, ~34 MB.
   Abre com ~4 MB (a abertura inteira + um rascunho do resto) e o resto chega em segundo plano.
-- `frames/m-*.webp`: celular em pé. Recorte central 480x720, 1 a cada 2 frames, qualidade 86, ~10 MB.
-  O site desenha na resolução real da tela e amplia com filtro bicúbico (fica bem menos pixelado que o esticado do navegador).
+- `frames/m-*.webp`: celular em pé. 720x1440, 1 a cada 2 frames, qualidade 80. Cada frame passou por upscale x4 com IA
+  (Real-ESRGAN) e foi recortado no formato do celular (1:2). Antes era um recorte de 480x720: como o celular é mais
+  estreito, só uns 330 px do vídeo cobriam a tela inteira (ampliação de 3,5x, daí o pixelado). Agora é ~1,7x.
+  O site desenha quase na resolução real da tela e amplia com filtro bicúbico.
 - `frames/poster-*.webp`: uma imagem por cena, para o modo estático.
 - `og.jpg`, `404.html`, `_headers` (segurança + cache longo dos frames).
 - `gerar-frames.py`: transforma os vídeos nos pacotes de frames e atualiza o `index.html`.
+- `nitidez-celular.py`: upscale com IA dos frames do celular, recorte 1:2 e novos pacotes `m-*.webp`.
 
 Os pacotes são "WebP animado": cada frame fica completo e o site lê em streaming, frame por frame.
 Assim são 8 downloads no computador (3 no celular) em vez de centenas de imagens soltas.
@@ -71,6 +76,7 @@ Assim são 8 downloads no computador (3 no celular) em vez de centenas de imagen
   (e expõe `window.__dbg`). Também funciona com `#debug` no fim do link (é o jeito no link de prévia do Claude).
   Se alguém disser que travou, peça print com `#debug`.
 - `?max`: trava na qualidade máxima (sem adaptar). Use pra gravar o Reels num computador bom: `?tour&max`.
+- `?lento=4`: abertura 4 vezes mais lenta, pra conferir a animação.
 
 ## Trocar os vídeos
 1. Salve os vídeos como `c1.mp4` até `c6.mp4` numa pasta (1280x720, 24 fps, 8 s, na ordem do filme).
@@ -78,7 +84,11 @@ Assim são 8 downloads no computador (3 no celular) em vez de centenas de imagen
 2. Rode `python3 gerar-frames.py <pasta>`. Precisa de ffmpeg, Pillow e numpy, e leva uns 2 minutos.
 3. Se o enquadramento mudar, ajuste no `index.html` os tempos (`PLAY`, `TR`, `CENAS`) e os pontos de foco das
    transições (`fa`/`fb` = posição do relógio, do sol e do horizonte, de 0 a 1).
-4. Troque `?v=3` por `?v=4` no `index.html` (são 3 lugares), porque os frames ficam um ano em cache.
+4. Rode `python3 nitidez-celular.py <pasta-de-trabalho>` pra refazer os frames do celular com upscale de IA
+   (precisa de PyTorch; leva ~45 min numa CPU de 4 núcleos e retoma de onde parou).
+5. Suba o número do `?v=` no `index.html` (são 3 lugares), porque os frames ficam um ano em cache.
+
+Pra ficar ainda mais nítido: gere os clipes no Flow em 1080p (ou direto em 9:16 pro celular) e refaça os passos acima.
 
 ## Antes de divulgar
 - Depois de subir no Netlify, trocar o `og:image` pela URL completa (`https://.../og.jpg`). Sem isso, o WhatsApp e o Instagram não mostram a imagem.

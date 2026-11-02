@@ -36,7 +36,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - uma comanda de serviços que vai pro WhatsApp.
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
 - **Meridiano** (demo pro Instagram, feita com vídeos do Google Flow, em `sites/meridiano`):
-  - a marca se desfaz na névoa e as nuvens se abrem na torre;
+  - a tela abre em duas portas a partir de um meridiano dourado, a luz do sol vaza e a câmera recua de dentro do sol; depois a marca se desfaz na névoa e as nuvens se abrem na torre;
   - a câmera mergulha no mostrador e a lente troca o foco pro outro relógio;
   - a rolagem pilota a câmera de um filme só, com voo pra dentro da fachada, sol estourando e a câmera olhando pro céu pra trocar de cena.
 
