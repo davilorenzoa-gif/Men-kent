@@ -9,6 +9,8 @@
 - **Texto com a cor da marca em cima de fundo da mesma cor some.** Exemplo: o nome roxo do açaí sobre a prévia roxa. Teste o contraste.
 - **Bodoni Moda gigante perde os traços finos:** o "M" parece "VI". Use `font-variation-settings:'opsz' 22` nos títulos grandes.
 - **Vídeo de IA inventa coisas:** no Meridiano, o Flow pôs um drone na marina e uma logo de marca real no relógio. Revise frame a frame antes de publicar.
+- **Transição que parece montagem foi reprovada** (Meridiano, 02/11): relógio colado dentro do outro "parece PNG" e a lâmina de vidro com linhas brancas pareceu efeito barato. A transição tem que parecer câmera ou lente (voo com borrão, troca de foco, luz). Para ficar perfeito, gere a ponte no Flow com primeiro e último frame.
+- **Título animado pela rolagem fica pela metade quando a pessoa para** (aconteceu de novo no Meridiano). Título e texto entram por tempo quando a cena chega.
 - **Vídeo rolando com a página:** `<video>` com `currentTime` engasga. Use frames WebP empacotados + WebGL, como no `sites/meridiano`.
 
 ## Celular

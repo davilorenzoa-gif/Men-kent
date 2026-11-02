@@ -260,10 +260,10 @@ var FIM=1660;
 var PLAY={1:[0,230],2:[205,445],3:[455,690],4:[725,960],5:[975,1205],6:[1220,1450]};
 var TR=[
   {a:1,b:2,s:[195,250],m:1,fa:[.5,.45],fb:[.5,.6]},             /* névoa: a nuvem abre e mostra a torre */
-  {a:2,b:3,s:[425,480],m:2,fa:[.5,.5],fb:[.5,.5]},               /* vidro: as lâminas da fachada deslizam */
-  {a:3,b:4,s:[675,760],m:3,fa:[.455,.58],fb:[.497,.52],r0:.178,r1:.16}, /* mostrador: o relógio vira portal */
+  {a:2,b:3,s:[425,482],m:2,fa:[.55,.45],fb:[.58,.45]},           /* voo: a câmera acelera pra dentro da fachada */
+  {a:3,b:4,s:[678,752],m:3,fa:[.455,.58],fb:[.497,.52]},         /* foco: mergulha num relógio e foca no outro */
   {a:4,b:5,s:[945,1000],m:4,fa:[.497,.64],fb:[.5,.45]},          /* sol: a luz da janela estoura */
-  {a:5,b:6,s:[1190,1245],m:5,fa:[.5,.487],fb:[.5,.505]},         /* horizonte: a linha do mar se abre na pista */
+  {a:5,b:6,s:[1190,1245],m:5,fa:[.5,.487],fb:[.5,.505]},         /* horizonte: os dois horizontes se alinham */
   {a:6,b:7,s:[1430,1500],m:6,fa:[.5,.5],fb:[.5,.5]}              /* a câmera desce do céu de volta às nuvens */
 ];
 var CENAS=[
@@ -310,7 +310,7 @@ CENAS.forEach(function(c){
   var w=c.el.querySelector('[data-letras]'),p=c.el.querySelector('[data-palavras]');
   c.L=w?divide(w,false):p?divide(p,true):[];
   c.X=[].map.call(c.el.querySelectorAll('[data-x]'),function(x){return{el:x,d:+x.getAttribute('data-x')};});
-  c.on=false;c.k=-1;
+  c.on=false;c.k=-1;c.vi=0;c.vo=0;
 });
 var marcaH=D.querySelector('.marca-h');
 
@@ -357,7 +357,7 @@ var FS=[
 'precision mediump float;',
 '#endif',
 'uniform sampler2D uA0,uA1,uB0,uB1;',
-'uniform float uAm,uBm,uMode,uP,uTime,uZA,uZB,uDusk,uGrain,uSharp,uR0,uR1;',
+'uniform float uAm,uBm,uMode,uP,uTime,uZA,uZB,uDusk,uGrain,uSharp;',
 'uniform vec2 uRes,uK,uFA,uFB,uPar,uTexel;',
 'vec3 tA(vec2 u){return mix(texture2D(uA0,u).rgb,texture2D(uA1,u).rgb,uAm);}',
 'vec3 tB(vec2 u){return mix(texture2D(uB0,u).rgb,texture2D(uB1,u).rgb,uBm);}',
@@ -370,6 +370,10 @@ var FS=[
 'float ez3(float x){x=clamp(x,0.,1.);return x<.5?4.*x*x*x:1.-pow(2.-2.*x,3.)*.5;}',
 'vec2 sfp(vec2 f){return .5+(f-.5)/uK;}',
 'vec2 mz(vec2 s,vec2 f,vec2 c,float z){return f+(s-c)*uK/z+uPar*uK;}',
+'vec3 zbA(vec2 u,vec2 c,float k){vec3 a=vec3(0.);for(int i=0;i<12;i++){a+=tA(c+(u-c)*(1.-k*float(i)/11.));}return a/12.;}',
+'vec3 zbB(vec2 u,vec2 c,float k){vec3 a=vec3(0.);for(int i=0;i<12;i++){a+=tB(c+(u-c)*(1.-k*float(i)/11.));}return a/12.;}',
+'vec3 dfA(vec2 s,vec2 f,vec2 c,float z,float R,float j){float ar=uRes.x/uRes.y;vec3 a=vec3(0.);float t=0.;for(int i=0;i<12;i++){float fi=float(i)+.5,rr=sqrt(fi/12.)*R,an=fi*2.39996+j;vec3 x=tA(mz(s+vec2(cos(an)*rr/ar,sin(an)*rr),f,c,z));float w=1.+4.*pow(dot(x,vec3(.3,.59,.11)),4.);a+=x*w;t+=w;}return a/t;}',
+'vec3 dfB(vec2 s,vec2 f,vec2 c,float z,float R,float j){float ar=uRes.x/uRes.y;vec3 a=vec3(0.);float t=0.;for(int i=0;i<12;i++){float fi=float(i)+.5,rr=sqrt(fi/12.)*R,an=fi*2.39996+j;vec3 x=tB(mz(s+vec2(cos(an)*rr/ar,sin(an)*rr),f,c,z));float w=1.+4.*pow(dot(x,vec3(.3,.59,.11)),4.);a+=x*w;t+=w;}return a/t;}',
 'void main(){',
 ' vec2 s=vec2(gl_FragCoord.x/uRes.x,1.-gl_FragCoord.y/uRes.y);',
 ' float ar=uRes.x/uRes.y,p=uP;vec3 col;',
@@ -385,49 +389,24 @@ var FS=[
 '  col=mix(a,b,m);',
 '  float g=sin(3.14159*p);',
 '  col=mix(col,vec3(1.,.93,.84),g*(.12+(1.-abs(m-.5)*2.)*.18));',
-' }else if(uMode<2.5){',                       /* vidro: uma lâmina de vidro passa na frente da câmera trazendo a sala */
-'  float e=ez3(p),w=.24;',
-'  float u=(s.x*ar+(1.-s.y)*.42)/(ar+.42);',
-'  float x0=mix(-w*.6,1.+w*.6,e),d=u-x0;',
-'  vec3 a=sA(mz(s,uFA,sfp(uFA),uZA*(1.+.16*e)));',
-'  float zb=uZB*(1.12-.12*e);',
-'  vec3 b=sB(mz(s,uFB,sfp(uFB),zb));',
-'  float hw=w*.5,aa=1.4/uRes.x;',
-'  float ing=1.-smoothstep(hw-aa,hw+aa,abs(d));',
-'  vec2 ub=mz(s+vec2(d*.20,d*.04),uFB,sfp(uFB),zb*1.04);',
-'  vec3 g=vec3(tB(ub+vec2(.0035,0.)).r,tB(ub).g,tB(ub-vec2(.0035,0.)).b);',
-'  float gq=d/(w*.3);',
-'  g=g*1.05+vec3(1.,.95,.88)*(.05+.10*exp(-gq*gq));',
-'  col=mix(d<0.?b:a,g,ing);',
-'  float on=step(.001,e)*step(e,.999);',
-'  col+=vec3(1.,.95,.86)*exp(-abs(abs(d)-hw)/aa*.7)*.85*on;',
-'  col+=vec3(1.,.93,.84)*exp(-abs(d+hw)*24.)*.10*on;',
-' }else if(uMode<3.5){',                       /* mostrador */
-'  float e=ez3(p);',
-'  vec2 sa=sfp(uFA),c=mix(sa,vec2(.5),ez(p*1.15));',
-'  float zA=uZA*(1.+1.7*e);',
-'  vec3 a=sA(mz(s,uFA,c,zA));',
-'  float rD=uR0/uK.y*zA,gr=smoothstep(.30,1.,p);',
-'  float r=rD*(1.+8.*gr*gr);',
-'  vec2 q=(s-c)*vec2(ar,1.);float d=length(q);',
-'  float zB0=rD*uK.y/uR1,zB=mix(zB0,uZB,smoothstep(.28,1.,p));',
-'  float bu=smoothstep(.55,1.,d/max(r,1e-4));',
-'  vec3 b=sB(mz(s-(s-c)*bu*.07*(1.-gr),uFB,c,zB));',
-'  float aa=1.5/uRes.y,ins=(1.-smoothstep(r-aa,r+aa,d))*smoothstep(.03,.26,p);',
-'  b*=1.-.38*smoothstep(r*.8,r,d);',
-'  a*=1.-.5*smoothstep(.22,.9,p);',
-'  col=mix(a,b,ins);',
-'  float rw=clamp(r*.085,.006,.045);',
-'  float ring=smoothstep(r-aa,r+aa,d)*(1.-smoothstep(r+rw-aa,r+rw+aa,d));',
-'  float rA=smoothstep(.24,.40,p)*(1.-smoothstep(.80,.97,p));',
-'  float ang=atan(q.y,q.x)+p*2.4;',
-'  float t60=abs(fract(ang/6.2831853*60.)-.5)*2.,t12=abs(fract(ang/6.2831853*12.)-.5)*2.;',
-'  float u=(d-r)/rw;',
-'  float tk=max(smoothstep(.80,.86,t60)*step(u,.45),smoothstep(.90,.93,t12)*step(u,.8));',
-'  vec3 ouro=vec3(.80,.62,.36)*(.72+.38*cos(ang-.8))+vec3(.25,.2,.12)*pow(max(0.,cos(ang*2.+1.)),8.);',
-'  vec3 rc=mix(ouro,vec3(.16,.12,.08),tk);',
-'  col=mix(col,rc,ring*rA);',
-'  col+=vec3(1.,.93,.8)*exp(-abs(d-r)*uRes.y/1.6)*rA*.55;',
+' }else if(uMode<2.5){',                       /* voo: a câmera acelera pra dentro da fachada e chega na sacada */
+'  float e1=ez(p/.62),e2=ez((p-.38)/.62);',
+'  vec2 ua=mz(s,uFA,sfp(uFA),uZA*(1.+.55*e1));',
+'  vec2 ub=mz(s,uFB,sfp(uFB),uZB*(1.45-.45*e2));',
+'  float kA=.19*e1,kB=.19*(1.-e2);',
+'  vec3 a=kA>.003?zbA(ua,uFA,kA):sA(ua);',
+'  vec3 b=kB>.003?zbB(ub,uFB,kB):sB(ub);',
+'  col=mix(a,b,smoothstep(.40,.60,p));',
+'  col*=1.+.14*sin(3.14159*p);',
+' }else if(uMode<3.5){',                       /* foco: mergulha no mostrador, a lente desfoca e foca no outro relógio */
+'  float e1=ez(p/.58),e2=ez((p-.42)/.58),j=hash(gl_FragCoord.xy)*6.2832;',
+'  vec2 ca=sfp(uFA),cb=sfp(uFB);',
+'  float zA=uZA*(1.+.8*e1),zB=uZB*(1.55-.55*e2);',
+'  float RA=.045*e1,RB=.045*(1.-e2);',
+'  vec3 a=RA>.0015?dfA(s,uFA,ca,zA,RA,j):sA(mz(s,uFA,ca,zA));',
+'  vec3 b=RB>.0015?dfB(s,uFB,cb,zB,RB,j):sB(mz(s,uFB,cb,zB));',
+'  col=mix(a,b,smoothstep(.40,.60,p));',
+'  col*=1.+.06*sin(3.14159*p);',
 ' }else if(uMode<4.5){',                       /* sol */
 '  float e=ez(p);vec2 su=sfp(uFA);',
 '  vec3 a=sA(mz(s,uFA,su,uZA*(1.+.10*e)));',
@@ -439,18 +418,13 @@ var FS=[
 '  float st=exp(-abs(q.y)*70.)*exp(-abs(q.x)*1.2)*.85*k;',
 '  vec3 L=vec3(1.,.88,.70)*(gw+st+.40*k*k);',
 '  col=1.-(1.-col)*(1.-clamp(L,0.,1.));',
-' }else if(uMode<5.5){',                       /* horizonte */
-'  float hA=sfp(uFA).y,dw=smoothstep(0.,.16,p),e=ez3(smoothstep(.12,1.,p));',
-'  float bd=e*.64,dy=s.y-hA;',
-'  vec3 a=sA(mz(s+vec2(0.,dy<0.?bd:-bd),uFA,sfp(uFA),uZA*(1.+.06*e)));',
+' }else if(uMode<5.5){',                       /* horizonte: as duas linhas do mar se alinham e a pista surge do céu pra baixo */
+'  float e=ez(p),hA=sfp(uFA).y;',
+'  vec3 a=sA(mz(s,uFA,sfp(uFA),uZA*(1.+.07*e)));',
 '  vec2 fB=sfp(uFB);',
-'  vec3 b=sB(mz(s,uFB,vec2(fB.x,mix(hA,fB.y,e)),uZB*(1.2-.2*e)));',
-'  float aa=1.5/uRes.y,inB=(1.-smoothstep(bd-aa,bd+aa,abs(dy)))*step(.0004,bd);',
-'  col=mix(a,b,inB);',
-'  float xs=abs(s.x-.5)*2.;',
-'  float lnA=(bd<.0006?1.-smoothstep(dw-.03,dw+.03,xs):1.)*(1.-smoothstep(.72,1.,p));',
-'  float dd=abs(abs(dy)-bd);',
-'  col+=vec3(1.,.82,.52)*(exp(-dd*uRes.y/1.3)*.9+exp(-dd*90.)*.18)*lnA;',
+'  vec3 b=sB(mz(s,uFB,vec2(fB.x,mix(hA,fB.y,e)),uZB*(1.12-.12*e)));',
+'  col=mix(a,b,smoothstep(0.,1.,p*1.8-.4+(hA-s.y)*.8));',
+'  col+=vec3(1.,.86,.62)*.12*sin(3.14159*p)*exp(-abs(s.y-hA)*7.);',
 ' }else{',                                     /* céu -> nuvens */
 '  float e=ez3(p);',
 '  vec3 a=sA(mz(s+vec2(0.,e*.55),uFA,sfp(uFA),uZA));',
@@ -476,7 +450,7 @@ function glInit(){
   var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);
   gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
   var lp=gl.getAttribLocation(prog,'p');gl.enableVertexAttribArray(lp);gl.vertexAttribPointer(lp,2,gl.FLOAT,false,0,0);
-  'uA0 uA1 uB0 uB1 uAm uBm uMode uP uTime uZA uZB uDusk uGrain uSharp uR0 uR1 uRes uK uFA uFB uPar uTexel'.split(' ').forEach(function(n){U[n]=gl.getUniformLocation(prog,n);});
+  'uA0 uA1 uB0 uB1 uAm uBm uMode uP uTime uZA uZB uDusk uGrain uSharp uRes uK uFA uFB uPar uTexel'.split(' ').forEach(function(n){U[n]=gl.getUniformLocation(prog,n);});
   gl.uniform1i(U.uA0,0);gl.uniform1i(U.uA1,1);gl.uniform1i(U.uB0,2);gl.uniform1i(U.uB1,3);
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,false);gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL,gl.NONE);
   return true;
@@ -666,9 +640,17 @@ if(!COARSE)W.addEventListener('pointermove',function(e){if(tour.on)return;mx=e.c
 /* ---------- textos ---------- */
 var veu=D.querySelector('.veu'),veuC=D.querySelector('.veu-centro'),dica=D.querySelector('.dica'),tMarca=D.querySelector('.t-marca');
 var introT0=0,introE=0,revelado=false;
-function cena(c,s){
-  var vin=c.abre?introE:(c.in?cl((s-c.in[0])/(c.in[1]-c.in[0])):1);
-  var vout=c.out?cl((s-c.out[0])/(c.out[1]-c.out[0])):0;
+function cena(c,s,dt){
+  var vin,vout;
+  if(c.abre){vin=introE;vout=cl((s-c.out[0])/(c.out[1]-c.out[0]));}
+  else{
+    /* a rolagem só decide SE o texto aparece; a animação corre sozinha, com folga pra não piscar */
+    var h=c.on?6:0,tv=s>=c.in[0]-h&&(!c.out||s<c.out[0]+h);
+    if(tv){if(c.vo>0)c.vo=Math.max(0,c.vo-dt/.55);else c.vi=Math.min(1,c.vi+dt/1.25);}
+    else if(c.vi>=1){c.vo=Math.min(1,c.vo+dt/.8);if(c.vo>=1)c.vi=c.vo=0;}
+    else{c.vi=Math.max(0,c.vi-dt/.6);c.vo=0;}
+    vin=c.vi;vout=c.vo;
+  }
   var on=vin>.001&&vout<.999;
   if(on!==c.on){c.on=on;c.el.classList.toggle('on',on);}
   if(!on)return 0;
@@ -772,7 +754,6 @@ function desenha(st){
   gl.uniform1f(U.uZA,zA);gl.uniform1f(U.uZB,zB);
   var fa=m?t.FA:CENTRO,fb=m?t.FB:CENTRO;
   gl.uniform2f(U.uFA,fa[0],fa[1]);gl.uniform2f(U.uFB,fb[0],fb[1]);
-  gl.uniform1f(U.uR0,t&&t.r0||.2);gl.uniform1f(U.uR1,t&&t.r1||.2);
   gl.uniform2f(U.uRes,cv.width,cv.height);gl.uniform2f(U.uK,K[0],K[1]);
   gl.uniform2f(U.uTexel,1/TW,1/TH);
   gl.uniform2f(U.uPar,pmx*.006,pmy*.004);
@@ -827,7 +808,7 @@ function laco(now){
   introE=ez((now-introT0)/2300);
   var vs=0,vg=0,vf=0,v;
   for(i=0;i<CENAS.length;i++){
-    v=cena(CENAS[i],sCur);
+    v=cena(CENAS[i],sCur,dt);
     var id=CENAS[i].id;
     if(id==='gudev')vg=v;else if(id==='fim')vf=v;else if(id!=='abertura')vs=Math.max(vs,v);
   }

@@ -12,11 +12,14 @@ o céu escurece pra "hora azul" e aparece o bloco da GuDev com o botão do Whats
 
 ## 3 WOWs
 1. **Abertura:** a marca MERIDIANO se desfaz na névoa enquanto a câmera desce pelas nuvens, e a nuvem abre e mostra a torre.
-2. **Meio:** o mostrador do relógio vira um portal pro outro relógio, com um aro dourado de 60 marcações girando.
+2. **Meio:** a câmera mergulha no mostrador do relógio da sala, a lente desfoca e foca no outro relógio (troca de foco, sem montagem).
 3. **Interativo:** a rolagem é a câmera. A régua da direita leva direto a cada capítulo, e o relógio mostra a hora real de São Paulo.
 
-Transições extras: uma lâmina de vidro passa na frente da câmera (torre → sala), o sol estoura na janela (relógio → marina),
-a linha do horizonte se abre na pista (marina → jato) e a câmera desce do céu de volta às nuvens (jato → fim).
+Transições extras: um voo rápido pra dentro da fachada (torre → sacada), o sol estoura na janela (relógio → marina),
+os dois horizontes se alinham e a pista surge do céu pra baixo (marina → jato) e a câmera desce do céu de volta às nuvens (jato → fim).
+Regra: toda transição tem que parecer movimento de câmera ou de lente. Nada de forma desenhada ou imagem colada em cima da outra.
+
+Os textos entram sozinhos (por tempo) quando a cena chega. A rolagem só decide se eles aparecem, então nunca ficam pela metade.
 
 ## Como gravar o Reels
 1. Abra o link com `?tour` no fim, por exemplo `https://<site>.netlify.app/?tour`.
