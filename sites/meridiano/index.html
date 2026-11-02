@@ -28,7 +28,7 @@ window.__mer={set:s,ac:ac,res:fetch('frames/'+s+'-1.webp?v=1',ac?{signal:ac.sign
   --tinta-topo:#121821;--tinta-nav:#121821;
   --serif:'Bodoni Moda','Bodoni 72','Didot',Georgia,serif;
   --sans:'Geist',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-  --chao:11vh;
+  --chao:11vh;color-scheme:dark;
 }
 @supports (height:100svh){:root{--chao:calc(100vh - 100svh + 11svh)}}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -244,8 +244,9 @@ var D=document,R=D.documentElement,W=window;
 var Q=location.search;
 var EMBED=/[?&]embed\b/.test(Q);
 var REDUZ=!!(W.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
-var TOUR=/[?&]tour\b/.test(Q);
-var AUTO=/[?&]auto\b/.test(Q);
+var HASH=location.hash||'';
+var TOUR=/[?&]tour\b/.test(Q)||/^#tour\b/.test(HASH);
+var AUTO=/[?&]auto\b/.test(Q)||/^#tour-auto\b/.test(HASH);
 var COARSE=!!(W.matchMedia&&matchMedia('(pointer: coarse)').matches);
 var MER=W.__mer||{};
 
@@ -709,7 +710,7 @@ function tinta(st,dusk){
 
 /* ---------- tour automático (pra gravar o Reels) ---------- */
 var tour={on:false,pronto:false,t0:0,tbl:null,dur:52};
-(function(){var m=Q.match(/[?&]tour=(\d+)/);if(m)tour.dur=cl(+m[1],15,180);})();
+(function(){var m=Q.match(/[?&]tour=(\d+)/)||HASH.match(/^#tour-(?:auto-)?(\d+)/);if(m)tour.dur=cl(+m[1],15,180);})();
 function tabela(){var t=new Float64Array(FIM_TOUR+1);for(var s=1;s<=FIM_TOUR;s++){var w=1;for(var j=0;j<BEATS.length;j++){var b=BEATS[j],z=(s-b[0])/b[2];w+=b[1]*Math.exp(-z*z);}t[s]=t[s-1]+w;}return t;}
 function tourS(ts){
   var hold=1.4;if(ts<hold)return 0;

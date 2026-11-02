@@ -26,6 +26,8 @@ a linha do horizonte se abre na pista (marina → jato) e a câmera desce do cé
    Com `?tour&auto` ele começa sozinho 1,6 s depois de carregar. Rolar ou apertar outra tecla pausa o tour.
    Apertar espaço de novo volta ao topo e recomeça.
 
+Também funciona com `#tour`, `#tour-40` e `#tour-auto` no lugar do `?` (é o jeito que funciona no link de prévia do Claude).
+
 Dica: grave em tela cheia (F11) no computador. A melhor qualidade é na tela deitada, porque os vídeos são 16:9.
 
 ## Arquivos
