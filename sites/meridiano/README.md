@@ -17,7 +17,8 @@ o céu escurece pra "hora azul" e aparece o bloco da GuDev com o botão do Whats
 3. **Interativo:** a rolagem é a câmera. A régua da direita leva direto a cada capítulo, e o relógio mostra a hora real de São Paulo.
 
 Emendas: a câmera voa pra dentro da torre e entra pela porta de vidro da cobertura (um prédio só, sem mostrar outra
-fachada), o sol estoura na janela (relógio → marina), os dois horizontes se alinham e a pista surge do céu pra baixo (marina → jato) e a câmera
+fachada), o sol estoura na janela (relógio → marina), a câmera olha rápido pro céu da marina e desce no céu da pista
+(marina → jato; a troca acontece no céu, dentro do borrão, então nenhum barco aparece por cima da pista) e a câmera
 desce do céu de volta às nuvens (jato → fim).
 Regra: toda transição tem que parecer movimento de câmera ou de lente. Nada de forma desenhada ou imagem colada em cima da outra.
 Os dois clipes continuam andando durante a emenda (nada congela), e só aparece um prédio do começo ao fim.
@@ -49,11 +50,26 @@ Dica: grave em tela cheia (F11) no computador. A melhor qualidade é na tela dei
 Os pacotes são "WebP animado": cada frame fica completo e o site lê em streaming, frame por frame.
 Assim são 8 downloads no computador (3 no celular) em vez de centenas de imagens soltas.
 
+## Fluidez (03/11)
+- **Qualidade adaptativa:** se o aparelho cai abaixo de ~43 qps, a tela do filme baixa um degrau (100% → 84% → 70% → 58%)
+  e volta sozinha quando sobra fôlego. Nas transições com borrão (voo e foco), desenha a 70% no celular e 85% no computador,
+  porque o borrão esconde a diferença.
+- **Celular desenha até ~2 Mpx** (antes 2,4). O vídeo do celular tem 480 px de largura, mais que isso só gastava GPU.
+- **Textos por CSS:** os títulos entram e saem com transição de CSS, fora do laço do WebGL. Se o vídeo pesar, o texto não engasga junto.
+- **Imagem nítida parada:** rolando, o shader mistura dois frames vizinhos (movimento liso). Parou, assenta no frame mais
+  próximo, sem imagem dupla.
+- **Parado, quase não desenha:** só o grão (20 qps no computador, 12 no celular). Antes, parar no meio de uma transição
+  pesada deixava a GPU a 100%. O mouse agora redesenha o fundo a cada quadro (a paralaxe ficava a 20 qps).
+- A rolagem é lida por `scrollY` (sem `getBoundingClientRect` a cada quadro) e a roda do mouse tem um pouco mais de amortecimento.
+- Cor: curva leve de contraste e saturação no shader, pra tirar o "leitoso" dos vídeos de IA (`?grade=0` mostra sem).
+
 ## Modos
 - `?embed`: versão estática (uma foto por cena, sem animação). Serve pra captura de prévia.
 - Celular com "reduzir movimento" ligado: a mesma versão estática, com fade curto ao aparecer.
 - Sem WebGL: cai na versão estática sozinho.
-- `?debug`: expõe contadores em `window.__dbg` (frames exatos e aproximados).
+- `?debug`: mostra um painel no canto com qps, tamanho da tela do filme, % de frames exatos e % baixado
+  (e expõe `window.__dbg`). Se alguém disser que travou, peça print com `?debug`.
+- `?max`: trava na qualidade máxima (sem adaptar). Use pra gravar o Reels num computador bom: `?tour&max`.
 
 ## Trocar os vídeos
 1. Salve os vídeos como `c1.mp4` até `c6.mp4` numa pasta (1280x720, 24 fps, 8 s, na ordem do filme).
