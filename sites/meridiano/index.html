@@ -290,7 +290,7 @@ var TR=[
   {a:2,b:3,s:[420,465],m:2,fa:[.55,.45],fb:[.55,.45]},           /* voo: a câmera entra pela janela da torre */
   {a:3,b:4,s:[564,634],m:3,fa:[.48,.55],fb:[.49,.49]},           /* foco: do relógio da sala pro mecanismo */
   {a:4,b:5,s:[790,830],m:4,fa:[.5,.02],fa2:[.48,.40],fb:[.5,.45]},/* sol: a luz da janela estoura (o sol desce no quadro) */
-  {a:5,b:6,s:[995,1045],m:5,fa:[.5,.5],fb:[.5,.5]},              /* céu: a câmera olha pro céu da marina e desce no céu da pista */
+  {a:5,b:6,s:[995,1045],m:5,fa:[.5,.487],fb:[.5,.505]},          /* horizonte: os dois horizontes se alinham */
   {a:6,b:NUV,s:[1215,1285],m:6,fa:[.5,.5],fb:[.5,.5]}            /* a câmera desce do céu de volta às nuvens */
 ];
 var CENAS=[
@@ -411,8 +411,6 @@ var FS=[
 'vec2 mz(vec2 s,vec2 f,vec2 c,float z){return f+(s-c)*uK/z+uPar*uK;}',
 'vec3 zbA(vec2 u,vec2 c,float k){vec3 a=vec3(0.);for(int i=0;i<12;i++){a+=tA(c+(u-c)*(1.-k*float(i)/11.));}return a/12.;}',
 'vec3 zbB(vec2 u,vec2 c,float k){vec3 a=vec3(0.);for(int i=0;i<12;i++){a+=tB(c+(u-c)*(1.-k*float(i)/11.));}return a/12.;}',
-'vec3 vbA(vec2 u,float k){vec3 a=vec3(0.);for(int i=0;i<10;i++){a+=tA(u+vec2(0.,(float(i)/9.-.5)*k));}return a/10.;}',
-'vec3 vbB(vec2 u,float k){vec3 a=vec3(0.);for(int i=0;i<10;i++){a+=tB(u+vec2(0.,(float(i)/9.-.5)*k));}return a/10.;}',
 'vec3 dfA(vec2 s,vec2 f,vec2 c,float z,float R,float j){float ar=uRes.x/uRes.y;vec3 a=vec3(0.);float t=0.;for(int i=0;i<12;i++){float fi=float(i)+.5,rr=sqrt(fi/12.)*R,an=fi*2.39996+j;vec3 x=tA(mz(s+vec2(cos(an)*rr/ar,sin(an)*rr),f,c,z));float w=1.+4.*pow(dot(x,vec3(.3,.59,.11)),4.);a+=x*w;t+=w;}return a/t;}',
 'vec3 dfB(vec2 s,vec2 f,vec2 c,float z,float R,float j){float ar=uRes.x/uRes.y;vec3 a=vec3(0.);float t=0.;for(int i=0;i<12;i++){float fi=float(i)+.5,rr=sqrt(fi/12.)*R,an=fi*2.39996+j;vec3 x=tB(mz(s+vec2(cos(an)*rr/ar,sin(an)*rr),f,c,z));float w=1.+4.*pow(dot(x,vec3(.3,.59,.11)),4.);a+=x*w;t+=w;}return a/t;}',
 'void main(){',
@@ -459,15 +457,13 @@ var FS=[
 '  float st=exp(-abs(q.y)*70.)*exp(-abs(q.x)*1.2)*.85*k;',
 '  vec3 L=vec3(1.,.88,.70)*(gw+st+.40*k*k);',
 '  col=1.-(1.-col)*(1.-clamp(L,0.,1.));',
-' }else if(uMode<5.5){',                       /* olhar pro céu: a câmera sobe rápido pro céu da marina e desce no céu da pista.
-                                                   A troca acontece no céu, dentro do borrão de movimento: nenhum barco por cima da pista */
-'  float u=p<.5?4.*p*p:4.*(1.-p)*(1.-p),v=p<.5?2.*p:2.*(1.-p);',
-'  float hg=mix(1.,.32,u),cy=mix(.5,.17,u),kb=.07*v*v,mb=smoothstep(.42,.58,p);',
-'  vec2 ta=vec2(.5,cy)+(s-.5)*uK*hg/uZA+uPar*uK,tb=vec2(.5,cy)+(s-.5)*uK*hg/uZB+uPar*uK;',
-'  vec3 a=vec3(0.),b=vec3(0.);',
-'  if(mb<.999)a=kb>.002?vbA(ta,kb):sA(ta);',
-'  if(mb>.001)b=kb>.002?vbB(tb,kb):sB(tb);',
-'  col=mix(a,b,mb)*(1.+.07*sin(3.14159*p));',
+' }else if(uMode<5.5){',                       /* horizonte: as duas linhas do mar se alinham e a pista surge do céu pra baixo */
+'  float e=ez(p),hA=sfp(uFA).y;',
+'  vec3 a=sA(mz(s,uFA,sfp(uFA),uZA*(1.+.07*e)));',
+'  vec2 fB=sfp(uFB);',
+'  vec3 b=sB(mz(s,uFB,vec2(fB.x,mix(hA,fB.y,e)),uZB*(1.12-.12*e)));',
+'  col=mix(a,b,smoothstep(0.,1.,p*1.8-.4+(hA-s.y)*.8));',
+'  col+=vec3(1.,.86,.62)*.12*sin(3.14159*p)*exp(-abs(s.y-hA)*7.);',
 ' }else{',                                     /* céu -> nuvens */
 '  float e=ez3(p);',
 '  vec3 a=sA(mz(s+vec2(0.,e*.55),uFA,sfp(uFA),uZA));',

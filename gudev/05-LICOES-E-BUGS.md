@@ -15,7 +15,7 @@
 - **Vídeo de 720p esticado no celular fica pixelado:** WebP qualidade 70 com recorte largo, esticado 3x pelo navegador. Resolvido com recorte de 480 px, qualidade 86, desenho na resolução real da tela e filtro bicúbico no shader. Se der, baixe do Flow em 1080p.
 - **Título animado pela rolagem fica pela metade quando a pessoa para** (aconteceu de novo no Meridiano). Título e texto entram por tempo quando a cena chega.
 - **Vídeo rolando com a página:** `<video>` com `currentTime` engasga. Use frames WebP empacotados + WebGL, como no `sites/meridiano`.
-- **Dupla exposição na transição** (Meridiano, marina → jato): misturar as duas cenas na tela inteira deixou barcos transparentes por cima da pista. Troque de cena onde as duas são parecidas (céu, borrão, luz), nunca por cima de objetos.
+- **Marina → jato: o Davi prefere a emenda dos horizontes** (Meridiano, 03/11). Troquei por uma câmera olhando pro céu com borrão vertical, pra não ter barco transparente sobre a pista, e ele não gostou: o borrão vertical na pista pareceu pior. Antes de trocar uma transição que já foi aprovada, mostre as duas e deixe ele escolher.
 - **Imagem dupla quando a pessoa para de rolar:** misturar dois frames vizinhos deixa o movimento liso, mas parado fica fantasma. Ao parar, assente no frame mais próximo.
 - **Texto animado no mesmo laço do WebGL engasga junto com o vídeo.** Título que entra por tempo vai por transição de CSS (classe in/out com atraso por letra).
 - **Site WebGL pesado no celular:** o vídeo tem 480 px, então desenhar a 3x da tela não melhora nada e esquenta o aparelho. Limite os pixels, baixe a resolução nas transições com borrão e adapte pelo qps.

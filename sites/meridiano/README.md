@@ -19,9 +19,9 @@ o céu escurece pra "hora azul" e aparece o bloco da GuDev com o botão do Whats
 3. **Interativo:** a rolagem é a câmera. A régua da direita leva direto a cada capítulo, e o relógio mostra a hora real de São Paulo.
 
 Emendas: a câmera voa pra dentro da torre e entra pela porta de vidro da cobertura (um prédio só, sem mostrar outra
-fachada), o sol estoura na janela (relógio → marina), a câmera olha rápido pro céu da marina e desce no céu da pista
-(marina → jato; a troca acontece no céu, dentro do borrão, então nenhum barco aparece por cima da pista) e a câmera
-desce do céu de volta às nuvens (jato → fim).
+fachada), o sol estoura na janela (relógio → marina), os dois horizontes se alinham e a pista surge do céu pra baixo (marina → jato)
+e a câmera desce do céu de volta às nuvens (jato → fim). Em 03/11 testamos a câmera olhando pro céu com borrão vertical
+nessa emenda, e o Davi preferiu a dos horizontes.
 Regra: toda transição tem que parecer movimento de câmera ou de lente. Nada de forma desenhada ou imagem colada em cima da outra.
 Os dois clipes continuam andando durante a emenda (nada congela), e só aparece um prédio do começo ao fim.
 
