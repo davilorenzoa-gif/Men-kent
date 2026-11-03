@@ -51,6 +51,7 @@ Dica: grave em tela cheia (F11) no computador. A melhor qualidade é na tela dei
 - `og.jpg`, `404.html`, `_headers` (segurança + cache longo dos frames).
 - `gerar-frames.py`: transforma os vídeos nos pacotes de frames e atualiza o `index.html`.
 - `nitidez-celular.py`: upscale com IA dos frames do celular, recorte 1:2 e novos pacotes `m-*.webp`.
+- `gerar-arquivo-unico.py` + `fontes/`: monta o site num HTML só (ver abaixo).
 
 Os pacotes são "WebP animado": cada frame fica completo e o site lê em streaming, frame por frame.
 Assim são 8 downloads no computador (3 no celular) em vez de centenas de imagens soltas.
@@ -89,6 +90,15 @@ Assim são 8 downloads no computador (3 no celular) em vez de centenas de imagen
 5. Suba o número do `?v=` no `index.html` (são 3 lugares), porque os frames ficam um ano em cache.
 
 Pra ficar ainda mais nítido: gere os clipes no Flow em 1080p (ou direto em 9:16 pro celular) e refaça os passos acima.
+
+## Arquivo único (abrir direto no celular, sem servidor)
+- `python3 gerar-arquivo-unico.py --so-celular` gera `dist/meridiano-celular.html` (~18 MB, só o celular em pé).
+- `python3 gerar-arquivo-unico.py` gera `dist/meridiano.html` (~63 MB, computador + celular).
+- Tudo vai dentro do HTML: frames e pôsteres em base64 (o site decodifica na hora, sem fetch nem link `data:`,
+  que o Chrome limita a 2 MB) e as fontes (`fontes/`, Bodoni Moda e Geist, licença OFL) em `@font-face`.
+- No Android: baixa o arquivo e abre com o Chrome. Dar dois cliques no `index.html` normal não funciona,
+  porque o navegador bloqueia a página aberta do disco de ler a pasta `frames/`.
+- A pasta `dist/` não vai pro git (dá pra gerar de novo a qualquer hora).
 
 ## Antes de divulgar
 - Depois de subir no Netlify, trocar o `og:image` pela URL completa (`https://.../og.jpg`). Sem isso, o WhatsApp e o Instagram não mostram a imagem.
