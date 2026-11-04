@@ -48,6 +48,11 @@ Usar só o tempo que realmente aparecer na tela.
 Celular na mão mostrando um perfil de Instagram de demo. A mão passa na frente da câmera e, no corte, o celular mostra o site.
 Texto: **"Pra quem acha que Instagram basta."** Usar só demo, nunca o perfil de um comércio real sem permissão.
 
+### E. "Pausa no susto": o carro vira vitrine (Google Flow, 04/11/2026)
+Vídeo POV de moto. Quando o carro aparece, a moto para, o carro avança sozinho pra rua vazia e a câmera dá um 360 nele. Depois corta pro site de estética automotiva (demo).
+Em Flow: 1) imagem "herói" do carro limpo; 2) Frames to Video do frame do susto até a imagem herói; 3) 360 a partir da imagem herói.
+Pra postar: **não usar o vídeo da Metrópoles** (é de terceiros e mostra um acidente real). Recriar a abertura em Flow.
+
 ## Banco de ideias que exigem sair de casa (para depois)
 Cada uma tem: gancho → meio → revelação → CTA.
 
