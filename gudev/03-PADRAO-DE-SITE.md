@@ -35,6 +35,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "PAI & FILHO" converge na rolagem;
   - uma comanda de serviços que vai pro WhatsApp.
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
+- **Sorvetes Nonna Lina:**
+  - portas de madeira da logo se abrem e a logo voa pro topo; a casquinha se desenha com a rolagem e as bolas caem e quicam;
+  - vitrine de cubas em trilho com o vidro embaçado que limpa com o dedo;
+  - oficina de tortas (tamanho + sabor, cobertura caindo) e o jogo "Torre da Nonna" (empilhar bolas).
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
