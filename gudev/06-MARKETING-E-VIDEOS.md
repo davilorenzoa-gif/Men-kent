@@ -22,7 +22,33 @@ O Davi mandou 4 vídeos. O que cada um faz:
 O "produto" é um site, então o visual principal é **um celular rolando o site** (gravação de tela ou o celular filmado na mão).
 Os sites têm WOWs (animações, jogos, efeitos). **O WOW é o momento da revelação do vídeo.**
 
-## Banco de ideias (roteiros curtos)
+## Prioridade: vídeos feitos em casa (pedido do Davi, 04/11/2026)
+Somos dois garotos começando, sem verba e sem tempo pra sair gravando. A regra é: **chamativo e gravável em casa em menos de 1h.**
+Kit: celular, papel A4 + caneta preta grossa, luz da janela, livros como tripé, CapCut (grátis) e gravação de tela do celular/PC.
+
+### A. "O desenho que vira site" (fazer primeiro)
+Mesmo formato do vídeo dos 9 pontos, que é o mais fácil de copiar.
+1. (0–2s) Celular fixo filmando o papel de cima. Texto na tela: **"Desafio: adivinha que negócio é esse."** A mão começa a desenhar.
+2. (2–10s) Desenho rápido (acelerar 2x) do contorno de um celular com as seções: título, foto, cardápio, botão.
+3. (10–12s) A última linha da caneta atravessa o papel. **Corte seco** pro celular real, na mesma posição, com o site aberto.
+4. (12–22s) Dedo rolando o site até o WOW (a animação mais bonita dele).
+5. (22–25s) Tela escurece, @gudev e "Projeto conceito. Quer o do seu negócio? Link na bio."
+Dica: grave o papel e o celular no mesmo lugar e com a mesma luz, pra transição encaixar.
+
+### B. "Site com moedas" (zero gravação)
+Mesmo formato do vídeo da rodovia, só que dentro do celular.
+Grave a tela fazendo um pedido na Peçaí (demo). No CapCut, cole stickers de moeda e "+1" a cada toque: cardápio, carrinho e WhatsApp.
+Termina com a mensagem do pedido chegando pronta. Texto: **"Fase final: o cliente pediu sem baixar app."**
+
+### C. "Ninguém bate esse tempo" (desafio que gera comentário)
+Mão segurando o celular, jogando o launch control do site 911. Texto: **"Meu recorde: X s. Duvido você bater. Link na bio."**
+Usar só o tempo que realmente aparecer na tela.
+
+### D. "Instagram vs. site" (antes/depois com a mão)
+Celular na mão mostrando um perfil de Instagram de demo. A mão passa na frente da câmera e, no corte, o celular mostra o site.
+Texto: **"Pra quem acha que Instagram basta."** Usar só demo, nunca o perfil de um comércio real sem permissão.
+
+## Banco de ideias que exigem sair de casa (para depois)
 Cada uma tem: gancho → meio → revelação → CTA.
 
 1. **"Desenhei um site no papel"** (estilo 9 pontos)
