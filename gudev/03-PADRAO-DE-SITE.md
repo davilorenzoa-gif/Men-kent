@@ -35,6 +35,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "PAI & FILHO" converge na rolagem;
   - uma comanda de serviços que vai pro WhatsApp.
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
+- **Órbita Seminovos** (demo de loja de carro, `sites/orbita-seminovos`): quase-acidente de moto que congela, mira trava no carro e a câmera mergulha nele; volta de 360 no carro guiada pela rolagem, com as qualidades trocando; "Gire você mesmo" com pergunta pelo WhatsApp sobre o lado que está na tela.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.

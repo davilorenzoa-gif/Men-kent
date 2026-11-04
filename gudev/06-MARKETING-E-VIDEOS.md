@@ -52,6 +52,7 @@ Texto: **"Pra quem acha que Instagram basta."** Usar só demo, nunca o perfil de
 Vídeo POV de moto. Quando o carro aparece, a moto para, o carro avança sozinho pra rua vazia e a câmera dá um 360 nele. Depois corta pro site de estética automotiva (demo).
 Em Flow: 1) imagem "herói" do carro limpo; 2) Frames to Video do frame do susto até a imagem herói; 3) 360 a partir da imagem herói.
 Pra postar: **não usar o vídeo da Metrópoles** (é de terceiros e mostra um acidente real). Recriar a abertura em Flow.
+**Feito (04/11/2026):** site `sites/orbita-seminovos` + Reel `sites/orbita-seminovos/reel/reel-orbita.mp4` (19,6 s). Roteiro: quase-acidente em câmera lenta com "Esse quase passou batido.", pausa com "Peraí. Olha ele direito.", mira no carro, mergulho até o 360 com as qualidades, o site encolhe pra dentro de um celular, desce até a ficha, toque no botão, a mensagem do WhatsApp salta pra fora e fecha com "Seu estoque não pode passar batido.". Legenda e áudio em alta: pôr no app na hora de postar.
 
 ## Banco de ideias que exigem sair de casa (para depois)
 Cada uma tem: gancho → meio → revelação → CTA.
