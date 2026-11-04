@@ -344,6 +344,10 @@ var Q_DUR = Q_SEQ.length / Q_FPS;
 
 // Pontos medidos nos quadros (0..1 da imagem 9:16)
 var CARRO_Q = {x:.79, y:.47};
+// Câmera travada no carro: quanto cada quadro da câmera lenta (i_001..i_053) anda pra direita, em fração da largura,
+// pra o farol do City ficar parado na tela. Medido rastreando o farol quadro a quadro. Sem isso o carro escorregava
+// pra direita conforme a moto chegava e parecia que a moto empurrava o carro.
+var DQ = [0.1102,0.1091,0.1079,0.1066,0.1053,0.1039,0.1025,0.101,0.0995,0.0979,0.0963,0.0946,0.0929,0.0911,0.0893,0.0874,0.0855,0.0836,0.0816,0.0796,0.0775,0.0754,0.0733,0.0711,0.0689,0.0667,0.0645,0.0622,0.0599,0.0575,0.0552,0.0528,0.0504,0.048,0.0456,0.0431,0.0406,0.0382,0.0357,0.0331,0.0306,0.0281,0.0256,0.023,0.0205,0.0179,0.0153,0.0128,0.0102,0.0077,0.0051,0.0026,0];
 var MIRA_Q = {x0:.585, y0:.318, x1:.985, y1:.645};
 var FAIXA_Q = {y0:.712, y1:.828};
 var CARRO_V = {x:.49, y:.5};
@@ -413,7 +417,7 @@ var faixaDentro = faixa.querySelector('.dentro');
 var cortina = document.getElementById('cortina'), veu = document.getElementById('veu');
 var topo = document.getElementById('topo'), heroi = document.getElementById('heroi');
 var vista = document.getElementById('vista'), trilhoI = document.getElementById('trilhoI'), trilhoB = document.getElementById('trilhoB');
-var W = 0, H = 0, dpr = 1, largo = false, sujo = true, larguraAntes = -1;
+var W = 0, H = 0, dpr = 1, largo = false, sujo = true, larguraAntes = -1, zBase = 1;
 
 function medir(){
   var r = palco.getBoundingClientRect();
@@ -424,7 +428,10 @@ function medir(){
   largo = W / H > .8;
   raiz.classList.toggle('largo', largo);
   if (largo) palco.style.backgroundImage = 'none';
-  if (!cena.volta) posicionaFaixa(encaixe(CARRO_Q.x, .5));
+  // zoom mínimo pra imagem deslocada continuar cobrindo a tela (ou a coluna, no computador)
+  var rq = encaixe(CARRO_Q.x, .5), cxq = rq.x + CARRO_Q.x * rq.w, den = cxq - rq.x - DQ[0] * rq.w;
+  zBase = den > 0 ? Math.max(1, (cxq - Math.max(rq.x, 0)) / den) : 1;
+  if (!cena.volta) posicionaFaixa(rq, zBase, cxq);
   sujo = true;
 }
 // encaixe de imagem 9:16 no palco: celular cobre (com foco), computador fica em pé no centro
@@ -445,12 +452,16 @@ function pinta(im, r, alfa, z, zx, zy){
   ctx.globalAlpha = 1;
 }
 // a faixa cobre a marca que o vídeo gerado deixou perto do guidão: fica no lugar desde o primeiro quadro
-function posicionaFaixa(r){
-  var fh = (FAIXA_Q.y1 - FAIXA_Q.y0) * r.h, esq = Math.max(r.x, 0);
+// A faixa fica na camada que acompanha o zoom da câmera (cx, cy, z): ela cresce junto e continua cobrindo a marca,
+// mas o texto fica do mesmo tamanho e no mesmo lugar da tela.
+function posicionaFaixa(r, z, cx){
+  var fh = (FAIXA_Q.y1 - FAIXA_Q.y0) * r.h, esq = Math.max(r.x, 0), dir = Math.min(r.x + r.w, W);
+  // largura escolhida pra, depois do zoom, bater certinho na tela (celular) ou na coluna do vídeo (computador)
+  var e2 = cx + (esq - cx) / z, d2 = cx + (dir - cx) / z;
   faixa.style.top = (r.y + FAIXA_Q.y0 * r.h) + 'px'; faixa.style.height = fh + 'px';
-  faixa.style.left = esq + 'px'; faixa.style.width = (Math.min(r.x + r.w, W) - esq) + 'px';
-  faixa.style.padding = '0 ' + Math.round(Math.max(18, W * .05)) + 'px';
-  faixa.style.setProperty('--faixa-fs', Math.round(Math.min(fh * .4, W * .095, 54)) + 'px');
+  faixa.style.left = e2.toFixed(1) + 'px'; faixa.style.width = (d2 - e2).toFixed(1) + 'px';
+  faixa.style.padding = '0 0 0 ' + (Math.max(18, W * .05) / z).toFixed(1) + 'px';
+  faixa.style.setProperty('--faixa-fs', (Math.min(fh * .4, W * .095, 54) / z).toFixed(1) + 'px');
 }
 function pintaAmb(im){
   if (!largo || !im) return;
@@ -492,10 +503,20 @@ function desenha(){
   preso.style.visibility = '';
   var r = encaixe(CARRO_Q.x, .5);
   var cx = r.x + CARRO_Q.x * r.w, cy = r.y + CARRO_Q.y * r.h;
-  var z = (1 + .06 * c.empurra) * (1 + 2.2 * eIn(c.mer));
-  var qim = (c.t < Q_DUR || !pausaImg) ? (qImg[Q_SEQ[c.q]] || ultimoQ) : pausaImg;
+  var zND = zBase * (1 + .06 * c.empurra), zMer = 1 + 2.2 * eIn(c.mer), z = zND * zMer;
+  var naPausa = c.t >= Q_DUR && pausaImg;
+  var qim = naPausa ? pausaImg : (qImg[Q_SEQ[c.q]] || ultimoQ);
   if (qim) ultimoQ = qim;
-  if (c.rev < 1) pinta(qim, r, 1, z, cx, cy);
+  var desl = naPausa ? 0 : (DQ[Q_SEQ[c.q] - 1] || 0);
+  if (c.rev < 1) {
+    // janela da imagem (no computador, a coluna em pé), que se abre junto com o mergulho
+    var jx0 = Math.max(r.x, 0), jx1 = Math.min(r.x + r.w, W);
+    ctx.save(); ctx.beginPath();
+    ctx.rect((cx + (jx0 - cx) * zMer) * dpr, (cy + (r.y - cy) * zMer) * dpr, (jx1 - jx0) * zMer * dpr, r.h * zMer * dpr);
+    ctx.clip();
+    pinta(qim, {x:r.x + desl * r.w, y:r.y, w:r.w, h:r.h}, 1, z, cx, cy);
+    ctx.restore();
+  }
   if (c.rev > 0) {
     var r2 = encaixe(.5, .5), v0 = vPerto(0);
     var cx2 = r2.x + CARRO_V.x * r2.w, cy2 = r2.y + CARRO_V.y * r2.h;
@@ -519,9 +540,11 @@ function desenha(){
   spot.style.background = 'radial-gradient(' + rx.toFixed(0) + 'px ' + ry.toFixed(0) + 'px at ' + cx.toFixed(0) + 'px ' + cy.toFixed(0) + 'px, rgba(46,51,58,0) 0%, rgba(46,51,58,0) 52%, rgba(46,51,58,.78) 100%)';
   spot.style.opacity = (c.pausa * .95).toFixed(3);
 
-  var x0 = lim(r.x + MIRA_Q.x0 * r.w, 10, W - 40), x1 = lim(r.x + MIRA_Q.x1 * r.w, x0 + 40, W - 10);
-  var y0 = r.y + MIRA_Q.y0 * r.h, y1 = r.y + MIRA_Q.y1 * r.h;
-  var k = eBack(c.mira), ox0 = 14, oy0 = 14, ox1 = W - 14, oy1 = H - 14;
+  // bordas da tela convertidas pra camada com zoom (a mira nasce nos cantos e trava no carro sem sair da tela)
+  var a0 = cx + (12 - cx) / zND, a1 = cx + (W - 12 - cx) / zND, b0 = cy + (12 - cy) / zND, b1 = cy + (H - 12 - cy) / zND;
+  var x0 = lim(r.x + MIRA_Q.x0 * r.w, a0, a1 - 40), x1 = lim(r.x + MIRA_Q.x1 * r.w, x0 + 40, a1);
+  var y0 = lim(r.y + MIRA_Q.y0 * r.h, b0, b1 - 40), y1 = lim(r.y + MIRA_Q.y1 * r.h, y0 + 40, b1);
+  var k = eBack(c.mira), ox0 = a0, oy0 = b0, ox1 = a1, oy1 = b1;
   var mx0 = ox0 + (x0 - ox0) * k, my0 = oy0 + (y0 - oy0) * k, mx1 = ox1 + (x1 - ox1) * k, my1 = oy1 + (y1 - oy1) * k;
   mira.style.left = mx0 + 'px'; mira.style.top = my0 + 'px';
   mira.style.width = Math.max(48, mx1 - mx0) + 'px'; mira.style.height = Math.max(48, my1 - my0) + 'px';
@@ -529,7 +552,7 @@ function desenha(){
   var kt = c01((c.mira - .7) / .3);
   miraTag.style.opacity = kt; miraTag.style.transform = 'translateY(' + (6 * (1 - kt)).toFixed(1) + 'px)';
 
-  posicionaFaixa(r);
+  posicionaFaixa(r, zND, cx);
   faixaDentro.style.clipPath = 'inset(0 ' + ((1 - c.faixa) * 100).toFixed(2) + '% 0 0)';
   // troca de frase: uma sai, depois a outra entra (sem as duas na tela ao mesmo tempo)
   var sai = c01(c.troca * 2), entra = c01(c.troca * 2 - 1);

@@ -25,6 +25,7 @@ Os botões da "loja" abrem uma prévia da mensagem que o cliente mandaria. O bot
 
 ## Mídia
 - O vídeo da moto é o clipe do Flow (gerado a partir de um quadro de outro vídeo). O Flow copiou uma mancha perto do guidão. Ela fica coberta pela faixa de legenda, que já está no lugar desde o primeiro quadro.
+- No clipe original o City escorregava pra direita conforme a moto chegava (parecia que a moto empurrava o carro). A câmera agora fica travada no carro: o farol foi rastreado quadro a quadro e cada quadro é deslocado (tabela `DQ` no `index.html`), com um zoom mínimo pra não aparecer borda. O carro fica parado na tela e vai crescendo até a pausa.
 - A volta do carro é outro clipe do Flow. O carro da volta é de outra geração do City. Não dá pra perceber no movimento, mas não use os dois clipes como se fossem o mesmo carro numa loja de verdade.
 - O vídeo `VID-20261103-WA0021` (City de 2015 a 2019) ficou de fora porque é de outra geração.
 
