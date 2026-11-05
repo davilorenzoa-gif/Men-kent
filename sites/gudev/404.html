@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Página não encontrada | GuDev</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#12204A">
+<meta name="theme-color" content="#0D0D0D">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
 <style>
-:root{--letreiro:#12204A;--cartaz:#FFD400;--aco-escuro:#6E757C}
+:root{--letreiro:#0D0D0D;--cartaz:#FF5B0A;--aco-escuro:#6E757C}
 *{box-sizing:border-box}
 body{margin:0;min-height:100svh;display:grid;grid-template-rows:auto 1fr;background:var(--letreiro);color:#fff;font:400 1.0625rem/1.6 "Instrument Sans",system-ui,sans-serif;overflow-x:clip}
 ::selection{background:var(--cartaz);color:var(--letreiro)}
@@ -19,14 +19,14 @@ header{padding:24px clamp(16px,5vw,64px)}
 .marca b{color:var(--cartaz)}
 .porta{position:relative;margin:0 clamp(16px,5vw,64px) 0;display:grid;place-items:center;padding:48px 16px 64px;background:
   linear-gradient(90deg, rgba(0,0,0,.22), transparent 14%, rgba(255,255,255,.06) 50%, transparent 86%, rgba(0,0,0,.22)),
-  repeating-linear-gradient(180deg, #D3D7DB 0 2px, #BDC2C7 2px 13px, #A4AAB0 13px 21px, #7E858C 21px 23px, #C6CACE 23px 26px);color:var(--letreiro);text-align:center}
+  repeating-linear-gradient(180deg, #FF8240 0 2px, #FF5B0A 2px 15px, #EC5003 15px 23px, #B23B00 23px 25px, #FF6C21 25px 28px);color:var(--letreiro);text-align:center}
 .placa{background:#FBFBF8;padding:28px clamp(20px,4vw,40px) 30px;max-width:460px;box-shadow:0 18px 34px -16px rgba(0,0,0,.5);transform:rotate(1.5deg)}
 h1{margin:0;font:800 clamp(2.4rem,8vw,3.6rem)/.95 "Bricolage Grotesque",sans-serif;font-variation-settings:"wdth" 78;letter-spacing:-.03em;text-wrap:balance}
-p{margin:14px 0 0;color:#46506B}
+p{margin:14px 0 0;color:#5E5A55}
 .acoes{margin-top:22px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center}
-.btn{display:inline-flex;align-items:center;min-height:50px;padding:0 20px;border-radius:999px;background:var(--cartaz);color:var(--letreiro);font-weight:700;text-decoration:none;transition:transform .18s cubic-bezier(.16,1,.3,1)}
+.btn{display:inline-flex;align-items:center;min-height:50px;padding:0 20px;border-radius:999px;background:var(--letreiro);color:#fff;font-weight:700;text-decoration:none;transition:transform .18s cubic-bezier(.16,1,.3,1)}
 .btn:hover{transform:translateY(-1px)}
-.btn--azul{background:var(--letreiro);color:#fff}
+.btn--azul{background:var(--cartaz);color:var(--letreiro)}
 :focus-visible{outline:3px solid var(--cartaz);outline-offset:3px;box-shadow:0 0 0 6px var(--letreiro);border-radius:8px}
 @media (prefers-reduced-motion:reduce){.btn:hover{transform:none}}
 </style>

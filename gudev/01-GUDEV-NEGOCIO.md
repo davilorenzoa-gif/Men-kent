@@ -2,6 +2,8 @@
 
 ## Quem somos
 - **GuDev** cria sites para comércios locais. O slogan é **"Sites que vendem."**
+- **Cores da marca:** laranja, branco e preto. O hex do laranja ainda não foi confirmado (o site usa `#FF5B0A` por enquanto).
+- **Site da GuDev:** `sites/gudev/` (página de venda própria).
 - **Gustavo (Gu)**, 17 anos, da Zona Leste de SP, constrói os sites e as propostas no PC. Ele tem as ferramentas: gerador de proposta, testes, melhoria de foto em 4K e Netlify.
 - **Davi**, sócio, cuida de vendas e prospecção. Usa o Claude pelo celular.
 - **O WhatsApp comercial da GuDev é o do Davi: (11) 96465-0141.** É o número que aparece nas propostas.

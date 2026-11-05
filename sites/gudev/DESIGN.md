@@ -1,34 +1,44 @@
-# Design: site da GuDev
+# Design: site da GuDev (v2, 05/11/2026)
 
-**Princípio:** o site é uma loja de rua. Fachada com letreiro, vitrine com cartaz de oferta, cupom fiscal, conversa de WhatsApp. São materiais que todo dono de comércio reconhece, e nenhum outro site de agência usa.
+**Princípio:** o site é a porta de um comércio de rua. Uma porta de aço laranja com "Sites que vendem." pintado sobe com a rolagem e mostra a rua cheia de gente (o cliente que passa na porta). Depois vêm um cartaz de oferta, um cupom fiscal, uma conversa de WhatsApp e fotos de comércio de verdade.
 
-## Paleta
+## Paleta (cores da marca: laranja, branco e preto)
 | Nome | Hex | Uso |
 |---|---|---|
-| Azul letreiro | `#12204A` | Tinta principal, fachada, balcão, seções escuras |
-| Amarelo cartaz | `#FFD400` | Cartaz de oferta, botão principal, título do letreiro |
-| Vermelho preço | `#C81E17` | Só preço e carimbo |
-| Aço | `#B9BEC3` / `#6E757C` | Porta de enrolar |
-| Concreto | `#E9EBEE` | Fundo da página |
-| Papel | `#FBFBF8` | Cupom e seção "Depois do ar" |
-| Verde WhatsApp | `#1FAF38` | Só no ícone e no botão flutuante |
+| Laranja GuDev | `#FF5B0A` | Porta, faixa, cartaz, destaques. **Hex provisório: confirmar com o logo** |
+| Laranja escuro | `#C94300` | Preço sobre fundo claro, sombra das ripas |
+| Preto | `#0D0D0D` | Texto, seções escuras, botão principal |
+| Branco | `#FFFFFF` | Fundo |
+| Osso | `#F5F3F0` | Seções alternadas |
+| Cinza | `#5E5A55` / `#B4ADA6` | Texto secundário no claro / no escuro |
+| Verde WhatsApp | `#1FAF38` | Só ícone e botão flutuante |
+
+Contraste: texto sobre laranja é sempre preto (branco sobre laranja não passa no AA). Laranja como texto só em título grande ou sobre preto.
 
 ## Tipografia
-- **Bricolage Grotesque** (variável, `wdth` 75 a 100): letreiro, títulos e o cartaz. Estreita e pesada, com cara de pintura de letreiro.
+- **Bricolage Grotesque** (`wdth` 75 a 100): títulos, porta, cartaz.
 - **Instrument Sans:** texto e botões.
-- Cupom em monoespaçada do sistema, porque é o que uma impressora térmica usa.
+- Cupom em monoespaçada do sistema.
 
 ## 3 WOWs (não repetir em outros sites)
-1. **Abertura:** a porta de aço sobe pra dentro do letreiro e as lâmpadas da vitrine piscam até acender.
-2. **Meio:** conversa de WhatsApp que se escreve com a rolagem (com "digitando…"), sincronizada com os 4 passos.
-3. **Interativo:** simulador com nome, tipo, bairro e cor que monta um mini site no celular e já prepara a mensagem do WhatsApp.
+1. **Abertura (rolagem):** a porta de aço laranja dá um tranco ao carregar, depois sobe com a rolagem. A foto da Rua 25 de Março dá zoom out, aparecem as frases "Todo dia passa cliente na sua porta. / E todo dia ele procura no celular.", um celular sobe com um site de exemplo e chegam notificações de pedido.
+2. **Meio:** conversa de WhatsApp que se escreve com a rolagem, com "digitando…", passos sincronizados e o celular girando em 3D no computador.
+3. **Interativo:** simulador (nome, tipo, bairro, cor) com foto por tipo. O botão dentro do celular faz chegar uma notificação de pedido. O botão de fora abre o WhatsApp com a mensagem pronta.
 
-## Componentes
-- `.btn` (amarelo) e `.btn--azul`: mesmo nome de ação em todo lugar, "Pedir prévia grátis".
-- `.fone`: moldura de celular, usada no WOW 2 e no WOW 3.
-- `waLink()` no JS: o único lugar que monta link de WhatsApp.
+## Apoio (calmo, cada um com motivo)
+- Faixa laranja com os tipos de comércio, que inclina conforme a velocidade da rolagem.
+- Foto da lousa revelada por cortina (clip-path), uma vez.
+- Cartaz: o preço conta de 500 até 297 quando aparece (lição do Açaí: animar sozinho quando entra na tela).
+- Cupom "sai da impressora", e o carimbo "PRÉVIA GRÁTIS" bate no fim.
+- Galeria com velocidades diferentes por foto (só no computador).
+- Fechamento: a porta desce até a metade, como fim de expediente.
+- Botões magnéticos e barra de progresso laranja no topo (só no computador).
 
-## Efeitos e por quê
-- Vidro (blur) só na barra fixa, por cima do conteúdo que rola, por legibilidade. Tem fundo sólido de reserva.
-- Reflexo diagonal na vitrine: diz "isso é vidro" sem precisar de foto.
-- Nada de fade em toda seção. Fora dos 3 WOWs, a página é quieta.
+## Técnica
+- GSAP 3.12.5 (cdnjs) e Lenis 1.1.13 (unpkg), versão fixa + SRI. Lenis só no computador, fora do iframe.
+- Sem pin do GSAP: toda cena é seção alta + `position:sticky` + progresso por `getBoundingClientRect()` num rAF disparado pela rolagem, com `setInterval` de garantia. O GSAP só monta a timeline (`tl.progress(p)`).
+- Sem GSAP (CDN fora): a porta fica fechada, com título e botão, e o resto da página funciona.
+- `?embed` e iframe seguem o `03-PADRAO`.
+
+## Fotos
+Wikimedia Commons (domínio público, CC BY e CC BY-SA), créditos no rodapé. Marcadas como ilustrativas, sem dizer que são clientes.
