@@ -15,7 +15,7 @@ Site de prévia feito em 06/11/2026. **Ainda não é cliente.**
 
 ## WOWs
 1. **Abertura:** o Fusca chega alto e baixa dente por dente em cima do nome KATRAKA (as letras "sentem" o peso); no fim, farol e lanterna acendem em laranja. Rolando, ele sai andando com as rodas girando.
-2. **Meio:** "Fusca é pra durar": a foto do Fusca verde liga a luz em 4 posições do interruptor (desligado, lanterna, farol baixo, farol alto). Em seguida, o **raio-x**: um scanner passa pelo carro e mostra por dentro onde a oficina mexe (suspensão e katraka, freio, direção, quadro, facão, rodas, motor). Cada parte vira um orçamento pronto no WhatsApp.
+2. **Meio:** "Fusca é pra durar": a foto do Fusca verde liga a luz em 4 posições do interruptor (desligado, lanterna, farol baixo, farol alto). Em seguida, o **raio-x**: a foto do Fusca de lado e, dentro da faixa do scanner, a mesma foto em vista interna (imagem que o Davi mandou), com um marcador laranja pulsando em cada parte onde a oficina mexe (suspensão e katraka, freio, direção, quadro, facão, rodas, motor). Cada parte vira um orçamento pronto no WhatsApp.
 3. **Interativo:** "Gire a katraka": duas catracas, uma embaixo de cada roda (dianteira = katraka, traseira = facão). A pessoa gira com o dedo, ouve o "tec", vê o Fusca baixar e o medidor dizer se está no ponto, no limite ou se passou (aí o pneu raspa no paralama). Escolhe o carro e manda a configuração pro WhatsApp.
 
 Extra: ordem de serviço (formulário) que leva um carimbo "ENVIADO" e abre o WhatsApp com a mensagem pronta.
@@ -34,6 +34,7 @@ Tudo veio de pesquisa pública (site katraka.com.br, Facebook, Instagram @katrak
 ## Fotos
 As fotos em `img/` (menos a `og-katraka.jpg`) são **fotos conceito que o Davi mandou** (Pinterest/Instagram), não são da Katraka nem de clientes. Estão marcadas como "foto ilustrativa". Antes de publicar como site final: trocar por fotos da oficina (Instagram @katrakavw / Google Maps, pedindo permissão) ou confirmar que pode usar.
 - `fusca-farol.jpg`: seção do interruptor do farol (o fundo preto da foto se funde no verde-escuro com `mix-blend-mode: lighten`).
+- `raiox-lateral.jpg` e `raiox-interna.jpg`: as duas metades da imagem "vista lateral / vista interna" que o Davi mandou, alinhadas pixel a pixel. Da vista interna tirei os textos e as linhas-guia (o fundo fora do carro vem da vista lateral e as linhas dentro do carro foram apagadas). Parece imagem gerada por IA, então está marcada como "Imagem ilustrativa".
 - `fusca-rebaixado.jpg`: "quem somos". `farol-detalhe.jpg`: FAQ (só no computador). `fusca-estrada.jpg`: rodapé "Boa estrada". `fusca-por-do-sol.jpg`: página 404.
 
 ## Checklist dos 19 itens

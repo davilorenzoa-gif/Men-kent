@@ -44,6 +44,7 @@
   --acento:#F2542D;   /* Laranja Lanterna (10%): farol e lanterna acesos, botão do WhatsApp, a katraka */
   --graxa:#16231C;    /* Graxa: texto sobre o creme, pneus, a sala do raio-x */
   --musgo:#56755F;    /* Musgo: linhas e divisórias sobre o verde */
+  --estudio:#3A3938;  /* Cinza Estúdio: o fundo da foto do raio-x, pra emenda sumir */
   --fd:"Jost","Futura","Century Gothic","Avenir Next",system-ui,sans-serif;          /* títulos e texto: geométrica, redonda como o Fusca (a família dos anúncios da VW) */
   --fm:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;      /* anotações técnicas, valores, a OS */
   --ease:cubic-bezier(.2,.7,.1,1);
@@ -168,24 +169,33 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .chave li.on{opacity:1}
 .chave li.on::before{background:var(--acento);border-color:var(--acento)}
 
-/* ===== WOW 2: raio-x do Fusca ===== */
-.raiox{position:relative;height:440vh;background:var(--graxa)}
-.rx-palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:clamp(8px,2svh,20px);padding-top:calc(84px + env(safe-area-inset-top,0px));padding-bottom:clamp(16px,3svh,32px);
-  background-image:linear-gradient(rgba(239,230,211,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(239,230,211,.045) 1px,transparent 1px);background-size:44px 44px}
+/* ===== WOW 2: raio-x do Fusca (foto: a vista interna aparece por dentro da faixa do scanner) ===== */
+.raiox{position:relative;height:440vh;background:var(--estudio)}
+.rx-palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:clamp(8px,2svh,20px);padding-top:calc(84px + env(safe-area-inset-top,0px));padding-bottom:clamp(16px,3svh,32px);background:var(--estudio)}
 .rx-topo{display:flex;justify-content:space-between;align-items:end;gap:16px 40px;flex-wrap:wrap}
 .rx-topo h2{font-size:clamp(34px,5vw,68px)}
 .rx-topo .sub{max-width:40ch}
 .rx-cena{display:grid;place-items:center;min-height:0}
-.rx-cena svg{width:min(100%,1100px,calc((100svh - 330px)*2.4));height:auto;overflow:visible}
-.planta{--lata:none;--linha:rgba(239,230,211,.42);--vidro:none;--luz:none;--cromo:rgba(239,230,211,.3);--tr:6 5}
-.dz{fill:none;stroke:rgba(239,230,211,.78);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s}
-.dz .tr{stroke-dasharray:5 5}
-.dz .grosso{stroke-width:9;stroke-opacity:.85}
-.dz .cat{fill:rgba(239,230,211,.15)}
-.dz.on{stroke:var(--acento)}
-.dz.on .cat{fill:rgba(242,84,45,.25)}
-.rx-borda{stroke:var(--acento);stroke-width:2.5}
-.rx-luz{opacity:.9}
+.rx-foto{position:relative;width:min(100%,1080px,calc((100svh - 330px)*1.62));aspect-ratio:858/530;--x0:0%;--x1:0%;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 10%,#000 78%,transparent 100%),linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to bottom,transparent 0,#000 10%,#000 78%,transparent 100%),linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%);mask-composite:intersect}
+.rx-foto img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.rx-int{clip-path:inset(0 calc(100% - var(--x1)) 0 var(--x0))}
+.rx-luz{position:absolute;top:0;bottom:0;left:var(--x0);width:calc(var(--x1) - var(--x0));background:linear-gradient(90deg,rgba(242,84,45,0),rgba(242,84,45,.12) 50%,rgba(242,84,45,0));pointer-events:none;transition:opacity .3s}
+.rx-borda{position:absolute;top:6%;bottom:12%;width:2px;margin-left:-1px;background:var(--acento);box-shadow:0 0 14px rgba(242,84,45,.8);pointer-events:none;transition:opacity .3s}
+.rx-borda.a{left:var(--x0)}
+.rx-borda.b{left:var(--x1)}
+.rx-foto.fim .rx-luz,.rx-foto.fim .rx-borda{opacity:0}
+.rx-marcas{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.mk{opacity:0;transition:opacity .25s}
+.mk .anel{fill:none;stroke:var(--acento);stroke-width:3}
+.mk .pto{fill:var(--acento);stroke:#fff;stroke-width:1.5}
+.mk .pulso{fill:none;stroke:var(--acento);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:pulso-mk 1.4s ease-out infinite}
+@keyframes pulso-mk{from{transform:scale(1);opacity:.9}to{transform:scale(2.3);opacity:0}}
+.mk.on{opacity:1}
+.rx-foto.fim .mk{opacity:1}
+.rx-foto.fim .mk .pulso{display:none}
+.rx-cred{position:absolute;right:4%;bottom:14%;font-family:var(--fm);font-size:11px;opacity:.55}
 .rx-base{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px 48px;align-items:end}
 .leitura{position:relative;min-height:150px;overflow:hidden}
 .leitura .pos{font-family:var(--fm);font-size:13px;opacity:.7}
@@ -372,7 +382,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .hero .acoes .btn{width:100%}
   .ficha{border-left:0;padding-left:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;max-width:none;margin-top:6px;padding-top:16px;border-top:1px solid rgba(239,230,211,.2)}
   .raiox{height:400vh}
-  .rx-palco{padding-top:calc(72px + env(safe-area-inset-top,0px));gap:6px}
+  .rx-palco{padding-top:calc(72px + env(safe-area-inset-top,0px));grid-template-rows:auto auto auto;align-content:center;gap:22px}
+  .rx-cena{padding-left:0;padding-right:0}
+  .rx-foto{width:100%}
   .rx-topo .sub{font-size:15px}
   .rx-lista{display:none}
   .leitura{min-height:170px}
@@ -392,7 +404,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .embed .sobe,.embed .sim-cena .sobe{transition:none}
 .embed .raiox{height:auto}
 .embed .rx-palco{position:relative;height:auto;min-height:0;padding-bottom:48px}
-.embed .rx-cena svg{width:min(100%,1100px)}
+.embed .rx-foto{width:min(100%,1080px)}
 .embed .rx-lista{display:flex}
 .embed .zap,.dentro .zap{display:none!important}
 .embed .farol{height:auto}
@@ -456,71 +468,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <path class="arco arco-r" d="M830 312A84 84 0 0 0 674 312"/>
   </symbol>
 
-  <!-- por dentro: o que aparece no raio-x (cada grupo é um serviço) -->
-  <symbol id="f-dentro" overflow="visible">
-    <g class="dz" data-z="quadro">
-      <path d="M300 292L700 292M300 312L700 312M340 292L340 312M420 292L420 312M500 292L500 312M580 292L580 312M660 292L660 312"/>
-      <path class="tr" d="M330 302L690 302"/>
-    </g>
-    <g class="dz" data-z="susp">
-      <rect x="176" y="262" width="28" height="56" rx="6"/>
-      <circle cx="190" cy="276" r="9"/><circle cx="190" cy="304" r="9"/>
-      <path d="M190 276L232 316M190 304L232 344"/>
-      <circle cx="232" cy="330" r="7"/>
-      <path class="grosso" d="M206 350L162 256"/>
-      <path class="cat" data-eng="190,276,18,12,12"/>
-    </g>
-    <g class="dz" data-z="freio">
-      <circle class="tr" cx="232" cy="330" r="34"/>
-      <path class="grosso" d="M206 320A28 28 0 0 1 258 320M206 340A28 28 0 0 0 258 340"/>
-      <circle class="tr" cx="752" cy="330" r="34"/>
-      <path class="grosso" d="M726 320A28 28 0 0 1 778 320M726 340A28 28 0 0 0 778 340"/>
-    </g>
-    <g class="dz" data-z="direcao">
-      <rect x="254" y="262" width="30" height="18" rx="4" transform="rotate(-20 269 271)"/>
-      <path d="M272 264L376 178M258 278L216 300"/>
-      <ellipse cx="382" cy="170" rx="6" ry="28" transform="rotate(-38 382 170)"/>
-    </g>
-    <g class="dz" data-z="facao">
-      <circle cx="684" cy="298" r="15"/>
-      <path class="cat" data-eng="684,298,11,7,10"/>
-      <path class="grosso" d="M684 298L746 326"/>
-      <path class="grosso" d="M772 346L792 262"/>
-    </g>
-    <g class="dz" data-z="rodas">
-      <path class="tr" d="M232 244L232 414M752 244L752 414"/>
-      <path d="M756 262L746 398M150 404L314 404M670 404L834 404"/>
-      <path d="M752 286A44 44 0 0 1 760 287"/>
-    </g>
-    <g class="dz" data-z="motor">
-      <circle cx="852" cy="232" r="24"/>
-      <path d="M852 214L852 250M834 232L870 232M839 219L865 245M865 219L839 245"/>
-      <rect x="800" y="252" width="104" height="46" rx="6"/>
-      <path d="M814 252V298M826 252V298M838 252V298M850 252V298M862 252V298M874 252V298M886 252V298"/>
-      <ellipse cx="826" cy="212" rx="18" ry="8"/>
-      <path d="M828 220L832 252"/>
-      <circle cx="904" cy="300" r="12"/>
-      <rect x="872" y="306" width="74" height="22" rx="10"/>
-      <path d="M946 314L968 314M946 321L966 321"/>
-    </g>
-  </symbol>
 
   <linearGradient id="gFacho" x1="1" y1="0" x2="0" y2="0">
     <stop offset="0" stop-color="#F2542D" stop-opacity=".55"/>
     <stop offset="1" stop-color="#F2542D" stop-opacity="0"/>
   </linearGradient>
-  <linearGradient id="gScan" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#F2542D" stop-opacity="0"/>
-    <stop offset=".5" stop-color="#F2542D" stop-opacity=".10"/>
-    <stop offset="1" stop-color="#F2542D" stop-opacity="0"/>
-  </linearGradient>
-  <filter id="brilha" x="-50%" y="-50%" width="200%" height="200%">
-    <feGaussianBlur stdDeviation="4" result="b"/>
-    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-  </filter>
-  <pattern id="grade" width="22" height="22" patternUnits="userSpaceOnUse">
-    <path d="M22 0H0V22" fill="none" stroke="rgba(239,230,211,.07)" stroke-width="1"/>
-  </pattern>
 </defs>
 </svg>
 
@@ -619,31 +571,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <p class="sub">Role a página. Por onde o scanner passa, aparece a parte que a gente conserta.</p>
     </div>
     <div class="miolo rx-cena">
-      <svg id="rxSvg" viewBox="0 0 1000 430" aria-hidden="true">
-        <defs><clipPath id="rxClip"><rect id="rxRect" x="-200" y="-20" width="170" height="470"/></clipPath></defs>
-        <line x1="0" y1="398" x2="1000" y2="398" stroke="rgba(239,230,211,.4)" stroke-width="2"/>
-        <g id="rxSolido">
-          <use href="#f-fundo"/>
-          <use href="#f-roda" x="232" y="330"/>
-          <use href="#f-roda" x="752" y="330"/>
-          <use href="#f-corpo"/>
-        </g>
-        <g clip-path="url(#rxClip)">
-          <rect x="-20" y="-20" width="1040" height="470" fill="#16231C"/>
-          <rect x="-20" y="-20" width="1040" height="470" fill="url(#grade)"/>
-          <g class="planta">
-            <circle cx="232" cy="330" r="68" fill="none" stroke="rgba(239,230,211,.42)" stroke-width="2" stroke-dasharray="6 5"/>
-            <circle cx="232" cy="330" r="41" fill="none" stroke="rgba(239,230,211,.3)" stroke-width="2"/>
-            <circle cx="752" cy="330" r="68" fill="none" stroke="rgba(239,230,211,.42)" stroke-width="2" stroke-dasharray="6 5"/>
-            <circle cx="752" cy="330" r="41" fill="none" stroke="rgba(239,230,211,.3)" stroke-width="2"/>
-            <use href="#f-corpo"/>
-          </g>
-          <use href="#f-dentro" id="rxDentro"/>
-          <rect id="rxLuz" class="rx-luz" x="-200" y="-20" width="170" height="470" fill="url(#gScan)"/>
-        </g>
-        <line id="rxB1" class="rx-borda" x1="-200" y1="-10" x2="-200" y2="420"/>
-        <line id="rxB2" class="rx-borda" x1="-30" y1="-10" x2="-30" y2="420"/>
-      </svg>
+      <div class="rx-foto" id="rxFoto">
+        <img class="rx-lat" src="img/raiox-lateral.jpg" alt="Fusca bege de lado, fotografado num estúdio" width="858" height="530" loading="lazy">
+        <img class="rx-int" src="img/raiox-interna.jpg" alt="O mesmo Fusca em vista interna, mostrando suspensão, freios, direção, chassi, motor e escapamento" width="858" height="530" loading="lazy">
+        <i class="rx-luz" aria-hidden="true"></i><i class="rx-borda a" aria-hidden="true"></i><i class="rx-borda b" aria-hidden="true"></i>
+        <svg class="rx-marcas" id="rxMarcas" viewBox="0 0 858 530" aria-hidden="true"></svg>
+        <span class="rx-cred">Imagem ilustrativa</span>
+      </div>
     </div>
     <div class="miolo rx-base">
       <div class="leitura" id="leitura" aria-live="polite">
@@ -1017,20 +951,26 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
   /* ===================== WOW 2: raio-x ===================== */
   var ZONAS = [
-    { z: "susp",    x: 196, t: "Suspensão dianteira e katraka", d: "A katraka regula a altura da frente. Junto, a gente confere braços, amortecedores e batentes.", m: "Quero ver a suspensão dianteira do meu carro (katraka, amortecedor, batente)." },
-    { z: "freio",   x: 240, t: "Freios", d: "Freio a tambor e a disco. Também fazemos furação de discos e tambores pra trocar a roda.", m: "Quero revisar os freios do meu carro." },
-    { z: "direcao", x: 310, t: "Direção", d: "Revisão da direção pra o carro andar reto e sem folga no volante.", m: "Quero revisar a direção do meu carro." },
-    { z: "quadro",  x: 490, t: "Quadro", d: "Encurtamento de quadro pra projetos especiais.", m: "Quero conversar sobre encurtamento de quadro." },
-    { z: "facao",   x: 690, t: "Traseira e facão", d: "A altura da traseira se regula no facão, na ponta da barra de torção.", m: "Quero regular a altura da traseira (facão)." },
-    { z: "rodas",   x: 760, t: "Rodas no lugar", d: "Alinhamento, balanceamento e cambagem, que pesa ainda mais depois de rebaixar. Pneus e rodas também.", m: "Quero fazer alinhamento, balanceamento e cambagem." },
-    { z: "motor",   x: 860, t: "Motor e escapamento", d: "Também atendemos motor e escapamento do VW a ar.", m: "Quero um orçamento de motor/escapamento." }
+    { z: "susp",    x: 112, y: 305, t: "Suspensão dianteira e katraka", d: "A katraka regula a altura da frente. Junto, a gente confere braços, amortecedores e batentes.", m: "Quero ver a suspensão dianteira do meu carro (katraka, amortecedor, batente)." },
+    { z: "freio",   x: 150, y: 342, t: "Freios", d: "Freio a tambor e a disco. Também fazemos furação de discos e tambores pra trocar a roda.", m: "Quero revisar os freios do meu carro." },
+    { z: "direcao", x: 330, y: 215, t: "Direção", d: "Revisão da direção pra o carro andar reto e sem folga no volante.", m: "Quero revisar a direção do meu carro." },
+    { z: "quadro",  x: 440, y: 328, t: "Quadro", d: "Encurtamento de quadro pra projetos especiais.", m: "Quero conversar sobre encurtamento de quadro." },
+    { z: "facao",   x: 622, y: 318, t: "Traseira e facão", d: "A altura da traseira se regula no facão, na ponta da barra de torção.", m: "Quero regular a altura da traseira (facão)." },
+    { z: "rodas",   x: 680, y: 345, t: "Rodas no lugar", d: "Alinhamento, balanceamento e cambagem, que pesa ainda mais depois de rebaixar. Pneus e rodas também.", m: "Quero fazer alinhamento, balanceamento e cambagem." },
+    { z: "motor",   x: 745, y: 262, t: "Motor e escapamento", d: "Também atendemos motor e escapamento do VW a ar.", m: "Quero um orçamento de motor/escapamento." }
   ];
-  var rx = $("#raiox"), rxRect = $("#rxRect"), rxLuz = $("#rxLuz"), rxB1 = $("#rxB1"), rxB2 = $("#rxB2");
+  var rx = $("#raiox"), rxFoto = $("#rxFoto"), rxMarcas = $("#rxMarcas"), LARG = 858;
   var leitura = $("#leitura"), rxPos = $("#rxPos"), rxT = $("#rxT"), rxD = $("#rxD"), rxA = $("#rxA"), lista = $("#rxLista");
-  var grupos = {}; $$("#f-dentro .dz").forEach(function(g){ grupos[g.getAttribute("data-z")] = g; });
-  ZONAS.forEach(function(zn){ var li = document.createElement("li"); li.textContent = zn.t; lista.appendChild(li); });
+  var grupos = {};
+  ZONAS.forEach(function(zn){
+    var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute("class", "mk"); g.setAttribute("transform", "translate(" + zn.x + " " + zn.y + ")");
+    g.innerHTML = '<circle class="pulso" r="15"/><circle class="anel" r="15"/><circle class="pto" r="5"/>';
+    rxMarcas.appendChild(g); grupos[zn.z] = g;
+    var li = document.createElement("li"); li.textContent = zn.t; lista.appendChild(li);
+  });
   var lis = $$("#rxLista li");
-  var BANDA = 180, zonaAtual = -2, fila = [], ocupado = false;
+  var BANDA = 150, zonaAtual = -2, fila = [], ocupado = false;
 
   function preenche(i){
     if (i === -1){ rxPos.textContent = "Comece a rolar"; rxT.textContent = "O scanner começa pela frente"; rxD.textContent = "Cada parte que aparece é um serviço da oficina."; rxA.href = wa(MSG.topo); return; }
@@ -1058,43 +998,41 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     ZONAS.forEach(function(zn, k){
       var on = (i === 99) ? false : k === i;
       grupos[zn.z].classList.toggle("on", on);
+      grupos[zn.z].classList.toggle("feito", i !== 99 && i >= 0 && k < i);
       lis[k].classList.toggle("on", on);
       lis[k].classList.toggle("feito", i === 99 || (i >= 0 && k < i));
     });
     fila.push(i); if (!ocupado) anima();
   }
   function banda(x, w){
-    rxRect.setAttribute("x", x.toFixed(1)); rxRect.setAttribute("width", w.toFixed(1));
-    rxLuz.setAttribute("x", x.toFixed(1)); rxLuz.setAttribute("width", w.toFixed(1));
-    rxB1.setAttribute("x1", x.toFixed(1)); rxB1.setAttribute("x2", x.toFixed(1));
-    rxB2.setAttribute("x1", (x + w).toFixed(1)); rxB2.setAttribute("x2", (x + w).toFixed(1));
-    var fim = w > 900;
-    rxB1.style.opacity = rxB2.style.opacity = fim ? 0 : 1;
-    rxLuz.style.opacity = fim ? 0 : .9;
+    var a = clamp(x / LARG * 100, 0, 100), b = clamp((x + w) / LARG * 100, 0, 100);
+    rxFoto.style.setProperty("--x0", a.toFixed(2) + "%");
+    rxFoto.style.setProperty("--x1", b.toFixed(2) + "%");
+    rxFoto.classList.toggle("fim", a <= 0.01 && b >= 99.99);
   }
   var altTela = window.innerHeight;
   function rxRola(){
-    if (embed){ banda(-20, 1040); mostraZona(99); return; }
+    if (embed){ banda(0, LARG); mostraZona(99); return; }
     var r = rx.getBoundingClientRect();
     var curso = r.height - altTela;
     var p = clamp(-r.top / Math.max(1, curso), 0, 1);
     var A = .06, B = .84;
     if (p <= B){
       var q = clamp((p - A) / (B - A), 0, 1);
-      var c = -BANDA / 2 + q * (1000 + BANDA);
+      var c = -BANDA / 2 + q * (LARG + BANDA);
       banda(c - BANDA / 2, BANDA);
       if (p < A + .01){ mostraZona(-1); return; }
       // zona mais perto do centro do scanner, com folga pra não ficar trocando
       var melhor = zonaAtual < 0 || zonaAtual > 50 ? 0 : zonaAtual, dm = Math.abs(ZONAS[melhor].x - c);
       for (var k = 0; k < ZONAS.length; k++){
         var dk = Math.abs(ZONAS[k].x - c);
-        if (dk < dm - 18){ melhor = k; dm = dk; }
+        if (dk < dm - 16){ melhor = k; dm = dk; }
       }
       mostraZona(melhor);
     } else {
       var e = clamp((p - B) / (1 - B - .04), 0, 1);
-      var x0 = 1000 - BANDA / 2 - (1000 - BANDA / 2 + 20) * e;
-      banda(x0, (1000 + 40 - x0) * 1);
+      var x0 = (LARG - BANDA / 2) * (1 - e);
+      banda(x0, LARG - x0);
       if (e > .6) mostraZona(99);
     }
   }
