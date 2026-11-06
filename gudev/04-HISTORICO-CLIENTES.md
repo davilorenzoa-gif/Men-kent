@@ -1,4 +1,4 @@
-# Histórico de leads e clientes (atualizado em 20/10/2026)
+# Histórico de leads e clientes (atualizado em 06/11/2026)
 
 Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o primeiro fechar, ele entra lá.
 
@@ -43,6 +43,17 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - Agendamento pelo AppBarber, com 40 serviços e uma equipe de 8.
   - WhatsApp: 5579999100181.
 - **Andamento:** pediu prévia em 19/10 e a prévia foi enviada. Pediram "cara de 10k".
+
+## Katraka Especializada VW Aircooled, Tatuapé, São Paulo (Zona Leste) · lead do Davi
+- **Dados (pesquisa pública, confirmar):** oficina especializada em Fusca e derivados (Brasília, Kombi, Variant), desde 1995.
+  - Endereço: Rua Serra de Bragança, 810.
+  - Fixo: (11) 3539-2100. Celular (usado como WhatsApp, confirmar): (11) 94745-6663.
+  - Instagram: @katrakavw. Facebook: katrakavws.
+  - Dono: Alexandre, o "Katraka". Nota 5,0 com 17 avaliações (diretório, conferir no Maps).
+  - Serviços (site oficial): suspensão, katraka (catraca pra rebaixar), regulagem de facão, encurtamento de quadro, freios, furação de discos e tambores, alinhamento, balanceamento, cambagem, pneus e rodas. Direção (Instagram).
+  - Já saiu no Canal da Peça (como rebaixar um Fusca) e no blog Acelerada.
+- **Andamento:** o Davi acha que fecha. Prévia feita em 06/11 em `sites/katraka/` (ver o README de lá com o que confirmar).
+- **Site:** Fusca desenhado em SVG que baixa dente por dente em cima do nome; interruptor do farol com foto; raio-x do Fusca; simulador "Gire a katraka"; ordem de serviço com carimbo. Fotos são conceito (do Davi), marcadas como ilustrativas.
 
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.

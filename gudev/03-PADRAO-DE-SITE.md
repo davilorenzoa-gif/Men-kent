@@ -35,6 +35,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "PAI & FILHO" converge na rolagem;
   - uma comanda de serviços que vai pro WhatsApp.
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
+- **Katraka** (oficina de Fusca):
+  - o Fusca (SVG) baixa dente por dente em cima do nome, as letras sentem o peso e o farol acende;
+  - interruptor do farol em 4 posições com a rolagem (foto escura que acende) e raio-x: um scanner que mostra por dentro onde a oficina mexe;
+  - "Gire a katraka": catracas embaixo de cada roda que baixam o carro, com som de clique e medidor de limite, mandando a configuração pro WhatsApp.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
