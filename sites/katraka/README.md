@@ -11,12 +11,13 @@ Site de prévia feito em 06/11/2026. **Ainda não é cliente.**
 - Cores: Verde Máquina `#3F5E4C` (base), Branco Lótus `#EFE6D3` (segunda), Laranja Lanterna `#F2542D` (acento: faróis, lanternas, WhatsApp, a katraka). Graxa `#16231C` pros fundos escuros.
 - Fontes: Jost (geométrica, redonda como o Fusca, da família dos anúncios da VW) + IBM Plex Mono (anotações técnicas).
 - Princípio: o nome da oficina é a peça (catraca = katraka). Tudo se move "em dentes", nunca deslizando.
-- O Fusca é desenhado em SVG (traço técnico), então o site fica completo mesmo sem foto da oficina.
+- O Fusca é uma foto de verdade (a que o Davi mandou) recortada em 3 camadas: carroceria e as duas rodas. A carroceria desce e as rodas ficam no chão, então dá pra baixar dente por dente.
 
 ## WOWs
-1. **Abertura:** o Fusca chega alto e baixa dente por dente em cima do nome KATRAKA (as letras "sentem" o peso); no fim, farol e lanterna acendem em laranja. Rolando, ele sai andando com as rodas girando.
+0. **Introdução:** o emblema VW se monta como peça (o anel gira em cliques de catraca e trava, o V desce, o W sobe, faísca laranja no encaixe) e o nome KATRAKA aparece dente por dente. Depois o emblema voa e pousa no emblema da calota do Fusca. Dá pra pular (toque, tecla ou rolagem). Não aparece no modo prévia (`?embed`) nem se a pessoa chegar por um link com `#`.
+1. **Abertura:** o Fusca de verdade sai da altura original e baixa dente por dente até a altura da foto rebaixada, em cima do nome KATRAKA (as letras "sentem" o peso); no fim, farol e lanterna acendem em laranja. Rolando, ele sai andando com as rodas girando.
 2. **Meio:** "Fusca é pra durar": a foto do Fusca verde liga a luz em 4 posições do interruptor (desligado, lanterna, farol baixo, farol alto). Em seguida, o **raio-x**: a foto do Fusca de lado e, dentro da faixa do scanner, a mesma foto em vista interna (imagem que o Davi mandou), com um marcador laranja pulsando em cada parte onde a oficina mexe (suspensão e katraka, freio, direção, quadro, facão, rodas, motor). Cada parte vira um orçamento pronto no WhatsApp.
-3. **Interativo:** "Gire a katraka": duas catracas, uma embaixo de cada roda (dianteira = katraka, traseira = facão). A pessoa gira com o dedo, ouve o "tec", vê o Fusca baixar e o medidor dizer se está no ponto, no limite ou se passou (aí o pneu raspa no paralama). Escolhe o carro e manda a configuração pro WhatsApp.
+3. **Interativo:** "Gire a katraka", com o mesmo Fusca de verdade: duas catracas, uma embaixo de cada roda (dianteira = katraka, traseira = facão). Com 4 dentes na frente e 4 atrás ele fica igual à foto do Fusca rebaixado que o Davi mandou (as duas fotos têm a carroceria no mesmo lugar, só as rodas mudam 24 px). A pessoa gira com o dedo, ouve o "tec", vê o Fusca baixar e o medidor dizer se está no ponto, no limite ou se passou (aí o pneu entra no para-lama e acende o aviso laranja). Escolhe o carro e manda a configuração pro WhatsApp.
 
 Extra: ordem de serviço (formulário) que leva um carimbo "ENVIADO" e abre o WhatsApp com a mensagem pronta.
 
@@ -30,9 +31,11 @@ Tudo veio de pesquisa pública (site katraka.com.br, Facebook, Instagram @katrak
 - [ ] **"Mais de mil carros"** e **"desde 1995":** do site oficial deles. Conferir.
 - [ ] **Coordenadas (geo) do JSON-LD:** não coloquei pra não chutar. Pegar no Maps e adicionar.
 - [ ] **Logo:** usei o nome em texto. Se tiver logo, trocar no topo.
+- [ ] **Emblema da VW na introdução:** é marca registrada da Volkswagen. Coloquei no rodapé que a Katraka é oficina independente, sem vínculo com a montadora. Se o Alexandre preferir não usar o emblema, dá pra trocar a introdução pelo logo dele.
 
 ## Fotos
 As fotos em `img/` (menos a `og-katraka.jpg`) são **fotos conceito que o Davi mandou** (Pinterest/Instagram), não são da Katraka nem de clientes. Estão marcadas como "foto ilustrativa". Antes de publicar como site final: trocar por fotos da oficina (Instagram @katrakavw / Google Maps, pedindo permissão) ou confirmar que pode usar.
+- `fusca-corpo.webp`, `fusca-roda-d.webp`, `fusca-roda-t.webp`: o Fusca bege que o Davi mandou (versão original), recortado do fundo. Usado na abertura e no simulador, com a legenda "Imagem ilustrativa".
 - `fusca-farol.jpg`: seção do interruptor do farol (o fundo preto da foto se funde no verde-escuro com `mix-blend-mode: lighten`).
 - `raiox-lateral.jpg` e `raiox-interna.jpg`: as duas metades da imagem "vista lateral / vista interna" que o Davi mandou, alinhadas pixel a pixel. Da vista interna tirei os textos e as linhas-guia (o fundo fora do carro vem da vista lateral e as linhas dentro do carro foram apagadas). Parece imagem gerada por IA, então está marcada como "Imagem ilustrativa".
 - `fusca-rebaixado.jpg`: "quem somos". `farol-detalhe.jpg`: FAQ (só no computador). `fusca-estrada.jpg`: rodapé "Boa estrada". `fusca-por-do-sol.jpg`: página 404.

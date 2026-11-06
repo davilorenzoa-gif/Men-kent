@@ -76,25 +76,13 @@ h2{font-size:clamp(36px,6vw,80px)}
 .lnk{display:inline-flex;align-items:center;min-height:44px;font-weight:500;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
 .lnk:hover{text-decoration-thickness:2px}
 
-/* desenho do Fusca (os mesmos símbolos servem pras 3 cenas; a cor vem de cada cena) */
-.lata{fill:var(--lata,#EFE6D3);stroke:var(--linha,#16231C);stroke-width:3;stroke-linejoin:round;stroke-dasharray:var(--tr,none)}
-.ln{fill:none;stroke:var(--linha,#16231C);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--tr,none)}
-.vidro{fill:var(--vidro,#24382D);stroke:var(--linha,#16231C);stroke-width:2.5;stroke-dasharray:var(--tr,none)}
-.brilho{fill:none;stroke:var(--lata,#EFE6D3);stroke-width:3;opacity:.25;stroke-linecap:round}
-.cromo{fill:none;stroke:var(--cromo,#cfc6b4);stroke-width:9;stroke-linecap:round}
-.cromo2{fill:none;stroke:var(--linha,#16231C);stroke-width:2}
-.luz{fill:var(--luz,#d9cfb8);stroke:var(--linha,#16231C);stroke-width:2.5;transition:fill .3s}
-.farol,.lanterna,.pisca{fill:var(--acesa,var(--luz,#d9cfb8))}
-.caixa{fill:var(--caixa,#0f1813)}
-.pneu{fill:var(--pneu,#16231C);stroke:var(--pneu-l,none);stroke-width:2;stroke-dasharray:var(--tr,none)}
-.banda{fill:none;stroke:var(--banda,#2a3a31);stroke-width:5;stroke-dasharray:6 7}
-.aro{fill:var(--aro,#d9cfb8);stroke:var(--linha,#16231C);stroke-width:2.5}
-.calota{fill:var(--calota,#EFE6D3);stroke:var(--linha,#16231C);stroke-width:2.5}
-.furo{fill:var(--linha,#16231C)}
+/* Fusca de verdade (foto em camadas: a carroceria desce, as rodas ficam no chão) */
 .arco{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke .2s}
 .arco-f{stroke:var(--arco-f,transparent)}
 .arco-r{stroke:var(--arco-r,transparent)}
-.aceso{--acesa:#F2542D}
+.luzes{opacity:0;transition:opacity .45s ease}
+.leg-foto{font-family:var(--fm);font-size:11px;opacity:.5;text-align:right;margin-top:4px}
+.aceso .luzes{opacity:1}
 
 /* topo */
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--base)}
@@ -110,6 +98,36 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .nav a.it span+span{position:absolute;left:0;top:100%}
 .nav a.it:hover span{transform:translateY(-100%)}
 .nav .btn{min-height:44px;padding:0 18px;font-size:15px}
+
+/* ===== introdução: o emblema VW se monta como peça (anel de catraca que trava, V desce, W sobe) e vira a calota ===== */
+html.travado,html.travado body{overflow:hidden}
+.intro{position:fixed;inset:0;z-index:200;background:var(--graxa);display:grid;place-content:center;justify-items:center;gap:clamp(18px,3.4vh,30px);padding:24px;transition:background-color .6s ease;animation:intro-fim .4s 4.6s forwards}
+@keyframes intro-fim{to{opacity:0;visibility:hidden}}
+.intro.sai{background-color:rgba(22,35,28,0)}
+.in-logo{width:min(44vw,200px);aspect-ratio:1;transform-origin:50% 50%}
+.in-logo svg{width:100%;height:100%;overflow:visible;display:block}
+.in-logo .tr{fill:none;stroke:var(--segunda);transition:stroke .6s ease}
+.in-logo.voa .tr{stroke:#9C9A95}
+.in-dentes{stroke-width:12;stroke-dasharray:24 12.91;animation:in-gira .64s steps(8,end) .1s both,in-some .01s .78s forwards}
+@keyframes in-gira{from{transform:rotate(-150deg) scale(.84);opacity:0}12%{opacity:1}to{transform:rotate(0) scale(1);opacity:1}}
+@keyframes in-some{to{opacity:0}}
+.in-anel{stroke-width:12;opacity:0;animation:in-trava .3s var(--dente) .78s forwards}
+@keyframes in-trava{from{opacity:1;transform:scale(1.1)}to{opacity:1;transform:scale(1)}}
+.in-v,.in-w{stroke-width:13;stroke-miterlimit:8;stroke-linejoin:miter}
+.in-v{transform:translateY(-150px);animation:in-encaixa .3s var(--dente) .9s forwards}
+.in-w{transform:translateY(170px);animation:in-encaixa .3s var(--dente) 1.02s forwards}
+@keyframes in-encaixa{to{transform:none}}
+.in-faisca{fill:none;stroke:var(--acento);stroke-width:5;opacity:0;transform-box:fill-box;transform-origin:center;animation:in-faisca .55s ease-out 1.3s}
+@keyframes in-faisca{from{opacity:1;transform:scale(.3)}to{opacity:0;transform:scale(3.4)}}
+.in-txt{display:grid;justify-items:center;gap:12px;transition:opacity .3s,transform .3s}
+.intro.sai .in-txt{opacity:0;transform:translateY(-12px)}
+.in-nome{width:min(76vw,500px);clip-path:inset(0 100% 0 0);animation:in-nome .56s steps(7,end) 1.38s forwards}
+@keyframes in-nome{to{clip-path:inset(0 0 0 0)}}
+.in-nome svg{width:100%;height:auto;display:block;fill:var(--segunda)}
+.in-sub{font-family:var(--fm);font-size:13px;letter-spacing:.04em;opacity:0;animation:in-aparece .4s ease 1.8s forwards}
+@keyframes in-aparece{to{opacity:.72}}
+.in-pula{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));font-family:var(--fm);font-size:12px;opacity:.5;min-height:44px;padding:0 4px}
+.intro.sai .in-pula{opacity:0}
 
 /* ===== WOW 1: a katraka baixa o Fusca, dente por dente, em cima do nome ===== */
 .hero{position:relative;min-height:100vh;min-height:100svh;padding-top:calc(76px + env(safe-area-inset-top,0px));padding-bottom:20px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;overflow:hidden;
@@ -128,7 +146,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .facho{opacity:0;transition:opacity .5s ease}
 .aceso .facho{opacity:1}
 .chao{stroke:var(--segunda);stroke-width:2;opacity:.55}
-.sombra{fill:#0f1813;opacity:.35;transition:opacity .22s}
+.sombra{fill:#0f1813;opacity:.3;transition:opacity .22s}
 .dentes-h{font-family:var(--fm);font-size:13px;display:flex;align-items:center;gap:10px;opacity:.75}
 .dentes-h i{display:inline-block;width:10px;height:10px;border:1.5px solid var(--segunda);border-radius:2px;transition:background .1s}
 .dentes-h i.on{background:var(--acento);border-color:var(--acento)}
@@ -216,8 +234,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .sim .sub{opacity:.8}
 .sim-topo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 64px;align-items:end}
 .sim-mesa{max-width:900px;margin:clamp(20px,3vw,36px) auto 0}
-.sim-cena{--lata:var(--base);--linha:var(--graxa);--vidro:var(--graxa);--luz:var(--segunda);--cromo:var(--graxa);--aro:var(--segunda);--calota:var(--segunda);--caixa:#0f1813;--pneu:var(--graxa);--banda:#2b3a31}
+.sim-cena{position:relative}
 .sim-cena svg{width:100%;height:auto;overflow:visible}
+.sim-cena .sombra-s{fill:#16231C;opacity:.22}
 .sim-cena .sobe{transition:transform .2s var(--dente)}
 .sim-cena .guia{stroke:var(--graxa);stroke-width:2;fill:none}
 .sim-cena .chao-s{stroke:var(--graxa);stroke-width:2.5}
@@ -407,11 +426,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .embed .rx-foto{width:min(100%,1080px)}
 .embed .rx-lista{display:flex}
 .embed .zap,.dentro .zap{display:none!important}
+.embed .intro{display:none}
 .embed .farol{height:auto}
 .embed .fa-palco{position:relative;height:auto;min-height:100svh;padding-block:40px}
 
 /* reduzir movimento: troca por um fade curto, sem desligar tudo */
 @media (prefers-reduced-motion:reduce){
+  .in-dentes,.in-faisca{display:none}
+  .in-anel,.in-v,.in-w,.in-nome,.in-sub{animation:none;opacity:1;transform:none;clip-path:none}
+  .intro{animation:intro-fim .4s 2.4s forwards}
   .sobe,.sim-cena .sobe,.dial-roda .cr,.palavra-h,.carimbo,.zap,.nav a.it span{transition-duration:.01s!important}
   .leitura.entra .vai{animation:fade .3s ease}
   @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -422,53 +445,38 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 -->
 </head>
 <body>
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="in-logo" id="inLogo">
+    <svg viewBox="-110 -110 220 220">
+      <defs><clipPath id="inClip"><circle r="89"/></clipPath></defs>
+      <circle class="tr in-dentes" r="94"/>
+      <circle class="tr in-anel" r="94"/>
+      <g clip-path="url(#inClip)">
+        <path class="tr in-v" d="M-56 -100L0 8L56 -100"/>
+        <path class="tr in-w" d="M-104 -50L-35 86L0 30L35 86L104 -50"/>
+      </g>
+      <circle class="in-faisca" cy="19" r="12"/>
+    </svg>
+  </div>
+  <div class="in-txt">
+    <div class="in-nome"><svg viewBox="0 0 1000 157"><use href="#palavra" width="1000" height="157"/></svg></div>
+    <p class="in-sub">Especializada em VW a ar desde 1995</p>
+  </div>
+  <button class="in-pula" type="button" id="inPula" tabindex="-1">Pular</button>
+</div>
 
-<!-- desenhos reaproveitados (Fusca de lado e o nome KATRAKA em vetor, na fonte Jost) -->
+<!-- o nome KATRAKA em vetor (fonte Jost) e os gradientes das luzes -->
 <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
 <defs>
   <symbol id="palavra" viewBox="72 -747 4765 747"><path d="M274-700L72-700L72 0L274 0L274-295L507 0L742 0L449-372L727-700L501-700L274-432L274-700Z"/><path d="M995-113L1202-113L1261 0L1481 0L1099-747L718 0L938 0L995-113ZM1030-256L1099-413L1169-256L1030-256Z"/><path d="M1392-700L1392-527L1588-527L1588 0L1782 0L1782-527L1978-527L1978-700L1392-700Z"/><path d="M2309-700L2034-700L2034 0L2228 0L2228-232L2269-232L2407 0L2633 0L2458-257Q2463-259 2468-262L2468-262Q2530-291 2561-345Q2591-398 2591-466L2591-466Q2591-535 2561-588Q2530-640 2468-670Q2405-700 2309-700L2309-700ZM2293-379L2228-379L2228-536L2293-536Q2324-536 2345-527Q2366-518 2378-501Q2389-483 2389-458Q2389-433 2378-415Q2366-397 2345-388Q2324-379 2293-379L2293-379Z"/><path d="M2891-113L3098-113L3157 0L3377 0L2995-747L2614 0L2834 0L2891-113ZM2926-256L2995-413L3065-256L2926-256Z"/><path d="M3630-700L3428-700L3428 0L3630 0L3630-295L3863 0L4098 0L3805-372L4083-700L3857-700L3630-432L3630-700Z"/><path d="M4351-113L4558-113L4617 0L4837 0L4455-747L4074 0L4294 0L4351-113ZM4386-256L4455-413L4525-256L4386-256Z"/></symbol>
 
-  <symbol id="f-roda" overflow="visible">
-    <circle class="pneu" r="68"/>
-    <circle class="banda" r="63"/>
-    <circle class="aro" r="41"/>
-    <g class="furo">
-      <rect x="-3" y="-37" width="6" height="9" rx="2"/><rect x="-3" y="28" width="6" height="9" rx="2"/><rect x="-37" y="-3" width="9" height="6" rx="2"/><rect x="28" y="-3" width="9" height="6" rx="2"/>
-      <g transform="rotate(45)"><rect x="-3" y="-37" width="6" height="9" rx="2"/><rect x="-3" y="28" width="6" height="9" rx="2"/><rect x="-37" y="-3" width="9" height="6" rx="2"/><rect x="28" y="-3" width="9" height="6" rx="2"/></g>
-    </g>
-    <circle class="calota" r="24"/>
-    <circle class="ln" r="9"/>
-  </symbol>
-
-  <symbol id="f-fundo" overflow="visible">
-    <path class="caixa" d="M319 318A88 88 0 0 0 145 318Z M839 318A88 88 0 0 0 665 318Z"/>
-  </symbol>
-
-  <symbol id="f-corpo" overflow="visible">
-    <path class="lata" d="M72 300C66 282 72 266 92 258C160 230 255 198 338 186C352 150 374 116 405 98C455 70 540 60 600 66C662 72 702 94 736 121C790 162 842 202 882 236C914 262 934 284 936 306C937 314 933 318 926 318L839.2 318A88 88 0 0 0 664.8 318L319.2 318A88 88 0 0 0 144.8 318L92 318C80 318 74 310 72 300Z"/>
-    <path class="ln" d="M98 302C100 262 150 232 222 230C286 228 326 258 336 312"/>
-    <path class="ln" d="M650 314C656 262 700 234 764 234C836 234 886 262 912 304"/>
-    <path class="lata" d="M330 304L656 304L656 318L330 318Z"/>
-    <path class="ln" d="M344 184C450 176 600 174 712 186"/>
-    <path class="ln" d="M366 186L370 300M566 178L566 300M370 300L566 300"/>
-    <path class="ln" d="M520 200L552 200"/>
-    <path class="vidro" d="M378 172C390 140 404 118 424 104C460 86 500 80 552 80L556 172Z"/>
-    <path class="ln" d="M428 172L440 100"/>
-    <path class="vidro" d="M574 82C622 84 664 98 704 126C690 146 668 162 646 172L578 172Z"/>
-    <path class="brilho" d="M468 158L500 102M488 160L516 112"/>
-    <path class="ln" d="M796 176C836 206 872 238 896 274"/>
-    <path class="ln" d="M818 200l14 10M828 192l14 10M838 184l14 10"/>
-    <ellipse class="luz farol" cx="122" cy="252" rx="13" ry="19" transform="rotate(-24 122 252)"/>
-    <path class="luz pisca" d="M196 228q8-10 18-2l-2 6q-8-3-16-4z"/>
-    <path class="luz lanterna" d="M880 252q14-2 22 18q-6 6-14 4q-8-10-8-22z"/>
-    <path class="cromo" d="M52 302L104 302"/>
-    <path class="cromo" d="M908 304L958 304"/>
-    <path class="cromo2" d="M64 286L64 316M944 288L944 318"/>
-    <path class="arco arco-f" d="M310 312A84 84 0 0 0 154 312"/>
-    <path class="arco arco-r" d="M830 312A84 84 0 0 0 674 312"/>
-  </symbol>
 
 
+  <radialGradient id="gLuz">
+    <stop offset="0" stop-color="#FFE7C2" stop-opacity=".95"/>
+    <stop offset=".25" stop-color="#F2542D" stop-opacity=".55"/>
+    <stop offset="1" stop-color="#F2542D" stop-opacity="0"/>
+  </radialGradient>
   <linearGradient id="gFacho" x1="1" y1="0" x2="0" y2="0">
     <stop offset="0" stop-color="#F2542D" stop-opacity=".55"/>
     <stop offset="1" stop-color="#F2542D" stop-opacity="0"/>
@@ -510,17 +518,21 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   </div>
 
   <div class="hero-arte">
-    <svg id="heroSvg" viewBox="0 24 1000 474" role="img" aria-label="Desenho de um Fusca baixando a suspensão, dente por dente, em cima do nome Katraka">
+    <svg id="heroSvg" viewBox="0 24 1000 474" role="img" aria-label="Fusca bege original que baixa a suspensão, dente por dente, até ficar rebaixado em cima do nome Katraka">
       <line class="chao" x1="0" y1="313" x2="1000" y2="313"/>
       <ellipse class="sombra" id="hSombra" cx="500" cy="314" rx="330" ry="9"/>
       <g id="hCarro" transform="translate(130 18) scale(.74)">
-        <g class="sobe"><polygon class="facho" points="112,240 112,266 -190,360 -190,150" fill="url(#gFacho)"/><use href="#f-fundo"/></g>
-        <g id="hR1"><use href="#f-roda" x="232" y="330"/></g>
-        <g id="hR2"><use href="#f-roda" x="752" y="330"/></g>
-        <g class="sobe"><use href="#f-corpo"/></g>
+        <g class="sobe"><polygon class="facho" points="124,254 124,280 -190,372 -190,158" fill="url(#gFacho)"/></g>
+        <g id="hR1"><image href="img/fusca-roda-d.webp" x="163.25" y="263.25" width="137.5" height="137.5"/></g>
+        <g id="hR2"><image href="img/fusca-roda-t.webp" x="683.25" y="261.5" width="137.5" height="137.5"/></g>
+        <g class="sobe">
+          <image href="img/fusca-corpo.webp" x="97.1" y="59.6" width="809.1" height="291.7"/>
+          <g class="luzes"><circle cx="128" cy="267" r="34" fill="url(#gLuz)"/><circle cx="206" cy="214" r="15" fill="url(#gLuz)"/><circle cx="862" cy="261" r="26" fill="url(#gLuz)"/></g>
+        </g>
       </g>
       <g class="palavra-h" id="hPalavra"><use href="#palavra" x="0" y="338" width="1000" height="157"/></g>
     </svg>
+    <p class="leg-foto">Imagem ilustrativa</p>
   </div>
 </section>
 
@@ -603,15 +615,20 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
     <div class="sim-mesa">
       <div class="sim-cena">
-        <svg id="simSvg" viewBox="0 -10 1000 468" role="img" aria-label="Fusca de lado que baixa conforme você gira a katraka e o facão">
+        <svg id="simSvg" viewBox="0 -10 1000 468" role="img" aria-label="Fusca bege de lado que baixa conforme você gira a katraka (frente) e o facão (traseira)">
           <line class="chao-s" x1="0" y1="398" x2="1000" y2="398"/>
           <path class="hach" d="M20 398l-14 16M60 398l-14 16M100 398l-14 16M140 398l-14 16M180 398l-14 16M220 398l-14 16M260 398l-14 16M300 398l-14 16M340 398l-14 16M380 398l-14 16M420 398l-14 16M460 398l-14 16M500 398l-14 16M540 398l-14 16M580 398l-14 16M620 398l-14 16M660 398l-14 16M700 398l-14 16M740 398l-14 16M780 398l-14 16M820 398l-14 16M860 398l-14 16M900 398l-14 16M940 398l-14 16M980 398l-14 16"/>
-          <g class="sobe"><use href="#f-fundo"/></g>
-          <use href="#f-roda" x="232" y="330"/>
-          <use href="#f-roda" x="752" y="330"/>
-          <g class="sobe"><use href="#f-corpo"/></g>
+          <ellipse class="sombra-s" cx="492" cy="399" rx="400" ry="7"/>
+          <image href="img/fusca-roda-d.webp" x="163.25" y="263.25" width="137.5" height="137.5"/>
+          <image href="img/fusca-roda-t.webp" x="683.25" y="261.5" width="137.5" height="137.5"/>
+          <g class="sobe">
+            <image href="img/fusca-corpo.webp" x="97.1" y="59.6" width="809.1" height="291.7"/>
+            <path class="arco arco-f" d="M162.5 306.7A74 74 0 0 1 301.5 306.7"/>
+            <path class="arco arco-r" d="M682.5 304.9A74 74 0 0 1 821.5 304.9"/>
+          </g>
           <path class="guia" d="M232 420V458M752 420V458" stroke-dasharray="4 5"/>
         </svg>
+        <p class="leg-foto">Imagem ilustrativa</p>
       </div>
       <div class="sim-dials">
         <div class="dial" id="dialF">
@@ -800,7 +817,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
         <a href="privacidade.html">Política de privacidade</a>
       </nav>
     </div>
-    <p class="credito">Site feito pela GuDev</p>
+    <p class="credito">Volkswagen, VW e o emblema VW são marcas da Volkswagen AG. A Katraka é uma oficina independente, sem vínculo com a montadora.</p>
+    <p class="credito" style="margin-top:8px">Site feito pela GuDev</p>
   </div>
 </footer>
 
@@ -889,11 +907,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   /* ===================== WOW 1: abertura ===================== */
   var heroSvg = $("#heroSvg"), hSobe = $$("#heroSvg .sobe"), hPal = $("#hPalavra"), hSombra = $("#hSombra");
   var hDentes = $$(".dentes-h i"), hCarro = $("#hCarro"), hR1 = $("#hR1"), hR2 = $("#hR2");
-  var DENTE = 8, N = 5;
+  var DENTE = 4.2, N = 5;   // 5 dentes = 21 unidades = a mesma altura da foto do Fusca rebaixado
   function alturaHero(dentes){
-    var dy = dentes * DENTE;
-    hSobe.forEach(function(g){ g.style.transform = "translateY(" + (-dy) + "px)"; });
-    hSombra.style.opacity = (.35 - dentes * .045).toFixed(3);
+    var dy = (N - dentes) * DENTE;   // começa na altura original e desce até rebaixado
+    hSobe.forEach(function(g){ g.style.transform = "translateY(" + dy.toFixed(1) + "px)"; });
+    hSombra.style.opacity = (.18 + (N - dentes) * .04).toFixed(3);
     hDentes.forEach(function(i, k){ i.classList.toggle("on", k < N - dentes); });
   }
   function heroFinal(){ alturaHero(0); heroSvg.classList.add("aceso"); }
@@ -903,6 +921,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     alturaHero(N);
     heroSvg.getBoundingClientRect();
     hSobe.forEach(function(g){ g.style.transition = ""; });
+  }
+  var heroFoi = false;
+  function heroComeca(atraso){
+    if (heroFoi) return; heroFoi = true;
+    if (embed || reduz){ heroFinal(); return; }
     var feito = 0;
     for (var k = 1; k <= N; k++) (function(k){
       setTimeout(function(){
@@ -910,10 +933,46 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
         alturaHero(N - k);
         hPal.classList.add("carga");
         setTimeout(function(){ hPal.classList.remove("carga"); }, 90);
-      }, 650 + k * 260);
+      }, atraso + k * 260);
     })(k);
-    setTimeout(function(){ heroSvg.classList.add("aceso"); }, 650 + N * 260 + 260);
-    setTimeout(function(){ if (feito < N){ feito = N; } heroFinal(); }, 650 + N * 260 + 1200);  // garantia
+    setTimeout(function(){ heroSvg.classList.add("aceso"); }, atraso + N * 260 + 260);
+    setTimeout(function(){ feito = N; heroFinal(); }, atraso + N * 260 + 1200);  // garantia
+  }
+
+  /* ---------- introdução: o emblema se monta, o nome aparece e o emblema vira a calota da roda ---------- */
+  var intro = $("#intro");
+  var temIntro = !!intro && !embed && !location.hash && (window.scrollY || window.pageYOffset || 0) < 40;
+  if (!temIntro){ if (intro) intro.parentNode.removeChild(intro); heroComeca(650); }
+  else {
+    raiz.classList.add("travado");
+    var acabou = false;
+    var fimIntro = function(rapido){
+      if (acabou) return; acabou = true;
+      var logo = $("#inLogo");
+      intro.classList.add("sai");
+      if (!rapido && !reduz){
+        var a = hR1.getBoundingClientRect(), b = logo.getBoundingClientRect();
+        // pousa em cima do emblema VW de verdade da calota (raio 11 px numa roda de 156 px)
+        var esc = (a.width * 22 / 156) / (b.width * 200 / 220);
+        var dx = (a.left + a.width * 79 / 156) - (b.left + b.width / 2), dy = (a.top + a.height * 80 / 156) - (b.top + b.height / 2);
+        logo.classList.add("voa");
+        logo.style.transition = "transform .75s cubic-bezier(.6,0,.2,1), opacity .22s ease .6s";
+        logo.style.opacity = 0;
+        logo.style.transform = "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px) scale(" + esc.toFixed(4) + ")";
+      } else {
+        logo.style.transition = "opacity .25s"; logo.style.opacity = 0;
+      }
+      setTimeout(function(){
+        raiz.classList.remove("travado");
+        if (intro.parentNode) intro.parentNode.removeChild(intro);
+        heroComeca(rapido ? 300 : 120);
+      }, rapido ? 320 : 800);
+    };
+    setTimeout(function(){ fimIntro(false); }, reduz ? 1300 : 2250);
+    var pula = function(){ fimIntro(true); };
+    $("#inPula").addEventListener("click", pula);
+    ["keydown", "wheel", "touchmove"].forEach(function(ev){ window.addEventListener(ev, pula, { once: true, passive: true }); });
+    intro.addEventListener("pointerdown", pula);
   }
   function heroRola(){
     if (embed || reduz) return;
@@ -921,9 +980,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     var p = clamp(-r.top / Math.max(1, r.height), 0, 1);
     var dx = p * 240;                         // anda pra esquerda (frente do Fusca)
     hCarro.setAttribute("transform", "translate(" + (130 - dx).toFixed(1) + " 18) scale(.74)");
-    var ang = -(dx / .74) / 68 * 180 / Math.PI;
-    hR1.setAttribute("transform", "rotate(" + ang.toFixed(1) + " 232 330)");
-    hR2.setAttribute("transform", "rotate(" + ang.toFixed(1) + " 752 330)");
+    var ang = -(dx / .74) / 66 * 180 / Math.PI;
+    hR1.setAttribute("transform", "rotate(" + ang.toFixed(1) + " 232 332)");
+    hR2.setAttribute("transform", "rotate(" + ang.toFixed(1) + " 752 330.2)");
   }
 
   /* ---------- o interruptor do farol: desligado, lanterna, farol baixo, farol alto ---------- */
@@ -1040,7 +1099,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   /* ===================== WOW 3: simulador ===================== */
   var est = { f: 2, r: 1 };
   var simSvg = $("#simSvg"), simSobe = $$("#simSvg .sobe"), estado = $("#estado"), medidor = $("#medidor"), segs = $$("#medidor i");
-  var simWa = $("#simWa"), PASSO = 6;
+  var simWa = $("#simWa"), PASSO = 5;   // 4 dentes ~ a foto do Fusca rebaixado
   function carroAtual(){ var c = $("input[name=carro]:checked"); return c ? c.value : "Fusca"; }
   function msgSim(){
     var c = carroAtual(), c2 = (c === "Fusca" ? "um " : "uma ") + c;
@@ -1050,9 +1109,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   function atualizaSim(){
     var fd = est.f * PASSO, rd = est.r * PASSO;
     var meio = (fd + rd) / 2, ang = Math.atan((rd - fd) / 520) * 180 / Math.PI;
-    simSobe.forEach(function(g){ g.style.transform = "rotate(" + ang.toFixed(3) + "deg) translateY(" + meio.toFixed(2) + "px)"; g.style.transformOrigin = "492px 318px"; });
-    simSvg.style.setProperty("--arco-f", fd > 20 ? "#F2542D" : "transparent");
-    simSvg.style.setProperty("--arco-r", rd > 20 ? "#F2542D" : "transparent");
+    simSobe.forEach(function(g){ g.style.transform = "rotate(" + ang.toFixed(3) + "deg) translateY(" + meio.toFixed(2) + "px)"; g.style.transformOrigin = "492px 331px"; });
+    simSvg.style.setProperty("--arco-f", fd > 22 ? "#F2542D" : "transparent");
+    simSvg.style.setProperty("--arco-r", rd > 22 ? "#F2542D" : "transparent");
     var tot = est.f + est.r, txt;
     medidor.classList.toggle("limite", tot >= 6 && tot <= 8);
     medidor.classList.toggle("passou", tot >= 9);
