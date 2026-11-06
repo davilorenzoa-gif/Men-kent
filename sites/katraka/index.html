@@ -81,6 +81,7 @@ h2{font-size:clamp(36px,6vw,80px)}
 .arco-f{stroke:var(--arco-f,transparent)}
 .arco-r{stroke:var(--arco-r,transparent)}
 .luzes{opacity:0;transition:opacity .45s ease}
+.luzes circle{mix-blend-mode:screen}
 .leg-foto{font-family:var(--fm);font-size:11px;opacity:.5;text-align:right;margin-top:4px}
 .aceso .luzes{opacity:1}
 
@@ -143,7 +144,7 @@ html.travado,html.travado body{overflow:hidden}
 .sobe{transition:transform .22s var(--dente)}
 .palavra-h{fill:var(--segunda);transform-box:fill-box;transform-origin:50% 0;transition:transform .09s ease-out}
 .palavra-h.carga{transform:scaleY(.965)}
-.facho{opacity:0;transition:opacity .5s ease}
+.facho{opacity:0;transition:opacity .5s ease;mix-blend-mode:screen}
 .aceso .facho{opacity:1}
 .chao{stroke:var(--segunda);stroke-width:2;opacity:.55}
 .sombra{fill:#0f1813;opacity:.3;transition:opacity .22s}
@@ -472,15 +473,27 @@ html.travado,html.travado body{overflow:hidden}
 
 
 
-  <radialGradient id="gLuz">
-    <stop offset="0" stop-color="#FFE7C2" stop-opacity=".95"/>
-    <stop offset=".25" stop-color="#F2542D" stop-opacity=".55"/>
-    <stop offset="1" stop-color="#F2542D" stop-opacity="0"/>
+  <radialGradient id="gFarol">
+    <stop offset="0" stop-color="#FFFDF6" stop-opacity="1"/>
+    <stop offset=".16" stop-color="#FFF4DC" stop-opacity=".8"/>
+    <stop offset=".45" stop-color="#FFE8BE" stop-opacity=".2"/>
+    <stop offset="1" stop-color="#FFE8BE" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="gLanterna">
+    <stop offset="0" stop-color="#FFC2B5" stop-opacity=".9"/>
+    <stop offset=".3" stop-color="#E3261C" stop-opacity=".45"/>
+    <stop offset="1" stop-color="#E3261C" stop-opacity="0"/>
   </radialGradient>
   <linearGradient id="gFacho" x1="1" y1="0" x2="0" y2="0">
-    <stop offset="0" stop-color="#F2542D" stop-opacity=".55"/>
-    <stop offset="1" stop-color="#F2542D" stop-opacity="0"/>
+    <stop offset="0" stop-color="#FFF5E0" stop-opacity=".38"/>
+    <stop offset=".4" stop-color="#FFF0D4" stop-opacity=".13"/>
+    <stop offset="1" stop-color="#FFF0D4" stop-opacity="0"/>
   </linearGradient>
+  <radialGradient id="gPoca">
+    <stop offset="0" stop-color="#FFF0D4" stop-opacity=".32"/>
+    <stop offset="1" stop-color="#FFF0D4" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="fDifuso" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="7"/></filter>
 </defs>
 </svg>
 
@@ -522,12 +535,13 @@ html.travado,html.travado body{overflow:hidden}
       <line class="chao" x1="0" y1="313" x2="1000" y2="313"/>
       <ellipse class="sombra" id="hSombra" cx="500" cy="314" rx="330" ry="9"/>
       <g id="hCarro" transform="translate(130 18) scale(.74)">
-        <g class="sobe"><polygon class="facho" points="124,254 124,280 -190,372 -190,158" fill="url(#gFacho)"/></g>
+        <ellipse class="facho" cx="-30" cy="398" rx="170" ry="10" fill="url(#gPoca)"/>
+        <g class="sobe"><polygon class="facho" points="120,257 120,275 -220,352 -220,232" fill="url(#gFacho)" filter="url(#fDifuso)"/></g>
         <g id="hR1"><image href="img/fusca-roda-d.webp" x="163.25" y="263.25" width="137.5" height="137.5"/></g>
         <g id="hR2"><image href="img/fusca-roda-t.webp" x="683.25" y="261.5" width="137.5" height="137.5"/></g>
         <g class="sobe">
           <image href="img/fusca-corpo.webp" x="97.1" y="59.6" width="809.1" height="291.7"/>
-          <g class="luzes"><circle cx="128" cy="267" r="34" fill="url(#gLuz)"/><circle cx="206" cy="214" r="15" fill="url(#gLuz)"/><circle cx="862" cy="261" r="26" fill="url(#gLuz)"/></g>
+          <g class="luzes"><circle cx="124" cy="266" r="24" fill="url(#gFarol)"/><circle cx="863" cy="262" r="15" fill="url(#gLanterna)"/></g>
         </g>
       </g>
       <g class="palavra-h" id="hPalavra"><use href="#palavra" x="0" y="338" width="1000" height="157"/></g>
