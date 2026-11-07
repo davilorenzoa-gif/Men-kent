@@ -15,7 +15,7 @@
 <link rel="preload" as="image" href="media/volta/000.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&text=%E3%82%B9%E3%82%AB%E3%82%A4%E3%83%A9%E3%83%B3&display=swap" rel="stylesheet">
 
 <!--
@@ -73,6 +73,8 @@ Som: trechos de vídeos reais de R34 (som/). Começa desligado; liga no botão d
   --disp:'Chakra Petch',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
   --corpo:'Manrope',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
   --jp:'Noto Sans JP','Hiragino Sans','Yu Gothic',sans-serif;
+  --mao:'Caveat','Bradley Hand','Segoe Print',cursive;
+  --papel:#f1ede4; --tinta:#2a2620; --luz-quente:rgba(255,138,30,.32);
   --g:clamp(16px,4vw,56px);
   --gl:max(var(--g),env(safe-area-inset-left,0px));
   --gr:max(var(--g),env(safe-area-inset-right,0px));
@@ -345,6 +347,32 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .nota{display:block;margin-top:16px;font-size:13px;color:var(--metal)}
 @media (max-width:700px){ .legenda{flex-direction:column;align-items:flex-start} .setas{display:none} .cinema video{aspect-ratio:4/3} }
 
+/* ---------- memórias: a foto revela, o dia vira noite ---------- */
+.memoria{position:relative;height:340vh}
+.memoria__palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;align-items:center;isolation:isolate;padding-top:calc(env(safe-area-inset-top,0px) + 56px)}
+.memoria__grade{display:grid;gap:clamp(18px,4vh,40px);align-items:center;justify-items:center;width:100%}
+.fotos{position:relative;width:min(56vw,290px);aspect-ratio:3/4.4;order:-1}
+.polaroid{position:absolute;inset:0;margin:0;padding:12px 12px 0;display:flex;flex-direction:column;background:var(--papel);box-shadow:0 30px 70px var(--sombra),0 2px 0 rgba(0,0,0,.2);will-change:transform}
+.polaroid canvas,.polaroid img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;background:var(--tinta)}
+.polaroid figcaption{flex:1;display:grid;place-items:center;font:600 clamp(20px,5vw,26px)/1 var(--mao);color:var(--tinta);transition:opacity .35s}
+.polaroid--tras{transform:translate(-26%,4%) rotate(-9deg);opacity:0}
+.polaroid--frente{transform:rotate(3deg)}
+.memoria__texto{position:relative;width:100%;min-height:9.5em;text-align:center}
+.memoria__texto .eyebrow{justify-content:center;margin-bottom:18px}
+.lembra{position:absolute;left:0;right:0;font:600 clamp(26px,4.2vw,58px)/1.05 var(--disp);letter-spacing:-.005em;text-wrap:balance;opacity:0;transform:translateY(18px);filter:blur(6px);transition:opacity .7s ease,transform .9s var(--curva),filter .9s ease}
+.lembra.on{opacity:1;transform:none;filter:none}
+.lembra em{font-style:normal;color:var(--acento)}
+.lembra a{display:inline-block;margin-top:18px;font:500 15px/1 var(--corpo);color:var(--apoio);text-underline-offset:4px}
+.grao{position:absolute;inset:-50%;z-index:3;pointer-events:none;opacity:.07;background-size:160px 160px;animation:grao .5s steps(4) infinite}
+@keyframes grao{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}100%{transform:translate(1%,3%)}}
+.vazamento{position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(50% 45% at 72% 40%,var(--luz-quente),transparent 70%);opacity:0}
+@media (min-width:900px){
+  .memoria__grade{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);justify-items:stretch}
+  .fotos{order:0;justify-self:center;width:min(30vw,360px)}
+  .memoria__texto{text-align:left;min-height:7.5em}
+  .memoria__texto .eyebrow{justify-content:flex-start}
+}
+
 /* ---------- 6. largada ---------- */
 .largada__grade{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center}
 @media (min-width:900px){ .largada__grade{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)} }
@@ -425,6 +453,8 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
   [data-revela]{transition-duration:.4s}
   .js-revela [data-revela]:not(.visto){transform:none}
   .js-revela [data-revela="corte"]:not(.visto){clip-path:none;opacity:0}
+  .grao{animation:none}
+  .lembra{filter:none;transition-duration:.3s}
 }
 </style>
 </head>
@@ -447,6 +477,7 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
     <a href="#design">Design</a>
     <a href="#tecnica">Ficha técnica</a>
     <a href="#galeria">Galeria</a>
+    <a href="#memorias">Memórias</a>
     <a href="#largada">Largada</a>
   </nav>
   <div class="bar__dir">
@@ -466,7 +497,8 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
   <a href="#design" style="--i:2"><small>02</small>Design</a>
   <a href="#tecnica" style="--i:3"><small>03</small>Ficha técnica</a>
   <a href="#galeria" style="--i:4"><small>04</small>Galeria</a>
-  <a href="#largada" style="--i:5"><small>05</small>Largada</a>
+  <a href="#memorias" style="--i:5"><small>05</small>Memórias</a>
+  <a href="#largada" style="--i:6"><small>06</small>Largada</a>
   <p>Skyline Motors é um conceito da GuDev. WhatsApp (11) 96465-0141.</p>
 </nav>
 
@@ -476,6 +508,7 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
   <a href="#design"><span>Design</span></a>
   <a href="#tecnica"><span>Ficha técnica</span></a>
   <a href="#galeria"><span>Galeria</span></a>
+  <a href="#memorias"><span>Memórias</span></a>
   <a href="#largada"><span>Largada</span></a>
 </nav>
 
@@ -668,8 +701,37 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
     </div>
   </section>
 
+  <!-- memórias: a foto revela e o dia vira noite com a rolagem -->
+  <section class="memoria" id="memorias" aria-labelledby="t-memoria" data-secao="5">
+    <div class="memoria__palco">
+      <div class="vazamento" id="vazamento" aria-hidden="true"></div>
+      <div class="grao" id="grao" aria-hidden="true"></div>
+      <div class="wrap memoria__grade">
+        <div class="memoria__texto" aria-live="off">
+          <p class="eyebrow">Memórias</p>
+          <h2 class="sr" id="t-memoria">Memórias</h2>
+          <p class="lembra" data-de="0" data-ate=".24">Tem carro que a gente vê uma vez e nunca mais esquece.</p>
+          <p class="lembra" data-de=".24" data-ate=".48">O pôster na parede do quarto.</p>
+          <p class="lembra" data-de=".48" data-ate=".72">O ronco que ficou na cabeça até hoje.</p>
+          <p class="lembra" data-de=".72" data-ate="1.01">Memória não se aluga. <em>O carro, sim.</em><br><a href="#largada">Ouvir o ronco</a></p>
+        </div>
+        <div class="fotos" aria-hidden="true">
+          <figure class="polaroid polaroid--tras" id="pol-tras"><img src="img/prata.jpg" alt="" width="720" height="540" loading="lazy"><figcaption>o pôster</figcaption></figure>
+          <figure class="polaroid polaroid--frente" id="pol"><canvas id="tela-mem"></canvas><figcaption id="pol-leg">dia</figcaption></figure>
+        </div>
+      </div>
+    </div>
+    <ul class="sr">
+      <li>Foto de um R34 azul na beira do lago; com a rolagem, o dia vira noite.</li>
+      <li>Tem carro que a gente vê uma vez e nunca mais esquece.</li>
+      <li>O pôster na parede do quarto.</li>
+      <li>O ronco que ficou na cabeça até hoje.</li>
+      <li>Memória não se aluga. O carro, sim.</li>
+    </ul>
+  </section>
+
   <!-- 6. largada: o som é de um R34 de verdade -->
-  <section class="sec" id="largada" aria-labelledby="t-largada" data-secao="5">
+  <section class="sec" id="largada" aria-labelledby="t-largada" data-secao="6">
     <div class="wrap largada__grade">
       <div data-revela>
         <p class="eyebrow">Largada</p>
@@ -743,6 +805,7 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
           <li><a href="#design">Design</a></li>
           <li><a href="#tecnica">Ficha técnica</a></li>
           <li><a href="#galeria">Galeria</a></li>
+          <li><a href="#memorias">Memórias</a></li>
           <li><a href="#largada">Largada</a></li>
         </ul>
       </div>
@@ -1328,6 +1391,69 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
     if (e.key === 'ArrowLeft'){ e.preventDefault(); vai(-1); }
   });
 
+  /* ================= memórias: a foto revela e o tempo passa ================= */
+  var memoria = $('memorias'), telaMem = $('tela-mem'), mctx = telaMem.getContext('2d'), pol = $('pol'), polTras = $('pol-tras'), polLeg = $('pol-leg');
+  var lembra = memoria.querySelectorAll('.lembra'), vaz = $('vazamento');
+  var NM = 51, QM = [], okM2 = [], memPediu = false, memUlt = '', memCur = 0, legAnt = '';
+  function pedeMemoria(){
+    if (memPediu) return; memPediu = true;
+    var ordem = [0, 50, 25, 12, 37, 6, 18, 31, 43];
+    for (var i = 0; i < NM; i++) if (ordem.indexOf(i) < 0) ordem.push(i);
+    ordem.forEach(function(i){
+      var im = new Image(); im.decoding = 'async';
+      im.onload = function(){ okM2[i] = true; memUlt = ''; };
+      im.src = 'media/memoria/' + (i < 10 ? '0' : '') + i + '.webp'; QM[i] = im;
+    });
+  }
+  /* grão de filme: um ladrilho de ruído feito uma vez só */
+  (function(){
+    var c = document.createElement('canvas'); c.width = c.height = 160;
+    var x = c.getContext('2d'), d = x.createImageData(160, 160);
+    for (var i = 0; i < d.data.length; i += 4){ var v = Math.random() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+    x.putImageData(d, 0, 0);
+    try{ $('grao').style.backgroundImage = 'url(' + c.toDataURL() + ')'; }catch(e){}
+  })();
+  function pertoMem(i){ for (var d = 0; d < NM; d++){ if (okM2[i - d]) return i - d; if (okM2[i + d]) return i + d; } return -1; }
+  function quadroMemoria(){
+    var ih = window.innerHeight, r = memoria.getBoundingClientRect();
+    var p = embed ? .1 : clamp(-r.top / Math.max(1, r.height - ih), 0, 1);
+    memCur += (p - memCur) * (reduz ? 1 : .12);
+    if (Math.abs(p - memCur) < .0005) memCur = p;
+    var q = memCur;
+    /* 1: a foto revela (de branco lavado pra cor) */
+    var rev = embed ? 1 : passo(0, .16, q), x = 1 - rev;
+    telaMem.style.filter = 'sepia(' + (x * .6).toFixed(3) + ') brightness(' + (1 + x * 1.1).toFixed(3) + ') contrast(' + (1 - x * .45).toFixed(3) + ') saturate(' + (1 - x * .8).toFixed(3) + ') blur(' + (x * 3).toFixed(2) + 'px)';
+    /* 2: o tempo passa (dia, fim de tarde, noite) */
+    var t = passo(.14, .86, q) * (NM - 1), i0 = Math.floor(t), f = t - i0;
+    var w = Math.round(telaMem.clientWidth * dpr), h = Math.round(telaMem.clientHeight * dpr);
+    if (w > 0 && h > 0){
+      tamanho(telaMem, w, h);
+      var chave = t.toFixed(2) + ':' + w;
+      var a = pertoMem(i0);
+      if (a >= 0 && chave !== memUlt){
+        /* recorte 3:4 do vídeo em pé, com o carro e o céu */
+        var sh = 360 * 4 / 3, sy = 150;
+        mctx.globalAlpha = 1; mctx.drawImage(QM[a], 0, sy, 360, sh, 0, 0, w, h);
+        if (a === i0 && f > .04 && okM2[i0 + 1]){ mctx.globalAlpha = f; mctx.drawImage(QM[i0 + 1], 0, sy, 360, sh, 0, 0, w, h); mctx.globalAlpha = 1; }
+        memUlt = chave;
+      }
+    }
+    var leg = t < 14 ? 'dia' : t < 32 ? 'fim de tarde' : 'noite';
+    if (leg !== legAnt){ legAnt = leg; polLeg.style.opacity = '0'; setTimeout(function(){ polLeg.textContent = legAnt; polLeg.style.opacity = '1'; }, 200); }
+    /* luz quente no pôr do sol */
+    vaz.style.opacity = (passo(.25, .42, q) * (1 - passo(.55, .72, q))).toFixed(3);
+    /* o pôster entra por trás na segunda lembrança */
+    var tras = passo(.22, .34, q);
+    polTras.style.opacity = tras.toFixed(3);
+    polTras.style.transform = 'translate(' + (-6 - 20 * tras).toFixed(1) + '%,' + (4 - 2 * tras).toFixed(1) + '%) rotate(' + (-3 - 6 * tras).toFixed(2) + 'deg)';
+    pol.style.transform = 'translate3d(0,' + ((.5 - q) * 24).toFixed(1) + 'px,0) rotate(' + (3 - 2 * q).toFixed(2) + 'deg)';
+    /* as frases, uma de cada vez */
+    for (var j = 0; j < lembra.length; j++){
+      var el = lembra[j], on = q >= parseFloat(el.dataset.de) && q < parseFloat(el.dataset.ate);
+      if (el.classList.contains('on') !== on) el.classList.toggle('on', on);
+    }
+  }
+
   /* ================= som: desligado até alguém pedir ================= */
   var A = { ctx:null, cru:{}, buf:{}, mestre:null, motor:null, gL:null, gH:null, low:null, high:null, ligado:false, visivel:false, pediu:false };
   var SONS = ['partida', 'lento', 'alto', 'desce', 'ronco'];
@@ -1600,19 +1726,20 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
   }
 
   /* ================= laço: cada parte só roda enquanto aparece ================= */
-  var vivo = { ceu:true, estudio:false, galeria:false, largada:false };
+  var vivo = { ceu:true, estudio:false, galeria:false, memorias:false, largada:false };
   if ('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(es){
       es.forEach(function(e){
         var k = e.target.id;
         vivo[k] = e.isIntersecting;
         if (k === 'estudio' && e.isIntersecting) libera();
+        if (k === 'memorias' && e.isIntersecting) pedeMemoria();
         if (k === 'largada'){ if (e.isIntersecting) preBaixa(); A.visivel = e.isIntersecting; volumeMestre(); }
       });
       ligaLaco();
     }, { rootMargin:'25% 0px' });
-    ['ceu', 'estudio', 'galeria', 'largada'].forEach(function(id){ io.observe($(id)); });
-  } else { vivo.estudio = vivo.galeria = vivo.largada = true; A.visivel = true; }
+    ['ceu', 'estudio', 'galeria', 'memorias', 'largada'].forEach(function(id){ io.observe($(id)); });
+  } else { vivo.estudio = vivo.galeria = vivo.memorias = vivo.largada = true; A.visivel = true; pedeMemoria(); }
 
   var rodando = false, antes = 0;
   function laco(t){
@@ -1620,6 +1747,7 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
     if (vivo.ceu) quadroCeu();
     if (vivo.estudio) quadroEstudio(t, dt);
     if (vivo.galeria) quadroAnel(t);
+    if (vivo.memorias) quadroMemoria();
     if (vivo.largada || L.estado === 'ligando') quadroLargada(t, dt);
     quadroParallax(); quadroCursor();
     requestAnimationFrame(laco);

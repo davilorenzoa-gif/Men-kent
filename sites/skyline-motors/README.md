@@ -12,8 +12,9 @@ Prévia (artifact): https://claude.ai/artifact/LHHdQPoedN2QyrPj6BneYk
 4. **Design**: vídeos do farol e da frente, com parallax.
 5. **Ficha técnica**: só dado de fábrica do R34 GT-R (motor, cilindrada, turbos, potência declarada, tração, câmbio, rodas, produção).
 6. **Galeria**: carrossel em anel + vídeo do lago em tela de cinema.
-7. **Largada**: painel com som real de R34 (partida, 2-step, trocas, 0–100, 0–200, recorde).
-8. Final + rodapé. Menu no celular, trilho lateral e cursor próprio no computador. Som começa desligado.
+7. **Memórias**: o vídeo de dia virando noite numa foto instantânea que revela ao aparecer; a rolagem passa o tempo e as frases de memória aparecem uma por vez (o R34 prata entra como o pôster do quarto).
+8. **Largada**: painel com som real de R34 (partida, 2-step, trocas, 0–100, 0–200, recorde).
+9. Final + rodapé. Menu no celular, trilho lateral e cursor próprio no computador. Som começa desligado.
 
 ## Arquivos
 - `index.html`: o site inteiro (CSS e JS dentro, sem biblioteca).
@@ -21,7 +22,9 @@ Prévia (artifact): https://claude.ai/artifact/LHHdQPoedN2QyrPj6BneYk
 - `media/volta/000–191.webp`: os 192 quadros da volta, com o carro recortado (fundo transparente).
 - `media/tinta/000–191.webp`: máscara da pintura de cada quadro (troca de cor). Só baixa quando alguém troca a cor.
 - `img/`: fotos do carrossel, nuvens do céu e imagem de compartilhamento.
+- `media/memoria/00–50.webp`: quadros do dia virando noite (seção Memórias).
 - `som/`: trechos do motor.
+- `apresentacao.mp4`: vídeo de apresentação em pé (9:16, 41 s, com som), gravado do site funcionando.
 
 ## Origem do material (conferir antes de divulgar publicamente)
 - Vídeos do farol e do céu: gerados por IA (enviados pelo Davi).
