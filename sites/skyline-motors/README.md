@@ -25,6 +25,7 @@ Prévia (artifact): https://claude.ai/artifact/LHHdQPoedN2QyrPj6BneYk
 - `media/memoria/00–50.webp`: quadros do dia virando noite (seção Memórias).
 - `som/`: trechos do motor.
 - `apresentacao.mp4`: vídeo de apresentação em pé (9:16, 41 s, com som), gravado do site funcionando.
+- `apresentacao-notebook.mp4`: o site no computador, dentro da tela de um notebook (9:16, 39 s, com som). A foto do notebook foi enviada pelo Davi.
 
 ## Origem do material (conferir antes de divulgar publicamente)
 - Vídeos do farol e do céu: gerados por IA (enviados pelo Davi).
