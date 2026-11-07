@@ -5,20 +5,28 @@ Marca fictícia: aluguel de JDM clássico, com um R34 GT-R Bayside Blue.
 
 Prévia (artifact): https://claude.ai/artifact/LHHdQPoedN2QyrPj6BneYk
 
-- `index.html`: o site inteiro (CSS e JS dentro).
-- `media/farol.mp4` (+ `.webm`): vídeo de abertura, o farol acende.
-- `media/volta/000–191.webp`: os 192 quadros da volta de 360°, com o carro recortado (fundo transparente).
-- `img/nuvens-base.jpg`: as nuvens paradas do céu limpo.
-- `img/`: fotos do carrossel e imagem de compartilhamento.
-- `som/`: trechos do motor (partida, giro baixo, giro alto, desaceleração).
+## O que tem
+1. **Carregamento**: o escuro antes do farol, com o nome enchendo de luz.
+2. **A volta**: o farol acende e o site acende junto; a câmera se afasta; a rolagem gira o R34 360° e o céu vira estúdio (com reflexo no chão). Contador de graus + ficha que troca pelo ângulo.
+3. **Estúdio 360°**: arrastar (com inércia), giro automático, zoom (botões, pinça, toque duplo), ângulos, ambiente (estúdio, céu, noite), cor (Bayside Blue, Midnight Purple, Millennium Jade, prata) e pontos clicáveis no carro (farol, roda, lanternas, asa).
+4. **Design**: vídeos do farol e da frente, com parallax.
+5. **Ficha técnica**: só dado de fábrica do R34 GT-R (motor, cilindrada, turbos, potência declarada, tração, câmbio, rodas, produção).
+6. **Galeria**: carrossel em anel + vídeo do lago em tela de cinema.
+7. **Largada**: painel com som real de R34 (partida, 2-step, trocas, 0–100, 0–200, recorde).
+8. Final + rodapé. Menu no celular, trilho lateral e cursor próprio no computador. Som começa desligado.
 
-3 WOWs:
-1. O farol acende e o site acende junto (título pisca e firma, barra entra), a câmera se afasta.
-2. A rolagem dá a volta de 360° num céu limpo e parado (só o carro gira, quadros misturados pra ficar liso): contador de graus e ficha técnica que troca pelo ângulo.
-3. Carrossel em anel (arrastar) e painel de largada: partida, 2-step, árvore, trocas de marcha, 0–100 e 0–200 com recorde.
+## Arquivos
+- `index.html`: o site inteiro (CSS e JS dentro, sem biblioteca).
+- `media/farol.*`: vídeo de abertura. `media/olhos.*`, `media/frente.*`, `media/lago.*`: vídeos das seções.
+- `media/volta/000–191.webp`: os 192 quadros da volta, com o carro recortado (fundo transparente).
+- `media/tinta/000–191.webp`: máscara da pintura de cada quadro (troca de cor). Só baixa quando alguém troca a cor.
+- `img/`: fotos do carrossel, nuvens do céu e imagem de compartilhamento.
+- `som/`: trechos do motor.
 
-Origem do material (conferir antes de divulgar publicamente):
+## Origem do material (conferir antes de divulgar publicamente)
 - Vídeos do farol e do céu: gerados por IA (enviados pelo Davi).
+- Vídeos do farol de anel, da frente e do lago, e a foto do R34 prata: enviados pelo Davi; confirmar a origem.
 - Som do motor: cortado de 3 vídeos do TikTok de R34 de verdade (@thomasrev, @alberto7040, @menace.to_society).
-- 3 fotos do carrossel: referência da internet (placas desfocadas, marca d'água cortada).
-- Nissan, Skyline e GT-R são marcas da Nissan. O nome "Skyline Motors" usa a marca; pra post público, considerar outro nome.
+- Foto "Estrada" do carrossel: referência da internet (placa desfocada).
+- A troca de cor é aplicada sobre o vídeo (tom aproximado), e o site avisa isso.
+- Nissan, Skyline e GT-R são marcas da Nissan. Pra post público, considerar outro nome.
