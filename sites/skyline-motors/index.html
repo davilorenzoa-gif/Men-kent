@@ -12,7 +12,7 @@
 <meta property="og:description" content="O farol acende, o site acende junto. Sites que vendem.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="img/og.jpg">
-<link rel="preload" as="image" href="media/volta/00.webp">
+<link rel="preload" as="image" href="media/volta/000.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -38,7 +38,8 @@ WOWs:
   3 Interativo: carrossel em anel (arraste pra girar) e o painel de largada com o som real
     de um R34: partida, giro, troca de marcha, 0 a 100 e 0 a 200.
 
-Mídia: vídeos gerados por IA (farol e volta no céu), 96 quadros da volta em media/volta.
+Mídia: vídeos gerados por IA (farol e volta no céu). 192 quadros da volta em media/volta,
+  com o carro recortado (fundo transparente) pra girar num céu limpo e parado.
 Som: trechos de vídeos reais de R34 enviados pelo Davi (som/). Fotos de referência em img/.
 -->
 
@@ -54,6 +55,8 @@ Som: trechos de vídeos reais de R34 enviados pelo Davi (som/). Fotos de referê
   --linha:rgba(234,242,255,.14);
   --apoio:rgba(234,242,255,.7);
   --apagado:rgba(234,242,255,.08);
+  /* o céu limpo da volta (cores tiradas do próprio vídeo) */
+  --ceu-alto:#1b5aa2; --ceu-meio:#3a8ac9; --ceu-baixo:#7cbbe3; --ceu-bruma:#c4def2; --sol:rgba(255,255,255,.55);
   --disp:'Chakra Petch',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
   --corpo:'Manrope',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
   --jp:'Noto Sans JP','Hiragino Sans','Yu Gothic',sans-serif;
@@ -89,20 +92,28 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* ---------- 1 + 2. o céu: farol, depois a volta ---------- */
 .ceu{position:relative;height:480vh}
 .palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;background:var(--noite)}
-#fundo{position:absolute;left:-10%;top:-10%;width:120%;height:120%;filter:blur(32px) saturate(1.2);opacity:.95}
-.midia{position:absolute;z-index:1;left:50%;top:50%;height:118%;aspect-ratio:9/16;transform:translate(-50%,-50%);
+#fundo{position:absolute;z-index:0;left:-10%;top:-10%;width:120%;height:120%;filter:blur(32px) saturate(1.2);opacity:.95;transition:opacity 1s ease}
+/* céu limpo e parado: só o carro se mexe */
+.limpo{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity 1.1s ease;
+  background:radial-gradient(80% 50% at 50% -8%,var(--sol),transparent 62%),linear-gradient(180deg,var(--ceu-alto) 0%,var(--ceu-meio) 40%,var(--ceu-baixo) 68%,var(--ceu-bruma) 100%)}
+.limpo img{position:absolute;left:0;bottom:0;width:100%;height:40%;object-fit:cover;object-position:50% 0;filter:blur(2px) saturate(.9);opacity:.9;
+  -webkit-mask-image:linear-gradient(transparent,#000 55%);mask-image:linear-gradient(transparent,#000 55%)}
+.na-volta .limpo{opacity:1}
+.na-volta #fundo,.na-volta .midia{opacity:0}
+.carro{position:absolute;inset:0;z-index:3;width:100%;height:100%;display:block;opacity:0;transform:scale(.86);transform-origin:50% 48%;
+  transition:opacity 1s ease,transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.na-volta .carro{opacity:1;transform:none}
+.midia{position:absolute;z-index:1;left:50%;top:50%;height:118%;aspect-ratio:9/16;transform:translate(-50%,-50%);transition:opacity 1s ease;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
-.midia video,.midia canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.midia canvas{opacity:0;transition:opacity 1s ease}
-.na-volta .midia canvas{opacity:1}
-.na-volta .midia video{opacity:0;transition:opacity 1s ease}
+.midia video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 @media (max-aspect-ratio:5/8){
   .midia{height:100%;width:100%;aspect-ratio:auto;-webkit-mask-image:none;mask-image:none}
   #fundo{display:none}
 }
-.vinheta{position:absolute;inset:0;z-index:2;pointer-events:none;
+.vinheta{position:absolute;inset:0;z-index:2;pointer-events:none;transition:opacity 1s ease;
   background:linear-gradient(180deg,rgba(5,9,20,.62) 0%,rgba(5,9,20,0) 34%,rgba(5,9,20,0) 58%,rgba(5,9,20,.72) 100%)}
-.clarao{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;mix-blend-mode:screen;
+.na-volta .vinheta{opacity:.22}
+.clarao{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;mix-blend-mode:screen;
   background:radial-gradient(circle at var(--fx,50%) var(--fy,50%),rgba(255,255,255,.98) 0,rgba(205,226,255,.55) 16%,rgba(120,170,255,.12) 42%,transparent 62%)}
 .faisca .clarao{animation:faisca .42s steps(1) both}
 @keyframes faisca{0%{opacity:0}18%{opacity:.35}36%{opacity:0}58%{opacity:.5}78%{opacity:.08}100%{opacity:.2}}
@@ -127,17 +138,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .tag{margin:clamp(14px,2.2svh,22px) auto 0;max-width:30ch;text-wrap:balance;font:500 clamp(15px,1.4vw,18px)/1.4 var(--corpo);color:var(--apoio);opacity:0;transform:translateY(8px);transition:opacity .9s ease .8s,transform .9s ease .8s;text-shadow:0 1px 18px rgba(5,9,20,.6)}
 .aceso .sub,.aceso .tag{opacity:1;transform:none}
 .tag span{display:inline-block}
-.kana{position:absolute;z-index:6;right:var(--gr);top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font:700 13px/1 var(--jp);letter-spacing:.5em;color:var(--apoio);opacity:0;transition:opacity 1.2s ease 1.2s}
-.aceso .kana{opacity:.8}
+.kana{position:absolute;z-index:6;right:var(--gr);top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font:700 13px/1 var(--jp);letter-spacing:.5em;color:var(--apoio);opacity:0;transition:opacity .25s ease}
 
 /* volta: contador de graus + ficha que troca pelo ângulo */
 .hud{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0}
 .graus{position:absolute;left:var(--gl);top:calc(env(safe-area-inset-top,0px) + 74px)}
 .graus small{display:block;font:600 12px/1 var(--disp);letter-spacing:.3em;color:var(--apoio);margin-bottom:8px}
-.graus span{display:block;font:600 clamp(46px,6.4vw,92px)/.9 var(--disp);font-variant-numeric:tabular-nums;text-shadow:0 2px 24px rgba(5,9,20,.45)}
+.graus span{display:block;font:500 clamp(42px,5.6vw,80px)/.9 var(--disp);font-variant-numeric:tabular-nums;text-shadow:0 2px 24px rgba(5,9,20,.45)}
 .graus sup{font-size:.42em;vertical-align:top;margin-left:.06em;color:var(--seta)}
-.ficha{position:absolute;left:var(--gl);right:var(--gr);bottom:calc(env(safe-area-inset-bottom,0px) + 22px);max-width:430px;padding:16px 18px 18px;
-  background:var(--painel);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--linha);border-radius:4px 4px 16px 16px}
+.ficha{position:absolute;left:var(--gl);right:var(--gr);bottom:calc(env(safe-area-inset-bottom,0px) + 22px);max-width:400px;padding:14px 16px 16px;
+  background:rgba(5,9,20,.32);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:14px}
 .ficha .in{transition:opacity .3s ease,transform .3s ease}
 .ficha.troca .in{opacity:0;transform:translateY(10px)}
 .ficha .rot{display:flex;justify-content:space-between;font:600 12px/1 var(--disp);letter-spacing:.28em;color:var(--apoio)}
@@ -270,14 +280,15 @@ footer a{color:var(--xenon);text-underline-offset:3px}
   <section class="ceu" id="ceu" aria-labelledby="t-nome">
     <div class="palco" id="palco">
       <canvas id="fundo" width="32" height="18" aria-hidden="true"></canvas>
+      <div class="limpo" aria-hidden="true"><img src="img/nuvens-base.jpg" alt="" width="720" height="400"></div>
       <div class="midia" id="midia">
         <video id="farol" poster="media/farol-poster.jpg" muted playsinline preload="auto" disablepictureinpicture aria-hidden="true">
           <source src="media/farol.mp4" type='video/mp4; codecs="avc1.64001F"'>
           <source src="media/farol.webm" type='video/webm; codecs="vp9"'>
         </video>
-        <canvas id="tela" role="img" aria-label="Nissan Skyline R34 GT-R azul flutuando acima das nuvens, girando 360 graus conforme você rola a página"></canvas>
       </div>
       <div class="vinheta"></div>
+      <canvas class="carro" id="tela" role="img" aria-label="Nissan Skyline R34 GT-R azul flutuando num céu azul, girando 360 graus conforme você rola a página"></canvas>
       <div class="clarao"></div>
 
       <div class="titulo" id="titulo">
@@ -415,16 +426,16 @@ footer a{color:var(--xenon);text-underline-offset:3px}
   });
 
   /* ================= quadros da volta: o 00 chega primeiro, o resto em ordem espalhada ================= */
-  var NQ = 96, Q = [], ok = [], fila = [], baixando = 0, liberado = false;
+  var NQ = 192, Q = [], ok = [], fila = [], baixando = 0, liberado = false;
   (function(){
     var vistos = {};
     fila.push(0); vistos[0] = 1;
-    for (var d = 48; d >= 1; d = Math.floor(d / 2)){
+    for (var d = 96; d >= 1; d = Math.floor(d / 2)){
       for (var i = 0; i < NQ; i += d) if (!vistos[i]){ vistos[i] = 1; fila.push(i); }
       if (d === 1) break;
     }
   })();
-  function nomeQ(i){ return 'media/volta/' + (i < 10 ? '0' : '') + i + '.webp'; }
+  function nomeQ(i){ return 'media/volta/' + (i < 10 ? '00' : i < 100 ? '0' : '') + i + '.webp'; }
   function libera(){ liberado = true; baixa(); }
   function baixa(){
     while (baixando < (liberado ? 4 : 1) && fila.length){
@@ -452,16 +463,23 @@ footer a{color:var(--xenon);text-underline-offset:3px}
   /* ================= 1 + 2. o farol, depois a volta ================= */
   var ceu = $('ceu'), palco = $('palco'), midia = $('midia'), video = $('farol');
   var tela = $('tela'), tctx = tela.getContext('2d'), fundo = $('fundo'), fctx = fundo.getContext('2d');
-  var titulo = $('titulo'), hud = $('hud'), pe = $('pe'), grausEl = $('graus'), ficha = $('ficha');
-  var fase = 'video', faisca = false, aceso = false, pulou = false, cur = 0, ultimo = -1, retrato = true, grausAntes = -1;
+  var titulo = $('titulo'), kana = document.querySelector('.kana'), hud = $('hud'), pe = $('pe'), grausEl = $('graus'), ficha = $('ficha');
+  var fase = 'video', faisca = false, aceso = false, pulou = false, cur = 0, ultimo = '', retrato = true, grausAntes = -1;
+  var caixa = { x:0, y:0, w:1, h:1 }, pena = null;
 
   function mede(){
     var W = palco.clientWidth, H = palco.clientHeight;
     retrato = W / H <= .625;
     var dpr = Math.min(2, window.devicePixelRatio || 1);
     var mw = midia.clientWidth, mh = midia.clientHeight;
-    tela.width = Math.max(1, Math.round(mw * dpr)); tela.height = Math.max(1, Math.round(mh * dpr));
-    ultimo = -1;
+    tela.width = Math.max(1, Math.round(W * dpr)); tela.height = Math.max(1, Math.round(H * dpr));
+    ultimo = '';
+    /* onde o carro fica: no celular passa um pouco da tela (as pontas cortadas do vídeo somem);
+       no computador fica no meio, com as pontas esfumadas */
+    var cw = retrato ? W * 1.08 : Math.min(W * .5, H * 1.2), ch = cw * 350 / 720;
+    caixa = { x:(W - cw) / 2 * dpr, y:(H * (retrato ? .47 : .55) - ch / 2) * dpr, w:cw * dpr, h:ch * dpr };
+    pena = tctx.createLinearGradient(caixa.x, 0, caixa.x + caixa.w, 0);
+    pena.addColorStop(0, 'rgba(0,0,0,0)'); pena.addColorStop(.09, '#000'); pena.addColorStop(.91, '#000'); pena.addColorStop(1, 'rgba(0,0,0,0)');
     /* o clarão nasce em cima do farol (56% x 50% do vídeo) */
     var s = Math.max(mw / 720, mh / 1280);
     var fx = (W - mw) / 2 + (mw - 720 * s) / 2 + .56 * 720 * s;
@@ -470,21 +488,31 @@ footer a{color:var(--xenon);text-underline-offset:3px}
     palco.style.setProperty('--fy', fy.toFixed(0) + 'px');
     if (fase === 'volta') desenha(idxAtual(), true);
   }
-  function desenha(i, forca){
-    var j = perto(i);
-    if (j < 0) return false;
-    if (j === ultimo && !forca) return true;
-    var im = Q[j], W = tela.width, H = tela.height, s = Math.max(W / 720, H / 1280);
-    tctx.drawImage(im, (W - 720 * s) / 2, (H - 1280 * s) / 2, 720 * s, 1280 * s);
-    if (!retrato) fctx.drawImage(im, 0, 0, 32, 18);
-    ultimo = j;
+  /* x é fracionário: entre dois quadros, o segundo entra por cima com transparência (giro liso) */
+  function desenha(x, forca){
+    var i0 = Math.floor(x), f = x - i0, a = perto(i0);
+    if (a < 0) return false;
+    var b = a === i0 && f > .04 && i0 + 1 < NQ && ok[i0 + 1] ? i0 + 1 : -1;
+    var chave = a + ':' + (b >= 0 ? f.toFixed(2) : '');
+    if (chave === ultimo && !forca) return true;
+    tctx.clearRect(0, 0, tela.width, tela.height);
+    tctx.globalAlpha = 1;
+    tctx.drawImage(Q[a], caixa.x, caixa.y, caixa.w, caixa.h);
+    if (b >= 0){ tctx.globalAlpha = f; tctx.drawImage(Q[b], caixa.x, caixa.y, caixa.w, caixa.h); tctx.globalAlpha = 1; }
+    if (pena && !retrato){
+      tctx.globalCompositeOperation = 'destination-in';
+      tctx.fillStyle = pena; tctx.fillRect(caixa.x, caixa.y, caixa.w, caixa.h);
+      tctx.globalCompositeOperation = 'source-over';
+    }
+    ultimo = chave;
     return true;
   }
-  function idxAtual(){ return Math.round(clamp((cur - .05) / .9, 0, 1) * (NQ - 1)); }
+  function idxAtual(){ return clamp((cur - .05) / .9, 0, 1) * (NQ - 1); }
 
+  var acesoEm = 0;
   function acende(semFlash){
     if (aceso) return;
-    aceso = true;
+    aceso = true; acesoEm = performance.now();
     if (semFlash) doc.classList.add('sem-flash');
     doc.classList.remove('apagado');
     doc.classList.add('aceso');
@@ -554,14 +582,16 @@ footer a{color:var(--xenon);text-underline-offset:3px}
       if (!retrato && video.readyState >= 2){ try{ fctx.drawImage(video, 0, 0, 32, 18); }catch(e){} }
       if (video.ended || t >= 7.9 || p > .05 || pulou) entraVolta();
     }
-    cur += (p - cur) * (reduz ? 1 : .14);
-    if (Math.abs(p - cur) < .0003) cur = p;
+    cur += (p - cur) * (reduz ? 1 : .1);
+    if (Math.abs(p - cur) < .0002) cur = p;
     var k = clamp((cur - .05) / .9, 0, 1);
-    if (fase === 'volta') desenha(Math.round(k * (NQ - 1)), false);
+    if (fase === 'volta') desenha(k * (NQ - 1), false);
 
     var some = passo(.03, .11, cur);
     titulo.style.opacity = String(1 - some);
     titulo.style.transform = 'translate3d(0,' + (-some * 40).toFixed(1) + 'px,0)';
+    /* as letras japonesas saem junto com o título: na volta, só o carro */
+    kana.style.opacity = aceso && performance.now() - (acesoEm || 0) > 1200 ? ((1 - some) * .8).toFixed(3) : '0';
     var vis = fase === 'volta' ? passo(.05, .1, cur) * (1 - passo(.955, .995, cur)) : 0;
     hud.style.opacity = vis.toFixed(3);
     pe.style.opacity = fase === 'volta' ? (1 - passo(.005, .04, cur)).toFixed(3) : '0';
@@ -956,7 +986,8 @@ footer a{color:var(--xenon);text-underline-offset:3px}
   window.addEventListener('scroll', liga2, { passive:true });
   setInterval(liga2, 1000);
 
-  function rolou(){ doc.classList.toggle('passou', window.scrollY > window.innerHeight * .6); }
+  /* a barra só ganha fundo depois do céu: na volta, nada escuro em cima do carro */
+  function rolou(){ doc.classList.toggle('passou', window.scrollY > ceu.offsetHeight - window.innerHeight * .4); }
   window.addEventListener('scroll', rolou, { passive:true });
   rolou();
 

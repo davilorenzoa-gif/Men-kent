@@ -7,13 +7,14 @@ Prévia (artifact): https://claude.ai/artifact/LHHdQPoedN2QyrPj6BneYk
 
 - `index.html`: o site inteiro (CSS e JS dentro).
 - `media/farol.mp4` (+ `.webm`): vídeo de abertura, o farol acende.
-- `media/volta/00–95.webp`: os 96 quadros da volta de 360° no céu.
+- `media/volta/000–191.webp`: os 192 quadros da volta de 360°, com o carro recortado (fundo transparente).
+- `img/nuvens-base.jpg`: as nuvens paradas do céu limpo.
 - `img/`: fotos do carrossel e imagem de compartilhamento.
 - `som/`: trechos do motor (partida, giro baixo, giro alto, desaceleração).
 
 3 WOWs:
 1. O farol acende e o site acende junto (título pisca e firma, barra entra), a câmera se afasta.
-2. A rolagem dá a volta de 360°: contador de graus e ficha técnica que troca pelo ângulo.
+2. A rolagem dá a volta de 360° num céu limpo e parado (só o carro gira, quadros misturados pra ficar liso): contador de graus e ficha técnica que troca pelo ângulo.
 3. Carrossel em anel (arrastar) e painel de largada: partida, 2-step, árvore, trocas de marcha, 0–100 e 0–200 com recorde.
 
 Origem do material (conferir antes de divulgar publicamente):
