@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="apagado">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skyline Motors</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Site conceito da Skyline Motors, aluguel de JDM clássico, feito pela GuDev. O farol acende, o R34 dá a volta no céu e você acelera com o som de verdade.">
+<meta name="theme-color" content="#050914">
+<meta property="og:title" content="Skyline Motors | Conceito GuDev">
+<meta property="og:description" content="O farol acende, o site acende junto. Sites que vendem.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/og.jpg">
+<link rel="preload" as="image" href="media/volta/00.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&text=%E3%82%B9%E3%82%AB%E3%82%A4%E3%83%A9%E3%83%B3&display=swap" rel="stylesheet">
+
+<!--
+PLANO (conceito GuDev, marca fictícia "Skyline Motors", aluguel de JDM clássico)
+
+Cores (método das 3):
+  Azul Noite    #050914  base, ~60%: o escuro antes do farol e o fundo das seções
+  Branco Xenônio #eaf2ff  segunda, ~30%: título e texto, a cor do farol aceso
+  Âmbar Seta    #ff8a1e  acento, ~10%: a seta dianteira do R34. Só no botão do WhatsApp,
+                         na faixa vermelha do conta-giros e no símbolo de grau
+  (o verde #3ee58c aparece só na luz de largada: é cor de sinal, não da marca)
+
+Fontes: Chakra Petch (títulos, cara de painel japonês) + Manrope (texto). Katakana em Noto Sans JP.
+
+WOWs:
+  1 Abertura: no escuro, o farol de xenônio acende e o site acende junto (o título pisca e
+    firma, a barra entra). A câmera se afasta e o R34 aparece flutuando no céu.
+  2 Meio: a rolagem dá a volta de 360° no carro; o contador de graus sobe e a ficha técnica
+    troca conforme o ângulo (motor de frente, lanternas de trás).
+  3 Interativo: carrossel em anel (arraste pra girar) e o painel de largada com o som real
+    de um R34: partida, giro, troca de marcha, 0 a 100 e 0 a 200.
+
+Mídia: vídeos gerados por IA (farol e volta no céu), 96 quadros da volta em media/volta.
+Som: trechos de vídeos reais de R34 enviados pelo Davi (som/). Fotos de referência em img/.
+-->
+
+<style>
+:root{
+  /* Layout: palco em pé no centro (o vídeo é 9:16) com o céu esticado e desfocado dos lados; título em cima, ficha técnica embaixo no celular e na margem direita no computador. */
+  --noite:#050914;   /* Azul Noite: base */
+  --xenon:#eaf2ff;   /* Branco Xenônio: segunda */
+  --seta:#ff8a1e;    /* Âmbar Seta: acento */
+  --vai:#3ee58c;     /* luz verde da largada (sinal) */
+  --noite-2:#0b1329; /* a base um tom acima, pros painéis */
+  --painel:rgba(5,9,20,.55);
+  --linha:rgba(234,242,255,.14);
+  --apoio:rgba(234,242,255,.7);
+  --apagado:rgba(234,242,255,.08);
+  --disp:'Chakra Petch',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --corpo:'Manrope',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --jp:'Noto Sans JP','Hiragino Sans','Yu Gothic',sans-serif;
+  --g:clamp(16px,4vw,56px);
+  --gl:max(var(--g),env(safe-area-inset-left,0px));
+  --gr:max(var(--g),env(safe-area-inset-right,0px));
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;background:var(--noite)}
+body{background:var(--noite);color:var(--xenon);font:400 16px/1.55 var(--corpo);overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--xenon);outline-offset:3px}
+img{display:block;max-width:100%;height:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--noite)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;background:var(--seta);color:var(--noite);
+  font:700 15px/1 var(--corpo);text-decoration:none;white-space:nowrap;transition:transform .25s cubic-bezier(.2,.8,.2,1),filter .2s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn svg{width:18px;height:18px;fill:currentColor}
+
+/* ---------- barra ---------- */
+.bar{position:fixed;z-index:50;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) var(--gr) 12px var(--gl);transition:opacity .9s ease .35s,transform .9s cubic-bezier(.2,.8,.2,1) .35s}
+.bar::before{content:"";position:absolute;inset:0 0 -28px;z-index:-1;background:linear-gradient(var(--noite) 35%,transparent);opacity:0;transition:opacity .4s}
+.passou .bar::before{opacity:.92}
+.apagado .bar{opacity:0;transform:translateY(-10px);pointer-events:none}
+.marca{font:600 15px/1 var(--disp);letter-spacing:.16em;text-decoration:none;white-space:nowrap}
+.marca b{font-weight:700}
+
+/* ---------- 1 + 2. o céu: farol, depois a volta ---------- */
+.ceu{position:relative;height:480vh}
+.palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;background:var(--noite)}
+#fundo{position:absolute;left:-10%;top:-10%;width:120%;height:120%;filter:blur(32px) saturate(1.2);opacity:.95}
+.midia{position:absolute;z-index:1;left:50%;top:50%;height:118%;aspect-ratio:9/16;transform:translate(-50%,-50%);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+.midia video,.midia canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.midia canvas{opacity:0;transition:opacity 1s ease}
+.na-volta .midia canvas{opacity:1}
+.na-volta .midia video{opacity:0;transition:opacity 1s ease}
+@media (max-aspect-ratio:5/8){
+  .midia{height:100%;width:100%;aspect-ratio:auto;-webkit-mask-image:none;mask-image:none}
+  #fundo{display:none}
+}
+.vinheta{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(5,9,20,.62) 0%,rgba(5,9,20,0) 34%,rgba(5,9,20,0) 58%,rgba(5,9,20,.72) 100%)}
+.clarao{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;mix-blend-mode:screen;
+  background:radial-gradient(circle at var(--fx,50%) var(--fy,50%),rgba(255,255,255,.98) 0,rgba(205,226,255,.55) 16%,rgba(120,170,255,.12) 42%,transparent 62%)}
+.faisca .clarao{animation:faisca .42s steps(1) both}
+@keyframes faisca{0%{opacity:0}18%{opacity:.35}36%{opacity:0}58%{opacity:.5}78%{opacity:.08}100%{opacity:.2}}
+.aceso .clarao{animation:clarao 1.5s cubic-bezier(.15,.7,.2,1) both}
+@keyframes clarao{0%{opacity:.2}10%{opacity:1}100%{opacity:0}}
+.sem-flash .clarao{animation:none;opacity:0}
+
+/* título: apagado é só contorno; o farol acende e ele firma */
+.titulo{position:absolute;z-index:6;left:var(--gl);right:var(--gr);top:calc(env(safe-area-inset-top,0px) + clamp(78px,11svh,130px));text-align:center;pointer-events:none;will-change:transform,opacity}
+.titulo h1{font-weight:inherit}
+.nome{position:relative;display:block;font:700 clamp(62px,17.5vw,210px)/.86 var(--disp);letter-spacing:.015em;color:transparent;-webkit-text-stroke:1px rgba(234,242,255,.16);
+  transition:color .5s,text-shadow .9s,-webkit-text-stroke-color .5s}
+.nome::after{content:attr(data-t);position:absolute;inset:0;color:transparent;-webkit-text-stroke:0;
+  background:linear-gradient(100deg,transparent 42%,rgba(255,255,255,.95) 50%,transparent 58%);background-size:260% 100%;background-position:140% 0;
+  -webkit-background-clip:text;background-clip:text;opacity:0}
+.faisca .nome{animation:pisca .42s steps(1) both}
+@keyframes pisca{0%{color:transparent}18%{color:var(--xenon)}36%{color:transparent}58%{color:var(--xenon)}78%{color:rgba(234,242,255,.3)}100%{color:rgba(234,242,255,.6)}}
+.aceso .nome{animation:none;color:var(--xenon);-webkit-text-stroke-color:transparent;text-shadow:0 0 22px rgba(160,200,255,.55),0 0 70px rgba(90,150,255,.35),0 2px 30px rgba(5,9,20,.35)}
+.aceso .nome::after{animation:varre 1.6s cubic-bezier(.3,.6,.2,1) .35s both}
+@keyframes varre{0%{opacity:1;background-position:140% 0}100%{opacity:1;background-position:-40% 0}}
+.sub{display:block;margin-top:.7em;font:600 clamp(13px,1.5vw,18px)/1 var(--disp);letter-spacing:.7em;padding-left:.7em;opacity:0;transform:translateY(8px);transition:opacity .9s ease .5s,transform .9s ease .5s}
+.tag{margin:clamp(14px,2.2svh,22px) auto 0;max-width:30ch;text-wrap:balance;font:500 clamp(15px,1.4vw,18px)/1.4 var(--corpo);color:var(--apoio);opacity:0;transform:translateY(8px);transition:opacity .9s ease .8s,transform .9s ease .8s;text-shadow:0 1px 18px rgba(5,9,20,.6)}
+.aceso .sub,.aceso .tag{opacity:1;transform:none}
+.kana{position:absolute;z-index:6;right:var(--gr);top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font:700 13px/1 var(--jp);letter-spacing:.5em;color:var(--apoio);opacity:0;transition:opacity 1.2s ease 1.2s}
+.aceso .kana{opacity:.8}
+
+/* volta: contador de graus + ficha que troca pelo ângulo */
+.hud{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0}
+.graus{position:absolute;left:var(--gl);top:calc(env(safe-area-inset-top,0px) + 74px)}
+.graus small{display:block;font:600 12px/1 var(--disp);letter-spacing:.3em;color:var(--apoio);margin-bottom:8px}
+.graus span{display:block;font:600 clamp(46px,6.4vw,92px)/.9 var(--disp);font-variant-numeric:tabular-nums;text-shadow:0 2px 24px rgba(5,9,20,.45)}
+.graus sup{font-size:.42em;vertical-align:top;margin-left:.06em;color:var(--seta)}
+.ficha{position:absolute;left:var(--gl);right:var(--gr);bottom:calc(env(safe-area-inset-bottom,0px) + 22px);max-width:430px;padding:16px 18px 18px;
+  background:var(--painel);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--linha);border-radius:4px 4px 16px 16px}
+.ficha .in{transition:opacity .3s ease,transform .3s ease}
+.ficha.troca .in{opacity:0;transform:translateY(10px)}
+.ficha .rot{display:flex;justify-content:space-between;font:600 12px/1 var(--disp);letter-spacing:.28em;color:var(--apoio)}
+.ficha h3{margin-top:10px;font:700 clamp(26px,3vw,40px)/1 var(--disp);letter-spacing:.01em}
+.ficha p{margin-top:8px;color:var(--apoio);font-size:15px;max-width:38ch}
+@media (min-aspect-ratio:5/8){
+  .graus{top:50%;transform:translateY(-50%)}
+  .ficha{left:auto;bottom:auto;top:50%;transform:translateY(-50%);width:clamp(210px,calc((100vw - 66svh)/2 - 2*var(--g)),380px)}
+}
+.pe{position:absolute;z-index:6;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 26px);display:flex;flex-direction:column;align-items:center;gap:10px;font-size:14px;color:var(--apoio);pointer-events:none;opacity:0}
+.pe i{display:block;width:1px;height:34px;background:linear-gradient(var(--xenon),transparent);transform-origin:top;animation:pinga 1.8s ease-in-out infinite}
+@keyframes pinga{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+/* ---------- 3. carrossel em anel ---------- */
+.anel{position:relative;overflow:hidden;padding-block:clamp(84px,14vh,150px) clamp(60px,10vh,110px)}
+.cab{padding-left:var(--gl);padding-right:var(--gr);max-width:1240px;margin:0 auto}
+.cab h2,.largada h2,.fim h2{font:700 clamp(38px,6.2vw,92px)/.95 var(--disp);letter-spacing:-.005em;text-wrap:balance}
+.cab p{margin-top:14px;color:var(--apoio);max-width:52ch}
+.roda{--w:min(72vw,520px);position:relative;height:calc(var(--w)*.75 + 90px);margin-top:clamp(26px,5vh,56px);perspective:1400px;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.roda.arrasta{cursor:grabbing}
+.giro{position:absolute;left:50%;top:50%;width:var(--w);aspect-ratio:4/3;max-width:100%;transform-style:preserve-3d;will-change:transform}
+.foto{position:absolute;inset:0;margin:0;border-radius:12px;overflow:hidden;background:var(--noite-2);-webkit-backface-visibility:hidden;backface-visibility:hidden;box-shadow:0 30px 70px rgba(0,0,0,.55)}
+.foto img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.foto .tom{position:absolute;inset:0;background:var(--noite);opacity:0;pointer-events:none}
+.foto figcaption{position:absolute;left:14px;right:14px;bottom:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px;font:600 12px/1 var(--disp);letter-spacing:.2em;text-transform:uppercase;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+.ia{padding:5px 7px 4px;border-radius:6px;background:var(--painel);letter-spacing:.1em;font-size:10px}
+.legenda{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-left:var(--gl);padding-right:var(--gr);max-width:1240px;margin:6px auto 0}
+.legenda p{font-size:clamp(17px,1.6vw,21px);max-width:34ch;min-width:0;transition:opacity .3s,transform .3s}
+.legenda p.troca{opacity:0;transform:translateY(6px)}
+.setas{display:flex;gap:10px;flex:none}
+.setas button{width:48px;height:48px;border-radius:50%;border:1px solid var(--linha);display:grid;place-items:center;transition:background .2s,color .2s}
+.setas button:hover{background:var(--xenon);color:var(--noite)}
+.setas svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
+.barras{display:flex;gap:6px;padding-left:var(--gl);padding-right:var(--gr);max-width:1240px;margin:20px auto 0}
+.barras i{height:2px;flex:1;max-width:56px;background:var(--linha);border-radius:2px;transition:background .3s}
+.barras i.on{background:var(--xenon)}
+.nota{display:block;padding-left:var(--gl);padding-right:var(--gr);max-width:1240px;margin:16px auto 0;font-size:13px;color:var(--apoio)}
+
+/* ---------- 4. largada ---------- */
+.largada{padding-block:clamp(70px,12vh,140px);padding-left:var(--gl);padding-right:var(--gr);background:linear-gradient(180deg,var(--noite),var(--noite-2) 55%,var(--noite))}
+.largada__grade{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(32px,5vw,72px);max-width:1180px;margin:0 auto;align-items:center}
+@media (min-width:900px){ .largada__grade{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)} }
+.largada .intro p{margin-top:14px;color:var(--apoio);max-width:46ch}
+.passos{list-style:none;counter-reset:p;margin-top:22px;display:grid;gap:12px}
+.passos li{counter-increment:p;display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:baseline}
+.passos li::before{content:counter(p);font:600 14px/1 var(--disp);color:var(--apoio);border:1px solid var(--linha);border-radius:50%;width:30px;height:30px;display:grid;place-items:center}
+.recorde{margin-top:22px;font:600 15px/1.4 var(--disp);letter-spacing:.06em}
+.recorde span{color:var(--apoio);font-weight:500}
+.painel{position:relative;padding:clamp(16px,3vw,28px);border-radius:24px;background:linear-gradient(180deg,var(--noite-2),var(--noite));border:1px solid var(--linha);transition:box-shadow 1s}
+.painel.ligado{box-shadow:0 30px 90px rgba(40,90,220,.22),inset 0 0 70px rgba(120,170,255,.06)}
+.topo-painel{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.leds,.arvore{display:flex;gap:6px}
+.leds i{width:clamp(14px,3.2vw,22px);height:6px;border-radius:3px;background:var(--apagado);transition:background .08s}
+.leds i.on{background:var(--seta);box-shadow:0 0 10px rgba(255,138,30,.7)}
+.leds.agora i{animation:led .14s steps(1) infinite alternate}
+@keyframes led{0%{background:var(--seta)}100%{background:var(--apagado);box-shadow:none}}
+.arvore i{width:14px;height:14px;border-radius:50%;background:var(--apagado);transition:background .06s}
+.arvore i.on{background:var(--seta);box-shadow:0 0 14px rgba(255,138,30,.8)}
+.arvore i.vai.on{background:var(--vai);box-shadow:0 0 18px rgba(62,229,140,.9)}
+.relogio{display:block;width:100%;max-width:400px;margin:8px auto 0}
+.relogio .trilho{fill:none;stroke:var(--linha);stroke-width:6}
+.relogio .giro-arco{fill:none;stroke:var(--xenon);stroke-width:6;stroke-linecap:round;stroke-dasharray:1 1;stroke-dashoffset:1;opacity:.85;filter:drop-shadow(0 0 6px rgba(160,200,255,.6))}
+.relogio .vermelho{fill:none;stroke:var(--seta);stroke-width:6}
+.relogio .tick{stroke:var(--apoio);stroke-width:1.5}
+.relogio .tick.g{stroke:var(--xenon);stroke-width:2.5}
+.relogio .num{fill:var(--apoio);font:600 15px var(--disp);text-anchor:middle;dominant-baseline:central}
+.relogio .ponteiro{stroke:var(--seta);stroke-width:4;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(255,138,30,.6))}
+.relogio .vel{fill:var(--xenon);font:700 58px var(--disp);text-anchor:middle;font-variant-numeric:tabular-nums}
+.relogio .un{fill:var(--apoio);font:600 12px var(--disp);letter-spacing:.25em;text-anchor:middle}
+.relogio .x1000{fill:var(--apoio);font:600 10px var(--disp);letter-spacing:.2em;text-anchor:middle}
+.relogio .marcha{fill:var(--xenon);font:700 26px var(--disp);text-anchor:middle}
+.relogio .caixa{fill:none;stroke:var(--linha)}
+.painel:not(.ligado) .relogio .vel,.painel:not(.ligado) .relogio .marcha{fill:var(--apagado)}
+.dados{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:6px}
+.dados div{padding:10px 12px;border-radius:12px;background:rgba(234,242,255,.04);min-width:0}
+.dados dt{font:600 11px/1 var(--disp);letter-spacing:.2em;color:var(--apoio)}
+.dados dd{margin-top:6px;font:700 clamp(18px,2.4vw,24px)/1 var(--disp);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pedal{display:block;width:100%;min-height:66px;margin-top:14px;border-radius:16px;background:var(--xenon);color:var(--noite);font:700 17px/1.1 var(--disp);letter-spacing:.12em;text-transform:uppercase;
+  touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:transform .12s,background .2s,filter .2s}
+.pedal:hover{filter:brightness(1.05)}
+.pedal.segura{transform:scale(.98)}
+.pedal.troque{background:var(--seta);animation:pulsa .3s ease-in-out infinite alternate}
+@keyframes pulsa{to{filter:brightness(1.25)}}
+.pedal:disabled{opacity:.6;cursor:default}
+.status{min-height:1.5em;margin-top:12px;text-align:center;font-weight:600}
+.rodape-painel{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;margin-top:10px;font-size:13px;color:var(--apoio)}
+.mudo{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px;border-radius:999px;border:1px solid var(--linha);font-size:13px}
+.mudo svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- 5. final ---------- */
+.fim{position:relative;isolation:isolate;overflow:hidden;min-height:78svh;display:grid;place-items:center;text-align:center;padding:clamp(80px,14vh,140px) var(--gr) clamp(70px,12vh,120px) var(--gl)}
+.fim__fundo{position:absolute;inset:0;z-index:-1}
+.fim__fundo img{width:100%;height:100%;object-fit:cover}
+.fim__fundo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--noite) 0%,rgba(5,9,20,.55) 40%,rgba(5,9,20,.75) 100%)}
+.fim .eyebrow{color:var(--apoio)}
+.fim .eyebrow a{text-underline-offset:3px}
+.fim h2{margin:14px auto 0;max-width:15ch}
+.fim .btn{margin-top:30px;min-height:56px;padding:0 30px;font-size:16px}
+footer{padding:28px var(--gr) calc(28px + env(safe-area-inset-bottom,0px)) var(--gl);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 28px;font-size:13px;color:var(--apoio);border-top:1px solid var(--linha)}
+footer span{max-width:70ch}
+footer a{color:var(--xenon);text-underline-offset:3px}
+
+@media (max-width:700px){
+  .bar .btn{min-height:40px;padding:0 14px;font-size:14px}
+  .bar .btn .longo{display:none}
+  .legenda{flex-direction:column;align-items:flex-start}
+  .setas{display:none}
+}
+@media (max-width:359px){ .marca{letter-spacing:.08em;font-size:13px} }
+
+/* prévia estática e reduzir movimento */
+.embed .ceu{height:auto}
+.embed .palco{position:relative}
+@media (prefers-reduced-motion:reduce){
+  .faisca .nome,.faisca .clarao,.aceso .clarao,.aceso .nome::after{animation:none}
+  .pe i,.pedal.troque{animation:none}
+  .bar,.sub,.tag,.kana{transition-duration:.4s;transition-delay:0s}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="marca" href="#topo"><b>SKYLINE</b> MOTORS</a>
+  <a class="btn" data-wa href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .3-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg><span>Quero um site<span class="longo"> assim</span></span></a>
+</header>
+
+<main id="topo">
+  <!-- 1 + 2. o farol acende, a câmera se afasta, a rolagem dá a volta -->
+  <section class="ceu" id="ceu" aria-labelledby="t-nome">
+    <div class="palco" id="palco">
+      <canvas id="fundo" width="32" height="18" aria-hidden="true"></canvas>
+      <div class="midia" id="midia">
+        <video id="farol" poster="media/farol-poster.jpg" muted playsinline preload="auto" disablepictureinpicture aria-hidden="true">
+          <source src="media/farol.mp4" type='video/mp4; codecs="avc1.64001F"'>
+          <source src="media/farol.webm" type='video/webm; codecs="vp9"'>
+        </video>
+        <canvas id="tela" role="img" aria-label="Nissan Skyline R34 GT-R azul flutuando acima das nuvens, girando 360 graus conforme você rola a página"></canvas>
+      </div>
+      <div class="vinheta"></div>
+      <div class="clarao"></div>
+
+      <div class="titulo" id="titulo">
+        <h1 id="t-nome"><span class="nome" data-t="SKYLINE">SKYLINE</span><span class="sub">MOTORS</span></h1>
+        <p class="tag">Aluguel de JDM clássico · R34 GT-R Bayside Blue</p>
+      </div>
+      <span class="kana" aria-hidden="true">スカイライン</span>
+
+      <div class="hud" id="hud" aria-hidden="true">
+        <div class="graus"><small>VOLTA</small><span id="graus">000<sup>°</sup></span></div>
+        <div class="ficha" id="ficha">
+          <div class="in">
+            <p class="rot"><span id="f-rot">MOTOR</span><span id="f-num">1/5</span></p>
+            <h3 id="f-tit">RB26DETT</h3>
+            <p id="f-txt">Seis cilindros em linha, 2,6 litros e dois turbos. No papel, 280 cv.</p>
+          </div>
+        </div>
+      </div>
+      <p class="pe" id="pe"><i></i>Role pra dar a volta de 360°</p>
+    </div>
+    <ul class="sr">
+      <li>Motor RB26DETT: seis cilindros em linha, 2,6 litros e dois turbos. No papel, 280 cv.</li>
+      <li>Tração ATTESA E-TS: integral; quando a traseira escorrega, a força vai pra frente.</li>
+      <li>Traseira com 4 lanternas redondas.</li>
+      <li>Câmbio manual de 6 marchas.</li>
+      <li>Cor Bayside Blue, a assinatura do R34 GT-R.</li>
+    </ul>
+  </section>
+
+  <!-- 3. carrossel em anel: arraste pra girar -->
+  <section class="anel" id="anel" aria-labelledby="t-anel">
+    <div class="cab">
+      <h2 id="t-anel">Sete ângulos de um R34.</h2>
+      <p>Arraste pro lado e o anel gira. Ou espere, que ele gira sozinho.</p>
+    </div>
+    <div class="roda" id="roda" role="group" aria-roledescription="carrossel" aria-label="Fotos do R34" tabindex="0">
+      <div class="giro" id="giro">
+        <figure class="foto"><img src="img/farol.jpg" alt="Farol de xenônio do R34 aceso, com raios de luz" width="720" height="540" draggable="false"><div class="tom"></div><figcaption><span>Farol</span><span class="ia">IA</span></figcaption></figure>
+        <figure class="foto"><img src="img/nuvens.jpg" alt="Frente do R34 azul com o farol aceso, flutuando sobre as nuvens" width="720" height="540" draggable="false" loading="lazy"><div class="tom"></div><figcaption><span>Céu</span><span class="ia">IA</span></figcaption></figure>
+        <figure class="foto"><img src="img/frente.jpg" alt="Frente do R34 azul vista de cima, com a entrada de ar no capô" width="452" height="339" draggable="false" loading="lazy"><div class="tom"></div><figcaption><span>Frente</span></figcaption></figure>
+        <figure class="foto"><img src="img/lateral.jpg" alt="R34 azul em movimento numa estrada, visto de lado" width="640" height="480" draggable="false" loading="lazy"><div class="tom"></div><figcaption><span>Lateral</span></figcaption></figure>
+        <figure class="foto"><img src="img/traseira.jpg" alt="Traseira do R34 azul com as quatro lanternas redondas e a asa" width="486" height="364" draggable="false" loading="lazy"><div class="tom"></div><figcaption><span>Traseira</span></figcaption></figure>
+        <figure class="foto"><img src="img/perfil.jpg" alt="Lateral do R34 azul flutuando no céu" width="720" height="540" draggable="false" loading="lazy"><div class="tom"></div><figcaption><span>Perfil</span><span class="ia">IA</span></figcaption></figure>
+        <figure class="foto"><img src="img/lanternas.jpg" alt="Traseira do R34 azul flutuando no céu, com as lanternas acesas" width="720" height="540" draggable="false" loading="lazy"><div class="tom"></div><figcaption><span>Lanternas</span><span class="ia">IA</span></figcaption></figure>
+      </div>
+    </div>
+    <div class="legenda">
+      <p id="leg" aria-live="polite"></p>
+      <div class="setas">
+        <button type="button" id="ant" aria-label="Foto anterior"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" id="prox" aria-label="Próxima foto"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+    <div class="barras" id="barras" aria-hidden="true"></div>
+    <small class="nota">As imagens marcadas com IA são ilustrativas. As outras são fotos de referência.</small>
+  </section>
+
+  <!-- 4. largada: o som é de um R34 de verdade -->
+  <section class="largada" id="largada" aria-labelledby="t-largada">
+    <div class="largada__grade">
+      <div class="intro">
+        <h2 id="t-largada">Agora é com você.</h2>
+        <p>O ronco é de um R34 de verdade. Os tempos são de brincadeira.</p>
+        <ol class="passos">
+          <li><span>Dê a partida e espere o painel acender.</span></li>
+          <li><span>Segure o botão pra subir o giro e solte quando acender o verde.</span></li>
+          <li><span>Toque pra trocar de marcha quando as luzes do painel piscarem.</span></li>
+        </ol>
+        <p class="recorde" id="recorde">Recorde de 0 a 200: <span>ainda não tem</span></p>
+      </div>
+
+      <div class="painel" id="painel">
+        <div class="topo-painel">
+          <div class="leds" id="leds" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="arvore" id="arvore" aria-hidden="true"><i></i><i></i><i></i><i class="vai"></i></div>
+        </div>
+        <svg class="relogio" id="relogio" viewBox="0 0 320 290" role="img" aria-label="Conta-giros e velocímetro">
+          <path class="trilho" id="trilho"/>
+          <path class="vermelho" id="vermelho"/>
+          <path class="giro-arco" id="arco" pathLength="1"/>
+          <g id="marcas"></g>
+          <text class="x1000" x="160" y="104">×1000 RPM</text>
+          <text class="vel" id="vel" x="160" y="176">0</text>
+          <text class="un" x="160" y="198">KM/H</text>
+          <rect class="caixa" x="140" y="218" width="40" height="40" rx="8"/>
+          <text class="marcha" id="marcha" x="160" y="248">N</text>
+          <line class="ponteiro" id="ponteiro" x1="160" y1="88" x2="160" y2="40"/>
+        </svg>
+        <dl class="dados">
+          <div><dt>REAÇÃO</dt><dd id="d-reacao">—</dd></div>
+          <div><dt>0–100</dt><dd id="d-100">—</dd></div>
+          <div><dt>0–200</dt><dd id="d-200">—</dd></div>
+        </dl>
+        <button class="pedal" type="button" id="pedal">Dar a partida</button>
+        <p class="status" id="status" role="status" aria-live="polite">Toque em dar a partida. Com som.</p>
+        <div class="rodape-painel">
+          <span>Tire o celular do silencioso pra ouvir.</span>
+          <button class="mudo" type="button" id="mudo" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path id="onda" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><span>Som ligado</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. final -->
+  <section class="fim" aria-labelledby="t-fim">
+    <div class="fim__fundo" aria-hidden="true"><img src="img/og.jpg" alt="" width="1200" height="630" loading="lazy"></div>
+    <div>
+      <p class="eyebrow">Skyline Motors é um conceito. Quem fez foi a GuDev.</p>
+      <h2 id="t-fim">Um site que dá vontade de acelerar.</h2>
+      <a class="btn" data-wa href="https://wa.me/5511964650141" target="_blank" rel="noopener">Quero um site assim</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>GuDev, sites para comércios locais. WhatsApp (11) 96465-0141.</span>
+  <span>Skyline Motors é uma marca fictícia, criada pela GuDev como conceito. Nissan, Skyline e GT-R são marcas da Nissan, sem ligação com este projeto. Vídeos e imagens marcadas com IA foram gerados por IA; o som do motor e as fotos de referência são de terceiros.</span>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var WHATS = '5511964650141';
+  var MSG = 'Oi! Vi o site conceito da Skyline Motors e quero um site assim pro meu negócio.';
+  var doc = document.documentElement;
+  var embed = /[?&]embed\b/.test(location.search);
+  var reduz = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(id){ return document.getElementById(id); }
+  function clamp(v, a, b){ return v < a ? a : v > b ? b : v; }
+  function passo(a, b, v){ v = clamp((v - a) / (b - a), 0, 1); return v * v * (3 - 2 * v); }
+  function virgula(n, c){ return n.toFixed(c).replace('.', ','); }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-wa]'), function(a){
+    a.href = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent(MSG);
+  });
+
+  /* ================= quadros da volta: o 00 chega primeiro, o resto em ordem espalhada ================= */
+  var NQ = 96, Q = [], ok = [], fila = [], baixando = 0, liberado = false;
+  (function(){
+    var vistos = {};
+    fila.push(0); vistos[0] = 1;
+    for (var d = 48; d >= 1; d = Math.floor(d / 2)){
+      for (var i = 0; i < NQ; i += d) if (!vistos[i]){ vistos[i] = 1; fila.push(i); }
+      if (d === 1) break;
+    }
+  })();
+  function nomeQ(i){ return 'media/volta/' + (i < 10 ? '0' : '') + i + '.webp'; }
+  function libera(){ liberado = true; baixa(); }
+  function baixa(){
+    while (baixando < (liberado ? 4 : 1) && fila.length){
+      var i = fila.shift();
+      if (Q[i]) continue;
+      baixando++;
+      (function(i){
+        var im = new Image();
+        im.decoding = 'async';
+        im.onload = function(){ ok[i] = true; baixando--; baixa(); };
+        im.onerror = function(){ baixando--; baixa(); };
+        im.src = nomeQ(i);
+        Q[i] = im;
+      })(i);
+    }
+  }
+  function perto(i){
+    for (var d = 0; d < NQ; d++){
+      if (i - d >= 0 && ok[i - d]) return i - d;
+      if (i + d < NQ && ok[i + d]) return i + d;
+    }
+    return -1;
+  }
+
+  /* ================= 1 + 2. o farol, depois a volta ================= */
+  var ceu = $('ceu'), palco = $('palco'), midia = $('midia'), video = $('farol');
+  var tela = $('tela'), tctx = tela.getContext('2d'), fundo = $('fundo'), fctx = fundo.getContext('2d');
+  var titulo = $('titulo'), hud = $('hud'), pe = $('pe'), grausEl = $('graus'), ficha = $('ficha');
+  var fase = 'video', faisca = false, aceso = false, pulou = false, cur = 0, ultimo = -1, retrato = true, grausAntes = -1;
+
+  function mede(){
+    var W = palco.clientWidth, H = palco.clientHeight;
+    retrato = W / H <= .625;
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    var mw = midia.clientWidth, mh = midia.clientHeight;
+    tela.width = Math.max(1, Math.round(mw * dpr)); tela.height = Math.max(1, Math.round(mh * dpr));
+    ultimo = -1;
+    /* o clarão nasce em cima do farol (56% x 50% do vídeo) */
+    var s = Math.max(mw / 720, mh / 1280);
+    var fx = (W - mw) / 2 + (mw - 720 * s) / 2 + .56 * 720 * s;
+    var fy = (H - mh) / 2 + (mh - 1280 * s) / 2 + .5 * 1280 * s;
+    palco.style.setProperty('--fx', fx.toFixed(0) + 'px');
+    palco.style.setProperty('--fy', fy.toFixed(0) + 'px');
+    if (fase === 'volta') desenha(idxAtual(), true);
+  }
+  function desenha(i, forca){
+    var j = perto(i);
+    if (j < 0) return false;
+    if (j === ultimo && !forca) return true;
+    var im = Q[j], W = tela.width, H = tela.height, s = Math.max(W / 720, H / 1280);
+    tctx.drawImage(im, (W - 720 * s) / 2, (H - 1280 * s) / 2, 720 * s, 1280 * s);
+    if (!retrato) fctx.drawImage(im, 0, 0, 32, 18);
+    ultimo = j;
+    return true;
+  }
+  function idxAtual(){ return Math.round(clamp((cur - .05) / .9, 0, 1) * (NQ - 1)); }
+
+  function acende(semFlash){
+    if (aceso) return;
+    aceso = true;
+    if (semFlash) doc.classList.add('sem-flash');
+    doc.classList.remove('apagado');
+    doc.classList.add('aceso');
+  }
+  function entraVolta(){
+    if (fase === 'volta' || !ok[0]) return;
+    fase = 'volta';
+    acende(true);
+    desenha(idxAtual(), true);
+    doc.classList.add('na-volta');
+    setTimeout(function(){ try{ video.pause(); }catch(e){} }, 1100);
+  }
+  function pulaIntro(){ pulou = true; acende(true); }
+
+  function abertura(){
+    baixa();   /* só o quadro 00 até o vídeo começar */
+    if (embed || reduz){
+      if (embed) doc.classList.add('embed');
+      pulaIntro();
+      libera();
+      return;
+    }
+    var p = video.play();
+    if (p && p.catch) p.catch(pulaIntro);
+    /* celular em economia de bateria bloqueia o vídeo: o site acende do mesmo jeito */
+    setTimeout(function(){ if (fase === 'video' && (video.currentTime || 0) < .05) pulaIntro(); }, 2600);
+  }
+
+  var FICHA = [
+    ['MOTOR', 'RB26DETT', 'Seis cilindros em linha, 2,6 litros e dois turbos. No papel, 280 cv.'],
+    ['TRAÇÃO', 'ATTESA E-TS', 'Tração integral: quando a traseira escorrega, a força vai pra frente.'],
+    ['TRASEIRA', '4 lanternas redondas', 'Dá pra reconhecer um Skyline de longe, só pelas luzes.'],
+    ['CÂMBIO', 'Manual, 6 marchas', 'Embreagem, alavanca e você. Do jeito que ele foi feito.'],
+    ['COR', 'Bayside Blue', 'O azul que virou a assinatura do R34 GT-R.']
+  ];
+  var fAtual = 0, fAnim = false, fPend = -1;
+  function preencheFicha(n){
+    $('f-rot').textContent = FICHA[n][0];
+    $('f-num').textContent = (n + 1) + '/5';
+    $('f-tit').textContent = FICHA[n][1];
+    $('f-txt').textContent = FICHA[n][2];
+  }
+  /* uma troca por vez, em fila; a de garantia destrava se algo falhar */
+  function trocaFicha(n){
+    if (fAnim){ fPend = n; return; }
+    if (n === fAtual) return;
+    fAnim = true;
+    ficha.classList.add('troca');
+    setTimeout(function(){
+      preencheFicha(n); fAtual = n;
+      ficha.classList.remove('troca');
+      setTimeout(function(){
+        fAnim = false;
+        var p = fPend; fPend = -1;
+        if (p >= 0 && p !== fAtual) trocaFicha(p);
+      }, 320);
+    }, 300);
+  }
+
+  function quadroCeu(){
+    var ih = window.innerHeight, r = ceu.getBoundingClientRect();
+    var p = embed ? 0 : clamp(-r.top / Math.max(1, r.height - ih), 0, 1);
+    if (fase === 'video'){
+      var t = video.currentTime || 0;
+      if (!faisca && t >= 2.08){ faisca = true; doc.classList.add('faisca'); }
+      if (!aceso && t >= 2.5) acende(false);
+      if (!retrato && video.readyState >= 2){ try{ fctx.drawImage(video, 0, 0, 32, 18); }catch(e){} }
+      if (video.ended || t >= 7.9 || p > .05 || pulou) entraVolta();
+    }
+    cur += (p - cur) * (reduz ? 1 : .14);
+    if (Math.abs(p - cur) < .0003) cur = p;
+    var k = clamp((cur - .05) / .9, 0, 1);
+    if (fase === 'volta') desenha(Math.round(k * (NQ - 1)), false);
+
+    var some = passo(.03, .11, cur);
+    titulo.style.opacity = String(1 - some);
+    titulo.style.transform = 'translate3d(0,' + (-some * 40).toFixed(1) + 'px,0)';
+    var vis = fase === 'volta' ? passo(.05, .1, cur) * (1 - passo(.955, .995, cur)) : 0;
+    hud.style.opacity = vis.toFixed(3);
+    pe.style.opacity = fase === 'volta' ? (1 - passo(.005, .04, cur)).toFixed(3) : '0';
+
+    var g = Math.round(k * 360);
+    if (g !== grausAntes){
+      grausAntes = g;
+      grausEl.firstChild.nodeValue = (g < 100 ? (g < 10 ? '00' : '0') : '') + g;
+    }
+    /* ficha: troca só com folga de 3% depois da borda */
+    var bruto = Math.min(4, Math.floor(k * 5));
+    var alvoF = fPend >= 0 ? fPend : fAtual;
+    if (bruto !== alvoF){
+      var borda = bruto > alvoF ? bruto / 5 : (bruto + 1) / 5;
+      if (Math.abs(k - borda) > .03 || Math.abs(bruto - alvoF) > 1) trocaFicha(bruto);
+    }
+  }
+
+  /* ================= 3. carrossel em anel ================= */
+  var roda = $('roda'), giro = $('giro'), fotos = giro.children, N = fotos.length, PA = 360 / N;
+  var LEG = [
+    'O farol de xenônio que acende o site.',
+    'Bayside Blue em cima das nuvens.',
+    'Capô com entrada de ar e o emblema GT-R na grade.',
+    'Baixo, largo e em movimento.',
+    'Quatro lanternas redondas e a asa traseira.',
+    'De perfil, a linha reta do teto até a asa.',
+    'A traseira que todo mundo reconhece de longe.'
+  ];
+  var ang = 0, alvoA = 0, arr = null, toque = 0, auto = 0, ativo = -1, R = 300;
+  var leg = $('leg'), barras = $('barras');
+  for (var b = 0; b < N; b++) barras.appendChild(document.createElement('i'));
+  function poeAnel(){
+    var w = fotos[0].offsetWidth || 300;
+    R = Math.round(w / 2 / Math.tan(Math.PI / N) * 1.12);
+    for (var i = 0; i < N; i++) fotos[i].style.transform = 'rotateY(' + (i * PA).toFixed(3) + 'deg) translateZ(' + R + 'px)';
+  }
+  function quadroAnel(agora){
+    if (!arr){
+      ang += (alvoA - ang) * (reduz ? .3 : .085);
+      if (Math.abs(alvoA - ang) < .01) ang = alvoA;
+      var cr = roda.getBoundingClientRect();
+      var aparece = cr.top < window.innerHeight * .85 && cr.bottom > window.innerHeight * .15;
+      if (aparece && !reduz && !embed && agora - toque > 5000 && agora - auto > 3200){ auto = agora; alvoA = Math.round(alvoA / PA) * PA + PA; }
+      if (!aparece) auto = agora;
+    }
+    giro.style.transform = 'translate(-50%,-50%) translateZ(' + (-R) + 'px) rotateY(' + (-ang).toFixed(2) + 'deg)';
+    for (var i = 0; i < N; i++){
+      var rel = ((i * PA - ang) % 360 + 540) % 360 - 180;
+      var c = Math.cos(rel * Math.PI / 180);
+      fotos[i].children[1].style.opacity = String(clamp((1 - c) * .7, 0, .85).toFixed(3));
+    }
+    var a = ((Math.round(ang / PA) % N) + N) % N;
+    if (a !== ativo){
+      ativo = a;
+      leg.classList.add('troca');
+      setTimeout(function(){ leg.textContent = LEG[ativo]; leg.classList.remove('troca'); }, 180);
+      for (var j = 0; j < N; j++){ barras.children[j].classList.toggle('on', j === a); fotos[j].setAttribute('aria-hidden', j === a ? 'false' : 'true'); }
+    }
+  }
+  function graPorPx(){ return PA / Math.max(120, fotos[0].offsetWidth * .9); }
+  roda.addEventListener('pointerdown', function(e){
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    arr = { x:e.clientX, y:e.clientY, a0:ang, lx:e.clientX, lt:performance.now(), v:0, ok:false, id:e.pointerId };
+    toque = performance.now();
+  });
+  roda.addEventListener('pointermove', function(e){
+    if (!arr || e.pointerId !== arr.id) return;
+    var dx = e.clientX - arr.x, dy = e.clientY - arr.y;
+    if (!arr.ok){
+      if (Math.abs(dx) < 6) return;
+      if (Math.abs(dy) > Math.abs(dx)){ arr = null; return; }
+      arr.ok = true; roda.classList.add('arrasta');
+      try{ roda.setPointerCapture(e.pointerId); }catch(er){}
+    }
+    var now = performance.now(), dt = Math.max(1, now - arr.lt);
+    arr.v = (e.clientX - arr.lx) / dt; arr.lx = e.clientX; arr.lt = now;
+    ang = arr.a0 - dx * graPorPx(); alvoA = ang;
+  });
+  function soltaAnel(){
+    if (!arr) return;
+    if (arr.ok) alvoA = Math.round((ang - arr.v * 240 * graPorPx()) / PA) * PA;
+    arr = null; roda.classList.remove('arrasta'); toque = performance.now();
+  }
+  roda.addEventListener('pointerup', soltaAnel);
+  roda.addEventListener('pointercancel', soltaAnel);
+  function vai(d){ alvoA = Math.round(alvoA / PA) * PA + d * PA; toque = performance.now(); }
+  $('ant').addEventListener('click', function(){ vai(-1); });
+  $('prox').addEventListener('click', function(){ vai(1); });
+  roda.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight'){ e.preventDefault(); vai(1); }
+    if (e.key === 'ArrowLeft'){ e.preventDefault(); vai(-1); }
+  });
+
+  /* ================= 4. largada com o som real ================= */
+  var CX = 160, CY = 160, MAXR = 9000;
+  function angRpm(r){ return -120 + clamp(r, 0, MAXR) / MAXR * 240; }
+  function pt(r, a){ a = a * Math.PI / 180; return (CX + r * Math.sin(a)).toFixed(2) + ',' + (CY - r * Math.cos(a)).toFixed(2); }
+  function arco(r, a0, a1){ return 'M' + pt(r, a0) + ' A' + r + ' ' + r + ' 0 ' + (a1 - a0 > 180 ? 1 : 0) + ' 1 ' + pt(r, a1); }
+  (function(){
+    $('trilho').setAttribute('d', arco(132, -120, 120));
+    $('arco').setAttribute('d', arco(132, -120, 120));
+    $('vermelho').setAttribute('d', arco(132, angRpm(8000), 120));
+    var ns = 'http://www.w3.org/2000/svg', g = $('marcas');
+    for (var r = 0; r <= MAXR; r += 500){
+      var a = angRpm(r), grande = r % 1000 === 0;
+      var l = document.createElementNS(ns, 'line');
+      var p1 = pt(grande ? 112 : 118, a).split(','), p2 = pt(124, a).split(',');
+      l.setAttribute('x1', p1[0]); l.setAttribute('y1', p1[1]); l.setAttribute('x2', p2[0]); l.setAttribute('y2', p2[1]);
+      l.setAttribute('class', 'tick' + (grande ? ' g' : ''));
+      g.appendChild(l);
+      if (grande){
+        var t = document.createElementNS(ns, 'text'), p3 = pt(96, a).split(',');
+        t.setAttribute('x', p3[0]); t.setAttribute('y', p3[1]); t.setAttribute('class', 'num');
+        t.textContent = String(r / 1000);
+        g.appendChild(t);
+      }
+    }
+  })();
+
+  var painel = $('painel'), pedal = $('pedal'), statusEl = $('status'), ponteiro = $('ponteiro'), arcoEl = $('arco');
+  var velEl = $('vel'), marchaEl = $('marcha'), ledsEl = $('leds'), leds = ledsEl.children, luzes = $('arvore').children;
+  var TOPO = [0, 62, 102, 145, 192, 250], ACC = [0, 27, 18.5, 13, 9.6, 6.6], MARCHAS = 5, LIMITE = 8000, LENTA = 950, DOIS_PASSOS = 6500;
+  var L = { estado:'desligado', rpm:0, v:0, marcha:0, segura:false, inicio:0, verdeEm:0, larga:0, lancRpm:0, mult:1, multAte:0, trocaAte:0,
+            t100:0, t200:0, ligouEm:0, partidaTocou:false, corte:0, acel:0, mostraV:0, ledsOn:-1, luzesOn:-1 };
+  var recorde = null;
+  try{ recorde = parseFloat(localStorage.getItem('skyline-recorde')) || null; }catch(e){}
+  function mostraRecorde(){ if (recorde) $('recorde').querySelector('span').textContent = virgula(recorde, 2) + ' s'; }
+  mostraRecorde();
+
+  function msg(t){ statusEl.textContent = t; }
+  function rotulo(t){ pedal.textContent = t; }
+  function torque(r){ if (r < 3000) return .5; if (r < 4500) return .5 + .5 * (r - 3000) / 1500; if (r < 7000) return 1; return 1 - .15 * Math.min(1, (r - 7000) / 1000); }
+
+  /* ---- som: dois trechos em loop (giro baixo e alto) que mudam de tom com o giro, mais partida e desaceleração ---- */
+  var A = { ctx:null, cru:{}, buf:{}, mestre:null, motor:null, gL:null, gH:null, low:null, high:null, mudo:false, visivel:false, pediu:false };
+  var SONS = ['partida', 'lento', 'alto', 'desce', 'ronco'];
+  function preBaixa(){
+    if (A.pediu || !window.fetch) return;
+    A.pediu = true;
+    SONS.forEach(function(n){
+      fetch('som/' + n + '.wav').then(function(r){ if (!r.ok) throw 0; return r.arrayBuffer(); }).then(function(b){ A.cru[n] = b; decodifica(n); }).catch(function(){});
+    });
+  }
+  function decodifica(n){
+    if (!A.ctx || !A.cru[n] || A.buf[n]) return;
+    var b = A.cru[n]; A.cru[n] = null;
+    try{ A.ctx.decodeAudioData(b, function(d){ A.buf[n] = d; }, function(){}); }catch(e){}
+  }
+  function criaAudio(){
+    if (A.ctx) return;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    A.ctx = new AC();
+    var comp = A.ctx.createDynamicsCompressor();
+    A.mestre = A.ctx.createGain(); A.mestre.gain.value = A.mudo ? 0 : .95;
+    A.mestre.connect(comp); comp.connect(A.ctx.destination);
+    A.motor = A.ctx.createGain(); A.motor.gain.value = 0; A.motor.connect(A.mestre);
+    A.gL = A.ctx.createGain(); A.gL.gain.value = 1; A.gL.connect(A.motor);
+    A.gH = A.ctx.createGain(); A.gH.gain.value = 0; A.gH.connect(A.motor);
+    preBaixa();
+    SONS.forEach(decodifica);
+  }
+  function fonte(buf, loop, destino){
+    var s = A.ctx.createBufferSource(); s.buffer = buf; s.loop = !!loop; s.connect(destino);
+    s.start(0, loop ? Math.random() * buf.duration * .8 : 0);
+    return s;
+  }
+  function umaVez(n, ganho){
+    if (!A.ctx || !A.buf[n]) return;
+    var g = A.ctx.createGain(); g.gain.value = ganho || 1; g.connect(A.mestre);
+    fonte(A.buf[n], false, g);
+  }
+  function ligaLoops(){
+    if (!A.ctx || A.low || !A.buf.lento || !A.buf.alto) return;
+    A.low = fonte(A.buf.lento, true, A.gL);
+    A.high = fonte(A.buf.alto, true, A.gH);
+  }
+  function somMotor(rpm, acel, volume){
+    if (!A.ctx || !A.low) return;
+    var t = A.ctx.currentTime;
+    A.low.playbackRate.setTargetAtTime(clamp(rpm / 2600, .34, 2.1), t, .03);
+    A.high.playbackRate.setTargetAtTime(clamp(rpm / 6800, .55, 1.3), t, .03);
+    var x = passo(3600, 5600, rpm);
+    A.gL.gain.setTargetAtTime(Math.cos(x * Math.PI / 2), t, .05);
+    A.gH.gain.setTargetAtTime(Math.sin(x * Math.PI / 2), t, .05);
+    A.motor.gain.setTargetAtTime(volume * (.42 + .58 * acel), t, .04);
+  }
+  function volumeMestre(){
+    if (!A.mestre) return;
+    A.mestre.gain.setTargetAtTime(A.mudo || !A.visivel ? 0 : .95, A.ctx.currentTime, .12);
+  }
+  $('mudo').addEventListener('click', function(){
+    A.mudo = !A.mudo;
+    this.setAttribute('aria-pressed', String(A.mudo));
+    this.querySelector('span').textContent = A.mudo ? 'Som desligado' : 'Som ligado';
+    $('onda').style.display = A.mudo ? 'none' : '';
+    volumeMestre();
+  });
+
+  /* ---- a lógica da largada ---- */
+  function liga(agora){
+    criaAudio();
+    if (A.ctx && A.ctx.resume) A.ctx.resume();
+    volumeMestre();
+    L.estado = 'ligando'; L.ligouEm = agora; L.partidaTocou = false;
+    pedal.disabled = true; rotulo('Ligando…'); msg('Painel acendendo.');
+    painel.classList.add('ligado');
+  }
+  function pronto(){
+    L.estado = 'pronto'; L.v = 0; L.marcha = 0; L.t100 = L.t200 = 0; L.mostraV = 0;
+    pedal.disabled = false; pedal.classList.remove('troque');
+    rotulo('Segure pra acelerar');
+    acendeLuzes(0, false);
+  }
+  function acendeLuzes(n, verde){
+    var k = n * 2 + (verde ? 1 : 0);
+    if (k === L.luzesOn) return;
+    L.luzesOn = k;
+    for (var i = 0; i < 3; i++) luzes[i].classList.toggle('on', i < n && !verde);
+    luzes[3].classList.toggle('on', verde);
+  }
+  function aperta(agora){
+    if (L.estado === 'desligado'){ liga(agora); return; }
+    if (L.estado === 'pronto' || L.estado === 'fim'){
+      if (L.estado === 'fim'){ $('d-reacao').textContent = $('d-100').textContent = $('d-200').textContent = '—'; }
+      pronto();
+      L.estado = 'arvore'; L.segura = true; L.inicio = agora;
+      L.verdeEm = agora + 1500 + 350 + Math.random() * 900;
+      rotulo('Solte no verde'); msg('Segurando no 2-step. Solte quando acender o verde.');
+      pedal.classList.add('segura');
+      return;
+    }
+    if (L.estado === 'corrida') troca(agora);
+  }
+  function solta(agora){
+    pedal.classList.remove('segura');
+    if (L.estado !== 'arvore' || !L.segura) return;
+    L.segura = false;
+    if (agora < L.verdeEm){
+      L.estado = 'queimou'; acendeLuzes(0, false);
+      msg('Queimou a largada. Espere o verde acender.');
+      rotulo('Espera…'); pedal.disabled = true;
+      umaVez('desce', .7);
+      setTimeout(function(){ if (L.estado === 'queimou'){ pronto(); msg('Segure de novo e solte no verde.'); } }, 1500);
+      return;
+    }
+    larga(agora);
+  }
+  function larga(agora){
+    var reacao = (agora - L.verdeEm) / 1000, r = Math.max(L.rpm, 4000);
+    L.estado = 'corrida'; L.larga = agora; L.lancRpm = r; L.marcha = 1; L.v = 0; L.trocaAte = 0;
+    L.mult = 1; L.multAte = 0;
+    msg(reacao < .2 ? 'Reação de piloto. Agora troca no tempo certo.' : reacao < .4 ? 'Boa largada. Troca quando o painel piscar.' : 'Largou atrasado. Dá pra recuperar nas trocas.');
+    $('d-reacao').textContent = virgula(reacao, 3) + ' s';
+    rotulo('Toque pra trocar');
+  }
+  function troca(agora){
+    if (L.marcha >= MARCHAS || agora < L.trocaAte) return;
+    L.marcha++; L.trocaAte = agora + 170;
+    pedal.classList.remove('troque');
+  }
+  function termina(agora){
+    L.estado = 'fim';
+    var t = L.t200;
+    $('d-200').textContent = virgula(t, 2) + ' s';
+    var novo = !recorde || t < recorde;
+    if (novo){ recorde = t; try{ localStorage.setItem('skyline-recorde', String(t)); }catch(e){} mostraRecorde(); }
+    msg(novo ? 'Novo recorde: 0 a 200 em ' + virgula(t, 2) + ' s.' : '0 a 200 em ' + virgula(t, 2) + ' s. Recorde: ' + virgula(recorde, 2) + ' s.');
+    rotulo('De novo'); pedal.classList.remove('troque');
+    umaVez('desce', .95);
+  }
+
+  function quadroLargada(agora, dt){
+    var acel = 0, volume = 1;
+    switch (L.estado){
+      case 'desligado': L.rpm = 0; volume = 0; break;
+      case 'ligando': {
+        var e = (agora - L.ligouEm) / 1000;
+        if (e < .5) L.rpm = MAXR * passo(0, .5, e);              /* o ponteiro varre o painel */
+        else if (e < 1) L.rpm = MAXR * (1 - passo(.5, 1, e));
+        else {
+          if (!L.partidaTocou){ L.partidaTocou = true; umaVez('partida', 1); }
+          var ta = e - 1;
+          L.rpm = ta < .28 ? 250 : ta < 1.15 ? 250 + 2150 * passo(.28, 1.15, ta) : 2400 - 1450 * passo(1.15, 2.4, ta);
+          if (ta > 1.9) ligaLoops();
+          volume = passo(1.9, 2.5, ta);
+          if (ta > 2.6){ pronto(); msg('Motor ligado. Segure o botão.'); }
+        }
+        if (e < 1) volume = 0;
+        break;
+      }
+      case 'arvore': {
+        var n = Math.min(3, Math.floor((agora - L.inicio) / 500));
+        acendeLuzes(n, agora >= L.verdeEm);
+        if (L.segura){
+          /* 2-step: segurando, o giro bate em 6.500 e fica pipocando ali até a largada */
+          acel = 1;
+          L.rpm += ((DOIS_PASSOS + 600) - L.rpm) * 2.6 * dt + 900 * dt;
+          if (L.rpm >= DOIS_PASSOS){ L.rpm = DOIS_PASSOS - 280; L.corte = agora + 55; }
+        }
+        break;
+      }
+      case 'corrida': {
+        var dtc = (agora - L.larga) / 1000;
+        var trocando = agora < L.trocaAte;
+        var rel = 8000 / TOPO[L.marcha];
+        var limitado = L.v >= TOPO[L.marcha] - .05;
+        if (!trocando && !limitado){
+          var r0 = Math.max(L.v * rel, L.lancRpm * (1 - dtc / .9) * (L.marcha === 1 ? 1 : 0), 1100);
+          var m = agora < L.multAte ? L.mult : 1;
+          L.v += ACC[L.marcha] * torque(r0) * m * dt;
+        }
+        if (L.v >= TOPO[L.marcha]) L.v = TOPO[L.marcha];
+        var rAlvo = Math.max(L.v * rel, L.marcha === 1 ? L.lancRpm * (1 - dtc / .9) : 0, 1100);
+        if (limitado){ rAlvo = LIMITE - (Math.floor(agora / 60) % 2 ? 240 : 0); if (Math.floor(agora / 60) % 2) L.corte = agora + 40; }
+        L.rpm += (rAlvo - L.rpm) * (trocando ? .35 : .5);
+        acel = trocando ? .15 : 1;
+        var tempo = (agora - L.verdeEm) / 1000;
+        if (!L.t100 && L.v >= 100){ L.t100 = tempo; $('d-100').textContent = virgula(tempo, 2) + ' s'; }
+        if (L.v >= 200){ L.t200 = tempo; termina(agora); }
+        pedal.classList.toggle('troque', L.rpm >= 7400 && L.marcha < MARCHAS);
+        break;
+      }
+      default: {
+        /* pronto, queimou, fim: marcha lenta */
+        L.rpm += (LENTA + Math.sin(agora / 140) * 25 - L.rpm) * 2.2 * dt;
+        if (L.estado === 'fim'){ L.v = Math.max(0, L.v - 40 * dt); }
+      }
+    }
+    if (L.estado !== 'corrida') pedal.classList.remove('troque');
+    if (L.estado !== 'desligado' && L.estado !== 'ligando') ligaLoops();   /* se o som chegou atrasado */
+    if (agora < L.corte) acel = 0;
+    somMotor(L.rpm, acel, volume);
+
+    /* painel */
+    ponteiro.setAttribute('transform', 'rotate(' + angRpm(L.rpm).toFixed(2) + ' ' + CX + ' ' + CY + ')');
+    arcoEl.style.strokeDashoffset = String((1 - clamp(L.rpm / MAXR, 0, 1)).toFixed(4));
+    var vv = Math.round(L.v);
+    if (vv !== L.mostraV){ L.mostraV = vv; velEl.textContent = String(vv); }
+    var mt = L.estado === 'corrida' ? String(L.marcha) : 'N';
+    if (marchaEl.textContent !== mt) marchaEl.textContent = mt;
+    var acesos = L.estado === 'desligado' ? 0 : Math.round(clamp((L.rpm - 4500) / 2900, 0, 1) * leds.length);
+    if (acesos !== L.ledsOn){ L.ledsOn = acesos; for (var i = 0; i < leds.length; i++) leds[i].classList.toggle('on', i < acesos); }
+    ledsEl.classList.toggle('agora', L.rpm >= 7400 && (L.estado === 'corrida' || L.estado === 'arvore'));
+  }
+
+  function agora(){ return performance.now(); }
+  pedal.addEventListener('pointerdown', function(e){
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    e.preventDefault();
+    try{ pedal.setPointerCapture(e.pointerId); }catch(er){}
+    aperta(agora());
+  });
+  pedal.addEventListener('pointerup', function(){ solta(agora()); });
+  pedal.addEventListener('pointercancel', function(){ solta(agora()); });
+  pedal.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  pedal.addEventListener('keydown', function(e){
+    if ((e.key === ' ' || e.key === 'Enter') && !e.repeat){ e.preventDefault(); aperta(agora()); }
+  });
+  pedal.addEventListener('keyup', function(e){
+    if (e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); solta(agora()); }
+  });
+
+  /* ================= laço: cada parte só roda enquanto aparece ================= */
+  var vivo = { ceu:true, anel:false, largada:false };
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        var k = e.target.id;
+        vivo[k] = e.isIntersecting;
+        if (k === 'largada'){
+          if (e.isIntersecting) preBaixa();
+          A.visivel = e.isIntersecting; volumeMestre();
+        }
+      });
+      liga2();
+    }, { rootMargin:'25% 0px' });
+    io.observe(ceu); io.observe($('anel')); io.observe($('largada'));
+  } else { vivo.anel = vivo.largada = true; A.visivel = true; }
+
+  var rodando = false, antes = 0;
+  function laco(t){
+    var dt = Math.min(.05, Math.max(0, (t - antes) / 1000)); antes = t;
+    if (vivo.ceu) quadroCeu();
+    if (vivo.anel) quadroAnel(t);
+    if (vivo.largada || L.estado === 'ligando') quadroLargada(t, dt);
+    if (vivo.ceu || vivo.anel || vivo.largada) requestAnimationFrame(laco); else rodando = false;
+  }
+  function liga2(){ if (!rodando){ rodando = true; antes = performance.now(); requestAnimationFrame(laco); } }
+  /* garantia: se o rAF parar (aba em segundo plano), a rolagem religa */
+  window.addEventListener('scroll', liga2, { passive:true });
+  setInterval(liga2, 1000);
+
+  function rolou(){ doc.classList.toggle('passou', window.scrollY > window.innerHeight * .6); }
+  window.addEventListener('scroll', rolou, { passive:true });
+  rolou();
+
+  var largura = window.innerWidth;
+  window.addEventListener('resize', function(){
+    if (window.innerWidth === largura) return;   /* ignora a barra do navegador do celular */
+    largura = window.innerWidth; mede(); poeAnel();
+  });
+  window.addEventListener('orientationchange', function(){ setTimeout(function(){ mede(); poeAnel(); }, 300); });
+
+  /* os outros quadros só começam depois que o vídeo andou, pra não disputar a rede */
+  video.addEventListener('playing', function(){ setTimeout(libera, 400); }, { once:true });
+  setTimeout(libera, 1800);
+
+  mede(); poeAnel();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(poeAnel);
+  abertura();
+  liga2();
+})();
+</script>
+</body>
+</html>
