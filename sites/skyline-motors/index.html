@@ -999,7 +999,7 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
     var mw = midia.clientWidth, mh = midia.clientHeight;
     tamanho(tela, Math.max(1, Math.round(W * dpr)), Math.max(1, Math.round(H * dpr)));
     ultimo = '';
-    var cw = retrato ? W * 1.08 : Math.min(W * .5, H * 1.2), ch = cw * 350 / 720;
+    var cw = retrato ? W * 1.18 : Math.min(W * .5, H * 1.2), ch = cw * 350 / 720;
     caixa = { x:(W - cw) / 2 * dpr, y:(H * (retrato ? .47 : .53) - ch / 2) * dpr, w:cw * dpr, h:ch * dpr };
     var s = Math.max(mw / 720, mh / 1280);
     palco.style.setProperty('--fx', ((W - mw) / 2 + (mw - 720 * s) / 2 + .56 * 720 * s).toFixed(0) + 'px');
@@ -1008,7 +1008,7 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
   function desenhaVolta(x, est, forca){
     var chave = x.toFixed(2) + ':' + est.toFixed(2);
     if (chave === ultimo && !forca) return;
-    if (!compoe(x, caixa.w, caixa.h, { mistura:true, pena:!retrato })) return;
+    if (!compoe(x, caixa.w, caixa.h, { mistura:true, pena:true })) return;
     tctx.clearRect(0, 0, tela.width, tela.height);
     poe(tctx, caixa.x, caixa.y, caixa.w, caixa.h, .2 * est);
     ultimo = chave;
@@ -1135,7 +1135,7 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
     E.w = palco2.clientWidth; E.h = palco2.clientHeight;
     tamanho(tela2, Math.max(1, Math.round(E.w * dpr)), Math.max(1, Math.round(E.h * dpr)));
     var estreito = E.w < 640;
-    E.cw = estreito ? E.w * 1.04 : Math.min(E.w * .86, E.h * 1.7);
+    E.cw = estreito ? E.w * 1.16 : Math.min(E.w * .86, E.h * 1.7);
     E.ch = E.cw * 350 / 720;
     E.cx = (E.w - E.cw) / 2; E.cy = E.h * .5 - E.ch / 2;
     E.ultimo = '';
@@ -1172,7 +1172,7 @@ footer{position:relative;overflow:hidden;padding-top:clamp(60px,10vh,110px);bord
     var reflexo = E.amb === 'ceu' ? 0 : E.amb === 'noite' ? .14 : .22;
     var chave = (E.cor ? f : E.ang.toFixed(2)) + ':' + z.toFixed(3) + ':' + E.amb + ':' + E.cor + ':' + E.w;
     if (chave !== E.ultimo){
-      if (compoe(E.cor ? f : E.ang, cw * dpr, ch * dpr, { cor:E.cor, mistura:!E.cor, brilho:E.amb === 'ceu' ? null : E.ang / NQ * 1.4, pena:E.w >= 640 })){
+      if (compoe(E.cor ? f : E.ang, cw * dpr, ch * dpr, { cor:E.cor, mistura:!E.cor, brilho:E.amb === 'ceu' ? null : E.ang / NQ * 1.4, pena:true })){
         t2.clearRect(0, 0, tela2.width, tela2.height);
         poe(t2, cx * dpr, cy * dpr, cw * dpr, ch * dpr, reflexo);
         E.ultimo = chave;
