@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Skyline Motors</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<script>document.documentElement.classList.add('apagado');document.documentElement.lang='pt-BR';</script>
 <meta name="description" content="Site conceito da Skyline Motors, aluguel de JDM clássico, feito pela GuDev. O farol acende, o R34 dá a volta no céu e você acelera com o som de verdade.">
 <meta name="theme-color" content="#050914">
 <meta property="og:title" content="Skyline Motors | Conceito GuDev">
@@ -125,6 +126,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .sub{display:block;margin-top:.7em;font:600 clamp(13px,1.5vw,18px)/1 var(--disp);letter-spacing:.7em;padding-left:.7em;opacity:0;transform:translateY(8px);transition:opacity .9s ease .5s,transform .9s ease .5s}
 .tag{margin:clamp(14px,2.2svh,22px) auto 0;max-width:30ch;text-wrap:balance;font:500 clamp(15px,1.4vw,18px)/1.4 var(--corpo);color:var(--apoio);opacity:0;transform:translateY(8px);transition:opacity .9s ease .8s,transform .9s ease .8s;text-shadow:0 1px 18px rgba(5,9,20,.6)}
 .aceso .sub,.aceso .tag{opacity:1;transform:none}
+.tag span{display:inline-block}
 .kana{position:absolute;z-index:6;right:var(--gr);top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font:700 13px/1 var(--jp);letter-spacing:.5em;color:var(--apoio);opacity:0;transition:opacity 1.2s ease 1.2s}
 .aceso .kana{opacity:.8}
 
@@ -280,7 +282,7 @@ footer a{color:var(--xenon);text-underline-offset:3px}
 
       <div class="titulo" id="titulo">
         <h1 id="t-nome"><span class="nome" data-t="SKYLINE">SKYLINE</span><span class="sub">MOTORS</span></h1>
-        <p class="tag">Aluguel de JDM clássico · R34 GT-R Bayside Blue</p>
+        <p class="tag"><span>Aluguel de JDM clássico.</span> <span>R34 GT-R Bayside Blue.</span></p>
       </div>
       <span class="kana" aria-hidden="true">スカイライン</span>
 
