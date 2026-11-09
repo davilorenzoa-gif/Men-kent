@@ -45,4 +45,4 @@ As fotos em `img/` (menos a `og-katraka.jpg`) são **fotos conceito que o Davi m
 ## Checklist dos 19 itens
 1. 404 ✅ · 2. CTA "Pedir orçamento no WhatsApp" repetido ✅ · 3. mensagens diferentes por seção + contagem de cliques (GoatCounter) ✅ · 4. cases: nenhum (não inventar) ✅ · 5. "obrigado" com carimbo ✅ · 6. breadcrumb na privacidade ✅ · 7. FAQ com 7 perguntas ✅ · 8. "resposta pelo WhatsApp, no horário da oficina" ✅ · 9. botão flutuante no celular ✅ · 10. robots + sitemap ✅ · 11. título ✅ · 12. description ✅ · 13. og:image ✅ · 14. mapa + "Como chegar" ✅ · 15. avaliações: nota pronta, falta colar os textos com nome ⚠️ · 16. alt ✅ · 17. JSON-LD AutoRepair (falta geo) ⚠️ · 18. privacidade ✅ · 19. GoatCounter comentado no `<head>`, o Gu cria a conta e descomenta ⚠️
 
-Link de Instagram pra bio: `https://katraka.netlify.app/?utm_source=instagram&utm_medium=bio`
+Link de Instagram pra bio: `https://katraka.com.br/?utm_source=instagram&utm_medium=bio`

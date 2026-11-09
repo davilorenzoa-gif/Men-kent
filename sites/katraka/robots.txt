@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://katraka.netlify.app/sitemap.xml
+Sitemap: https://katraka.com.br/sitemap.xml
