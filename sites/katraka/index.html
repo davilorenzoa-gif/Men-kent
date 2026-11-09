@@ -182,16 +182,27 @@ html.travado,html.travado body{overflow:hidden}
 .yt-capa img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease),filter .4s}
 .yt-capa:hover img{transform:scale(1.04);filter:brightness(.85)}
 .yt-capa::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.65))}
-.yt-play{position:absolute;left:50%;top:50%;width:clamp(64px,9vw,92px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:var(--acento);display:grid;place-items:center;z-index:1;box-shadow:0 0 0 0 rgba(169,211,222,.6);animation:yt-pulso 2s ease-out infinite;transition:transform .25s var(--dente)}
+.yt-play{position:absolute;left:50%;top:50%;width:clamp(72px,10vw,104px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:var(--acento);display:grid;place-items:center;z-index:1;box-shadow:0 0 0 0 rgba(227,38,28,.6);animation:yt-pulso 2s ease-out infinite;transition:transform .25s var(--dente)}
 .yt-capa:hover .yt-play{transform:translate(-50%,-50%) scale(1.08)}
 .yt-play svg{width:34%;height:34%;margin-left:8%;fill:var(--graxa)}
-@keyframes yt-pulso{0%{box-shadow:0 0 0 0 rgba(169,211,222,.55)}100%{box-shadow:0 0 0 26px rgba(169,211,222,0)}}
+@keyframes yt-pulso{0%{box-shadow:0 0 0 0 rgba(227,38,28,.6)}100%{box-shadow:0 0 0 30px rgba(227,38,28,0)}}
 .yt-dur{position:absolute;right:12px;bottom:12px;z-index:1;font-family:var(--fm);font-size:13px;background:rgba(0,0,0,.75);color:#fff;padding:4px 9px;border-radius:6px}
 .yt-nome{position:absolute;left:16px;bottom:12px;right:90px;z-index:1;font-weight:600;font-size:clamp(15px,1.5vw,19px);color:#fff;line-height:1.25}
-.hero-yt{display:inline-flex;align-items:center;gap:10px;font-family:var(--fd);font-size:14px;font-weight:500;text-decoration:none;border:1.5px solid rgba(239,230,211,.45);border-radius:999px;padding:8px 14px;width:max-content;max-width:100%}
-.hero-yt:hover{background:rgba(239,230,211,.12)}
-.hero-yt i{width:22px;height:22px;border-radius:50%;background:#E3261C;display:grid;place-items:center;flex:none}
-.hero-yt i svg{width:9px;height:9px;fill:#fff;margin-left:2px}
+.hero-yt{display:inline-flex;align-items:center;gap:12px;font-family:var(--fd);font-size:15px;font-weight:600;line-height:1.25;text-decoration:none;background:#E3261C;color:#fff;border-radius:12px;padding:10px 16px 10px 10px;width:max-content;max-width:100%;box-shadow:0 10px 24px -10px rgba(0,0,0,.6);transition:transform .25s var(--dente)}
+.hero-yt:hover{transform:translateY(-2px)}
+.hero-yt i{width:34px;height:34px;border-radius:8px;background:#fff;display:grid;place-items:center;flex:none}
+.hero-yt i svg{width:12px;height:12px;fill:#E3261C;margin-left:2px}
+.hero-yt small{display:block;font-family:var(--fm);font-weight:400;font-size:11.5px;opacity:.9}
+.yt-faixa{display:block;background:#E3261C;color:#fff;text-decoration:none;overflow:hidden;white-space:nowrap;padding-block:16px;position:relative}
+.yt-faixa .fita{display:inline-flex;gap:0;animation:fita 28s linear infinite}
+.yt-faixa span{display:inline-flex;align-items:center;gap:18px;padding-right:18px;font-weight:700;font-size:clamp(18px,2.2vw,28px);letter-spacing:-.01em}
+.yt-faixa span i{width:30px;height:30px;border-radius:50%;background:#fff;display:inline-grid;place-items:center;flex:none}
+.yt-faixa span i svg{width:11px;height:11px;fill:#E3261C;margin-left:2px}
+.yt-faixa:hover .fita{animation-play-state:paused}
+@keyframes fita{to{transform:translateX(-50%)}}
+.btn-yt{background:#E3261C;color:#fff}
+.yt-play.verm{background:#E3261C}
+.yt-play.verm svg{fill:#fff}
 
 /* ===== o interruptor do farol (foto) ===== */
 .farol{position:relative;height:220vh;background:var(--graxa)}
@@ -314,17 +325,37 @@ html.travado,html.travado body{overflow:hidden}
 .lista-s span{font-size:15px;opacity:.75}
 .lista-s a:hover b{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px}
 
-/* ===== trabalhos da oficina (feed do Instagram) ===== */
+/* ===== alguns dos nossos trabalhos (fotos reais da oficina) ===== */
 .trabalhos{padding-block:clamp(80px,11vw,140px) 0}
 .trab-cab{display:flex;justify-content:space-between;align-items:end;gap:18px 40px;flex-wrap:wrap}
+.trab-cab h2{font-size:clamp(40px,6.4vw,92px)}
 .trab-cab .sub{margin-top:14px}
-.trab-aviso{margin-top:clamp(24px,3vw,36px);font-family:var(--fm);font-size:12.5px;line-height:1.5;padding:12px 14px;border:1.5px dashed rgba(239,230,211,.5);border-radius:6px;max-width:70ch}
-.trab-grade{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(6px,1vw,12px);margin-top:16px}
-.trab-grade a{position:relative;display:block;aspect-ratio:1;overflow:hidden;border-radius:4px;background:var(--graxa)}
-.trab-grade img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
-.trab-grade a:hover img{transform:scale(1.05)}
-.trab-grade span{position:absolute;left:8px;top:8px;font-family:var(--fm);font-size:11px;background:rgba(35,25,18,.75);color:var(--segunda);padding:3px 8px;border-radius:99px}
-.trab-feed{margin-top:clamp(24px,3vw,36px)}
+.trab-cab .mono{opacity:.75;margin-bottom:12px}
+.trab-grade{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(150px,17vw,250px);gap:clamp(6px,1vw,12px);margin-top:clamp(28px,4vw,44px)}
+.trab-grade li{min-width:0}
+.trab-grade li:first-child{grid-column:span 2;grid-row:span 2}
+.trab-grade li.largo{grid-column:span 2}
+.trab-grade button{position:relative;display:block;width:100%;height:100%;overflow:hidden;border-radius:6px;background:var(--graxa);cursor:zoom-in}
+.trab-grade img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
+.trab-grade button:hover img{transform:scale(1.05)}
+.trab-grade button::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(20,12,8,.7));pointer-events:none}
+.trab-grade b{position:absolute;left:12px;bottom:10px;z-index:1;font-size:clamp(14px,1.3vw,18px);font-weight:600;color:#fff;text-align:left}
+.trab-grade li:first-child b{font-size:clamp(18px,2vw,26px);left:18px;bottom:16px}
+.trab-mais{display:flex;justify-content:space-between;align-items:center;gap:16px 32px;flex-wrap:wrap;margin-top:clamp(18px,2.4vw,28px);padding:clamp(18px,2.4vw,26px);border-radius:10px;background:rgba(35,25,18,.35)}
+.trab-mais p{font-size:clamp(17px,1.6vw,21px);font-weight:500;max-width:44ch}
+.trab-mais .acoes{display:flex;flex-wrap:wrap;gap:12px}
+.galeria{border:0;padding:0;background:transparent;max-width:min(1200px,96vw);max-height:none;width:100%;height:100%;margin:auto;overflow:visible}
+.galeria[open]{display:grid;place-items:center}
+.galeria::backdrop{background:rgba(15,10,7,.92)}
+.galeria figure{margin:0;display:grid;gap:12px;justify-items:center}
+.galeria img{max-width:100%;max-height:80vh;width:auto;height:auto;border-radius:6px;display:block}
+.galeria figcaption{color:#EFE6D3;font-weight:600;font-size:18px}
+.gal-bt{position:fixed;width:52px;height:52px;border-radius:50%;background:rgba(239,230,211,.15);color:#EFE6D3;font-size:24px;display:grid;place-items:center}
+.gal-bt:hover{background:rgba(239,230,211,.28)}
+.gal-fecha{top:max(16px,env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px))}
+.gal-ant{left:max(12px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%)}
+.gal-prox{right:max(12px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%)}
+.trab-video{margin-top:clamp(56px,8vw,96px)}
 .trab-video{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:28px 56px;align-items:center;margin-top:clamp(28px,4vw,48px)}
 .tv-play{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:10px;overflow:hidden;background:var(--graxa);box-shadow:0 24px 50px -24px rgba(20,12,8,.7)}
 .tv-play video{width:100%;height:100%;object-fit:cover;display:block}
@@ -458,7 +489,8 @@ html.travado,html.travado body{overflow:hidden}
   .rx-lista{display:none}
   .leitura{min-height:170px}
   .lista-s{grid-template-columns:minmax(0,1fr)}
-  .trab-grade{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .trab-grade{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:clamp(120px,34vw,190px)}
+  .gal-ant,.gal-prox{top:auto;bottom:max(16px,env(safe-area-inset-bottom,0px));transform:none}
   .trab-video{grid-template-columns:minmax(0,1fr)}
   .tv-play{max-width:360px}
   .dial-roda{width:104px;height:104px}
@@ -487,6 +519,7 @@ html.travado,html.travado body{overflow:hidden}
 @media (prefers-reduced-motion:reduce){
   .in-dentes,.in-faisca{display:none}
   .yt-play{animation:none}
+  .yt-faixa .fita{animation:none}
   .in-anel,.in-v,.in-w,.in-nome,.in-sub{animation:none;opacity:1;transform:none;clip-path:none}
   .intro{animation:intro-fim .4s 2.4s forwards}
   .sobe,.sim-cena .sobe,.dial-roda .cr,.palavra-h,.carimbo,.zap,.nav a.it span{transition-duration:.01s!important}
@@ -581,7 +614,7 @@ html.travado,html.travado body{overflow:hidden}
     <div class="ficha">
       <p><span>Endereço</span>Rua Serra de Bragança, 810<br>Tatuapé, São Paulo</p>
       <p><span>Horário</span>Segunda a sexta, 9h às 17h</p>
-      <a class="hero-yt" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener"><i aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg></i>Assista: Direção sobre rodas, no YouTube</a>
+      <a class="hero-yt" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener"><i aria-hidden="true"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg></i><span>Assista no YouTube<small>Direção sobre rodas, 28 min</small></span></a>
       <p class="dentes-h" aria-hidden="true"><span>katraka</span><i></i><i></i><i></i><i></i><i></i></p>
     </div>
   </div>
@@ -605,6 +638,11 @@ html.travado,html.travado body{overflow:hidden}
     <p class="leg-foto">Imagem ilustrativa</p>
   </div>
 </section>
+
+<!-- ===== faixa do YouTube, logo depois da abertura ===== -->
+<a class="yt-faixa" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener" aria-label="Assistir no YouTube: Direção sobre rodas com a Katraka, 28 minutos">
+  <span class="fita" aria-hidden="true"><span><i><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg></i>Assista no YouTube: Direção sobre rodas com a Katraka</span><span>28 minutos de oficina</span><span><i><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg></i>Assista no YouTube: Direção sobre rodas com a Katraka</span><span>28 minutos de oficina</span><span><i><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg></i>Assista no YouTube: Direção sobre rodas com a Katraka</span><span>28 minutos de oficina</span><span><i><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg></i>Assista no YouTube: Direção sobre rodas com a Katraka</span><span>28 minutos de oficina</span></span>
+</a>
 
 <!-- ===== quem somos ===== -->
 <section class="sobre" id="sobre">
@@ -635,13 +673,13 @@ html.travado,html.travado body{overflow:hidden}
       <h2 id="ytTit">Direção sobre rodas com a Katraka</h2>
       <p class="sub">28 minutos de oficina com o Alexandre, pra quem quer entender de verdade o próprio VW a ar.</p>
       <div class="acoes">
-        <a class="btn" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true" fill="currentColor"><path d="M1 0l9 5-9 5z"/></svg>Assistir no YouTube</a>
+        <a class="btn btn-yt" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true" fill="currentColor"><path d="M1 0l9 5-9 5z"/></svg>Assistir no YouTube</a>
         <a class="lnk" data-wa="youtube" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
       </div>
     </div>
     <a class="yt-capa" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener" aria-label="Assistir no YouTube o vídeo Direção sobre rodas com a Katraka, 28 minutos">
       <img src="https://i.ytimg.com/vi/Yvma_5ttA9c/hqdefault.jpg" alt="Capa do vídeo da Katraka no YouTube" width="480" height="360" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/katraka-catraca-capa.jpg'">
-      <span class="yt-play" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg></span>
+      <span class="yt-play verm" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg></span>
       <span class="yt-nome" aria-hidden="true">Direção sobre rodas com a Katraka</span>
       <span class="yt-dur" aria-hidden="true">28 min</span>
     </a>
@@ -778,16 +816,33 @@ html.travado,html.travado body{overflow:hidden}
   </div>
 </section>
 
-<!-- ===== trabalhos da oficina: fotos e vídeos que o Alexandre manda + link pro Instagram ===== -->
+<!-- ===== alguns dos nossos trabalhos: fotos reais da oficina (do Instagram @katrakavw) ===== -->
 <section class="trabalhos" id="trabalhos" aria-labelledby="trabTit">
   <div class="miolo">
     <div class="trab-cab">
       <div>
-        <h2 id="trabTit">Trabalhos da oficina</h2>
-        <p class="sub">Alguns carros que passaram pela oficina. Tem muito mais no Instagram.</p>
+        <p class="mono">Direto do elevador da Katraka</p>
+        <h2 id="trabTit">Alguns dos nossos trabalhos</h2>
+        <p class="sub">Fusca, Variant, Kombi, Puma e buggy que passaram pela oficina. Toque na foto pra ver inteira.</p>
       </div>
-      <a class="btn-ln" href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener">Seguir @katrakavw</a>
     </div>
+    <ul class="trab-grade" id="trabGrade">
+        <li><button type="button" data-foto="img/trab-fusca-verde.webp" data-nome="Fusca"><img src="img/trab-fusca-verde.webp" alt="Fusca verde com rodas esportivas no elevador de alinhamento da Katraka" width="1400" height="830" loading="lazy"><b>Fusca</b></button></li>
+        <li><button type="button" data-foto="img/trab-variant-amarela.webp" data-nome="Variant"><img src="img/trab-variant-amarela.webp" alt="Variant amarela com rodas cromadas no elevador da Katraka" width="1100" height="618" loading="lazy"><b>Variant</b></button></li>
+        <li><button type="button" data-foto="img/trab-buggy-laranja.webp" data-nome="Buggy"><img src="img/trab-buggy-laranja.webp" alt="Buggy laranja com capota preta no elevador da Katraka" width="1100" height="685" loading="lazy"><b>Buggy</b></button></li>
+        <li><button type="button" data-foto="img/trab-puma.webp" data-nome="Puma"><img src="img/trab-puma.webp" alt="Puma amarelo no elevador de alinhamento da Katraka" width="1100" height="636" loading="lazy"><b>Puma</b></button></li>
+        <li><button type="button" data-foto="img/trab-variant-vermelha.webp" data-nome="Variant"><img src="img/trab-variant-vermelha.webp" alt="Variant vermelha com calotas no elevador da Katraka" width="1100" height="653" loading="lazy"><b>Variant</b></button></li>
+        <li class="largo"><button type="button" data-foto="img/trab-kombi.webp" data-nome="Kombi"><img src="img/trab-kombi.webp" alt="Kombi amarela e branca no elevador da Katraka" width="1100" height="656" loading="lazy"><b>Kombi</b></button></li>
+        <li class="largo"><button type="button" data-foto="img/trab-variant-azul.webp" data-nome="Variant"><img src="img/trab-variant-azul.webp" alt="Variant azul com rodas pretas no elevador da Katraka" width="1100" height="684" loading="lazy"><b>Variant</b></button></li>
+    </ul>
+    <div class="trab-mais">
+      <p>Quer ver mais carros que saíram daqui? Tem bem mais no Instagram da Katraka.</p>
+      <div class="acoes">
+        <a class="btn-ln" href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener">Ver no Instagram @katrakavw</a>
+        <a class="btn" data-wa="trabalhos" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
+      </div>
+    </div>
+
     <div class="trab-video">
       <button class="tv-play" type="button" id="tvPlay" data-completo="img/katraka-catraca-video.mp4" aria-label="Assistir o vídeo completo da catraca mexicana, com som">
         <video id="tvVideo" src="img/katraka-catraca-trecho.mp4" poster="img/katraka-catraca-capa.jpg" muted loop playsinline preload="metadata"></video>
@@ -799,23 +854,17 @@ html.travado,html.travado body{overflow:hidden}
         <p>O Alexandre mostra no carro, na oficina, como funciona a catraca que regula a altura do Fusca.</p>
         <div class="acoes">
           <a class="btn" data-wa="video" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
-          <a class="lnk" href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener">Ver mais no Instagram</a>
+          <a class="lnk btn-yt-lnk" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener">Ver o vídeo de 28 min no YouTube</a>
         </div>
       </div>
     </div>
-    <div class="trab-feed" id="feedInsta" hidden></div>
-    <div id="feedExemplo">
-      <p class="trab-aviso">Exemplo de como fica. Aqui entram as fotos e os vídeos dos trabalhos da Katraka, com o Instagram @katrakavw do lado pra quem quiser ver mais.</p>
-      <ul class="trab-grade">
-        <li><a href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener"><img src="img/fusca-rebaixado.jpg" alt="Exemplo: Fusca verde rebaixado com rodas cromadas" loading="lazy" width="600" height="600"><span>exemplo</span></a></li>
-        <li><a href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener"><img src="img/farol-detalhe.jpg" alt="Exemplo: Farol redondo e para-choque cromado de um Fusca amarelo" loading="lazy" width="600" height="600"><span>exemplo</span></a></li>
-        <li><a href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener"><img src="img/raiox-lateral.jpg" alt="Exemplo: Fusca bege de lado, num estúdio" loading="lazy" width="600" height="600"><span>exemplo</span></a></li>
-        <li><a href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener"><img src="img/fusca-farol.jpg" alt="Exemplo: Fusca verde-escuro de frente com os faróis acesos" loading="lazy" width="600" height="600"><span>exemplo</span></a></li>
-        <li><a href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener"><img src="img/fusca-estrada.jpg" alt="Exemplo: Fusca verde-claro de traseira na praia, no pôr do sol" loading="lazy" width="600" height="600"><span>exemplo</span></a></li>
-        <li><a href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener"><img src="img/fusca-por-do-sol.jpg" alt="Exemplo: Fusca preto com os faróis acesos no pôr do sol" loading="lazy" width="600" height="600"><span>exemplo</span></a></li>
-      </ul>
-    </div>
   </div>
+  <dialog class="galeria" id="galeria" aria-label="Foto do trabalho">
+    <figure><img id="galImg" src="" alt=""><figcaption id="galNome"></figcaption></figure>
+    <button class="gal-bt gal-fecha" type="button" id="galFecha" aria-label="Fechar">×</button>
+    <button class="gal-bt gal-ant" type="button" id="galAnt" aria-label="Foto anterior">‹</button>
+    <button class="gal-bt gal-prox" type="button" id="galProx" aria-label="Próxima foto">›</button>
+  </dialog>
 </section>
 
 <!-- ===== avaliações ===== -->
@@ -964,10 +1013,6 @@ html.travado,html.travado body{overflow:hidden}
   var WHATS = "5511947456663";
 
   /* Avaliações reais do Google: copiar do Maps com o nome de quem escreveu. Enquanto estiver vazio, a seção mostra só a nota. */
-  /* Instagram (@katrakavw): criar o feed grátis em behold.so ligado na conta dele e colar aqui o "feed ID".
-     Enquanto estiver vazio, a seção mostra as fotos de exemplo. */
-  var INSTAGRAM_FEED_ID = "";
-
   var AVALIACOES = [
     /* { nome: "Nome como aparece no Google", texto: "Texto da avaliação", quando: "há 2 meses" } */
   ];
@@ -992,6 +1037,7 @@ html.travado,html.travado body{overflow:hidden}
     rodape: "Oi! Vim pelo site da Katraka e queria marcar uma revisão no meu VW a ar.",
     video: "Oi! Vi o vídeo da catraca no site da Katraka e queria um orçamento pra rebaixar meu VW a ar.",
     youtube: "Oi! Vi o vídeo da Katraka no YouTube e queria um orçamento pro meu VW a ar.",
+    trabalhos: "Oi! Vi os trabalhos da Katraka no site e queria um orçamento pro meu VW a ar.",
     flutuante: "Oi! Vim pelo site da Katraka e queria um orçamento."
   };
   var wa = function(t){ return "https://wa.me/" + WHATS + "?text=" + encodeURIComponent(t); };
@@ -1355,14 +1401,21 @@ html.travado,html.travado body{overflow:hidden}
     depo.hidden = false;
   }
 
-  /* ---------- trabalhos: feed do Instagram ---------- */
-  if (INSTAGRAM_FEED_ID && !embed){
-    var feed = $("#feedInsta"), bw = document.createElement("behold-widget");
-    bw.setAttribute("feed-id", INSTAGRAM_FEED_ID);
-    feed.appendChild(bw); feed.hidden = false;
-    $("#feedExemplo").hidden = true;
-    var sc = document.createElement("script"); sc.type = "module"; sc.src = "https://w.behold.so/widget.js";
-    document.head.appendChild(sc);
+  /* ---------- trabalhos: toque na foto abre ela inteira ---------- */
+  var galeria = $("#galeria"), galImg = $("#galImg"), galNome = $("#galNome"), botoesFoto = $$("#trabGrade button"), galAtual = 0;
+  function abreFoto(i){
+    galAtual = (i + botoesFoto.length) % botoesFoto.length;
+    var b = botoesFoto[galAtual];
+    galImg.src = b.getAttribute("data-foto"); galImg.alt = $("img", b).alt; galNome.textContent = b.getAttribute("data-nome");
+    if (galeria.showModal && !galeria.open) galeria.showModal(); else if (!galeria.showModal) window.open(b.getAttribute("data-foto"), "_blank");
+  }
+  if (galeria){
+    botoesFoto.forEach(function(b, i){ b.addEventListener("click", function(){ abreFoto(i); conta("foto-trabalho"); }); });
+    $("#galFecha").addEventListener("click", function(){ galeria.close(); });
+    $("#galAnt").addEventListener("click", function(){ abreFoto(galAtual - 1); });
+    $("#galProx").addEventListener("click", function(){ abreFoto(galAtual + 1); });
+    galeria.addEventListener("click", function(e){ if (e.target === galeria) galeria.close(); });
+    galeria.addEventListener("keydown", function(e){ if (e.key === "ArrowLeft") abreFoto(galAtual - 1); if (e.key === "ArrowRight") abreFoto(galAtual + 1); });
   }
 
   /* ---------- vídeo da catraca: trecho mudo em repetição; ao tocar, o vídeo completo com som ---------- */

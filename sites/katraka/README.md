@@ -55,3 +55,6 @@ Vídeo do Instagram dele, "Catraca mexicana, explicação na prática" (enviado 
 
 ## Vídeo do YouTube (destaque)
 Seção logo depois do "quem somos" + atalho no menu ("Vídeo") e na abertura. Link: https://www.youtube.com/watch?v=Yvma_5ttA9c (28 min). Título usado: "Direção sobre rodas com a Katraka" (confirmar com o Alexandre o título que ele prefere). A capa vem do próprio YouTube; se não carregar, usa `img/katraka-catraca-capa.jpg`.
+
+## Fotos dos trabalhos (reais, do Instagram dele)
+`img/trab-*.webp`: Fusca verde, Variant amarela, buggy laranja, Puma, Variant vermelha, Kombi e Variant azul, todos no elevador da Katraka. As placas visíveis foram borradas (carros de clientes). Confirmar com o Alexandre os nomes dos modelos (principalmente Puma e Variant). Toque abre a foto inteira.
