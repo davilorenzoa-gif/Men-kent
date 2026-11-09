@@ -67,3 +67,5 @@ Abas Fusca, Kombi, Variant, Brasília e SP2 no "Gire a katraka". Fotos que o Dav
 - Desde 2010 (não 1995, como dizia o site antigo). Já apareceu na Band, no programa Direção sobre Rodas (é o vídeo do YouTube).
 - Serviços: suspensão dianteira e traseira, freio, direção, katraka, mangas deslocadas, encurtamento do quadro, furação de discos e tambores, alinhamento de direção. Saíram pneus e rodas, cambagem, balanceamento e motor/escapamento. Sem a palavra "batente".
 - Agendamento obrigatório (FAQ).
+
+- Avaliações: 490 no Google (informado pelo Alexandre). Confirmar se a nota é mesmo 5,0.

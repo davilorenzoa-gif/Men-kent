@@ -49,7 +49,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - Endereço: Rua Serra de Bragança, 810.
   - Fixo: (11) 3539-2100. Celular (usado como WhatsApp, confirmar): (11) 94745-6663.
   - Instagram: @katrakavw. Facebook: katrakavws.
-  - Dono: Alexandre, o "Katraka". Nota 5,0 com 17 avaliações (diretório, conferir no Maps).
+  - Dono: Alexandre, o "Katraka". Nota 5,0 com 490 avaliações no Google (número passado pelo Alexandre em 09/11; nota 5,0 ainda a confirmar).
   - Serviços (site oficial): suspensão, katraka (catraca pra rebaixar), regulagem de facão, encurtamento de quadro, freios, furação de discos e tambores, alinhamento, balanceamento, cambagem, pneus e rodas. Direção (Instagram).
   - Já saiu no Canal da Peça (como rebaixar um Fusca) e no blog Acelerada.
 - **Andamento:** o Davi acha que fecha. Prévia feita em 06/11 em `sites/katraka/` (ver o README de lá com o que confirmar).
