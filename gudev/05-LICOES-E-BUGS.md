@@ -14,6 +14,7 @@
 - **Sabores que ficavam trocando sem parar:** duas contas de rolagem diferentes discordavam quando a barra do navegador aparecia e sumia. Use uma só, com folga e fila.
 - **Página mais larga que a tela no celular:** foi causada por grid sem `minmax(0,1fr)`, `input date` e `radio` escondido com `width:100%`.
 - **Seção alta parada dentro da prévia parece "travado":** dentro da proposta, as animações de rolagem têm que estar ligadas.
+- **HTML "não funciona" aberto pela prévia de arquivo do app:** a prévia pode não rodar o JS. Página que depende de JS pra aparecer fica só com o fundo. Teste sempre pelo navegador ou pelo link do Netlify, e deixe a primeira tela visível mesmo sem JS.
 
 ## Vendas
 - **Lead que pede prévia, fala com o chefe e marca de pagar pode sumir.** Faça o follow-up em 3 passos (veja 02-VENDAS) e não corra atrás demais.

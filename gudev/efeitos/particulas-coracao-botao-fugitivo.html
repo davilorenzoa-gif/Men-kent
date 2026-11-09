@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Efeitos: partículas + botão que foge</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta property="og:title" content="tenho uma coisa pra te mostrar">
+<meta property="og:description" content="abre aí ✦">
+<meta name="theme-color" content="#0b0a1a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;1,400;1,600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{color-scheme:dark;--bg:#0b0a1a;--ink:#fff4ef;--muted:#c7bdd6;--rose:#ff8fab;--peach:#ffd6a5}
+  *{box-sizing:border-box}
+  body *{margin:0;padding:0}
+  body{margin:0}
+  html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--ink)}
+  body{
+    font-family:'DM Sans',system-ui,sans-serif;
+    background:radial-gradient(120% 80% at 50% 0%,#241a3d 0%,var(--bg) 62%);
+    -webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;
+    user-select:none;-webkit-user-select:none;
+  }
+  canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+
+  .stage{
+    position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:18px;
+    padding-top:calc(24px + env(safe-area-inset-top,0px));padding-bottom:calc(44px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));text-align:center;
+    pointer-events:none;opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s .9s;
+  }
+  .stage.on{opacity:1;visibility:visible;transition:opacity .9s ease}
+  .stage.center{justify-content:center}
+  .stage.on .btn{pointer-events:auto}
+
+  .hint{font-size:14px;letter-spacing:.14em;text-transform:lowercase;color:var(--muted);animation:breathe 2.4s ease-in-out infinite}
+  @keyframes breathe{50%{opacity:.35}}
+
+  .btn{
+    font:500 16px/1 'DM Sans',sans-serif;min-height:50px;padding:0 28px;border-radius:999px;border:0;cursor:pointer;
+    color:#1d1027;background:linear-gradient(120deg,var(--rose),var(--peach));
+    box-shadow:0 10px 30px -10px rgba(255,143,171,.7);
+    touch-action:manipulation;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .5s;
+  }
+  .btn:active{transform:scale(.96)}
+  .btn.ghost{background:rgba(255,255,255,.06);color:var(--ink);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:none}
+  .later{opacity:0;transform:translateY(10px)}
+  .later.show{opacity:1;transform:none;transition:opacity .7s,transform .7s}
+
+  .lines{display:flex;flex-direction:column;gap:14px;max-width:560px;min-height:9.5em;justify-content:center}
+  .lines p{font:400 clamp(24px,6.4vw,38px)/1.2 'Fraunces',serif;text-shadow:0 2px 24px rgba(11,10,26,.9)}
+  .lines p:nth-child(2){font-style:italic;color:var(--peach)}
+  .caret{display:inline-block;width:2px;height:.9em;background:var(--rose);margin-left:3px;vertical-align:-2px;animation:blink .8s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  .q{font:400 clamp(30px,8.5vw,56px)/1.1 'Fraunces',serif;max-width:620px;text-shadow:0 2px 30px rgba(11,10,26,.9)}
+  .q em{font-style:italic;color:var(--rose)}
+  .row{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;min-height:70px}
+  .btn.no{background:rgba(255,255,255,.08);color:var(--ink);border:1px solid rgba(255,255,255,.2);box-shadow:none;white-space:nowrap}
+  .btn.no.loose{position:fixed;z-index:5;transition:left .32s cubic-bezier(.34,1.56,.64,1),top .32s cubic-bezier(.34,1.56,.64,1),opacity .4s}
+  .btn.no.gone{opacity:0;pointer-events:none!important}
+
+  .s3 h2{font:italic 400 clamp(40px,11vw,72px)/1 'Fraunces',serif;background:linear-gradient(120deg,var(--rose),var(--peach));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .s3 p{color:var(--muted);font-size:17px}
+
+  @media (prefers-reduced-motion:reduce){.hint,.caret{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="c" aria-hidden="true"></canvas>
+
+<section class="stage on" id="s0">
+  <p class="hint">toca na tela ✦</p>
+  <button class="btn later" id="go1">continua →</button>
+</section>
+
+<section class="stage center" id="s1">
+  <div class="lines" id="lines"></div>
+  <button class="btn ghost later" id="go2">tenho uma pergunta →</button>
+</section>
+
+<section class="stage center" id="s2">
+  <h1 class="q" id="q"></h1>
+  <div class="row">
+    <button class="btn" id="yes">sim</button>
+    <button class="btn no" id="no">não</button>
+  </div>
+</section>
+
+<section class="stage s3" id="s3">
+  <h2>Eu sabia.</h2>
+  <p>agora me responde lá no zap 😌</p>
+</section>
+
+<script>
+/* ===== EDITA AQUI ===== */
+const NOME = 'Nome';  // texto que vira partículas (nome, marca, palavra curta)
+const PERGUNTA = 'Bora sair comigo <em>essa semana?</em>';
+const LINHAS = [
+  'Eu ia te mandar só um "oi"...',
+  'mas aí lembrei que eu faço site.',
+  'então fiz um só pra você.'
+];
+/* ================================================ */
+
+const $ = id => document.getElementById(id);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cv = $('c'), ctx = cv.getContext('2d');
+const COLORS = ['#ff8fab', '#ffb3c6', '#ffd6a5', '#fff4ef', '#ffc2d1'];
+const CAP = reduce ? 900 : 2200;
+let W, H, mode = 'text', parts = [], stars = [], sparks = [], alpha = .9, alphaT = .9;
+const ptr = { x: -999, y: -999, on: false };
+
+function resize() {
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  W = innerWidth; H = innerHeight;
+  cv.width = W * dpr; cv.height = H * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  stars = Array.from({ length: Math.round(W * H / 5000) }, () => ({
+    x: Math.random() * W, y: Math.random() * H, r: Math.random() < .9 ? 1 : 1.7,
+    sp: .4 + Math.random() * 1.4, ph: Math.random() * 6.3
+  }));
+  if (mode === 'text') setTargets(textPoints());
+}
+
+function newPart(x, y) {
+  return { x: x ?? Math.random() * W, y: y ?? Math.random() * H, vx: 0, vy: 0, tx: 0, ty: 0, hx: 0, hy: 0,
+    s: .9 + Math.random() * 1.3, c: COLORS[Math.random() * COLORS.length | 0] };
+}
+
+function textPoints() {
+  if (W < 2 || H < 2) return [];
+  const oc = document.createElement('canvas'); oc.width = W; oc.height = H;
+  const o = oc.getContext('2d');
+  let fs = Math.min(W * .3, 190);
+  const font = () => `italic 600 ${fs}px Fraunces, Georgia, serif`;
+  o.font = font();
+  const m = o.measureText(NOME).width, maxW = W * .86;
+  if (m > maxW) { fs *= maxW / m; o.font = font(); }
+  o.fillStyle = '#fff'; o.textAlign = 'center'; o.textBaseline = 'middle';
+  o.fillText(NOME, W / 2, H * .42);
+  const d = o.getImageData(0, 0, W, H).data, gap = Math.max(3, Math.round(fs / 34)), pts = [];
+  for (let y = 0; y < H; y += gap) for (let x = 0; x < W; x += gap)
+    if (d[(y * W + x) * 4 + 3] > 128) pts.push([x, y]);
+  for (let i = pts.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [pts[i], pts[j]] = [pts[j], pts[i]]; }
+  return pts.slice(0, CAP);
+}
+
+function setTargets(pts) {
+  while (parts.length < pts.length) parts.push(newPart());
+  parts.length = pts.length;
+  pts.forEach((p, i) => { parts[i].tx = p[0]; parts[i].ty = p[1]; });
+}
+
+function toFree() {
+  mode = 'free'; alphaT = .45;
+  parts.forEach(p => { p.vx = (Math.random() - .5) * 3; p.vy = (Math.random() - .5) * 3; });
+}
+
+function toHeart() {
+  const cx = W / 2, cy = H * .4;
+  while (parts.length < Math.min(1500, CAP)) {
+    const p = newPart(cx, cy), a = Math.random() * 6.3, v = 4 + Math.random() * 10;
+    p.vx = Math.cos(a) * v; p.vy = Math.sin(a) * v; parts.push(p);
+  }
+  const hx = t => 16 * Math.sin(t) ** 3;
+  const hy = t => -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+  const poly = Array.from({ length: 160 }, (_, i) => [hx(i / 160 * 6.2832), hy(i / 160 * 6.2832)]);
+  const inside = (x, y) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i], [xj, yj] = poly[j];
+    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
+  parts.forEach((p, i) => {
+    if (i % 5 < 3) { const t = Math.random() * 6.2832; p.hx = hx(t); p.hy = hy(t); return; }
+    let x, y; do { x = (Math.random() - .5) * 34; y = -13 + Math.random() * 31; } while (!inside(x, y));
+    p.hx = x; p.hy = y;
+  });
+  for (let i = 0; i < 140; i++) {
+    const a = Math.random() * 6.3, v = 3 + Math.random() * 9;
+    sparks.push({ x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 3, life: 1, c: COLORS[i % COLORS.length], s: 2 + Math.random() * 3 });
+  }
+  mode = 'heart'; alphaT = .95;
+}
+
+function burst(x, y) {
+  for (const p of parts) {
+    const dx = p.x - x, dy = p.y - y, d = Math.hypot(dx, dy);
+    if (d < 150) { const f = (1 - d / 150) * 14; p.vx += dx / (d || 1) * f; p.vy += dy / (d || 1) * f; }
+  }
+}
+
+function frame(t) {
+  ctx.clearRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = '#fff';
+  for (const s of stars) {
+    ctx.globalAlpha = .15 + .35 * (.5 + .5 * Math.sin(t * .001 * s.sp + s.ph));
+    ctx.fillRect(s.x, s.y, s.r, s.r);
+  }
+
+  alpha += (alphaT - alpha) * .04;
+  const cx = W / 2, cy = H * .4, sc = Math.min(W, H * .8) * .021;
+  let beat = 1;
+  if (mode === 'heart' && !reduce) {
+    const k = (t * .0011) % 1;
+    beat = 1 + .08 * Math.exp(-((k - .1) ** 2) / .003) + .05 * Math.exp(-((k - .28) ** 2) / .003);
+  }
+
+  ctx.globalCompositeOperation = 'lighter';
+  for (const p of parts) {
+    if (mode === 'free') {
+      p.vx += (Math.random() - .5) * .06; p.vy += (Math.random() - .5) * .06;
+      p.vx *= .985; p.vy *= .985;
+    } else {
+      const tx = mode === 'heart' ? cx + p.hx * sc * beat : p.tx;
+      const ty = mode === 'heart' ? cy + p.hy * sc * beat : p.ty;
+      p.vx = (p.vx + (tx - p.x) * .012) * .87;
+      p.vy = (p.vy + (ty - p.y) * .012) * .87;
+    }
+    if (ptr.on) {
+      const dx = p.x - ptr.x, dy = p.y - ptr.y, d2 = dx * dx + dy * dy;
+      if (d2 < 6400) { const d = Math.sqrt(d2) || 1, f = (1 - d / 80) * 2.4; p.vx += dx / d * f; p.vy += dy / d * f; }
+    }
+    p.x += p.vx; p.y += p.vy;
+    if (mode === 'free') {
+      if (p.x < -5) p.x = W + 5; else if (p.x > W + 5) p.x = -5;
+      if (p.y < -5) p.y = H + 5; else if (p.y > H + 5) p.y = -5;
+    }
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = p.c;
+    ctx.fillRect(p.x, p.y, p.s, p.s);
+  }
+
+  for (let i = sparks.length - 1; i >= 0; i--) {
+    const s = sparks[i];
+    s.vy += .12; s.vx *= .985; s.x += s.vx; s.y += s.vy; s.life -= .011;
+    if (s.life <= 0) { sparks.splice(i, 1); continue; }
+    ctx.globalAlpha = s.life; ctx.fillStyle = s.c;
+    ctx.fillRect(s.x, s.y, s.s, s.s * .6);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ponteiro: mouse empurra, toque explode */
+addEventListener('pointermove', e => { ptr.x = e.clientX; ptr.y = e.clientY; ptr.on = true; });
+addEventListener('pointerdown', e => { ptr.x = e.clientX; ptr.y = e.clientY; ptr.on = true; if (e.target === cv) burst(e.clientX, e.clientY); });
+addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') ptr.on = false; });
+addEventListener('pointercancel', () => ptr.on = false);
+document.addEventListener('pointerleave', () => ptr.on = false);
+addEventListener('resize', resize);
+
+/* etapas */
+function show(id) {
+  document.querySelectorAll('.stage').forEach(s => s.classList.toggle('on', s.id === id));
+}
+
+async function typeLines() {
+  const box = $('lines'), wait = ms => new Promise(r => setTimeout(r, ms));
+  await wait(900);
+  for (const line of LINHAS) {
+    const p = document.createElement('p'), caret = document.createElement('span');
+    caret.className = 'caret'; box.appendChild(p);
+    for (const ch of line) {
+      p.textContent += ch; p.appendChild(caret);
+      await wait(reduce ? 0 : 42 + Math.random() * 40);
+    }
+    await wait(650); caret.remove();
+  }
+  $('go2').classList.add('show');
+}
+
+$('go1').onclick = () => { show('s1'); toFree(); typeLines(); };
+$('go2').onclick = () => { show('s2'); };
+$('q').innerHTML = PERGUNTA;
+
+/* o "não" foge */
+const no = $('no'), yes = $('yes');
+const NAO = ['tem certeza?', 'pensa de novo', 'quase...', 'erro 404', 'esse botão não existe'];
+let tries = 0;
+function dodge(e) {
+  if (e) e.preventDefault();
+  if (no.classList.contains('gone')) return;
+  if (!no.classList.contains('loose')) {
+    const b = no.getBoundingClientRect();
+    no.style.left = b.left + 'px'; no.style.top = b.top + 'px';
+    no.classList.add('loose');
+  }
+  tries++;
+  no.textContent = NAO[Math.min(tries - 1, NAO.length - 1)];
+  yes.style.transform = `scale(${1 + Math.min(tries, 6) * .09})`;
+  requestAnimationFrame(() => {
+    const nb = no.getBoundingClientRect(), yb = yes.getBoundingClientRect(), qb = $('q').getBoundingClientRect();
+    const hit = (r, x, y) => x < r.right + 16 && x + nb.width > r.left - 16 && y < r.bottom + 16 && y + nb.height > r.top - 16;
+    let x, y, n = 0;
+    do {
+      x = 16 + Math.random() * Math.max(0, W - nb.width - 32);
+      y = 16 + Math.random() * Math.max(0, H - nb.height - 32);
+      n++;
+    } while (n < 60 && (hit(yb, x, y) || hit(qb, x, y) || Math.hypot(x - nb.left, y - nb.top) < 140));
+    no.style.left = x + 'px'; no.style.top = y + 'px';
+  });
+  if (tries >= 6) no.classList.add('gone');
+}
+no.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') dodge(); });
+no.addEventListener('pointerdown', dodge);
+no.addEventListener('click', e => { e.preventDefault(); if (e.detail === 0) dodge(); });
+
+yes.onclick = () => {
+  no.classList.add('gone');
+  show('s3');
+  toHeart();
+  if (navigator.vibrate) navigator.vibrate([30, 60, 30]);
+};
+
+/* start */
+function init() {
+  resize();
+  show('s0');
+  requestAnimationFrame(frame);
+  setTimeout(() => $('go1').classList.add('show'), 2600);
+}
+let started = false;
+function safeInit() { if (started) return; started = true; try { init(); } catch (e) { console.error(e); } }
+try { Promise.race([document.fonts.load('italic 600 120px Fraunces'), new Promise(r => setTimeout(r, 1500))]).then(safeInit, safeInit); } catch (e) { safeInit(); }
+setTimeout(safeInit, 2000);
+</script>
+</body>
+</html>
