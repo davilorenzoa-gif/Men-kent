@@ -46,3 +46,6 @@ As fotos em `img/` (menos a `og-katraka.jpg`) são **fotos conceito que o Davi m
 1. 404 ✅ · 2. CTA "Pedir orçamento no WhatsApp" repetido ✅ · 3. mensagens diferentes por seção + contagem de cliques (GoatCounter) ✅ · 4. cases: nenhum (não inventar) ✅ · 5. "obrigado" com carimbo ✅ · 6. breadcrumb na privacidade ✅ · 7. FAQ com 7 perguntas ✅ · 8. "resposta pelo WhatsApp, no horário da oficina" ✅ · 9. botão flutuante no celular ✅ · 10. robots + sitemap ✅ · 11. título ✅ · 12. description ✅ · 13. og:image ✅ · 14. mapa + "Como chegar" ✅ · 15. avaliações: nota pronta, falta colar os textos com nome ⚠️ · 16. alt ✅ · 17. JSON-LD AutoRepair (falta geo) ⚠️ · 18. privacidade ✅ · 19. GoatCounter comentado no `<head>`, o Gu cria a conta e descomenta ⚠️
 
 Link de Instagram pra bio: `https://katraka.com.br/?utm_source=instagram&utm_medium=bio`
+
+## Logo
+O logo oficial (CorelDRAW 2018) que o Alexandre mandou está em `marca/`: `katraka-logo.eps` (original, vetor) e `katraka-logo.png` (fundo transparente, alta resolução). No site: `img/logo-katraka.webp` (topo, sobre o laranja) e `img/logo-katraka-claro.webp` (introdução e rodapé, com o "Especializada em Aircooled" claro pra aparecer no escuro).

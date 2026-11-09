@@ -91,8 +91,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .topo{position:fixed;left:0;right:0;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .3s,box-shadow .3s}
 .topo .miolo{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
 .topo.solido{background:rgba(156,82,40,.95);box-shadow:0 1px 0 rgba(239,230,211,.12);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.marca{display:flex;align-items:baseline;gap:12px;text-decoration:none}
-.marca b{font-weight:800;font-size:20px;letter-spacing:.04em}
+.marca{display:flex;align-items:center;gap:14px;text-decoration:none}
+.marca img{height:42px;width:auto;display:block}
 .marca span{font-family:var(--fm);font-size:12px;opacity:.7}
 .nav{display:flex;align-items:center;gap:26px}
 .nav a.it{font-size:15px;text-decoration:none;opacity:.85;position:relative;display:inline-block;overflow:hidden;height:22px;line-height:22px}
@@ -125,7 +125,7 @@ html.travado,html.travado body{overflow:hidden}
 .intro.sai .in-txt{opacity:0;transform:translateY(-12px)}
 .in-nome{width:min(76vw,500px);clip-path:inset(0 100% 0 0);animation:in-nome .56s steps(7,end) 1.38s forwards}
 @keyframes in-nome{to{clip-path:inset(0 0 0 0)}}
-.in-nome svg{width:100%;height:auto;display:block;fill:var(--segunda)}
+.in-nome img{width:100%;height:auto;display:block}
 .in-sub{font-family:var(--fm);font-size:13px;letter-spacing:.04em;opacity:0;animation:in-aparece .4s ease 1.8s forwards}
 @keyframes in-aparece{to{opacity:.72}}
 .in-pula{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));font-family:var(--fm);font-size:12px;opacity:.5;min-height:44px;padding:0 4px}
@@ -375,6 +375,7 @@ html.travado,html.travado body{overflow:hidden}
 
 /* ===== rodapé ===== */
 .rodape{background:var(--graxa);padding-block:clamp(56px,8vw,96px) calc(28px + env(safe-area-inset-bottom,0px))}
+.logo-rod{width:min(320px,70vw);height:auto;margin-top:28px}
 .rodape .palavra-r{width:100%;height:auto;fill:none;stroke:rgba(239,230,211,.35);stroke-width:5;margin-top:clamp(56px,8vw,96px)}
 .rod-topo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.6fr);gap:40px 72px;align-items:end}
 .rod-topo h2{font-size:clamp(48px,8vw,120px)}
@@ -410,6 +411,7 @@ html.travado,html.travado body{overflow:hidden}
   body{font-size:16px}
   .topo .nav .btn{display:none}
   .marca span{display:none}
+  .marca img{height:36px}
   .zap{display:grid}
   .hero{min-height:auto;padding-top:calc(72px + env(safe-area-inset-top,0px));gap:6px;justify-content:flex-start}
   .hero-arte{order:-1;min-width:0;width:100%;margin:10px 0 18px;padding-left:var(--g);padding-right:var(--gd)}
@@ -475,8 +477,8 @@ html.travado,html.travado body{overflow:hidden}
     </svg>
   </div>
   <div class="in-txt">
-    <div class="in-nome"><svg viewBox="0 0 1000 157"><use href="#palavra" width="1000" height="157"/></svg></div>
-    <p class="in-sub">Especializada em VW a ar desde 1995</p>
+    <div class="in-nome"><img src="img/logo-katraka-claro.webp" alt="" width="1000" height="257"></div>
+    <p class="in-sub">Tatuapé, São Paulo. Desde 1995.</p>
   </div>
   <button class="in-pula" type="button" id="inPula" tabindex="-1">Pular</button>
 </div>
@@ -514,7 +516,7 @@ html.travado,html.travado body{overflow:hidden}
 
 <header class="topo" id="topo">
   <div class="miolo">
-    <a class="marca" href="#inicio" aria-label="Katraka, voltar ao início"><b>KATRAKA</b><span>VW a ar desde 1995</span></a>
+    <a class="marca" href="#inicio" aria-label="Katraka, voltar ao início"><img src="img/logo-katraka.webp" alt="Katraka, especializada em aircooled" width="1000" height="257"><span>VW a ar desde 1995</span></a>
     <nav class="nav" aria-label="Seções">
       <a class="it" href="#raiox"><span>Raio-x</span><span aria-hidden="true">Raio-x</span></a>
       <a class="it" href="#rebaixar"><span>Rebaixar</span><span aria-hidden="true">Rebaixar</span></a>
@@ -864,6 +866,7 @@ html.travado,html.travado body{overflow:hidden}
       </figure>
     </div>
     <svg class="palavra-r" viewBox="0 0 1000 157" aria-hidden="true"><use href="#palavra" width="1000" height="157"/></svg>
+    <img class="logo-rod" src="img/logo-katraka-claro.webp" alt="Katraka, especializada em aircooled" width="1000" height="257" loading="lazy">
     <div class="rod-grade">
       <p>Katraka Especializada VW Aircooled. Oficina especializada em Fusca e derivados, desde 1995, no Tatuapé.</p>
       <nav aria-label="Rodapé">
