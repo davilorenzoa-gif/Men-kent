@@ -8,7 +8,7 @@ Site de prévia feito em 06/11/2026. **Ainda não é cliente.**
 - `img/og-katraka.jpg`: imagem de compartilhamento (feita com o próprio desenho do site).
 
 ## Direção
-- Cores: Verde Máquina `#3F5E4C` (base), Branco Lótus `#EFE6D3` (segunda), Laranja Lanterna `#F2542D` (acento: faróis, lanternas, WhatsApp, a katraka). Graxa `#16231C` pros fundos escuros.
+- Cores (trocadas a pedido do Alexandre, que não gostou do verde): Laranja Queimado `#9C5228` (base), Branco Lótus `#EFE6D3` (segunda), Azul Lagoa `#A9D3DE` (acento: WhatsApp, marcadores, a katraka). Graxa `#231912` pros fundos escuros e vermelho `#C8402A` só pro aviso de "passou do limite".
 - Fontes: Jost (geométrica, redonda como o Fusca, da família dos anúncios da VW) + IBM Plex Mono (anotações técnicas).
 - Princípio: o nome da oficina é a peça (catraca = katraka). Tudo se move "em dentes", nunca deslizando.
 - O Fusca é uma foto de verdade (a que o Davi mandou) recortada em 3 camadas: carroceria e as duas rodas. A carroceria desce e as rodas ficam no chão, então dá pra baixar dente por dente.
@@ -18,6 +18,8 @@ Site de prévia feito em 06/11/2026. **Ainda não é cliente.**
 1. **Abertura:** o Fusca de verdade sai da altura original e baixa dente por dente até a altura da foto rebaixada, em cima do nome KATRAKA (as letras "sentem" o peso); no fim, farol e lanterna acendem em laranja. Rolando, ele sai andando com as rodas girando.
 2. **Meio:** "Fusca é pra durar": a foto do Fusca verde liga a luz em 4 posições do interruptor (desligado, lanterna, farol baixo, farol alto). Em seguida, o **raio-x**: a foto do Fusca de lado e, dentro da faixa do scanner, a mesma foto em vista interna (imagem que o Davi mandou), com um marcador laranja pulsando em cada parte onde a oficina mexe (suspensão e katraka, freio, direção, quadro, facão, rodas, motor). Cada parte vira um orçamento pronto no WhatsApp.
 3. **Interativo:** "Gire a katraka", com o mesmo Fusca de verdade: duas catracas, uma embaixo de cada roda (dianteira = katraka, traseira = facão). Com 4 dentes na frente e 4 atrás ele fica igual à foto do Fusca rebaixado que o Davi mandou (as duas fotos têm a carroceria no mesmo lugar, só as rodas mudam 24 px). A pessoa gira com o dedo, ouve o "tec", vê o Fusca baixar e o medidor dizer se está no ponto, no limite ou se passou (aí o pneu entra no para-lama e acende o aviso laranja). Escolhe o carro e manda a configuração pro WhatsApp.
+
+Extra: "Trabalhos da oficina", com as fotos que ele posta no Instagram @katrakavw aparecendo sozinhas no site (ferramenta Behold; enquanto não tiver o Feed ID, mostra fotos de exemplo marcadas). Como subir: ver `SUBIR-NO-AR.md`.
 
 Extra: ordem de serviço (formulário) que leva um carimbo "ENVIADO" e abre o WhatsApp com a mensagem pronta.
 
