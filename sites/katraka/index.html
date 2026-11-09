@@ -302,6 +302,15 @@ html.travado,html.travado body{overflow:hidden}
 .trab-grade a:hover img{transform:scale(1.05)}
 .trab-grade span{position:absolute;left:8px;top:8px;font-family:var(--fm);font-size:11px;background:rgba(35,25,18,.75);color:var(--segunda);padding:3px 8px;border-radius:99px}
 .trab-feed{margin-top:clamp(24px,3vw,36px)}
+.trab-video{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:28px 56px;align-items:center;margin-top:clamp(28px,4vw,48px)}
+.tv-play{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:10px;overflow:hidden;background:var(--graxa);box-shadow:0 24px 50px -24px rgba(20,12,8,.7)}
+.tv-play video{width:100%;height:100%;object-fit:cover;display:block}
+.tv-btn{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;background:var(--acento);color:var(--graxa);font-weight:600;font-size:15px;padding:10px 18px;border-radius:999px;transition:transform .25s var(--dente)}
+.tv-play:hover .tv-btn{transform:translateX(-50%) translateY(-2px)}
+.tv-play.tocando .tv-btn{display:none}
+.tv-tx{display:grid;gap:14px;justify-items:start;max-width:46ch}
+.tv-tx h3{font-size:clamp(28px,3.4vw,46px)}
+.tv-tx .acoes{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin-top:6px}
 
 /* ===== avaliações e mídia ===== */
 .aval{padding-block:clamp(80px,11vw,140px)}
@@ -426,6 +435,8 @@ html.travado,html.travado body{overflow:hidden}
   .leitura{min-height:170px}
   .lista-s{grid-template-columns:minmax(0,1fr)}
   .trab-grade{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .trab-video{grid-template-columns:minmax(0,1fr)}
+  .tv-play{max-width:360px}
   .dial-roda{width:104px;height:104px}
   .mais{width:36px;height:36px;font-size:18px}
   .dial-linha{gap:4px}
@@ -729,6 +740,21 @@ html.travado,html.travado body{overflow:hidden}
       </div>
       <a class="btn-ln" href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener">Seguir @katrakavw</a>
     </div>
+    <div class="trab-video">
+      <button class="tv-play" type="button" id="tvPlay" data-completo="img/katraka-catraca-video.mp4" aria-label="Assistir o vídeo completo da catraca mexicana, com som">
+        <video id="tvVideo" src="img/katraka-catraca-trecho.mp4" poster="img/katraka-catraca-capa.jpg" muted loop playsinline preload="metadata"></video>
+        <span class="tv-btn" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M2 1l11 6-11 6z"/></svg>Assistir com som</span>
+      </button>
+      <div class="tv-tx">
+        <p class="mono" style="opacity:.75">Do Instagram @katrakavw</p>
+        <h3>Catraca mexicana, explicada na prática</h3>
+        <p>O Alexandre mostra no carro, na oficina, como funciona a catraca que regula a altura do Fusca.</p>
+        <div class="acoes">
+          <a class="btn" data-wa="video" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
+          <a class="lnk" href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener">Ver mais no Instagram</a>
+        </div>
+      </div>
+    </div>
     <div class="trab-feed" id="feedInsta" hidden></div>
     <div id="feedExemplo">
       <p class="trab-aviso">Exemplo de como fica. Aqui entram as fotos e os vídeos dos trabalhos da Katraka, com o Instagram @katrakavw do lado pra quem quiser ver mais.</p>
@@ -916,6 +942,7 @@ html.travado,html.travado body{overflow:hidden}
     faq: "Oi! Vim pelo site da Katraka e fiquei com uma dúvida:",
     visite: "Oi! Vim pelo site da Katraka e queria combinar um dia pra levar meu carro.",
     rodape: "Oi! Vim pelo site da Katraka e queria marcar uma revisão no meu VW a ar.",
+    video: "Oi! Vi o vídeo da catraca no site da Katraka e queria um orçamento pra rebaixar meu VW a ar.",
     flutuante: "Oi! Vim pelo site da Katraka e queria um orçamento."
   };
   var wa = function(t){ return "https://wa.me/" + WHATS + "?text=" + encodeURIComponent(t); };
@@ -1287,6 +1314,29 @@ html.travado,html.travado body{overflow:hidden}
     $("#feedExemplo").hidden = true;
     var sc = document.createElement("script"); sc.type = "module"; sc.src = "https://w.behold.so/widget.js";
     document.head.appendChild(sc);
+  }
+
+  /* ---------- vídeo da catraca: trecho mudo em repetição; ao tocar, o vídeo completo com som ---------- */
+  var tvPlay = $("#tvPlay"), tvVideo = $("#tvVideo");
+  if (tvPlay && tvVideo){
+    if (!embed && !reduz){
+      if ("IntersectionObserver" in window){
+        new IntersectionObserver(function(es){ es.forEach(function(e){
+          if (tvPlay.classList.contains("tocando")) return;
+          if (e.isIntersecting){ var pr = tvVideo.play(); if (pr && pr.catch) pr.catch(function(){}); } else tvVideo.pause();
+        }); }, { threshold: .3 }).observe(tvVideo);
+      }
+    }
+    tvPlay.addEventListener("click", function(){
+      var completo = tvPlay.getAttribute("data-completo");
+      if (!completo){ window.open("https://www.instagram.com/katrakavw/", "_blank", "noopener"); return; }
+      if (tvPlay.classList.contains("tocando")) return;
+      tvPlay.classList.add("tocando");
+      tvVideo.loop = false; tvVideo.muted = false; tvVideo.controls = true;
+      tvVideo.src = completo; tvVideo.currentTime = 0;
+      var pr = tvVideo.play(); if (pr && pr.catch) pr.catch(function(){});
+      conta("video-completo");
+    });
   }
 
   /* ---------- ordem de serviço ---------- */

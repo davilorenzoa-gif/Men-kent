@@ -49,3 +49,6 @@ Link de Instagram pra bio: `https://katraka.com.br/?utm_source=instagram&utm_med
 
 ## Logo
 O logo oficial (CorelDRAW 2018) que o Alexandre mandou está em `marca/`: `katraka-logo.eps` (original, vetor) e `katraka-logo.png` (fundo transparente, alta resolução). No site: `img/logo-katraka.webp` (topo, sobre o laranja) e `img/logo-katraka-claro.webp` (introdução e rodapé, com o "Especializada em Aircooled" claro pra aparecer no escuro).
+
+## Vídeo (Trabalhos da oficina)
+Vídeo do Instagram dele, "Catraca mexicana, explicação na prática" (enviado pelo Davi em 09/11). `img/katraka-catraca-trecho.mp4` (12 s, sem som, toca sozinho), `img/katraka-catraca-video.mp4` (completo, 2min35, ~10 MB, só carrega quando a pessoa toca) e `img/katraka-catraca-capa.jpg`. O vídeo tem a marca d agua "Inspira Fusca" (veio assim do Instagram dele).
