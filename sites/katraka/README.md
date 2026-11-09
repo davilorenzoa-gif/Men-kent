@@ -19,7 +19,7 @@ Site de prévia feito em 06/11/2026. **Ainda não é cliente.**
 2. **Meio:** "Fusca é pra durar": a foto do Fusca verde liga a luz em 4 posições do interruptor (desligado, lanterna, farol baixo, farol alto). Em seguida, o **raio-x**: a foto do Fusca de lado e, dentro da faixa do scanner, a mesma foto em vista interna (imagem que o Davi mandou), com um marcador laranja pulsando em cada parte onde a oficina mexe (suspensão e katraka, freio, direção, quadro, facão, rodas, motor). Cada parte vira um orçamento pronto no WhatsApp.
 3. **Interativo:** "Gire a katraka", com o mesmo Fusca de verdade: duas catracas, uma embaixo de cada roda (dianteira = katraka, traseira = facão). Com 4 dentes na frente e 4 atrás ele fica igual à foto do Fusca rebaixado que o Davi mandou (as duas fotos têm a carroceria no mesmo lugar, só as rodas mudam 24 px). A pessoa gira com o dedo, ouve o "tec", vê o Fusca baixar e o medidor dizer se está no ponto, no limite ou se passou (aí o pneu entra no para-lama e acende o aviso laranja). Escolhe o carro e manda a configuração pro WhatsApp.
 
-Extra: "Trabalhos da oficina", com as fotos que ele posta no Instagram @katrakavw aparecendo sozinhas no site (ferramenta Behold; enquanto não tiver o Feed ID, mostra fotos de exemplo marcadas). Como subir: ver `SUBIR-NO-AR.md`.
+Extra: "Trabalhos da oficina": galeria com as fotos e vídeos que o Alexandre manda pelo WhatsApp, mais o botão "Seguir @katrakavw". (A ideia de puxar sozinho do Instagram pelo Behold foi deixada de lado: exigia o login dele. O código ainda aceita um Feed ID se um dia quiserem.) Como subir: ver `SUBIR-NO-AR.md`.
 
 Extra: ordem de serviço (formulário) que leva um carimbo "ENVIADO" e abre o WhatsApp com a mensagem pronta.
 
