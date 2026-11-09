@@ -58,3 +58,6 @@ Seção logo depois do "quem somos" + atalho no menu ("Vídeo") e na abertura. L
 
 ## Fotos dos trabalhos (reais, do Instagram dele)
 `img/trab-*.webp`: Fusca verde, Variant amarela, buggy laranja, Puma, Variant vermelha, Kombi e Variant azul, todos no elevador da Katraka. As placas visíveis foram borradas (carros de clientes). Confirmar com o Alexandre os nomes dos modelos (principalmente Puma e Variant). Toque abre a foto inteira.
+
+## Simulador com 5 carros
+Abas Fusca, Kombi, Variant, Brasília e SP2 no "Gire a katraka". Fotos que o Davi mandou (padrão), ampliadas 4x com EDSR (as da Variant e Brasília eram pequenas, ~250 px), recortadas em carroceria + 2 rodas e alinhadas pelo entre-eixos: `img/carro-<modelo>-corpo.webp`, `-roda-d.webp`, `-roda-t.webp`. A Kombi veio da foto separada (a da grade estava de lado). Marcadas como "Imagem ilustrativa".

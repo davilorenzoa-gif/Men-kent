@@ -273,6 +273,11 @@ html.travado,html.travado body{overflow:hidden}
 .sim-cena{position:relative}
 .sim-cena svg{width:100%;height:auto;overflow:visible}
 .sim-cena .sombra-s{fill:#231912;opacity:.22}
+.sim-cena .modelo{opacity:0;transition:opacity .3s ease;pointer-events:none}
+.sim-cena .modelo.on{opacity:1}
+.carros.abas{justify-content:center;margin:clamp(24px,3vw,36px) auto 0;max-width:900px;gap:8px}
+.carros.abas legend{text-align:center;font-size:13px;margin-bottom:12px}
+.carros.abas span{min-height:48px;padding:0 22px;font-size:17px;font-weight:600;border-width:2px}
 .sim-cena .sobe{transition:transform .2s var(--dente)}
 .sim-cena .guia{stroke:var(--graxa);stroke-width:2;fill:none}
 .sim-cena .chao-s{stroke:var(--graxa);stroke-width:2.5}
@@ -654,7 +659,7 @@ html.travado,html.travado body{overflow:hidden}
       <div>
         <p class="mono" style="opacity:.7;margin-bottom:12px">Carros que a gente atende</p>
         <ul class="modelos">
-          <li>Fusca</li><li>Brasília</li><li>Kombi</li><li>Variant</li><li>e derivados a ar</li>
+          <li>Fusca</li><li>Brasília</li><li>Kombi</li><li>Variant</li><li>SP2</li><li>e derivados a ar</li>
         </ul>
       </div>
     </div>
@@ -739,21 +744,67 @@ html.travado,html.travado body{overflow:hidden}
   <div class="miolo">
     <div class="sim-topo">
       <h2 id="simTit">Gire a katraka.</h2>
-      <p class="sub">Na dianteira, quem regula a altura é a katraka. Na traseira, é o facão, na ponta da barra de torção. Gire as duas e veja como o Fusca fica.</p>
+      <p class="sub">Na dianteira, quem regula a altura é a katraka. Na traseira, é o facão, na ponta da barra de torção. Escolha o seu VW, gire as duas e veja como ele fica.</p>
     </div>
 
+    <fieldset class="carros abas" id="abasCarro">
+      <legend>Escolha o seu VW</legend>
+      <label><input type="radio" name="carro" id="cFusca" value="Fusca" checked><span>Fusca</span></label>
+      <label><input type="radio" name="carro" id="cKombi" value="Kombi"><span>Kombi</span></label>
+      <label><input type="radio" name="carro" id="cVariant" value="Variant"><span>Variant</span></label>
+      <label><input type="radio" name="carro" id="cBrasilia" value="Brasília"><span>Brasília</span></label>
+      <label><input type="radio" name="carro" id="cSP2" value="SP2"><span>SP2</span></label>
+    </fieldset>
     <div class="sim-mesa">
       <div class="sim-cena">
-        <svg id="simSvg" viewBox="0 -10 1000 468" role="img" aria-label="Fusca bege de lado que baixa conforme você gira a katraka (frente) e o facão (traseira)">
+        <svg id="simSvg" viewBox="0 -10 1000 468" role="img" aria-label="VW a ar de lado (Fusca, Kombi, Variant, Brasília ou SP2) que baixa conforme você gira a katraka (frente) e o facão (traseira)">
           <line class="chao-s" x1="0" y1="398" x2="1000" y2="398"/>
           <path class="hach" d="M20 398l-14 16M60 398l-14 16M100 398l-14 16M140 398l-14 16M180 398l-14 16M220 398l-14 16M260 398l-14 16M300 398l-14 16M340 398l-14 16M380 398l-14 16M420 398l-14 16M460 398l-14 16M500 398l-14 16M540 398l-14 16M580 398l-14 16M620 398l-14 16M660 398l-14 16M700 398l-14 16M740 398l-14 16M780 398l-14 16M820 398l-14 16M860 398l-14 16M900 398l-14 16M940 398l-14 16M980 398l-14 16"/>
           <ellipse class="sombra-s" cx="492" cy="399" rx="400" ry="7"/>
-          <image href="img/fusca-roda-d.webp" x="163.25" y="263.25" width="137.5" height="137.5"/>
-          <image href="img/fusca-roda-t.webp" x="683.25" y="261.5" width="137.5" height="137.5"/>
-          <g class="sobe">
-            <image href="img/fusca-corpo.webp" x="97.1" y="59.6" width="809.1" height="291.7"/>
-            <path class="arco arco-f" d="M162.5 306.7A74 74 0 0 1 301.5 306.7"/>
-            <path class="arco arco-r" d="M682.5 304.9A74 74 0 0 1 821.5 304.9"/>
+          <g class="modelo on" data-carro="Fusca" data-yc="331">
+            <image href="img/fusca-roda-d.webp" x="163.25" y="263.25" width="137.5" height="137.5"/>
+            <image href="img/fusca-roda-t.webp" x="683.25" y="261.5" width="137.5" height="137.5"/>
+            <g class="sobe">
+              <image href="img/fusca-corpo.webp" x="97.1" y="59.6" width="809.1" height="291.7"/>
+              <path class="arco arco-f" d="M162.5 306.7A74 74 0 0 1 301.5 306.7"/>
+              <path class="arco arco-r" d="M682.5 304.9A74 74 0 0 1 821.5 304.9"/>
+            </g>
+          </g>
+          <g class="modelo" data-carro="Kombi" data-yc="325.2">
+            <image href="img/carro-kombi-roda-d.webp" x="157.98" y="251.15" width="148.03" height="148.03"/>
+            <image href="img/carro-kombi-roda-t.webp" x="677.98" y="251.15" width="148.03" height="148.03"/>
+            <g class="sobe">
+              <image href="img/carro-kombi-corpo.webp" x="27.20" y="-6.80" width="892.91" height="361.81"/>
+              <path class="arco arco-f" d="M156.7 297.8A80.1 80.1 0 0 1 307.3 297.8"/>
+              <path class="arco arco-r" d="M676.7 297.8A80.1 80.1 0 0 1 827.3 297.8"/>
+            </g>
+          </g>
+          <g class="modelo" data-carro="Variant" data-yc="323.0">
+            <image href="img/carro-variant-roda-d.webp" x="154.10" y="245.08" width="155.81" height="155.81"/>
+            <image href="img/carro-variant-roda-t.webp" x="674.10" y="245.08" width="155.81" height="155.81"/>
+            <g class="sobe">
+              <image href="img/carro-variant-corpo.webp" x="43.10" y="60.41" width="882.92" height="294.31"/>
+              <path class="arco arco-f" d="M154.5 294.8A82.5 82.5 0 0 1 309.5 294.8"/>
+              <path class="arco arco-r" d="M674.5 294.8A82.5 82.5 0 0 1 829.5 294.8"/>
+            </g>
+          </g>
+          <g class="modelo" data-carro="Brasília" data-yc="320.9">
+            <image href="img/carro-brasilia-roda-d.webp" x="152.07" y="240.93" width="159.86" height="159.86"/>
+            <image href="img/carro-brasilia-roda-t.webp" x="672.07" y="240.93" width="159.86" height="159.86"/>
+            <g class="sobe">
+              <image href="img/carro-brasilia-corpo.webp" x="39.98" y="67.68" width="859.73" height="285.34"/>
+              <path class="arco arco-f" d="M152.3 291.8A84.9 84.9 0 0 1 311.7 291.8"/>
+              <path class="arco arco-r" d="M672.3 291.8A84.9 84.9 0 0 1 831.7 291.8"/>
+            </g>
+          </g>
+          <g class="modelo" data-carro="SP2" data-yc="328.9">
+            <image href="img/carro-sp2-roda-d.webp" x="161.34" y="258.28" width="141.32" height="141.32"/>
+            <image href="img/carro-sp2-roda-t.webp" x="681.34" y="258.28" width="141.32" height="141.32"/>
+            <g class="sobe">
+              <image href="img/carro-sp2-corpo.webp" x="76.44" y="139.13" width="872.55" height="218.41"/>
+              <path class="arco arco-f" d="M160.6 303.0A76.0 76.0 0 0 1 303.4 303.0"/>
+              <path class="arco arco-r" d="M680.6 303.0A76.0 76.0 0 0 1 823.4 303.0"/>
+            </g>
           </g>
           <path class="guia" d="M232 420V458M752 420V458" stroke-dasharray="4 5"/>
         </svg>
@@ -788,13 +839,6 @@ html.travado,html.travado body{overflow:hidden}
         <p class="estado" id="estado" aria-live="polite"></p>
       </div>
       <div class="pedido">
-        <fieldset class="carros">
-          <legend>Qual é o seu carro?</legend>
-          <label><input type="radio" name="carro" id="cFusca" value="Fusca" checked><span>Fusca</span></label>
-          <label><input type="radio" name="carro" id="cBrasilia" value="Brasília"><span>Brasília</span></label>
-          <label><input type="radio" name="carro" id="cKombi" value="Kombi"><span>Kombi</span></label>
-          <label><input type="radio" name="carro" id="cVariant" value="Variant"><span>Variant</span></label>
-        </fieldset>
         <div class="acoes">
           <a class="btn" id="simWa" data-wa="sim" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
           <button class="somb" type="button" id="somBtn" aria-pressed="true">Som do clique: ligado</button>
@@ -903,7 +947,7 @@ html.travado,html.travado body{overflow:hidden}
       </figure>
     </div>
     <div>
-      <details><summary>Vocês atendem quais carros?<i aria-hidden="true"></i></summary><p>Só VW a ar: Fusca, Brasília, Kombi, Variant e os outros derivados. É nisso que a oficina é especializada desde 1995.</p></details>
+      <details><summary>Vocês atendem quais carros?<i aria-hidden="true"></i></summary><p>Só VW a ar: Fusca, Brasília, Kombi, Variant, SP2 e os outros derivados. É nisso que a oficina é especializada desde 1995.</p></details>
       <details><summary>Dá pra rebaixar e continuar rodando macio?<i aria-hidden="true"></i></summary><p>Dá, até um limite. Passando dele, batentes, amortecedores e outras peças da suspensão precisam ser acertados junto pra o carro não ficar duro. A gente avisa onde fica esse limite no seu carro antes de começar.</p></details>
       <details><summary>Rebaixar gasta pneu?<i aria-hidden="true"></i></summary><p>Pode gastar os pneus traseiros de forma irregular. Por isso a gente confere cambagem e alinhamento junto com o rebaixamento.</p></details>
       <details><summary>Quanto custa?<i aria-hidden="true"></i></summary><p>Depende do modelo e do estado da suspensão. Manda pelo WhatsApp o carro, o ano e o que você quer fazer (se der, uma foto) e a gente passa o orçamento.</p></details>
@@ -930,7 +974,7 @@ html.travado,html.travado body{overflow:hidden}
       <div class="os-cab"><b>KATRAKA</b><span>Ordem de serviço de <span id="osData"></span></span></div>
       <div class="campos">
         <label class="cheio" for="osNome">Seu nome<input id="osNome" name="nome" required autocomplete="name" placeholder="Como a gente te chama"></label>
-        <label for="osCarro">Carro<select id="osCarro" name="carro"><option>Fusca</option><option>Brasília</option><option>Kombi</option><option>Variant</option><option>Outro VW a ar</option></select></label>
+        <label for="osCarro">Carro<select id="osCarro" name="carro"><option>Fusca</option><option>Brasília</option><option>Kombi</option><option>Variant</option><option>SP2</option><option>Outro VW a ar</option></select></label>
         <label for="osAno">Ano<input id="osAno" name="ano" inputmode="numeric" maxlength="4" placeholder="Ex.: 1975"></label>
         <label class="cheio" for="osServ">Serviço<select id="osServ" name="serv"></select></label>
         <label class="cheio" for="osTexto">O que está acontecendo?<textarea id="osTexto" name="texto" placeholder="Ex.: quero baixar a frente, mas sem ficar duro"></textarea></label>
@@ -1282,18 +1326,20 @@ html.travado,html.travado body{overflow:hidden}
 
   /* ===================== WOW 3: simulador ===================== */
   var est = { f: 2, r: 1 };
-  var simSvg = $("#simSvg"), simSobe = $$("#simSvg .sobe"), estado = $("#estado"), medidor = $("#medidor"), segs = $$("#medidor i");
+  var simSvg = $("#simSvg"), simSobe = $$("#simSvg .sobe"), modelos = $$("#simSvg .modelo"), estado = $("#estado"), medidor = $("#medidor"), segs = $$("#medidor i");
   var simWa = $("#simWa"), PASSO = 5;   // 4 dentes ~ a foto do Fusca rebaixado
   function carroAtual(){ var c = $("input[name=carro]:checked"); return c ? c.value : "Fusca"; }
   function msgSim(){
-    var c = carroAtual(), c2 = (c === "Fusca" ? "um " : "uma ") + c;
+    var c = carroAtual(), c2 = ((c === "Fusca" || c === "SP2") ? "um " : "uma ") + c;
     if (est.f === 0 && est.r === 0) return "Oi! Vim pelo site da Katraka. Tenho " + c2 + " e quero revisar a suspensão.";
     return "Oi! Vim pelo site da Katraka. Tenho " + c2 + " e quero rebaixar. No simulador ficou: dianteira com " + est.f + (est.f === 1 ? " dente" : " dentes") + " na katraka e traseira com " + est.r + (est.r === 1 ? " estria" : " estrias") + " no facão. Dá pra avaliar?";
   }
   function atualizaSim(){
     var fd = est.f * PASSO, rd = est.r * PASSO;
     var meio = (fd + rd) / 2, ang = Math.atan((rd - fd) / 520) * 180 / Math.PI;
-    simSobe.forEach(function(g){ g.style.transform = "rotate(" + ang.toFixed(3) + "deg) translateY(" + meio.toFixed(2) + "px)"; g.style.transformOrigin = "492px 331px"; });
+    var atual = carroAtual();
+    modelos.forEach(function(m){ m.classList.toggle("on", m.getAttribute("data-carro") === atual); });
+    simSobe.forEach(function(g){ var yc = g.parentNode.getAttribute("data-yc") || "331"; g.style.transform = "rotate(" + ang.toFixed(3) + "deg) translateY(" + meio.toFixed(2) + "px)"; g.style.transformOrigin = "492px " + yc + "px"; });
     simSvg.style.setProperty("--arco-f", fd > 22 ? "#C8402A" : "transparent");
     simSvg.style.setProperty("--arco-r", rd > 22 ? "#C8402A" : "transparent");
     var tot = est.f + est.r, txt;
