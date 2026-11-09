@@ -52,3 +52,6 @@ O logo oficial (CorelDRAW 2018) que o Alexandre mandou está em `marca/`: `katra
 
 ## Vídeo (Trabalhos da oficina)
 Vídeo do Instagram dele, "Catraca mexicana, explicação na prática" (enviado pelo Davi em 09/11). `img/katraka-catraca-trecho.mp4` (12 s, sem som, toca sozinho), `img/katraka-catraca-video.mp4` (completo, 2min35, ~10 MB, só carrega quando a pessoa toca) e `img/katraka-catraca-capa.jpg`. O vídeo tem a marca d agua "Inspira Fusca" (veio assim do Instagram dele).
+
+## Vídeo do YouTube (destaque)
+Seção logo depois do "quem somos" + atalho no menu ("Vídeo") e na abertura. Link: https://www.youtube.com/watch?v=Yvma_5ttA9c (28 min). Título usado: "Direção sobre rodas com a Katraka" (confirmar com o Alexandre o título que ele prefere). A capa vem do próprio YouTube; se não carregar, usa `img/katraka-catraca-capa.jpg`.

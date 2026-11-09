@@ -170,6 +170,29 @@ html.travado,html.travado body{overflow:hidden}
 .foto figcaption{position:absolute;left:12px;bottom:10px;font-family:var(--fm);font-size:11px;color:#fff;opacity:.8;text-shadow:0 1px 6px rgba(0,0,0,.6)}
 .sobre-foto{max-width:420px;justify-self:end;width:100%}
 
+/* ===== vídeo do YouTube (destaque) ===== */
+.yt{background:var(--graxa);padding-block:clamp(72px,10vw,130px)}
+.yt-grade{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:32px 64px;align-items:center}
+.yt-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:13px;border:1.5px solid rgba(239,230,211,.4);border-radius:999px;padding:6px 14px}
+.yt-tag i{width:9px;height:9px;border-radius:50%;background:#E3261C}
+.yt h2{font-size:clamp(38px,5.4vw,78px);margin-top:18px}
+.yt .sub{margin-top:18px}
+.yt .acoes{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:28px}
+.yt-capa{position:relative;display:block;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 30px 70px -30px rgba(0,0,0,.8);text-decoration:none}
+.yt-capa img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease),filter .4s}
+.yt-capa:hover img{transform:scale(1.04);filter:brightness(.85)}
+.yt-capa::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.65))}
+.yt-play{position:absolute;left:50%;top:50%;width:clamp(64px,9vw,92px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:var(--acento);display:grid;place-items:center;z-index:1;box-shadow:0 0 0 0 rgba(169,211,222,.6);animation:yt-pulso 2s ease-out infinite;transition:transform .25s var(--dente)}
+.yt-capa:hover .yt-play{transform:translate(-50%,-50%) scale(1.08)}
+.yt-play svg{width:34%;height:34%;margin-left:8%;fill:var(--graxa)}
+@keyframes yt-pulso{0%{box-shadow:0 0 0 0 rgba(169,211,222,.55)}100%{box-shadow:0 0 0 26px rgba(169,211,222,0)}}
+.yt-dur{position:absolute;right:12px;bottom:12px;z-index:1;font-family:var(--fm);font-size:13px;background:rgba(0,0,0,.75);color:#fff;padding:4px 9px;border-radius:6px}
+.yt-nome{position:absolute;left:16px;bottom:12px;right:90px;z-index:1;font-weight:600;font-size:clamp(15px,1.5vw,19px);color:#fff;line-height:1.25}
+.hero-yt{display:inline-flex;align-items:center;gap:10px;font-family:var(--fd);font-size:14px;font-weight:500;text-decoration:none;border:1.5px solid rgba(239,230,211,.45);border-radius:999px;padding:8px 14px;width:max-content;max-width:100%}
+.hero-yt:hover{background:rgba(239,230,211,.12)}
+.hero-yt i{width:22px;height:22px;border-radius:50%;background:#E3261C;display:grid;place-items:center;flex:none}
+.hero-yt i svg{width:9px;height:9px;fill:#fff;margin-left:2px}
+
 /* ===== o interruptor do farol (foto) ===== */
 .farol{position:relative;height:220vh;background:var(--graxa)}
 .fa-palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--graxa);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:24px}
@@ -408,7 +431,7 @@ html.travado,html.travado body{overflow:hidden}
   .ficha{justify-self:start}
   .painel{grid-template-columns:minmax(0,1fr)}
   .rx-lista{justify-content:flex-start}
-  .sobre-grade,.rod-topo{grid-template-columns:minmax(0,1fr)}
+  .sobre-grade,.rod-topo,.yt-grade{grid-template-columns:minmax(0,1fr)}
   .sobre-foto,.rod-foto{justify-self:start;max-width:360px}
   .faq-foto{display:none}
   .fa-palco{grid-template-columns:minmax(0,1fr);place-items:center}
@@ -421,6 +444,7 @@ html.travado,html.travado body{overflow:hidden}
   .topo .nav .btn{display:none}
   .marca span{display:none}
   .marca img{height:36px}
+  .ficha .hero-yt{grid-column:1/-1}
   .zap{display:grid}
   .hero{min-height:auto;padding-top:calc(72px + env(safe-area-inset-top,0px));gap:6px;justify-content:flex-start}
   .hero-arte{order:-1;min-width:0;width:100%;margin:10px 0 18px;padding-left:var(--g);padding-right:var(--gd)}
@@ -462,6 +486,7 @@ html.travado,html.travado body{overflow:hidden}
 /* reduzir movimento: troca por um fade curto, sem desligar tudo */
 @media (prefers-reduced-motion:reduce){
   .in-dentes,.in-faisca{display:none}
+  .yt-play{animation:none}
   .in-anel,.in-v,.in-w,.in-nome,.in-sub{animation:none;opacity:1;transform:none;clip-path:none}
   .intro{animation:intro-fim .4s 2.4s forwards}
   .sobe,.sim-cena .sobe,.dial-roda .cr,.palavra-h,.carimbo,.zap,.nav a.it span{transition-duration:.01s!important}
@@ -529,6 +554,7 @@ html.travado,html.travado body{overflow:hidden}
   <div class="miolo">
     <a class="marca" href="#inicio" aria-label="Katraka, voltar ao início"><img src="img/logo-katraka.webp" alt="Katraka, especializada em aircooled" width="1000" height="257"><span>VW a ar desde 1995</span></a>
     <nav class="nav" aria-label="Seções">
+      <a class="it" href="#video"><span>Vídeo</span><span aria-hidden="true">Vídeo</span></a>
       <a class="it" href="#raiox"><span>Raio-x</span><span aria-hidden="true">Raio-x</span></a>
       <a class="it" href="#rebaixar"><span>Rebaixar</span><span aria-hidden="true">Rebaixar</span></a>
       <a class="it" href="#servicos"><span>Serviços</span><span aria-hidden="true">Serviços</span></a>
@@ -555,6 +581,7 @@ html.travado,html.travado body{overflow:hidden}
     <div class="ficha">
       <p><span>Endereço</span>Rua Serra de Bragança, 810<br>Tatuapé, São Paulo</p>
       <p><span>Horário</span>Segunda a sexta, 9h às 17h</p>
+      <a class="hero-yt" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener"><i aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg></i>Assista: Direção sobre rodas, no YouTube</a>
       <p class="dentes-h" aria-hidden="true"><span>katraka</span><i></i><i></i><i></i><i></i><i></i></p>
     </div>
   </div>
@@ -597,6 +624,27 @@ html.travado,html.travado body{overflow:hidden}
       <img src="img/fusca-rebaixado.jpg" alt="Fusca verde rebaixado, com rodas cromadas, estacionado numa praça com palmeiras e bandeiras" width="675" height="1200" loading="lazy">
       <figcaption>Foto ilustrativa</figcaption>
     </figure>
+  </div>
+</section>
+
+<!-- ===== vídeo do YouTube (28 min), em destaque ===== -->
+<section class="yt" id="video" aria-labelledby="ytTit">
+  <div class="miolo yt-grade">
+    <div>
+      <span class="yt-tag"><i aria-hidden="true"></i>Vídeo completo no YouTube</span>
+      <h2 id="ytTit">Direção sobre rodas com a Katraka</h2>
+      <p class="sub">28 minutos de oficina com o Alexandre, pra quem quer entender de verdade o próprio VW a ar.</p>
+      <div class="acoes">
+        <a class="btn" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true" fill="currentColor"><path d="M1 0l9 5-9 5z"/></svg>Assistir no YouTube</a>
+        <a class="lnk" data-wa="youtube" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
+      </div>
+    </div>
+    <a class="yt-capa" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener" aria-label="Assistir no YouTube o vídeo Direção sobre rodas com a Katraka, 28 minutos">
+      <img src="https://i.ytimg.com/vi/Yvma_5ttA9c/hqdefault.jpg" alt="Capa do vídeo da Katraka no YouTube" width="480" height="360" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/katraka-catraca-capa.jpg'">
+      <span class="yt-play" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg></span>
+      <span class="yt-nome" aria-hidden="true">Direção sobre rodas com a Katraka</span>
+      <span class="yt-dur" aria-hidden="true">28 min</span>
+    </a>
   </div>
 </section>
 
@@ -943,6 +991,7 @@ html.travado,html.travado body{overflow:hidden}
     visite: "Oi! Vim pelo site da Katraka e queria combinar um dia pra levar meu carro.",
     rodape: "Oi! Vim pelo site da Katraka e queria marcar uma revisão no meu VW a ar.",
     video: "Oi! Vi o vídeo da catraca no site da Katraka e queria um orçamento pra rebaixar meu VW a ar.",
+    youtube: "Oi! Vi o vídeo da Katraka no YouTube e queria um orçamento pro meu VW a ar.",
     flutuante: "Oi! Vim pelo site da Katraka e queria um orçamento."
   };
   var wa = function(t){ return "https://wa.me/" + WHATS + "?text=" + encodeURIComponent(t); };
