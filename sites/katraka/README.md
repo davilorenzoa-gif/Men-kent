@@ -30,7 +30,7 @@ Tudo veio de pesquisa pública (site katraka.com.br, Facebook, Instagram @katrak
 - [ ] **Nota do Google:** usei 5,0 com 17 avaliações (veio do diretório Locais do Brasil, não do Maps direto). Conferir no Maps e corrigir no texto e no JSON-LD (`aggregateRating`). Se não bater, tirar.
 - [ ] **Avaliações com nome:** a seção mostra só a nota. Copiar 2 ou 3 avaliações reais do Maps (com o nome de quem escreveu) no array `AVALIACOES` do JS que elas aparecem sozinhas.
 - [ ] **Motor e escapamento:** uma matéria diz que a oficina faz; o site oficial lista só suspensão, freio e afins. Se não fizer, tirar a parte "Motor e escapamento" do raio-x.
-- [ ] **"Mais de mil carros"** e **"desde 1995":** do site oficial deles. Conferir.
+- [ ] **"Mais de mil carros"** e **"desde 2010":** do site oficial deles. Conferir.
 - [ ] **Coordenadas (geo) do JSON-LD:** não coloquei pra não chutar. Pegar no Maps e adicionar.
 - [ ] **Logo:** usei o nome em texto. Se tiver logo, trocar no topo.
 - [ ] **Emblema da VW na introdução:** é marca registrada da Volkswagen. Coloquei no rodapé que a Katraka é oficina independente, sem vínculo com a montadora. Se o Alexandre preferir não usar o emblema, dá pra trocar a introdução pelo logo dele.
@@ -61,3 +61,9 @@ Seção logo depois do "quem somos" + atalho no menu ("Vídeo") e na abertura. L
 
 ## Simulador com 5 carros
 Abas Fusca, Kombi, Variant, Brasília e SP2 no "Gire a katraka". Fotos que o Davi mandou (padrão), ampliadas 4x com EDSR (as da Variant e Brasília eram pequenas, ~250 px), recortadas em carroceria + 2 rodas e alinhadas pelo entre-eixos: `img/carro-<modelo>-corpo.webp`, `-roda-d.webp`, `-roda-t.webp`. A Kombi veio da foto separada (a da grade estava de lado). Marcadas como "Imagem ilustrativa".
+
+## Alterações pedidas pelo Alexandre (09/11)
+- Logo dele no lugar do nome KATRAKA embaixo do Fusca, na abertura.
+- Desde 2010 (não 1995, como dizia o site antigo). Já apareceu na Band, no programa Direção sobre Rodas (é o vídeo do YouTube).
+- Serviços: suspensão dianteira e traseira, freio, direção, katraka, mangas deslocadas, encurtamento do quadro, furação de discos e tambores, alinhamento de direção. Saíram pneus e rodas, cambagem, balanceamento e motor/escapamento. Sem a palavra "batente".
+- Agendamento obrigatório (FAQ).

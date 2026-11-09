@@ -45,7 +45,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Andamento:** pediu prévia em 19/10 e a prévia foi enviada. Pediram "cara de 10k".
 
 ## Katraka Especializada VW Aircooled, Tatuapé, São Paulo (Zona Leste) · lead do Davi
-- **Dados (pesquisa pública, confirmar):** oficina especializada em Fusca e derivados (Brasília, Kombi, Variant), desde 1995.
+- **Dados (pesquisa pública, confirmar):** oficina especializada em Fusca e derivados (Brasília, Kombi, Variant, SP2), desde 2010 (o site antigo dizia 1995; o Alexandre corrigiu). Já apareceu na Band (Direção sobre Rodas).
   - Endereço: Rua Serra de Bragança, 810.
   - Fixo: (11) 3539-2100. Celular (usado como WhatsApp, confirmar): (11) 94745-6663.
   - Instagram: @katrakavw. Facebook: katrakavws.
