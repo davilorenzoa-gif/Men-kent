@@ -1169,7 +1169,9 @@ html.travado,html.travado body{overflow:hidden}
 
   /* ---------- introdução: o emblema se monta, o nome aparece e o emblema vira a calota da roda ---------- */
   var intro = $("#intro");
-  var temIntro = !!intro && !embed && !location.hash && (window.scrollY || window.pageYOffset || 0) < 40;
+  // a introdução aparece sempre que a página abre; fora do topo (link de seção ou rolagem guardada) ela termina com um fade
+  var temIntro = !!intro && !embed;
+  var noTopo = function(){ return !location.hash && (window.scrollY || window.pageYOffset || 0) < 40; };
   if (!temIntro){ if (intro) intro.parentNode.removeChild(intro); heroComeca(650); }
   else {
     raiz.classList.add("travado");
@@ -1193,10 +1195,11 @@ html.travado,html.travado body{overflow:hidden}
       setTimeout(function(){
         raiz.classList.remove("travado");
         if (intro.parentNode) intro.parentNode.removeChild(intro);
+        if (location.hash){ var alvo = document.getElementById(location.hash.slice(1)); if (alvo) alvo.scrollIntoView(); }
         heroComeca(rapido ? 300 : 120);
       }, rapido ? 320 : 800);
     };
-    setTimeout(function(){ fimIntro(false); }, reduz ? 1300 : 2250);
+    setTimeout(function(){ fimIntro(!noTopo()); }, reduz ? 1300 : 2250);
     var pula = function(){ fimIntro(true); };
     $("#inPula").addEventListener("click", pula);
     ["keydown", "wheel", "touchmove"].forEach(function(ev){ window.addEventListener(ev, pula, { once: true, passive: true }); });
