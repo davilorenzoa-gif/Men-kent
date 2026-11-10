@@ -69,6 +69,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Atenção:** eles **já têm site** em WordPress (ferroeacoandrade.com.br, de 2025/2026). O argumento é o pedido de armação que vai pronto pro WhatsApp, não "ter um site".
 - **Andamento:** em 22/10 montamos o site em `sites/andrade-ferro-e-aco/`. O Davi vai mostrar e trazer o retorno.
 - **Falta:** avaliações reais do Google, geo do Maps e permissão pra usar as fotos e o vídeo do Instagram.
+- **Preço (10/11):** o Davi está tentando um valor mais alto que a referência de R$ 800, porque o projeto é maior. R$ 1.200 foi uma ideia, nada fechado.
 - **Aba "Nossa história"** (pedido do Davi em 22/10): texto emocional feito só com dados reais (1989, +35 anos, +95 mil projetos entregues, confirmado pelo Davi em 22/10). Termina com a frase do Davi: "Há décadas estruturando sonhos." Se o padrinho contar como o depósito começou (quem fundou, o primeiro galpão), dá pra enriquecer.
 - **Minigame "Corte na medida"** (pedido do Davi em 22/10): 100 pontos dão 5% de desconto, só 1 vez por compra. **O padrinho precisa aprovar os 5%** e o atendente controla o uso do código no WhatsApp (o site não valida).
 
@@ -99,7 +100,10 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - Dono: Alexandre, o "Katraka". Nota 5,0 com 490 avaliações no Google (número passado pelo Alexandre em 09/11; nota no site: 4,9, confirmar o valor exato no Google).
   - Serviços (site oficial): suspensão, katraka (catraca pra rebaixar), regulagem de facão, encurtamento de quadro, freios, furação de discos e tambores, alinhamento, balanceamento, cambagem, pneus e rodas. Direção (Instagram).
   - Já saiu no Canal da Peça (como rebaixar um Fusca) e no blog Acelerada.
-- **Andamento:** o Davi acha que fecha. Prévia feita em 06/11 em `sites/katraka/` (ver o README de lá com o que confirmar).
+- **Andamento:** prévia feita em 06/11 em `sites/katraka/` (ver o README de lá com o que confirmar).
+- **Preço (07/11, confirmado pelo Davi em 10/11):** o Alexandre pediu desconto e, por ser a 1ª venda, Gu e Davi aceitaram **R$ 600 em 2x de R$ 300** (metade pra começar, metade no ar), com domínio no nome dele e oferta do plano de R$ 60.
+- **10/11:** ainda não pagou. Vai pedir uma segunda opinião antes, mas o Davi acredita forte que ele paga em 11/11, pela quantidade de alterações que já pediu.
+- **Pendente:** confirmar se ele já pagou a 1ª parcela. Quando pagar, vira o **1º cliente da GuDev**: atualizar o resumo do `CLAUDE.md` e, com autorização dele, a seção de cases.
 - **Pedidos dele (09/11):** quer poder mostrar os trabalhos todo dia → seção ligada no Instagram dele (Behold), sem custo extra por ser prévia. Não gostou do verde → site trocado pra laranja queimado. Prints estáticos enviados pra ele ler.
 - **Domínio:** já existe `katraka.com.br`; confirmar se é dele antes de registrar outro.
 - **Site:** Fusca desenhado em SVG que baixa dente por dente em cima do nome; interruptor do farol com foto; raio-x do Fusca; simulador "Gire a katraka"; ordem de serviço com carimbo. Fotos são conceito (do Davi), marcadas como ilustrativas.
@@ -108,10 +112,6 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Dados (conferir no Maps):** hamburgueria. Rua Rio Javari, 43, Nossa Senhora das Graças (Vieiralves). WhatsApp (92) 99213-6850. 4,7 no Google com 577 avaliações (via Wanderlog). Terça a domingo, 17h45 às 00h.
 - **Site:** `sites/malibu-vieiralves/` (burger que desmonta, rota pela costa, prancha de pedido). Fotos do catálogo do WhatsApp (300px): mandar pro Gu melhorar.
 - **Falta:** confirmar endereço, WhatsApp e cardápio.
-
-## Cliente sem nome (mensagem de 07/11/2026)
-- O Davi pediu uma mensagem oferecendo **R$ 600 em 2x de R$ 300**, com domínio no nome do cliente e plano de R$ 60. Pelo print não deu pra saber quem era.
-- **Pendente:** dizer qual cliente é e confirmar com o Gu se R$ 600 virou preço oficial.
 
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.

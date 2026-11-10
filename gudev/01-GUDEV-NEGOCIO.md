@@ -3,7 +3,7 @@
 ## Quem somos
 - **GuDev** cria sites para comércios locais. O slogan é **"Sites que vendem."**
 - **Cores da marca:** laranja, branco e preto. O hex do laranja ainda não foi confirmado (o site usa `#FF5B0A` por enquanto).
-- **Site da GuDev:** duas versões. `sites/gudev/` é a página de venda (05/11, a mais nova). `gudev/site/` é o site multipágina com os conceitos Vértice (29/10); `sites/gudev-site/` é uma cópia dele salva do artifact em 06/11. Antes de subir, confirmar com o Gu qual vai pro ar.
+- **Site da GuDev (decidido em 10/11/2026):** o que vai pro ar é a **página de venda** em `sites/gudev/`. O multipágina (`gudev/site/`, cópia em `sites/gudev-site/`) fica guardado como arquivo, não sobe. Antes de subir, trocar o preço antigo (R$ 297) pela regra nova.
 - **Gustavo (Gu)**, 17 anos, da Zona Leste de SP, constrói os sites e as propostas no PC. Ele tem as ferramentas: gerador de proposta, testes, melhoria de foto em 4K e Netlify.
 - **Davi**, sócio, cuida de vendas e prospecção. Usa o Claude pelo celular.
 - **O WhatsApp comercial da GuDev é o do Davi: (11) 96465-0141.** É o número que aparece nas propostas.
@@ -11,7 +11,11 @@
 - **Plano:** ano que vem, com 18 anos, abrir CNPJ (MEI). O irmão mais novo do Gu, que vai ter 15, entra pra ajudar.
 
 ## A oferta
-- **Site "Essencial"**, de **R$ 500**, sai por **R$ 297 pros 3 primeiros clientes**. É o preço de lançamento e as vagas são reais.
+- **Preço (atualizado em 10/11/2026):** não tem mais tabela fixa. Gu e Davi decidiram cobrar mais caro e negociar caso a caso.
+  - **Referência: R$ 800** por site. É a margem que eles estão usando.
+  - Desconto só com motivo. Exemplo: a 1ª venda (Katraka) saiu a **R$ 600 em 2x de R$ 300**, porque o cliente pediu desconto e era a primeira.
+  - Cliente maior pode pagar mais. O Davi está negociando um valor mais alto com o padrinho (Andrade Ferro e Aço); **R$ 1.200** foi uma ideia, nada fechado.
+  - O antigo "R$ 500 → R$ 297 pros 3 primeiros" **acabou**. Não usar em mensagem nova.
 - **O que vem no site:**
   - uma página única, feita do zero com a cara do negócio;
   - cardápio ou serviços com preço;
@@ -27,10 +31,7 @@
   - **Inclui:** hospedagem, manter o site no ar e até umas 4 alterações por mês (trocar preço, foto, horário, texto, link, sabor, banner de promoção).
   - **Não inclui:** coisa grande, como página ou seção nova, refazer o design ou página de franquia. Isso é orçado à parte.
   - **Antes do pagamento:** os ajustes que o cliente pede na prévia fazem parte da entrega. Não cobra.
-- **Preços fora da tabela que já apareceram (não são oficiais até o Gu confirmar):**
-  - Andrade Ferro e Aço (padrinho do Davi, 22/10): roteiro de conversa com **R$ 1.200**, metade na entrada.
-  - Cliente sem nome (07/11): mensagem com **R$ 600 em 2x de R$ 300**.
-  - Se algum desses virar regra, atualizar aqui e no resumo do `CLAUDE.md`.
+- **Ainda com o preço antigo (R$ 297), pro Gu trocar:** o site da GuDev (`sites/gudev/`: descrição, schema, adesivo, cartaz, cupom e FAQ) e o gerador de proposta dele.
 
 ## Hospedagem e domínio
 - O site fica hospedado no **Netlify da GuDev**. A prévia/proposta vai em `proposta-<nome>.netlify.app` e o site final em `<nome>.netlify.app`.
