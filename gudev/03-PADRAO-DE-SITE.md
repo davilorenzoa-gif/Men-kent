@@ -81,6 +81,9 @@ Depois pergunte: **"isso ficaria igual pra qualquer pizzaria ou salão?"** Se fi
   - Salão: Cormorant Garamond + Jost.
   - Açaí: Fredoka + Pacifico.
 - **Evitar Anton + Inter genérico.** O Gu odiou um teste assim.
+- **Estilos que o Davi curtiu (10/11):** gótica (Fraktur) e serifa em negrito itálico. Usar a fonte de verdade, nunca as letras "estilizadas" copiadas de gerador (𝔉𝔯𝔞𝔨𝔱𝔲𝔯, 𝑩𝒐𝒍𝒅): elas não têm acento nem ç, o Google não lê e o leitor de tela do celular soletra.
+  - Gótica: UnifrakturMaguntia ou UnifrakturCook (Google Fonts). Só em título curto ou logo: tatuagem, barbearia, hamburgueria, rock, cerveja artesanal.
+  - Serifa negrito itálico: Playfair Display 700 itálico, DM Serif Display itálico ou Fraunces itálico. Fica bem em restaurante, doceria, salão.
 - Cuidado com fontes cujo acento fica estranho em tamanho gigante. No Cormorant, o "ê" de "você" parece bug. Se acontecer, troque a palavra.
 - A paleta sai da fachada, do logo e das fotos. Uma cor domina, e o acento vem da marca.
 
