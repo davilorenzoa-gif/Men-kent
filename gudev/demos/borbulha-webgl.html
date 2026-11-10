@@ -102,7 +102,9 @@ in vec2 vUv;out vec4 o;
 uniform sampler2D uTA,uTB,uCol,uNrm;
 uniform float uYA,uYB,uNivel,uT,uAsp,uRaio,uInclina,uEspuma,uJato;
 uniform vec2 uCentro;
-uniform vec3 uCima,uBaixo,uCima0,uBaixo0,uToque;
+uniform vec3 uCima,uBaixo,uCima0,uBaixo0;
+uniform vec4 uOndas[6]; /* x, y, idade, força: toques e rastro do dedo */
+uniform vec3 uDedo;    /* x, y, força: o dedo afunda a superfície onde está */
 uniform float uW[64];
 const vec3 PAPEL=vec3(.933,.949,.910),TINTA=vec3(.063,.082,.067);
 float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
@@ -124,6 +126,17 @@ float espuma(vec2 uv,float d,float alt){ /* bolinhas de espuma em 2 tamanhos */
   float r2=.2+hash(i2+7.)*.25,b2=smoothstep(r2,r2-.06,length(f2))-smoothstep(r2-.08,r2-.14,length(f2));
   return m*(.82+.18*(1.-max(b,b2)));
 }
+float relevo(vec2 uv){
+  float h=0.;
+  for(int i=0;i<6;i++){
+    vec4 w=uOndas[i];if(w.w<=0.)continue;
+    float rr=length((uv-w.xy)*vec2(uAsp,1.)),fr=w.z*.42;
+    h+=sin((rr-fr)*48.)*exp(-abs(rr-fr)*9.)*exp(-w.z*1.6)*w.w*smoothstep(0.,.08,w.z+.02);
+  }
+  vec2 a=(uv-uDedo.xy)*vec2(uAsp,1.);
+  h-=exp(-dot(a,a)*140.)*uDedo.z*1.6;
+  return h*.05;
+}
 void main(){
   vec2 uv=vUv;
   float sup=1.-uNivel+onda(uv.x)+uInclina*(uv.x-.5);
@@ -133,10 +146,10 @@ void main(){
   float xj=.5+sin(uv.y*8.+uT*5.)*.004,lj=uJato*(.014+.004*sin(uv.y*28.-uT*16.));
   float jato=(uJato>.01&&uv.y<sup)?smoothstep(lj,lj*.5,abs(uv.x-xj)):0.;
   float liq=max(dentro,jato);
-  /* anel do toque */
-  vec2 a=(uv-uToque.xy)*vec2(uAsp,1.);float rr=length(a),fr0=uToque.z*.6;
-  float anel=sin((rr-fr0)*64.)*exp(-abs(rr-fr0)*12.)*exp(-uToque.z*1.4);
-  vec2 off=(rr>.0001?a/rr:vec2(0.))*anel*.028;
+  /* relevo da tela inteira (papel e água): anéis dos toques + covinha do dedo */
+  vec2 ep=vec2(.0025,0.);
+  vec2 g=vec2(relevo(uv+ep.xy)-relevo(uv-ep.xy),relevo(uv+ep.yx)-relevo(uv-ep.yx))/(2.*ep.x);
+  vec2 off=g*.006;
   vec4 n=texture(uNrm,uv);
   if(liq>.01){
     off+=vec2(sin(uv.y*15.+uT*1.4+sin(uv.x*7.+uT)),cos(uv.x*13.-uT*1.1+sin(uv.y*5.)))*.007*liq;
@@ -149,7 +162,11 @@ void main(){
   vec3 seco=PAPEL*(1.-.05*length((uv-.5)*vec2(1.,1.2)));
   seco=mix(seco,mix(uBaixo,uCima,.5),.1*exp(min(d,0.)*36.));
   seco=mix(seco,c.rgb,c.a);
-  seco=mix(seco,TINTA,txt(uv));
+  seco=mix(seco,TINTA,vec3(tR,tG,tB));
+  /* luz e sombra do relevo no papel: parece uma lâmina macia */
+  float luzP=clamp(dot(g,normalize(vec2(-.55,-.85)))*.9,-1.,1.);
+  seco*=1.+luzP*.11;
+  seco+=vec3(1.)*pow(max(luzP,0.),3.)*.14;
   /* dentro: cor do sabor com a troca espalhando em círculo */
   vec2 q=(uv-uCentro)*vec2(uAsp,1.);
   float rd=length(q)+sin(atan(q.y,q.x)*7.+uT*2.6)*.025,frente=smoothstep(uRaio-.02,uRaio+.012,rd);
@@ -176,7 +193,7 @@ if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){R.classList.add("semgl");return;}
 gl.useProgram(pr);
 const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
 const la=gl.getAttribLocation(pr,"a");gl.enableVertexAttribArray(la);gl.vertexAttribPointer(la,2,gl.FLOAT,false,0,0);
-const u={};["uTA","uTB","uCol","uNrm","uYA","uYB","uNivel","uT","uAsp","uRaio","uInclina","uEspuma","uJato","uCentro","uCima","uBaixo","uCima0","uBaixo0","uToque","uW"].forEach(k=>u[k]=gl.getUniformLocation(pr,k));
+const u={};["uTA","uTB","uCol","uNrm","uYA","uYB","uNivel","uT","uAsp","uRaio","uInclina","uEspuma","uJato","uCentro","uCima","uBaixo","uCima0","uBaixo0","uOndas","uDedo","uW"].forEach(k=>u[k]=gl.getUniformLocation(pr,k));
 function tex(){const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);[[gl.TEXTURE_MIN_FILTER,gl.LINEAR],[gl.TEXTURE_MAG_FILTER,gl.LINEAR],[gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE],[gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE]].forEach(([k,v])=>gl.texParameteri(gl.TEXTURE_2D,k,v));gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));return t;}
 
 /* ---------------- cenas (títulos como textura) ---------------- */
@@ -252,7 +269,7 @@ const ESPUMA=[[0,0],[.2,.018],[.215,.018],[.27,.13],[.32,.13],[.39,.022],[.84,.0
 const FRUTAS=[{x:.18,r:.11,g:.5},{x:.78,r:.13,g:-.4},{x:.5,r:.08,g:.9},{x:.9,r:.09,g:-.7},{x:.33,r:.1,g:.2}];
 
 const falas=[...D.querySelectorAll(".fala")].map(e=>({e,a:+e.dataset.de,b:+e.dataset.ate}));
-let sabor=0,saborAntes=0,tRaio=99,centro=[.5,.5],toqueV=[.5,.45,9],p=0,pAnt=0,ini=null,ult=0,acum=0,pxAnt=null,jatoV=0,inclina=0,alvoInclina=0,giro=null,pedido=false;
+let sabor=0,saborAntes=0,tRaio=99,centro=[.5,.5],ondas=new Float32Array(24),proxOnda=0,dedo=[.5,.5,0],dedoAlvo=0,rastro=null,p=0,pAnt=0,ini=null,ult=0,acum=0,pxAnt=null,jatoV=0,inclina=0,alvoInclina=0,giro=null,pedido=false;
 function trocaSabor(i,x,y){if(i===sabor)return;saborAntes=sabor;sabor=i;tRaio=0;centro=[x,y];
   D.querySelectorAll(".sabores button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.s===i)));empurra(x,.012,8);}
 D.querySelectorAll(".sabores button").forEach(b=>b.addEventListener("click",()=>{const r=b.getBoundingClientRect();trocaSabor(+b.dataset.s,(r.left+r.width/2)/innerWidth,(r.top+r.height/2)/innerHeight);}));
@@ -264,10 +281,18 @@ function pedeGiro(){if(pedido)return;pedido=true;
   const liga=()=>addEventListener("deviceorientation",e=>{if(e.gamma!=null)giro=clamp(e.gamma/40,-1,1);});
   if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==="function")DeviceOrientationEvent.requestPermission().then(r=>{if(r==="granted")liga();}).catch(()=>{});
   else liga();}
-addEventListener("pointerdown",e=>{const x=e.clientX/innerWidth,y=e.clientY/innerHeight;toqueV=[x,y,0];empurra(x,-.012,5);
+addEventListener("pointerdown",e=>{const x=e.clientX/innerWidth,y=e.clientY/innerHeight;onda(x,y,1);dedo[0]=x;dedo[1]=y;dedoAlvo=1;empurra(x,-.012,5);
   for(let i=0;i<8;i++){const b=bolhas[i*8];b.x=x+(Math.random()-.5)*.1;b.y=y+Math.random()*.06;}
   if(pesoInclina()>.5)pedeGiro();},{passive:true});
-addEventListener("pointermove",e=>{const x=e.clientX/innerWidth;
+function onda(x,y,f){const k=proxOnda*4;ondas[k]=x;ondas[k+1]=y;ondas[k+2]=0;ondas[k+3]=f;proxOnda=(proxOnda+1)%6;rastro=[x,y];}
+addEventListener("pointerup",()=>{dedoAlvo=0;},{passive:true});
+addEventListener("pointercancel",()=>{dedoAlvo=0;},{passive:true});
+addEventListener("pointermove",e=>{const x=e.clientX/innerWidth,y=e.clientY/innerHeight;
+  if(!calmo){
+    const vel=pxAnt===null?0:Math.abs(e.clientX-pxAnt)/innerWidth;
+    dedo[0]=x;dedo[1]=y;dedoAlvo=Math.max(e.buttons||e.pointerType==="touch"?1:.45,dedoAlvo);
+    if(!rastro||Math.hypot((x-rastro[0])*innerWidth/innerHeight,y-rastro[1])>.09)onda(x,y,.35+Math.min(vel*20,.4));
+  }
   if(pxAnt!==null&&!calmo){const dx=(e.clientX-pxAnt)/innerWidth;empurra(x,clamp(dx*.3,-.014,.014),6);}
   pxAnt=e.clientX;if(giro===null)alvoInclina=(x-.5)*2;},{passive:true});
 
@@ -312,7 +337,8 @@ function quadro(ts){
   pAnt=p;
   acum+=dt;let lim=0;while(acum>1/60&&lim++<3){passo();acum-=1/60;}
   camadas(nivel,t,1-nivel);
-  toqueV[2]+=dt;tRaio+=dt;
+  for(let k=0;k<6;k++)ondas[k*4+2]+=dt;tRaio+=dt;
+  dedo[2]+=(dedoAlvo-dedo[2])*.15;dedoAlvo*=.94;
   const vis=CENAS.map((c,i)=>({i,...posCena(c)})).filter(c=>c.vis),A=vis[0]||{i:0,y:-3},B=vis[1]||{i:0,y:-3};
   gl.useProgram(pr);
   gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,texCena[A.i]);gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,texCena[B.i]);
@@ -322,7 +348,7 @@ function quadro(ts){
   gl.uniform1f(u.uInclina,inclina);gl.uniform1f(u.uEspuma,ESPUMA_atual*Math.min(1,nivel*4));gl.uniform1f(u.uJato,calmo?0:jatoV);
   const cor=(i,k)=>hex(SABOR[i][k]);
   gl.uniform3fv(u.uCima,cor(sabor,"cima"));gl.uniform3fv(u.uBaixo,cor(sabor,"baixo"));gl.uniform3fv(u.uCima0,cor(saborAntes,"cima"));gl.uniform3fv(u.uBaixo0,cor(saborAntes,"baixo"));
-  gl.uniform3fv(u.uToque,toqueV);gl.uniform1fv(u.uW,h);
+  gl.uniform4fv(u.uOndas,ondas);gl.uniform3fv(u.uDedo,dedo);gl.uniform1fv(u.uW,h);
   gl.drawArrays(gl.TRIANGLES,0,3);
   falas.forEach(f=>f.e.classList.toggle("on",p>=f.a&&p<f.b));
 }
