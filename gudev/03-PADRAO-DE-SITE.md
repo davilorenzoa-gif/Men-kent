@@ -130,13 +130,19 @@ Já usados nesse cliente: pra outro, variar a ideia, não colar igual.
 ### Estudados nos vídeos Fervo e Madoska (10/11/2026, demos em `demos/`)
 O Davi mandou 2 vídeos de referência e pediu pra aprender a fazer igual. As demos são técnica com marca fictícia: pra cliente, trocar marca, texto e fotos, e variar a coreografia.
 
-**1. A página enche de líquido (Fervo, refrigerante). Demo: `demos/borbulha-liquido-rolagem.html`.**
+**1. A página enche de líquido (Fervo, água com gás). Site original da GuDev: `sites/fervo/index.html`. Versão simples (Canvas 2D) pra estudar: `demos/borbulha-liquido-rolagem.html`.**
 - O que acontece: um jato cai do topo e o líquido sobe com a rolagem. O título que fica embaixo do líquido vira cor clara, com borda RGB e meio torto. O dedo mexe a água. Bolhas sobem e rodelas de fruta boiam. Os botões de sabor trocam a cor do líquido. Numa seção, cai gelo. No fim, o líquido esvazia e o texto volta a ficar escuro.
 - O segredo: o texto existe **2 vezes**. A cópia escura fica embaixo do canvas. A cópia clara (`cloneNode`) fica em cima, recortada com `clip-path: polygon(...)` no formato da superfície. As duas rolam nativas, então nunca desalinham; só o recorte é refeito por quadro (em coordenadas da página: `scrollY + y da onda`).
 - Superfície = ondas fixas (3 senos) + mola de 72 pontos (o dedo dá "velocidade" no ponto mais perto). Nível = rolagem: enche na 1ª tela, esvazia quando a última seção entra.
 - Legenda, botões e CTA ficam com `z-index` acima do canvas e escondidos na cópia clara. O título fica embaixo.
 - Distorção: `feTurbulence` + `feDisplacementMap` **estático** só no computador. Animar a turbulência pesa.
 - Serve pra: bebida, açaí, sorvete, suco, cervejaria, lava-rápido (espuma), piscina.
+- **Como a Fervo de verdade faz (WebGL2, nível acima da demo):**
+  - Um shader só desenha tudo. Cada título gigante vira textura (fonte desenhada num canvas 2D); o shader pinta tinta acima da água e creme embaixo, com separação RGB (amostra a textura 3 vezes com deslocamentos diferentes) e ondulação.
+  - Bolhas e cubos de gelo são sprites de "normal": R e G = direção da refração, B = brilho. O shader desloca o fundo e as letras por eles, então o gelo parece vidro de verdade.
+  - Cáustica (luz no fundo) calculada no shader; troca de sabor é uma "inundação" de cor que se espalha em círculo a partir do botão tocado.
+  - Tudo sai de um progresso `p` (0 a 1) da página de 900svh: tabela de nível `[[0,.05],[.07,.05],[.3,.8],[.82,.8],[.955,0]]`, janelas de entrada/saída de cada cena, falas com `data-de`/`data-ate`. Fatia e gelo fazem "espirro" quando `p` passa pelo ponto deles.
+  - Sem WebGL2, cai pra texto normal (classe `semgl`).
 
 **2. A câmera passeia pela vitrine e a colher prova (Madoska, sorveteria). Demo: `demos/pingo-vitrine-provas.html`.**
 - O que acontece: o topo é a vitrine inteira vista de cima, com o lado do texto "lavado" de branco. Na rolagem, a câmera chega perto de uma cuba e uma colherzinha vermelha mergulha. Do lado, sai uma bola do sabor. Uma bandeirinha com o nome desce balançando, o título troca, aparece "2 de 9 provas" e os pontinhos do lado marcam onde você está.
