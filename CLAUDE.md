@@ -19,6 +19,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `gudev/10-REFERENCIA-ORIGINKIT.md`: biblioteca de efeitos originkit.dev (o que é grátis, licença, como converter)
 - `gudev/exemplos/*.html`: sites reais (Açaí Happy, Chersoni, Dellart), nível mínimo de qualidade
 - `gudev/efeitos/`, `gudev/demos/`, `gudev/aprendizados/`: efeitos testados, demos de técnica e páginas de estudo
+- `gudev/aprendizados/guia-motion-premium.md` + `fusca-lab/`: guia de motion (stack, 60fps, mola, magnético, cursor, scroll storytelling, Flip, 3D) com tudo funcionando no Fusca Lab. Ler antes de criar WOW.
 - `sites/<nome>/`: cada site de lead e cada conceito, com README do que falta confirmar
 
 ## Resumo rápido
