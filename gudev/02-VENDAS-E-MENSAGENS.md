@@ -60,7 +60,7 @@ Ou:
   - No PC, a prévia roda animada.
   - No celular, aparece como imagem, com o botão **"Ver o site animado"**, que abre o site numa gaveta dentro da própria proposta.
   - A prévia mostra só **50%** do site. Depois vem o cadeado "o resto libera quando você fechar" e os links não funcionam.
-- **Preço:** R$ 500 riscado → **R$ 297**, "3 primeiros clientes". Depois, a oferta do plano mensal.
+- **Preço:** o valor combinado com o cliente (referência R$ 800, ver `01`). Nada de "de/por" nem "vagas limitadas" inventadas. Depois, a oferta do plano mensal.
 - **Fechamento:** o botão leva pro WhatsApp. O Pix é combinado no chat.
 
 ## Lead quente que sumiu (pediu prévia, falou com o "chefe", marcou de pagar e não voltou)
@@ -68,9 +68,9 @@ Ou:
 1. **Na hora:**
    > Oi! Tudo certo por aí? Imagino que a semana tá corrida. Só pra não deixar parado: o site da {nome} tá pronto pra ir pro ar, já com os ajustes que você pediu. Quando você e seu sócio conseguirem ver, me dá um toque que eu resolvo tudo no mesmo dia 👍
 2. **3 dias depois:**
-   > Oi! Passando rapidinho: o valor de R$ 297 é das 3 primeiras vagas de lançamento, e já estamos fechando com outros comércios. Consigo segurar a sua até sexta. Se preferir, dá pra fazer metade agora e metade quando o site estiver no ar. O que fica melhor pra vocês?
+   > Oi! Passando rapidinho: se o valor tiver pesado, dá pra fazer metade agora e metade quando o site estiver no ar. Consigo manter essa condição até sexta. O que fica melhor pra vocês?
 
-   Só use se for verdade que vai segurar a vaga.
+   Só prometa o prazo se for verdade.
 3. **1 semana depois:**
    > Oi! Vou deixar o projeto da {nome} guardado aqui. Se quiser retomar, é só me chamar que coloco no ar rapidinho. Sucesso aí!
 
@@ -79,7 +79,7 @@ Depois disso, para. Correr atrás demais derruba o preço.
 ## Objeções comuns
 - **"Já tenho Instagram."** O Instagram não aparece bem no Google e não mostra cardápio com preço organizado. O site é a vitrine que recebe quem vem do Google e manda pro WhatsApp.
 - **"Já tenho iFood."** O iFood fica com uma parte de cada pedido. Pelo site, o pedido chega direto no WhatsApp, sem taxa. Dá pra manter o iFood também e pôr os botões dos apps no site.
-- **"Tá caro."** São R$ 297 uma vez, nos 3 primeiros. Se trouxer 2 ou 3 pedidos a mais, já se pagou. Dá pra fazer 50% agora e 50% quando estiver no ar.
+- **"Tá caro."** É um pagamento só, e o site é dele pra sempre (o domínio fica no nome dele). Se trouxer uns poucos pedidos a mais por mês, já se pagou. Dá pra fazer 50% agora e 50% quando estiver no ar. Se ainda travar, desconto só com motivo (ver `01`).
 - **"Vou ver com meu sócio."** Ótimo! Mande o link da prévia pra ele. Fico no aguardo, e qualquer dúvida dele eu respondo.
 
 ## Venda perdida

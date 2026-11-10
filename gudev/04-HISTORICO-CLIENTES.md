@@ -69,6 +69,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Atenção:** eles **já têm site** em WordPress (ferroeacoandrade.com.br, de 2025/2026). O argumento é o pedido de armação que vai pronto pro WhatsApp, não "ter um site".
 - **Andamento:** em 22/10 montamos o site em `sites/andrade-ferro-e-aco/`. O Davi vai mostrar e trazer o retorno.
 - **Falta:** avaliações reais do Google, geo do Maps e permissão pra usar as fotos e o vídeo do Instagram.
+- **Preço (10/11):** o Davi está tentando um valor mais alto que a referência de R$ 800, porque o projeto é maior. R$ 1.200 foi uma ideia, nada fechado.
 - **Aba "Nossa história"** (pedido do Davi em 22/10): texto emocional feito só com dados reais (1989, +35 anos, +95 mil projetos entregues, confirmado pelo Davi em 22/10). Termina com a frase do Davi: "Há décadas estruturando sonhos." Se o padrinho contar como o depósito começou (quem fundou, o primeiro galpão), dá pra enriquecer.
 - **Minigame "Corte na medida"** (pedido do Davi em 22/10): 100 pontos dão 5% de desconto, só 1 vez por compra. **O padrinho precisa aprovar os 5%** e o atendente controla o uso do código no WhatsApp (o site não valida).
 
@@ -109,9 +110,9 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Site:** `sites/malibu-vieiralves/` (burger que desmonta, rota pela costa, prancha de pedido). Fotos do catálogo do WhatsApp (300px): mandar pro Gu melhorar.
 - **Falta:** confirmar endereço, WhatsApp e cardápio.
 
-## Cliente sem nome (mensagem de 07/11/2026)
-- O Davi pediu uma mensagem oferecendo **R$ 600 em 2x de R$ 300**, com domínio no nome do cliente e plano de R$ 60. Pelo print não deu pra saber quem era.
-- **Pendente:** dizer qual cliente é e confirmar com o Gu se R$ 600 virou preço oficial.
+## Cliente da 1ª venda, nome a confirmar (mensagem de 07/11/2026)
+- Ele pediu desconto e, por ser a primeira venda, Gu e Davi aceitaram **R$ 600 em 2x de R$ 300**, com domínio no nome dele e plano de R$ 60 (confirmado pelo Davi em 10/11).
+- **Pendente:** o nome do cliente (pelo print não deu pra saber) e se já pagou. Quando fechar, atualizar aqui e no resumo do `CLAUDE.md`.
 
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.

@@ -22,7 +22,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `sites/<nome>/`: cada site de lead e cada conceito, com README do que falta confirmar
 
 ## Resumo rápido
-- Site Essencial: R$ 500 → **R$ 297 pros 3 primeiros clientes**. Pix 50% pra começar, 50% no ar. Divisão 50/50 Gu/Davi. Já apareceram propostas de R$ 1.200 (padrinho) e R$ 600 em 2x: não são oficiais até o Gu confirmar (ver `01`).
+- Preço: sem tabela fixa, **referência R$ 800** por site, negociado caso a caso (desde 10/11/2026). Desconto só com motivo: a 1ª venda saiu a R$ 600 em 2x. O padrinho (Andrade) pode pagar mais; nada fechado. O antigo "R$ 297 pros 3 primeiros" acabou. Pix 50% pra começar, 50% no ar. Divisão 50/50 Gu/Davi. Detalhes em `01`.
 - Plano mensal opcional **R$ 60**: hospedagem + até ~4 alterações pequenas/mês. Coisa grande é orçada à parte.
 - WhatsApp comercial (Davi): (11) 96465-0141. Venda 100% pelo WhatsApp.
 - Hospedagem no Netlify da GuDev (`proposta-<nome>.netlify.app` → `<nome>.netlify.app`); domínio no nome do cliente no registro.br.
