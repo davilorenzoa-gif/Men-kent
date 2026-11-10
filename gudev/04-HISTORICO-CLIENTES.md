@@ -1,6 +1,4 @@
-# Histórico de leads e clientes (atualizado em 27/10/2026)
-# Histórico de leads e clientes (atualizado em 01/11/2026)
-# Histórico de leads e clientes (atualizado em 06/11/2026)
+# Histórico de leads e clientes (atualizado em 10/11/2026)
 
 Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o primeiro fechar, ele entra lá.
 
@@ -73,6 +71,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Falta:** avaliações reais do Google, geo do Maps e permissão pra usar as fotos e o vídeo do Instagram.
 - **Aba "Nossa história"** (pedido do Davi em 22/10): texto emocional feito só com dados reais (1989, +35 anos, +95 mil projetos entregues, confirmado pelo Davi em 22/10). Termina com a frase do Davi: "Há décadas estruturando sonhos." Se o padrinho contar como o depósito começou (quem fundou, o primeiro galpão), dá pra enriquecer.
 - **Minigame "Corte na medida"** (pedido do Davi em 22/10): 100 pontos dão 5% de desconto, só 1 vez por compra. **O padrinho precisa aprovar os 5%** e o atendente controla o uso do código no WhatsApp (o site não valida).
+
 ## Santo Mimo By Hanna, Vila Matilde, São Paulo (Zona Leste) · lead do Davi
 - **Dados:** cafeteria, $$ no Google. Nota 4,9 no Google segundo o Restaurant Guru (**conferir no Maps**).
   - Endereço: Rua José Mascarenhas, 1063, CEP 03515-000.
@@ -84,12 +83,14 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Site (27/10/2026):** `sites/santo-mimo/`. Caixinha que se abre, zoom-out da xícara pra vitrine, "Mande um mimo".
   - Fotos de produto ainda são ilustrativas (Pexels). Pedir as fotos da casa pra trocar (lista no README do site).
 - **Andamento:** prévia pronta, ainda não enviada.
+
 ## Sorvetes Nonna Lina, RJ (DDD 21) · lead do Davi (04/11/2026)
 - **Dados:** WhatsApp comercial verificado +55 21 98654-6556 (wa.me/nonnalina), "responde rapidamente".
   - Gelato italiano. Terça 12h às 19h30 (os outros dias ainda não sabemos).
   - Catálogo no WhatsApp: 12 gelatos especiais, base água (zero lactose, sem glúten, veganos), picolés, potes de 500 ml, tortas de sorvete (1 L, 1,8 L, 2,5 L) e casquinhas artesanais.
   - Não achamos Instagram, Maps nem avaliações na internet. Falta endereço.
 - **Site:** `sites/nonna-lina/`. Plano-sequência da casquinha (estilo Meridiano), vitrine embaçada, oficina de tortas, jogo Torre da Nonna.
+
 ## Katraka Especializada VW Aircooled, Tatuapé, São Paulo (Zona Leste) · lead do Davi
 - **Dados (pesquisa pública, confirmar):** oficina especializada em Fusca e derivados (Brasília, Kombi, Variant, SP2), desde 2010 (o site antigo dizia 1995; o Alexandre corrigiu). Já apareceu na Band (Direção sobre Rodas).
   - Endereço: Rua Serra de Bragança, 810.
@@ -103,6 +104,15 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Domínio:** já existe `katraka.com.br`; confirmar se é dele antes de registrar outro.
 - **Site:** Fusca desenhado em SVG que baixa dente por dente em cima do nome; interruptor do farol com foto; raio-x do Fusca; simulador "Gire a katraka"; ordem de serviço com carimbo. Fotos são conceito (do Davi), marcadas como ilustrativas.
 
+## Malibu Vieiralves, Manaus-AM · lead do Davi (28/10/2026)
+- **Dados (conferir no Maps):** hamburgueria. Rua Rio Javari, 43, Nossa Senhora das Graças (Vieiralves). WhatsApp (92) 99213-6850. 4,7 no Google com 577 avaliações (via Wanderlog). Terça a domingo, 17h45 às 00h.
+- **Site:** `sites/malibu-vieiralves/` (burger que desmonta, rota pela costa, prancha de pedido). Fotos do catálogo do WhatsApp (300px): mandar pro Gu melhorar.
+- **Falta:** confirmar endereço, WhatsApp e cardápio.
+
+## Cliente sem nome (mensagem de 07/11/2026)
+- O Davi pediu uma mensagem oferecendo **R$ 600 em 2x de R$ 300**, com domínio no nome do cliente e plano de R$ 60. Pelo print não deu pra saber quem era.
+- **Pendente:** dizer qual cliente é e confirmar com o Gu se R$ 600 virou preço oficial.
+
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.
 - O site dele virou **a régua mínima de qualidade**: fotos reais recortadas, slogan real, cardápio real e carrinho pro WhatsApp.
@@ -114,3 +124,8 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Vértice e Vértice Reserva:** locadora premium fictícia, sites conceito que aparecem no site da GuDev (`sites/gudev-site/projetos/`).
 - **Porsche 911 GT3 RS:** conceito de portfólio (`sites/porsche-911/`).
 - **Skyline Motors:** aluguel de JDM fictício com R34 GT-R, conceito de portfólio (`sites/skyline-motors/`).
+- **Lustro:** estética automotiva fictícia (`sites/lustro-estetica/`, v1 em `sites/estetica-lustro/`).
+- **Faixa Vermelha:** garagem de seminovos fictícia (`sites/faixa-vermelha/`).
+- **Fornalha:** padaria fictícia (citada no padrão de site; a pasta `demos/fornalha/` não está no repositório).
+- **DOZE V12, Espelho, Basalto, Meridiano, APEX, Moenda, Sulco:** conceitos e demos de portfólio (`sites/` e `gudev/demos/`).
+- **Davi 26:** trabalho de escola do Davi (`sites/presidente-davi-26/`), nem é GuDev.

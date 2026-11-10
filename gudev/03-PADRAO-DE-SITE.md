@@ -49,7 +49,6 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - o site abre como uma caixinha de presente: o laço dourado se desfaz, a tampa sobe e o selo (logo) voa pro topo;
   - zoom-out da xícara: começa com um café em tela cheia e a câmera se afasta até mostrar a vitrine (grade 3x3);
   - "Mande um mimo": bilhete escrito à mão ao vivo + doces + ocasião (cor da fita) que vira pedido no WhatsApp.
-- **Lustro** (demo de estética automotiva): luzes do estúdio acendendo na abertura; a rolagem lava o carro quadro a quadro; lanterna de inspeção que mostra os micro-riscos e abre na pintura corrigida; cartão na cena que abre a gaveta de agendamento com tubo de LED.
 - **Vértice Reserva** (demo de locadora de carros premium, `site/projetos/vertice-reserva/`): dois faróis acendem e abrem a tela; a rolagem gira o carro (76 quadros num canvas, os mesmos do site da GuDev) com o título invertendo a cor onde cruza o carro; "Monte sua reserva" escreve a mensagem do WhatsApp ao vivo (marcada como teste enquanto for demo).
 - **Vértice** (conceito pro Instagram da GuDev, `site/projetos/vertice/`): no escuro, a lanterna traseira acende de dentro pra fora seguindo a curva dela, o carro aparece na chuva e VÉRTICE sobe por trás dele; a rolagem gira o carro e a frase passa por trás; carrossel 3D de detalhes; no fim o carro gira sozinho como vídeo, arraste pra girar, com "Sites que vendem." atrás.
 - **911 GT3 RS** (projeto conceito):
@@ -70,7 +69,24 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - vitrine de cubas em trilho com o vidro embaçado que limpa com o dedo;
   - oficina de tortas (tamanho + sabor, cobertura caindo) e o jogo "Torre da Nonna" (empilhar bolas).
 - **Órbita Seminovos** (demo de loja de carro, `sites/orbita-seminovos`): quase-acidente de moto que congela, mira trava no carro e a câmera mergulha nele; volta de 360 no carro guiada pela rolagem, com as qualidades trocando; "Gire você mesmo" com pergunta pelo WhatsApp sobre o lado que está na tela.
-- **Site da própria GuDev** (`sites/gudev`, 05/11/2026):
+- **Katraka** (oficina de Fusca):
+  - o Fusca (SVG) baixa dente por dente em cima do nome, as letras sentem o peso e o farol acende;
+  - interruptor do farol em 4 posições com a rolagem (foto escura que acende) e raio-x: um scanner que mostra por dentro onde a oficina mexe;
+  - "Gire a katraka": catracas embaixo de cada roda que baixam o carro, com som de clique e medidor de limite, mandando a configuração pro WhatsApp.
+- **Malibu Vieiralves** (hamburgueria, Manaus, `sites/malibu-vieiralves`):
+  - o burger (quadros do Google Flow) desmonta camada por camada com a rolagem e monta de volta;
+  - "rota pela costa": um carrinho desce o mapa e para em cada burger com nome de praia;
+  - prancha de pedido: cada item vira um adesivo na prancha de surf e vai pro WhatsApp.
+- **DOZE V12** (conceito, `sites/doze-v12`): segurar ENGINE START acende os 12 cilindros na ordem de ignição e o portão sobe; faixa de luz troca o carro no salão; a chave muda de cor e o cadeado pisca como seta antes de abrir o WhatsApp.
+- **Lustro v2** (conceito de estética automotiva, `sites/lustro-estetica`; a v1 está em `sites/estetica-lustro`): luzes do estúdio acendendo na abertura; a rolagem lava o carro quadro a quadro; lanterna de inspeção que mostra os micro-riscos e abre na pintura corrigida; cartão "Qual é o carro?" que abre a gaveta de agendamento com tubo de LED.
+- **Espelho** (conceito de estética automotiva com vídeos do BMW M4, `sites/espelho`).
+- **Basalto** (demo de depósito de construção, `sites/basalto-desafio`).
+- **Moenda Café** (demo, `gudev/demos/moenda-cafe-demo.html`): moedor que monta o pedido pro WhatsApp e modo `?embed`.
+- **Sulco** (demo, `gudev/demos/sulco-vidro-liquido.html`): vidro líquido estilo Apple em botões e busca flutuantes.
+- **Skyline Motors** (conceito JDM com R34, `sites/skyline-motors`): o farol acende e o site acende junto; a rolagem gira o R34 em 360° (192 quadros recortados) e o céu vira estúdio; estúdio 360° com arraste, zoom, troca de cor e painel de largada com som real.
+- **APEX Automotive** (conceito, `sites/apex`): **exceção ao HTML único**, feito em React + Vite + Tailwind. Filmes montados com fotos (sem MP4), fotos do Wikimedia com crédito, ficha técnica com link pra fonte oficial.
+- **Davi 26** (trabalho de escola, não é GuDev, `sites/presidente-davi-26`): poeira verde e amarela que pinta o nome; globo da bandeira com uma estrela por proposta; urna eletrônica de simulação.
+- **Site da própria GuDev** (página de venda, `sites/gudev`, 05/11/2026):
   - porta de aço laranja que sobe com a rolagem e mostra a rua, com um celular subindo e pedidos chegando;
   - conversa de WhatsApp que se escreve com a rolagem;
   - simulador que monta um mini site com o nome, o tipo e a cor do comércio, e faz chegar uma notificação de pedido;
@@ -95,10 +111,6 @@ Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS 
   - Não rodar com tela de tamanho 0.
   - Reduzir as partículas com `prefers-reduced-motion`.
   - O botão que foge desvia do título e do outro botão.
-- **Katraka** (oficina de Fusca):
-  - o Fusca (SVG) baixa dente por dente em cima do nome, as letras sentem o peso e o farol acende;
-  - interruptor do farol em 4 posições com a rolagem (foto escura que acende) e raio-x: um scanner que mostra por dentro onde a oficina mexe;
-  - "Gire a katraka": catracas embaixo de cada roda que baixam o carro, com som de clique e medidor de limite, mandando a configuração pro WhatsApp.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
@@ -138,11 +150,10 @@ Só os quadros foram lidos (sem áudio). Lista que o vídeo mostra, em duas part
 
 ## Referências (olhar antes de criar)
 - **Primeiro:** `07-REFERENCIAS-DESIGN.md` (destaques por nicho e ideias de WOW ainda não usadas).
-- motionsites.ai: composição de hero e acabamento.
 - naocodei.com/free-code: animações em JS puro (cartas empilhando, galeria horizontal, máscara, texto que preenche, cursor magnético).
 - codepen.io/collection/BNMEYN: efeitos de rolagem limpos.
 - 21st.dev: componentes. Eles são em React, então reescreva em HTML/JS puro.
-- originkit.dev: 700+ efeitos animados (texto, galeria, foto, fundo). Também em React. Licença e lista dos que valem a pena: `06-REFERENCIA-ORIGINKIT.md`.
+- originkit.dev: 700+ efeitos animados (texto, galeria, foto, fundo). Também em React. Licença e lista dos que valem a pena: `10-REFERENCIA-ORIGINKIT.md`.
 
 ### Sites "premium" (analisados em 23/10/2026)
 Os três usam GSAP + Lenis, igual a gente. Os dois que usam 3D (Three.js) são pesados demais pra comércio local: pegar a **ideia**, não a técnica.
@@ -169,11 +180,8 @@ Os três usam GSAP + Lenis, igual a gente. Os dois que usam 3D (Three.js) são p
 - cta.gallery: grátis. Botões e chamadas finais (filtros "Call-to-Buy", "Form", "Button"). Tem comida (pizza-amici, eatsnackish). Usar pra melhorar o bloco "Pedir pelo WhatsApp" e o fechamento da página.
 - unsection.com: grátis com cadastro. Seções separadas por tipo (Hero, Testimonials, Pricing, FAQs, Contact, Footer, Navbar). Usar quando travar numa seção específica. É quase tudo SaaS, então pegar a estrutura, não o visual.
 - 60fps.design: grátis pra explorar (o PRO custa US$ 15/mês e não precisa). Microanimações de apps: filtros "Effects" (Parallax, Blur, Morph, Spring) e "Elements" (Button, Toast, Tabs, Bottom Sheet). Boa fonte de ideia de WOW pequeno pro celular, mas recriar em JS puro.
-- naocodei.com/free-code: animações em JS puro (cartas empilhando, galeria horizontal, máscara, texto que preenche, cursor magnético).
-- codepen.io/collection/BNMEYN: efeitos de rolagem limpos.
-- 21st.dev: componentes. Eles são em React, então reescreva em HTML/JS puro.
 - gsap.com: o GSAP ficou 100% grátis em 2025, depois da compra pelo Webflow, incluindo os plugins que eram pagos. Os principais são SplitText (texto que entra letra por letra ou linha por linha), MorphSVG (uma forma vira outra) e ScrollSmoother. Estão no cdnjs na versão 3.13.0. Se usar plugin, carregar o `gsap` e o `ScrollTrigger` da mesma 3.13.0, nunca misturando com a 3.12.5. A vitrine (gsap.com/showcase) é boa fonte de ideia de WOW de rolagem.
-- motion.dev: grátis, funciona em HTML puro (`animate`, `scroll`, `inView`) e é bem leve. Não precisa, porque o GSAP já cobre tudo. Não colocar as duas bibliotecas no mesmo site. Serve pra olhar exemplos de animação de blocos.
+- motion.dev: grátis, funciona em HTML puro (`animate`, `scroll`, `inView`) e é bem leve. Pode entrar no lugar do GSAP (ver "Ferramentas do vídeo" abaixo), mas nunca as duas bibliotecas no mesmo site.
 - threejs.org: 3D grátis. Pesa e esquenta celular fraco. Comida nunca em 3D (ver abaixo). Só vale pra um fundo abstrato leve, e mesmo assim desligado no celular. Na prática, quase nunca.
 - shaders.com: biblioteca de efeitos WebGPU/shader pra fundo e hero (visto num reel em 01/11/2026, ainda não testado). Pesa no celular: só usar com plano B em CSS e nunca no modo `?embed`.
 - ls.graphics: mockups de alta qualidade (celular, branding). Serve pra capa de proposta e posts do Instagram da GuDev. Conferir a licença antes de usar.
