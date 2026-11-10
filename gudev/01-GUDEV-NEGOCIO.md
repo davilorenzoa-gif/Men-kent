@@ -3,7 +3,7 @@
 ## Quem somos
 - **GuDev** cria sites para comércios locais. O slogan é **"Sites que vendem."**
 - **Cores da marca:** laranja, branco e preto. O hex do laranja ainda não foi confirmado (o site usa `#FF5B0A` por enquanto).
-- **Site da GuDev:** duas versões. `sites/gudev/` é a página de venda (05/11, a mais nova). `gudev/site/` é o site multipágina com os conceitos Vértice (29/10); `sites/gudev-site/` é uma cópia dele salva do artifact em 06/11. Antes de subir, confirmar com o Gu qual vai pro ar.
+- **Site da GuDev (decidido em 10/11/2026):** o que vai pro ar é a **página de venda** em `sites/gudev/`. O multipágina (`gudev/site/`, cópia em `sites/gudev-site/`) fica guardado como arquivo, não sobe. Antes de subir, trocar o preço antigo (R$ 297) pela regra nova.
 - **Gustavo (Gu)**, 17 anos, da Zona Leste de SP, constrói os sites e as propostas no PC. Ele tem as ferramentas: gerador de proposta, testes, melhoria de foto em 4K e Netlify.
 - **Davi**, sócio, cuida de vendas e prospecção. Usa o Claude pelo celular.
 - **O WhatsApp comercial da GuDev é o do Davi: (11) 96465-0141.** É o número que aparece nas propostas.
