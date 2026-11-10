@@ -12,13 +12,16 @@ Ordem: abertura nas nuvens → I Residências → II Relojoaria → III Marina �
 o céu escurece pra "hora azul" e aparece o bloco da GuDev com o botão do WhatsApp.
 
 ## 3 WOWs
-1. **Abertura:** a marca MERIDIANO se desfaz na névoa enquanto a câmera desce pelas nuvens, e a nuvem abre e mostra a torre.
+1. **Abertura:** enquanto carrega, um meridiano dourado cresce no meio da tela. Pronto, a tela abre em duas portas a partir
+   dessa linha, a luz do sol vaza pela fresta e a câmera recua de dentro do sol até o mar de nuvens. Depois, a marca MERIDIANO
+   se desfaz na névoa enquanto a câmera desce, e a nuvem abre e mostra a torre.
 2. **Meio:** a câmera mergulha no relógio da sala, a lente desfoca e foca nas engrenagens do mecanismo (troca de foco, sem montagem).
 3. **Interativo:** a rolagem é a câmera. A régua da direita leva direto a cada capítulo, e o relógio mostra a hora real de São Paulo.
 
 Emendas: a câmera voa pra dentro da torre e entra pela porta de vidro da cobertura (um prédio só, sem mostrar outra
-fachada), o sol estoura na janela (relógio → marina), os dois horizontes se alinham e a pista surge do céu pra baixo (marina → jato) e a câmera
-desce do céu de volta às nuvens (jato → fim).
+fachada), o sol estoura na janela (relógio → marina), os dois horizontes se alinham e a pista surge do céu pra baixo (marina → jato)
+e a câmera desce do céu de volta às nuvens (jato → fim). Em 03/11 testamos a câmera olhando pro céu com borrão vertical
+nessa emenda, e o Davi preferiu a dos horizontes.
 Regra: toda transição tem que parecer movimento de câmera ou de lente. Nada de forma desenhada ou imagem colada em cima da outra.
 Os dois clipes continuam andando durante a emenda (nada congela), e só aparece um prédio do começo ao fim.
 
@@ -40,20 +43,41 @@ Dica: grave em tela cheia (F11) no computador. A melhor qualidade é na tela dei
 - `index.html`: o site inteiro (CSS, JS e o shader WebGL das transições).
 - `frames/d-*.webp`: computador e tela deitada. 1280x720, todos os frames, qualidade 80, ~34 MB.
   Abre com ~4 MB (a abertura inteira + um rascunho do resto) e o resto chega em segundo plano.
-- `frames/m-*.webp`: celular em pé. Recorte central 480x720, 1 a cada 2 frames, qualidade 86, ~10 MB.
-  O site desenha na resolução real da tela e amplia com filtro bicúbico (fica bem menos pixelado que o esticado do navegador).
+- `frames/m-*.webp`: celular em pé. 720x1440, 1 a cada 2 frames, qualidade 80. Cada frame passou por upscale x4 com IA
+  (Real-ESRGAN) e foi recortado no formato do celular (1:2). Antes era um recorte de 480x720: como o celular é mais
+  estreito, só uns 330 px do vídeo cobriam a tela inteira (ampliação de 3,5x, daí o pixelado). Agora é ~1,7x.
+  O site desenha quase na resolução real da tela e amplia com filtro bicúbico.
 - `frames/poster-*.webp`: uma imagem por cena, para o modo estático.
 - `og.jpg`, `404.html`, `_headers` (segurança + cache longo dos frames).
 - `gerar-frames.py`: transforma os vídeos nos pacotes de frames e atualiza o `index.html`.
+- `nitidez-celular.py`: upscale com IA dos frames do celular, recorte 1:2 e novos pacotes `m-*.webp`.
+- `gerar-arquivo-unico.py` + `fontes/`: monta o site num HTML só (ver abaixo).
 
 Os pacotes são "WebP animado": cada frame fica completo e o site lê em streaming, frame por frame.
 Assim são 8 downloads no computador (3 no celular) em vez de centenas de imagens soltas.
+
+## Fluidez (03/11)
+- **Qualidade adaptativa:** se o aparelho cai abaixo de ~43 qps, a tela do filme baixa um degrau (100% → 84% → 70% → 58%)
+  e volta sozinha quando sobra fôlego. Nas transições com borrão (voo e foco), desenha a 70% no celular e 85% no computador,
+  porque o borrão esconde a diferença.
+- **Celular desenha até ~2 Mpx** (antes 2,4). O vídeo do celular tem 480 px de largura, mais que isso só gastava GPU.
+- **Textos por CSS:** os títulos entram e saem com transição de CSS, fora do laço do WebGL. Se o vídeo pesar, o texto não engasga junto.
+- **Imagem nítida parada:** rolando, o shader mistura dois frames vizinhos (movimento liso). Parou, assenta no frame mais
+  próximo, sem imagem dupla.
+- **Parado, quase não desenha:** só o grão (20 qps no computador, 12 no celular). Antes, parar no meio de uma transição
+  pesada deixava a GPU a 100%. O mouse agora redesenha o fundo a cada quadro (a paralaxe ficava a 20 qps).
+- A rolagem é lida por `scrollY` (sem `getBoundingClientRect` a cada quadro) e a roda do mouse tem um pouco mais de amortecimento.
+- Cor: curva leve de contraste e saturação no shader, pra tirar o "leitoso" dos vídeos de IA (`?grade=0` mostra sem).
 
 ## Modos
 - `?embed`: versão estática (uma foto por cena, sem animação). Serve pra captura de prévia.
 - Celular com "reduzir movimento" ligado: a mesma versão estática, com fade curto ao aparecer.
 - Sem WebGL: cai na versão estática sozinho.
-- `?debug`: expõe contadores em `window.__dbg` (frames exatos e aproximados).
+- `?debug`: mostra um painel no canto com qps, tamanho da tela do filme, % de frames exatos e % baixado
+  (e expõe `window.__dbg`). Também funciona com `#debug` no fim do link (é o jeito no link de prévia do Claude).
+  Se alguém disser que travou, peça print com `#debug`.
+- `?max`: trava na qualidade máxima (sem adaptar). Use pra gravar o Reels num computador bom: `?tour&max`.
+- `?lento=4`: abertura 4 vezes mais lenta, pra conferir a animação.
 
 ## Trocar os vídeos
 1. Salve os vídeos como `c1.mp4` até `c6.mp4` numa pasta (1280x720, 24 fps, 8 s, na ordem do filme).
@@ -61,7 +85,20 @@ Assim são 8 downloads no computador (3 no celular) em vez de centenas de imagen
 2. Rode `python3 gerar-frames.py <pasta>`. Precisa de ffmpeg, Pillow e numpy, e leva uns 2 minutos.
 3. Se o enquadramento mudar, ajuste no `index.html` os tempos (`PLAY`, `TR`, `CENAS`) e os pontos de foco das
    transições (`fa`/`fb` = posição do relógio, do sol e do horizonte, de 0 a 1).
-4. Troque `?v=3` por `?v=4` no `index.html` (são 3 lugares), porque os frames ficam um ano em cache.
+4. Rode `python3 nitidez-celular.py <pasta-de-trabalho>` pra refazer os frames do celular com upscale de IA
+   (precisa de PyTorch; leva ~45 min numa CPU de 4 núcleos e retoma de onde parou).
+5. Suba o número do `?v=` no `index.html` (são 3 lugares), porque os frames ficam um ano em cache.
+
+Pra ficar ainda mais nítido: gere os clipes no Flow em 1080p (ou direto em 9:16 pro celular) e refaça os passos acima.
+
+## Arquivo único (abrir direto no celular, sem servidor)
+- `python3 gerar-arquivo-unico.py --so-celular` gera `dist/meridiano-celular.html` (~18 MB, só o celular em pé).
+- `python3 gerar-arquivo-unico.py` gera `dist/meridiano.html` (~63 MB, computador + celular).
+- Tudo vai dentro do HTML: frames e pôsteres em base64 (o site decodifica na hora, sem fetch nem link `data:`,
+  que o Chrome limita a 2 MB) e as fontes (`fontes/`, Bodoni Moda e Geist, licença OFL) em `@font-face`.
+- No Android: baixa o arquivo e abre com o Chrome. Dar dois cliques no `index.html` normal não funciona,
+  porque o navegador bloqueia a página aberta do disco de ler a pasta `frames/`.
+- A pasta `dist/` não vai pro git (dá pra gerar de novo a qualquer hora).
 
 ## Antes de divulgar
 - Depois de subir no Netlify, trocar o `og:image` pela URL completa (`https://.../og.jpg`). Sem isso, o WhatsApp e o Instagram não mostram a imagem.
