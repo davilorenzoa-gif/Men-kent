@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sulco</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: caixote de discos que rola por baixo de controles de vidro flutuantes (busca no topo, gêneros no rodapé).
+   O vidro fica SÓ em botões e na busca; o resto é sólido pra o vidro ter o que refratar. */
+:root{
+  --bg:#EEEDF1;          /* papel de capa, cinza levemente lilás */
+  --fg:#16141C;          /* tinta */
+  --muted:#5F5B6B;
+  --card:#FFFFFF;
+  --accent:#2747F5;      /* cobalto */
+  --line:rgba(22,20,28,.10);
+  --glass-tint:rgba(255,255,255,.16);
+  --glass-tint-strong:rgba(255,255,255,.42);
+  --glass-tint-mid:rgba(255,255,255,.28);
+  --glass-rim:rgba(255,255,255,.75);
+  --glass-shadow:rgba(20,18,40,.22);
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Figtree", "Helvetica Neue", Arial, system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121117; --fg:#EEECF3; --muted:#A29EB0; --card:#1C1A23; --accent:#7D93FF;
+    --line:rgba(238,236,243,.10);
+    --glass-tint:rgba(40,38,52,.18); --glass-tint-strong:rgba(28,26,36,.48); --glass-tint-mid:rgba(28,26,36,.32);
+    --glass-rim:rgba(255,255,255,.42); --glass-shadow:rgba(0,0,0,.5);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121117; --fg:#EEECF3; --muted:#A29EB0; --card:#1C1A23; --accent:#7D93FF;
+  --line:rgba(238,236,243,.10);
+  --glass-tint:rgba(40,38,52,.18); --glass-tint-strong:rgba(28,26,36,.48); --glass-tint-mid:rgba(28,26,36,.32);
+  --glass-rim:rgba(255,255,255,.42); --glass-shadow:rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+main{overflow-x:clip}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;overflow-x:clip}
+button{font:inherit;color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+
+/* ───────────── VIDRO LÍQUIDO ─────────────
+   Fallback (Safari/Firefox): vidro fosco.
+   Chromium: html.lg-on → o JS troca por backdrop-filter:url(#filtro) com refração na borda + dispersão. */
+.glass{
+  position:relative; isolation:isolate;
+  border:0; cursor:pointer;
+  background:var(--glass-tint);
+  -webkit-backdrop-filter:blur(14px) saturate(180%);
+  backdrop-filter:blur(14px) saturate(180%);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.45),
+    inset 0 -10px 18px -14px rgba(255,255,255,.5),
+    0 10px 28px -10px var(--glass-shadow),
+    0 2px 6px -2px var(--glass-shadow);
+  transition:transform .5s cubic-bezier(.3,1.7,.5,1), background-color .25s, color .25s, box-shadow .3s;
+  -webkit-tap-highlight-color:transparent;
+}
+/* aro especular: gradiente só na borda */
+.glass::before{
+  content:""; position:absolute; inset:0; border-radius:inherit; padding:1px; pointer-events:none;
+  background:linear-gradient(140deg, var(--glass-rim), rgba(255,255,255,.06) 38%, rgba(255,255,255,0) 58%, rgba(255,255,255,.5));
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude;
+}
+/* brilho que acompanha o dedo/cursor */
+.glass::after{
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.5), rgba(255,255,255,0) 62%);
+  transition:opacity .35s;
+}
+.glass:hover::after{opacity:.35}
+.glass.is-press{transform:scale(1.07)}
+.glass.is-press::after{opacity:.9}
+.glass:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+.glass[aria-pressed="true"]{background:color-mix(in oklab, var(--accent) 78%, transparent); color:#fff}
+.glass > *{position:relative; z-index:1}
+
+@media (prefers-reduced-transparency: reduce){
+  .glass{background:var(--card); -webkit-backdrop-filter:none; backdrop-filter:none}
+}
+
+/* ───────────── BARRA DE BUSCA (topo, flutuando) ───────────── */
+.topbar{
+  position:fixed; top:0; left:0; right:0; z-index:30;
+  display:flex; justify-content:center; align-items:center; gap:10px;
+  padding-top:calc(env(safe-area-inset-top,0px) + 14px);
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+  pointer-events:none;
+}
+.topbar > *{pointer-events:auto}
+.search{
+  flex:1 1 auto; min-width:0; max-width:560px; height:54px; border-radius:999px;
+  display:flex; align-items:center; gap:10px; padding:0 7px 0 18px; cursor:text;
+  background:var(--glass-tint-strong);
+}
+.search svg{flex:none; width:20px; height:20px; opacity:.75}
+.search input{
+  flex:1; min-width:0; height:100%; background:none; border:0; outline:none;
+  font:500 16px/1 var(--body); color:var(--fg);
+}
+.search input::placeholder{color:var(--muted)}
+.search input::-webkit-search-cancel-button{display:none}
+.search:focus-within{outline:2px solid color-mix(in oklab, var(--accent) 70%, transparent); outline-offset:3px}
+.clear{
+  flex:none; width:40px; height:40px; border-radius:50%;
+  display:grid; place-items:center; padding:0;
+}
+.clear svg{width:16px; height:16px; opacity:.85}
+.saved{
+  flex:none; height:54px; border-radius:999px; padding:0 18px;
+  display:flex; align-items:center; gap:8px; font-weight:600; font-size:15px;
+  font-variant-numeric:tabular-nums;
+}
+.saved svg{width:18px; height:18px}
+
+/* ───────────── HERO / TOCA-DISCOS ───────────── */
+.hero{padding-top:calc(env(safe-area-inset-top,0px) + 112px); padding-bottom:56px}
+.hero-grid{display:grid; gap:40px; align-items:center}
+@media (min-width:880px){ .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)} }
+.logo{
+  font-family:var(--display); font-weight:800; font-size:clamp(76px, 15vw, 168px);
+  line-height:.84; letter-spacing:-.055em; margin:0;
+  font-variation-settings:"opsz" 96;
+}
+.logo span{display:inline-block; transform:translateY(.06em) rotate(-4deg); color:var(--accent)}
+.lede{max-width:34ch; font-size:19px; line-height:1.45; color:var(--muted); margin:22px 0 0; text-wrap:pretty}
+.now{margin-top:26px; font-size:15px; color:var(--muted)}
+.now strong{color:var(--fg); font-weight:600}
+
+.deck{position:relative; width:100%; max-width:100%; aspect-ratio:1.38/1}
+.sleeve{
+  position:absolute; left:0; top:0; width:72.5%; aspect-ratio:1; z-index:2;
+  border-radius:6px; overflow:hidden;
+  box-shadow:0 30px 60px -28px rgba(20,18,40,.55), 0 4px 10px -4px rgba(20,18,40,.25);
+}
+.sleeve .cover{position:absolute; inset:0}
+.sleeve-title{
+  position:absolute; left:7%; top:6%; right:7%; z-index:1;
+  font-family:var(--display); font-weight:800; font-size:clamp(26px,4.6vw,52px);
+  line-height:.92; letter-spacing:-.04em; color:#fff; text-wrap:balance;
+  text-shadow:0 2px 18px rgba(0,0,0,.25);
+}
+.vinyl{
+  position:absolute; left:4%; top:4.5%; width:66%; aspect-ratio:1; z-index:1;
+  transition:transform .8s cubic-bezier(.2,.9,.25,1);
+}
+.vinyl.out{transform:translateX(44%)}
+.disc{
+  position:absolute; inset:0; border-radius:50%;
+  background:
+    repeating-radial-gradient(circle, #141418 0 1.5px, #212127 1.5px 3px);
+  box-shadow:0 22px 40px -20px rgba(0,0,0,.6);
+  animation:spin 1.8s linear infinite;
+}
+.disc .label{
+  position:absolute; inset:31%; border-radius:50%; overflow:hidden;
+  box-shadow:0 0 0 3px #0c0c0f;
+}
+.disc .label::after{
+  content:""; position:absolute; left:50%; top:50%; width:9%; aspect-ratio:1; border-radius:50%;
+  background:var(--bg); transform:translate(-50%,-50%); box-shadow:inset 0 1px 2px rgba(0,0,0,.5);
+}
+.sheen{
+  position:absolute; inset:0; border-radius:50%; pointer-events:none;
+  background:conic-gradient(from 20deg, transparent 0 8%, rgba(255,255,255,.16) 13%, transparent 19% 56%, rgba(255,255,255,.12) 62%, transparent 69%);
+  -webkit-mask:radial-gradient(circle, transparent 0 31%, #000 31.5%);
+  mask:radial-gradient(circle, transparent 0 31%, #000 31.5%);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.play{
+  position:absolute; z-index:3; left:5.5%; bottom:6%;
+  height:56px; border-radius:999px; padding:0 22px 0 16px;
+  display:flex; align-items:center; gap:10px;
+  font-weight:600; font-size:16px; color:#fff;
+}
+.play svg{width:22px; height:22px}
+
+/* ───────────── CAIXOTE ───────────── */
+.crate{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 130px)}
+.crate-head{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px 20px; margin-bottom:22px; border-top:1px solid var(--line); padding-top:28px}
+.crate-head h2{font-family:var(--display); font-weight:700; font-size:clamp(30px,4vw,40px); letter-spacing:-.03em; line-height:1; margin:0}
+.count{color:var(--muted); font-size:15px; font-variant-numeric:tabular-nums}
+.grid{display:grid; gap:28px 20px; grid-template-columns:repeat(auto-fill, minmax(min(100%,210px),1fr))}
+@media (max-width:520px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 14px} }
+.rec{position:relative; min-width:0}
+.rec-cover{
+  display:block; width:100%; aspect-ratio:1; max-width:100%; padding:0; border:0; cursor:pointer;
+  border-radius:5px; overflow:hidden; position:relative;
+  box-shadow:0 18px 30px -22px rgba(20,18,40,.6), 0 1px 3px rgba(20,18,40,.15);
+  transition:transform .35s cubic-bezier(.2,.9,.25,1);
+}
+.rec-cover:hover{transform:translateY(-4px) rotate(-.6deg)}
+.rec-cover:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+.rec-cover .cover{position:absolute; inset:0}
+.rec-cover .t{
+  position:absolute; left:9%; right:9%; bottom:8%; text-align:left;
+  font-family:var(--display); font-weight:800; font-size:clamp(17px,2.1vw,23px); line-height:.95; letter-spacing:-.035em;
+  color:#fff; text-shadow:0 1px 12px rgba(0,0,0,.28); text-wrap:balance;
+}
+.rec.is-playing .rec-cover{outline:3px solid var(--accent); outline-offset:3px}
+.heart{
+  position:absolute; top:9px; right:9px; z-index:2;
+  width:42px; height:42px; border-radius:50%; padding:0;
+  display:grid; place-items:center; color:#fff;
+}
+.heart svg{width:19px; height:19px}
+.heart[aria-pressed="true"]{background:color-mix(in oklab, #FF3B5C 80%, transparent)}
+.heart[aria-pressed="true"] svg path{fill:currentColor}
+.meta{margin-top:11px; min-width:0}
+.meta b{display:block; font-weight:600; font-size:16px; line-height:1.25}
+.meta span{display:flex; gap:10px; color:var(--muted); font-size:14px; margin-top:2px; font-variant-numeric:tabular-nums}
+.empty{padding:40px 0 10px; color:var(--muted); font-size:17px; display:flex; flex-wrap:wrap; align-items:center; gap:14px}
+.empty .glass{height:46px; border-radius:999px; padding:0 18px; font-weight:600; background:var(--glass-tint-strong)}
+.note{color:var(--muted); font-size:13px; margin-top:44px; max-width:60ch}
+
+/* ───────────── DOCK DE GÊNEROS (rodapé, flutuando) ───────────── */
+.dock{
+  position:fixed; left:0; right:0; bottom:0; z-index:30; pointer-events:none;
+  padding-bottom:calc(env(safe-area-inset-bottom,0px) + 6px);
+}
+.dock-row{
+  display:flex; gap:9px; overflow-x:auto; pointer-events:auto; scrollbar-width:none;
+  padding:14px max(16px, env(safe-area-inset-right,0px)) 14px max(16px, env(safe-area-inset-left,0px));
+  -webkit-mask:linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+  mask:linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+}
+.dock-row::-webkit-scrollbar{display:none}
+.dock-row > :first-child{margin-left:auto}
+.dock-row > :last-child{margin-right:auto}
+.chip{
+  flex:none; height:48px; border-radius:999px; padding:0 20px; background:var(--glass-tint-mid);
+  font-weight:600; font-size:15px; white-space:nowrap;
+  display:flex; align-items:center; gap:8px;
+}
+.chip svg{width:18px; height:18px}
+
+/* ───────────── CAPAS GERADAS ───────────── */
+.cover{background:var(--b)}
+.p-sun{background:radial-gradient(circle at 50% 66%, var(--a) 0 27%, transparent 27.4%), linear-gradient(var(--b) 0 66%, var(--c) 66%)}
+.p-stripes{background:repeating-linear-gradient(-35deg, var(--a) 0 11%, var(--b) 11% 22%, var(--c) 22% 33%)}
+.p-rings{background:repeating-radial-gradient(circle at 28% 30%, var(--a) 0 6%, var(--b) 6% 12%, var(--c) 12% 13%)}
+.p-split{background:conic-gradient(from 45deg at 62% 38%, var(--a) 0 25%, var(--b) 0 50%, var(--c) 0 75%, var(--a) 0)}
+.p-dots{background:radial-gradient(circle, var(--a) 0 32%, transparent 34%) 0 0/16.6% 16.6%, linear-gradient(160deg, var(--b), var(--c))}
+.p-arch{background:radial-gradient(ellipse 58% 78% at 50% 100%, var(--a) 0 62%, var(--c) 62% 66%, transparent 66.4%), var(--b)}
+.p-waves{background:radial-gradient(circle at 50% 0, transparent 0 18%, var(--a) 18.4% 24%, transparent 24.4%) 0 0/50% 40%, linear-gradient(var(--b), var(--c))}
+
+@media (prefers-reduced-motion: reduce){
+  .disc{animation:none}
+  .glass,.vinyl,.rec-cover{transition:none}
+  .glass.is-press{transform:none}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs id="lg-defs"></defs></svg>
+
+<header class="topbar">
+  <label class="glass search" data-blur="3" for="q">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+    <input id="q" type="search" placeholder="Buscar disco, artista, ano…" autocomplete="off" enterkeyhint="search" aria-label="Buscar no caixote">
+    <button class="glass clear" id="clear" type="button" aria-label="Limpar busca" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </label>
+  <button class="glass saved" id="saved" type="button" aria-pressed="false" aria-label="Mostrar só os salvos">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2Z"/></svg>
+    <span id="savedN">0</span>
+  </button>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div class="hero-grid">
+      <div>
+        <h1 class="logo">Sul<span>c</span>o</h1>
+        <p class="lede">Um caixote de discos imaginários. Clique numa capa pra colocar na agulha, salve as que você levaria pra casa.</p>
+        <p class="now" aria-live="polite">Na agulha: <strong id="nowTitle">…</strong>, <span id="nowArtist"></span></p>
+      </div>
+      <div class="deck">
+        <div class="vinyl out" id="vinyl">
+          <div class="disc"><div class="label cover" id="label"></div></div>
+          <div class="sheen"></div>
+        </div>
+        <div class="sleeve"><div class="cover" id="sleeve"></div><div class="sleeve-title" id="sleeveTitle"></div></div>
+        <button class="glass play" id="shuffleOne" type="button">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>
+          Tocar outro disco
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap crate" aria-labelledby="crateTitle">
+    <div class="crate-head">
+      <h2 id="crateTitle">O caixote</h2>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>
+      <span id="emptyMsg"></span>
+      <button class="glass" id="reset" type="button">Ver todos os discos</button>
+    </div>
+    <p class="note">Discos, artistas e capas são fictícios. A refração completa aparece no Chrome, Edge e Android; Safari e Firefox mostram vidro fosco.</p>
+  </section>
+</main>
+
+<nav class="dock" aria-label="Gêneros">
+  <div class="dock-row" id="dock"></div>
+</nav>
+
+<script>
+(() => {
+  /* ═════════ DADOS (fictícios) ═════════ */
+  const R = [
+    ["Maré Alta","Lua Cavalcanti","MPB",1978,"sun","#FF6A3D","#1E3F8C","#F7C548"],
+    ["Asfalto Quente","Trio Pereira","Samba",1974,"stripes","#F2B705","#D9381E","#1B1B1F"],
+    ["Neblina em Santos","Otávio Reis Quarteto","Jazz",1966,"rings","#1D2B53","#7E9CD8","#F4F1FF"],
+    ["Circuito","Kaleidosom","Eletrônica",1999,"dots","#FFFFFF","#00B4D8","#6A00F4"],
+    ["Fio Desencapado","Os Alicates","Rock",1983,"split","#E63946","#111111","#F1FAEE"],
+    ["Cavaquinho de Lata","Regional do Tito","Choro",1958,"arch","#F4A259","#2A6F6B","#F8E9C8"],
+    ["Ladeira","Bena Monteiro","MPB",1981,"waves","#FFD6E0","#3A86FF","#023E8A"],
+    ["Pé de Valsa","Dona Zezé","Samba",1969,"sun","#FFE066","#06A77D","#05445E"],
+    ["Fumaça Azul","Célio Barros","Jazz",1962,"split","#3A0CA3","#4CC9F0","#F72585"],
+    ["Onda Curta","Rádio Subsolo","Eletrônica",2004,"rings","#B5FF3A","#151515","#3D3D3D"],
+    ["Garagem 4","Bicicleta Elétrica","Rock",1991,"stripes","#FF9F1C","#2EC4B6","#CBF3F0"],
+    ["Flauta no Telhado","Zé Nogueira","Choro",1963,"dots","#FFF3B0","#E09F3E","#9E2A2B"],
+    ["Varanda","Marisa Leme","MPB",1976,"arch","#FCBF49","#D62828","#003049"],
+    ["Surdo Mundo","Bloco do Fim","Samba",1987,"waves","#FFFFFF","#EF476F","#7A1E3A"],
+    ["Hora Azul","Quinteto Vigília","Jazz",1971,"sun","#F1F7ED","#243E36","#7CA982"],
+    ["Pixel Tropical","DJ Caju","Eletrônica",2011,"split","#FF3CAC","#2B86C5","#FFE53B"],
+    ["Rua sem Saída","Os Vira-Latas","Rock",1979,"dots","#111111","#FFB703","#FB8500"],
+    ["Bandolim Manso","Irmãs Faria","Choro",1955,"rings","#E9C46A","#264653","#E76F51"],
+  ].map((r,i)=>({id:i,title:r[0],artist:r[1],genre:r[2],year:r[3],p:r[4],a:r[5],b:r[6],c:r[7]}));
+  const GENRES = ["Todos","MPB","Samba","Choro","Jazz","Rock","Eletrônica"];
+
+  const $ = s => document.querySelector(s);
+  const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+  const paint = (el, r) => {
+    el.className = el.className.replace(/\bp-\w+/g,"").trim() + " p-" + r.p;
+    el.style.setProperty("--a", r.a); el.style.setProperty("--b", r.b); el.style.setProperty("--c", r.c);
+  };
+
+  const state = { q:"", genre:"Todos", onlySaved:false, saved:new Set(), playing:null };
+  try { JSON.parse(localStorage.getItem("sulco-saved")||"[]").forEach(id=>state.saved.add(id)); } catch(e){}
+  if (!state.saved.size) [0,8].forEach(id=>state.saved.add(id));
+
+  /* ═════════ MOTOR DE VIDRO LÍQUIDO ═════════
+     Para cada tamanho de botão gera um mapa de deslocamento (canvas) a partir da
+     distância até a borda arredondada. Perto da borda o fundo é puxado pra dentro,
+     como uma lente convexa; cada canal de cor desloca um pouco diferente (dispersão). */
+  const lgOn = !!navigator.userAgentData && !matchMedia("(prefers-reduced-transparency: reduce)").matches;
+  if (lgOn) document.documentElement.classList.add("lg-on");
+  const defs = $("#lg-defs");
+  const cache = new Map();
+
+  function makeMap(w, h, r, bez){
+    const c = document.createElement("canvas"); c.width = w; c.height = h;
+    const ctx = c.getContext("2d"), img = ctx.createImageData(w, h), d = img.data;
+    const hw = w/2, hh = h/2;
+    for (let y=0; y<h; y++){
+      for (let x=0; x<w; x++){
+        const px = x+.5-hw, py = y+.5-hh, ax = Math.abs(px), ay = Math.abs(py);
+        const qx = ax-(hw-r), qy = ay-(hh-r);
+        let dist, nx, ny;
+        if (qx>0 && qy>0){ const L = Math.hypot(qx,qy)||1; dist = r-L; nx = qx/L*Math.sign(px); ny = qy/L*Math.sign(py); }
+        else if (qx>qy){ dist = r-qx; nx = Math.sign(px); ny = 0; }
+        else { dist = r-qy; nx = 0; ny = Math.sign(py); }
+        let m = 0;
+        if (dist < bez){ const t = Math.min(1, Math.max(0, 1-dist/bez)); m = 1-Math.sqrt(1-t*t); }
+        const i = (y*w+x)*4;
+        d[i]   = 128 - nx*m*127;
+        d[i+1] = 128 - ny*m*127;
+        d[i+2] = 128; d[i+3] = 255;
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    return c.toDataURL();
+  }
+
+  function filterFor(w, h, r, blur){
+    const key = `${w}x${h}r${r}b${blur}`;
+    if (cache.has(key)) return cache.get(key);
+    const id = "lg" + cache.size;
+    const bez = Math.max(6, Math.min(r, h*.45, 26));
+    const s = Math.round(Math.min(bez*1.7, 40));
+    const map = makeMap(w, h, r, bez);
+    const ch = (src, n, v) => `<feDisplacementMap in="bl" in2="m" scale="${n}" xChannelSelector="R" yChannelSelector="G" result="d${src}"/><feColorMatrix in="d${src}" type="matrix" values="${v}" result="${src}"/>`;
+    defs.insertAdjacentHTML("beforeend",
+      `<filter id="${id}" x="0" y="0" width="${w}" height="${h}" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="${blur}" result="bl"/>
+        <feImage href="${map}" x="0" y="0" width="${w}" height="${h}" preserveAspectRatio="none" result="m"/>
+        ${ch("r", s,              "1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0")}
+        ${ch("g", Math.round(s*1.06), "0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0")}
+        ${ch("b", Math.round(s*1.12), "0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0")}
+        <feBlend in="r" in2="g" mode="screen" result="rg"/>
+        <feBlend in="rg" in2="b" mode="screen" result="rgb"/>
+        <feColorMatrix in="rgb" type="saturate" values="1.55"/>
+      </filter>`);
+    cache.set(key, id);
+    return id;
+  }
+
+  const pending = new Set(); let raf = 0;
+  function apply(el){
+    const w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
+    if (w < 4 || h < 4) return;
+    const r = Math.round(Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius)||0, w/2, h/2));
+    const blur = parseFloat(el.dataset.blur || "1.2");
+    const f = `url(#${filterFor(w, h, r, blur)})`;
+    el.style.backdropFilter = f; el.style.webkitBackdropFilter = f;
+  }
+  const ro = lgOn ? new ResizeObserver(es => {
+    es.forEach(e => pending.add(e.target));
+    if (!raf) raf = requestAnimationFrame(() => { raf = 0; pending.forEach(apply); pending.clear(); });
+  }) : null;
+  const glassify = root => { if (ro) root.querySelectorAll(".glass").forEach(el => ro.observe(el)); };
+
+  // brilho e "apertão" elástico ao tocar
+  const setPos = (el, e) => { const b = el.getBoundingClientRect(); el.style.setProperty("--mx", (e.clientX-b.left)+"px"); el.style.setProperty("--my", (e.clientY-b.top)+"px"); };
+  document.addEventListener("pointermove", e => { const g = e.target.closest?.(".glass"); if (g) setPos(g, e); }, {passive:true});
+  document.addEventListener("pointerdown", e => {
+    const g = e.target.closest?.(".glass:not(.search)"); if (!g) return;
+    setPos(g, e); g.classList.add("is-press");
+    const up = () => { g.classList.remove("is-press"); removeEventListener("pointerup", up); removeEventListener("pointercancel", up); };
+    addEventListener("pointerup", up); addEventListener("pointercancel", up);
+  });
+
+  /* ═════════ CAIXOTE ═════════ */
+  const grid = $("#grid");
+  const heartSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2Z"/></svg>`;
+  const cards = R.map(r => {
+    const el = document.createElement("article");
+    el.className = "rec"; el.dataset.id = r.id;
+    el.innerHTML = `
+      <button class="rec-cover" type="button" aria-label="Colocar ${r.title} na agulha"><div class="cover"></div><span class="t"></span></button>
+      <button class="glass heart" type="button" aria-pressed="false" aria-label="Salvar ${r.title}">${heartSVG}</button>
+      <div class="meta"><b></b><span><span></span><span></span></span></div>`;
+    paint(el.querySelector(".cover"), r);
+    el.querySelector(".t").textContent = r.title;
+    el.querySelector(".meta b").textContent = r.artist;
+    const sp = el.querySelectorAll(".meta span span"); sp[0].textContent = r.genre; sp[1].textContent = r.year;
+    el.querySelector(".rec-cover").addEventListener("click", () => { play(r); scrollTo({top:0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); });
+    el.querySelector(".heart").addEventListener("click", () => toggleSave(r.id));
+    grid.appendChild(el);
+    return { r, el };
+  });
+
+  function toggleSave(id){
+    state.saved.has(id) ? state.saved.delete(id) : state.saved.add(id);
+    try { localStorage.setItem("sulco-saved", JSON.stringify([...state.saved])); } catch(e){}
+    render();
+  }
+
+  function render(){
+    const q = norm(state.q.trim());
+    let shown = 0;
+    cards.forEach(({r, el}) => {
+      const hay = norm(`${r.title} ${r.artist} ${r.genre} ${r.year}`);
+      const ok = (!q || q.split(/\s+/).every(w => hay.includes(w)))
+        && (state.genre === "Todos" || r.genre === state.genre)
+        && (!state.onlySaved || state.saved.has(r.id));
+      el.hidden = !ok; if (ok) shown++;
+      el.querySelector(".heart").setAttribute("aria-pressed", state.saved.has(r.id));
+      el.classList.toggle("is-playing", state.playing === r.id);
+    });
+    $("#savedN").textContent = state.saved.size;
+    $("#saved").setAttribute("aria-pressed", state.onlySaved);
+    $("#count").textContent = shown === R.length ? `${R.length} discos` : `${shown} de ${R.length} discos`;
+    $("#clear").hidden = !state.q;
+    document.querySelectorAll(".chip[data-g]").forEach(b => b.setAttribute("aria-pressed", b.dataset.g === state.genre));
+    const empty = $("#empty");
+    empty.hidden = shown > 0;
+    if (!shown){
+      $("#emptyMsg").textContent = state.q
+        ? `Nada com “${state.q.trim()}” no caixote. Tente artista, gênero ou ano.`
+        : state.onlySaved ? "Você ainda não salvou nenhum disco desse jeito." : "Nenhum disco nesse filtro.";
+    }
+  }
+
+  /* ═════════ TOCA-DISCOS ═════════ */
+  const vinyl = $("#vinyl"); let swapT;
+  function play(r){
+    state.playing = r.id;
+    $("#nowTitle").textContent = r.title; $("#nowArtist").textContent = r.artist;
+    vinyl.classList.remove("out");
+    clearTimeout(swapT);
+    swapT = setTimeout(() => {
+      paint($("#label"), r); paint($("#sleeve"), r);
+      $("#sleeveTitle").textContent = r.title;
+      vinyl.classList.add("out");
+    }, matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 420);
+    render();
+  }
+  $("#shuffleOne").addEventListener("click", () => {
+    const pool = R.filter(r => r.id !== state.playing);
+    play(pool[Math.floor(Math.random()*pool.length)]);
+  });
+
+  /* ═════════ DOCK ═════════ */
+  const dock = $("#dock");
+  GENRES.forEach(g => {
+    const b = document.createElement("button");
+    b.className = "glass chip"; b.type = "button"; b.dataset.g = g; b.textContent = g;
+    b.addEventListener("click", () => { state.genre = g; render(); });
+    dock.appendChild(b);
+  });
+  const sh = document.createElement("button");
+  sh.className = "glass chip"; sh.type = "button";
+  sh.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h4v4M4 20 20 4M20 16v4h-4M15 15l5 5M4 4l5 5"/></svg>Embaralhar`;
+  sh.addEventListener("click", () => {
+    for (let i = cards.length-1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [cards[i], cards[j]] = [cards[j], cards[i]]; }
+    cards.forEach(c => grid.appendChild(c.el));
+  });
+  dock.appendChild(sh);
+
+  /* ═════════ BUSCA E SALVOS ═════════ */
+  const q = $("#q");
+  q.addEventListener("input", () => { state.q = q.value; render(); });
+  $("#clear").addEventListener("click", e => { e.preventDefault(); q.value = ""; state.q = ""; render(); q.focus(); });
+  $("#saved").addEventListener("click", () => { state.onlySaved = !state.onlySaved; render(); });
+  $("#reset").addEventListener("click", () => { q.value = ""; Object.assign(state, {q:"", genre:"Todos", onlySaved:false}); render(); });
+
+  // primeiro disco na agulha já no carregamento
+  const first = R[0];
+  paint($("#label"), first); paint($("#sleeve"), first);
+  $("#sleeveTitle").textContent = first.title;
+  state.playing = first.id;
+  $("#nowTitle").textContent = first.title; $("#nowArtist").textContent = first.artist;
+  render();
+  glassify(document);
+})();
+</script>
+</body>
+</html>
