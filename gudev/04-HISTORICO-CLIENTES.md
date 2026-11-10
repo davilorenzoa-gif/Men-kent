@@ -1,4 +1,4 @@
-# Histórico de leads e clientes (atualizado em 20/10/2026)
+# Histórico de leads e clientes (atualizado em 27/10/2026)
 
 Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o primeiro fechar, ele entra lá.
 
@@ -56,6 +56,17 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Falta:** avaliações reais do Google, geo do Maps e permissão pra usar as fotos e o vídeo do Instagram.
 - **Aba "Nossa história"** (pedido do Davi em 22/10): texto emocional feito só com dados reais (1989, +35 anos, +95 mil projetos entregues, confirmado pelo Davi em 22/10). Termina com a frase do Davi: "Há décadas estruturando sonhos." Se o padrinho contar como o depósito começou (quem fundou, o primeiro galpão), dá pra enriquecer.
 - **Minigame "Corte na medida"** (pedido do Davi em 22/10): 100 pontos dão 5% de desconto, só 1 vez por compra. **O padrinho precisa aprovar os 5%** e o atendente controla o uso do código no WhatsApp (o site não valida).
+## Santo Mimo By Hanna, Vila Matilde, São Paulo (Zona Leste) · lead do Davi
+- **Dados:** cafeteria, $$ no Google. Nota 4,9 no Google segundo o Restaurant Guru (**conferir no Maps**).
+  - Endereço: Rua José Mascarenhas, 1063, CEP 03515-000.
+  - WhatsApp: (11) 97430-8633 ("responde rapidamente" no Google).
+  - Instagram: @santomimobyhanna (~5 mil seguidores). Faz "doces inclusivos" e entrega pelo iFood.
+  - Horário: terça 8h30 às 18h45 (Maps). Segunda 10h às 18h (Instagram). O resto a confirmar.
+  - Logo: selo redondo branco, "Santo" dourado em letra de mão, "Mimo" rosado, batedor com asinhas, "Um doce para você".
+- **O negócio:** café com doces, sobremesas, donuts e tortas salgadas. Clientes elogiam ambiente pequeno e aconchegante, bolos e atendimento.
+- **Site (27/10/2026):** `sites/santo-mimo/`. Caixinha que se abre, zoom-out da xícara pra vitrine, "Mande um mimo".
+  - Fotos de produto ainda são ilustrativas (Pexels). Pedir as fotos da casa pra trocar (lista no README do site).
+- **Andamento:** prévia pronta, ainda não enviada.
 
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.

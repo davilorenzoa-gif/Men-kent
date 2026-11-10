@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://santo-mimo.netlify.app/sitemap.xml
