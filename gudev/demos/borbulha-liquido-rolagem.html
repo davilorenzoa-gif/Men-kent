@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Borbulha · demo de técnica</title>
+<meta name="description" content="Demo GuDev: a página enche de refrigerante com a rolagem, a água responde ao dedo e esvazia no fim. Marca fictícia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&display=swap">
+<style>
+/*
+  TÉCNICA (estudada nos vídeos Fervo, 10/11/2026)
+  1. Canvas fixo desenha o líquido: superfície = ondas fixas + mola (o dedo mexe).
+  2. O texto existe 2 vezes: a cópia escura (embaixo do canvas) e a cópia clara
+     (em cima do canvas) recortada com clip-path no formato do líquido.
+     As duas rolam nativas, então nunca desalinham; só o recorte é por frame.
+  3. O nível do líquido vem da rolagem: enche na 1ª tela, esvazia na última.
+*/
+:root{
+  --creme:#f1ebe0;
+  --tinta:#17130f;
+  --espuma:#fffaf0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--creme);color:var(--tinta);font-family:"Archivo",system-ui,sans-serif;font-stretch:100%;overflow-x:clip}
+#liquido{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;display:block}
+.camadas{position:relative}
+.conteudo{position:relative}
+/* o que é de clicar/ler fica acima do líquido; o título fica embaixo */
+.legenda,.sabores,.dica,.fim p,.fim a,.fim small{position:relative;z-index:3}
+.conteudo.clara{position:absolute;inset:0;z-index:2;pointer-events:none;color:var(--espuma)}
+.topo{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px clamp(16px,3vw,40px);font-size:15px;pointer-events:none}
+.topo b{font-weight:900;font-stretch:125%;font-size:20px;letter-spacing:-.02em}
+.topo span{font-weight:500;opacity:.8}
+.topo{mix-blend-mode:difference;color:#fff}
+
+section{min-height:100svh;padding:0 clamp(16px,3vw,40px);display:flex;flex-direction:column;justify-content:center;position:relative}
+.gigante{font-weight:900;font-stretch:125%;line-height:.86;letter-spacing:-.035em;text-transform:uppercase;font-size:clamp(56px,13.5vw,230px)}
+.gigante span{display:block}
+.legenda{display:inline-block;margin-top:clamp(18px,3vw,32px);background:var(--tinta);color:var(--espuma);padding:9px 14px;border-radius:8px;font-weight:600;font-size:clamp(14px,1.3vw,17px);align-self:flex-start;max-width:34ch}
+.clara .legenda{visibility:hidden}
+.clara .gigante{text-shadow:-3px 0 rgba(255,40,90,.45),3px 0 rgba(0,210,255,.45)}
+@media (min-width:900px){.clara .gigante{filter:url(#torto)}}
+
+.abre{justify-content:flex-end;padding-bottom:12svh}
+.abre .gigante{font-size:clamp(36px,12.4vw,250px);white-space:nowrap}
+.abre .dica{position:absolute;z-index:3;left:50%;top:22svh;transform:translateX(-50%);font-weight:600;font-size:15px;background:var(--tinta);color:var(--espuma);padding:8px 14px;border-radius:8px;white-space:nowrap}
+.clara .dica{visibility:hidden}
+
+.sabores{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.sabores button{font:600 15px/1 "Archivo",sans-serif;display:flex;align-items:center;gap:8px;padding:10px 16px 10px 10px;border-radius:99px;border:2px solid var(--tinta);background:var(--espuma);color:var(--tinta);cursor:pointer;pointer-events:auto}
+.sabores button i{width:18px;height:18px;border-radius:50%;background:var(--c)}
+.sabores button[aria-pressed="true"]{background:var(--tinta);color:var(--espuma)}
+.sabores button:focus-visible,.fim a:focus-visible{outline:3px solid #2a7fff;outline-offset:3px}
+.clara .sabores{visibility:hidden}
+
+.fim{justify-content:flex-start;padding-top:14svh;min-height:120svh}
+.fim p{margin-top:26px;font-size:clamp(17px,1.6vw,21px);font-weight:500;max-width:36ch}
+.fim a{align-self:flex-start;display:inline-block;margin-top:18px;background:var(--tinta);color:var(--espuma);text-decoration:none;font-weight:700;padding:16px 26px;border-radius:99px}
+.fim small{display:block;margin-top:14px;font-size:13px;opacity:.7}
+.clara .fim p,.clara .fim a,.clara .fim small{visibility:hidden}
+
+@media (prefers-reduced-motion:reduce){.clara .gigante{filter:none;text-shadow:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="torto" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.008 0.02" numOctaves="2" seed="4"/>
+    <feDisplacementMap in="SourceGraphic" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<header class="topo"><b>Borbulha</b><span>Marca fictícia</span></header>
+<canvas id="liquido" aria-hidden="true"></canvas>
+
+<div class="camadas">
+  <main class="conteudo" id="escura">
+    <section class="abre">
+      <p class="dica">Rola devagar: a página vai encher.</p>
+      <h1 class="gigante"><span>Borbulha</span></h1>
+    </section>
+    <section>
+      <h2 class="gigante"><span>Gelado</span><span>até o fim</span></h2>
+      <p class="legenda">Encosta o dedo no líquido. Ele mexe.</p>
+    </section>
+    <section>
+      <h2 class="gigante"><span>Rodela</span><span>que boia</span></h2>
+      <p class="legenda">Fruta de verdade dentro da garrafa.</p>
+    </section>
+    <section>
+      <h2 class="gigante"><span>Troca</span><span>o sabor</span></h2>
+      <div class="sabores" role="group" aria-label="Sabor">
+        <button type="button" data-s="limao" aria-pressed="true" style="--c:#b6e22c"><i></i>Limão</button>
+        <button type="button" data-s="pitanga" aria-pressed="false" style="--c:#ff4f63"><i></i>Pitanga</button>
+        <button type="button" data-s="laranja" aria-pressed="false" style="--c:#ff9a2e"><i></i>Laranja</button>
+      </div>
+    </section>
+    <section data-gelo>
+      <h2 class="gigante"><span>Põe</span><span>mais gelo</span></h2>
+      <p class="legenda">Chegou nessa parte, cai gelo.</p>
+    </section>
+    <section class="fim">
+      <h2 class="gigante"><span>Secou.</span><span>Enche de novo?</span></h2>
+      <p>O líquido some quando a página acaba. O texto que estava embaixo dele aparece escuro de novo.</p>
+      <a href="#" id="denovo">Voltar pro começo</a>
+      <small>Demo de técnica da GuDev. A Borbulha não existe.</small>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  var cv=document.getElementById('liquido'),ctx=cv.getContext('2d');
+  var escura=document.getElementById('escura');
+  var clara=escura.cloneNode(true);
+  clara.id='';clara.className='conteudo clara';clara.setAttribute('aria-hidden','true');
+  clara.querySelectorAll('[id]').forEach(function(n){n.removeAttribute('id')});
+  clara.querySelectorAll('a,button').forEach(function(n){n.tabIndex=-1});
+  escura.parentNode.appendChild(clara);
+
+  var calmo=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var SABORES={
+    limao:{a:[198,240,52],b:[92,180,24],fruta:[214,240,120]},
+    pitanga:{a:[255,110,120],b:[214,30,72],fruta:[255,190,170]},
+    laranja:{a:[255,178,64],b:[240,104,18],fruta:[255,200,110]}
+  };
+  var corA=SABORES.limao.a.slice(),corB=SABORES.limao.b.slice(),corF=SABORES.limao.fruta.slice(),alvo=SABORES.limao;
+
+  var W=0,H=0,dpr=1,N=72,alt=[],vel=[],nivel=0,bolhas=[],frutas=[],gelos=[],t0=performance.now();
+  var CHEIO=0.16; // superfície fica a 16% do topo quando cheio
+
+  function medir(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=innerWidth;H=innerHeight;
+    if(!W||!H)return;
+    cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    alt=[];vel=[];for(var i=0;i<N;i++){alt.push(0);vel.push(0)}
+    frutas=[];var q=W<700?5:8;
+    for(var k=0;k<q;k++)frutas.push({x:Math.random()*W,y:H*(.35+Math.random()*.6),r:(W<700?22:34)+Math.random()*26,f:Math.random()*6.28,giro:Math.random()*6.28});
+  }
+  var ultimaLargura=0;
+  addEventListener('resize',function(){if(innerWidth!==ultimaLargura||!H){ultimaLargura=innerWidth;medir()}else{H=innerHeight;cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}});
+  ultimaLargura=innerWidth;medir();
+
+  function clamp(v,a,b){return v<a?a:v>b?b:v}
+  function suave(x){return x*x*(3-2*x)}
+
+  // nível pela rolagem: 0 = vazio, 1 = cheio
+  var fim=document.querySelector('.fim');
+  function nivelAlvo(){
+    var y=scrollY;
+    var enche=suave(clamp(y/(H*.85),0,1));
+    var topoFim=fim.offsetTop;
+    var esvazia=suave(clamp((y-(topoFim-H*.9))/(H*.75),0,1));
+    return enche*(1-esvazia);
+  }
+
+  // dedo na água
+  var ultimo=null;
+  function mexer(x,y,forca){
+    var sup=superficieY(x);
+    if(y<sup-40)return;
+    var i=Math.round(x/W*(N-1));
+    var perto=Math.abs(y-sup)<120?1:.35;
+    for(var d=-2;d<=2;d++){var j=i+d;if(j>=0&&j<N)vel[j]+=forca*perto*(1-Math.abs(d)*.3)}
+    if(y>sup&&bolhas.length<220)for(var b=0;b<3;b++)bolhas.push({x:x+(Math.random()-.5)*30,y:y+(Math.random()-.5)*20,r:2+Math.random()*5,v:.6+Math.random()*1.6,o:Math.random()*6});
+  }
+  addEventListener('pointermove',function(e){
+    if(calmo)return;
+    var dy=ultimo?e.clientY-ultimo.y:0,dx=ultimo?e.clientX-ultimo.x:0;
+    ultimo={x:e.clientX,y:e.clientY};
+    var f=clamp((Math.abs(dx)+Math.abs(dy))*.35,0,14)*(dy<0?-1:1);
+    mexer(e.clientX,e.clientY,f);
+  },{passive:true});
+  addEventListener('pointerdown',function(e){if(!calmo)mexer(e.clientX,e.clientY,-18)},{passive:true});
+  addEventListener('pointerleave',function(){ultimo=null});
+
+  function superficieBase(){return H-(H-H*CHEIO)*nivel}
+  function superficieY(x){
+    var i=clamp(x/W*(N-1),0,N-1),a=Math.floor(i),b=Math.min(N-1,a+1),f=i-a;
+    return superficieBase()+alt[a]*(1-f)+alt[b]*f+onda(x,performance.now());
+  }
+  function onda(x,t){
+    if(calmo)return 0;
+    var s=t/1000;
+    return Math.sin(x*.006+s*1.6)*7+Math.sin(x*.013-s*2.3)*3.5+Math.sin(x*.0021+s*.7)*5;
+  }
+
+  // gelo cai quando a seção chega
+  var secGelo=document.querySelector('[data-gelo]'),jaCaiu=false;
+  function soltarGelo(){
+    var q=W<700?5:9;
+    for(var k=0;k<q;k++)gelos.push({x:W*(.1+Math.random()*.8),y:-60-Math.random()*300,vy:0,l:(W<700?38:60)+Math.random()*30,a:Math.random()*6.28,va:(Math.random()-.5)*.06,boiando:false,f:Math.random()*6});
+  }
+
+  // botões de sabor
+  document.querySelectorAll('.sabores button').forEach(function(bt){
+    bt.addEventListener('click',function(){
+      alvo=SABORES[bt.dataset.s];
+      document.querySelectorAll('#escura .sabores button').forEach(function(o){o.setAttribute('aria-pressed',o===bt?'true':'false')});
+      for(var i=0;i<N;i+=3)vel[i]+=(Math.random()-.5)*16;
+    });
+  });
+  document.getElementById('denovo').addEventListener('click',function(e){e.preventDefault();scrollTo({top:0,behavior:calmo?'auto':'smooth'})});
+
+  function rgb(c,a){return 'rgba('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+','+(a==null?1:a)+')'}
+  function misturar(c,d,k){for(var i=0;i<3;i++)c[i]+=(d[i]-c[i])*k}
+
+  function rodela(f,t){
+    ctx.save();ctx.translate(f.x,f.y);ctx.rotate(f.giro+Math.sin(t*.4+f.f)*.15);
+    ctx.fillStyle=rgb(corB,.9);ctx.beginPath();ctx.arc(0,0,f.r,0,6.283);ctx.fill();
+    ctx.fillStyle=rgb([255,250,235],.9);ctx.beginPath();ctx.arc(0,0,f.r*.86,0,6.283);ctx.fill();
+    ctx.fillStyle=rgb(corF,.95);
+    for(var g=0;g<10;g++){ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,f.r*.78,g*.628+.05,g*.628+.578);ctx.closePath();ctx.fill()}
+    ctx.fillStyle=rgb([255,250,235],.9);ctx.beginPath();ctx.arc(0,0,f.r*.12,0,6.283);ctx.fill();
+    ctx.restore();
+  }
+
+  var pontos=new Array(N);
+  function quadro(agora){
+    requestAnimationFrame(quadro);
+    if(!W||!H)return;
+    var t=(agora-t0)/1000;
+    nivel+=(nivelAlvo()-nivel)*(calmo?1:.12);
+    misturar(corA,alvo.a,.06);misturar(corB,alvo.b,.06);misturar(corF,alvo.fruta,.06);
+
+    // mola da superfície
+    for(var p=0;p<3;p++){
+      for(var i=0;i<N;i++){
+        var esq=alt[i>0?i-1:i],dir=alt[i<N-1?i+1:i];
+        vel[i]+=(-alt[i]*.02)+((esq+dir)/2-alt[i])*.25;
+        vel[i]*=.985;
+      }
+      for(i=0;i<N;i++){alt[i]+=vel[i]*.33;alt[i]=clamp(alt[i],-90,90)}
+    }
+
+    ctx.clearRect(0,0,W,H);
+    var base=superficieBase();
+    if(base>=H+2){atualizarRecorte(null);return}
+
+    for(i=0;i<N;i++){var x=i/(N-1)*W;pontos[i]=[x,base+alt[i]+onda(x,agora)]}
+
+    // jato caindo enquanto enche
+    var enchendo=nivel>0.02&&nivel<0.97&&scrollY<H*1.2;
+    if(enchendo&&!calmo){
+      ctx.fillStyle=rgb(corA,.95);
+      var jx=W*.5,jw=6+4*Math.sin(t*9);
+      ctx.fillRect(jx-jw/2,0,jw,pontos[Math.round(N/2)][1]+4);
+    }
+
+    // corpo
+    ctx.beginPath();ctx.moveTo(0,H);
+    for(i=0;i<N;i++)ctx.lineTo(pontos[i][0],pontos[i][1]);
+    ctx.lineTo(W,H);ctx.closePath();
+    var gr=ctx.createLinearGradient(0,base-20,0,H);
+    gr.addColorStop(0,rgb(corA));gr.addColorStop(1,rgb(corB));
+    ctx.fillStyle=gr;ctx.fill();
+
+    ctx.save();ctx.clip();
+    // feixes de luz (cáustica)
+    if(!calmo){
+      ctx.globalCompositeOperation='lighter';
+      for(var k=0;k<7;k++){
+        var cx=(k/7)*W+Math.sin(t*.5+k*1.7)*W*.05;
+        var lg=ctx.createLinearGradient(0,base,0,base+H*.7);
+        lg.addColorStop(0,'rgba(255,255,220,.08)');lg.addColorStop(1,'rgba(255,255,220,0)');
+        ctx.fillStyle=lg;ctx.beginPath();
+        ctx.moveTo(cx-20,base);ctx.lineTo(cx+30,base);
+        ctx.lineTo(cx+90+Math.sin(t+k)*40,base+H*.7);ctx.lineTo(cx-10+Math.sin(t+k)*40,base+H*.7);ctx.fill();
+      }
+      ctx.globalCompositeOperation='source-over';
+    }
+    // rodelas
+    for(k=0;k<frutas.length;k++){
+      var f=frutas[k];
+      f.x+=Math.sin(t*.3+f.f)*.15;f.y+=Math.cos(t*.5+f.f)*.12;
+      if(f.y<base+f.r*.6)f.y=base+f.r*.6;
+      rodela(f,t);
+    }
+    // bolhas
+    if(!calmo&&bolhas.length<140&&Math.random()<.5)bolhas.push({x:Math.random()*W,y:H+10,r:1.5+Math.random()*4,v:.5+Math.random()*1.4,o:Math.random()*6});
+    ctx.strokeStyle='rgba(255,255,240,.75)';ctx.lineWidth=1.3;
+    for(k=bolhas.length-1;k>=0;k--){
+      var b=bolhas[k];b.y-=b.v;b.x+=Math.sin(t*3+b.o)*.4;
+      if(b.y<superficieY(b.x)){bolhas.splice(k,1);continue}
+      ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,6.283);ctx.stroke();
+    }
+    ctx.restore();
+
+    // gelo (por cima, flutua na superfície)
+    if(secGelo){
+      var r=secGelo.getBoundingClientRect();
+      if(!jaCaiu&&r.top<H*.5&&r.bottom>H*.3){jaCaiu=true;soltarGelo()}
+      if(jaCaiu&&r.top>H*1.2){jaCaiu=false}
+    }
+    for(k=gelos.length-1;k>=0;k--){
+      var g=gelos[k],sup=superficieY(g.x);
+      if(calmo){gelos.splice(k,1);continue}
+      if(g.y<sup){g.vy+=.6;g.y+=g.vy;if(g.y>=sup){g.vy*=.25;var ci=Math.round(g.x/W*(N-1));if(vel[ci]!=null)vel[ci]+=g.vy*4+8;g.boiando=true}}
+      else{g.y+=( sup+g.l*.25 - g.y)*.08 + Math.sin(t*2+g.f)*.3}
+      g.a+=g.va;g.va*=.99;
+      if(!jaCaiu)g.y+=6;
+      if(g.y>H+120){gelos.splice(k,1);continue}
+      ctx.save();ctx.translate(g.x,g.y);ctx.rotate(g.a);
+      ctx.fillStyle='rgba(255,255,255,.28)';ctx.strokeStyle='rgba(255,255,255,.85)';ctx.lineWidth=2;
+      var l=g.l;ctx.beginPath();ctx.roundRect?ctx.roundRect(-l/2,-l/2,l,l,l*.18):ctx.rect(-l/2,-l/2,l,l);ctx.fill();ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,.55)';ctx.fillRect(-l*.3,-l*.32,l*.18,l*.4);
+      ctx.restore();
+    }
+
+    // linha da espuma
+    ctx.beginPath();for(i=0;i<N;i++)ctx[i?'lineTo':'moveTo'](pontos[i][0],pontos[i][1]);
+    ctx.strokeStyle='rgba(255,255,235,.85)';ctx.lineWidth=3;ctx.stroke();
+
+    atualizarRecorte(pontos);
+  }
+
+  // recorte da cópia clara: polígono em coordenadas da página
+  var ultimoClip='';
+  function atualizarRecorte(pts){
+    var c;
+    if(!pts){c='polygon(0 0,0 0,0 0)'}
+    else{
+      var y0=scrollY,s=['0px '+(y0+H+200)+'px'];
+      for(var i=0;i<N;i+=2)s.push(pts[i][0].toFixed(1)+'px '+(y0+pts[i][1]).toFixed(1)+'px');
+      s.push(W+'px '+(y0+pts[N-1][1]).toFixed(1)+'px');
+      s.push(W+'px '+(y0+H+200)+'px');
+      c='polygon('+s.join(',')+')';
+    }
+    if(c!==ultimoClip){clara.style.clipPath=c;clara.style.webkitClipPath=c;ultimoClip=c}
+  }
+
+  requestAnimationFrame(quadro);
+})();
+</script>
+</body>
+</html>

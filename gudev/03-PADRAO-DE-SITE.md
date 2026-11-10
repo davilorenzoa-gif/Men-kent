@@ -127,6 +127,31 @@ Já usados nesse cliente: pra outro, variar a ideia, não colar igual.
   - Reduzir as partículas com `prefers-reduced-motion`.
   - O botão que foge desvia do título e do outro botão.
 
+### Estudados nos vídeos Fervo e Madoska (10/11/2026, demos em `demos/`)
+O Davi mandou 2 vídeos de referência e pediu pra aprender a fazer igual. As demos são técnica com marca fictícia: pra cliente, trocar marca, texto e fotos, e variar a coreografia.
+
+**1. A página enche de líquido (Fervo, refrigerante). Demo: `demos/borbulha-liquido-rolagem.html`.**
+- O que acontece: um jato cai do topo e o líquido sobe com a rolagem. O título que fica embaixo do líquido vira cor clara, com borda RGB e meio torto. O dedo mexe a água. Bolhas sobem e rodelas de fruta boiam. Os botões de sabor trocam a cor do líquido. Numa seção, cai gelo. No fim, o líquido esvazia e o texto volta a ficar escuro.
+- O segredo: o texto existe **2 vezes**. A cópia escura fica embaixo do canvas. A cópia clara (`cloneNode`) fica em cima, recortada com `clip-path: polygon(...)` no formato da superfície. As duas rolam nativas, então nunca desalinham; só o recorte é refeito por quadro (em coordenadas da página: `scrollY + y da onda`).
+- Superfície = ondas fixas (3 senos) + mola de 72 pontos (o dedo dá "velocidade" no ponto mais perto). Nível = rolagem: enche na 1ª tela, esvazia quando a última seção entra.
+- Legenda, botões e CTA ficam com `z-index` acima do canvas e escondidos na cópia clara. O título fica embaixo.
+- Distorção: `feTurbulence` + `feDisplacementMap` **estático** só no computador. Animar a turbulência pesa.
+- Serve pra: bebida, açaí, sorvete, suco, cervejaria, lava-rápido (espuma), piscina.
+
+**2. A câmera passeia pela vitrine e a colher prova (Madoska, sorveteria). Demo: `demos/pingo-vitrine-provas.html`.**
+- O que acontece: o topo é a vitrine inteira vista de cima, com o lado do texto "lavado" de branco. Na rolagem, a câmera chega perto de uma cuba e uma colherzinha vermelha mergulha. Do lado, sai uma bola do sabor. Uma bandeirinha com o nome desce balançando, o título troca, aparece "2 de 9 provas" e os pontinhos do lado marcam onde você está.
+- O segredo: uma "mesa" grande (a vitrine) dentro de um palco `sticky`. A câmera é só `translate + scale` na mesa. Cada sabor é um estado de câmera `{centro, escala, âncora na tela}`. Em cada trecho da rolagem, a 1ª metade é viagem e a 2ª é parada; a colher prova na parada.
+- Colher e bola ficam **dentro da mesa**, então andam com a câmera sem conta nenhuma. A bola usa a própria textura da cuba como fundo, com sombra interna de esfera.
+- Troca do texto com folga (só depois de 55% da viagem) e um `setTimeout` por troca. Os pontinhos levam pro sabor.
+- No cliente de verdade: **uma foto real da vitrine de cima** (ou foto de cada cuba montada em grade) e recorte real da bola. As cubas da demo são desenhadas no código só pra não usar foto de ninguém. A frase de cada sabor sai do cardápio e das avaliações reais (com nome, como a Madoska faz).
+- Serve pra: sorveteria, açaí (toppings), doceria (vitrine de doces), padaria, hortifruti, pizzaria (pizzas inteiras de cima), loja de tintas.
+
+**O que os dois têm em comum (é isso que faz parecer caro):**
+- Uma ideia só, ligada ao produto ("esse site enche", "prova antes"), levada até o fim da página.
+- Frase-gancho pequena dizendo o que fazer: "Mexa o dedo na água", "Rola devagar".
+- O resto é calmo: barra simples, um botão verde de WhatsApp, "Aberto até 18h".
+- O fim fecha a piada: o líquido esvazia; a vitrine termina no "Já escolheu?".
+
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
 
