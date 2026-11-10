@@ -114,7 +114,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Falta:** confirmar endereço, WhatsApp e cardápio.
 
 ## Oficina Mestre das Motos · lead real do Davi (10/11/2026)
-- **É lead real** (confirmado pelo Davi em 10/11). Ainda falta saber cidade, contato e quem é o dono.
+- **É lead real** (confirmado pelo Davi em 10/11). WhatsApp: (11) 96950-1340. Falta cidade, endereço e quem é o dono.
 - O Davi mandou um briefing completo (paleta, textos, seções) e fotos/vídeos de moto tirados da internet.
 - **Site:** `sites/mestre-das-motos/` (ignição no conta-giros, mapa da moto, painel de alertas pro WhatsApp).
 - **Nenhum dado real ainda:** sem WhatsApp, endereço, cidade, horário, Instagram, números ou avaliações. Tudo fica no `CONFIG` do HTML e aparece como "a confirmar".

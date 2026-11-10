@@ -23,14 +23,15 @@ Apoio: título por palavra, foto revelada por cortina, botões magnéticos, luz 
 
 ## Onde preencher os dados
 No começo do `<script>` do `index.html` tem o objeto `CONFIG`. Campo vazio aparece como "a confirmar" e nada inventado entra:
-- `whatsapp`: enquanto estiver vazio, os botões abrem o WhatsApp com a mensagem pronta e a pessoa escolhe o contato. **Preencher antes de subir.** No `404.html` o link também é sem número: trocar lá.
+- `whatsapp`: preenchido com (11) 96950-1340 (também no `404.html` e no schema).
 - `telefone`, `endereco` (liga o mapa e o "Como chegar"), `cidade`, `horario`, `instagram`, `googleAvaliacoes`.
 - `numeros`: anos de experiência, motos atendidas etc. **Só com o número que o dono der.** Com `null`, o bloco não aparece.
 - `avaliacoes`: copiar do Google com nome, nota e texto. Sem isso, aparece um cartão "Demonstrativo".
 - Schema JSON-LD no `<head>`: completar endereço, telefone e geo quando tiver.
 
 ## Falta confirmar com o dono
-- [ ] WhatsApp, telefone, endereço, cidade, horário e Instagram.
+- [x] WhatsApp e telefone: (11) 96950-1340 (10/11).
+- [ ] Endereço, cidade, horário e Instagram.
 - [ ] Lista de serviços: os 9 vieram do briefing como "sujeitos à confirmação". Tirar o que a oficina não faz.
 - [ ] Textos do "Sobre" e dos diferenciais (diagnóstico explicado, orçamento aprovado antes, retorno pelo WhatsApp): são promessas, só mantém se a oficina cumpre.
 - [ ] Números reais pros contadores e avaliações reais do Google.
