@@ -74,3 +74,5 @@ Abas Fusca, Kombi, Variant, Brasília e SP2 no "Gire a katraka". Fotos que o Dav
 - Pagamento combinado: R$ 600 em 3 meses (R$ 200 por mês). Neste mês: R$ 100 quando o site subir no Netlify e R$ 100 quando o domínio estiver ligado. Depois, R$ 200 no 2º mês e R$ 200 no 3º.
 
 - 10/11: rodapé sem o KATRAKA vazado, só com o logo dele. O Fusca branco do vídeo (quem somos) é de cliente: o Alexandre vai mandar foto de um carro dele pra trocar.
+
+- 10/11: vídeo do "quem somos" trocado pelo Fusca preto rebaixado do próprio Alexandre (`img/fusca-oficina.mp4`).
