@@ -12,6 +12,8 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `gudev/03-PADRAO-DE-SITE.md` — 3 WOWs, filtro anti-"cara de IA", regras de celular, segurança, checklist de 19 itens
 - `gudev/04-HISTORICO-CLIENTES.md` — cada lead e cliente até agora
 - `gudev/05-LICOES-E-BUGS.md` — erros que já aconteceram
+- `gudev/07-REFERENCIAS-DESIGN.md` — 330 referências por nicho: padrões que funcionam, o que é template, ideias de WOW novas e onde dá pra buscar
+- `gudev/06-REFERENCIA-ORIGINKIT.md` — biblioteca de efeitos originkit.dev: o que é grátis, licença, como converter pra HTML puro
 - `gudev/exemplos/*.html` — sites reais (Açaí Happy, Chersoni, Dellart): nível mínimo de qualidade
 
 ## Resumo rápido
@@ -20,7 +22,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - WhatsApp comercial (Davi): (11) 96465-0141. Venda 100% pelo WhatsApp.
 - Hospedagem no Netlify da GuDev (`proposta-<nome>.netlify.app` → `<nome>.netlify.app`); domínio no nome do cliente no registro.br.
 - Prospecção: até 20 mensagens novas/dia por pessoa, blocos de 5 a cada ~30 min. Nunca disparo em massa. 1º contato manda vídeo de 15s, não link.
-- Nenhum cliente fechou ainda (20/10/2026) → seção de cases vazia. Prumo e Peçaí são demos, nunca case.
+- Nenhum cliente fechou ainda (20/10/2026) → seção de cases vazia. Prumo, Peçaí e Fornalha são demos, nunca case.
 
 ## Regras que nunca quebram
 - Nunca inventar avaliação, depoimento, cliente, número ou caso. Só dados reais (Google Maps, Instagram, cardápio).
