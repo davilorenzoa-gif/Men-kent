@@ -102,6 +102,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - Já saiu no Canal da Peça (como rebaixar um Fusca) e no blog Acelerada.
 - **Andamento:** prévia feita em 06/11 em `sites/katraka/` (ver o README de lá com o que confirmar).
 - **Preço (07/11, confirmado pelo Davi em 10/11):** o Alexandre pediu desconto e, por ser a 1ª venda, Gu e Davi aceitaram **R$ 600 em 2x de R$ 300** (metade pra começar, metade no ar), com domínio no nome dele e oferta do plano de R$ 60.
+- **10/11:** ainda não pagou. Vai pedir uma segunda opinião antes, mas o Davi acredita forte que ele paga em 11/11, pela quantidade de alterações que já pediu.
 - **Pendente:** confirmar se ele já pagou a 1ª parcela. Quando pagar, vira o **1º cliente da GuDev**: atualizar o resumo do `CLAUDE.md` e, com autorização dele, a seção de cases.
 - **Pedidos dele (09/11):** quer poder mostrar os trabalhos todo dia → seção ligada no Instagram dele (Behold), sem custo extra por ser prévia. Não gostou do verde → site trocado pra laranja queimado. Prints estáticos enviados pra ele ler.
 - **Domínio:** já existe `katraka.com.br`; confirmar se é dele antes de registrar outro.
