@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DOZE · Garagem de V12 | Projeto conceito GuDev</title>
+<meta name="description" content="Projeto conceito da GuDev: uma garagem só de V12. Dê a partida, conheça o DBS, o Ghost e o 812 e destrave a chave pra agendar seu test drive.">
+<meta name="theme-color" content="#08090A">
+<meta property="og:title" content="DOZE · Garagem de V12">
+<meta property="og:description" content="Segure pra dar a partida. Três carros, doze cilindros cada.">
+<meta property="og:image" content="img/dbs.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+<style>
+@property --acento { syntax: '<color>'; inherits: true; initial-value: #2BC9C0; }
+:root{
+  --noite:#08090A; --carvao:#111314; --linha:rgba(239,232,220,.12);
+  --marfim:#EFE8DC; --nevoa:#9C978E; --ouro:#C8A46A; --ouro-claro:#E2C48F;
+  --acento:#2BC9C0;
+  transition: --acento .9s ease;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{background:var(--noite);color:var(--marfim);font-family:'Manrope',system-ui,sans-serif;font-size:16px;line-height:1.55;overflow-x:clip;-webkit-font-smoothing:antialiased}
+body.travado{overflow:hidden}
+img{max-width:100%;height:auto;display:block}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ouro-claro);outline-offset:3px}
+.miolo{width:min(1160px,100% - 32px);margin-inline:auto}
+.serif{font-family:'Bodoni Moda',serif;font-optical-sizing:auto}
+.kicker{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ouro)}
+h2{font-family:'Bodoni Moda',serif;font-weight:500;font-size:clamp(34px,6vw,64px);line-height:1.02;letter-spacing:-.01em}
+h2 em{font-style:italic;color:var(--ouro-claro)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border:1px solid var(--ouro);transition:background .3s,color .3s,transform .3s}
+.btn.cheio{background:var(--ouro);color:#15110A}
+.btn.cheio:hover{background:var(--ouro-claro)}
+.btn.vazado:hover{background:rgba(200,164,106,.12)}
+.btn svg{width:14px;height:14px}
+
+/* ---------- WOW 1: portão + partida ---------- */
+.portao{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:
+  repeating-linear-gradient(180deg,#0d0f10 0 46px,#070808 46px 48px,#16191a 48px 50px);
+  transition:transform 1.5s cubic-bezier(.7,0,.2,1)}
+.portao.sobe{transform:translateY(-102%)}
+.portao.sobe .painel{opacity:0;transition:opacity .3s}
+.portao::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:linear-gradient(#2a2d2f,#0a0b0c)}
+.painel{position:relative;text-align:center;display:grid;justify-items:center;gap:22px;padding:24px}
+.painel .marca{font-family:'Bodoni Moda',serif;font-size:15px;letter-spacing:.6em;padding-left:.6em;color:var(--nevoa)}
+.bloco{width:min(300px,72vw)}
+.bloco .cil{fill:#1b1e20;stroke:#2c3033;stroke-width:1;transition:fill .12s, filter .12s}
+.bloco .cil.aceso{fill:var(--ouro-claro);filter:drop-shadow(0 0 6px rgba(226,196,143,.9))}
+.bloco .cil.fogo{fill:#fff4dc;filter:drop-shadow(0 0 10px #ffb36b)}
+.partida{position:relative;width:118px;height:118px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 35%,#2a2d30,#0c0d0e 70%);box-shadow:0 0 0 1px #34383b,0 10px 30px rgba(0,0,0,.6),inset 0 2px 0 rgba(255,255,255,.06);
+  touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:transform .15s}
+.partida.apertado{transform:scale(.95)}
+.partida svg.anel{position:absolute;inset:-8px;width:134px;height:134px;transform:rotate(-90deg)}
+.partida .anel circle{fill:none;stroke-width:2}
+.partida .anel .trilho{stroke:#26292b}
+.partida .anel .carga{stroke:var(--ouro);stroke-dasharray:408;stroke-dashoffset:408;filter:drop-shadow(0 0 4px rgba(200,164,106,.8))}
+.partida span{font-size:10px;letter-spacing:.24em;line-height:1.5;color:var(--marfim)}
+.partida b{display:block;font-size:13px;letter-spacing:.3em;color:var(--ouro-claro);font-weight:600}
+.painel .dica{font-size:13px;color:var(--nevoa);max-width:30ch}
+.pular{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--nevoa);text-decoration:underline;text-underline-offset:4px}
+.flash{position:fixed;inset:0;z-index:99;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 55%,rgba(220,250,255,.55),transparent 60%)}
+.flash.on{animation:flash .9s ease-out}
+@keyframes flash{0%{opacity:0}15%{opacity:1}100%{opacity:0}}
+
+/* ---------- topo ---------- */
+.topo{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .4s,backdrop-filter .4s}
+.topo.solido{background:rgba(8,9,10,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--linha)}
+.topo .miolo{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo svg{width:30px;height:30px}
+.logo b{font-family:'Bodoni Moda',serif;font-weight:500;font-size:20px;letter-spacing:.32em}
+.logo small{display:block;font-size:8px;letter-spacing:.42em;color:var(--ouro);margin-top:-3px}
+.topo nav{display:flex;gap:30px;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+.topo nav a{text-decoration:none;opacity:.8;transition:opacity .2s}
+.topo nav a:hover{opacity:1}
+.topo .btn{padding:11px 16px;font-size:10px}
+@media (max-width:860px){.topo nav{display:none}}
+@media (max-width:520px){.topo .btn{display:none}}
+
+/* ---------- hero (lanterna) ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:grid;align-items:center;padding:96px 0 48px;overflow:clip;
+  background:radial-gradient(ellipse 60% 70% at 72% 50%,#06312f 0%,#041a19 38%,var(--noite) 75%)}
+.hero .miolo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:center;gap:24px}
+.hero h1{font-family:'Bodoni Moda',serif;font-weight:500;font-size:clamp(46px,7.4vw,104px);line-height:.95;letter-spacing:-.02em;margin:18px 0 22px}
+.hero h1 .l{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .l > span{display:block;transform:translateY(105%);transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.hero h1 em{font-style:italic;color:var(--ouro-claro)}
+.vivo .hero h1 .l > span{transform:none}
+.vivo .hero h1 .l:nth-child(2) > span{transition-delay:.12s}
+.hero p.sub{max-width:40ch;color:#CFC8BC;font-size:16px}
+.hero .acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero .fade{opacity:0;transform:translateY(16px);transition:opacity .9s .35s,transform .9s .35s}
+.vivo .hero .fade{opacity:1;transform:none}
+.numeros{display:flex;gap:30px;margin-top:40px;padding-top:22px;border-top:1px solid var(--linha)}
+.numeros div{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--nevoa)}
+.numeros b{display:block;font-family:'Bodoni Moda',serif;font-weight:500;font-size:34px;letter-spacing:0;color:var(--marfim);line-height:1.1;text-transform:none}
+.farol{position:relative;aspect-ratio:1;width:100%;max-width:640px;justify-self:end;cursor:none;touch-action:pan-y;
+  -webkit-mask-image:radial-gradient(ellipse 62% 62% at 50% 52%,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse 62% 62% at 50% 52%,#000 62%,transparent 100%)}
+.farol img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.farol .base{filter:brightness(.22) saturate(.7) contrast(1.1)}
+.farol .luz{--x:50%;--y:45%;--r:34%;
+  -webkit-mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),#000 0%,rgba(0,0,0,.85) 35%,transparent 100%);
+  mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),#000 0%,rgba(0,0,0,.85) 35%,transparent 100%);
+  filter:brightness(1.12) saturate(1.1)}
+.farol .olho{position:absolute;width:18%;aspect-ratio:2/1;border-radius:50%;top:57%;transform:translate(-50%,-50%);opacity:0;
+  background:radial-gradient(ellipse,rgba(225,245,255,.95),rgba(140,210,255,.35) 40%,transparent 70%);mix-blend-mode:screen;transition:opacity .25s}
+.farol .olho.e{left:23.5%}.farol .olho.d{left:76.5%}
+.farol.acesa .olho{opacity:1;animation:respira 4s ease-in-out infinite}
+@keyframes respira{50%{opacity:.7}}
+.farol .anel-cursor{position:absolute;left:var(--x);top:var(--y);width:54px;height:54px;margin:-27px 0 0 -27px;border:1px solid rgba(226,196,143,.6);border-radius:50%;pointer-events:none;transition:opacity .3s}
+.farol .rotulo{position:absolute;left:50%;bottom:9%;transform:translateX(-50%);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ouro);white-space:nowrap}
+@media (hover:none){.farol{cursor:auto}.farol .anel-cursor{opacity:.5}}
+@media (max-width:860px){
+  .hero{padding-top:88px}
+  .hero .miolo{grid-template-columns:minmax(0,1fr)}
+  .farol{order:-1;max-width:460px;justify-self:center;margin:-10px auto -30px}
+  .numeros{gap:22px}
+  .numeros b{font-size:28px}
+}
+
+/* ---------- faixa ---------- */
+.faixa{border-block:1px solid var(--linha);overflow:hidden;padding:18px 0;background:#0B0C0D}
+.faixa .trilho{display:flex;width:max-content;animation:corre 38s linear infinite}
+.faixa span{font-family:'Bodoni Moda',serif;font-style:italic;font-size:clamp(22px,3vw,34px);padding-right:44px;white-space:nowrap;color:#D6CEC0}
+.faixa span i{font-style:normal;color:var(--ouro);margin-right:44px;font-size:.6em;vertical-align:middle}
+@keyframes corre{to{transform:translateX(-50%)}}
+
+/* ---------- WOW 2: salão (troca com varredura de luz) ---------- */
+.salao{position:relative;height:330vh}
+.salao .cena{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;align-content:center;
+  background:radial-gradient(ellipse 70% 55% at 50% 58%,color-mix(in srgb,var(--acento) 22%,transparent),transparent 70%),var(--noite)}
+.salao .grade{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr);gap:40px;align-items:center}
+.salao .topo-s{display:flex;justify-content:space-between;align-items:end;margin-bottom:28px}
+.salao .indice{font-family:'Bodoni Moda',serif;font-size:14px;letter-spacing:.2em;color:var(--nevoa)}
+.salao .indice b{color:var(--marfim);font-weight:500}
+.ficha .marca-c{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--acento);transition:color .9s}
+.ficha h3{font-family:'Bodoni Moda',serif;font-weight:500;font-size:clamp(34px,4.6vw,58px);line-height:1;margin:10px 0 14px}
+.ficha h3 em{font-style:italic}
+.ficha .frase{color:#CFC8BC;max-width:34ch;font-size:15px}
+.ficha .troca{transition:opacity .35s,transform .35s}
+.ficha.saindo .troca{opacity:0;transform:translateY(10px)}
+.specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--linha);border:1px solid var(--linha);margin-top:24px}
+.specs div{background:var(--noite);padding:14px 16px}
+.specs small{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--nevoa)}
+.specs b{font-family:'Bodoni Moda',serif;font-weight:500;font-size:28px;line-height:1.2;font-variant-numeric:lining-nums tabular-nums}
+.specs b sub{font-family:'Manrope',sans-serif;font-size:11px;vertical-align:baseline;color:var(--nevoa);margin-left:3px;letter-spacing:.05em}
+.ficha .acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.ficha .acoes .btn{padding:12px 16px;font-size:10px}
+.palco{position:relative;aspect-ratio:16/9;border:1px solid var(--linha);overflow:hidden;background:#000}
+.palco img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.palco .prox{clip-path:inset(0 100% 0 0)}
+.palco .varre{position:absolute;top:-10%;bottom:-10%;width:22%;left:-22%;pointer-events:none;opacity:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08) 40%,rgba(255,252,240,.85) 50%,rgba(255,255,255,.08) 60%,transparent);mix-blend-mode:screen;filter:blur(2px)}
+.palco::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 80px rgba(0,0,0,.55);pointer-events:none}
+.palco .num{position:absolute;right:14px;bottom:6px;z-index:2;font-family:'Bodoni Moda',serif;font-style:italic;font-size:clamp(40px,7vw,86px);line-height:1;color:rgba(255,255,255,.88);text-shadow:0 4px 30px rgba(0,0,0,.6)}
+.marcos{display:flex;gap:8px;margin-top:18px}
+.marcos button{flex:1;text-align:left;padding:10px 0 0;border-top:2px solid var(--linha);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--nevoa);position:relative;transition:color .3s}
+.marcos button::before{content:"";position:absolute;left:0;top:-2px;height:2px;width:var(--p,0%);background:var(--acento)}
+.marcos button.ativo{color:var(--marfim)}
+@media (max-width:860px){
+  .salao{height:300vh}
+  .salao .grade{grid-template-columns:minmax(0,1fr);gap:14px}
+  .salao .lado-img{order:-1}
+  .salao .topo-s{margin-bottom:12px}
+  .salao .topo-s h2{font-size:28px}
+  .ficha h3{font-size:30px;margin:6px 0 6px}
+  .ficha .frase{font-size:14px}
+  .specs{margin-top:12px}
+  .specs div{padding:8px 12px}
+  .specs b{font-size:22px}
+  .ficha .acoes{margin-top:12px}
+  .marcos{margin-top:10px}
+}
+@media (max-width:860px) and (max-height:700px){.ficha .frase{display:none}}
+
+/* ---------- Ghost de perto ---------- */
+.perto{padding:120px 0}
+.perto .cab{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:40px;flex-wrap:wrap}
+.perto .cab p{max-width:36ch;color:#CFC8BC}
+.perto .grade{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:stretch}
+.vitrine{position:relative;border:1px solid var(--linha);overflow:hidden;max-width:760px;align-self:start}
+.vitrine img{width:100%}
+.ponto{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;display:grid;place-items:center}
+.ponto::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--ouro-claro);box-shadow:0 0 0 4px rgba(226,196,143,.3)}
+.ponto::after{content:"";position:absolute;inset:6px;border-radius:50%;border:1px solid var(--ouro-claro);animation:pulsa 2.2s ease-out infinite}
+.ponto.ativo::before{background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.35)}
+@keyframes pulsa{from{transform:scale(.5);opacity:1}to{transform:scale(1.6);opacity:0}}
+.detalhe{border:1px solid var(--linha);background:var(--carvao);display:grid;grid-template-rows:auto 1fr}
+.detalhe .foto{position:relative;aspect-ratio:4/3;overflow:hidden}
+.detalhe .foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:circle(0% at var(--cx,50%) var(--cy,50%));transition:clip-path .9s cubic-bezier(.6,0,.2,1)}
+.detalhe .foto img.on{clip-path:circle(150% at var(--cx,50%) var(--cy,50%))}
+.detalhe .txt{padding:20px 22px 24px}
+.detalhe h4{font-family:'Bodoni Moda',serif;font-weight:500;font-size:26px;line-height:1.1;margin:8px 0 8px}
+.detalhe p{color:#CFC8BC;font-size:15px}
+.abas{display:flex;gap:6px;margin-top:16px;flex-wrap:wrap}
+.abas button{font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:8px 10px;border:1px solid var(--linha);color:var(--nevoa)}
+.abas button.ativo{border-color:var(--ouro);color:var(--ouro-claro)}
+@media (max-width:860px){.perto{padding:80px 0}.perto .grade{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- WOW 3: chave ---------- */
+.chave{padding:120px 0;background:linear-gradient(180deg,var(--noite),#0C0D0E 30%,#0C0D0E)}
+.chave .grade{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center}
+.chave h2{margin:14px 0 14px}
+.chave p.lead{color:#CFC8BC;max-width:44ch}
+.passo{margin-top:28px}
+.passo > small{display:block;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--nevoa);margin-bottom:10px}
+.carros{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.carros button{border:1px solid var(--linha);text-align:left;overflow:hidden;transition:border-color .3s}
+.carros button img{aspect-ratio:16/10;object-fit:cover;width:100%;filter:grayscale(.7) brightness(.6);transition:filter .4s}
+.carros button span{display:block;padding:8px 10px;font-size:12px}
+.carros button[aria-pressed="true"]{border-color:var(--ouro)}
+.carros button[aria-pressed="true"] img{filter:none}
+.dias{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.dias button,.turnos button{border:1px solid var(--linha);padding:10px 0;text-align:center;font-size:12px;line-height:1.2;transition:background .3s,border-color .3s,color .3s}
+.dias button b{display:block;font-family:'Bodoni Moda',serif;font-size:20px;font-weight:500}
+.dias button small{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--nevoa)}
+.turnos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.dias button[aria-pressed="true"],.turnos button[aria-pressed="true"]{border-color:var(--ouro);background:rgba(200,164,106,.12);color:var(--ouro-claro)}
+.campo{width:100%;background:transparent;border:0;border-bottom:1px solid var(--linha);color:var(--marfim);font:inherit;font-size:16px;padding:10px 0}
+.campo:focus{outline:none;border-color:var(--ouro)}
+.fob-lado{display:grid;justify-items:center;gap:18px;text-align:center}
+.fob{width:min(230px,60vw);filter:drop-shadow(0 30px 40px rgba(0,0,0,.6));transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.fob .corpo{fill:var(--acento);transition:fill .6s}
+.fob .botao{cursor:pointer}
+.fob .botao circle{transition:fill .2s}
+.fob .botao:hover circle.b{fill:#2a2d30}
+.fob .led{fill:#3a1d0b;transition:fill .1s}
+.fob.pisca .led{animation:led .5s 2}
+@keyframes led{0%,100%{fill:#3a1d0b}40%{fill:#ffb347;filter:drop-shadow(0 0 4px #ffb347)}}
+.fob.treme{animation:treme .32s 2}
+@keyframes treme{25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+.fob-lado .dica{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--nevoa)}
+.resumo{font-family:'Bodoni Moda',serif;font-style:italic;font-size:20px;min-height:1.6em;color:var(--ouro-claro)}
+.destravar{position:relative}
+.setas{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:0}
+.setas::before,.setas::after{content:"";position:absolute;top:0;bottom:0;width:22vw;max-width:220px}
+.setas::before{left:0;background:linear-gradient(90deg,rgba(255,160,40,.55),transparent)}
+.setas::after{right:0;background:linear-gradient(-90deg,rgba(255,160,40,.55),transparent)}
+.setas.on{animation:pisca .5s 2 steps(1)}
+@keyframes pisca{0%{opacity:1}55%{opacity:0}}
+.obrigado{display:none;border:1px solid var(--ouro);padding:18px;text-align:left;max-width:340px}
+.obrigado.on{display:block;animation:sobe .6s ease}
+.obrigado b{font-family:'Bodoni Moda',serif;font-weight:500;font-size:22px;display:block}
+.obrigado p{font-size:14px;color:#CFC8BC;margin:6px 0 12px}
+@keyframes sobe{from{opacity:0;transform:translateY(12px)}}
+@media (max-width:860px){.chave{padding:80px 0}.chave .grade{grid-template-columns:minmax(0,1fr);gap:40px}.fob-lado{order:2}}
+@media (max-width:420px){.dias button b{font-size:17px}.dias{gap:4px}}
+
+/* ---------- rodapé ---------- */
+.rodape{border-top:1px solid var(--linha);padding:60px 0 100px;font-size:13px;color:var(--nevoa)}
+.rodape .miolo{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:end}
+.rodape .gu{font-family:'Bodoni Moda',serif;font-size:28px;color:var(--marfim);line-height:1.1;margin-bottom:12px}
+.rodape .gu em{color:var(--ouro-claro)}
+.rodape p{max-width:52ch}
+.zap{position:fixed;right:16px;bottom:16px;z-index:60;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.4);transform:scale(0);transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.zap.on{transform:scale(1)}
+.zap svg{width:28px;height:28px}
+@media (min-width:861px){.zap{display:none}}
+
+/* revelar ao rolar */
+.rv{opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.on{opacity:1;transform:none}
+
+/* prévia estática */
+.embed .portao,.embed .flash{display:none}
+.embed .salao{height:auto}
+.embed .salao .cena{position:relative;height:auto;padding:80px 0}
+.embed .rv{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  .portao{transition:opacity .5s}
+  .portao.sobe{transform:none;opacity:0;pointer-events:none}
+  .faixa .trilho{animation:none}
+  .rv{transform:none;transition:opacity .4s}
+  .hero h1 .l > span{transform:none;opacity:0;transition:opacity .5s}
+  .vivo .hero h1 .l > span{opacity:1}
+  .palco .prox{transition:none}
+  .ponto::after{animation:none}
+}
+</style>
+</head>
+<body class="travado">
+
+<!-- WOW 1: o portão da garagem. Segura pra dar a partida, os 12 cilindros acendem na ordem de ignição e o portão sobe -->
+<div class="portao" id="portao" role="dialog" aria-label="Partida">
+  <div class="painel">
+    <div class="marca">DOZE</div>
+    <svg class="bloco" viewBox="0 0 300 150" aria-hidden="true" id="bloco"></svg>
+    <button class="partida" id="partida" aria-label="Segure para dar a partida">
+      <svg class="anel" viewBox="0 0 134 134"><circle class="trilho" cx="67" cy="67" r="65"/><circle class="carga" id="carga" cx="67" cy="67" r="65"/></svg>
+      <span>ENGINE<b>START</b>STOP</span>
+    </button>
+    <p class="dica">Segure o botão pra dar a partida.<br>Melhor com som ligado.</p>
+    <button class="pular" id="pular">Entrar sem partida</button>
+  </div>
+</div>
+<div class="flash" id="flash"></div>
+<div class="setas" id="setas"></div>
+
+<header class="topo" id="topo">
+  <div class="miolo">
+    <a href="#inicio" class="logo" aria-label="DOZE, início">
+      <svg viewBox="0 0 30 30" fill="none" stroke="#C8A46A" stroke-width="1.2" aria-hidden="true"><path d="M4 6 L15 26 L26 6"/><path d="M9 6 L15 17 L21 6"/><circle cx="15" cy="15" r="13.5" stroke-opacity=".35"/></svg>
+      <span><b>DOZE</b><small>GARAGEM DE V12</small></span>
+    </a>
+    <nav aria-label="Seções"><a href="#salao">Coleção</a><a href="#perto">Ghost de perto</a><a href="#chave">Test drive</a></nav>
+    <a href="#chave" class="btn vazado">Agendar test drive</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="inicio" aria-label="Abertura">
+  <div class="miolo">
+    <div>
+      <p class="kicker fade">Só V12. Sem exceção.</p>
+      <h1><span class="l"><span>Doze cilindros.</span></span><span class="l"><span><em>Nenhuma pressa.</em></span></span></h1>
+      <p class="sub fade">Um salão pequeno, com três carros que você não encontra em qualquer esquina. Passe a luz pelo DBS, escolha o seu e marque o dia de sentir o motor.</p>
+      <div class="acoes fade">
+        <a href="#salao" class="btn cheio">Ver a coleção <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <button class="btn vazado" id="ouvir"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6v4h3l4 3V3L5 6H2z"/><path d="M11.5 5.5a3.5 3.5 0 010 5M13.5 3.5a6.5 6.5 0 010 9"/></svg> Ouvir o motor</button>
+      </div>
+      <div class="numeros fade">
+        <div><b data-conta="3">3</b>V12 no salão</div>
+        <div><b data-conta="800">800</b>cv no mais bravo</div>
+        <div><b data-conta="36">36</b>cilindros ao todo</div>
+      </div>
+    </div>
+    <div class="farol" id="farol" aria-label="Aston Martin DBS Superleggera no escuro; mova o dedo ou o mouse para iluminar">
+      <img class="base" src="img/dbs.jpg" alt="" width="736" height="736">
+      <img class="luz" src="img/dbs.jpg" alt="Frente do Aston Martin DBS Superleggera verde com os faróis acesos" width="736" height="736">
+      <span class="olho e"></span><span class="olho d"></span>
+      <span class="anel-cursor" aria-hidden="true"></span>
+      <span class="rotulo">Passe a luz</span>
+    </div>
+  </div>
+</section>
+
+<div class="faixa" aria-hidden="true"><div class="trilho">
+  <span>Aston Martin DBS<i>◆</i></span><span>5.2 V12 biturbo<i>◆</i></span><span>Rolls-Royce Ghost<i>◆</i></span><span>6.75 V12<i>◆</i></span><span>Ferrari 812 Superfast<i>◆</i></span><span>6.5 V12 aspirado<i>◆</i></span>
+  <span>Aston Martin DBS<i>◆</i></span><span>5.2 V12 biturbo<i>◆</i></span><span>Rolls-Royce Ghost<i>◆</i></span><span>6.75 V12<i>◆</i></span><span>Ferrari 812 Superfast<i>◆</i></span><span>6.5 V12 aspirado<i>◆</i></span>
+</div></div>
+
+<!-- WOW 2: o salão. Rolando, uma faixa de luz varre o palco e troca o carro; a cor do ambiente vira a do carro -->
+<section class="salao" id="salao" aria-label="A coleção">
+  <div class="cena">
+    <div class="miolo">
+      <div class="topo-s">
+        <div><p class="kicker">A coleção</p><h2>Três jeitos de <em>ter doze.</em></h2></div>
+        <div class="indice" aria-live="polite"><b id="idx">01</b> / 03</div>
+      </div>
+      <div class="grade">
+        <div class="ficha" id="ficha">
+          <div class="troca">
+            <p class="marca-c" id="f-marca">Aston Martin</p>
+            <h3 id="f-nome">DBS <em>Superleggera</em></h3>
+            <p class="frase" id="f-frase">O mais bruto dos Aston de linha: muito torque desde baixo e um ronco grave que enche a garagem.</p>
+          </div>
+          <div class="specs">
+            <div><small>Motor</small><b id="s-motor">5.2 V12</b></div>
+            <div><small>Potência</small><b><span id="s-cv">725</span><sub>cv</sub></b></div>
+            <div><small>Torque</small><b><span id="s-nm">900</span><sub>Nm</sub></b></div>
+            <div><small>0 a 100</small><b><span id="s-0100">3,4</span><sub>s</sub></b></div>
+          </div>
+          <div class="acoes">
+            <button class="btn vazado" id="ouvir-carro"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6v4h3l4 3V3L5 6H2z"/><path d="M11.5 5.5a3.5 3.5 0 010 5"/></svg> Ouvir</button>
+            <a class="btn cheio" href="#chave" id="quero-carro">Quero dirigir</a>
+          </div>
+        </div>
+        <div class="lado-img">
+          <div class="palco" id="palco">
+            <img class="atual" id="img-atual" src="img/dbs.jpg" alt="Aston Martin DBS Superleggera" width="736" height="736" style="object-position:50% 56%">
+            <img class="prox" id="img-prox" src="img/ghost.jpg" alt="" width="736" height="405" loading="lazy">
+            <span class="varre" id="varre"></span>
+            <span class="num" id="f-num">01</span>
+          </div>
+          <div class="marcos" id="marcos">
+            <button data-i="0" class="ativo">DBS</button><button data-i="1">Ghost</button><button data-i="2">812</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="perto" id="perto" aria-label="Ghost de perto">
+  <div class="miolo">
+    <div class="cab rv">
+      <div><p class="kicker">Ghost de perto</p><h2>Toque nos <em>detalhes.</em></h2></div>
+      <p>Os pontos dourados abrem o que faz um Rolls-Royce ser Rolls-Royce. Começa pelo emblema.</p>
+    </div>
+    <div class="grade">
+      <div class="vitrine rv" id="vitrine">
+        <img src="img/ghost.jpg" alt="Rolls-Royce Ghost Series II champanhe numa estrada de pedra no deserto" width="736" height="405" loading="lazy">
+        <button class="ponto ativo" style="left:78.5%;top:30%" data-d="0" aria-label="Spirit of Ecstasy"></button>
+        <button class="ponto" style="left:47%;top:20%" data-d="1" aria-label="Interior"></button>
+        <button class="ponto" style="left:41%;top:66%" data-d="2" aria-label="Rodas"></button>
+        <button class="ponto" style="left:12%;top:36%" data-d="3" aria-label="Traseira"></button>
+      </div>
+      <div class="detalhe rv" aria-live="polite">
+        <div class="foto" id="d-foto">
+          <img src="img/ghost-emblema.jpg" alt="Spirit of Ecstasy, a estatueta no capô do Ghost" class="on" loading="lazy" width="170" height="225">
+          <img src="img/ghost-interior.jpg" alt="Volante e painel do Ghost com couro caramelo" loading="lazy" width="232" height="225">
+          <img src="img/ghost.jpg" alt="Roda do Ghost com o emblema RR" loading="lazy" width="736" height="405" style="object-position:38% 72%;transform:scale(2.4);transform-origin:38% 72%">
+          <img src="img/ghost-traseira.jpg" alt="Traseira do Ghost Series II" loading="lazy" width="296" height="225">
+        </div>
+        <div class="txt">
+          <p class="kicker" id="d-k">01 · Capô</p>
+          <h4 id="d-t">Spirit of Ecstasy</h4>
+          <p id="d-p">A estatueta que vai no capô de todo Rolls-Royce. Ela é retrátil: se alguém tentar arrancar, ela some pra dentro do radiador.</p>
+          <div class="abas" id="abas">
+            <button class="ativo" data-d="0">Emblema</button><button data-d="1">Interior</button><button data-d="2">Rodas</button><button data-d="3">Traseira</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WOW 3: a chave. Escolhe carro, dia e turno; a chave muda de cor; aperta destravar, o carro "pisca" a tela e abre o WhatsApp -->
+<section class="chave" id="chave" aria-label="Agendar test drive">
+  <div class="miolo grade">
+    <div>
+      <p class="kicker rv">Test drive</p>
+      <h2 class="rv">Monte a chave. <em>Destrave.</em></h2>
+      <p class="lead rv">Escolha o carro, o dia e o turno. Quando a chave estiver pronta, aperte o cadeado: o pedido vai direto pro WhatsApp.</p>
+
+      <div class="passo rv"><small>1 · O carro</small>
+        <div class="carros" id="carros">
+          <button aria-pressed="true" data-c="0"><img src="img/dbs.jpg" alt="" width="736" height="736" loading="lazy" style="object-position:50% 56%"><span>DBS</span></button>
+          <button aria-pressed="false" data-c="1"><img src="img/ghost.jpg" alt="" width="736" height="405" loading="lazy"><span>Ghost</span></button>
+          <button aria-pressed="false" data-c="2"><img src="img/812.jpg" alt="" width="736" height="552" loading="lazy" style="object-position:50% 65%"><span>812</span></button>
+        </div>
+      </div>
+      <div class="passo rv"><small>2 · O dia</small><div class="dias" id="dias"></div></div>
+      <div class="passo rv"><small>3 · O turno</small>
+        <div class="turnos" id="turnos"><button aria-pressed="false" data-t="manhã">Manhã</button><button aria-pressed="false" data-t="tarde">Tarde</button><button aria-pressed="false" data-t="fim de tarde">Fim de tarde</button></div>
+      </div>
+      <div class="passo rv"><small>4 · Seu nome</small><input class="campo" id="nome" autocomplete="given-name" placeholder="Como te chamamos?" aria-label="Seu nome"></div>
+    </div>
+
+    <div class="fob-lado rv">
+      <svg class="fob" id="fob" viewBox="0 0 200 330" role="img" aria-label="Chave do carro">
+        <defs>
+          <linearGradient id="brilho" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></linearGradient>
+        </defs>
+        <rect x="70" y="0" width="60" height="40" rx="18" fill="none" stroke="#8c8577" stroke-width="6"/>
+        <rect class="corpo" x="20" y="28" width="160" height="290" rx="56"/>
+        <rect x="20" y="28" width="160" height="290" rx="56" fill="url(#brilho)"/>
+        <rect x="34" y="42" width="132" height="262" rx="46" fill="none" stroke="rgba(255,255,255,.18)"/>
+        <circle class="led" cx="100" cy="64" r="4"/>
+        <text x="100" y="118" text-anchor="middle" font-family="Bodoni Moda, serif" font-size="30" fill="#0b0c0d" fill-opacity=".75" id="fob-sigla">DBS</text>
+        <g class="botao" aria-hidden="true"><circle class="b" cx="100" cy="170" r="24" fill="#111314"/><path d="M92 170v-6a8 8 0 0116 0v6" fill="none" stroke="#8c8577" stroke-width="2.4"/><rect x="89" y="169" width="22" height="15" rx="2" fill="#8c8577"/></g>
+        <g class="botao" id="btn-destravar" role="button" tabindex="0" aria-label="Destravar e enviar pedido pelo WhatsApp"><circle class="b" cx="100" cy="236" r="30" fill="#111314"/><circle cx="100" cy="236" r="30" fill="none" stroke="#E2C48F" stroke-width="1.5"/><path d="M92 236v-8a8 8 0 0115.5-2.5" fill="none" stroke="#E2C48F" stroke-width="2.4"/><rect x="89" y="235" width="22" height="15" rx="2" fill="#E2C48F"/></g>
+      </svg>
+      <p class="resumo" id="resumo">DBS · escolha o dia</p>
+      <p class="dica">Aperte o cadeado aberto</p>
+      <div class="obrigado" id="obrigado">
+        <b>Destravado.</b>
+        <p>Abrimos seu WhatsApp com o pedido pronto. Se não abriu, toque abaixo.</p>
+        <a class="btn cheio" id="link-zap" href="#" target="_blank" rel="noopener">Abrir WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="rodape">
+  <div class="miolo">
+    <div>
+      <p class="gu">Sites que <em>vendem.</em></p>
+      <p>DOZE é um projeto conceito da GuDev, feito pra mostrar o que dá pra fazer no site de uma loja de carros. Não é uma loja real. Fichas técnicas dos fabricantes; marcas e fotos pertencem aos donos.</p>
+    </div>
+    <a class="btn cheio" href="https://wa.me/5511964650141?text=Oi!%20Vi%20o%20site%20conceito%20DOZE%20e%20quero%20um%20site%20assim%20pro%20meu%20neg%C3%B3cio." target="_blank" rel="noopener">Quero um site assim</a>
+  </div>
+</footer>
+
+<a class="zap" id="zap" href="#chave" aria-label="Agendar test drive"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5 0a6.7 6.7 0 01-3.3-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 00-.7.3 3 3 0 00-.9 2.2 5.2 5.2 0 001.1 2.8 11.9 11.9 0 004.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 001.8-1.3 2.3 2.3 0 00.2-1.3c-.1-.1-.3-.2-.6-.3z"/></svg></a>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+var embed = /[?&]embed\b/.test(location.search);
+var dentro = window.parent !== window;
+var calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var fino = matchMedia('(hover:hover) and (pointer:fine)').matches;
+var root = document.documentElement;
+var $ = function(s){return document.querySelector(s)};
+var ZAP = '5511964650141';
+if (embed) document.body.classList.add('embed');
+
+/* ===== os três carros (fichas oficiais dos fabricantes) ===== */
+var CARROS = [
+  {marca:'Aston Martin', nome:'DBS <em>Superleggera</em>', curto:'DBS', img:'img/dbs.jpg', pos:'50% 56%', acento:'#2BC9C0', motor:'5.2 V12', cv:725, nm:900, s:'3,4',
+   frase:'O mais bruto dos Aston de linha: muito torque desde baixo e um ronco grave que enche a garagem.', som:{base:38, top:3.2, brilho:900, turbo:true}},
+  {marca:'Rolls-Royce', nome:'Ghost <em>Series II</em>', curto:'Ghost', img:'img/ghost.jpg', pos:'50% 50%', acento:'#D9C3A0', motor:'6.75 V12', cv:571, nm:850, s:'4,8',
+   frase:'Doze cilindros que você quase não escuta. Potência pra sobrar e silêncio de biblioteca lá dentro.', som:{base:30, top:2.1, brilho:420}},
+  {marca:'Ferrari', nome:'812 <em>Superfast</em>', curto:'812', img:'img/812.jpg', pos:'50% 66%', acento:'#E0263C', motor:'6.5 V12', cv:800, nm:718, s:'2,9',
+   frase:'Aspirado, sem turbo, girando até 8.900 rpm. O V12 de rua mais forte que a Ferrari já fez na época.', som:{base:46, top:4.6, brilho:2400}}
+];
+
+/* ===== som do motor (Web Audio, sintetizado) ===== */
+var ctx = null;
+function audio(){
+  if (!ctx){ try{ ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } }
+  if (ctx.state === 'suspended') ctx.resume();
+  return ctx;
+}
+function motor(perfil, dur){
+  var a = audio(); if (!a) return;
+  perfil = perfil || CARROS[0].som; dur = dur || 2.6;
+  var t = a.currentTime, f = perfil.base;
+  var saida = a.createGain(); saida.gain.value = 0;
+  var filtro = a.createBiquadFilter(); filtro.type = 'lowpass'; filtro.Q.value = 3;
+  var dist = a.createWaveShaper(); var c = new Float32Array(1024);
+  for (var i=0;i<1024;i++){ var x=i/512-1; c[i]=Math.tanh(x*2.4); } dist.curve = c;
+  var o1 = a.createOscillator(); o1.type='sawtooth';
+  var o2 = a.createOscillator(); o2.type='square';
+  var o3 = a.createOscillator(); o3.type='sawtooth';
+  [o1,o2,o3].forEach(function(o){ o.connect(dist); });
+  // trepidação dos pulsos de combustão
+  var lfo = a.createOscillator(), lg = a.createGain(); lfo.type='square'; lg.gain.value = .25;
+  lfo.connect(lg); lg.connect(saida.gain);
+  dist.connect(filtro); filtro.connect(saida); saida.connect(a.destination);
+  function freq(o, mult){
+    o.frequency.setValueAtTime(f*mult, t);
+    o.frequency.exponentialRampToValueAtTime(f*mult*perfil.top, t+dur*.38);
+    o.frequency.exponentialRampToValueAtTime(f*mult*1.15, t+dur*.85);
+  }
+  freq(o1,1); freq(o2,.5); freq(o3,1.007);
+  lfo.frequency.setValueAtTime(f*.5, t); lfo.frequency.exponentialRampToValueAtTime(f*.5*perfil.top, t+dur*.38); lfo.frequency.exponentialRampToValueAtTime(f*.55, t+dur*.85);
+  filtro.frequency.setValueAtTime(perfil.brilho*.4, t); filtro.frequency.exponentialRampToValueAtTime(perfil.brilho, t+dur*.38); filtro.frequency.exponentialRampToValueAtTime(perfil.brilho*.35, t+dur);
+  saida.gain.setValueAtTime(0, t); saida.gain.linearRampToValueAtTime(.16, t+.08); saida.gain.setValueAtTime(.16, t+dur*.8); saida.gain.linearRampToValueAtTime(0, t+dur);
+  [o1,o2,o3,lfo].forEach(function(o){ o.start(t); o.stop(t+dur+.05); });
+  if (perfil.turbo){ // chiado do turbo aliviando
+    var n = a.createBufferSource(), buf = a.createBuffer(1, a.sampleRate*.5, a.sampleRate), d = buf.getChannelData(0);
+    for (var k=0;k<d.length;k++) d[k] = (Math.random()*2-1)*(1-k/d.length);
+    n.buffer = buf; var bp = a.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value = 3200; var ng = a.createGain(); ng.gain.value = .05;
+    n.connect(bp); bp.connect(ng); ng.connect(a.destination); n.start(t+dur*.42);
+  }
+}
+function arranque(){ // motor de partida girando enquanto segura
+  var a = audio(); if (!a) return null;
+  var o = a.createOscillator(), g = a.createGain(), l = a.createOscillator(), lg = a.createGain(), fl = a.createBiquadFilter();
+  o.type='square'; o.frequency.value = 55; fl.type='lowpass'; fl.frequency.value = 500;
+  l.frequency.value = 9; lg.gain.value = .05; l.connect(lg); lg.connect(g.gain);
+  g.gain.value = .06; o.connect(fl); fl.connect(g); g.connect(a.destination); o.start(); l.start();
+  return function(){ try{ g.gain.setTargetAtTime(0, a.currentTime, .03); o.stop(a.currentTime+.2); l.stop(a.currentTime+.2); }catch(e){} };
+}
+function chirp(){
+  var a = audio(); if (!a) return;
+  [0,.16].forEach(function(dt){
+    var o = a.createOscillator(), g = a.createGain(), t = a.currentTime+dt;
+    o.type='triangle'; o.frequency.setValueAtTime(2300,t); o.frequency.exponentialRampToValueAtTime(1500,t+.09);
+    g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.12,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+.11);
+    o.connect(g); g.connect(a.destination); o.start(t); o.stop(t+.12);
+  });
+}
+
+/* ===== WOW 1: bloco V12 + segurar pra dar partida ===== */
+var bloco = $('#bloco'), NS = 'http://www.w3.org/2000/svg', cil = [];
+(function(){
+  // duas bancadas de 6 em "V", vistas de cima: 1–6 à esquerda, 7–12 à direita
+  for (var i=0;i<12;i++){
+    var lado = i<6 ? -1 : 1, k = i%6;
+    var x = 150 + lado*(28 + k*20), y = 26 + k*19;
+    var g = document.createElementNS(NS,'rect');
+    g.setAttribute('x', x-12); g.setAttribute('y', y-7); g.setAttribute('width', 24); g.setAttribute('height', 14); g.setAttribute('rx', 7);
+    g.setAttribute('transform','rotate('+(lado*-28)+' '+x+' '+y+')');
+    g.setAttribute('class','cil'); bloco.appendChild(g); cil.push(g);
+  }
+  var eixo = document.createElementNS(NS,'path');
+  eixo.setAttribute('d','M150 18 V140'); eixo.setAttribute('stroke','#2c3033'); eixo.setAttribute('stroke-dasharray','3 5');
+  bloco.insertBefore(eixo, bloco.firstChild);
+})();
+var ORDEM = [1,7,5,11,3,9,6,12,2,8,4,10]; // ordem de ignição clássica de V12
+var portao = $('#portao'), partida = $('#partida'), carga = $('#carga');
+var carregando = false, nivel = 0, ultimo = 0, pararArranque = null, aberto = false;
+var TEMPO = 1300, VOLTA = 408;
+
+function desenhaCarga(){
+  carga.style.strokeDashoffset = VOLTA*(1-nivel);
+  var acesos = Math.floor(nivel*12);
+  for (var i=0;i<12;i++) cil[ORDEM[i]-1].classList.toggle('aceso', i < acesos);
+}
+function laco(t){
+  var dt = ultimo ? t-ultimo : 16; ultimo = t;
+  nivel += (carregando ? 1 : -1.6) * dt/TEMPO;
+  nivel = Math.max(0, Math.min(1, nivel));
+  desenhaCarga();
+  if (nivel >= 1 && carregando){ ligar(); return; }
+  if (carregando || nivel > 0) requestAnimationFrame(laco); else ultimo = 0;
+}
+function aperta(e){
+  if (aberto) return; e.preventDefault();
+  if (!carregando){ carregando = true; partida.classList.add('apertado'); pararArranque = arranque(); ultimo = 0; requestAnimationFrame(laco); }
+}
+function solta(){
+  if (!carregando) return; carregando = false; partida.classList.remove('apertado');
+  if (pararArranque){ pararArranque(); pararArranque = null; }
+}
+partida.addEventListener('pointerdown', aperta);
+window.addEventListener('pointerup', solta); window.addEventListener('pointercancel', solta);
+partida.addEventListener('keydown', function(e){ if (e.key===' '||e.key==='Enter'){ if(!e.repeat) aperta(e); } });
+partida.addEventListener('keyup', function(e){ if (e.key===' '||e.key==='Enter') solta(); });
+partida.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+
+function ligar(){
+  aberto = true; carregando = false; partida.classList.remove('apertado');
+  if (pararArranque){ pararArranque(); pararArranque = null; }
+  motor(CARROS[0].som, 2.8);
+  if (navigator.vibrate) navigator.vibrate([30,40,30,40,80]);
+  cil.forEach(function(c){ c.classList.remove('aceso'); });
+  ORDEM.forEach(function(n, i){
+    setTimeout(function(){ cil[n-1].classList.add('fogo'); setTimeout(function(){ cil[n-1].classList.replace('fogo','aceso'); }, 110); }, i*55);
+  });
+  setTimeout(abrir, calmo ? 200 : 900);
+}
+function abrir(){
+  $('#flash').classList.add('on');
+  portao.classList.add('sobe');
+  document.body.classList.remove('travado');
+  document.body.classList.add('vivo');
+  setTimeout(function(){ farol.classList.add('acesa'); contarNumeros(); }, calmo ? 100 : 700);
+  setTimeout(function(){ portao.style.display = 'none'; }, 1600);
+}
+$('#pular').addEventListener('click', function(){ aberto = true; abrir(); });
+
+if (embed){ aberto = true; portao.style.display='none'; document.body.classList.remove('travado'); document.body.classList.add('vivo'); }
+
+/* ===== hero: lanterna que segue o dedo/mouse ===== */
+var farol = $('#farol'), luz = farol.querySelector('.luz'), anel = farol.querySelector('.anel-cursor');
+var alvo = {x:50,y:45}, atual = {x:50,y:45}, mexeu = 0;
+function moveLuz(e){
+  var r = farol.getBoundingClientRect();
+  alvo.x = (e.clientX - r.left)/r.width*100; alvo.y = (e.clientY - r.top)/r.height*100; mexeu = performance.now();
+}
+farol.addEventListener('pointermove', moveLuz);
+farol.addEventListener('pointerdown', moveLuz);
+function lanterna(t){
+  if (performance.now() - mexeu > 2500){ // sozinha, passeia pelos faróis e pela grade
+    alvo.x = 50 + Math.sin(t/1700)*30; alvo.y = 52 + Math.sin(t/1100)*12;
+  }
+  atual.x += (alvo.x-atual.x)*.08; atual.y += (alvo.y-atual.y)*.08;
+  luz.style.setProperty('--x', atual.x+'%'); luz.style.setProperty('--y', atual.y+'%');
+  anel.style.left = atual.x+'%'; anel.style.top = atual.y+'%';
+  if (heroVisivel) requestAnimationFrame(lanterna); else rodando = false;
+}
+var heroVisivel = true, rodando = false;
+if (embed || calmo){ luz.style.setProperty('--r','70%'); farol.classList.add('acesa'); }
+else {
+  new IntersectionObserver(function(es){ heroVisivel = es[0].isIntersecting; if (heroVisivel && !rodando){ rodando = true; requestAnimationFrame(lanterna); } }).observe(farol);
+}
+$('#ouvir').addEventListener('click', function(){ motor(CARROS[0].som, 2.8); farol.classList.remove('acesa'); void farol.offsetWidth; farol.classList.add('acesa'); });
+
+function contarNumeros(){
+  document.querySelectorAll('[data-conta]').forEach(function(el){
+    var fim = +el.dataset.conta, t0 = performance.now();
+    if (calmo || embed){ el.textContent = fim; return; }
+    (function passo(t){ var p = Math.min(1,(t-t0)/1400); el.textContent = Math.round(fim*(1-Math.pow(1-p,3))); if (p<1) requestAnimationFrame(passo); })(t0);
+  });
+}
+
+/* ===== WOW 2: salão com varredura de luz ===== */
+var salao = $('#salao'), ficha = $('#ficha'), imgA = $('#img-atual'), imgP = $('#img-prox'), varre = $('#varre');
+var marcos = document.querySelectorAll('#marcos button');
+var mostrado = 0, pedido = 0, ocupado = false;
+function preencheFicha(i, animar){
+  var c = CARROS[i];
+  $('#f-marca').textContent = c.marca; $('#f-nome').innerHTML = c.nome; $('#f-frase').textContent = c.frase;
+  $('#s-motor').textContent = c.motor; $('#f-num').textContent = '0'+(i+1); $('#idx').textContent = '0'+(i+1);
+  [['#s-cv',c.cv],['#s-nm',c.nm]].forEach(function(par){
+    var el = $(par[0]), de = +el.textContent || 0, para = par[1], t0 = performance.now();
+    if (!animar || calmo){ el.textContent = para; return; }
+    (function passo(t){ var p = Math.min(1,(t-t0)/800), e = 1-Math.pow(1-p,3); el.textContent = Math.round(de+(para-de)*e); if (p<1) requestAnimationFrame(passo); })(t0);
+  });
+  $('#s-0100').textContent = c.s;
+  root.style.setProperty('--acento', c.acento);
+  marcos.forEach(function(b, k){ b.classList.toggle('ativo', k===i); });
+}
+function trocar(){
+  if (ocupado || pedido === mostrado) return;
+  ocupado = true;
+  var i = pedido, c = CARROS[i], dir = i > mostrado ? 1 : -1;
+  imgP.src = c.img; imgP.alt = c.marca+' '+c.nome.replace(/<[^>]+>/g,''); imgP.style.objectPosition = c.pos;
+  ficha.classList.add('saindo');
+  var acabou = false;
+  function fim(){
+    if (acabou) return; acabou = true;
+    imgA.src = c.img; imgA.alt = imgP.alt; imgA.style.objectPosition = c.pos;
+    imgP.style.transition = 'none'; imgP.style.clipPath = 'inset(0 100% 0 0)';
+    varre.style.transition = 'none'; varre.style.opacity = 0;
+    mostrado = i; ocupado = false;
+    requestAnimationFrame(trocar); // se a pessoa já rolou pro próximo, segue a fila
+  }
+  var dur = calmo ? 1 : 950;
+  setTimeout(function(){ preencheFicha(i, true); ficha.classList.remove('saindo'); }, calmo ? 0 : 380);
+  var comeco = dir > 0 ? 'inset(0 100% 0 0)' : 'inset(0 0 0 100%)';
+  imgP.style.transition = 'none'; imgP.style.clipPath = comeco;
+  varre.style.transition = 'none'; varre.style.left = dir > 0 ? '-22%' : '100%'; varre.style.opacity = calmo ? 0 : 1;
+  void imgP.offsetWidth;
+  imgP.style.transition = 'clip-path '+dur+'ms cubic-bezier(.65,0,.35,1)'; imgP.style.clipPath = 'inset(0 0 0 0)';
+  varre.style.transition = 'left '+dur+'ms cubic-bezier(.65,0,.35,1), opacity .3s '+(dur-200)+'ms'; varre.style.left = dir > 0 ? '100%' : '-22%'; varre.style.opacity = 0;
+  imgP.addEventListener('transitionend', fim, {once:true});
+  setTimeout(fim, dur+250); // garantia
+}
+// uma conta de progresso só, com folga perto da troca
+var FOLGA = .08;
+function progressoSalao(){
+  if (embed) return;
+  var r = salao.getBoundingClientRect(), alto = r.height - innerHeight;
+  if (alto <= 0) return;
+  var p = Math.max(0, Math.min(1, -r.top/alto)), f = p*3, alvoI = pedido;
+  if (f >= pedido+1+FOLGA) alvoI = Math.min(2, Math.floor(f));
+  else if (f < pedido-FOLGA) alvoI = Math.max(0, Math.floor(f));
+  marcos.forEach(function(b,k){ b.style.setProperty('--p', Math.max(0,Math.min(1,f-k))*100+'%'); });
+  if (alvoI !== pedido){ pedido = alvoI; trocar(); }
+}
+marcos.forEach(function(b){
+  b.addEventListener('click', function(){
+    var i = +b.dataset.i;
+    if (embed){ pedido = i; trocar(); return; }
+    var topo = salao.getBoundingClientRect().top + scrollY, alto = salao.offsetHeight - innerHeight;
+    var y = topo + alto*((i+.5)/3);
+    if (lenis) lenis.scrollTo(y, {duration:1.2}); else scrollTo({top:y, behavior:'smooth'});
+  });
+});
+$('#ouvir-carro').addEventListener('click', function(){ motor(CARROS[mostrado].som, 2.6); });
+$('#quero-carro').addEventListener('click', function(){ escolheCarro(mostrado); });
+
+/* ===== Ghost de perto ===== */
+var DET = [
+  {k:'01 · Capô', t:'Spirit of Ecstasy', p:'A estatueta que vai no capô de todo Rolls-Royce. Ela é retrátil: se alguém tentar arrancar, ela some pra dentro do radiador.'},
+  {k:'02 · Cabine', t:'Couro, madeira e silêncio', p:'O Ghost foi pensado pra quem vai atrás, mas o volante fino e o painel iluminado fazem querer dirigir. Opcional: o teto com “céu estrelado” em fibra ótica.'},
+  {k:'03 · Rodas', t:'O RR que nunca gira', p:'As calotas centrais têm peso próprio e ficam sempre de pé, com o RR reto, mesmo com o carro andando.'},
+  {k:'04 · Traseira', t:'Suspensão Planar', p:'Uma câmera lê a rua à frente e a suspensão se prepara antes do buraco chegar. É daí que vem a sensação de “tapete voador”.'}
+];
+var fotos = document.querySelectorAll('#d-foto img'), pontos = document.querySelectorAll('.ponto'), abas = document.querySelectorAll('#abas button');
+function detalhe(i, de){
+  var fx = de ? de.style.left : '50%', fy = de ? de.style.top : '50%';
+  fotos.forEach(function(f,k){ f.style.setProperty('--cx', fx); f.style.setProperty('--cy', fy); f.style.zIndex = k===i ? 2 : 1; });
+  fotos.forEach(function(f,k){ if (k!==i) setTimeout(function(){ if (!fotos[k].style.zIndex || fotos[k].style.zIndex==='1') f.classList.remove('on'); }, 900); });
+  fotos[i].classList.remove('on'); void fotos[i].offsetWidth; fotos[i].classList.add('on');
+  $('#d-k').textContent = DET[i].k; $('#d-t').textContent = DET[i].t; $('#d-p').textContent = DET[i].p;
+  pontos.forEach(function(p,k){ p.classList.toggle('ativo', k===i); });
+  abas.forEach(function(a,k){ a.classList.toggle('ativo', k===i); });
+}
+pontos.forEach(function(p){ p.addEventListener('click', function(){ detalhe(+p.dataset.d, p); }); });
+abas.forEach(function(a){ a.addEventListener('click', function(){ detalhe(+a.dataset.d, pontos[+a.dataset.d]); }); });
+
+/* ===== WOW 3: a chave ===== */
+var escolha = {c:0, dia:null, turno:null};
+var fob = $('#fob'), bCarros = document.querySelectorAll('#carros button'), bTurnos = document.querySelectorAll('#turnos button');
+var SEM = ['dom','seg','ter','qua','qui','sex','sáb'];
+(function(){
+  var dias = $('#dias'), hoje = new Date();
+  for (var i=1;i<=7;i++){
+    var d = new Date(hoje); d.setDate(hoje.getDate()+i);
+    var b = document.createElement('button');
+    b.setAttribute('aria-pressed','false');
+    b.dataset.label = SEM[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1);
+    b.innerHTML = '<small>'+SEM[d.getDay()]+'</small><b>'+d.getDate()+'</b>';
+    b.addEventListener('click', function(){ escolha.dia = this.dataset.label; marca(dias.children, this); resumo(); });
+    dias.appendChild(b);
+  }
+})();
+function marca(lista, el){ Array.prototype.forEach.call(lista, function(b){ b.setAttribute('aria-pressed', b===el ? 'true' : 'false'); }); }
+function escolheCarro(i){
+  escolha.c = i; marca(bCarros, bCarros[i]);
+  fob.style.setProperty('--acento', CARROS[i].acento);
+  $('#fob-sigla').textContent = CARROS[i].curto;
+  fob.style.transform = 'rotate(-6deg) scale(1.04)'; setTimeout(function(){ fob.style.transform = ''; }, 260);
+  resumo();
+}
+bCarros.forEach(function(b){ b.addEventListener('click', function(){ escolheCarro(+b.dataset.c); }); });
+bTurnos.forEach(function(b){ b.addEventListener('click', function(){ escolha.turno = b.dataset.t; marca(bTurnos, b); resumo(); }); });
+function resumo(){
+  var c = CARROS[escolha.c].curto;
+  $('#resumo').textContent = !escolha.dia ? c+' · escolha o dia' : !escolha.turno ? c+' · '+escolha.dia+' · escolha o turno' : c+' · '+escolha.dia+' · '+escolha.turno;
+}
+function destravar(){
+  if (!escolha.dia || !escolha.turno){
+    fob.classList.remove('treme'); void fob.getBBox(); fob.classList.add('treme');
+    var falta = !escolha.dia ? '#dias' : '#turnos';
+    $(falta).scrollIntoView({behavior: calmo ? 'auto' : 'smooth', block:'center'});
+    return;
+  }
+  var c = CARROS[escolha.c], nome = $('#nome').value.trim();
+  var msg = 'Oi! [Teste do site conceito DOZE] '+(nome ? 'Sou '+nome+'. ' : '')+'Quero agendar um test drive do '+c.marca+' '+c.nome.replace(/<[^>]+>/g,'')+' na '+escolha.dia+', de '+escolha.turno+'.';
+  var url = 'https://wa.me/'+ZAP+'?text='+encodeURIComponent(msg);
+  $('#link-zap').href = url;
+  chirp();
+  if (navigator.vibrate) navigator.vibrate([40,90,40]);
+  fob.classList.remove('pisca'); void fob.getBBox(); fob.classList.add('pisca');
+  if (!calmo){ var s = $('#setas'); s.classList.remove('on'); void s.offsetWidth; s.classList.add('on'); }
+  $('#obrigado').classList.add('on');
+  window.open(url, '_blank', 'noopener');
+}
+var bd = $('#btn-destravar');
+bd.addEventListener('click', destravar);
+bd.addEventListener('keydown', function(e){ if (e.key==='Enter'||e.key===' '){ e.preventDefault(); destravar(); } });
+
+/* ===== revelar ao rolar ===== */
+if (!embed){
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }); }, {rootMargin:'0px 0px -10% 0px'});
+  document.querySelectorAll('.rv').forEach(function(el, i){ el.style.transitionDelay = (i%4)*70+'ms'; io.observe(el); });
+}
+
+/* ===== rolagem: uma fonte só (rAF disparado pelo scroll + intervalo de garantia) ===== */
+var topo = $('#topo'), zap = $('#zap'), agendado = false;
+function quadro(){
+  agendado = false;
+  progressoSalao();
+  topo.classList.toggle('solido', scrollY > 40);
+  if (!dentro) zap.classList.toggle('on', scrollY > innerHeight*.8 && $('#chave').getBoundingClientRect().top > innerHeight*.6);
+}
+function agenda(){ if (!agendado){ agendado = true; requestAnimationFrame(quadro); } }
+addEventListener('scroll', agenda, {passive:true});
+setInterval(agenda, 400);
+var largura = innerWidth;
+addEventListener('resize', function(){ if (innerWidth !== largura){ largura = innerWidth; agenda(); } });
+if (dentro) zap.style.display = 'none';
+
+/* ===== Lenis só no computador ===== */
+var lenis = null;
+if (fino && !dentro && !calmo && !embed && window.Lenis){
+  lenis = new Lenis({duration:1.15, smoothWheel:true});
+  lenis.on('scroll', agenda);
+  (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){ var id = a.getAttribute('href'); if (id.length > 1){ e.preventDefault(); lenis.scrollTo(id, {offset: id==='#salao' ? 0 : -60, duration:1.4}); } });
+  });
+}
+preencheFicha(0, false);
+escolha.c = 0; fob.style.setProperty('--acento', CARROS[0].acento);
+quadro();
+})();
+</script>
+</body>
+</html>

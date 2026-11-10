@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Honda City Sedan em 360 | Órbita Seminovos (projeto conceito GuDev)</title>
+<meta name="description" content="Projeto conceito da GuDev: a página de um Honda City Sedan que você vê de todos os lados. Role pra dar a volta no carro, gire com o dedo e pergunte pelo WhatsApp.">
+<meta name="theme-color" content="#2E333A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Honda City Sedan em 360 | Órbita Seminovos">
+<meta property="og:description" content="Projeto conceito da GuDev: role pra dar a volta no carro e pergunte sobre o lado que você está vendo.">
+<meta property="og:image" content="media/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="fontesGoogle" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=DM+Mono:wght@400;500&display=swap">
+<link rel="preload" as="image" href="media/quase/q001.webp">
+<style>
+/*
+  Paleta (3 cores, método GuDev):
+  --base    Concreto ao sol #ECE8E1  (~60%: fundo das seções e texto sobre o palco)
+  --segunda Grafite City    #2E333A  (~30%: palco, títulos, texto)
+  --acento  Laranja seta    #FF6A13  (~10%: botão principal, mira, progresso)
+*/
+:root{
+  --base:#ECE8E1;
+  --segunda:#2E333A;
+  --acento:#FF6A13;
+  --base-72:rgba(236,232,225,.72);
+  --base-25:rgba(236,232,225,.25);
+  --seg-94:rgba(46,51,58,.94);
+  --seg-60:rgba(46,51,58,.6);
+  --seg-18:rgba(46,51,58,.18);
+  --seg-08:rgba(46,51,58,.08);
+  --mono:"DM Mono",ui-monospace,Menlo,monospace;
+  --sans:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mola:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--base);color:var(--segunda);font-family:var(--sans);font-optical-sizing:auto;overflow-x:clip;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+img,canvas,svg{display:block}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+a{color:inherit;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--acento);outline-offset:3px;border-radius:8px}
+.so-leitor{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- topo ---------- */
+.topo{position:fixed;left:0;right:0;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(12px + env(safe-area-inset-top)) 18px 12px;color:var(--base);transition:opacity .5s ease,background-color .3s,color .3s;pointer-events:none}
+.topo>*{pointer-events:auto}
+.topo.escondido{opacity:0;visibility:hidden}
+.topo.claro{color:var(--segunda);background:rgba(236,232,225,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.marca{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit}
+.marca svg{width:36px;height:24px;overflow:visible}
+.marca b{font-weight:800;font-stretch:75%;font-size:24px;line-height:1;letter-spacing:-.01em}
+.marca small{font-family:var(--mono);font-size:11px;opacity:.78}
+.pilula{font-family:var(--mono);font-size:11px;line-height:1;padding:8px 11px;border:1px solid currentColor;border-radius:99px;text-decoration:none;white-space:nowrap}
+
+/* ---------- palco (abertura + volta) ---------- */
+.show{position:relative;height:560vh;height:560svh;background:var(--segunda)}
+.palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;background:var(--segunda) url(media/quase/q001.webp) 100% 50%/cover no-repeat}
+#amb{position:absolute;left:-6%;top:-6%;width:112%;height:112%;filter:blur(34px) saturate(1.1);opacity:0;transition:opacity .8s}
+.largo #amb{opacity:.5}
+#tela{position:absolute;inset:0;width:100%;height:100%}
+.preso{position:absolute;inset:0;pointer-events:none;will-change:transform}
+.spot{position:absolute;inset:0;opacity:0}
+.mira{position:absolute;left:0;top:0;width:0;height:0;opacity:0}
+.mira i{position:absolute;width:24px;height:24px;border:3px solid var(--acento)}
+.mira i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0}
+.mira i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0}
+.mira i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0}
+.mira i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0}
+.mira span{position:absolute;left:0;bottom:calc(100% + 10px);font-family:var(--mono);font-size:12px;font-weight:500;line-height:1;background:var(--acento);color:var(--segunda);padding:6px 9px;border-radius:4px;white-space:nowrap;opacity:0;transform:translateY(6px)}
+.faixa{position:absolute;left:0;top:71.2%;height:11.6%;width:100%;display:flex;align-items:center;padding:0 20px;background:var(--seg-94);color:var(--base)}
+.faixa .dentro{display:flex;align-items:center;gap:14px;width:100%;clip-path:inset(0 100% 0 0)}
+.pisca{flex:none;width:26px;height:20px;color:var(--acento);animation:piscar .86s steps(1) infinite}
+@keyframes piscar{50%{opacity:.2}}
+.faixa .falas-faixa{display:grid;flex:1;min-width:0}
+.faixa .falas-faixa p{grid-area:1/1;align-self:center;margin:0;font-weight:800;font-stretch:75%;font-size:var(--faixa-fs,36px);line-height:.94;letter-spacing:-.01em;white-space:nowrap}
+.cortina{position:absolute;inset:0;background:var(--base);opacity:0;pointer-events:none}
+.veu{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(to bottom,rgba(46,51,58,.55),rgba(46,51,58,0) 17%,rgba(46,51,58,0) 50%,rgba(46,51,58,.55) 66%,rgba(46,51,58,.93) 88%)}
+.ia{position:absolute;right:18px;top:calc(64px + env(safe-area-inset-top));margin:0;font-family:var(--mono);font-size:10px;color:var(--base);opacity:0;transition:opacity .6s}
+.palco.pronto .ia{opacity:.62}
+
+.rodape-palco{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:0 20px calc(18px + env(safe-area-inset-bottom));color:var(--base)}
+.pilha{display:grid}
+.pilha>*{grid-area:1/1;align-self:end;min-width:0}
+.heroi .selo{margin:0 0 10px;font-family:var(--mono);font-size:13px;line-height:1}
+.heroi h1{margin:0;font-weight:800;font-stretch:75%;font-size:clamp(56px,17vw,104px);line-height:.84;letter-spacing:-.025em;white-space:nowrap}
+.heroi .sub{margin:12px 0 18px;font-size:17px;line-height:1.35;max-width:28ch}
+.sobe{opacity:0;transform:translateY(18px);transition:opacity .45s ease,transform .6s var(--mola)}
+.heroi.on .sobe{opacity:1;transform:none}
+.heroi.on .sobe:nth-child(2){transition-delay:.06s}
+.heroi.on .sobe:nth-child(3){transition-delay:.12s}
+.heroi.on .sobe:nth-child(4){transition-delay:.18s}
+.heroi:not(.on){pointer-events:none}
+.acoes{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 22px;border-radius:99px;background:var(--acento);color:var(--segunda);font-weight:700;font-size:16px;line-height:1;text-decoration:none;white-space:nowrap;box-shadow:0 12px 30px -14px rgba(255,106,19,.9);transition:transform .2s var(--mola)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:20px;height:20px;flex:none}
+.txt-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:14px;font-weight:500;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.txt-btn svg{width:16px;height:16px}
+
+.falas{display:grid}
+.fala{grid-area:1/1;align-self:end;min-width:0;opacity:0;transform:translateY(24px);transition:opacity .32s ease,transform .5s var(--mola);pointer-events:none}
+.fala.on{opacity:1;transform:none;pointer-events:auto}
+.fala .num{margin:0;font-weight:800;font-stretch:75%;font-size:clamp(76px,25vw,150px);line-height:.8;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.fala .num small{font-size:.34em;font-stretch:100%;font-weight:700;letter-spacing:-.01em;margin-left:.14em}
+.fala .leg{margin:14px 0 0;font-size:16px;line-height:1.4;max-width:30ch}
+.fala .btn{margin-top:18px}
+
+.barra{display:flex;align-items:center;gap:14px;margin-top:22px;font-family:var(--mono);font-size:12px;line-height:1}
+.barra .vista{flex:none;min-width:11.5em;white-space:nowrap}
+.trilho{position:relative;flex:1;height:2px;border-radius:2px;background:var(--base-25)}
+.trilho i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:2px;background:var(--acento)}
+.trilho b{position:absolute;left:0;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--acento)}
+.rever{flex:none;display:grid;place-items:center;width:40px;height:40px;margin:-10px -8px -10px 0;border-radius:50%;color:var(--base)}
+.rever svg{width:18px;height:18px}
+.barra,.ia{transition:opacity .5s}
+.palco:not(.pronto) .barra{opacity:0}
+
+/* computador: carro em pé no centro, texto à esquerda */
+.largo .rodape-palco{left:max(5vw,24px);right:auto;bottom:9vh;width:min(32vw,460px);padding:0}
+.largo .heroi h1{font-size:clamp(64px,7.2vw,120px)}
+.largo .fala .num{font-size:clamp(84px,9vw,150px)}
+
+/* ---------- seções ---------- */
+.secao{padding:88px 20px 92px;max-width:1120px;margin:0 auto}
+h2{margin:0 0 16px;font-weight:800;font-stretch:75%;font-size:clamp(46px,13vw,92px);line-height:.88;letter-spacing:-.025em}
+.secao p{font-size:17px;line-height:1.5;max-width:46ch;margin:0 0 14px}
+.ficha .tabela{margin:34px 0 30px;border-top:1px solid var(--seg-18)}
+.tabela div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:14px;align-items:baseline;padding:17px 0;border-bottom:1px solid var(--seg-18)}
+.tabela dt{font-size:16px}
+.tabela dd{margin:0;font-family:var(--mono);font-size:15px;font-weight:500;line-height:1.45;text-align:right}
+.btn-escuro{background:var(--segunda);color:var(--base);box-shadow:none}
+.fonte{margin-top:18px!important;font-family:var(--mono);font-size:12px!important;line-height:1.5!important;opacity:.72}
+
+.gire{border-top:1px solid var(--seg-18)}
+.giro{position:relative;margin-top:30px;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:var(--segunda);touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none}
+.giro.pegando{cursor:grabbing}
+.giro canvas{width:100%;height:100%}
+.giro-vista{position:absolute;left:14px;top:14px;margin:0!important;font-family:var(--mono);font-size:12px!important;line-height:1!important;padding:8px 11px;border-radius:99px;background:rgba(46,51,58,.8);color:var(--base)}
+.giro-dica{position:absolute;left:50%;bottom:16px;display:flex;align-items:center;gap:8px;transform:translateX(-50%);padding:9px 14px;border-radius:99px;background:var(--base);color:var(--segunda);font-family:var(--mono);font-size:12px;line-height:1;white-space:nowrap;transition:opacity .4s}
+.giro-dica svg{width:18px;height:18px}
+.giro-dica.some{opacity:0}
+.giro-acoes{display:grid;grid-template-columns:52px minmax(0,1fr) 52px;gap:10px;margin-top:14px}
+.giro-acoes .btn{white-space:normal;text-align:center;padding:0 14px}
+.seta-btn{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1.5px solid var(--seg-18)}
+.seta-btn svg{width:20px;height:20px}
+.giro-nota{margin-top:14px!important;font-family:var(--mono);font-size:12px!important;opacity:.7}
+
+.gudev{background:var(--segunda);color:var(--base)}
+.gudev .secao{padding-bottom:64px}
+.gudev h2{max-width:11ch}
+.assina{margin-top:44px!important;font-family:var(--mono);font-size:13px!important;opacity:.8}
+.rodape{padding:0 20px calc(110px + env(safe-area-inset-bottom));max-width:1120px;margin:0 auto;background:var(--segunda);color:var(--base)}
+.rodape p{margin:0;padding-top:20px;border-top:1px solid var(--base-25);font-family:var(--mono);font-size:11px;line-height:1.6;opacity:.7;max-width:70ch}
+
+@media (min-width:900px){
+  .secao{padding:120px 40px}
+  .ficha{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px 64px;align-items:start}
+  .ficha .tabela{margin-top:0}
+  .ficha .ficha-cab{grid-row:span 2}
+  .gire{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:0 64px;align-items:center}
+  .gire .giro-col{order:-1}
+  .giro{margin-top:0;aspect-ratio:4/5;max-height:78vh}
+}
+
+/* ---------- botão flutuante e folha ---------- */
+.flutua{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:25;transform:translateY(160%);transition:transform .45s var(--mola)}
+.flutua.on{transform:none}
+.dentro-proposta .flutua{display:none}
+.folha{position:fixed;inset:0;z-index:60;display:grid;align-items:end}
+.folha[hidden]{display:none}
+.folha-fundo{position:absolute;inset:0;background:rgba(46,51,58,.62)}
+.folha-caixa{position:relative;width:100%;max-width:520px;margin:0 auto;padding:26px 20px calc(20px + env(safe-area-inset-bottom));border-radius:24px 24px 0 0;background:var(--base);animation:folhaSobe .4s var(--mola)}
+@keyframes folhaSobe{from{transform:translateY(100%)}to{transform:none}}
+.folha-tit{margin:0 0 14px;font-weight:700;font-size:18px;line-height:1.3}
+.balao{position:relative;margin:0 0 20px;padding:14px 16px 26px;border-radius:16px 16px 4px 16px;background:var(--seg-08);font-size:16px;line-height:1.45}
+.balao p{margin:0}
+.balao span{position:absolute;right:12px;bottom:8px;font-family:var(--mono);font-size:10px;opacity:.6}
+.folha .btn{width:100%}
+.folha .txt-btn{width:100%;justify-content:center;margin-top:6px}
+.folha-nota{margin:12px 0 0;font-family:var(--mono);font-size:11px;line-height:1.5;opacity:.7;text-align:center}
+
+/* ---------- prévia (?embed) e movimento reduzido ---------- */
+.embed .show{height:auto}
+.embed .palco{position:relative}
+.embed .flutua{display:none}
+.reduz .sobe,.reduz .fala{transform:none!important}
+</style>
+</head>
+<body>
+
+<header class="topo escondido" id="topo">
+  <a class="marca" href="#show" aria-label="Órbita Seminovos, voltar ao início">
+    <svg viewBox="0 0 40 24" aria-hidden="true"><g transform="rotate(-16 20 12)"><ellipse cx="20" cy="12" rx="18" ry="7.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle r="2.8" fill="#FF6A13"><animateMotion id="orbitaLogo" dur="7s" repeatCount="indefinite" begin="indefinite" path="M2,12 a18,7.2 0 1,0 36,0 a18,7.2 0 1,0 -36,0"/></circle></g></svg>
+    <b>Órbita</b><small>seminovos</small>
+  </a>
+  <a class="pilula" href="#gudev">Projeto conceito</a>
+</header>
+
+<main>
+  <section class="show" id="show" aria-label="Honda City Sedan, apresentação em 360">
+    <div class="palco" id="palco">
+      <canvas id="amb" width="36" height="20" aria-hidden="true"></canvas>
+      <canvas id="tela" role="img" aria-label="Vídeo em primeira pessoa numa moto: um Honda City cinza quase encosta, a cena congela e a câmera vai até o carro, que gira conforme a rolagem."></canvas>
+      <div class="preso" id="preso" aria-hidden="true">
+        <div class="spot" id="spot"></div>
+        <div class="mira" id="mira"><i></i><i></i><i></i><i></i><span>Honda City Sedan</span></div>
+        <div class="faixa" id="faixa">
+          <div class="dentro">
+            <svg class="pisca" id="pisca" viewBox="0 0 26 20" aria-hidden="true"><path d="M3 2l8 8-8 8M14 2l8 8-8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="falas-faixa"><p id="faixaA">Esse quase<br>passou batido.</p><p id="faixaB" style="opacity:0">Peraí.<br>Olha ele direito.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="cortina" id="cortina"></div>
+      <div class="veu" id="veu"></div>
+      <p class="ia">Imagens ilustrativas (IA)</p>
+
+      <div class="rodape-palco">
+        <div class="pilha">
+          <div class="heroi" id="heroi">
+            <p class="selo sobe">Sedan 1.5 flex, automático</p>
+            <h1 class="sobe">Honda City</h1>
+            <p class="sub sobe">Dê a volta nele antes de sair de casa.</p>
+            <div class="acoes sobe">
+              <button class="btn" type="button" data-msg="testdrive"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3a2.6 2.6 0 0 0-.8 1.9 4.5 4.5 0 0 0 1 2.4 10.3 10.3 0 0 0 4 3.5c1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.2z"/></svg>Agendar test drive</button>
+            </div>
+          </div>
+          <div class="falas" id="falas" aria-live="polite">
+            <div class="fala" data-de=".08" data-ate=".36"><p class="num"><b data-conta="126">126</b><small>cv</small></p><p class="leg">Motor 1.5 i-VTEC flex. A mesma potência no etanol e na gasolina.</p></div>
+            <div class="fala" data-de=".385" data-ate=".52"><p class="num"><b data-conta="2600">2.600</b><small>mm</small></p><p class="leg">De um eixo ao outro. Sobra espaço pra perna de quem vai atrás.</p></div>
+            <div class="fala" data-de=".545" data-ate=".73"><p class="num"><b data-conta="519">519</b><small>litros</small></p><p class="leg">De porta-malas. Viagem de família sem deixar mala pra trás.</p></div>
+            <div class="fala" data-de=".755" data-ate=".885"><p class="num">CVT</p><p class="leg">Câmbio automático. Sem tranco no anda e para.</p></div>
+            <div class="fala" data-de=".91" data-ate="1.01"><p class="num">Gostou?</p><p class="leg">Marque um horário e dirija ele.</p><button class="btn" type="button" data-msg="testdrive">Agendar test drive</button></div>
+          </div>
+        </div>
+        <div class="barra">
+          <span class="vista" id="vista" aria-hidden="true">Role pra dar a volta</span>
+          <span class="trilho" aria-hidden="true"><i id="trilhoI"></i><b id="trilhoB"></b></span>
+          <button class="rever" type="button" id="rever" aria-label="Ver o quase de novo" title="Ver o quase de novo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao ficha" id="ficha" aria-labelledby="fichaTit">
+    <div class="ficha-cab">
+      <h2 id="fichaTit">Ficha de fábrica</h2>
+      <p>Os números da Honda para o City Sedan 1.5. Ano, quilometragem e valor deste carro a loja passa no WhatsApp.</p>
+    </div>
+    <dl class="tabela">
+      <div><dt>Motor</dt><dd>1.5 i-VTEC flex</dd></div>
+      <div><dt>Potência</dt><dd>126 cv a 6.200 rpm<br>(etanol e gasolina)</dd></div>
+      <div><dt>Torque</dt><dd>15,8 kgfm (etanol)<br>15,5 kgfm (gasolina)</dd></div>
+      <div><dt>Câmbio</dt><dd>Automático CVT</dd></div>
+      <div><dt>Porta-malas</dt><dd>519 litros</dd></div>
+      <div><dt>Entre-eixos</dt><dd>2.600 mm</dd></div>
+      <div><dt>Tanque</dt><dd>44 litros</dd></div>
+    </dl>
+    <div>
+      <button class="btn btn-escuro" type="button" data-msg="ficha">Pedir ano, km e valor</button>
+      <p class="fonte">Fonte: ficha técnica da Honda para o City Sedan 1.5 flex. A versão do carro a loja confirma.</p>
+    </div>
+  </section>
+
+  <section class="secao gire" id="gire" aria-labelledby="gireTit">
+    <div>
+      <h2 id="gireTit">Gire você mesmo.</h2>
+      <p>Arraste o carro pro lado. Viu alguma coisa que quer saber? Pergunte sobre o lado que está na tela.</p>
+    </div>
+    <div class="giro-col">
+      <div class="giro" id="giro" tabindex="0" role="slider" aria-label="Girar o carro" aria-valuemin="0" aria-valuemax="100" aria-valuenow="16" aria-valuetext="Frente">
+        <canvas id="giroTela" aria-hidden="true"></canvas>
+        <p class="giro-vista" id="giroVista">Frente</p>
+        <div class="giro-dica" id="giroDica"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12m0-1.5v-2a1.5 1.5 0 0 1 3 0V12m0-1a1.5 1.5 0 0 1 3 0v1m0 0a1.5 1.5 0 0 1 3 0v3a6 6 0 0 1-6 6h-1.5a6 6 0 0 1-4.6-2.2L4.2 16a1.5 1.5 0 0 1 2.3-2L8 15.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Arraste pra girar</div>
+      </div>
+      <div class="giro-acoes">
+        <button class="seta-btn" type="button" data-dir="-1" aria-label="Girar o carro pra esquerda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="btn" type="button" id="perguntar">Perguntar sobre a frente</button>
+        <button class="seta-btn" type="button" data-dir="1" aria-label="Girar o carro pra direita"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <p class="giro-nota">Imagens ilustrativas geradas por IA.</p>
+    </div>
+  </section>
+
+  <section class="gudev" id="gudev" aria-labelledby="gudevTit">
+    <div class="secao">
+      <h2 id="gudevTit">Seu estoque girando assim.</h2>
+      <p>Esta página é um projeto conceito da GuDev. A loja é inventada e as imagens do carro foram geradas por IA.</p>
+      <p>Quer que os carros da sua loja apareçam assim, de todos os lados, com o WhatsApp a um toque?</p>
+      <a class="btn" href="https://wa.me/5511964650141?text=Oi!%20Vi%20o%20site%20conceito%20da%20%C3%93rbita%20Seminovos%20(o%20Honda%20City%20em%20360)%20e%20quero%20um%20site%20assim%20pra%20minha%20loja." target="_blank" rel="noopener">Quero um site assim</a>
+      <p class="assina">GuDev. Sites que vendem.</p>
+    </div>
+    <footer class="rodape">
+      <p>Órbita Seminovos é uma marca fictícia, criada pela GuDev como projeto conceito. Carro e cenas: imagens ilustrativas geradas por IA. Ficha técnica: dados de fábrica da Honda para o City Sedan 1.5 flex. Honda e City são marcas da Honda.</p>
+    </footer>
+  </section>
+</main>
+
+<button class="btn flutua" type="button" id="flutua" data-msg="testdrive"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3a2.6 2.6 0 0 0-.8 1.9 4.5 4.5 0 0 0 1 2.4 10.3 10.3 0 0 0 4 3.5c1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.2z"/></svg>Agendar test drive</button>
+
+<div class="folha" id="folha" role="dialog" aria-modal="true" aria-labelledby="folhaTit" hidden>
+  <div class="folha-fundo" data-fecha></div>
+  <div class="folha-caixa">
+    <p class="folha-tit" id="folhaTit">Na loja de verdade, o vendedor recebe isto no WhatsApp:</p>
+    <div class="balao"><p id="folhaMsg"></p><span>agora</span></div>
+    <a class="btn" id="folhaIr" href="https://wa.me/5511964650141" target="_blank" rel="noopener">Quero isso na minha loja</a>
+    <button class="txt-btn" type="button" data-fecha>Voltar pro carro</button>
+    <p class="folha-nota">Este site é um projeto conceito da GuDev. A Órbita Seminovos não existe.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- modos ---------- */
+var busca = location.search;
+var embed = /[?&]embed\b/.test(busca);
+var reel = /[?&]reel\b/.test(busca);
+var dentro = window.parent !== window;
+var reduz = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+var raiz = document.documentElement;
+if (embed) raiz.classList.add('embed');
+if (dentro) raiz.classList.add('dentro-proposta');
+if (reduz) raiz.classList.add('reduz');
+var WA = '5511964650141';
+
+/* ---------- mídia ---------- */
+// Quase-acidente em câmera lenta (24 qps, rampa já calculada) e quadro congelado.
+var Q_SEQ = [1,4,7,10,13,15,18,20,23,25,27,29,31,33,35,36,38,40,41,42,44,45,46,47,48,49,49,50,51,51,52,52,52,53,53,53,53,53];
+var Q_FPS = 24;
+var qCaminho = function(n){ return 'media/quase/q' + ('00' + n).slice(-3) + '.webp'; };
+var PAUSA = 'media/quase-pausa.jpg';
+var NV = 96;
+var vCaminho = function(i){ return 'media/volta/v' + ('0' + i).slice(-2) + '.webp'; };
+if (reel && window.ORBITA_REEL) {
+  var R = window.ORBITA_REEL;
+  Q_SEQ = R.qSeq; Q_FPS = R.qFps; qCaminho = R.qCaminho; NV = R.nv; vCaminho = R.vCaminho; PAUSA = R.pausa || PAUSA;
+}
+var Q_DUR = Q_SEQ.length / Q_FPS;
+
+// Pontos medidos nos quadros (0..1 da imagem 9:16)
+var CARRO_Q = {x:.79, y:.47};
+// Câmera travada no carro: quanto cada quadro da câmera lenta (i_001..i_053) anda pra direita, em fração da largura,
+// pra o farol do City ficar parado na tela. Medido rastreando o farol quadro a quadro. Sem isso o carro escorregava
+// pra direita conforme a moto chegava e parecia que a moto empurrava o carro.
+var DQ = [0.1102,0.1091,0.1079,0.1066,0.1053,0.1039,0.1025,0.101,0.0995,0.0979,0.0963,0.0946,0.0929,0.0911,0.0893,0.0874,0.0855,0.0836,0.0816,0.0796,0.0775,0.0754,0.0733,0.0711,0.0689,0.0667,0.0645,0.0622,0.0599,0.0575,0.0552,0.0528,0.0504,0.048,0.0456,0.0431,0.0406,0.0382,0.0357,0.0331,0.0306,0.0281,0.0256,0.023,0.0205,0.0179,0.0153,0.0128,0.0102,0.0077,0.0051,0.0026,0];
+var MIRA_Q = {x0:.585, y0:.318, x1:.985, y1:.645};
+var FAIXA_Q = {y0:.712, y1:.828};
+var CARRO_V = {x:.49, y:.5};
+
+var T = {};
+T.mira0 = Q_DUR + .10; T.mira1 = Q_DUR + .50; T.troca = Q_DUR + .30;
+T.mer0 = Q_DUR + .95; T.mer1 = T.mer0 + .80;
+T.rev0 = T.mer0 + .45; T.rev1 = T.rev0 + .70;
+T.her0 = T.rev0 + .45; T.fim = T.her0 + .80;
+
+function c01(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+function lim(v, a, b){ return v < a ? a : v > b ? b : v; }
+function eOut(t){ return 1 - Math.pow(1 - t, 3); }
+function eIn(t){ return t * t * t; }
+function eIO(t){ return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+function eBack(t){ var c = 1.4; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); }
+
+var qImg = {}, vImg = new Array(NV), pausaImg = null, ultimoQ = null;
+function carrega(src){
+  return new Promise(function(ok){
+    var im = new Image(); im.decoding = 'async';
+    im.onload = function(){ ok(im); }; im.onerror = function(){ ok(null); };
+    im.src = src;
+  });
+}
+function carregaQuase(){
+  var unicos = Q_SEQ.filter(function(v, i, a){ return a.indexOf(v) === i; });
+  return Promise.all(unicos.map(function(n){ return carrega(qCaminho(n)).then(function(im){ if (im) qImg[n] = im; }); }))
+    .then(function(){ return carrega(PAUSA); }).then(function(im){ pausaImg = im; });
+}
+function carregaVolta(tudo){
+  // ordem progressiva: 0, depois de 32 em 32, 16, 8... até todos
+  var ordem = [], visto = {};
+  for (var passo = 32; passo >= 1; passo = passo / 2) {
+    for (var i = 0; i < NV; i += passo) { if (!visto[i]) { visto[i] = 1; ordem.push(i); } }
+    if (passo === 1) break;
+  }
+  if (!visto[NV - 1]) ordem.splice(1, 0, NV - 1);
+  var fila = ordem.slice(), ativos = 0, max = tudo ? 12 : 6;
+  return new Promise(function(fim){
+    function proximo(){
+      if (!fila.length) { if (!ativos) fim(); return; }
+      var i = fila.shift(); ativos++;
+      carrega(vCaminho(i)).then(function(im){ if (im) { vImg[i] = im; sujo = true; } ativos--; proximo(); });
+    }
+    for (var k = 0; k < max; k++) proximo();
+  });
+}
+function vPerto(i){
+  if (vImg[i]) return vImg[i];
+  for (var d = 1; d < NV; d++) {
+    if (i - d >= 0 && vImg[i - d]) return vImg[i - d];
+    if (i + d < NV && vImg[i + d]) return vImg[i + d];
+  }
+  return null;
+}
+
+/* ---------- palco ---------- */
+var show = document.getElementById('show');
+var palco = document.getElementById('palco');
+var tela = document.getElementById('tela'), ctx = tela.getContext('2d');
+var amb = document.getElementById('amb'), actx = amb.getContext('2d');
+var preso = document.getElementById('preso'), spot = document.getElementById('spot');
+var mira = document.getElementById('mira'), miraTag = mira.querySelector('span');
+var faixa = document.getElementById('faixa'), faixaA = document.getElementById('faixaA'), faixaB = document.getElementById('faixaB');
+var faixaDentro = faixa.querySelector('.dentro');
+var cortina = document.getElementById('cortina'), veu = document.getElementById('veu');
+var topo = document.getElementById('topo'), heroi = document.getElementById('heroi');
+var vista = document.getElementById('vista'), trilhoI = document.getElementById('trilhoI'), trilhoB = document.getElementById('trilhoB');
+var W = 0, H = 0, dpr = 1, largo = false, sujo = true, larguraAntes = -1, zBase = 1;
+
+function medir(){
+  var r = palco.getBoundingClientRect();
+  W = r.width; H = r.height;
+  dpr = Math.min(2, window.devicePixelRatio || 1);
+  tela.width = Math.max(1, Math.round(W * dpr));
+  tela.height = Math.max(1, Math.round(H * dpr));
+  largo = W / H > .8;
+  raiz.classList.toggle('largo', largo);
+  if (largo) palco.style.backgroundImage = 'none';
+  // zoom mínimo pra imagem deslocada continuar cobrindo a tela (ou a coluna, no computador)
+  var rq = encaixe(CARRO_Q.x, .5), cxq = rq.x + CARRO_Q.x * rq.w, den = cxq - rq.x - DQ[0] * rq.w;
+  zBase = den > 0 ? Math.max(1, (cxq - Math.max(rq.x, 0)) / den) : 1;
+  if (!cena.volta) posicionaFaixa(rq, zBase, cxq);
+  sujo = true;
+}
+// encaixe de imagem 9:16 no palco: celular cobre (com foco), computador fica em pé no centro
+function encaixe(fx, fy){
+  var dw, dh, dx, dy;
+  if (largo) { dh = H; dw = H * 9 / 16; dx = lim(W * .6 - dw / 2, 0, W - dw); dy = 0; }
+  else {
+    var s = Math.max(W / 9, H / 16); dw = 9 * s; dh = 16 * s;
+    dx = lim(W / 2 - fx * dw, W - dw, 0); dy = lim(H / 2 - fy * dh, H - dh, 0);
+  }
+  return {x:dx, y:dy, w:dw, h:dh};
+}
+function pinta(im, r, alfa, z, zx, zy){
+  if (!im) return;
+  var x = zx + (r.x - zx) * z, y = zy + (r.y - zy) * z;
+  ctx.globalAlpha = alfa;
+  ctx.drawImage(im, x * dpr, y * dpr, r.w * z * dpr, r.h * z * dpr);
+  ctx.globalAlpha = 1;
+}
+// a faixa cobre a marca que o vídeo gerado deixou perto do guidão: fica no lugar desde o primeiro quadro
+// A faixa fica na camada que acompanha o zoom da câmera (cx, cy, z): ela cresce junto e continua cobrindo a marca,
+// mas o texto fica do mesmo tamanho e no mesmo lugar da tela.
+function posicionaFaixa(r, z, cx){
+  var fh = (FAIXA_Q.y1 - FAIXA_Q.y0) * r.h, esq = Math.max(r.x, 0), dir = Math.min(r.x + r.w, W);
+  // largura escolhida pra, depois do zoom, bater certinho na tela (celular) ou na coluna do vídeo (computador)
+  var e2 = cx + (esq - cx) / z, d2 = cx + (dir - cx) / z;
+  faixa.style.top = (r.y + FAIXA_Q.y0 * r.h) + 'px'; faixa.style.height = fh + 'px';
+  faixa.style.left = e2.toFixed(1) + 'px'; faixa.style.width = (d2 - e2).toFixed(1) + 'px';
+  faixa.style.padding = '0 0 0 ' + (Math.max(18, W * .05) / z).toFixed(1) + 'px';
+  faixa.style.setProperty('--faixa-fs', (Math.min(fh * .4, W * .095, 54) / z).toFixed(1) + 'px');
+}
+function pintaAmb(im){
+  if (!largo || !im) return;
+  actx.drawImage(im, 0, (im.naturalHeight - im.naturalWidth * 20 / 36) / 2, im.naturalWidth, im.naturalWidth * 20 / 36, 0, 0, 36, 20);
+}
+
+var cena = {t:0, q:0, empurra:0, faixa:0, flash:0, pausa:0, mira:0, troca:0, mer:0, rev:0, ui:0, a:0, volta:false};
+
+function introCena(t){
+  var c = cena; c.t = t; c.volta = false;
+  if (reduz) {
+    c.q = Q_SEQ.length - 1; c.empurra = 0; c.flash = 0; c.pausa = 0; c.mira = 0; c.troca = 0; c.mer = 0;
+    c.faixa = 1; c.rev = c01((t - .6) / .5); c.ui = c01((t - .9) / .4); return;
+  }
+  c.q = Math.min(Q_SEQ.length - 1, Math.floor(t * Q_FPS));
+  c.empurra = eIO(c01(t / Q_DUR));
+  c.faixa = eOut(c01(t / .35));
+  c.flash = t < Q_DUR ? 0 : Math.max(0, 1 - (t - Q_DUR) / .24);
+  c.pausa = eOut(c01((t - Q_DUR) / .35));
+  c.mira = c01((t - T.mira0) / (T.mira1 - T.mira0));
+  c.troca = eIO(c01((t - T.troca) / .32));
+  c.mer = c01((t - T.mer0) / (T.mer1 - T.mer0));
+  c.rev = c01((t - T.rev0) / (T.rev1 - T.rev0));
+  c.ui = eOut(c01((t - T.her0) / .5));
+}
+
+function desenha(){
+  var c = cena;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, tela.width, tela.height);
+  if (c.volta || c.rev >= 1) {
+    var rv = encaixe(.5, .5), im = vPerto(Math.round(c01(c.a) * (NV - 1)));
+    pinta(im, rv, 1, 1, 0, 0); pintaAmb(im);
+    tela.style.filter = '';
+    preso.style.visibility = 'hidden';
+    cortina.style.opacity = 0;
+    return;
+  }
+  preso.style.visibility = '';
+  var r = encaixe(CARRO_Q.x, .5);
+  var cx = r.x + CARRO_Q.x * r.w, cy = r.y + CARRO_Q.y * r.h;
+  var zND = zBase * (1 + .06 * c.empurra), zMer = 1 + 2.2 * eIn(c.mer), z = zND * zMer;
+  var naPausa = c.t >= Q_DUR && pausaImg;
+  var qim = naPausa ? pausaImg : (qImg[Q_SEQ[c.q]] || ultimoQ);
+  if (qim) ultimoQ = qim;
+  var desl = naPausa ? 0 : (DQ[Q_SEQ[c.q] - 1] || 0);
+  if (c.rev < 1) {
+    // janela da imagem (no computador, a coluna em pé), que se abre junto com o mergulho
+    var jx0 = Math.max(r.x, 0), jx1 = Math.min(r.x + r.w, W);
+    ctx.save(); ctx.beginPath();
+    ctx.rect((cx + (jx0 - cx) * zMer) * dpr, (cy + (r.y - cy) * zMer) * dpr, (jx1 - jx0) * zMer * dpr, r.h * zMer * dpr);
+    ctx.clip();
+    pinta(qim, {x:r.x + desl * r.w, y:r.y, w:r.w, h:r.h}, 1, z, cx, cy);
+    ctx.restore();
+  }
+  if (c.rev > 0) {
+    var r2 = encaixe(.5, .5), v0 = vPerto(0);
+    var cx2 = r2.x + CARRO_V.x * r2.w, cy2 = r2.y + CARRO_V.y * r2.h;
+    pinta(v0, r2, eOut(c01(c.rev / .55)), 1 + .6 * (1 - eOut(c.rev)), cx2, cy2);
+    if (c.rev > .5) pintaAmb(v0);
+  } else pintaAmb(qim);
+
+  var sat = 1 - .55 * c.pausa * (1 - c01(c.rev * 1.5));
+  var con = 1 + .08 * c.pausa * (1 - c01(c.rev * 1.5));
+  var bSobe = 18 * eIn(c01((c.mer - .08) / .7));
+  var bDesce = c.rev > 0 ? 18 * (1 - eOut(c01((c.rev - .25) / .75))) : 99;
+  var blur = Math.min(bSobe, bDesce);
+  tela.style.filter = 'saturate(' + sat.toFixed(3) + ') contrast(' + con.toFixed(3) + ')' + (blur > .25 ? ' blur(' + blur.toFixed(1) + 'px)' : '');
+
+  // camada presa à imagem (mira, foco, faixa): mesma escala da câmera
+  preso.style.transformOrigin = cx + 'px ' + cy + 'px';
+  preso.style.transform = 'scale(' + z.toFixed(4) + ')';
+  preso.style.opacity = 1 - c01((c.mer - .25) / .35);
+
+  var rx = .34 * r.w, ry = .24 * r.h;
+  spot.style.background = 'radial-gradient(' + rx.toFixed(0) + 'px ' + ry.toFixed(0) + 'px at ' + cx.toFixed(0) + 'px ' + cy.toFixed(0) + 'px, rgba(46,51,58,0) 0%, rgba(46,51,58,0) 52%, rgba(46,51,58,.78) 100%)';
+  spot.style.opacity = (c.pausa * .95).toFixed(3);
+
+  // bordas da tela convertidas pra camada com zoom (a mira nasce nos cantos e trava no carro sem sair da tela)
+  var a0 = cx + (12 - cx) / zND, a1 = cx + (W - 12 - cx) / zND, b0 = cy + (12 - cy) / zND, b1 = cy + (H - 12 - cy) / zND;
+  var x0 = lim(r.x + MIRA_Q.x0 * r.w, a0, a1 - 40), x1 = lim(r.x + MIRA_Q.x1 * r.w, x0 + 40, a1);
+  var y0 = lim(r.y + MIRA_Q.y0 * r.h, b0, b1 - 40), y1 = lim(r.y + MIRA_Q.y1 * r.h, y0 + 40, b1);
+  var k = eBack(c.mira), ox0 = a0, oy0 = b0, ox1 = a1, oy1 = b1;
+  var mx0 = ox0 + (x0 - ox0) * k, my0 = oy0 + (y0 - oy0) * k, mx1 = ox1 + (x1 - ox1) * k, my1 = oy1 + (y1 - oy1) * k;
+  mira.style.left = mx0 + 'px'; mira.style.top = my0 + 'px';
+  mira.style.width = Math.max(48, mx1 - mx0) + 'px'; mira.style.height = Math.max(48, my1 - my0) + 'px';
+  mira.style.opacity = c.mira > 0 ? Math.min(1, c.mira * 4).toFixed(3) : 0;
+  var kt = c01((c.mira - .7) / .3);
+  miraTag.style.opacity = kt; miraTag.style.transform = 'translateY(' + (6 * (1 - kt)).toFixed(1) + 'px)';
+
+  posicionaFaixa(r, zND, cx);
+  faixaDentro.style.clipPath = 'inset(0 ' + ((1 - c.faixa) * 100).toFixed(2) + '% 0 0)';
+  // troca de frase: uma sai, depois a outra entra (sem as duas na tela ao mesmo tempo)
+  var sai = c01(c.troca * 2), entra = c01(c.troca * 2 - 1);
+  faixaA.style.opacity = (1 - sai).toFixed(3); faixaA.style.transform = 'translateY(' + (-12 * sai).toFixed(1) + 'px)';
+  faixaB.style.opacity = entra.toFixed(3); faixaB.style.transform = 'translateY(' + (12 * (1 - entra)).toFixed(1) + 'px)';
+
+  cortina.style.opacity = (.55 * c.flash).toFixed(3);
+}
+
+/* ---------- textos do palco ---------- */
+var falas = [].slice.call(document.querySelectorAll('.fala'));
+var faixasA = falas.map(function(f){ return [parseFloat(f.getAttribute('data-de')), parseFloat(f.getAttribute('data-ate'))]; });
+var falaAtual = -1, trocando = false, heroiOn = false;
+function nomeVista(a){
+  var i = Math.round(c01(a) * 95);
+  if (i <= 14) return ['frente', 'a frente'];
+  if (i <= 36) return ['frente e lateral', 'a lateral'];
+  if (i <= 50) return ['lateral', 'a lateral'];
+  if (i <= 70) return ['traseira', 'a traseira'];
+  if (i <= 85) return ['lateral', 'a lateral'];
+  return ['frente', 'a frente'];
+}
+function alvoFala(a){
+  if (a < faixasA[0][0] - .03) return -1;
+  for (var i = 0; i < faixasA.length; i++) if (a >= faixasA[i][0] && a <= faixasA[i][1]) return i;
+  return falaAtual; // folga entre as faixas: mantém o que está na tela
+}
+function fmt(n){ return n >= 1000 ? Math.floor(n / 1000) + '.' + ('00' + (n % 1000)).slice(-3) : String(n); }
+function conta(el){
+  var b = el.querySelector('[data-conta]'); if (!b) return;
+  var fim = parseInt(b.getAttribute('data-conta'), 10);
+  if (reduz) { b.textContent = fmt(fim); return; }
+  var t0 = performance.now(), dur = 700;
+  (function passo(agora){
+    var k = eOut(c01((agora - t0) / dur));
+    b.textContent = fmt(Math.round(fim * k));
+    if (k < 1) requestAnimationFrame(passo);
+  })(t0);
+}
+function trocaFala(){
+  if (trocando) return;
+  var alvo = alvoFala(cena.a);
+  if (alvo === falaAtual) return;
+  trocando = true;
+  var sai = falaAtual >= 0 ? falas[falaAtual] : null, feito = false;
+  function entra(){
+    if (feito) return; feito = true;
+    falaAtual = alvo;
+    if (alvo >= 0) { falas[alvo].classList.add('on'); conta(falas[alvo]); }
+    setTimeout(function(){ trocando = false; }, 360);
+  }
+  if (sai) { sai.classList.remove('on'); setTimeout(entra, 240); } else entra();
+}
+function mostraHeroi(sim){
+  if (sim === heroiOn) return;
+  heroiOn = sim; heroi.classList.toggle('on', sim);
+}
+
+/* ---------- estados da página ---------- */
+var fase = 'espera', inicio = 0, pular = false, ultimoIdx = -1, ultimoT = 0;
+function progresso(){
+  var sr = show.getBoundingClientRect(), total = sr.height - H;
+  return total > 0 ? c01(-sr.top / total) : 0;
+}
+function uiIntro(){
+  var u = cena.ui;
+  topo.classList.toggle('escondido', u < .05);
+  veu.style.opacity = u.toFixed(3);
+  if (u > .05) { mostraHeroi(true); palco.classList.add('pronto'); }
+}
+function terminaIntro(){
+  fase = 'livre'; cena.volta = true; cena.rev = 1; cena.a = 0;
+  topo.classList.remove('escondido'); veu.style.opacity = 1;
+  palco.classList.add('pronto'); palco.style.backgroundImage = 'none';
+  mostraHeroi(progresso() < .03);
+  var logo = document.getElementById('orbitaLogo');
+  if (logo && !reduz && logo.beginElement) { try { logo.beginElement(); } catch (e) {} }
+  sujo = true;
+}
+function comecaIntro(){
+  pular = false; fase = 'intro'; inicio = performance.now();
+  falas.forEach(function(f){ f.classList.remove('on'); }); falaAtual = -1;
+  mostraHeroi(false); topo.classList.add('escondido'); veu.style.opacity = 0;
+  palco.classList.remove('pronto');
+}
+
+var flutua = document.getElementById('flutua'), gudev = document.getElementById('gudev');
+function laco(agora){
+  requestAnimationFrame(laco);
+  var dt = Math.min(.05, (agora - (ultimoT || agora)) / 1000); ultimoT = agora;
+  var p = progresso();
+  if (fase === 'intro') {
+    var t = (agora - inicio) / 1000;
+    if (p > .012 || pular || t >= (reduz ? 1.4 : T.fim)) terminaIntro();
+    else { introCena(t); desenha(); uiIntro(); return; }
+  }
+  if (fase !== 'livre') return;
+  var aAlvo = embed ? 0 : c01((p - .05) / .92);
+  var k = 1 - Math.exp(-dt * 11);
+  cena.a += (aAlvo - cena.a) * k;
+  if (Math.abs(aAlvo - cena.a) < .0006) cena.a = aAlvo;
+  var idx = Math.round(cena.a * (NV - 1));
+  if (idx !== ultimoIdx || sujo) { desenha(); ultimoIdx = idx; sujo = false; }
+  if (!embed) {
+    if (p > .03) mostraHeroi(false); else if (p < .018) mostraHeroi(true);
+    trocaFala();
+  }
+  var nv = nomeVista(cena.a);
+  var txt = (heroiOn && p < .03) ? 'Role pra dar a volta' : 'Vista: ' + nv[0];
+  if (vista.textContent !== txt) vista.textContent = txt;
+  trilhoI.style.width = (cena.a * 100).toFixed(2) + '%';
+  trilhoB.style.left = (cena.a * 100).toFixed(2) + '%';
+  // topo claro fora do palco; botão flutuante só depois do palco e antes do fim
+  var fimShow = show.getBoundingClientRect().bottom;
+  topo.classList.toggle('claro', fimShow < 70);
+  var gTop = gudev.getBoundingClientRect().top;
+  flutua.classList.toggle('on', !dentro && !embed && fimShow < H * .5 && gTop > H * .8);
+  lacoGiro(dt);
+}
+
+/* ---------- gire você mesmo ---------- */
+var giro = document.getElementById('giro'), gtela = document.getElementById('giroTela'), gctx = gtela.getContext('2d');
+var giroVista = document.getElementById('giroVista'), giroDica = document.getElementById('giroDica'), perguntar = document.getElementById('perguntar');
+var gA = .16, gV = 0, gAlvo = null, arrastando = false, gx0 = 0, gA0 = 0, gUx = 0, gUt = 0, gW = 0, gH = 0, gSujo = true, gIdx = -1, gVisto = false, gMexeu = false;
+function gMedir(){
+  var r = giro.getBoundingClientRect(); gW = r.width; gH = r.height;
+  gtela.width = Math.max(1, Math.round(gW * dpr)); gtela.height = Math.max(1, Math.round(gH * dpr)); gSujo = true;
+}
+function gDesenha(){
+  var i = Math.round(c01(gA) * (NV - 1)), im = vPerto(i); if (!im) return;
+  var s = Math.max(gW / 9, gH / 16), dw = 9 * s, dh = 16 * s;
+  gctx.drawImage(im, (gW - dw) / 2 * dpr, (gH - dh) / 2 * dpr, dw * dpr, dh * dpr);
+  var nv = nomeVista(gA);
+  var rot = nv[0].charAt(0).toUpperCase() + nv[0].slice(1);
+  if (giroVista.textContent !== rot) {
+    giroVista.textContent = rot;
+    perguntar.textContent = 'Perguntar sobre ' + nv[1];
+    giro.setAttribute('aria-valuetext', rot);
+  }
+  giro.setAttribute('aria-valuenow', Math.round(c01(gA) * 100));
+}
+function lacoGiro(dt){
+  var r = giro.getBoundingClientRect();
+  if (r.bottom < -50 || r.top > H + 50) return;
+  if (!gVisto && r.top < H * .7) { gVisto = true; if (!reduz) cutucada(); }
+  if (!arrastando) {
+    if (gAlvo !== null) { gA += (gAlvo - gA) * (1 - Math.exp(-dt * 9)); if (Math.abs(gAlvo - gA) < .001) { gA = gAlvo; gAlvo = null; } }
+    else if (Math.abs(gV) > .00005) { gA += gV; gV *= Math.pow(.9, dt * 60); }
+    if (gA < 0) { gA += (0 - gA) * .25; gV = 0; } else if (gA > 1) { gA += (1 - gA) * .25; gV = 0; }
+  }
+  var i = Math.round(c01(gA) * (NV - 1));
+  if (i !== gIdx || gSujo) { gDesenha(); gIdx = i; gSujo = false; }
+}
+function cutucada(){
+  var seq = [.3, .16], n = 0;
+  (function vai(){
+    if (gMexeu || n >= seq.length) return;
+    gAlvo = seq[n++]; setTimeout(vai, 900);
+  })();
+}
+function escondeDica(){ gMexeu = true; giroDica.classList.add('some'); }
+giro.addEventListener('pointerdown', function(e){
+  arrastando = true; gAlvo = null; gV = 0; escondeDica();
+  try { giro.setPointerCapture(e.pointerId); } catch (err) {}
+  gx0 = gUx = e.clientX; gA0 = gA; gUt = e.timeStamp; giro.classList.add('pegando');
+});
+giro.addEventListener('pointermove', function(e){
+  if (!arrastando) return;
+  var bruto = gA0 + (e.clientX - gx0) / (gW * 1.5);
+  gA = bruto < 0 ? bruto * .3 : bruto > 1 ? 1 + (bruto - 1) * .3 : bruto;
+  var d = Math.max(8, e.timeStamp - gUt);
+  gV = (e.clientX - gUx) / (gW * 1.5) / d * 16.7;
+  gUx = e.clientX; gUt = e.timeStamp;
+});
+function solta(){ if (!arrastando) return; arrastando = false; giro.classList.remove('pegando'); }
+giro.addEventListener('pointerup', solta);
+giro.addEventListener('pointercancel', solta);
+giro.addEventListener('keydown', function(e){
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    e.preventDefault(); escondeDica();
+    gAlvo = c01((gAlvo === null ? gA : gAlvo) + (e.key === 'ArrowRight' ? .04 : -.04));
+  }
+});
+[].forEach.call(document.querySelectorAll('.seta-btn'), function(b){
+  b.addEventListener('click', function(){ escondeDica(); gAlvo = c01((gAlvo === null ? gA : gAlvo) + parseInt(b.getAttribute('data-dir'), 10) * .12); });
+});
+
+/* ---------- WhatsApp (prévia da mensagem) ---------- */
+var folha = document.getElementById('folha'), folhaMsg = document.getElementById('folhaMsg'), folhaIr = document.getElementById('folhaIr');
+var focoAntes = null;
+var MSG = {
+  testdrive: 'Oi! Vi o Honda City no site e quero agendar um test drive.',
+  ficha: 'Oi! Vi a ficha do Honda City no site. Pode me passar ano, km e valor?'
+};
+function abreFolha(msg){
+  folhaMsg.textContent = msg;
+  folhaIr.href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent('Oi! Testei o site conceito da Órbita Seminovos (o Honda City em 360). A mensagem do cliente chegaria assim: "' + msg + '". Quero um site assim pra minha loja.');
+  focoAntes = document.activeElement;
+  folha.hidden = false;
+  folhaIr.focus();
+}
+function fechaFolha(){ folha.hidden = true; if (focoAntes && focoAntes.focus) focoAntes.focus(); }
+[].forEach.call(document.querySelectorAll('[data-msg]'), function(b){
+  b.addEventListener('click', function(){ abreFolha(MSG[b.getAttribute('data-msg')]); });
+});
+perguntar.addEventListener('click', function(){
+  abreFolha('Oi! Vi o Honda City no site e fiquei olhando ' + nomeVista(gA)[1] + '. Pode me mandar mais fotos e o valor?');
+});
+[].forEach.call(folha.querySelectorAll('[data-fecha]'), function(b){ b.addEventListener('click', fechaFolha); });
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !folha.hidden) fechaFolha(); });
+folhaIr.addEventListener('click', function(){ setTimeout(fechaFolha, 300); });
+
+document.getElementById('rever').addEventListener('click', function(){
+  window.scrollTo(0, 0);
+  setTimeout(comecaIntro, 60);
+});
+
+/* ---------- início ---------- */
+function aoMudarTamanho(){
+  var w = window.innerWidth;
+  if (w === larguraAntes) return; // barra do navegador do celular: ignora
+  larguraAntes = w; medir(); gMedir();
+}
+window.addEventListener('resize', aoMudarTamanho);
+window.addEventListener('orientationchange', function(){ setTimeout(function(){ larguraAntes = -1; aoMudarTamanho(); }, 200); });
+larguraAntes = window.innerWidth; medir(); gMedir();
+
+window.ORBITA = {cena:cena, introCena:introCena, desenha:desenha, T:T, Q_DUR:Q_DUR, NV:NV, vImg:vImg, falas:falas, faixas:faixasA, nomeVista:nomeVista, fmt:fmt,
+  medir:function(){ medir(); gMedir(); }, carregaTudo:function(){ return Promise.all([carregaQuase(), carregaVolta(true)]); }};
+if (reel) return; // o Reel controla o tempo quadro a quadro (reel/reel.js)
+
+requestAnimationFrame(laco);
+setInterval(function(){ sujo = true; }, 1000); // garantia: redesenha mesmo se algum evento de rolagem se perder
+
+if (embed || window.scrollY > 40) {
+  carregaVolta(false); carregaQuase();
+  var esperaV0 = setInterval(function(){ if (vImg[0]) { clearInterval(esperaV0); terminaIntro(); } }, 50);
+  return;
+}
+var comecou = false;
+function vai(){ if (comecou) return; comecou = true; comecaIntro(); carregaVolta(false); }
+carrega('media/volta/v00.webp').then(function(im){ if (im) vImg[0] = im; });
+carregaQuase().then(function(){ var e = setInterval(function(){ if (vImg[0]) { clearInterval(e); vai(); } }, 30); });
+setTimeout(function(){ if (!comecou) { comecou = true; carregaVolta(false); var e = setInterval(function(){ if (vImg[0]) { clearInterval(e); terminaIntro(); } }, 50); } }, 4500);
+})();
+</script>
+</body>
+</html>

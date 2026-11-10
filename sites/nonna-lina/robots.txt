@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nonna-lina.netlify.app/sitemap.xml

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vértice | Conceito GuDev</title>
+<meta name="description" content="Site conceito de uma locadora de carros premium, feito pela GuDev. Sites que vendem.">
+<meta name="theme-color" content="#060607">
+<meta property="og:title" content="Vértice | Conceito GuDev">
+<meta property="og:description" content="Um site que faz o cliente parar de rolar.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/capa.jpg">
+<link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="../../quadros/m/f00.webp" media="(max-width:900px)">
+<link rel="preload" as="image" href="../../quadros/d/f00.webp" media="(min-width:901px)">
+<script>document.documentElement.classList.add('intro');document.documentElement.lang='pt-BR';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+
+<!--
+PLANO (conceito GuDev pro Instagram, marca fictícia "Vértice")
+Princípio: o texto mora ATRÁS do carro. O carro é recortado quadro a quadro
+(BiRefNet) e desenhado por cima do próprio quadro, com o texto no meio.
+
+Paleta (saiu do vídeo):
+  Asfalto  #060607  fundo
+  Chumbo   #141518  superfícies
+  Prata    #8e9096  texto de apoio; o texto atrás do carro é um degradê de metal
+  Osso     #f1efea  texto e botões
+  Lanterna #ff2a35  só a luz da lanterna na abertura
+
+Fonte: Archivo (variável, largura 62 a 125)
+
+WOWs:
+  1 Abertura: no escuro, a lanterna traseira acende de dentro pra fora, o carro aparece
+    na chuva e VÉRTICE sobe por trás dele.
+  2 Meio: a rolagem gira o carro; a frase gigante passa por trás dele.
+  3 Interativo: carrossel 3D de detalhes, de arrastar; e no fim o carro gira sozinho
+    como vídeo e você arrasta pra girar.
+
+Quadros: 76, os mesmos do site da GuDev (../../quadros/d 1920px, ../../quadros/m 1440px).
+fNN = quadro, mNN = máscara do carro. O motor (fila de download, recorte, chuva) é ../../js/cena.js.
+Upscale com Real-ESRGAN (realesr-general-x4v3).
+-->
+
+<style>
+:root{
+  --asfalto:#060607; --chumbo:#141518; --prata:#8e9096; --osso:#f1efea; --lanterna:#ff2a35;
+  --metal:linear-gradient(180deg,#eceef1 0%,#b4b7bd 46%,#6c6e74 100%);
+  --gut:clamp(16px,4vw,56px);
+  --sans:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --bw:min(112vw,calc(72svh*2.795));
+  --bw2:min(104vw,calc(66svh*2.795));
+  color-scheme:dark;
+}
+@media (max-aspect-ratio:1/1){ :root{ --bw:140vw; --bw2:140vw } .palco .band{top:50%} }
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--asfalto);color:var(--osso);font:400 16px/1.5 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--osso);outline-offset:3px}
+img{display:block;max-width:100%;height:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;border-radius:999px;background:var(--osso);color:var(--asfalto);
+  font:600 15px/1 var(--sans);text-decoration:none;white-space:nowrap;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .2s}
+.btn:hover{transform:translateY(-2px);background:#fff}
+
+/* ---------- barra fixa ---------- */
+.bar{position:fixed;z-index:50;left:0;right:0;top:0;padding:max(14px,env(safe-area-inset-top)) max(var(--gut),env(safe-area-inset-right)) 14px max(var(--gut),env(safe-area-inset-left));
+  display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateY(-10px);transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.bar::before{content:"";position:absolute;inset:0 0 -30px;z-index:-1;background:linear-gradient(var(--asfalto) 30%,transparent);opacity:0;transition:opacity .4s}
+.on-bar .bar{opacity:1;transform:none}
+.past .bar::before{opacity:1}
+.marca{font:800 15px/1 var(--sans);font-stretch:125%;letter-spacing:.04em;text-decoration:none}
+.bar__dir{display:flex;align-items:center;gap:clamp(8px,2vw,24px)}
+.gudev{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-size:14px;color:rgba(241,239,234,.78);text-decoration:none;transition:color .2s}
+.gudev:hover{color:var(--osso)}
+.gudev svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- palco do carro (abertura + volta) ---------- */
+.volta{position:relative;height:430vh}
+.palco,.palco2{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--asfalto);isolation:isolate}
+.luz{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(70% 58% at 50% -6%,rgba(196,204,218,.13),transparent 72%)}
+.band{position:absolute;left:50%;top:52%;width:var(--bw);max-width:none;aspect-ratio:2560/916;transform:translate(-50%,-50%);transform-origin:50% 50%;will-change:transform;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 82%,transparent),linear-gradient(to right,transparent,#000 7%,#000 93%,transparent);
+  -webkit-mask-composite:source-in;
+          mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 82%,transparent),linear-gradient(to right,transparent,#000 7%,#000 93%,transparent);
+          mask-composite:intersect}
+.band canvas{display:block;width:100%;height:100%}
+.fundo{z-index:1} .frente{z-index:3}
+.linha{position:absolute;z-index:2;left:0;top:0;white-space:nowrap;will-change:transform;pointer-events:none;transition:opacity .4s;font-family:var(--sans);font-size:15.4vw}
+.linha .sobe{display:inline-block}
+.linha .nome,.linha .frase,.linha2{display:inline-block;color:transparent;background:var(--metal);-webkit-background-clip:text;background-clip:text;line-height:1}
+.linha .nome{font-weight:900;font-stretch:125%;letter-spacing:-.02em}
+.linha .frase{font-weight:800;font-stretch:108%;letter-spacing:-.035em;margin-left:.55em}
+.chuva{position:absolute;inset:0;z-index:4;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen}
+.veu{position:absolute;inset:0;z-index:5;background:#000;pointer-events:none;opacity:0}
+.luzes{z-index:6;-webkit-mask-image:none;mask-image:none;pointer-events:none}
+.luzes svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.luzes path{fill:none;stroke-linecap:round;stroke-dasharray:1 2;stroke-dashoffset:1}
+.luzes .l1{stroke:#ff2030;stroke-width:22;opacity:.16}
+.luzes .l2{stroke:var(--lanterna);stroke-width:8;opacity:.5}
+.luzes .l3{stroke:#ffe0dc;stroke-width:2.6}
+.pe{position:absolute;z-index:7;left:var(--gut);right:var(--gut);bottom:max(18px,env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
+  font-size:14px;color:rgba(241,239,234,.75)}
+.role{display:flex;align-items:center;gap:10px}
+.role i{display:block;width:1px;height:34px;background:linear-gradient(var(--osso),transparent);transform-origin:top;animation:pinga 1.8s ease-in-out infinite}
+@keyframes pinga{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+/* abertura: a lanterna acende, o carro aparece, o nome sobe por trás */
+.intro .veu{opacity:1}
+.intro .linha .sobe{opacity:0;transform:translateY(40%)}
+.intro .pe{opacity:0}
+.go .veu{animation:abre 1.9s cubic-bezier(.45,0,.2,1) 1.2s both}
+@keyframes abre{from{opacity:1}to{opacity:0}}
+.go .luzes path{animation:traca .95s cubic-bezier(.65,0,.35,1) .35s both}
+@keyframes traca{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.go .luzes svg{animation:brilho 3.4s ease .35s both}
+@keyframes brilho{0%,38%{opacity:1}100%{opacity:.42}}
+.go .linha .sobe{animation:sobe 1.6s cubic-bezier(.2,.8,.2,1) 1.75s both}
+@keyframes sobe{from{opacity:0;transform:translateY(40%)}to{opacity:1;transform:none}}
+.go .pe{animation:surge 1s ease 2.9s both}
+@keyframes surge{from{opacity:0}to{opacity:1}}
+
+/* ---------- detalhes ---------- */
+.det{position:relative;padding:clamp(80px,14vh,150px) 0 clamp(60px,10vh,110px);overflow:hidden;background:var(--asfalto)}
+.det h2{padding:0 var(--gut);font:700 clamp(40px,7vw,104px)/.95 var(--sans);font-stretch:112%;letter-spacing:-.03em;text-wrap:balance}
+.det .sub{padding:0 var(--gut);margin-top:14px;color:rgba(241,239,234,.6)}
+.cf{--cw:min(64vw,330px);position:relative;height:calc(var(--cw)*1.25 + 60px);margin-top:clamp(28px,6vh,60px);perspective:1100px;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.cf.arrasta{cursor:grabbing}
+.card{position:absolute;left:50%;top:50%;width:var(--cw);aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--chumbo);box-shadow:0 30px 70px rgba(0,0,0,.65);will-change:transform}
+.card img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.card .sombra{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+.card .brilho{position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.32) 50%,transparent 62%);background-size:260% 100%;background-position:130% 0}
+.card.ativo .brilho{animation:passa 1.2s cubic-bezier(.3,.6,.2,1) .15s both}
+@keyframes passa{from{background-position:130% 0}to{background-position:-30% 0}}
+.card b{position:absolute;left:16px;bottom:14px;font:700 13px/1 var(--sans);font-stretch:125%;letter-spacing:.06em;text-transform:uppercase}
+.legenda{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 var(--gut);margin-top:8px}
+.legenda p{font-size:clamp(17px,1.6vw,21px);max-width:30ch;transition:opacity .3s,transform .3s}
+.legenda p.troca{opacity:0;transform:translateY(6px)}
+.setas{display:flex;gap:10px}
+.setas button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(241,239,234,.25);display:grid;place-items:center;transition:background .2s,color .2s}
+.setas button:hover{background:var(--osso);color:var(--asfalto)}
+.setas svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
+.barras{display:flex;gap:6px;padding:0 var(--gut);margin-top:22px}
+.barras i{height:2px;flex:1;max-width:60px;background:rgba(241,239,234,.18);border-radius:2px;transition:background .3s}
+.barras i.on{background:var(--osso)}
+.det small{display:block;padding:0 var(--gut);margin-top:16px;font-size:13px;color:var(--prata)}
+
+/* ---------- final: o carro gira sozinho, arraste pra girar ---------- */
+.giro{position:relative;background:var(--asfalto)}
+.palco2{position:relative;height:92svh;max-height:960px;min-height:520px;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.palco2.arrasta{cursor:grabbing}
+.palco2 .band{top:50%;width:var(--bw2)}
+.linha2{position:absolute;z-index:2;left:0;top:0;white-space:nowrap;will-change:transform;pointer-events:none;font:800 10.4vw/1 var(--sans);font-stretch:112%;letter-spacing:-.035em}
+.dica{position:absolute;z-index:7;left:0;right:0;bottom:clamp(18px,5svh,48px);display:flex;flex-direction:column;align-items:center;gap:10px;font-size:14px;color:rgba(241,239,234,.72);pointer-events:none}
+.dica i{position:relative;display:block;width:64px;height:2px;border-radius:2px;background:rgba(241,239,234,.2)}
+.dica i::after{content:"";position:absolute;top:-2px;left:0;width:6px;height:6px;border-radius:50%;background:var(--osso);animation:vai 2.4s ease-in-out infinite alternate}
+@keyframes vai{to{transform:translateX(58px)}}
+.cta{position:relative;z-index:2;padding:clamp(28px,6vh,60px) var(--gut) clamp(70px,12vh,130px);text-align:center}
+.cta .eyebrow{color:rgba(241,239,234,.6);font-size:15px}
+.cta h2{margin:14px auto 0;max-width:14ch;font:800 clamp(38px,6.6vw,100px)/.95 var(--sans);font-stretch:108%;letter-spacing:-.035em;text-wrap:balance}
+.cta .btn{margin-top:30px;min-height:54px;padding:0 30px;font-size:16px}
+footer{padding:28px var(--gut) max(28px,env(safe-area-inset-bottom));display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;font-size:14px;color:var(--prata);border-top:1px solid rgba(241,239,234,.08)}
+footer a{color:var(--osso);text-underline-offset:3px}
+.cta .eyebrow a{color:var(--osso);text-underline-offset:3px}
+
+@media (max-aspect-ratio:1/1){
+  .palco2{height:min(76svh,124vw);min-height:360px}
+  .linha2{font-size:12.2vw}
+  /* em pé, o que sobra embaixo do carro vira a legenda da marca */
+  .pe{flex-direction:column;align-items:center;gap:22px;text-align:center;bottom:max(26px,env(safe-area-inset-bottom))}
+  .pe .tag{font-size:clamp(18px,5.4vw,24px);font-weight:600;font-stretch:108%;letter-spacing:-.01em;color:var(--osso)}
+}
+@media (max-width:700px){
+  .legenda{flex-direction:column;align-items:flex-start}
+  .setas{display:none}
+  .bar .btn{min-height:40px;padding:0 16px;font-size:14px}
+  .gudev__mais{display:none}
+}
+@media (max-width:379px){ .gudev{display:none} }
+
+/* ---------- prévia / reduzir movimento ---------- */
+.embed .volta{height:auto}
+.embed .veu{display:none}
+.embed .linha .sobe,.embed .pe{opacity:1!important;transform:none!important;animation:none!important}
+.embed .luzes path{stroke-dashoffset:0;animation:none}
+.embed .luzes svg{opacity:.42;animation:none}
+@media (prefers-reduced-motion:reduce){
+  .go .veu,.go .luzes path,.go .luzes svg,.go .linha .sobe,.go .pe{animation-duration:.5s;animation-delay:0s}
+  .role i,.dica i::after{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="marca" href="#topo">VÉRTICE</a>
+  <div class="bar__dir">
+    <a class="gudev" href="../../projetos.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span><span class="gudev__mais">Projetos </span>GuDev</span></a>
+    <a class="btn" data-wa href="https://wa.me/5511964650141" target="_blank" rel="noopener">Quero um site assim</a>
+  </div>
+</header>
+
+<main id="topo">
+  <!-- 1 + 2. abertura e a volta: o texto passa entre o quadro e o carro recortado -->
+  <section class="volta" id="volta" aria-labelledby="t-vertice">
+    <h1 class="sr" id="t-vertice">Vértice, aluguel de carros premium</h1>
+    <div class="palco" id="palco">
+      <div class="luz"></div>
+      <div class="band fundo" id="bF"><canvas id="cF" role="img" aria-label="Esportivo branco visto de trás, na chuva, girando devagar até mostrar a lateral"></canvas></div>
+      <div class="linha" id="linha" aria-hidden="true"><span class="sobe"><span class="nome">VÉRTICE</span><span class="frase">Dirija o que você só via passar.</span></span></div>
+      <div class="band frente" id="bC"><canvas id="cC" aria-hidden="true"></canvas></div>
+      <canvas class="chuva" id="chuva1" aria-hidden="true"></canvas>
+      <div class="veu"></div>
+      <div class="band luzes" id="bL" aria-hidden="true">
+        <svg viewBox="0 0 1000 357.8" preserveAspectRatio="none">
+          <g><path class="l1" pathLength="1" d="M507 134.2C470 134.4 440 135 419 135.3C390 136 350 140 300 146"/><path class="l1" pathLength="1" d="M507 134.2C545 134.3 575 135.3 596 135.4C630 136.6 670 141 715 146.5"/></g>
+          <g><path class="l2" pathLength="1" d="M507 134.2C470 134.4 440 135 419 135.3C390 136 350 140 300 146"/><path class="l2" pathLength="1" d="M507 134.2C545 134.3 575 135.3 596 135.4C630 136.6 670 141 715 146.5"/></g>
+          <g><path class="l3" pathLength="1" d="M507 134.2C470 134.4 440 135 419 135.3C390 136 350 140 300 146"/><path class="l3" pathLength="1" d="M507 134.2C545 134.3 575 135.3 596 135.4C630 136.6 670 141 715 146.5"/></g>
+        </svg>
+      </div>
+      <div class="pe">
+        <span class="tag">Aluguel de carros premium</span>
+        <span class="role"><i></i>Role pra dar a volta</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. detalhes -->
+  <section class="det" id="det" aria-label="Detalhes">
+    <h2>Chegue mais perto.</h2>
+    <p class="sub">Arraste pro lado.</p>
+    <div class="cf" id="cf" role="group" aria-roledescription="carrossel" aria-label="Detalhes do carro">
+      <figure class="card"><img src="img/d-farois.jpg" alt="Os dois faróis acesos refletindo no chão molhado" draggable="false"><div class="sombra"></div><div class="brilho"></div><b>Faróis</b></figure>
+      <figure class="card"><img src="img/d-perfil.jpg" alt="Lateral dianteira com retrovisor e roda escura" draggable="false" loading="lazy"><div class="sombra"></div><div class="brilho"></div><b>Perfil</b></figure>
+      <figure class="card"><img src="img/d-roda.jpg" alt="Roda traseira escura com pinça de freio vermelha" draggable="false" loading="lazy"><div class="sombra"></div><div class="brilho"></div><b>Roda</b></figure>
+      <figure class="card"><img src="img/d-lanterna.jpg" alt="Traseira com a lanterna em linha acesa de ponta a ponta" draggable="false" loading="lazy"><div class="sombra"></div><div class="brilho"></div><b>Lanterna</b></figure>
+      <figure class="card"><img src="img/d-reflexo.jpg" alt="Reflexo vermelho da lanterna no asfalto molhado" draggable="false" loading="lazy"><div class="sombra"></div><div class="brilho"></div><b>Reflexo</b></figure>
+    </div>
+    <div class="legenda">
+      <p id="leg" aria-live="polite"></p>
+      <div class="setas">
+        <button type="button" id="ant" aria-label="Detalhe anterior"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" id="prox" aria-label="Próximo detalhe"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+    <div class="barras" id="barras" aria-hidden="true"></div>
+    <small>Imagens ilustrativas geradas por IA.</small>
+  </section>
+
+  <!-- 4. final: o carro gira sozinho; arraste pra girar -->
+  <section class="giro" id="giro" aria-label="Feito pela GuDev">
+    <div class="palco2" id="palco2">
+      <div class="luz"></div>
+      <div class="band fundo" id="bF2"><canvas id="cF2" role="img" aria-label="O esportivo gira devagar de um lado pro outro. Arraste pra girar."></canvas></div>
+      <div class="linha2" id="linha2" aria-hidden="true"><span>Sites que vendem.</span></div>
+      <div class="band frente" id="bC2"><canvas id="cC2" aria-hidden="true"></canvas></div>
+      <canvas class="chuva" id="chuva2" aria-hidden="true"></canvas>
+      <p class="dica"><i></i>Arraste pra girar</p>
+    </div>
+    <div class="cta">
+      <p class="eyebrow">Vértice é um conceito. Quem fez foi a <a href="../../index.html">GuDev</a>.</p>
+      <h2>Um site que faz o cliente parar de rolar.</h2>
+      <a class="btn" data-wa href="https://wa.me/5511964650141" target="_blank" rel="noopener">Quero um site assim</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span><a href="../../index.html">GuDev</a>, sites para comércios locais. <a href="../../projetos.html">Ver outros projetos</a></span>
+  <span>Vértice é uma marca fictícia. Imagens geradas por IA.</span>
+</footer>
+
+<script src="../../js/cena.js"></script>
+<script>
+(function(){
+  var C = window.Cena;
+  if (!C) return;
+  var WHATS = '5511964650141';
+  var MSG = 'Oi! Vi o site conceito da Vértice e quero um site assim pro meu negócio.';
+
+  var embed = /[?&]embed\b/.test(location.search);
+  var reduz = C.reduz, NQ = C.NQ, clamp = C.clamp, suave = C.suave, passo = C.passo, retrato = C.retrato;
+  var doc = document.documentElement;
+  function $(id){ return document.getElementById(id); }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-wa]'), function(a){
+    a.href = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent(MSG);
+  });
+
+  /* ===== quadros: fila com prioridade, o primeiro chega antes de tudo ===== */
+  var Q = new C.Quadros('../../quadros/');
+  Q.pede([0], true);
+
+  /* ===== 1 + 2. abertura e a volta ===== */
+  var volta = $('volta'), palco = $('palco'), linha = $('linha'), nome = linha.querySelector('.nome'), role = palco.querySelector('.role');
+  var bF = $('bF'), bC = $('bC'), bL = $('bL');
+  var P1 = new C.Palco($('cF'), $('cC'), Q), chuva1 = new C.Chuva($('chuva1'));
+  var cur = 0, x0 = 0, x1 = 0, fs1 = 0, fs2 = 0, x2 = 0, bw1 = 0, bw2 = 0, ph1 = 0, ph2 = 0;
+
+  /* ===== 4. final ===== */
+  var palco2 = $('palco2'), linha2 = $('linha2'), bF2 = $('bF2'), bC2 = $('bC2');
+  var P2 = new C.Palco($('cF2'), $('cC2'), Q), chuva2 = new C.Chuva($('chuva2'));
+  var G = { k:0, u:0, auto:!reduz, drag:null, vel:0, solto:0 }, T_IDA = 3.6;
+
+  /* o nome ocupa 90% da largura e "Sites que vendem." 88%, em qualquer tela */
+  function mede(){
+    var vw = window.innerWidth;
+    linha.style.fontSize = '';
+    fs1 = parseFloat(getComputedStyle(linha).fontSize) * vw * .9 / Math.max(1, nome.offsetWidth);
+    linha.style.fontSize = fs1 + 'px';
+    x0 = vw * .05;
+    x1 = vw * .7 - linha.scrollWidth;
+    linha2.style.fontSize = '';
+    fs2 = parseFloat(getComputedStyle(linha2).fontSize) * vw * .88 / Math.max(1, linha2.offsetWidth);
+    linha2.style.fontSize = fs2 + 'px';
+    x2 = vw * .06;
+    bw1 = bC.offsetWidth; bw2 = bC2.offsetWidth; ph1 = palco.clientHeight; ph2 = palco2.clientHeight;
+    chuva1.mede(); chuva2.mede();
+  }
+
+  /* a barra aparece cedo; quem já começou a rolar não espera nem isso */
+  function barra(){ doc.classList.add('on-bar'); }
+  var tGo = 0;
+  function abertura(){
+    if (embed){
+      doc.classList.remove('intro'); doc.classList.add('embed', 'on-bar');
+      Q.todos(0);
+      return;
+    }
+    var vai = function(){
+      if (tGo) return;
+      tGo = performance.now();
+      doc.classList.add('go');
+      Q.depois(0, 2500);
+      setTimeout(barra, reduz ? 0 : 1100);
+    };
+    (function espera(){ if (Q.ok[0]) vai(); else if (!tGo) setTimeout(espera, 40); })();
+    setTimeout(vai, 3000);
+    window.addEventListener('scroll', barra, { passive:true, once:true });
+  }
+
+  /* ===== 3. carrossel 3D ===== */
+  var cf = $('cf'), cards = cf.querySelectorAll('.card'), N = cards.length;
+  var LEG = [
+    'A primeira coisa que aparece na chuva.',
+    'Retrovisor, entrada de ar e roda escura.',
+    'Pinça vermelha atrás do aro escuro.',
+    'Uma linha de luz de ponta a ponta.',
+    'Até o chão molhado entra na foto.'
+  ];
+  var pos = 0, alvoC = 0, dragC = null, ultimoToque = 0, ultimoAuto = 0, ativo = -1;
+  var leg = $('leg'), barras = $('barras');
+  for (var b = 0; b < N; b++) barras.appendChild(document.createElement('i'));
+  function wrap(d){ d = ((d % N) + N) % N; return d > N/2 ? d - N : d; }
+  function espaco(){ return cards[0].offsetWidth * .62; }
+  function carrossel(){
+    if (!dragC){
+      pos += (alvoC - pos) * (reduz ? .35 : .1);
+      if (Math.abs(alvoC - pos) < .001) pos = alvoC;
+      var agora = performance.now(), cr = cf.getBoundingClientRect();
+      var aparece = cr.top < window.innerHeight * .85 && cr.bottom > window.innerHeight * .15;
+      if (aparece && !reduz && !embed && agora - ultimoToque > 4500 && agora - ultimoAuto > 2800){ ultimoAuto = agora; alvoC = Math.round(alvoC) + 1; }
+      if (!aparece) ultimoAuto = agora;
+    }
+    var sp = espaco();
+    for (var i = 0; i < N; i++){
+      var d = wrap(i - pos), ad = Math.abs(d), c = clamp(d, -2, 2);
+      cards[i].style.transform = 'translate(-50%,-50%) translateX(' + (d * sp).toFixed(1) + 'px) translateZ(' + (-ad * 170).toFixed(1) + 'px) rotateY(' + (-c * 32).toFixed(2) + 'deg)';
+      cards[i].style.zIndex = String(100 - Math.round(ad * 10));
+      cards[i].style.opacity = ad > 2.3 ? '0' : '1';
+      cards[i].querySelector('.sombra').style.opacity = String(Math.min(.75, ad * .42));
+    }
+    var a = ((Math.round(pos) % N) + N) % N;
+    if (a !== ativo){
+      if (ativo >= 0) cards[ativo].classList.remove('ativo');
+      ativo = a;
+      void cards[a].offsetWidth;
+      cards[a].classList.add('ativo');
+      leg.classList.add('troca');
+      setTimeout(function(){ leg.textContent = LEG[ativo]; leg.classList.remove('troca'); }, 180);
+      for (var j = 0; j < N; j++){ barras.children[j].classList.toggle('on', j === a); cards[j].setAttribute('aria-hidden', j === a ? 'false' : 'true'); }
+    }
+  }
+  cf.addEventListener('pointerdown', function(e){
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    dragC = { x:e.clientX, y:e.clientY, p0:pos, t:performance.now(), lx:e.clientX, v:0, ok:false, id:e.pointerId, alvo:e.target.closest('.card') };
+    ultimoToque = performance.now();
+  });
+  cf.addEventListener('pointermove', function(e){
+    if (!dragC || e.pointerId !== dragC.id) return;
+    var dx = e.clientX - dragC.x, dy = e.clientY - dragC.y;
+    if (!dragC.ok){
+      if (Math.abs(dx) < 6) return;
+      if (Math.abs(dy) > Math.abs(dx)){ dragC = null; return; }
+      dragC.ok = true; cf.classList.add('arrasta');
+      try{ cf.setPointerCapture(e.pointerId); }catch(er){}
+    }
+    var now = performance.now(), dt = Math.max(1, now - dragC.t);
+    dragC.v = (e.clientX - dragC.lx) / dt; dragC.lx = e.clientX; dragC.t = now;
+    pos = dragC.p0 - dx / espaco(); alvoC = pos;
+  });
+  function soltaC(){
+    if (!dragC) return;
+    if (dragC.ok) alvoC = Math.round(pos - dragC.v * 260 / espaco());
+    else if (dragC.alvo){ var i = Array.prototype.indexOf.call(cards, dragC.alvo); alvoC = Math.round(pos) + Math.round(wrap(i - pos)); }
+    dragC = null; cf.classList.remove('arrasta'); ultimoToque = performance.now();
+  }
+  cf.addEventListener('pointerup', soltaC);
+  cf.addEventListener('pointercancel', soltaC);
+  $('ant').addEventListener('click', function(){ alvoC = Math.round(alvoC) - 1; ultimoToque = performance.now(); });
+  $('prox').addEventListener('click', function(){ alvoC = Math.round(alvoC) + 1; ultimoToque = performance.now(); });
+  cf.tabIndex = 0;
+  cf.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight'){ e.preventDefault(); alvoC = Math.round(alvoC) + 1; ultimoToque = performance.now(); }
+    if (e.key === 'ArrowLeft'){ e.preventDefault(); alvoC = Math.round(alvoC) - 1; ultimoToque = performance.now(); }
+  });
+
+  /* ===== final: arraste pra girar ===== */
+  palco2.addEventListener('pointerdown', function(e){
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    G.drag = { x:e.clientX, y:e.clientY, k0:G.k, ok:false, id:e.pointerId, lx:e.clientX, lt:performance.now(), v:0 };
+  });
+  palco2.addEventListener('pointermove', function(e){
+    var d = G.drag;
+    if (!d || e.pointerId !== d.id) return;
+    var dx = e.clientX - d.x, dy = e.clientY - d.y;
+    if (!d.ok){
+      if (Math.abs(dx) < 6) return;
+      if (Math.abs(dy) > Math.abs(dx)){ G.drag = null; return; }
+      d.ok = true; G.auto = false; palco2.classList.add('arrasta');
+      try{ palco2.setPointerCapture(e.pointerId); }catch(er){}
+    }
+    var w = palco2.clientWidth * .85, now = performance.now(), dt = Math.max(1, now - d.lt);
+    G.k = clamp(d.k0 - dx / w, 0, 1);
+    d.v = -(e.clientX - d.lx) / w / dt * 1000; d.lx = e.clientX; d.lt = now;
+  });
+  function soltaG(){
+    var d = G.drag;
+    if (!d) return;
+    if (d.ok){ G.vel = d.v; G.solto = performance.now(); }
+    G.drag = null; palco2.classList.remove('arrasta');
+  }
+  palco2.addEventListener('pointerup', soltaG);
+  palco2.addEventListener('pointercancel', soltaG);
+
+  /* ===== cada parte só roda enquanto aparece na tela ===== */
+  function quadroVolta(agora, dt){
+    var ih = window.innerHeight, r = volta.getBoundingClientRect();
+    var alvo = embed ? 0 : clamp(-r.top / Math.max(1, r.height - ih), 0, 1);
+    cur += (alvo - cur) * (reduz ? 1 : .12);
+    if (Math.abs(alvo - cur) < .0004) cur = alvo;
+    var k = clamp((cur - .04) / .88, 0, 1);
+    var j = P1.desenha(Math.round(k * (NQ - 1)));
+    var e = C.enquadra(k, bw1);
+    C.transforma(bF, e); C.transforma(bC, e); C.transforma(bL, e);
+    var x = x0 + (x1 - x0) * suave(clamp((cur - .05) / .93, 0, 1));
+    var subir = passo(0, .18, k);
+    var y = retrato() ? C.yTexto(ph1 * .5, bw1, e, fs1, -.05 - .3 * subir) : C.yTexto(ph1 * .52, bw1, e, fs1, .06 - .2 * subir);
+    linha.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
+    linha.style.opacity = j < 0 ? '0' : '';
+    bL.style.opacity = String(1 - passo(0, .035, cur));
+    role.style.opacity = String(1 - passo(.8, .97, cur));
+    chuva1.luz = embed ? 1 : tGo ? passo(1100, 2600, agora - tGo) : 0;
+    chuva1.passo(dt);
+  }
+  function quadroGiro(agora, dt){
+    if (G.drag && G.drag.ok){ /* o dedo manda */ }
+    else if (!G.auto){
+      G.k = clamp(G.k + G.vel * dt, 0, 1);
+      G.vel *= Math.pow(.03, dt);
+      if (!reduz && agora - G.solto > 1800){
+        G.auto = true;
+        var tri = Math.acos(1 - 2 * G.k) / Math.PI;
+        G.u = G.vel >= 0 ? tri : 2 - tri;
+      }
+    } else {
+      G.u = (G.u + dt / T_IDA) % 2;
+      var t3 = G.u < 1 ? G.u : 2 - G.u;
+      G.k = .5 - .5 * Math.cos(Math.PI * t3);
+    }
+    if (embed) G.k = .5;
+    var j2 = P2.desenha(Math.round(G.k * (NQ - 1)));
+    var e2 = C.enquadra(G.k, bw2);
+    C.transforma(bF2, e2); C.transforma(bC2, e2);
+    var y2 = C.yTexto(ph2 * .5, bw2, e2, fs2, retrato() ? -.3 : -.06);
+    linha2.style.transform = 'translate3d(' + x2.toFixed(1) + 'px,' + y2.toFixed(1) + 'px,0)';
+    linha2.style.opacity = j2 < 0 ? '0' : '';
+    chuva2.passo(dt);
+  }
+
+  var vivo = { volta:true, det:false, giro:false };
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ vivo[e.target === volta ? 'volta' : e.target === palco2 ? 'giro' : 'det'] = e.isIntersecting; });
+      liga();
+    }, { rootMargin:'10% 0px' });
+    io.observe(volta); io.observe($('det')); io.observe(palco2);
+  } else { vivo.det = vivo.giro = true; }
+
+  var rodando = false, antes = 0;
+  function laco(agora){
+    var dt = Math.min(.05, Math.max(0, (agora - antes) / 1000)); antes = agora;
+    if (vivo.volta) quadroVolta(agora, dt);
+    if (vivo.giro) quadroGiro(agora, dt);
+    if (vivo.det) carrossel();
+    if (vivo.volta || vivo.giro || vivo.det) requestAnimationFrame(laco); else rodando = false;
+  }
+  function liga(){ if (!rodando){ rodando = true; antes = performance.now(); requestAnimationFrame(laco); } }
+
+  function rolou(){ doc.classList.toggle('past', window.scrollY > window.innerHeight * .6); }
+  window.addEventListener('scroll', rolou, { passive:true });
+  rolou();
+
+  var lastW = window.innerWidth;
+  window.addEventListener('resize', function(){
+    if (window.innerWidth === lastW) return;   /* ignora a barra do navegador do celular */
+    lastW = window.innerWidth; mede();
+  });
+  mede();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(mede);
+  abertura();
+  liga();
+})();
+</script>
+</body>
+</html>

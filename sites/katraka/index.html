@@ -1,0 +1,1551 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Katraka | Oficina de Fusca e VW a ar no Tatuapé</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Katraka, oficina no Tatuapé (SP) especializada em suspensão, freio e direção de VW a ar desde 2010: Fusca, Brasília, Kombi, Variant e SP2. Rebaixamento com katraka, regulagem de facão, alinhamento e furação. Peça orçamento pelo WhatsApp.">
+<meta name="theme-color" content="#9C5228">
+<link rel="canonical" href="https://katraka.com.br/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://katraka.com.br/">
+<meta property="og:title" content="Katraka | Fusca original ou baixo, rodando macio">
+<meta property="og:description" content="Oficina no Tatuapé especializada em suspensão e freio de VW a ar desde 2010. Gire a katraka e veja seu Fusca baixar.">
+<meta property="og:image" content="https://katraka.com.br/img/og-katraka.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%239C5228'/%3E%3Cpath d='M18 14h9v15l11-15h11L37 30l13 20H38l-8-13-3 4v9h-9z' fill='%23EFE6D3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Jost:wght@400;500;600;700;800&display=swap">
+<!-- CONFIRMAR com o Alexandre: telefone, WhatsApp, horário e nota do Google (ver README.md) -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"AutoRepair",
+ "name":"Katraka Especializada VW Aircooled",
+ "description":"Oficina especializada em Fusca e derivados: suspensão, freio, direção, alinhamento, cambagem, rebaixamento com katraka e regulagem de facão para VW a ar.",
+ "url":"https://katraka.com.br/",
+ "telephone":"+55 11 3539-2100",
+ "foundingDate":"2010",
+ "image":"https://katraka.com.br/img/og-katraka.jpg",
+ "address":{"@type":"PostalAddress","streetAddress":"Rua Serra de Bragança, 810","addressLocality":"São Paulo","addressRegion":"SP","addressCountry":"BR"},
+ "areaServed":"São Paulo",
+ "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"17:00"}],
+ "sameAs":["https://www.instagram.com/katrakavw/","https://www.facebook.com/katrakavws/"],
+ "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"490"}}
+</script>
+<style>
+/* Layout: o Fusca sempre no centro da cena, e tudo se move como uma catraca: em dentes, nunca deslizando.
+   Princípio único: o nome da oficina É a peça. A abertura baixa o carro dente por dente, o raio-x mostra onde a gente mexe,
+   e o simulador deixa o cliente girar a katraka antes de levar o carro. */
+:root{
+  --base:#9C5228;     /* Laranja Queimado (60%): laranja de oficina antiga, sem ser berrante; o texto creme lê bem em cima */
+  --segunda:#EFE6D3;  /* Branco Lótus (30%): o branco do Fusca "saia e blusa", títulos, o desenho, o papel da OS */
+  --acento:#A9D3DE;   /* Azul Lagoa (10%): o oposto do laranja; botão do WhatsApp, marcadores, a katraka */
+  --alerta:#C8402A;   /* Vermelho de aviso: só pro "passou do limite" do simulador */
+  --graxa:#231912;    /* Graxa: texto sobre o creme, fundos escuros */
+  --musgo:#B5703F;    /* Laranja claro: linhas e divisórias sobre o laranja */
+  --estudio:#3A3938;  /* Cinza Estúdio: o fundo da foto do raio-x, pra emenda sumir */
+  --fd:"Jost","Futura","Century Gothic","Avenir Next",system-ui,sans-serif;          /* títulos e texto: geométrica, redonda como o Fusca (a família dos anúncios da VW) */
+  --fm:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;      /* anotações técnicas, valores, a OS */
+  --ease:cubic-bezier(.2,.7,.1,1);
+  --dente:cubic-bezier(.3,1.6,.5,1);   /* o "tec" da catraca: passa um pouco e volta */
+  --g:max(16px,env(safe-area-inset-left,0px));
+  --gd:max(16px,env(safe-area-inset-right,0px));
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;background:var(--base)}
+body{background:var(--base);color:var(--segunda);font-family:var(--fd);font-size:17px;line-height:1.55;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+svg{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--acento);outline-offset:3px;border-radius:4px}
+.miolo{width:100%;max-width:1240px;margin-inline:auto;padding-left:var(--g);padding-right:var(--gd)}
+.mono{font-family:var(--fm);font-size:13px;letter-spacing:.02em}
+h1,h2,h3{font-weight:700;line-height:1;letter-spacing:-.02em;text-wrap:balance}
+h2{font-size:clamp(36px,6vw,80px)}
+.sub{max-width:52ch;font-size:clamp(16px,1.3vw,19px);opacity:.86;text-wrap:pretty}
+.so-leitor{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* botões: o principal é sempre "Pedir orçamento no WhatsApp" */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 24px;border-radius:999px;background:var(--acento);color:var(--graxa);font-weight:600;font-size:16px;text-decoration:none;transition:transform .25s var(--dente),background .2s}
+.btn svg{flex:none}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(1px)}
+.lnk{display:inline-flex;align-items:center;min-height:44px;font-weight:500;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+.lnk:hover{text-decoration-thickness:2px}
+
+/* Fusca de verdade (foto em camadas: a carroceria desce, as rodas ficam no chão) */
+.arco{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke .2s}
+.arco-f{stroke:var(--arco-f,transparent)}
+.arco-r{stroke:var(--arco-r,transparent)}
+.luzes{opacity:0;transition:opacity .45s ease}
+.luzes circle{mix-blend-mode:screen}
+.leg-foto{font-family:var(--fm);font-size:11px;opacity:.5;text-align:right;margin-top:4px}
+.aceso .luzes{opacity:1}
+
+/* topo */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--base)}
+.topo{position:fixed;left:0;right:0;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .3s,box-shadow .3s}
+.topo .miolo{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.topo.solido{background:rgba(156,82,40,.95);box-shadow:0 1px 0 rgba(239,230,211,.12);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.marca{display:flex;align-items:center;gap:14px;text-decoration:none}
+.marca img{height:42px;width:auto;display:block}
+.marca span{font-family:var(--fm);font-size:12px;opacity:.7}
+.nav{display:flex;align-items:center;gap:26px}
+.nav a.it{font-size:15px;text-decoration:none;opacity:.85;position:relative;display:inline-block;overflow:hidden;height:22px;line-height:22px}
+.nav a.it span{display:block;transition:transform .35s steps(3,end)}
+.nav a.it span+span{position:absolute;left:0;top:100%}
+.nav a.it:hover span{transform:translateY(-100%)}
+.nav .btn{min-height:44px;padding:0 18px;font-size:15px}
+
+/* ===== introdução: o emblema VW se monta como peça (anel de catraca que trava, V desce, W sobe) e vira a calota ===== */
+html.travado,html.travado body{overflow:hidden}
+.intro{position:fixed;inset:0;z-index:200;background:var(--graxa);display:grid;place-content:center;justify-items:center;gap:clamp(18px,3.4vh,30px);padding:24px;transition:background-color .6s ease;animation:intro-fim .4s 4.6s forwards}
+@keyframes intro-fim{to{opacity:0;visibility:hidden}}
+.intro.sai{background-color:rgba(35,25,18,0)}
+.in-logo{width:min(44vw,200px);aspect-ratio:1;transform-origin:50% 50%}
+.in-logo svg{width:100%;height:100%;overflow:visible;display:block}
+.in-logo .tr{fill:none;stroke:var(--segunda);transition:stroke .6s ease}
+.in-logo.voa .tr{stroke:#9C9A95}
+.in-dentes{stroke-width:12;stroke-dasharray:24 12.91;animation:in-gira .64s steps(8,end) .1s both,in-some .01s .78s forwards}
+@keyframes in-gira{from{transform:rotate(-150deg) scale(.84);opacity:0}12%{opacity:1}to{transform:rotate(0) scale(1);opacity:1}}
+@keyframes in-some{to{opacity:0}}
+.in-anel{stroke-width:12;opacity:0;animation:in-trava .3s var(--dente) .78s forwards}
+@keyframes in-trava{from{opacity:1;transform:scale(1.1)}to{opacity:1;transform:scale(1)}}
+.in-v,.in-w{stroke-width:13;stroke-miterlimit:8;stroke-linejoin:miter}
+.in-v{transform:translateY(-150px);animation:in-encaixa .3s var(--dente) .9s forwards}
+.in-w{transform:translateY(170px);animation:in-encaixa .3s var(--dente) 1.02s forwards}
+@keyframes in-encaixa{to{transform:none}}
+.in-faisca{fill:none;stroke:var(--acento);stroke-width:5;opacity:0;transform-box:fill-box;transform-origin:center;animation:in-faisca .55s ease-out 1.3s}
+@keyframes in-faisca{from{opacity:1;transform:scale(.3)}to{opacity:0;transform:scale(3.4)}}
+.in-txt{display:grid;justify-items:center;gap:12px;transition:opacity .3s,transform .3s}
+.intro.sai .in-txt{opacity:0;transform:translateY(-12px)}
+.in-nome{width:min(76vw,500px);clip-path:inset(0 100% 0 0);animation:in-nome .56s steps(7,end) 1.38s forwards}
+@keyframes in-nome{to{clip-path:inset(0 0 0 0)}}
+.in-nome img{width:100%;height:auto;display:block}
+.in-sub{font-family:var(--fm);font-size:13px;letter-spacing:.04em;opacity:0;animation:in-aparece .4s ease 1.8s forwards}
+@keyframes in-aparece{to{opacity:.72}}
+.in-pula{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));font-family:var(--fm);font-size:12px;opacity:.5;min-height:44px;padding:0 4px}
+.intro.sai .in-pula{opacity:0}
+
+/* ===== WOW 1: a katraka baixa o Fusca, dente por dente, em cima do nome ===== */
+.hero{position:relative;min-height:100vh;min-height:100svh;padding-top:calc(76px + env(safe-area-inset-top,0px));padding-bottom:20px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;overflow:hidden;
+  background-image:linear-gradient(rgba(239,230,211,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(239,230,211,.05) 1px,transparent 1px);background-size:44px 44px;background-position:center top}
+.hero-tx{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:24px 48px;align-items:end}
+.hero h1{font-size:clamp(38px,4.1vw,62px);max-width:16ch}
+.hero .sub{margin-top:18px}
+.hero .acoes{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:26px}
+.ficha{justify-self:end;display:grid;gap:14px;font-family:var(--fm);font-size:13px;line-height:1.5;border-left:1px solid rgba(239,230,211,.25);padding-left:18px;max-width:30ch}
+.ficha p span{display:block;opacity:.6}
+.hero-arte{width:min(100%,calc((100svh - 400px)*1.96));min-width:min(100%,640px);margin-inline:auto}
+.hero-arte svg{width:100%;height:auto;overflow:visible}
+.sobe{transition:transform .22s var(--dente)}
+.palavra-h{fill:var(--segunda);transform-box:fill-box;transform-origin:50% 0;transition:transform .09s ease-out}
+.palavra-h.carga{transform:scaleY(.965)}
+.facho{opacity:0;transition:opacity .5s ease;mix-blend-mode:screen}
+.aceso .facho{opacity:1}
+.chao{stroke:var(--segunda);stroke-width:2;opacity:.55}
+.sombra{fill:#1a120d;opacity:.3;transition:opacity .22s}
+.dentes-h{font-family:var(--fm);font-size:13px;display:flex;align-items:center;gap:10px;opacity:.75}
+.dentes-h i{display:inline-block;width:10px;height:10px;border:1.5px solid var(--segunda);border-radius:2px;transition:background .1s}
+.dentes-h i.on{background:var(--acento);border-color:var(--acento)}
+
+/* ===== quem somos ===== */
+.sobre{padding-block:clamp(80px,12vw,150px) clamp(60px,9vw,110px)}
+.sobre-grade{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:48px 72px;align-items:end}
+.sobre .frase{font-size:clamp(26px,3.4vw,48px);font-weight:500;line-height:1.12;letter-spacing:-.015em;max-width:22ch;text-wrap:balance}
+.sobre .frase em{font-style:normal;color:var(--acento)}
+.sobre-tx{display:grid;gap:22px}
+.sobre-tx > p:not(.frase){max-width:52ch;opacity:.88}
+.sobre-tx .frase{margin-bottom:clamp(8px,2vw,24px)}
+.modelos{display:flex;flex-wrap:wrap;gap:10px;list-style:none}
+.modelos li{font-family:var(--fm);font-size:14px;border:1.5px solid rgba(239,230,211,.45);border-radius:999px;padding:8px 16px}
+.midia{font-size:15px;opacity:.85}
+.midia a{text-underline-offset:4px}
+.foto{position:relative;margin:0}
+.foto img{width:100%;height:auto;border-radius:6px}
+.foto figcaption{position:absolute;left:12px;bottom:10px;font-family:var(--fm);font-size:11px;color:#fff;opacity:.8;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.sobre-foto{max-width:420px;justify-self:end;width:100%}
+
+/* ===== vídeo do YouTube (destaque) ===== */
+.yt{background:var(--graxa);padding-block:clamp(72px,10vw,130px)}
+.yt-grade{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:32px 64px;align-items:center}
+.yt-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:13px;border:1.5px solid rgba(239,230,211,.4);border-radius:999px;padding:6px 14px}
+.yt-tag i{width:9px;height:9px;border-radius:50%;background:#E3261C}
+.yt h2{font-size:clamp(38px,5.4vw,78px);margin-top:18px}
+.yt .sub{margin-top:18px}
+.yt .acoes{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:28px}
+.yt-capa{position:relative;display:block;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 30px 70px -30px rgba(0,0,0,.8);text-decoration:none}
+.yt-capa img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease),filter .4s}
+.yt-capa:hover img{transform:scale(1.04);filter:brightness(.85)}
+.yt-capa::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.65))}
+.yt-play{position:absolute;left:50%;top:50%;width:clamp(72px,10vw,104px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:var(--acento);display:grid;place-items:center;z-index:1;box-shadow:0 0 0 0 rgba(227,38,28,.6);animation:yt-pulso 2s ease-out infinite;transition:transform .25s var(--dente)}
+.yt-capa:hover .yt-play{transform:translate(-50%,-50%) scale(1.08)}
+.yt-play svg{width:34%;height:34%;margin-left:8%;fill:var(--graxa)}
+@keyframes yt-pulso{0%{box-shadow:0 0 0 0 rgba(227,38,28,.6)}100%{box-shadow:0 0 0 30px rgba(227,38,28,0)}}
+.yt-dur{position:absolute;right:12px;bottom:12px;z-index:1;font-family:var(--fm);font-size:13px;background:rgba(0,0,0,.75);color:#fff;padding:4px 9px;border-radius:6px}
+.yt-nome{position:absolute;left:16px;bottom:12px;right:90px;z-index:1;font-weight:600;font-size:clamp(15px,1.5vw,19px);color:#fff;line-height:1.25}
+.hero-yt{display:inline-flex;align-items:center;gap:12px;font-family:var(--fd);font-size:15px;font-weight:600;line-height:1.25;text-decoration:none;background:#E3261C;color:#fff;border-radius:12px;padding:10px 16px 10px 10px;width:max-content;max-width:100%;box-shadow:0 10px 24px -10px rgba(0,0,0,.6);transition:transform .25s var(--dente)}
+.hero-yt:hover{transform:translateY(-2px)}
+.hero-yt i{width:34px;height:34px;border-radius:8px;background:#fff;display:grid;place-items:center;flex:none}
+.hero-yt i svg{width:12px;height:12px;fill:#E3261C;margin-left:2px}
+.hero-yt small{display:block;font-family:var(--fm);font-weight:400;font-size:11.5px;opacity:.9}
+.yt-faixa{display:block;background:#E3261C;color:#fff;text-decoration:none;overflow:hidden;white-space:nowrap;padding-block:16px;position:relative}
+.yt-faixa .fita{display:inline-flex;gap:0;animation:fita 28s linear infinite}
+.yt-faixa span{display:inline-flex;align-items:center;gap:18px;padding-right:18px;font-weight:700;font-size:clamp(18px,2.2vw,28px);letter-spacing:-.01em}
+.yt-faixa span i{width:30px;height:30px;border-radius:50%;background:#fff;display:inline-grid;place-items:center;flex:none}
+.yt-faixa span i svg{width:11px;height:11px;fill:#E3261C;margin-left:2px}
+.yt-faixa:hover .fita{animation-play-state:paused}
+@keyframes fita{to{transform:translateX(-50%)}}
+.btn-yt{background:#E3261C;color:#fff}
+.yt-play.verm{background:#E3261C}
+.yt-play.verm svg{fill:#fff}
+
+/* ===== o interruptor do farol (foto) ===== */
+.farol{position:relative;height:220vh;background:var(--graxa)}
+.fa-palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--graxa);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:24px}
+.fa-foto{position:relative;grid-column:2;width:min(50svh,100vw);aspect-ratio:1/2;margin:0}
+.fa-foto img{width:100%;height:100%;object-fit:cover;border-radius:0;mix-blend-mode:lighten;filter:brightness(var(--luz,1)) saturate(.9);transition:filter .28s steps(3,end)}
+.halo{position:absolute;width:46%;aspect-ratio:1;transform:translate(-50%,-50%) scale(var(--hs,1));border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:var(--ho,1);transition:opacity .28s steps(3,end),transform .28s steps(3,end);
+  background:radial-gradient(circle,rgba(255,244,226,.95) 0,rgba(255,226,190,.55) 9%,rgba(169,211,222,.22) 30%,rgba(169,211,222,0) 62%)}
+.halo.e{left:25.3%;top:56.2%}
+.halo.d{left:74.2%;top:56.1%}
+.fa-foto figcaption{position:absolute;right:10px;bottom:10px;font-family:var(--fm);font-size:11px;opacity:.6}
+.fa-tx{grid-column:1;grid-row:1;justify-self:end;max-width:30ch;display:grid;gap:16px}
+.fa-tx h2{font-size:clamp(36px,4.6vw,66px)}
+.fa-tx p{opacity:.86}
+.chave{grid-column:3;grid-row:1;justify-self:start;display:grid;gap:10px;font-family:var(--fm);font-size:13px;list-style:none}
+.chave li{display:flex;align-items:center;gap:10px;opacity:.4;transition:opacity .2s}
+.chave li::before{content:"";width:12px;height:12px;border-radius:50%;border:1.5px solid currentColor}
+.chave li.on{opacity:1}
+.chave li.on::before{background:var(--acento);border-color:var(--acento)}
+
+/* ===== WOW 2: raio-x do Fusca (foto: a vista interna aparece por dentro da faixa do scanner) ===== */
+.raiox{position:relative;height:440vh;background:var(--estudio)}
+.rx-palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:clamp(8px,2svh,20px);padding-top:calc(84px + env(safe-area-inset-top,0px));padding-bottom:clamp(16px,3svh,32px);background:var(--estudio)}
+.rx-topo{display:flex;justify-content:space-between;align-items:end;gap:16px 40px;flex-wrap:wrap}
+.rx-topo h2{font-size:clamp(34px,5vw,68px)}
+.rx-topo .sub{max-width:40ch}
+.rx-cena{display:grid;place-items:center;min-height:0}
+.rx-foto{position:relative;width:min(100%,1080px,calc((100svh - 330px)*1.62));aspect-ratio:858/530;--x0:0%;--x1:0%;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 10%,#000 78%,transparent 100%),linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to bottom,transparent 0,#000 10%,#000 78%,transparent 100%),linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%);mask-composite:intersect}
+.rx-foto img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.rx-int{clip-path:inset(0 calc(100% - var(--x1)) 0 var(--x0))}
+.rx-luz{position:absolute;top:0;bottom:0;left:var(--x0);width:calc(var(--x1) - var(--x0));background:linear-gradient(90deg,rgba(169,211,222,0),rgba(169,211,222,.12) 50%,rgba(169,211,222,0));pointer-events:none;transition:opacity .3s}
+.rx-borda{position:absolute;top:6%;bottom:12%;width:2px;margin-left:-1px;background:var(--acento);box-shadow:0 0 14px rgba(169,211,222,.8);pointer-events:none;transition:opacity .3s}
+.rx-borda.a{left:var(--x0)}
+.rx-borda.b{left:var(--x1)}
+.rx-foto.fim .rx-luz,.rx-foto.fim .rx-borda{opacity:0}
+.rx-marcas{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.mk{opacity:0;transition:opacity .25s}
+.mk .anel{fill:none;stroke:var(--acento);stroke-width:3}
+.mk .pto{fill:var(--acento);stroke:#fff;stroke-width:1.5}
+.mk .pulso{fill:none;stroke:var(--acento);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:pulso-mk 1.4s ease-out infinite}
+@keyframes pulso-mk{from{transform:scale(1);opacity:.9}to{transform:scale(2.3);opacity:0}}
+.mk.on{opacity:1}
+.rx-foto.fim .mk{opacity:1}
+.rx-foto.fim .mk .pulso{display:none}
+.rx-cred{position:absolute;right:4%;bottom:14%;font-family:var(--fm);font-size:11px;opacity:.55}
+.rx-base{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px 48px;align-items:end}
+.leitura{position:relative;min-height:150px;overflow:hidden}
+.leitura .pos{font-family:var(--fm);font-size:13px;opacity:.7}
+.leitura h3{font-size:clamp(24px,2.6vw,36px);margin-top:6px}
+.leitura p{margin-top:8px;max-width:46ch;opacity:.86;font-size:16px}
+.leitura .lnk{margin-top:4px;font-size:15px}
+.leitura .vai{transition:transform .2s var(--ease),opacity .2s}
+.leitura.sai .vai{transform:translateY(-14px);opacity:0}
+.leitura.entra .vai{animation:entra .26s var(--dente)}
+@keyframes entra{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+.rx-lista{list-style:none;display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.rx-lista li{font-family:var(--fm);font-size:12.5px;padding:7px 12px;border-radius:999px;border:1.5px solid rgba(239,230,211,.22);opacity:.6;transition:opacity .2s,border-color .2s,background .2s,color .2s}
+.rx-lista li.feito{opacity:.9;border-color:rgba(239,230,211,.5)}
+.rx-lista li.on{opacity:1;background:var(--acento);border-color:var(--acento);color:var(--graxa)}
+
+/* ===== WOW 3: o simulador da katraka ===== */
+.sim{background:var(--segunda);color:var(--graxa);padding-block:clamp(64px,7vw,100px) clamp(64px,9vw,110px)}
+.sim .sub{opacity:.8}
+.sim-topo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 64px;align-items:end}
+.sim-mesa{max-width:900px;margin:clamp(20px,3vw,36px) auto 0}
+.sim-cena{position:relative}
+.sim-cena svg{width:100%;height:auto;overflow:visible}
+.sim-cena .sombra-s{fill:#231912;opacity:.22}
+.sim-cena .modelo{opacity:0;transition:opacity .3s ease;pointer-events:none}
+.sim-cena .modelo.on{opacity:1}
+.carros.abas{justify-content:center;margin:clamp(24px,3vw,36px) auto 0;max-width:900px;gap:8px}
+.carros.abas legend{text-align:center;font-size:13px;margin-bottom:12px}
+.carros.abas span{min-height:48px;padding:0 22px;font-size:17px;font-weight:600;border-width:2px}
+.sim-cena .sobe{transition:transform .2s var(--dente)}
+.sim-cena .guia{stroke:var(--graxa);stroke-width:2;fill:none}
+.sim-cena .chao-s{stroke:var(--graxa);stroke-width:2.5}
+.sim-cena .hach{stroke:var(--graxa);stroke-width:1.5;opacity:.35}
+.sim-dials{display:grid;grid-template-columns:46.4% 4% 49.6%;margin-top:4px}
+.sim-dials #dialR{grid-column:3}
+.dial{display:grid;justify-items:center;gap:8px;text-align:center}
+.dial .nome{font-weight:600;font-size:16px;line-height:1.2}
+.dial .nome small{display:block;font-family:var(--fm);font-weight:400;font-size:12px;opacity:.7}
+.dial-linha{display:flex;align-items:center;gap:8px}
+.dial-roda{width:128px;height:128px;touch-action:none;cursor:grab;border-radius:50%;user-select:none;-webkit-user-select:none}
+.dial-roda:active{cursor:grabbing}
+.dial-roda .cr{transition:transform .16s var(--dente);transform-origin:0 0}
+.dial-roda .dentes{fill:var(--graxa)}
+.dial-roda .miolo-d{fill:var(--segunda);stroke:var(--graxa);stroke-width:3}
+.dial-roda .marca-d{stroke:var(--base);stroke-width:6;stroke-linecap:round}
+.dial-roda .ling{fill:var(--acento);stroke:var(--graxa);stroke-width:2.5;transform-origin:44px -58px;transition:transform .08s}
+.dial-roda.tec .ling{transform:rotate(-14deg)}
+.mais{width:40px;height:40px;border-radius:50%;border:2px solid var(--graxa);font-size:20px;font-weight:600;line-height:1;display:grid;place-items:center;flex:none;transition:background .15s,color .15s}
+.mais:hover{background:var(--graxa);color:var(--segunda)}
+.dial .val{font-family:var(--fm);font-size:13.5px;font-weight:500;font-variant-numeric:tabular-nums;min-width:8ch}
+.painel{max-width:900px;margin:clamp(24px,3vw,40px) auto 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 48px;align-items:start;padding-top:clamp(20px,3vw,28px);border-top:2px solid var(--graxa)}
+.leitor,.pedido{display:grid;gap:14px;min-width:0;align-content:start}
+.medidor{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}
+.medidor i{height:14px;border-radius:2px;background:rgba(35,25,18,.12);transition:background .1s}
+.medidor i.on{background:var(--base)}
+.medidor.limite i.on{background:#B98A2E}
+.medidor.passou i.on{background:var(--alerta)}
+.escala{display:flex;justify-content:space-between;font-family:var(--fm);font-size:11.5px;opacity:.65;gap:8px}
+.estado{font-size:clamp(19px,1.8vw,24px);font-weight:600;line-height:1.25;min-height:2.5em}
+.carros{display:flex;flex-wrap:wrap;gap:8px;border:0}
+.carros legend{font-family:var(--fm);font-size:12px;opacity:.7;margin-bottom:8px;width:100%}
+.carros label{position:relative;cursor:pointer}
+.carros input{position:absolute;opacity:0;width:1px;height:1px}
+.carros span{display:inline-flex;min-height:40px;align-items:center;padding:0 16px;border-radius:999px;border:1.5px solid rgba(35,25,18,.4);font-size:15px;transition:background .15s,color .15s}
+.carros input:checked+span{background:var(--graxa);color:var(--segunda);border-color:var(--graxa)}
+.carros input:focus-visible+span{outline:3px solid var(--acento);outline-offset:2px}
+.sim .acoes{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center}
+.sim .nota{font-family:var(--fm);font-size:12.5px;opacity:.7;max-width:62ch}
+.somb{font-family:var(--fm);font-size:12.5px;text-decoration:underline;text-underline-offset:4px;min-height:44px}
+
+/* ===== serviços ===== */
+.servicos{background:var(--segunda);color:var(--graxa);padding-bottom:clamp(80px,11vw,140px)}
+.servicos .cab{display:flex;justify-content:space-between;align-items:end;gap:16px 40px;flex-wrap:wrap;padding-top:clamp(40px,6vw,64px);border-top:2px dashed rgba(35,25,18,.35)}
+.lista-s{list-style:none;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:56px;margin-top:clamp(28px,4vw,44px)}
+.lista-s a{display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 14px;padding:18px 0;border-bottom:1.5px solid rgba(35,25,18,.18);text-decoration:none;align-items:start}
+.lista-s svg{grid-row:span 2;margin-top:4px;transition:transform .3s steps(2,end)}
+.lista-s a:hover svg,.lista-s a:focus-visible svg{transform:rotate(45deg)}
+.lista-s b{font-size:20px;font-weight:600;line-height:1.25}
+.lista-s span{font-size:15px;opacity:.75}
+.lista-s a:hover b{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px}
+
+/* ===== alguns dos nossos trabalhos (fotos reais da oficina) ===== */
+.trabalhos{padding-block:clamp(80px,11vw,140px) 0}
+.trab-cab{display:flex;justify-content:space-between;align-items:end;gap:18px 40px;flex-wrap:wrap}
+.trab-cab h2{font-size:clamp(40px,6.4vw,92px)}
+.trab-cab .sub{margin-top:14px}
+.trab-cab .mono{opacity:.75;margin-bottom:12px}
+.trab-grade{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(150px,17vw,250px);gap:clamp(6px,1vw,12px);margin-top:clamp(28px,4vw,44px)}
+.trab-grade li{min-width:0}
+.trab-grade li:first-child{grid-column:span 2;grid-row:span 2}
+.trab-grade li.largo{grid-column:span 2}
+.trab-grade button{position:relative;display:block;width:100%;height:100%;overflow:hidden;border-radius:6px;background:var(--graxa);cursor:zoom-in}
+.trab-grade img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
+.trab-grade button:hover img{transform:scale(1.05)}
+.trab-grade button::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(20,12,8,.7));pointer-events:none}
+.trab-grade b{position:absolute;left:12px;bottom:10px;z-index:1;font-size:clamp(14px,1.3vw,18px);font-weight:600;color:#fff;text-align:left}
+.trab-grade li:first-child b{font-size:clamp(18px,2vw,26px);left:18px;bottom:16px}
+.trab-mais{display:flex;justify-content:space-between;align-items:center;gap:16px 32px;flex-wrap:wrap;margin-top:clamp(18px,2.4vw,28px);padding:clamp(18px,2.4vw,26px);border-radius:10px;background:rgba(35,25,18,.35)}
+.trab-mais p{font-size:clamp(17px,1.6vw,21px);font-weight:500;max-width:44ch}
+.trab-mais .acoes{display:flex;flex-wrap:wrap;gap:12px}
+.galeria{border:0;padding:0;background:transparent;max-width:min(1200px,96vw);max-height:none;width:100%;height:100%;margin:auto;overflow:visible}
+.galeria[open]{display:grid;place-items:center}
+.galeria::backdrop{background:rgba(15,10,7,.92)}
+.galeria figure{margin:0;display:grid;gap:12px;justify-items:center}
+.galeria img{max-width:100%;max-height:80vh;width:auto;height:auto;border-radius:6px;display:block}
+.galeria figcaption{color:#EFE6D3;font-weight:600;font-size:18px}
+.gal-bt{position:fixed;width:52px;height:52px;border-radius:50%;background:rgba(239,230,211,.15);color:#EFE6D3;font-size:24px;display:grid;place-items:center}
+.gal-bt:hover{background:rgba(239,230,211,.28)}
+.gal-fecha{top:max(16px,env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px))}
+.gal-ant{left:max(12px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%)}
+.gal-prox{right:max(12px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%)}
+.trab-video{margin-top:clamp(56px,8vw,96px)}
+.trab-video{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:28px 56px;align-items:center;margin-top:clamp(28px,4vw,48px)}
+.tv-play{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:10px;overflow:hidden;background:var(--graxa);box-shadow:0 24px 50px -24px rgba(20,12,8,.7)}
+.tv-play video{width:100%;height:100%;object-fit:cover;display:block}
+.tv-btn{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;background:var(--acento);color:var(--graxa);font-weight:600;font-size:15px;padding:10px 18px;border-radius:999px;transition:transform .25s var(--dente)}
+.tv-play:hover .tv-btn{transform:translateX(-50%) translateY(-2px)}
+.tv-play.tocando .tv-btn{display:none}
+.tv-tx{display:grid;gap:14px;justify-items:start;max-width:46ch}
+.tv-tx h3{font-size:clamp(28px,3.4vw,46px)}
+.tv-tx .acoes{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin-top:6px}
+
+/* ===== avaliações e mídia ===== */
+.aval{padding-block:clamp(80px,11vw,140px)}
+.aval-grade{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px 72px;align-items:center}
+.nota-g{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.nota-g .n{font-size:clamp(96px,14vw,190px);font-weight:700;line-height:.8;letter-spacing:-.04em}
+.estrelas{display:flex;gap:6px;margin-bottom:10px}
+.estrelas svg{width:26px;height:26px;fill:var(--segunda)}
+.nota-g p{font-family:var(--fm);font-size:13px;opacity:.8}
+.depo{display:grid;gap:16px}
+.depo blockquote{border-left:3px solid var(--acento);padding:4px 0 4px 18px}
+.depo blockquote p{font-size:18px}
+.depo cite{display:block;margin-top:8px;font-style:normal;font-family:var(--fm);font-size:13px;opacity:.75}
+.aval .texto{display:grid;gap:18px;justify-items:start}
+.aval .texto p{max-width:50ch;opacity:.88}
+
+/* ===== FAQ ===== */
+.faq{padding-bottom:clamp(80px,11vw,140px)}
+.faq-grade{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:32px 72px;align-items:start}
+.faq details{border-bottom:1.5px solid rgba(239,230,211,.2)}
+.faq details:first-child{border-top:1.5px solid rgba(239,230,211,.2)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0;font-size:19px;font-weight:500}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{flex:none;width:22px;height:22px;position:relative;transition:transform .3s steps(3,end)}
+.faq summary i::before,.faq summary i::after{content:"";position:absolute;left:0;right:0;top:10px;height:2px;background:currentColor}
+.faq summary i::after{transform:rotate(90deg)}
+.faq details[open] summary i{transform:rotate(135deg)}
+.faq details p{padding:0 0 22px;max-width:60ch;opacity:.86}
+
+/* ===== ordem de serviço (formulário) ===== */
+.os-sec{padding-block:clamp(40px,6vw,80px) clamp(80px,11vw,140px)}
+.os-grade{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:40px 72px;align-items:start}
+.os{position:relative;overflow:hidden;overflow:clip;background:var(--segunda);color:var(--graxa);border-radius:6px;padding:clamp(20px,3vw,36px);box-shadow:0 30px 60px -30px rgba(20,12,8,.6);
+  background-image:repeating-linear-gradient(transparent 0 35px,rgba(35,25,18,.07) 35px 36px)}
+.os-cab{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--graxa);padding-bottom:12px;margin-bottom:18px}
+.os-cab b{font-size:20px;font-weight:800;letter-spacing:.03em}
+.os-cab span{font-family:var(--fm);font-size:12.5px}
+.campos{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 18px}
+.campos label{display:grid;gap:6px;font-family:var(--fm);font-size:12.5px;min-width:0}
+.campos .cheio{grid-column:1/-1}
+.campos input,.campos select,.campos textarea{width:100%;min-width:0;font:inherit;font-family:var(--fd);font-size:17px;color:var(--graxa);background:rgba(255,255,255,.45);border:0;border-bottom:2px solid var(--graxa);border-radius:4px 4px 0 0;padding:10px 12px;min-height:48px}
+.campos textarea{min-height:96px;resize:vertical}
+.campos input:focus,.campos select:focus,.campos textarea:focus{outline:none;background:#fff;border-bottom-color:var(--acento)}
+.os .btn{margin-top:22px;width:100%}
+.sim .btn,.os .btn{background:var(--graxa);color:var(--segunda)}
+.os .resp{margin-top:12px;font-family:var(--fm);font-size:12.5px;opacity:.75;text-align:center}
+.carimbo{position:absolute;right:clamp(14px,4vw,40px);top:clamp(70px,10vw,96px);border:4px solid var(--base);color:var(--base);font-weight:800;font-size:clamp(24px,3vw,34px);letter-spacing:.08em;padding:6px 16px;border-radius:8px;transform:rotate(-12deg) scale(2.2);opacity:0;pointer-events:none;transition:transform .35s var(--dente),opacity .2s}
+.os.enviada .carimbo{opacity:.92;transform:rotate(-12deg) scale(1)}
+.obrigado{display:none;margin-top:16px;padding:14px 16px;border-radius:6px;background:var(--graxa);color:var(--segunda);font-size:15px}
+.os.enviada .obrigado{display:block}
+.passos{list-style:none;display:grid;gap:18px;margin-top:28px;counter-reset:p}
+.passos li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;align-items:start;counter-increment:p}
+.passos li::before{content:counter(p);font-family:var(--fm);font-size:14px;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(239,230,211,.5);display:grid;place-items:center}
+.passos b{display:block;font-weight:600}
+.passos span{opacity:.8;font-size:15.5px}
+
+/* ===== visite ===== */
+.visite{padding-bottom:clamp(80px,11vw,140px)}
+.vis-grade{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:32px 64px;align-items:stretch}
+.end{font-size:clamp(26px,3vw,40px);font-weight:600;line-height:1.15;margin-top:18px}
+.dados{display:grid;gap:14px;margin-top:26px;font-size:16px}
+.dados div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;padding-bottom:14px;border-bottom:1.5px solid rgba(239,230,211,.18)}
+.dados dt{font-family:var(--fm);font-size:12.5px;opacity:.7;padding-top:3px}
+.dados dd a{text-underline-offset:4px}
+.visite .acoes{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin-top:28px}
+.btn-ln{display:inline-flex;align-items:center;min-height:54px;padding:0 22px;border-radius:999px;border:2px solid var(--segunda);text-decoration:none;font-weight:600;transition:background .2s,color .2s}
+.btn-ln:hover{background:var(--segunda);color:var(--base)}
+.mapa{position:relative;min-height:340px;border-radius:8px;overflow:hidden;background:#874621}
+.mapa svg{position:absolute;inset:0;width:100%;height:100%}
+.mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.35) contrast(1.05)}
+
+/* ===== rodapé ===== */
+.rodape{background:var(--graxa);padding-block:clamp(56px,8vw,96px) calc(28px + env(safe-area-inset-bottom,0px))}
+.logo-rod{width:min(320px,70vw);height:auto;margin-top:28px}
+.rodape .palavra-r{width:100%;height:auto;fill:none;stroke:rgba(239,230,211,.35);stroke-width:5;margin-top:clamp(56px,8vw,96px)}
+.rod-topo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.6fr);gap:40px 72px;align-items:end}
+.rod-topo h2{font-size:clamp(48px,8vw,120px)}
+.rod-foto{max-width:380px;justify-self:end;width:100%}
+.faq-foto{max-width:300px;margin-top:40px}
+.rod-grade{display:flex;justify-content:space-between;gap:20px 40px;flex-wrap:wrap;margin-top:28px;font-size:15px}
+.rod-grade p{opacity:.8;max-width:44ch}
+.rod-grade nav{display:flex;flex-wrap:wrap;gap:6px 24px}
+.rod-grade nav a{min-height:44px;display:inline-flex;align-items:center;text-underline-offset:4px}
+.credito{margin-top:28px;font-family:var(--fm);font-size:12px;opacity:.5}
+
+/* botão flutuante (celular) */
+.zap{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;width:60px;height:60px;border-radius:50%;background:var(--acento);display:none;place-items:center;box-shadow:0 12px 28px -10px rgba(0,0,0,.55);transform:translateY(120px);transition:transform .35s var(--dente)}
+.zap.ve{transform:none}
+.zap svg{fill:var(--graxa)}
+
+/* ===== celular ===== */
+@media (max-width:900px){
+  .nav a.it{display:none}
+  .hero-tx,.sobre .grade,.sim-topo,.aval-grade,.faq-grade,.os-grade,.vis-grade,.rx-base{grid-template-columns:minmax(0,1fr)}
+  .ficha{justify-self:start}
+  .painel{grid-template-columns:minmax(0,1fr)}
+  .rx-lista{justify-content:flex-start}
+  .sobre-grade,.rod-topo,.yt-grade{grid-template-columns:minmax(0,1fr)}
+  .sobre-foto,.rod-foto{justify-self:start;max-width:360px}
+  .faq-foto{display:none}
+  .fa-palco{grid-template-columns:minmax(0,1fr);place-items:center}
+  .fa-foto{grid-column:1;grid-row:1;width:min(50svh,100%)}
+  .fa-tx{grid-column:1;grid-row:1;align-self:end;justify-self:stretch;max-width:none;padding:0 var(--gd) max(28px,env(safe-area-inset-bottom,0px)) var(--g);position:relative;z-index:2}
+  .chave{grid-column:1;grid-row:1;align-self:start;justify-self:start;margin-top:calc(80px + env(safe-area-inset-top,0px));padding-left:var(--g);position:relative;z-index:2;font-size:12px;gap:6px}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .topo .nav .btn{display:none}
+  .marca span{display:none}
+  .marca img{height:36px}
+  .ficha .hero-yt{grid-column:1/-1}
+  .zap{display:grid}
+  .hero{min-height:auto;padding-top:calc(72px + env(safe-area-inset-top,0px));gap:6px;justify-content:flex-start}
+  .hero-arte{order:-1;min-width:0;width:100%;margin:10px 0 18px;padding-left:var(--g);padding-right:var(--gd)}
+  .hero .acoes .btn{width:100%}
+  .ficha{border-left:0;padding-left:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;max-width:none;margin-top:6px;padding-top:16px;border-top:1px solid rgba(239,230,211,.2)}
+  .raiox{height:400vh}
+  .rx-palco{padding-top:calc(72px + env(safe-area-inset-top,0px));grid-template-rows:auto auto auto;align-content:center;gap:22px}
+  .rx-cena{padding-left:0;padding-right:0}
+  .rx-foto{width:100%}
+  .rx-topo .sub{font-size:15px}
+  .rx-lista{display:none}
+  .leitura{min-height:170px}
+  .lista-s{grid-template-columns:minmax(0,1fr)}
+  .trab-grade{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:clamp(120px,34vw,190px)}
+  .gal-ant,.gal-prox{top:auto;bottom:max(16px,env(safe-area-inset-bottom,0px));transform:none}
+  .trab-video{grid-template-columns:minmax(0,1fr)}
+  .tv-play{max-width:360px}
+  .dial-roda{width:104px;height:104px}
+  .mais{width:36px;height:36px;font-size:18px}
+  .dial-linha{gap:4px}
+  .dial .val{font-size:12.5px;min-width:7.5ch}
+  .sim .acoes .btn{width:100%}
+  .campos{grid-template-columns:minmax(0,1fr)}
+  .dados div{grid-template-columns:minmax(0,1fr);gap:2px}
+  .mapa{min-height:280px}
+}
+
+/* modo prévia (captura estática) e dentro da proposta */
+.embed .hero{min-height:auto}
+.embed .sobe,.embed .sim-cena .sobe{transition:none}
+.embed .raiox{height:auto}
+.embed .rx-palco{position:relative;height:auto;min-height:0;padding-bottom:48px}
+.embed .rx-foto{width:min(100%,1080px)}
+.embed .rx-lista{display:flex}
+.embed .zap,.dentro .zap{display:none!important}
+.embed .intro{display:none}
+.embed .farol{height:auto}
+.embed .fa-palco{position:relative;height:auto;min-height:100svh;padding-block:40px}
+
+/* reduzir movimento: troca por um fade curto, sem desligar tudo */
+@media (prefers-reduced-motion:reduce){
+  .in-dentes,.in-faisca{display:none}
+  .yt-play{animation:none}
+  .yt-faixa .fita{animation:none}
+  .in-anel,.in-v,.in-w,.in-nome,.in-sub{animation:none;opacity:1;transform:none;clip-path:none}
+  .intro{animation:intro-fim .4s 2.4s forwards}
+  .sobe,.sim-cena .sobe,.dial-roda .cr,.palavra-h,.carimbo,.zap,.nav a.it span{transition-duration:.01s!important}
+  .leitura.entra .vai{animation:fade .3s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+}
+</style>
+<!-- Analytics (item 19): o Gu cria a conta no GoatCounter e descomenta.
+<script data-goatcounter="https://katraka.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+-->
+</head>
+<body>
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="in-logo" id="inLogo">
+    <svg viewBox="-110 -110 220 220">
+      <defs><clipPath id="inClip"><circle r="89"/></clipPath></defs>
+      <circle class="tr in-dentes" r="94"/>
+      <circle class="tr in-anel" r="94"/>
+      <g clip-path="url(#inClip)">
+        <path class="tr in-v" d="M-56 -100L0 8L56 -100"/>
+        <path class="tr in-w" d="M-104 -50L-35 86L0 30L35 86L104 -50"/>
+      </g>
+      <circle class="in-faisca" cy="19" r="12"/>
+    </svg>
+  </div>
+  <div class="in-txt">
+    <div class="in-nome"><img src="img/logo-katraka-claro.webp" alt="" width="1000" height="257"></div>
+    <p class="in-sub">Tatuapé, São Paulo. Desde 2010.</p>
+  </div>
+  <button class="in-pula" type="button" id="inPula" tabindex="-1">Pular</button>
+</div>
+
+<!-- o nome KATRAKA em vetor (fonte Jost) e os gradientes das luzes -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
+<defs>
+  <symbol id="palavra" viewBox="72 -747 4765 747"><path d="M274-700L72-700L72 0L274 0L274-295L507 0L742 0L449-372L727-700L501-700L274-432L274-700Z"/><path d="M995-113L1202-113L1261 0L1481 0L1099-747L718 0L938 0L995-113ZM1030-256L1099-413L1169-256L1030-256Z"/><path d="M1392-700L1392-527L1588-527L1588 0L1782 0L1782-527L1978-527L1978-700L1392-700Z"/><path d="M2309-700L2034-700L2034 0L2228 0L2228-232L2269-232L2407 0L2633 0L2458-257Q2463-259 2468-262L2468-262Q2530-291 2561-345Q2591-398 2591-466L2591-466Q2591-535 2561-588Q2530-640 2468-670Q2405-700 2309-700L2309-700ZM2293-379L2228-379L2228-536L2293-536Q2324-536 2345-527Q2366-518 2378-501Q2389-483 2389-458Q2389-433 2378-415Q2366-397 2345-388Q2324-379 2293-379L2293-379Z"/><path d="M2891-113L3098-113L3157 0L3377 0L2995-747L2614 0L2834 0L2891-113ZM2926-256L2995-413L3065-256L2926-256Z"/><path d="M3630-700L3428-700L3428 0L3630 0L3630-295L3863 0L4098 0L3805-372L4083-700L3857-700L3630-432L3630-700Z"/><path d="M4351-113L4558-113L4617 0L4837 0L4455-747L4074 0L4294 0L4351-113ZM4386-256L4455-413L4525-256L4386-256Z"/></symbol>
+
+
+
+  <radialGradient id="gFarol">
+    <stop offset="0" stop-color="#FFFDF6" stop-opacity="1"/>
+    <stop offset=".16" stop-color="#FFF4DC" stop-opacity=".8"/>
+    <stop offset=".45" stop-color="#FFE8BE" stop-opacity=".2"/>
+    <stop offset="1" stop-color="#FFE8BE" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="gLanterna">
+    <stop offset="0" stop-color="#FFC2B5" stop-opacity=".9"/>
+    <stop offset=".3" stop-color="#E3261C" stop-opacity=".45"/>
+    <stop offset="1" stop-color="#E3261C" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="gFacho" x1="1" y1="0" x2="0" y2="0">
+    <stop offset="0" stop-color="#FFF5E0" stop-opacity=".38"/>
+    <stop offset=".4" stop-color="#FFF0D4" stop-opacity=".13"/>
+    <stop offset="1" stop-color="#FFF0D4" stop-opacity="0"/>
+  </linearGradient>
+  <radialGradient id="gPoca">
+    <stop offset="0" stop-color="#FFF0D4" stop-opacity=".32"/>
+    <stop offset="1" stop-color="#FFF0D4" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="fDifuso" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="7"/></filter>
+</defs>
+</svg>
+
+<header class="topo" id="topo">
+  <div class="miolo">
+    <a class="marca" href="#inicio" aria-label="Katraka, voltar ao início"><img src="img/logo-katraka.webp" alt="Katraka, especializada em aircooled" width="1000" height="257"><span>VW a ar desde 2010</span></a>
+    <nav class="nav" aria-label="Seções">
+      <a class="it" href="#video"><span>Vídeo</span><span aria-hidden="true">Vídeo</span></a>
+      <a class="it" href="#raiox"><span>Raio-x</span><span aria-hidden="true">Raio-x</span></a>
+      <a class="it" href="#rebaixar"><span>Rebaixar</span><span aria-hidden="true">Rebaixar</span></a>
+      <a class="it" href="#servicos"><span>Serviços</span><span aria-hidden="true">Serviços</span></a>
+      <a class="it" href="#trabalhos"><span>Trabalhos</span><span aria-hidden="true">Trabalhos</span></a>
+      <a class="it" href="#visite"><span>Como chegar</span><span aria-hidden="true">Como chegar</span></a>
+      <a class="btn" data-wa="topo" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+
+<!-- ===== WOW 1 ===== -->
+<section class="hero" id="hero">
+  <div class="miolo hero-tx">
+    <div>
+      <h1>Fusca original ou baixo, rodando macio.</h1>
+      <p class="sub">Oficina no Tatuapé especializada em suspensão, freio e direção. Fusca, Brasília, Kombi, Variant, SP2 e derivados, desde 2010.</p>
+      <div class="acoes">
+        <a class="btn" data-wa="hero" href="https://wa.me/5511947456663"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 5 5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>Pedir orçamento no WhatsApp</a>
+        <a class="lnk" href="#raiox">Ver onde a gente mexe</a>
+      </div>
+    </div>
+    <div class="ficha">
+      <p><span>Endereço</span>Rua Serra de Bragança, 810<br>Tatuapé, São Paulo</p>
+      <p><span>Horário</span>Segunda a sexta, 9h às 17h</p>
+      <a class="hero-yt" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener"><i aria-hidden="true"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg></i><span>Assista no YouTube<small>Direção sobre Rodas, da Band</small></span></a>
+      <p class="dentes-h" aria-hidden="true"><span>katraka</span><i></i><i></i><i></i><i></i><i></i></p>
+    </div>
+  </div>
+
+  <div class="hero-arte">
+    <svg id="heroSvg" viewBox="0 24 1000 510" role="img" aria-label="Fusca bege original que baixa a suspensão, dente por dente, até ficar rebaixado em cima do logo da Katraka">
+      <line class="chao" x1="0" y1="313" x2="1000" y2="313"/>
+      <ellipse class="sombra" id="hSombra" cx="500" cy="314" rx="330" ry="9"/>
+      <g id="hCarro" transform="translate(130 18) scale(.74)">
+        <ellipse class="facho" cx="-30" cy="398" rx="170" ry="10" fill="url(#gPoca)"/>
+        <g class="sobe"><polygon class="facho" points="120,257 120,275 -220,352 -220,232" fill="url(#gFacho)" filter="url(#fDifuso)"/></g>
+        <g id="hR1"><image href="img/fusca-roda-d.webp" x="163.25" y="263.25" width="137.5" height="137.5"/></g>
+        <g id="hR2"><image href="img/fusca-roda-t.webp" x="683.25" y="261.5" width="137.5" height="137.5"/></g>
+        <g class="sobe">
+          <image href="img/fusca-corpo.webp" x="97.1" y="59.6" width="809.1" height="291.7"/>
+          <g class="luzes"><circle cx="124" cy="266" r="24" fill="url(#gFarol)"/><circle cx="863" cy="262" r="15" fill="url(#gLanterna)"/></g>
+        </g>
+      </g>
+      <g class="palavra-h" id="hPalavra"><image href="img/logo-katraka.webp" x="110" y="330" width="780" height="200.5"/></g>
+    </svg>
+    <p class="leg-foto">Imagem ilustrativa</p>
+  </div>
+</section>
+
+<!-- ===== faixa do YouTube, logo depois da abertura ===== -->
+<a class="yt-faixa" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener" aria-label="Assistir no YouTube: a Katraka no programa Direção sobre Rodas, da Band">
+  <span class="fita" aria-hidden="true"><span><i><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg></i>A Katraka no Direção sobre Rodas, da Band. Assista no YouTube</span><span>Programa completo</span><span><i><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg></i>A Katraka no Direção sobre Rodas, da Band. Assista no YouTube</span><span>Programa completo</span><span><i><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg></i>A Katraka no Direção sobre Rodas, da Band. Assista no YouTube</span><span>Programa completo</span><span><i><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg></i>A Katraka no Direção sobre Rodas, da Band. Assista no YouTube</span><span>Programa completo</span></span>
+</a>
+
+<!-- ===== quem somos ===== -->
+<section class="sobre" id="sobre">
+  <div class="miolo sobre-grade">
+    <div class="sobre-tx">
+      <p class="frase">Desde 2010, a Katraka mexe com uma coisa só: <em>VW a ar</em>. Suspensão, freio e direção de Fusca e derivados.</p>
+      <p>A oficina fica na Rua Serra de Bragança, no Tatuapé, e quem toca é o Alexandre, o "Katraka". Pelas contas da casa, mais de mil carros já passaram por lá.</p>
+      <p class="midia">Já apareceu na Band, no programa <a href="#video">Direção sobre Rodas</a>, no <a href="https://www.canaldapeca.com.br/blog/veja-forma-mais-simples-de-rebaixar-um-fusca/" target="_blank" rel="noopener">Canal da Peça</a> e no blog <a href="https://www.acelerada.com.br/meu-primeiro-fusca-rebaixei-com-katraka/" target="_blank" rel="noopener">Acelerada</a>.</p>
+      <div>
+        <p class="mono" style="opacity:.7;margin-bottom:12px">Carros que a gente atende</p>
+        <ul class="modelos">
+          <li>Fusca</li><li>Brasília</li><li>Kombi</li><li>Variant</li><li>SP2</li><li>e derivados a ar</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="foto sobre-foto">
+      <img src="img/fusca-rebaixado.jpg" alt="Fusca verde rebaixado, com rodas cromadas, estacionado numa praça com palmeiras e bandeiras" width="675" height="1200" loading="lazy">
+      <figcaption>Foto ilustrativa</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== vídeo do YouTube (28 min), em destaque ===== -->
+<section class="yt" id="video" aria-labelledby="ytTit">
+  <div class="miolo yt-grade">
+    <div>
+      <span class="yt-tag"><i aria-hidden="true"></i>Na TV: Band</span>
+      <h2 id="ytTit">A Katraka no Direção sobre Rodas</h2>
+      <p class="sub">A oficina apareceu no programa Direção sobre Rodas, da Band. Assista no YouTube.</p>
+      <div class="acoes">
+        <a class="btn btn-yt" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true" fill="currentColor"><path d="M1 0l9 5-9 5z"/></svg>Assistir no YouTube</a>
+        <a class="lnk" data-wa="youtube" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
+      </div>
+    </div>
+    <a class="yt-capa" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener" aria-label="Assistir no YouTube: a Katraka no programa Direção sobre Rodas, da Band">
+      <img src="https://i.ytimg.com/vi/Yvma_5ttA9c/hqdefault.jpg" alt="Capa do vídeo da Katraka no YouTube" width="480" height="360" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/katraka-catraca-capa.jpg'">
+      <span class="yt-play verm" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg></span>
+      <span class="yt-nome" aria-hidden="true">A Katraka no Direção sobre Rodas</span>
+      <span class="yt-dur" aria-hidden="true">28 min</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== o interruptor do farol ===== -->
+<section class="farol" id="farol" aria-labelledby="faTit">
+  <div class="fa-palco">
+    <div class="fa-tx">
+      <h2 id="faTit">Fusca é pra durar.</h2>
+      <p>A suspensão também. Faça a revisão com quem é especialista e só mexe com VW a ar.</p>
+    </div>
+    <figure class="fa-foto">
+      <img src="img/fusca-farol.jpg" alt="Fusca verde-escuro de frente, num estúdio escuro, com os dois faróis acesos refletindo no chão" width="736" height="1472" loading="lazy">
+      <i class="halo e" aria-hidden="true"></i><i class="halo d" aria-hidden="true"></i>
+      <figcaption>Foto ilustrativa</figcaption>
+    </figure>
+    <ol class="chave" id="chave" aria-hidden="true">
+      <li>desligado</li><li>lanterna</li><li>farol baixo</li><li>farol alto</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== WOW 2: raio-x ===== -->
+<section class="raiox" id="raiox" aria-labelledby="rxTit">
+  <div class="rx-palco">
+    <div class="miolo rx-topo">
+      <h2 id="rxTit">Raio-x do Fusca</h2>
+      <p class="sub">Role a página. Por onde o scanner passa, aparece a parte que a gente conserta.</p>
+    </div>
+    <div class="miolo rx-cena">
+      <div class="rx-foto" id="rxFoto">
+        <img class="rx-lat" src="img/raiox-lateral.jpg" alt="Fusca bege de lado, fotografado num estúdio" width="858" height="530" loading="lazy">
+        <img class="rx-int" src="img/raiox-interna.jpg" alt="O mesmo Fusca em vista interna, mostrando suspensão, freios, direção, chassi, motor e escapamento" width="858" height="530" loading="lazy">
+        <i class="rx-luz" aria-hidden="true"></i><i class="rx-borda a" aria-hidden="true"></i><i class="rx-borda b" aria-hidden="true"></i>
+        <svg class="rx-marcas" id="rxMarcas" viewBox="0 0 858 530" aria-hidden="true"></svg>
+        <span class="rx-cred">Imagem ilustrativa</span>
+      </div>
+    </div>
+    <div class="miolo rx-base">
+      <div class="leitura" id="leitura" aria-live="polite">
+        <div class="vai">
+          <p class="pos" id="rxPos">Comece a rolar</p>
+          <h3 id="rxT">O scanner começa pela frente</h3>
+          <p id="rxD">Cada parte que aparece é um serviço da oficina.</p>
+          <a class="lnk" id="rxA" data-wa="raiox" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
+        </div>
+      </div>
+      <ol class="rx-lista" id="rxLista" aria-label="Partes do raio-x"></ol>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WOW 3: simulador ===== -->
+<section class="sim" id="rebaixar" aria-labelledby="simTit">
+  <div class="miolo">
+    <div class="sim-topo">
+      <h2 id="simTit">Gire a katraka.</h2>
+      <p class="sub">Na dianteira, quem regula a altura são os dentes da katraka. Na traseira, é o facão, nas estrias da barra de torção. Escolha o seu VW, gire as duas e veja como ele fica.</p>
+    </div>
+
+    <fieldset class="carros abas" id="abasCarro">
+      <legend>Escolha o seu VW</legend>
+      <label><input type="radio" name="carro" id="cFusca" value="Fusca" checked><span>Fusca</span></label>
+      <label><input type="radio" name="carro" id="cKombi" value="Kombi"><span>Kombi</span></label>
+      <label><input type="radio" name="carro" id="cVariant" value="Variant"><span>Variant</span></label>
+      <label><input type="radio" name="carro" id="cBrasilia" value="Brasília"><span>Brasília</span></label>
+      <label><input type="radio" name="carro" id="cSP2" value="SP2"><span>SP2</span></label>
+    </fieldset>
+    <div class="sim-mesa">
+      <div class="sim-cena">
+        <svg id="simSvg" viewBox="0 -10 1000 468" role="img" aria-label="VW a ar de lado (Fusca, Kombi, Variant, Brasília ou SP2) que baixa conforme você gira a katraka (frente) e o facão (traseira)">
+          <line class="chao-s" x1="0" y1="398" x2="1000" y2="398"/>
+          <path class="hach" d="M20 398l-14 16M60 398l-14 16M100 398l-14 16M140 398l-14 16M180 398l-14 16M220 398l-14 16M260 398l-14 16M300 398l-14 16M340 398l-14 16M380 398l-14 16M420 398l-14 16M460 398l-14 16M500 398l-14 16M540 398l-14 16M580 398l-14 16M620 398l-14 16M660 398l-14 16M700 398l-14 16M740 398l-14 16M780 398l-14 16M820 398l-14 16M860 398l-14 16M900 398l-14 16M940 398l-14 16M980 398l-14 16"/>
+          <ellipse class="sombra-s" cx="492" cy="399" rx="400" ry="7"/>
+          <g class="modelo on" data-carro="Fusca" data-yc="331">
+            <image href="img/fusca-roda-d.webp" x="163.25" y="263.25" width="137.5" height="137.5"/>
+            <image href="img/fusca-roda-t.webp" x="683.25" y="261.5" width="137.5" height="137.5"/>
+            <g class="sobe">
+              <image href="img/fusca-corpo.webp" x="97.1" y="59.6" width="809.1" height="291.7"/>
+              <path class="arco arco-f" d="M162.5 306.7A74 74 0 0 1 301.5 306.7"/>
+              <path class="arco arco-r" d="M682.5 304.9A74 74 0 0 1 821.5 304.9"/>
+            </g>
+          </g>
+          <g class="modelo" data-carro="Kombi" data-yc="325.2">
+            <image href="img/carro-kombi-roda-d.webp" x="157.98" y="251.15" width="148.03" height="148.03"/>
+            <image href="img/carro-kombi-roda-t.webp" x="677.98" y="251.15" width="148.03" height="148.03"/>
+            <g class="sobe">
+              <image href="img/carro-kombi-corpo.webp" x="27.20" y="-6.80" width="892.91" height="361.81"/>
+              <path class="arco arco-f" d="M156.7 297.8A80.1 80.1 0 0 1 307.3 297.8"/>
+              <path class="arco arco-r" d="M676.7 297.8A80.1 80.1 0 0 1 827.3 297.8"/>
+            </g>
+          </g>
+          <g class="modelo" data-carro="Variant" data-yc="323.0">
+            <image href="img/carro-variant-roda-d.webp" x="154.10" y="245.08" width="155.81" height="155.81"/>
+            <image href="img/carro-variant-roda-t.webp" x="674.10" y="245.08" width="155.81" height="155.81"/>
+            <g class="sobe">
+              <image href="img/carro-variant-corpo.webp" x="43.10" y="60.41" width="887.73" height="295.27"/>
+              <path class="arco arco-f" d="M154.5 294.8A82.5 82.5 0 0 1 309.5 294.8"/>
+              <path class="arco arco-r" d="M674.5 294.8A82.5 82.5 0 0 1 829.5 294.8"/>
+            </g>
+          </g>
+          <g class="modelo" data-carro="Brasília" data-yc="320.8">
+            <image href="img/carro-brasilia-roda-d.webp" x="152.83" y="241.65" width="158.34" height="158.34"/>
+            <image href="img/carro-brasilia-roda-t.webp" x="672.83" y="241.65" width="158.34" height="158.34"/>
+            <g class="sobe">
+              <image href="img/carro-brasilia-corpo.webp" x="58.76" y="81.85" width="842.93" height="272.11"/>
+              <path class="arco arco-f" d="M152.2 291.8A84.9 84.9 0 0 1 311.8 291.8"/>
+              <path class="arco arco-r" d="M672.2 291.8A84.9 84.9 0 0 1 831.8 291.8"/>
+            </g>
+          </g>
+          <g class="modelo" data-carro="SP2" data-yc="328.9">
+            <image href="img/carro-sp2-roda-d.webp" x="161.34" y="258.28" width="141.32" height="141.32"/>
+            <image href="img/carro-sp2-roda-t.webp" x="681.34" y="258.28" width="141.32" height="141.32"/>
+            <g class="sobe">
+              <image href="img/carro-sp2-corpo.webp" x="76.44" y="139.13" width="872.55" height="218.41"/>
+              <path class="arco arco-f" d="M160.6 303.0A76.0 76.0 0 0 1 303.4 303.0"/>
+              <path class="arco arco-r" d="M680.6 303.0A76.0 76.0 0 0 1 823.4 303.0"/>
+            </g>
+          </g>
+          <path class="guia" d="M232 420V458M752 420V458" stroke-dasharray="4 5"/>
+        </svg>
+        <p class="leg-foto">Imagem ilustrativa</p>
+      </div>
+      <div class="sim-dials">
+        <div class="dial" id="dialF">
+          <p class="nome">Dianteira<small>katraka</small></p>
+          <div class="dial-roda" tabindex="0" role="slider" aria-label="Dentes da katraka na dianteira" aria-valuemin="0" aria-valuemax="6"></div>
+          <div class="dial-linha">
+            <button class="mais" type="button" data-passo="-1" aria-label="Subir a dianteira um dente">−</button>
+            <p class="val" aria-hidden="true"></p>
+            <button class="mais" type="button" data-passo="1" aria-label="Baixar a dianteira um dente">+</button>
+          </div>
+        </div>
+        <div class="dial" id="dialR">
+          <p class="nome">Traseira<small>facão</small></p>
+          <div class="dial-roda" tabindex="0" role="slider" aria-label="Estrias do facão na traseira" aria-valuemin="0" aria-valuemax="6"></div>
+          <div class="dial-linha">
+            <button class="mais" type="button" data-passo="-1" aria-label="Subir a traseira uma estria">−</button>
+            <p class="val" aria-hidden="true"></p>
+            <button class="mais" type="button" data-passo="1" aria-label="Baixar a traseira uma estria">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="painel">
+      <div class="leitor">
+        <div class="medidor" id="medidor" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="escala" aria-hidden="true"><span>original</span><span>no ponto</span><span>no limite</span><span>passou</span></div>
+        <p class="estado" id="estado" aria-live="polite"></p>
+      </div>
+      <div class="pedido">
+        <div class="acoes">
+          <a class="btn" id="simWa" data-wa="sim" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
+          <button class="somb" type="button" id="somBtn" aria-pressed="true">Som do clique: ligado</button>
+        </div>
+        <p class="nota">Simulação ilustrativa. A altura certa a gente define com o carro na oficina: rebaixar tem limite pra continuar rodando macio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== serviços ===== -->
+<section class="servicos" id="servicos" aria-labelledby="servTit">
+  <div class="miolo">
+    <div class="cab">
+      <h2 id="servTit">Tudo o que a gente faz</h2>
+      <p class="sub" style="opacity:.75">Toque no serviço e a mensagem já vai pronta pro WhatsApp.</p>
+    </div>
+    <ul class="lista-s" id="listaServ"></ul>
+  </div>
+</section>
+
+<!-- ===== alguns dos nossos trabalhos: fotos reais da oficina (do Instagram @katrakavw) ===== -->
+<section class="trabalhos" id="trabalhos" aria-labelledby="trabTit">
+  <div class="miolo">
+    <div class="trab-cab">
+      <div>
+        <p class="mono">Direto do elevador da Katraka</p>
+        <h2 id="trabTit">Alguns dos nossos trabalhos</h2>
+        <p class="sub">Fusca, Variant, Kombi, Puma e buggy que passaram pela oficina. Toque na foto pra ver inteira.</p>
+      </div>
+    </div>
+    <ul class="trab-grade" id="trabGrade">
+        <li><button type="button" data-foto="img/trab-fusca-verde.webp" data-nome="Fusca"><img src="img/trab-fusca-verde.webp" alt="Fusca verde com rodas esportivas no elevador de alinhamento da Katraka" width="1400" height="830" loading="lazy"><b>Fusca</b></button></li>
+        <li><button type="button" data-foto="img/trab-variant-amarela.webp" data-nome="Variant"><img src="img/trab-variant-amarela.webp" alt="Variant amarela com rodas cromadas no elevador da Katraka" width="1100" height="618" loading="lazy"><b>Variant</b></button></li>
+        <li><button type="button" data-foto="img/trab-buggy-laranja.webp" data-nome="Buggy"><img src="img/trab-buggy-laranja.webp" alt="Buggy laranja com capota preta no elevador da Katraka" width="1100" height="685" loading="lazy"><b>Buggy</b></button></li>
+        <li><button type="button" data-foto="img/trab-puma.webp" data-nome="Puma"><img src="img/trab-puma.webp" alt="Puma amarelo no elevador de alinhamento da Katraka" width="1100" height="636" loading="lazy"><b>Puma</b></button></li>
+        <li><button type="button" data-foto="img/trab-variant-vermelha.webp" data-nome="Variant"><img src="img/trab-variant-vermelha.webp" alt="Variant vermelha com calotas no elevador da Katraka" width="1100" height="653" loading="lazy"><b>Variant</b></button></li>
+        <li class="largo"><button type="button" data-foto="img/trab-kombi.webp" data-nome="Kombi"><img src="img/trab-kombi.webp" alt="Kombi amarela e branca no elevador da Katraka" width="1100" height="656" loading="lazy"><b>Kombi</b></button></li>
+        <li class="largo"><button type="button" data-foto="img/trab-variant-azul.webp" data-nome="Variant"><img src="img/trab-variant-azul.webp" alt="Variant azul com rodas pretas no elevador da Katraka" width="1100" height="684" loading="lazy"><b>Variant</b></button></li>
+    </ul>
+    <div class="trab-mais">
+      <p>Quer ver mais carros que saíram daqui? Tem bem mais no Instagram da Katraka.</p>
+      <div class="acoes">
+        <a class="btn-ln" href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener">Ver no Instagram @katrakavw</a>
+        <a class="btn" data-wa="trabalhos" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="trab-video">
+      <button class="tv-play" type="button" id="tvPlay" data-completo="img/katraka-catraca-video.mp4" aria-label="Assistir o vídeo completo da catraca mexicana, com som">
+        <video id="tvVideo" src="img/katraka-catraca-trecho.mp4" poster="img/katraka-catraca-capa.jpg" muted loop playsinline preload="metadata"></video>
+        <span class="tv-btn" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M2 1l11 6-11 6z"/></svg>Assistir com som</span>
+      </button>
+      <div class="tv-tx">
+        <p class="mono" style="opacity:.75">Do Instagram @katrakavw</p>
+        <h3>Catraca mexicana, explicada na prática</h3>
+        <p>O Alexandre mostra no carro, na oficina, como funciona a catraca que regula a altura do Fusca.</p>
+        <div class="acoes">
+          <a class="btn" data-wa="video" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
+          <a class="lnk btn-yt-lnk" href="https://www.youtube.com/watch?v=Yvma_5ttA9c" target="_blank" rel="noopener">Ver a Katraka na Band, no YouTube</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <dialog class="galeria" id="galeria" aria-label="Foto do trabalho">
+    <figure><img id="galImg" src="" alt=""><figcaption id="galNome"></figcaption></figure>
+    <button class="gal-bt gal-fecha" type="button" id="galFecha" aria-label="Fechar">×</button>
+    <button class="gal-bt gal-ant" type="button" id="galAnt" aria-label="Foto anterior">‹</button>
+    <button class="gal-bt gal-prox" type="button" id="galProx" aria-label="Próxima foto">›</button>
+  </dialog>
+</section>
+
+<!-- ===== avaliações ===== -->
+<section class="aval" id="avaliacoes" aria-labelledby="avTit">
+  <div class="miolo aval-grade">
+    <div>
+      <h2 id="avTit" class="so-leitor">Avaliações no Google</h2>
+      <div class="nota-g">
+        <span class="n">4,9</span>
+        <div>
+          <div class="estrelas" aria-label="Nota 4,9 de 5">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7.2.7-5.4 4.8 1.6 7.1L12 17.5l-6.4 3.7 1.6-7.1L1.8 9.3 9 8.6z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7.2.7-5.4 4.8 1.6 7.1L12 17.5l-6.4 3.7 1.6-7.1L1.8 9.3 9 8.6z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7.2.7-5.4 4.8 1.6 7.1L12 17.5l-6.4 3.7 1.6-7.1L1.8 9.3 9 8.6z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7.2.7-5.4 4.8 1.6 7.1L12 17.5l-6.4 3.7 1.6-7.1L1.8 9.3 9 8.6z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7.2.7-5.4 4.8 1.6 7.1L12 17.5l-6.4 3.7 1.6-7.1L1.8 9.3 9 8.6z"/></svg>
+          </div>
+          <p>490 avaliações no Google</p>
+        </div>
+      </div>
+    </div>
+    <div class="texto">
+      <div class="depo" id="depo" hidden></div>
+      <p>Nota de quem já levou o carro na oficina. Leia o que eles escreveram direto no Google.</p>
+      <a class="btn-ln" id="lerAval" href="https://www.google.com/maps/search/?api=1&amp;query=Katraka+Especializada+Vw+Aircooled+Rua+Serra+de+Bragan%C3%A7a+810+Tatuap%C3%A9" target="_blank" rel="noopener">Ler as avaliações no Google</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq" id="duvidas" aria-labelledby="faqTit">
+  <div class="miolo faq-grade">
+    <div>
+      <h2 id="faqTit">Dúvidas de quem tem Fusca</h2>
+      <p class="sub" style="margin-top:18px">Não achou a sua? Manda no WhatsApp que o Alexandre responde.</p>
+      <p style="margin-top:22px"><a class="btn" data-wa="faq" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a></p>
+      <figure class="foto faq-foto">
+        <img src="img/farol-detalhe.jpg" alt="Detalhe do farol redondo e do para-choque cromado de um Fusca amarelo" width="736" height="1104" loading="lazy">
+        <figcaption>Foto ilustrativa</figcaption>
+      </figure>
+    </div>
+    <div>
+      <details><summary>Vocês atendem quais carros?<i aria-hidden="true"></i></summary><p>Só VW a ar: Fusca, Brasília, Kombi, Variant, SP2 e os outros derivados. É nisso que a oficina é especializada desde 2010.</p></details>
+      <details><summary>Dá pra rebaixar e continuar rodando macio?<i aria-hidden="true"></i></summary><p>Dá, até um limite. Passando dele, os amortecedores e outras peças da suspensão precisam ser acertados junto para o carro não ficar duro. A gente avisa onde fica esse limite no seu carro antes de começar.</p></details>
+      <details><summary>Rebaixar gasta pneu?<i aria-hidden="true"></i></summary><p>Pode gastar os pneus traseiros de forma irregular. Nos pneus dianteiros, a gente confere toda a geometria junto com o rebaixamento.</p></details>
+      <details><summary>Quanto custa?<i aria-hidden="true"></i></summary><p>Depende da altura, do modelo e do estado da suspensão. Manda pelo WhatsApp o carro, o ano e o que você quer fazer (se der, uma foto) e a gente passa o orçamento.</p></details>
+      <details><summary>Preciso marcar antes de levar o carro?<i aria-hidden="true"></i></summary><p>Sim. Todo serviço é feito com agendamento. Chama no WhatsApp pra agendar, assim o carro já entra na fila do jeito certo.</p></details>
+      <details><summary>Vocês fazem furação pra trocar a roda?<i aria-hidden="true"></i></summary><p>Fazemos furação de discos e tambores, pra você usar outras rodas no seu VW a ar.</p></details>
+      <details><summary>Onde fica a oficina?<i aria-hidden="true"></i></summary><p>Rua Serra de Bragança, 810, no Tatuapé, Zona Leste de São Paulo. O mapa e o botão "Como chegar" estão logo abaixo.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ordem de serviço ===== -->
+<section class="os-sec" id="orcamento" aria-labelledby="osTit">
+  <div class="miolo os-grade">
+    <div>
+      <h2 id="osTit">Abra sua ordem de serviço</h2>
+      <p class="sub" style="margin-top:18px">Preencha do jeito que der. A mensagem sai pronta no WhatsApp da oficina, é só apertar enviar.</p>
+      <ol class="passos">
+        <li><div><b>Você conta o que o carro tem</b><span>Modelo, ano e o que está acontecendo.</span></div></li>
+        <li><div><b>A gente responde com o orçamento</b><span>Pelo WhatsApp, no horário da oficina.</span></div></li>
+        <li><div><b>Você leva o carro no dia combinado</b><span>Rua Serra de Bragança, 810, Tatuapé.</span></div></li>
+      </ol>
+    </div>
+    <form class="os" id="osForm" novalidate>
+      <div class="os-cab"><b>KATRAKA</b><span>Ordem de serviço de <span id="osData"></span></span></div>
+      <div class="campos">
+        <label class="cheio" for="osNome">Seu nome<input id="osNome" name="nome" required autocomplete="name" placeholder="Como a gente te chama"></label>
+        <label for="osCarro">Carro<select id="osCarro" name="carro"><option>Fusca</option><option>Brasília</option><option>Kombi</option><option>Variant</option><option>SP2</option><option>Outro VW a ar</option></select></label>
+        <label for="osAno">Ano<input id="osAno" name="ano" inputmode="numeric" maxlength="4" placeholder="Ex.: 1975"></label>
+        <label class="cheio" for="osServ">Serviço<select id="osServ" name="serv"></select></label>
+        <label class="cheio" for="osTexto">O que está acontecendo?<textarea id="osTexto" name="texto" placeholder="Ex.: quero baixar a frente, mas sem ficar duro"></textarea></label>
+      </div>
+      <button class="btn" type="submit">Pedir orçamento no WhatsApp</button>
+      <p class="resp">Resposta pelo WhatsApp, no horário da oficina.</p>
+      <p class="obrigado" id="obrigado" role="status">Pronto! Abrimos o WhatsApp com a sua mensagem. Se não abriu, <a id="osLink" href="https://wa.me/5511947456663" target="_blank" rel="noopener">toque aqui</a>.</p>
+      <span class="carimbo" aria-hidden="true">ENVIADO</span>
+    </form>
+  </div>
+</section>
+
+<!-- ===== visite ===== -->
+<section class="visite" id="visite" aria-labelledby="visTit">
+  <div class="miolo vis-grade">
+    <div>
+      <h2 id="visTit">Venha de Fusca</h2>
+      <p class="end">Rua Serra de Bragança, 810<br>Tatuapé, São Paulo - SP</p>
+      <dl class="dados">
+        <div><dt>Horário</dt><dd>Segunda a sexta, das 9h às 17h</dd></div>
+        <div><dt>WhatsApp</dt><dd><a data-wa="visite" href="https://wa.me/5511947456663">(11) 94745-6663</a></dd></div>
+        <div><dt>Telefone</dt><dd><a href="tel:+551135392100">(11) 3539-2100</a></dd></div>
+        <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener">@katrakavw</a></dd></div>
+      </dl>
+      <div class="acoes">
+        <a class="btn" data-wa="visite" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a>
+        <a class="btn-ln" href="https://www.google.com/maps/dir/?api=1&amp;destination=Rua+Serra+de+Bragan%C3%A7a+810+Tatuap%C3%A9+S%C3%A3o+Paulo" target="_blank" rel="noopener">Como chegar</a>
+      </div>
+    </div>
+    <div class="mapa">
+      <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="600" height="400" fill="#874621"/>
+        <path d="M-20 120L620 60M-20 300L620 250M140 -20L90 420M380 -20L420 420M-20 200L620 180" stroke="rgba(239,230,211,.18)" stroke-width="14" fill="none"/>
+        <path d="M-20 200L620 180" stroke="rgba(239,230,211,.35)" stroke-width="18" fill="none"/>
+        <circle cx="300" cy="190" r="16" fill="#A9D3DE"/><circle cx="300" cy="190" r="6" fill="#231912"/>
+        <text x="300" y="232" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="15" fill="#EFE6D3">Rua Serra de Bragança, 810</text>
+      </svg>
+      <iframe title="Mapa da Katraka no Tatuapé" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Rua%20Serra%20de%20Bragan%C3%A7a%2C%20810%20-%20Tatuap%C3%A9%2C%20S%C3%A3o%20Paulo%20-%20SP&amp;z=16&amp;output=embed"></iframe>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="rodape">
+  <div class="miolo">
+    <div class="rod-topo">
+      <div>
+        <h2>Boa estrada.</h2>
+        <p class="sub" style="margin-top:18px">Quando o Fusca pedir, a Katraka está na Rua Serra de Bragança, 810, no Tatuapé.</p>
+        <p style="margin-top:26px"><a class="btn" data-wa="rodape" href="https://wa.me/5511947456663">Pedir orçamento no WhatsApp</a></p>
+      </div>
+      <figure class="foto rod-foto">
+        <img src="img/fusca-estrada.jpg" alt="Fusca verde-claro de traseira, parado na areia da praia durante o pôr do sol" width="735" height="1105" loading="lazy">
+        <figcaption>Foto ilustrativa</figcaption>
+      </figure>
+    </div>
+    <svg class="palavra-r" viewBox="0 0 1000 157" aria-hidden="true"><use href="#palavra" width="1000" height="157"/></svg>
+    <img class="logo-rod" src="img/logo-katraka-claro.webp" alt="Katraka, especializada em aircooled" width="1000" height="257" loading="lazy">
+    <div class="rod-grade">
+      <p>Katraka Especializada VW Aircooled. Oficina especializada em Fusca e derivados, desde 2010, no Tatuapé.</p>
+      <nav aria-label="Rodapé">
+        <a href="https://www.instagram.com/katrakavw/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/katrakavws/" target="_blank" rel="noopener">Facebook</a>
+        <a href="privacidade.html">Política de privacidade</a>
+      </nav>
+    </div>
+    <p class="credito">Volkswagen, VW e o emblema VW são marcas da Volkswagen AG. A Katraka é uma oficina independente, sem vínculo com a montadora.</p>
+    <p class="credito" style="margin-top:8px">Site feito pela GuDev</p>
+  </div>
+</footer>
+
+<a class="zap" id="zap" data-wa="flutuante" href="https://wa.me/5511947456663" aria-label="Pedir orçamento no WhatsApp"><svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 5 5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg></a>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
+<script>
+(function(){
+  "use strict";
+  /* CONFIRMAR com o Alexandre: este é o celular que aparece no blog Acelerada. */
+  var WHATS = "5511947456663";
+
+  /* Avaliações reais do Google: copiar do Maps com o nome de quem escreveu. Enquanto estiver vazio, a seção mostra só a nota. */
+  var AVALIACOES = [
+    /* { nome: "Nome como aparece no Google", texto: "Texto da avaliação", quando: "há 2 meses" } */
+  ];
+
+  var $ = function(s, c){ return (c || document).querySelector(s); };
+  var $$ = function(s, c){ return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  var raiz = document.documentElement;
+  var embed = /[?&]embed\b/.test(location.search), dentro = window.parent !== window;
+  if (embed) raiz.classList.add("embed");
+  if (dentro) raiz.classList.add("dentro");
+  var toque = matchMedia("(pointer: coarse)").matches;
+  var reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var clamp = function(v, a, b){ return Math.max(a, Math.min(b, v)); };
+  var conta = function(nome){ try { if (window.goatcounter && goatcounter.count) goatcounter.count({ path: "clique-" + nome, event: true }); } catch(e){} };
+
+  /* ---------- WhatsApp: cada lugar manda uma mensagem pronta diferente ---------- */
+  var MSG = {
+    topo: "Oi! Vim pelo site da Katraka e queria um orçamento.",
+    hero: "Oi! Vim pelo site da Katraka. Quero deixar meu VW a ar baixo e rodando macio. Pode me passar um orçamento?",
+    faq: "Oi! Vim pelo site da Katraka e fiquei com uma dúvida:",
+    visite: "Oi! Vim pelo site da Katraka e queria combinar um dia pra levar meu carro.",
+    rodape: "Oi! Vim pelo site da Katraka e queria marcar uma revisão no meu VW a ar.",
+    video: "Oi! Vi o vídeo da catraca no site da Katraka e queria um orçamento pra rebaixar meu VW a ar.",
+    youtube: "Oi! Vi o vídeo da Katraka no YouTube e queria um orçamento pro meu VW a ar.",
+    trabalhos: "Oi! Vi os trabalhos da Katraka no site e queria um orçamento pro meu VW a ar.",
+    flutuante: "Oi! Vim pelo site da Katraka e queria um orçamento."
+  };
+  var wa = function(t){ return "https://wa.me/" + WHATS + "?text=" + encodeURIComponent(t); };
+  var ligaWa = function(a){
+    var k = a.getAttribute("data-wa");
+    if (MSG[k]) a.href = wa(MSG[k]);
+    a.target = "_blank"; a.rel = "noopener";
+    a.addEventListener("click", function(){ conta("wa-" + k); });
+  };
+  $$("[data-wa]").forEach(ligaWa);
+
+  /* ---------- engrenagem de catraca (dentes em serra) ---------- */
+  function engrenagem(cx, cy, rFora, rDentro, n){
+    var d = "", passo = Math.PI * 2 / n;
+    for (var i = 0; i < n; i++){
+      var a0 = i * passo - Math.PI / 2, a1 = a0 + passo * .78, a2 = a0 + passo;
+      var p = function(r, a){ return (cx + r * Math.cos(a)).toFixed(1) + " " + (cy + r * Math.sin(a)).toFixed(1); };
+      d += (i ? "L" : "M") + p(rDentro, a0) + "L" + p(rFora, a1) + "L" + p(rDentro, a1 + .02) + "L" + p(rDentro, a2);
+    }
+    return d + "Z";
+  }
+  $$("[data-eng]").forEach(function(el){
+    var v = el.getAttribute("data-eng").split(",").map(Number);
+    el.setAttribute("d", engrenagem(v[0], v[1], v[2], v[3], v[4]));
+  });
+
+  /* ---------- som do clique (sintetizado, só depois de um toque) ---------- */
+  var som = true, ctx = null, ruido = null;
+  function clique(forte){
+    if (!som) return;
+    try {
+      ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+      if (ctx.state === "suspended") ctx.resume();
+      if (!ruido){
+        ruido = ctx.createBuffer(1, Math.floor(ctx.sampleRate * .04), ctx.sampleRate);
+        var dd = ruido.getChannelData(0);
+        for (var i = 0; i < dd.length; i++) dd[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / dd.length, 3);
+      }
+      var t = ctx.currentTime, s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+      s.buffer = ruido; f.type = "bandpass"; f.frequency.value = forte ? 1800 : 2600; f.Q.value = 3;
+      g.gain.setValueAtTime(forte ? .5 : .35, t); g.gain.exponentialRampToValueAtTime(.001, t + .05);
+      s.connect(f); f.connect(g); g.connect(ctx.destination); s.start(t); s.stop(t + .06);
+      var o = ctx.createOscillator(), og = ctx.createGain();
+      o.type = "square"; o.frequency.value = forte ? 520 : 900;
+      og.gain.setValueAtTime(.025, t); og.gain.exponentialRampToValueAtTime(.001, t + .03);
+      o.connect(og); og.connect(ctx.destination); o.start(t); o.stop(t + .04);
+    } catch(e){}
+    try { if (navigator.vibrate) navigator.vibrate(forte ? 14 : 8); } catch(e){}
+  }
+
+  /* ===================== WOW 1: abertura ===================== */
+  var heroSvg = $("#heroSvg"), hSobe = $$("#heroSvg .sobe"), hPal = $("#hPalavra"), hSombra = $("#hSombra");
+  var hDentes = $$(".dentes-h i"), hCarro = $("#hCarro"), hR1 = $("#hR1"), hR2 = $("#hR2");
+  var DENTE = 4.2, N = 5;   // 5 dentes = 21 unidades = a mesma altura da foto do Fusca rebaixado
+  function alturaHero(dentes){
+    var dy = (N - dentes) * DENTE;   // começa na altura original e desce até rebaixado
+    hSobe.forEach(function(g){ g.style.transform = "translateY(" + dy.toFixed(1) + "px)"; });
+    hSombra.style.opacity = (.18 + (N - dentes) * .04).toFixed(3);
+    hDentes.forEach(function(i, k){ i.classList.toggle("on", k < N - dentes); });
+  }
+  function heroFinal(){ alturaHero(0); heroSvg.classList.add("aceso"); }
+  if (embed || reduz){ heroFinal(); }
+  else {
+    hSobe.forEach(function(g){ g.style.transition = "none"; });
+    alturaHero(N);
+    heroSvg.getBoundingClientRect();
+    hSobe.forEach(function(g){ g.style.transition = ""; });
+  }
+  var heroFoi = false;
+  function heroComeca(atraso){
+    if (heroFoi) return; heroFoi = true;
+    if (embed || reduz){ heroFinal(); return; }
+    var feito = 0;
+    for (var k = 1; k <= N; k++) (function(k){
+      setTimeout(function(){
+        if (feito >= k) return; feito = k;
+        alturaHero(N - k);
+        hPal.classList.add("carga");
+        setTimeout(function(){ hPal.classList.remove("carga"); }, 90);
+      }, atraso + k * 260);
+    })(k);
+    setTimeout(function(){ heroSvg.classList.add("aceso"); }, atraso + N * 260 + 260);
+    setTimeout(function(){ feito = N; heroFinal(); }, atraso + N * 260 + 1200);  // garantia
+  }
+
+  /* ---------- introdução: o emblema se monta, o nome aparece e o emblema vira a calota da roda ---------- */
+  var intro = $("#intro");
+  // a introdução aparece sempre que a página abre; fora do topo (link de seção ou rolagem guardada) ela termina com um fade
+  var temIntro = !!intro && !embed;
+  var noTopo = function(){ return !location.hash && (window.scrollY || window.pageYOffset || 0) < 40; };
+  if (!temIntro){ if (intro) intro.parentNode.removeChild(intro); heroComeca(650); }
+  else {
+    raiz.classList.add("travado");
+    var acabou = false;
+    var fimIntro = function(rapido){
+      if (acabou) return; acabou = true;
+      var logo = $("#inLogo");
+      intro.classList.add("sai");
+      if (!rapido && !reduz){
+        var a = hR1.getBoundingClientRect(), b = logo.getBoundingClientRect();
+        // pousa em cima do emblema VW de verdade da calota (raio 11 px numa roda de 156 px)
+        var esc = (a.width * 22 / 156) / (b.width * 200 / 220);
+        var dx = (a.left + a.width * 79 / 156) - (b.left + b.width / 2), dy = (a.top + a.height * 80 / 156) - (b.top + b.height / 2);
+        logo.classList.add("voa");
+        logo.style.transition = "transform .75s cubic-bezier(.6,0,.2,1), opacity .22s ease .6s";
+        logo.style.opacity = 0;
+        logo.style.transform = "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px) scale(" + esc.toFixed(4) + ")";
+      } else {
+        logo.style.transition = "opacity .25s"; logo.style.opacity = 0;
+      }
+      setTimeout(function(){
+        raiz.classList.remove("travado");
+        if (intro.parentNode) intro.parentNode.removeChild(intro);
+        if (location.hash){ var alvo = document.getElementById(location.hash.slice(1)); if (alvo) alvo.scrollIntoView(); }
+        heroComeca(rapido ? 300 : 120);
+      }, rapido ? 320 : 800);
+    };
+    setTimeout(function(){ fimIntro(!noTopo()); }, reduz ? 1300 : 2250);
+    var pula = function(){ fimIntro(true); };
+    $("#inPula").addEventListener("click", pula);
+    ["keydown", "wheel", "touchmove"].forEach(function(ev){ window.addEventListener(ev, pula, { once: true, passive: true }); });
+    intro.addEventListener("pointerdown", pula);
+  }
+  function heroRola(){
+    if (embed || reduz) return;
+    var r = $("#hero").getBoundingClientRect();
+    var p = clamp(-r.top / Math.max(1, r.height), 0, 1);
+    var dx = p * 240;                         // anda pra esquerda (frente do Fusca)
+    hCarro.setAttribute("transform", "translate(" + (130 - dx).toFixed(1) + " 18) scale(.74)");
+    var ang = -(dx / .74) / 66 * 180 / Math.PI;
+    hR1.setAttribute("transform", "rotate(" + ang.toFixed(1) + " 232 332)");
+    hR2.setAttribute("transform", "rotate(" + ang.toFixed(1) + " 752 330.2)");
+  }
+
+  /* ---------- o interruptor do farol: desligado, lanterna, farol baixo, farol alto ---------- */
+  var farol = $("#farol"), faFoto = $(".fa-foto"), chave = $$("#chave li"), posFarol = -1;
+  var LUZ = [ [.1, .25, .55], [.32, .55, .75], [.68, .85, .95], [1, 1, 1.12] ];   // brilho da foto, força e tamanho do halo
+  function poeFarol(i){
+    if (i === posFarol) return; posFarol = i;
+    faFoto.style.setProperty("--luz", LUZ[i][0]);
+    faFoto.style.setProperty("--ho", LUZ[i][1]);
+    faFoto.style.setProperty("--hs", LUZ[i][2]);
+    chave.forEach(function(li, k){ li.classList.toggle("on", k === i); });
+  }
+  function farolRola(){
+    if (embed){ poeFarol(3); return; }
+    var r = farol.getBoundingClientRect();
+    var p = clamp(-r.top / Math.max(1, r.height - altTela), 0, 1);
+    // folga de ~8% em cada troca (não fica piscando se a pessoa parar no meio)
+    var alvo = p < .14 ? 0 : p < .38 ? 1 : p < .62 ? 2 : 3;
+    if (posFarol >= 0 && Math.abs(alvo - posFarol) === 1){
+      var lim = [.14, .38, .62][Math.min(alvo, posFarol)];
+      if (Math.abs(p - lim) < .04) return;
+    }
+    poeFarol(alvo);
+  }
+
+  /* ===================== WOW 2: raio-x ===================== */
+  var ZONAS = [
+    { z: "susp",    x: 112, y: 305, t: "Suspensão dianteira e katraka", d: "Na dianteira, quem regula a altura são os dentes da katraka. Mangas deslocadas também.", m: "Quero ver a suspensão dianteira do meu carro." },
+    { z: "freio",   x: 150, y: 342, t: "Freio", d: "Revisão e reparo do freio. Também fazemos furação de discos e tambores.", m: "Quero revisar o freio do meu carro." },
+    { z: "direcao", x: 330, y: 215, t: "Direção", d: "Revisão da direção pra o carro andar reto e sem folga no volante.", m: "Quero revisar a direção do meu carro." },
+    { z: "quadro",  x: 440, y: 328, t: "Encurtamento do quadro", d: "Pra não raspar os pneus nos para-lamas.", m: "Quero conversar sobre encurtamento do quadro." },
+    { z: "facao",   x: 622, y: 318, t: "Suspensão traseira e facão", d: "Na traseira, a altura se regula no facão, nas estrias da barra de torção.", m: "Quero ver a suspensão traseira do meu carro." },
+    { z: "rodas",   x: 680, y: 345, t: "Alinhamento de direção", d: "Carro reto e sem desgaste de pneu.", m: "Quero fazer o alinhamento de direção." }
+  ];
+  var rx = $("#raiox"), rxFoto = $("#rxFoto"), rxMarcas = $("#rxMarcas"), LARG = 858;
+  var leitura = $("#leitura"), rxPos = $("#rxPos"), rxT = $("#rxT"), rxD = $("#rxD"), rxA = $("#rxA"), lista = $("#rxLista");
+  var grupos = {};
+  ZONAS.forEach(function(zn){
+    var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute("class", "mk"); g.setAttribute("transform", "translate(" + zn.x + " " + zn.y + ")");
+    g.innerHTML = '<circle class="pulso" r="15"/><circle class="anel" r="15"/><circle class="pto" r="5"/>';
+    rxMarcas.appendChild(g); grupos[zn.z] = g;
+    var li = document.createElement("li"); li.textContent = zn.t; lista.appendChild(li);
+  });
+  var lis = $$("#rxLista li");
+  var BANDA = 150, zonaAtual = -2, fila = [], ocupado = false;
+
+  function preenche(i){
+    if (i === -1){ rxPos.textContent = "Comece a rolar"; rxT.textContent = "O scanner começa pela frente"; rxD.textContent = "Cada parte que aparece é um serviço da oficina."; rxA.href = wa(MSG.topo); return; }
+    if (i === 99){ rxPos.textContent = "Fim do raio-x"; rxT.textContent = "Tudo isso numa oficina só"; rxD.textContent = "Da suspensão à direção e aos freios, o seu VW a ar fica com quem só mexe com ele."; rxA.href = wa(MSG.hero); return; }
+    var zn = ZONAS[i];
+    rxPos.textContent = "Parte " + (i + 1) + " de " + ZONAS.length;
+    rxT.textContent = zn.t; rxD.textContent = zn.d;
+    rxA.href = wa("Oi! Vim pelo site da Katraka. " + zn.m);
+  }
+  function anima(){
+    if (!fila.length){ ocupado = false; return; }
+    ocupado = true;
+    var i = fila.pop(); fila = [];
+    if (reduz || embed){ preenche(i); ocupado = false; return; }
+    leitura.classList.remove("entra"); leitura.classList.add("sai");
+    setTimeout(function(){
+      preenche(i);
+      leitura.classList.remove("sai"); leitura.classList.add("entra");
+      setTimeout(function(){ leitura.classList.remove("entra"); anima(); }, 270);
+    }, 190);
+  }
+  function mostraZona(i){
+    if (i === zonaAtual) return;
+    zonaAtual = i;
+    ZONAS.forEach(function(zn, k){
+      var on = (i === 99) ? false : k === i;
+      grupos[zn.z].classList.toggle("on", on);
+      grupos[zn.z].classList.toggle("feito", i !== 99 && i >= 0 && k < i);
+      lis[k].classList.toggle("on", on);
+      lis[k].classList.toggle("feito", i === 99 || (i >= 0 && k < i));
+    });
+    fila.push(i); if (!ocupado) anima();
+  }
+  function banda(x, w){
+    var a = clamp(x / LARG * 100, 0, 100), b = clamp((x + w) / LARG * 100, 0, 100);
+    rxFoto.style.setProperty("--x0", a.toFixed(2) + "%");
+    rxFoto.style.setProperty("--x1", b.toFixed(2) + "%");
+    rxFoto.classList.toggle("fim", a <= 0.01 && b >= 99.99);
+  }
+  var altTela = window.innerHeight;
+  function rxRola(){
+    if (embed){ banda(0, LARG); mostraZona(99); return; }
+    var r = rx.getBoundingClientRect();
+    var curso = r.height - altTela;
+    var p = clamp(-r.top / Math.max(1, curso), 0, 1);
+    var A = .06, B = .84;
+    if (p <= B){
+      var q = clamp((p - A) / (B - A), 0, 1);
+      var c = -BANDA / 2 + q * (LARG + BANDA);
+      banda(c - BANDA / 2, BANDA);
+      if (p < A + .01){ mostraZona(-1); return; }
+      // zona mais perto do centro do scanner, com folga pra não ficar trocando
+      var melhor = zonaAtual < 0 || zonaAtual > 50 ? 0 : zonaAtual, dm = Math.abs(ZONAS[melhor].x - c);
+      for (var k = 0; k < ZONAS.length; k++){
+        var dk = Math.abs(ZONAS[k].x - c);
+        if (dk < dm - 16){ melhor = k; dm = dk; }
+      }
+      mostraZona(melhor);
+    } else {
+      var e = clamp((p - B) / (1 - B - .04), 0, 1);
+      var x0 = (LARG - BANDA / 2) * (1 - e);
+      banda(x0, LARG - x0);
+      if (e > .6) mostraZona(99);
+    }
+  }
+
+  /* ===================== WOW 3: simulador ===================== */
+  var est = { f: 2, r: 1 };
+  var simSvg = $("#simSvg"), simSobe = $$("#simSvg .sobe"), modelos = $$("#simSvg .modelo"), estado = $("#estado"), medidor = $("#medidor"), segs = $$("#medidor i");
+  var simWa = $("#simWa"), PASSO = 5;   // 4 dentes ~ a foto do Fusca rebaixado
+  function carroAtual(){ var c = $("input[name=carro]:checked"); return c ? c.value : "Fusca"; }
+  function msgSim(){
+    var c = carroAtual(), c2 = ((c === "Fusca" || c === "SP2") ? "um " : "uma ") + c;
+    if (est.f === 0 && est.r === 0) return "Oi! Vim pelo site da Katraka. Tenho " + c2 + " e quero revisar a suspensão.";
+    return "Oi! Vim pelo site da Katraka. Tenho " + c2 + " e quero rebaixar. No simulador ficou: dianteira com " + est.f + (est.f === 1 ? " dente" : " dentes") + " na katraka e traseira com " + est.r + (est.r === 1 ? " estria" : " estrias") + " no facão. Dá pra avaliar?";
+  }
+  function atualizaSim(){
+    var fd = est.f * PASSO, rd = est.r * PASSO;
+    var meio = (fd + rd) / 2, ang = Math.atan((rd - fd) / 520) * 180 / Math.PI;
+    var atual = carroAtual();
+    modelos.forEach(function(m){ m.classList.toggle("on", m.getAttribute("data-carro") === atual); });
+    simSobe.forEach(function(g){ var yc = g.parentNode.getAttribute("data-yc") || "331"; g.style.transform = "rotate(" + ang.toFixed(3) + "deg) translateY(" + meio.toFixed(2) + "px)"; g.style.transformOrigin = "492px " + yc + "px"; });
+    simSvg.style.setProperty("--arco-f", fd > 22 ? "#C8402A" : "transparent");
+    simSvg.style.setProperty("--arco-r", rd > 22 ? "#C8402A" : "transparent");
+    var tot = est.f + est.r, txt;
+    medidor.classList.toggle("limite", tot >= 6 && tot <= 8);
+    medidor.classList.toggle("passou", tot >= 9);
+    segs.forEach(function(s, k){ s.classList.toggle("on", k < tot); });
+    if (tot === 0) txt = "Altura original. É daqui que a gente parte.";
+    else if (Math.abs(est.f - est.r) >= 4) txt = "Muito desnivelado. A gente acerta frente e traseira juntas pra o carro não ficar torto.";
+    else if (tot <= 5) txt = "No ponto: mais baixo ou mais alto, e ainda anda macio.";
+    else if (tot <= 8) txt = "No limite. Daqui pra baixo, os amortecedores precisam estar em dia.";
+    else txt = "Passou do limite. Pra rodar macio assim, vai precisar mexer em mais peças da suspensão.";
+    estado.textContent = txt;
+    simWa.href = wa(msgSim());
+  }
+  function dial(id, chave, unid1, unidN){
+    var box = $(id), roda = $(".dial-roda", box), val = $(".val", box), N_D = 16, GRAU = 360 / N_D, MAX = 6;
+    roda.innerHTML = '<svg viewBox="-80 -80 160 160" width="100%" height="100%" aria-hidden="true">' +
+      '<g class="cr"><path class="dentes" d="' + engrenagem(0, 0, 66, 52, N_D) + '"/><circle class="miolo-d" r="40"/><line class="marca-d" x1="0" y1="-30" x2="0" y2="-14"/><circle r="7" fill="#231912"/></g>' +
+      '<path class="ling" d="M44 -58L14 -64L20 -50Z"/><circle cx="44" cy="-58" r="5" fill="#231912"/></svg>';
+    var cr = $(".cr", roda);
+    function poe(v, comSom){
+      v = clamp(v, 0, MAX);
+      var mudou = v !== est[chave];
+      est[chave] = v;
+      cr.style.transform = "rotate(" + (v * GRAU) + "deg)";
+      val.textContent = v + " " + (v === 1 ? unid1 : unidN);
+      roda.setAttribute("aria-valuenow", v);
+      roda.setAttribute("aria-valuetext", v + " " + (v === 1 ? unid1 : unidN));
+      if (mudou){
+        atualizaSim();
+        if (comSom){ clique(v === MAX || v === 0); roda.classList.add("tec"); setTimeout(function(){ roda.classList.remove("tec"); }, 90); }
+      }
+    }
+    poe(est[chave], false);
+    $$(".mais", box).forEach(function(b){ b.addEventListener("click", function(){ poe(est[chave] + Number(b.getAttribute("data-passo")), true); }); });
+    roda.addEventListener("keydown", function(e){
+      var k = e.key;
+      if (k === "ArrowUp" || k === "ArrowRight"){ e.preventDefault(); poe(est[chave] + 1, true); }
+      else if (k === "ArrowDown" || k === "ArrowLeft"){ e.preventDefault(); poe(est[chave] - 1, true); }
+      else if (k === "Home"){ e.preventDefault(); poe(0, true); }
+      else if (k === "End"){ e.preventDefault(); poe(MAX, true); }
+    });
+    var arrasta = null;
+    function angulo(e){ var b = roda.getBoundingClientRect(); return Math.atan2(e.clientY - (b.top + b.height / 2), e.clientX - (b.left + b.width / 2)) * 180 / Math.PI; }
+    roda.addEventListener("pointerdown", function(e){
+      arrasta = { a: angulo(e), soma: 0, v0: est[chave] };
+      try { roda.setPointerCapture(e.pointerId); } catch(_){}
+      e.preventDefault();
+    });
+    roda.addEventListener("pointermove", function(e){
+      if (!arrasta) return;
+      var a = angulo(e), d = a - arrasta.a;
+      if (d > 180) d -= 360; if (d < -180) d += 360;
+      arrasta.soma += d; arrasta.a = a;
+      poe(arrasta.v0 + Math.round(arrasta.soma / GRAU), true);
+    });
+    var solta = function(){ arrasta = null; };
+    roda.addEventListener("pointerup", solta); roda.addEventListener("pointercancel", solta);
+  }
+  dial("#dialF", "f", "dente", "dentes");
+  dial("#dialR", "r", "estria", "estrias");
+  $$("input[name=carro]").forEach(function(r){ r.addEventListener("change", atualizaSim); });
+  simWa.addEventListener("click", function(){ conta("wa-simulador"); });
+  var somBtn = $("#somBtn");
+  somBtn.addEventListener("click", function(){ som = !som; somBtn.setAttribute("aria-pressed", som); somBtn.textContent = "Som do clique: " + (som ? "ligado" : "desligado"); });
+  atualizaSim();
+
+  /* ---------- serviços (lista que vira mensagem pronta) ---------- */
+  var SERV = [
+    ["Suspensão dianteira", "Revisão e reparo da suspensão da frente."],
+    ["Suspensão traseira", "Revisão e reparo da suspensão de trás."],
+    ["Freio", "Revisão e reparo do freio."],
+    ["Direção", "Revisão da direção e dos terminais."],
+    ["Katraka", "Regula a altura da frente pelos dentes da katraka."],
+    ["Mangas deslocadas", "Pra baixar a frente do carro."],
+    ["Encurtamento do quadro", "Pra não raspar os pneus nos para-lamas."],
+    ["Furação de discos e tambores", "Pra você usar outras rodas no seu VW a ar."],
+    ["Alinhamento de direção", "Carro reto e sem desgaste de pneu."]
+  ];
+  var ul = $("#listaServ"), sel = $("#osServ");
+  var ic = '<svg width="24" height="24" viewBox="-12 -12 24 24" aria-hidden="true"><path d="' + engrenagem(0, 0, 11, 8, 8) + '" fill="#231912"/><circle r="4" fill="#EFE6D3"/></svg>';
+  SERV.forEach(function(s){
+    var li = document.createElement("li"), a = document.createElement("a");
+    a.href = wa("Oi! Vim pelo site da Katraka e queria um orçamento de " + s[0].toLowerCase() + ".");
+    a.target = "_blank"; a.rel = "noopener";
+    a.innerHTML = ic;
+    var b = document.createElement("b"); b.textContent = s[0];
+    var sp = document.createElement("span"); sp.textContent = s[1];
+    a.appendChild(b); a.appendChild(sp);
+    a.addEventListener("click", function(){ conta("wa-servico"); });
+    li.appendChild(a); ul.appendChild(li);
+    var o = document.createElement("option"); o.textContent = s[0]; sel.appendChild(o);
+  });
+  var o2 = document.createElement("option"); o2.textContent = "Não sei, quero uma avaliação"; sel.appendChild(o2);
+
+  /* ---------- avaliações (só aparecem se tiver as reais) ---------- */
+  if (AVALIACOES.length){
+    var depo = $("#depo");
+    AVALIACOES.slice(0, 3).forEach(function(av){
+      var bq = document.createElement("blockquote"), p = document.createElement("p"), ci = document.createElement("cite");
+      p.textContent = "“" + av.texto + "”"; ci.textContent = av.nome + (av.quando ? ", " + av.quando : "") + " no Google";
+      bq.appendChild(p); bq.appendChild(ci); depo.appendChild(bq);
+    });
+    depo.hidden = false;
+  }
+
+  /* ---------- trabalhos: toque na foto abre ela inteira ---------- */
+  var galeria = $("#galeria"), galImg = $("#galImg"), galNome = $("#galNome"), botoesFoto = $$("#trabGrade button"), galAtual = 0;
+  function abreFoto(i){
+    galAtual = (i + botoesFoto.length) % botoesFoto.length;
+    var b = botoesFoto[galAtual];
+    galImg.src = b.getAttribute("data-foto"); galImg.alt = $("img", b).alt; galNome.textContent = b.getAttribute("data-nome");
+    if (galeria.showModal && !galeria.open) galeria.showModal(); else if (!galeria.showModal) window.open(b.getAttribute("data-foto"), "_blank");
+  }
+  if (galeria){
+    botoesFoto.forEach(function(b, i){ b.addEventListener("click", function(){ abreFoto(i); conta("foto-trabalho"); }); });
+    $("#galFecha").addEventListener("click", function(){ galeria.close(); });
+    $("#galAnt").addEventListener("click", function(){ abreFoto(galAtual - 1); });
+    $("#galProx").addEventListener("click", function(){ abreFoto(galAtual + 1); });
+    galeria.addEventListener("click", function(e){ if (e.target === galeria) galeria.close(); });
+    galeria.addEventListener("keydown", function(e){ if (e.key === "ArrowLeft") abreFoto(galAtual - 1); if (e.key === "ArrowRight") abreFoto(galAtual + 1); });
+  }
+
+  /* ---------- vídeo da catraca: trecho mudo em repetição; ao tocar, o vídeo completo com som ---------- */
+  var tvPlay = $("#tvPlay"), tvVideo = $("#tvVideo");
+  if (tvPlay && tvVideo){
+    if (!embed && !reduz){
+      if ("IntersectionObserver" in window){
+        new IntersectionObserver(function(es){ es.forEach(function(e){
+          if (tvPlay.classList.contains("tocando")) return;
+          if (e.isIntersecting){ var pr = tvVideo.play(); if (pr && pr.catch) pr.catch(function(){}); } else tvVideo.pause();
+        }); }, { threshold: .3 }).observe(tvVideo);
+      }
+    }
+    tvPlay.addEventListener("click", function(){
+      var completo = tvPlay.getAttribute("data-completo");
+      if (!completo){ window.open("https://www.instagram.com/katrakavw/", "_blank", "noopener"); return; }
+      if (tvPlay.classList.contains("tocando")) return;
+      tvPlay.classList.add("tocando");
+      tvVideo.loop = false; tvVideo.muted = false; tvVideo.controls = true;
+      tvVideo.src = completo; tvVideo.currentTime = 0;
+      var pr = tvVideo.play(); if (pr && pr.catch) pr.catch(function(){});
+      conta("video-completo");
+    });
+  }
+
+  /* ---------- ordem de serviço ---------- */
+  var hoje = new Date();
+  $("#osData").textContent = ("0" + hoje.getDate()).slice(-2) + "/" + ("0" + (hoje.getMonth() + 1)).slice(-2) + "/" + hoje.getFullYear();
+  var form = $("#osForm");
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var nome = $("#osNome").value.trim();
+    if (!nome){ $("#osNome").focus(); $("#osNome").setAttribute("aria-invalid", "true"); $("#osNome").placeholder = "Escreve seu nome aqui"; return; }
+    $("#osNome").removeAttribute("aria-invalid");
+    var ano = $("#osAno").value.trim(), texto = $("#osTexto").value.trim();
+    var m = "Oi! Vim pelo site da Katraka. Ordem de serviço:\n" +
+      "Nome: " + nome + "\n" +
+      "Carro: " + $("#osCarro").value + (ano ? " " + ano : "") + "\n" +
+      "Serviço: " + $("#osServ").value +
+      (texto ? "\nO que está acontecendo: " + texto : "");
+    var url = wa(m);
+    $("#osLink").href = url;
+    form.classList.add("enviada");
+    conta("wa-ordem");
+    var w = null; try { w = window.open(url, "_blank"); } catch(_){}
+    if (w){ try { w.opener = null; } catch(_){} }
+    else if (!dentro){ setTimeout(function(){ location.href = url; }, 600); }
+  });
+
+  /* ---------- topo, botão flutuante e rolagem ---------- */
+  var topo = $("#topo"), zap = $("#zap");
+  var pendente = false;
+  function quadro(){
+    pendente = false;
+    var y = window.scrollY || window.pageYOffset;
+    topo.classList.toggle("solido", y > 30);
+    zap.classList.toggle("ve", y > 280);
+    heroRola();
+    farolRola();
+    rxRola();
+  }
+  function pede(){ if (!pendente){ pendente = true; requestAnimationFrame(quadro); } }
+  window.addEventListener("scroll", pede, { passive: true });
+  setInterval(pede, 300);   // garantia
+  var largura = window.innerWidth;
+  window.addEventListener("resize", function(){
+    if (window.innerWidth === largura) return;   // ignora a barra do navegador do celular
+    largura = window.innerWidth; altTela = window.innerHeight; pede();
+  });
+  quadro();
+
+  if (!embed && !dentro && !toque && !reduz && window.Lenis){
+    var lenis = new Lenis({ lerp: .1 });
+    lenis.on("scroll", pede);
+    (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+    $$('a[href^="#"]').forEach(function(a){
+      a.addEventListener("click", function(e){
+        var alvo = document.getElementById(a.getAttribute("href").slice(1));
+        if (!alvo) return; e.preventDefault(); lenis.scrollTo(alvo, { offset: a.getAttribute("href") === "#inicio" ? 0 : -10, duration: 1.4 });
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
