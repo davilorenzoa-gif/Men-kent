@@ -41,6 +41,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - extras: porta de enrolar de aço que sobe com a rolagem e revela a foto do caminhão; vídeo revelado por uma "serra" amarela; frase que acende palavra por palavra; minigame "Corte na medida".
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
 - **Fornalha** (demo de padaria, `demos/fornalha/`): pincelada que revela o pão + vapor subindo; "a noite do pão" (relógio 22h→6h, céu amanhece e a massa vira pão pela rolagem); "Monte sua cesta" com cartas pra arrastar (direita quero, esquerda passa) e comanda pro WhatsApp. Extras: painel de fornadas com letras que viram e selo giratório.
+- **Faixa Vermelha** (demo de garagem de seminovos, `sites/faixa-vermelha`):
+  - portão de aço que sobe e fluorescentes que piscam até acender;
+  - vitrine com placa Mercosul trocando letra por letra e odômetro de tambor;
+  - alavanca de câmbio em H que monta a proposta pro WhatsApp.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
@@ -100,6 +104,16 @@ Os três usam GSAP + Lenis, igual a gente. Os dois que usam 3D (Three.js) são p
   - lista de trabalhos com data, título e tags.
   - Pra GuDev: logo do cliente "se desenhando" em SVG (`stroke-dasharray`) como intro curta (até 1,5 s, pular no `embed`).
 - **Não copiar:** tela "ativar som?", intro que trava a rolagem e 3D pesado. Comércio local é acessado no 4G pelo celular.
+- motionsites.ai: composição de hero e acabamento. Olhar os previews é grátis. Copiar o prompt é pago (a partir de US$ 49), então não vale assinar.
+- cta.gallery: grátis. Botões e chamadas finais (filtros "Call-to-Buy", "Form", "Button"). Tem comida (pizza-amici, eatsnackish). Usar pra melhorar o bloco "Pedir pelo WhatsApp" e o fechamento da página.
+- unsection.com: grátis com cadastro. Seções separadas por tipo (Hero, Testimonials, Pricing, FAQs, Contact, Footer, Navbar). Usar quando travar numa seção específica. É quase tudo SaaS, então pegar a estrutura, não o visual.
+- 60fps.design: grátis pra explorar (o PRO custa US$ 15/mês e não precisa). Microanimações de apps: filtros "Effects" (Parallax, Blur, Morph, Spring) e "Elements" (Button, Toast, Tabs, Bottom Sheet). Boa fonte de ideia de WOW pequeno pro celular, mas recriar em JS puro.
+- naocodei.com/free-code: animações em JS puro (cartas empilhando, galeria horizontal, máscara, texto que preenche, cursor magnético).
+- codepen.io/collection/BNMEYN: efeitos de rolagem limpos.
+- 21st.dev: componentes. Eles são em React, então reescreva em HTML/JS puro.
+- gsap.com: o GSAP ficou 100% grátis em 2025, depois da compra pelo Webflow, incluindo os plugins que eram pagos. Os principais são SplitText (texto que entra letra por letra ou linha por linha), MorphSVG (uma forma vira outra) e ScrollSmoother. Estão no cdnjs na versão 3.13.0. Se usar plugin, carregar o `gsap` e o `ScrollTrigger` da mesma 3.13.0, nunca misturando com a 3.12.5. A vitrine (gsap.com/showcase) é boa fonte de ideia de WOW de rolagem.
+- motion.dev: grátis, funciona em HTML puro (`animate`, `scroll`, `inView`) e é bem leve. Não precisa, porque o GSAP já cobre tudo. Não colocar as duas bibliotecas no mesmo site. Serve pra olhar exemplos de animação de blocos.
+- threejs.org: 3D grátis. Pesa e esquenta celular fraco. Comida nunca em 3D (ver abaixo). Só vale pra um fundo abstrato leve, e mesmo assim desligado no celular. Na prática, quase nunca.
 
 ## Tipografia e cor
 - Sempre um par com personalidade, que combine com o negócio. Exemplos:
