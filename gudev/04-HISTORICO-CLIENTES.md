@@ -21,9 +21,10 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Dados reais (print do Google que o Davi mandou):** 4,5 no Google, "1,4 mil" avaliações, R$ 20–100 por pessoa, loja de açaí.
   - Endereço: Av. Jurema, 436, Parque Jurema, Guarulhos-SP, 07244-000.
   - Instagram @curtapecai, Facebook /curtapecai. Bio (pela busca): açaí, cupuaçu, sorvetes, tapioca e lanches; delivery e retirada no local.
-  - Tem WhatsApp no Google, mas **o número ainda não foi pego**. Horário também não.
+  - Horário ainda não foi pego.
   - 2ª loja confirmada pelo Davi: Parque das Nações (Rua Campo Maior, 357, pelo registro), com iFood próprio.
-  - Telefone citado na busca (Facebook): (11) 96465-0080, **não confirmado**.
+  - WhatsApp: (11) 96465-0080 (confirmado pelo Davi em 10/11).
+  - Logo: círculo roxo, palmeira verde-clara com contorno branco, "Pé" roxo-escuro com bagas brancas e "ÇAÍ" magenta (`sites/pecai/img/logo-pecai.png`).
 - **Site:** `sites/pecai/` (veja o README). Antes era tratada como "marca fictícia" de demo: é loja real.
 - **Andamento:** site pronto pra mostrar. Fotos e vídeos estão em 2 pastas do Drive do Davi, que o ambiente não conseguiu abrir.
 

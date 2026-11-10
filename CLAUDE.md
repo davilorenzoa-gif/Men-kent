@@ -27,7 +27,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - WhatsApp comercial (Davi): (11) 96465-0141. Venda 100% pelo WhatsApp.
 - Hospedagem no Netlify da GuDev (`proposta-<nome>.netlify.app` → `<nome>.netlify.app`); domínio no nome do cliente no registro.br.
 - Prospecção: até 20 mensagens novas/dia por pessoa, blocos de 5 a cada ~30 min. Nunca disparo em massa. 1º contato manda vídeo de 15s, não link.
-- 1ª venda combinada: **Katraka**, R$ 600 em 2x (10/11/2026). Falta confirmar o pagamento; até lá, seção de cases vazia. Outro lead quente: ENTRElinhas (avó do Davi). Péçaí (açaí real em Guarulhos, `sites/pecai`) tem site pronto; falta o WhatsApp e as fotos.
+- 1ª venda combinada: **Katraka**, R$ 600 em 2x (10/11/2026). Falta confirmar o pagamento; até lá, seção de cases vazia. Outro lead quente: ENTRElinhas (avó do Davi). Péçaí (açaí real em Guarulhos, `sites/pecai`) tem site pronto com logo e WhatsApp; faltam fotos e avaliações com nome.
 - Demos e conceitos, **nunca case**: Prumo, Fornalha, Faixa Vermelha, Lustro, Órbita, Vértice, 911, DOZE, Meridiano, Skyline, APEX, Espelho, Basalto, Moenda, Sulco. Lista em `04`.
 - `sites/glassy-dashboard` (painel em React/Tailwind): base se algum cliente pedir painel/sistema. É produto novo: preço e prazo a definir antes de oferecer.
 - Vídeo: os de 15s e os Reels saem de prompts pro Google Flow (Veo) + montagem no CapCut, ou edição feita aqui com ffmpeg. Claude não abre o CapCut. Lições em `05` e `08`.

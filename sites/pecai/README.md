@@ -13,13 +13,13 @@ Loja de açaí **real**: Av. Jurema, 436, Parque Jurema, Guarulhos-SP, 07244-000
 3. **Colha seu pedido:** cada item é uma baga do cacho; tocando, ela cai no paneiro. Entrega ou retirada, endereço e nome viram a mensagem pronta.
 
 ## Falta confirmar / trocar antes de mandar
-- **WhatsApp:** o número não foi pego. Pôr em `var WHATS = ''` no fim do `index.html` (só números com DDD). Enquanto estiver vazio, o botão vira "Pedir pelo Instagram": copia a mensagem e abre o direct do @curtapecai.
+- **WhatsApp:** (11) 96465-0080, confirmado pelo Davi (10/11). Está em `var WHATS` no fim do `index.html`; o pedido abre `wa.me/5511964650080` com a mensagem pronta.
+- **Logo:** `img/logo-pecai.webp/.png` (recortada do print do Instagram que o Davi mandou, 480px). Também virou favicon, ícone do celular e a imagem de compartilhamento. Pedir o arquivo original pro dono se quiser mais nítido.
 - **Fotos:** só tem 1 foto real (o copo com calda, recortada do print, baixa resolução). As fotos e vídeos estão nas 2 pastas do Drive do Davi, que o Claude não conseguiu abrir. Trocar/adicionar e pedir pro Gu passar no Real-ESRGAN.
 - **Cardápio:** só as 5 categorias da bio do Instagram (açaí, cupuaçu, sorvete, tapioca, lanche), sem preço nem tamanho. Pegar no iFood/Instagram se quiser preço. O iFood também cita "caldos".
 - **Avaliações:** a seção mostra só a nota real (4,5, 1,4 mil no Google) e o botão pro Google. Falta colocar 3 avaliações com nome: o Davi manda print da aba Avaliações do Google.
 - **Horário:** não tem. Hoje o site manda conferir no Instagram.
 - **2ª loja (Parque das Nações):** o Davi confirmou que é da Péçaí (10/11). Está no site com Rua Campo Maior, 357 (endereço do registro da empresa) e o link do iFood dessa unidade. Conferir número e CEP no Google.
-- **Telefone:** a busca citou (11) 96465-0080 no Facebook, sem confirmação. Não foi usado.
 - `reviewCount` ficou fora do schema porque "1,4 mil" é arredondado.
 - Analytics (GoatCounter) e `_headers`: o Gu põe ao subir.
 - Antes de mandar pro dono: pedir permissão pra usar as fotos.

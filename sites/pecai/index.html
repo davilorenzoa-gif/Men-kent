@@ -11,7 +11,8 @@
 <meta property="og:description" content="Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema, Guarulhos. Entrega ou retirada.">
 <meta property="og:image" content="https://proposta-pecai.netlify.app/og.jpg">
 <meta property="og:locale" content="pt_BR">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233b0f4a'/%3E%3Cpath d='M16 30V13' stroke='%23c79a63' stroke-width='3'/%3E%3Cpath d='M16 13c-3-6-9-6-12-3 4-1 8 0 12 3zm0 0c3-6 9-6 12-3-4-1-8 0-12 3zm0 0c-1-5 1-9 5-10-2 3-4 6-5 10zm0 0c1-5-1-9-5-10 2 3 4 6 5 10z' fill='%233daa48'/%3E%3Ccircle cx='14' cy='17' r='2' fill='%23a84bc4'/%3E%3Ccircle cx='18' cy='17' r='2' fill='%23a84bc4'/%3E%3Ccircle cx='16' cy='20' r='2' fill='%23a84bc4'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
@@ -22,6 +23,8 @@
   "name": "Péçaí",
   "description": "Açaí, cupuaçu, sorvetes, tapioca e lanches. Entrega e retirada no local.",
   "priceRange": "R$ 20–100",
+  "telephone": "+55 11 96465-0080",
+  "logo": "https://proposta-pecai.netlify.app/img/logo-pecai.png",
   "image": "https://proposta-pecai.netlify.app/og.jpg",
   "address": {
     "@type": "PostalAddress",
@@ -66,7 +69,7 @@ h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;t
 .topo.solido{background:rgba(42,11,51,.92);backdrop-filter:blur(8px)}
 .topo .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
 .marca{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:"Bricolage Grotesque";font-weight:800;font-size:24px;min-height:44px}
-.marca svg{width:30px;height:30px}
+.marca img{width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.85)}
 .topo nav{display:flex;gap:6px;align-items:center}
 .topo nav a.l{text-decoration:none;font-weight:600;padding:10px 12px;border-radius:999px;min-height:44px;display:inline-flex;align-items:center}
 .topo nav a.l:hover{background:rgba(255,255,255,.1)}
@@ -90,10 +93,10 @@ h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;t
 .cena .foto small{position:absolute;right:6px;bottom:6px;font-size:10px;background:rgba(0,0,0,.55);padding:2px 6px;border-radius:6px}
 .tronco{fill:none;stroke:#c79a63;stroke-width:9;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420}
 .aneis{fill:none;stroke:#9c7447;stroke-width:2;opacity:0}
-.folha{fill:var(--palmeira);transform-box:fill-box;transform-origin:0% 60%;transform:scale(0)}
-.folha.esc{fill:#2b8a37}
-.baga{fill:var(--polpa-clara);transform-box:fill-box;transform-origin:50% 0;transform:scale(0)}
-.baga.esc{fill:#5e1f73}
+.folha{fill:#9cc94a;stroke:#fff;stroke-width:2.5;stroke-linejoin:round;transform-box:fill-box;transform-origin:0% 60%;transform:scale(0)}
+.folha.esc{fill:#709d36}
+.baga{fill:#fff;stroke:#5e1f73;stroke-width:1.5;transform-box:fill-box;transform-origin:50% 0;transform:scale(0)}
+.baga.esc{fill:#f1e4f4}
 .cai{fill:#8d36a8;opacity:0}
 .vai .tronco{animation:tronco 1s cubic-bezier(.5,0,.2,1) forwards}
 .vai .aneis{animation:aparece .4s .8s forwards}
@@ -106,10 +109,13 @@ h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;t
 @keyframes folha{to{transform:scale(1)}}
 @keyframes cai{0%{opacity:1;transform:translateY(0)}85%{opacity:1}100%{opacity:0;transform:translateY(var(--y,128px))}}
 @keyframes pulo{0%,100%{transform:none}40%{transform:translateY(5px) scale(1.02,.97)}}
+.logo-abre{width:112px;height:112px;border-radius:50%;box-shadow:0 0 0 3px #fff,0 20px 40px -14px rgba(0,0,0,.6);margin-bottom:22px}
+@media (max-width:860px){.logo-abre{display:none}}
 .texto-abre .selo{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);padding:8px 14px;border-radius:999px;font-weight:600;font-size:15px;margin-bottom:20px}
 .selo .estrela{color:#ffcf4a}
 .texto-abre h1{font-size:clamp(64px,13vw,150px);font-weight:800;color:#fff}
-.texto-abre h1 .pe{color:var(--palmeira)}
+.texto-abre h1 .pe{color:#fff}
+.texto-abre h1 .sufixo{color:#e070d3}
 .texto-abre .frase{font-family:"Bricolage Grotesque";font-weight:600;font-size:clamp(24px,3.4vw,36px);margin:6px 0 18px;color:#e9d3f2}
 .texto-abre p.sub{max-width:44ch;color:#e6d6ec}
 .acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
@@ -258,7 +264,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
 <header class="topo" id="topo">
   <div class="wrap">
     <a class="marca" href="#inicio" aria-label="Péçaí, voltar ao topo">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 30V13" stroke="#c79a63" stroke-width="3"/><path d="M16 13c-3-6-9-6-12-3 4-1 8 0 12 3zm0 0c3-6 9-6 12-3-4-1-8 0-12 3zm0 0c-1-5 1-9 5-10-2 3-4 6-5 10zm0 0c1-5-1-9-5-10 2 3 4 6 5 10z" fill="#3daa48"/><circle cx="14" cy="17" r="2" fill="#a84bc4"/><circle cx="18" cy="17" r="2" fill="#a84bc4"/><circle cx="16" cy="20" r="2" fill="#a84bc4"/></svg>
+      <img src="img/logo-pecai.webp" width="40" height="40" alt="">
       Péçaí
     </a>
     <nav aria-label="Principal">
@@ -274,8 +280,9 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
   <section class="abre" aria-labelledby="titulo">
     <div class="wrap">
       <div class="texto-abre">
+        <img class="logo-abre entra" src="img/logo-pecai.webp" width="112" height="112" alt="Logo da Péçaí">
         <span class="selo entra"><span class="estrela" aria-hidden="true">★</span> 4,5 no Google, 1,4 mil avaliações</span>
-        <h1 id="titulo" class="entra d2"><span class="pe">Pé</span>çaí</h1>
+        <h1 id="titulo" class="entra d2"><span class="pe">Pé</span><span class="sufixo">çaí</span></h1>
         <p class="frase entra d2">Do pé direto pro copo.</p>
         <p class="sub entra d3">Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema e no Parque das Nações, em Guarulhos. Peça pra entregar ou passe pra retirar.</p>
         <div class="acoes entra d3">
@@ -423,8 +430,8 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
               <p class="previa-rot">A mensagem que vai sair:</p>
               <p class="previa" id="previa"></p>
             </div>
-            <button class="btn btn-pedir js-enviar" type="submit">Pedir pelo Instagram</button>
-            <p class="aviso" id="aviso">Os valores e o tempo de entrega a Péçaí confirma na conversa.</p>
+            <button class="btn btn-pedir js-enviar" type="submit">Pedir pelo WhatsApp</button>
+            <p class="aviso" id="aviso">Abre o WhatsApp da Péçaí com a mensagem pronta. Valores e tempo de entrega eles confirmam na conversa.</p>
           </form>
           <div class="obrigado" id="obrigado" role="status" tabindex="-1">
             <h3>Pedido colhido.</h3>
@@ -473,6 +480,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
           </article>
         </div>
         <div class="acoes">
+          <a class="btn btn-pedir" href="https://wa.me/5511964650080" target="_blank" rel="noopener">WhatsApp (11) 96465-0080</a>
           <a class="btn btn-linha" href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">@curtapecai</a>
         </div>
       </div>
@@ -497,9 +505,10 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
 
 <footer>
   <div class="wrap">
-    <a class="marca" href="#inicio" aria-label="Péçaí, voltar ao topo">Péçaí</a>
+    <a class="marca" href="#inicio" aria-label="Péçaí, voltar ao topo"><img src="img/logo-pecai.webp" width="72" height="72" loading="lazy" alt="Logo da Péçaí" style="width:72px;height:72px"></a>
     <p>Açaí, sorvetes e lanches em Guarulhos, SP.<br>Av. Jurema, 436, Parque Jurema.<br>Rua Campo Maior, 357, Parque das Nações.</p>
     <div class="linha">
+      <a href="https://wa.me/5511964650080" target="_blank" rel="noopener">WhatsApp (11) 96465-0080</a>
       <a href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">Instagram</a>
       <a href="https://www.facebook.com/curtapecai" target="_blank" rel="noopener">Facebook</a>
       <a href="privacidade.html">Privacidade</a>
@@ -515,7 +524,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
 (function(){
   /* Contato: quando a Péçaí confirmar o WhatsApp, coloque aqui só os números com DDD (ex.: '11999999999').
      Com o número vazio, o pedido vai pelo direct do Instagram (a mensagem é copiada antes). */
-  var WHATS = '';
+  var WHATS = '11964650080';
   var INSTA = 'curtapecai';
 
   var embed = /[?&]embed\b/.test(location.search);
