@@ -113,6 +113,16 @@ Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS 
   - Só serve pra brincadeira, quiz ou campanha.
 - Cuidados que já estão no código:
   - Esperar a fonte carregar antes de desenhar o texto em partículas.
+  - (continua abaixo)
+
+### Efeitos do Mestre das Motos (10/11/2026, código em `sites/mestre-das-motos/index.html`, JS puro)
+Já usados nesse cliente: pra outro, variar a ideia, não colar igual.
+- **Filme com frases (o Davi pediu e gostou da ideia):** seção alta (`560svh`) com palco `sticky`; vídeo de fundo em loop (não preso na rolagem, então nunca parece "travado"); 5 frases gigantes que trocam pela rolagem. Uma fonte de progresso só, folga de 8% perto da troca, uma troca a cada 380 ms, palavras entram por tempo (CSS), a frase que sai sobe e some com `opacity`. Barra vermelha de progresso e zoom leve no vídeo seguem a rolagem direto. Serve pra qualquer negócio com vídeo bom: estética, academia, restaurante.
+- **Holofote em ponto da foto (mapa do produto):** `@property --x/--y/--r` + `radial-gradient` escurecendo o resto da foto, anel SVG tracejado girando e etiqueta. Cada cartão tem `data-x/data-y` em % da foto. No celular a foto fica `sticky` no topo e o cartão que passa pelo meio da tela acende sozinho (sem hover). Serve pra carro, cozinha, salão (onde cada serviço acontece).
+- **Painel que monta o pedido:** botões que "acendem" (luz-espia com piscada em `steps`), visor LCD com o que a pessoa digita e progresso "x de 3". Formato bom pra qualquer "diga o problema e mande no WhatsApp".
+- **Abertura de conta-giros:** agulha em SVG vai ao máximo e volta, segmentos acendem; só na 1ª visita (`sessionStorage`), toque pula, garantia de 4,5 s.
+- **Revelar foto com cortina:** `::after` da cor do fundo que encolhe (`scaleY`), nunca `clip-path` na própria figura (ver `05`).
+- Cuidados do bloco anterior que continuam valendo:
   - Não rodar com tela de tamanho 0.
   - Reduzir as partículas com `prefers-reduced-motion`.
   - O botão que foge desvia do título e do outro botão.
