@@ -14,6 +14,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `gudev/05-LICOES-E-BUGS.md` — erros que já aconteceram
 - `gudev/07-REFERENCIAS-DESIGN.md` — 330 referências por nicho: padrões que funcionam, o que é template, ideias de WOW novas e onde dá pra buscar
 - `gudev/06-REFERENCIA-ORIGINKIT.md` — biblioteca de efeitos originkit.dev: o que é grátis, licença, como converter pra HTML puro
+- `gudev/06-CANVA-TRUQUES.md` — Canva: transições Combinar/Fluxo, efeito vidro, o que o conector faz vs. clique manual
 - `gudev/exemplos/*.html` — sites reais (Açaí Happy, Chersoni, Dellart): nível mínimo de qualidade
 
 ## Resumo rápido
