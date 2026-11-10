@@ -54,7 +54,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - Já saiu no Canal da Peça (como rebaixar um Fusca) e no blog Acelerada.
 - **Andamento:** o Davi acha que fecha. Prévia feita em 06/11 em `sites/katraka/` (ver o README de lá com o que confirmar).
 - **Pedidos dele (09/11):** quer poder mostrar os trabalhos todo dia → seção ligada no Instagram dele (Behold), sem custo extra por ser prévia. Não gostou do verde → site trocado pra laranja queimado. Prints estáticos enviados pra ele ler.
-- **Preço (10/11):** fechado em **R$ 600, em 3x** (não é o preço de lançamento de R$ 297). 1ª parcela quando o site sobe no Netlify, 2ª quando o domínio estiver ligado.
+- **Preço (10/11):** fechado em **R$ 600, em 3 meses de R$ 200** (não é o preço de lançamento de R$ 297). Neste mês: R$ 100 quando o site sobe no Netlify e R$ 100 quando o domínio estiver ligado; depois R$ 200 em cada um dos 2 meses seguintes.
 - **Domínio:** já existe `katraka.com.br`; confirmar se é dele antes de registrar outro.
 - **Site:** Fusca desenhado em SVG que baixa dente por dente em cima do nome; interruptor do farol com foto; raio-x do Fusca; simulador "Gire a katraka"; ordem de serviço com carimbo. Fotos são conceito (do Davi), marcadas como ilustrativas.
 

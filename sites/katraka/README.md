@@ -71,4 +71,4 @@ Abas Fusca, Kombi, Variant, Brasília e SP2 no "Gire a katraka". Fotos que o Dav
 - Avaliações: 490 no Google (informado pelo Alexandre). Nota no site: 4,9 (definido pelo Davi; confirmar com o Alexandre o valor exato no Google antes de publicar).
 
 - 10/11: o Fusca verde (foto ilustrativa) do "quem somos" foi trocado pelo vídeo do Fusca branco do Instagram dele (`img/fusca-oficina.mp4`, mudo, em repetição). A placa aparece no vídeo; confirmar se tudo bem.
-- Pagamento combinado: R$ 600 em 3x de R$ 200 (1ª quando subir no Netlify, 2ª quando o domínio estiver ligado, 3ª um mês depois; confirmar datas com o Davi).
+- Pagamento combinado: R$ 600 em 3 meses (R$ 200 por mês). Neste mês: R$ 100 quando o site subir no Netlify e R$ 100 quando o domínio estiver ligado. Depois, R$ 200 no 2º mês e R$ 200 no 3º.
