@@ -16,6 +16,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `gudev/06-REFERENCIA-ORIGINKIT.md` — biblioteca de efeitos originkit.dev: o que é grátis, licença, como converter pra HTML puro
 - `gudev/06-CANVA-TRUQUES.md` — Canva: transições Combinar/Fluxo, efeito vidro, o que o conector faz vs. clique manual
 - `gudev/06-MARKETING-E-VIDEOS.md` — vídeos de referência, padrões de Reels e banco de ideias pro Instagram da GuDev
+- `gudev/06-SISTEMA-DE-DESIGN.md` — processo (Impeccable), skills instaladas, ordem de autoridade, política de efeitos, QA, Figma
 - `gudev/exemplos/*.html` — sites reais (Açaí Happy, Chersoni, Dellart): nível mínimo de qualidade
 - `gudev/site/` — o site da própria GuDev (ver abaixo)
 
@@ -48,6 +49,14 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 1. Pegar nome + cidade e os dados disponíveis (fotos, Instagram, cardápio, Maps).
 2. Propor em 3 linhas a direção (paleta, fontes, 3 WOWs) e construir: um único HTML seguindo `gudev/03-PADRAO-DE-SITE.md`.
 3. No fim, listar o que precisa confirmar e lembrar: "manda o HTML pro Gu finalizar, gerar a proposta e subir no Netlify". O link pro cliente é sempre o do Netlify.
+
+## Design e engenharia (todo site ou app, de cliente ou não)
+- Skills em `.claude/skills/`: `impeccable` (processo: init, document, shape, craft, extract, critique, audit, polish) e `design-taste-frontend` (anti-"cara de IA" + redesign). As clássicas (`minimalist-ui`, `industrial-brutalist-ui`, `high-end-visual-design`, `gpt-taste`, `stitch-design-taste`, `design-taste-frontend-v1`) só quando o Davi chamar pelo nome.
+- Em conflito, quem manda é `gudev/03-PADRAO-DE-SITE.md` (3 WOWs, HTML único, só dados reais). Os conflitos já mapeados estão no `06`.
+- Pensar como diretor de arte + UX + front + QA. Discordar quando uma ideia piora o resultado e dizer o porquê com uma alternativa.
+- Efeito só com motivo: glassmorphism só sobre imagem e por legibilidade, gradiente só se vier da marca, animar só transform/opacity.
+- Reformulação: print do antes, preservar marca, conteúdo e funções, print do depois.
+- Entregar completo: nada de placeholder, botão sem ação ou "o resto fica igual". Antes de dizer "pronto", rodar o QA do `06` no Playwright (390/768/1024/1440, console, links) e dizer o que foi e o que não foi verificado.
 
 ## Quando pedirem ajuda com cliente
 - Mensagem pronta pra copiar, tom de WhatsApp, curta, e dizer quando mandar.

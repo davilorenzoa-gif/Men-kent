@@ -70,6 +70,11 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - vitrine de cubas em trilho com o vidro embaçado que limpa com o dedo;
   - oficina de tortas (tamanho + sabor, cobertura caindo) e o jogo "Torre da Nonna" (empilhar bolas).
 - **Órbita Seminovos** (demo de loja de carro, `sites/orbita-seminovos`): quase-acidente de moto que congela, mira trava no carro e a câmera mergulha nele; volta de 360 no carro guiada pela rolagem, com as qualidades trocando; "Gire você mesmo" com pergunta pelo WhatsApp sobre o lado que está na tela.
+- **Site da própria GuDev** (`sites/gudev`, 05/11/2026):
+  - porta de aço laranja que sobe com a rolagem e mostra a rua, com um celular subindo e pedidos chegando;
+  - conversa de WhatsApp que se escreve com a rolagem;
+  - simulador que monta um mini site com o nome, o tipo e a cor do comércio, e faz chegar uma notificação de pedido;
+  - apoio: faixa que inclina com a velocidade, preço que conta de 500 até 297, cupom que sai da impressora, porta que desce no fim.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
