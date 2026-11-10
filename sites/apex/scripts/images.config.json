@@ -1,0 +1,691 @@
+{
+  "grade": {
+    "brightness": 1,
+    "saturation": 1,
+    "contrast": 1
+  },
+  "images": {
+    "hero": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Porsche_911_GT3_RS%2C_Auto_2025%2C_Zurich_%2820251029-P1073692%29.jpg",
+      "sourceWidth": 5184,
+      "fetchWidth": 3840,
+      "page": "https://commons.wikimedia.org/wiki/File:Porsche_911_GT3_RS,_Auto_2025,_Zurich_(20251029-P1073692).jpg",
+      "title": "Porsche 911 GT3 RS, Auto 2025, Zurich (20251029-P1073692)",
+      "author": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "Matte black Porsche 911 GT3 RS seen from the front left, carbon bonnet and tall rear wing, in a dark exhibition hall",
+      "focus": "56% 46%",
+      "widths": [
+        960,
+        1440,
+        1920,
+        2560,
+        3200
+      ],
+      "grade": {
+        "brightness": 0.9,
+        "saturation": 0.72,
+        "contrast": 1.22
+      },
+      "crop": [
+        0,
+        0.115,
+        1,
+        0.885
+      ],
+      "burn": [
+        {
+          "poly": [
+            [
+              0.566,
+              0.343
+            ],
+            [
+              0.628,
+              0.334
+            ],
+            [
+              0.651,
+              0.378
+            ],
+            [
+              0.588,
+              0.389
+            ]
+          ],
+          "strength": 0.9,
+          "feather": 0.004
+        },
+        {
+          "rect": [
+            0.095,
+            0.1,
+            0.24,
+            0.295
+          ],
+          "strength": 0.9,
+          "feather": 0.012
+        },
+        {
+          "rect": [
+            0,
+            0,
+            0.05,
+            1
+          ],
+          "strength": 0.6,
+          "feather": 0.02
+        }
+      ],
+      "quality": 52
+    },
+    "car-turbo-s": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/8/86/2025_Porsche_992_Turbo_S_coupes_IAA_2025_DSC_1835.jpg",
+      "sourceWidth": 5218,
+      "fetchWidth": 1920,
+      "page": "https://commons.wikimedia.org/wiki/File:2025_Porsche_992_Turbo_S_coupes_IAA_2025_DSC_1835.jpg",
+      "title": "2025 Porsche 992 Turbo S coupes IAA 2025 DSC 1835",
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "Porsche 911 Turbo S in grey-blue on a turntable under stage lights at IAA Mobility 2025",
+      "focus": "50% 55%",
+      "widths": [
+        640,
+        960,
+        1440,
+        1920
+      ],
+      "grade": {
+        "brightness": 0.9,
+        "saturation": 0.9,
+        "contrast": 1.06
+      },
+      "crop": [
+        0,
+        0.08,
+        0.985,
+        0.86
+      ]
+    },
+    "car-amg-gt": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Mercedes-AMG_GT_63%2C_Auto_2024%2C_Zurich_%28PANA0088%29.jpg",
+      "sourceWidth": 5184,
+      "fetchWidth": 1920,
+      "page": "https://commons.wikimedia.org/wiki/File:Mercedes-AMG_GT_63,_Auto_2024,_Zurich_(PANA0088).jpg",
+      "title": "Mercedes-AMG GT 63, Auto 2024, Zurich (PANA0088)",
+      "author": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "Matte white Mercedes-AMG GT 63 seen from the rear three-quarter, tail lights lit, in a dark hall",
+      "focus": "50% 55%",
+      "widths": [
+        640,
+        960,
+        1440,
+        1920
+      ],
+      "grade": {
+        "brightness": 0.92,
+        "saturation": 0.85,
+        "contrast": 1.05
+      },
+      "crop": [
+        0,
+        0.07,
+        1,
+        0.93
+      ],
+      "burn": [
+        {
+          "rect": [
+            0.425,
+            0.07,
+            0.465,
+            0.12
+          ],
+          "strength": 0.85,
+          "feather": 0.004
+        },
+        {
+          "rect": [
+            0.52,
+            0.06,
+            0.6,
+            0.11
+          ],
+          "strength": 0.8,
+          "feather": 0.006
+        },
+        {
+          "rect": [
+            0.08,
+            0.06,
+            0.22,
+            0.09
+          ],
+          "strength": 0.8,
+          "feather": 0.006
+        }
+      ]
+    },
+    "car-750s": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/b/bd/McLaren_750S_%2853047565942%29.jpg",
+      "sourceWidth": 5763,
+      "fetchWidth": 1920,
+      "page": "https://commons.wikimedia.org/wiki/File:McLaren_750S_(53047565942).jpg",
+      "title": "McLaren 750S (53047565942)",
+      "author": "Andrew Basterfield",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "alt": "Orange McLaren 750S seen from the front left on a dark stage, headlight and carbon front splitter in focus",
+      "focus": "50% 55%",
+      "widths": [
+        640,
+        960,
+        1440,
+        1920
+      ],
+      "grade": {
+        "brightness": 0.95,
+        "saturation": 0.95,
+        "contrast": 1.05
+      },
+      "crop": [
+        0,
+        0.03,
+        1,
+        0.94
+      ],
+      "burn": [
+        {
+          "poly": [
+            [
+              0.757,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              0.4
+            ],
+            [
+              0.957,
+              0.4
+            ],
+            [
+              0.942,
+              0.33
+            ],
+            [
+              0.9,
+              0.286
+            ],
+            [
+              0.84,
+              0.268
+            ],
+            [
+              0.757,
+              0.262
+            ]
+          ],
+          "strength": 0.97,
+          "feather": 0.005
+        },
+        {
+          "rect": [
+            0,
+            0,
+            0.56,
+            0.092
+          ],
+          "strength": 0.8,
+          "feather": 0.008
+        }
+      ]
+    },
+    "car-296": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Ferrari_296_GTB_Auto_Zuerich_2024_DSC_6403.jpg",
+      "sourceWidth": 5606,
+      "fetchWidth": 1920,
+      "page": "https://commons.wikimedia.org/wiki/File:Ferrari_296_GTB_Auto_Zuerich_2024_DSC_6403.jpg",
+      "title": "Ferrari 296 GTB Auto Zuerich 2024 DSC 6403",
+      "author": "Alexander-93",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "Matte red Ferrari 296 GTB seen from the front right on a dark stand at Auto Zürich 2024",
+      "focus": "50% 55%",
+      "widths": [
+        640,
+        960,
+        1440,
+        1920
+      ],
+      "grade": {
+        "brightness": 0.95,
+        "saturation": 0.92,
+        "contrast": 1.05
+      },
+      "burn": [
+        {
+          "poly": [
+            [
+              0.585,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              0.62
+            ],
+            [
+              0.958,
+              0.56
+            ],
+            [
+              0.953,
+              0.534
+            ],
+            [
+              0.932,
+              0.47
+            ],
+            [
+              0.885,
+              0.411
+            ],
+            [
+              0.8125,
+              0.36
+            ],
+            [
+              0.742,
+              0.355
+            ],
+            [
+              0.742,
+              0.283
+            ],
+            [
+              0.698,
+              0.283
+            ],
+            [
+              0.652,
+              0.283
+            ],
+            [
+              0.578,
+              0.176
+            ]
+          ],
+          "strength": 0.88,
+          "feather": 0.006,
+          "protect": 0.5
+        },
+        {
+          "poly": [
+            [
+              0,
+              0
+            ],
+            [
+              0.14,
+              0
+            ],
+            [
+              0.14,
+              0.215
+            ],
+            [
+              0.09,
+              0.24
+            ],
+            [
+              0.05,
+              0.285
+            ],
+            [
+              0.032,
+              0.36
+            ],
+            [
+              0.028,
+              0.62
+            ],
+            [
+              0,
+              0.62
+            ]
+          ],
+          "strength": 0.78,
+          "feather": 0.006,
+          "protect": 0.5
+        }
+      ]
+    },
+    "car-m4": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/9/92/BMW_M4_%28G82%29_Mint_Green_IAA_2021_1X7A0036.jpg",
+      "sourceWidth": 4543,
+      "fetchWidth": 1920,
+      "page": "https://commons.wikimedia.org/wiki/File:BMW_M4_(G82)_Mint_Green_IAA_2021_1X7A0036.jpg",
+      "title": "BMW M4 (G82) Mint Green IAA 2021 1X7A0036",
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "BMW M4 in mint green with bronze wheels and a carbon roof, seen from above the front right, on a dark stand at IAA 2021",
+      "focus": "50% 50%",
+      "widths": [
+        640,
+        960,
+        1440,
+        1920
+      ],
+      "grade": {
+        "brightness": 0.95,
+        "saturation": 0.9,
+        "contrast": 1.05
+      }
+    },
+    "car-rs6": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Audi_RS6_Avant_C8_at_IAA_2019_IMG_0194.jpg",
+      "sourceWidth": 4211,
+      "fetchWidth": 1920,
+      "page": "https://commons.wikimedia.org/wiki/File:Audi_RS6_Avant_C8_at_IAA_2019_IMG_0194.jpg",
+      "title": "Audi RS6 Avant C8 at IAA 2019 IMG 0194",
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "Red Audi RS 6 Avant seen from the front, honeycomb grille and RS 6 plate, on a red-lit stand at IAA 2019",
+      "focus": "50% 55%",
+      "widths": [
+        640,
+        960,
+        1440,
+        1920
+      ],
+      "grade": {
+        "brightness": 0.92,
+        "saturation": 0.9,
+        "contrast": 1.06
+      },
+      "crop": [
+        0,
+        0.03,
+        0.96,
+        0.95
+      ],
+      "burn": [
+        {
+          "rect": [
+            0,
+            0,
+            0.12,
+            0.47
+          ],
+          "strength": 0.93,
+          "feather": 0.006,
+          "protect": 0.55
+        },
+        {
+          "rect": [
+            0.885,
+            0,
+            1,
+            0.31
+          ],
+          "strength": 0.85,
+          "feather": 0.008,
+          "protect": 0.55
+        },
+        {
+          "rect": [
+            0,
+            0,
+            0.115,
+            0.27
+          ],
+          "strength": 0.95,
+          "feather": 0.006
+        }
+      ]
+    },
+    "frame-1": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Interior_of_a_McLaren_750S_%28Japanese_specification%29.jpg",
+      "sourceWidth": 4032,
+      "fetchWidth": 3840,
+      "page": "https://commons.wikimedia.org/wiki/File:Interior_of_a_McLaren_750S_(Japanese_specification).jpg",
+      "title": "Interior of a McLaren 750S (Japanese specification)",
+      "author": "Aos.1905",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "McLaren 750S cockpit through the open door: carbon bucket seat with yellow piping and the steering wheel",
+      "focus": "50% 50%",
+      "widths": [
+        640,
+        960,
+        1440
+      ],
+      "grade": {
+        "brightness": 0.9,
+        "saturation": 0.92,
+        "contrast": 1.08
+      },
+      "crop": [
+        0.17,
+        0.27,
+        0.505,
+        0.73
+      ],
+      "burn": [
+        {
+          "rect": [
+            0.52,
+            0.2,
+            0.72,
+            0.52
+          ],
+          "strength": 0.78,
+          "feather": 0.01,
+          "protect": 0.45
+        },
+        {
+          "rect": [
+            0.17,
+            0.25,
+            0.47,
+            0.335
+          ],
+          "strength": 0.9,
+          "feather": 0.008
+        }
+      ]
+    },
+    "frame-2": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Ferrari_296%2C_Auto_2024%2C_Zurich_%28PANA0653%29.jpg",
+      "sourceWidth": 5184,
+      "fetchWidth": 1920,
+      "page": "https://commons.wikimedia.org/wiki/File:Ferrari_296,_Auto_2024,_Zurich_(PANA0653).jpg",
+      "title": "Ferrari 296, Auto 2024, Zurich (PANA0653)",
+      "author": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "Red Ferrari 296 GTB with a white number 5 roundel driving toward the camera at night, headlights cutting through haze",
+      "focus": "55% 55%",
+      "widths": [
+        640,
+        960,
+        1440,
+        1920
+      ],
+      "grade": {
+        "brightness": 0.96,
+        "saturation": 0.95,
+        "contrast": 1.06
+      },
+      "crop": [
+        0.02,
+        0.1,
+        0.96,
+        0.85
+      ],
+      "burn": [
+        {
+          "rect": [
+            0.66,
+            0,
+            1,
+            0.4
+          ],
+          "strength": 0.94,
+          "feather": 0.012,
+          "protect": 0.6
+        },
+        {
+          "rect": [
+            0.36,
+            0.3,
+            0.7,
+            0.445
+          ],
+          "strength": 0.72,
+          "feather": 0.01,
+          "protect": 0.6
+        }
+      ]
+    },
+    "frame-3": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Porsche_911_GT3_RS%2C_Auto_2025%2C_Zurich_%2820251029-P1073693%29.jpg",
+      "sourceWidth": 5184,
+      "fetchWidth": 3840,
+      "page": "https://commons.wikimedia.org/wiki/File:Porsche_911_GT3_RS,_Auto_2025,_Zurich_(20251029-P1073693).jpg",
+      "title": "Porsche 911 GT3 RS, Auto 2025, Zurich (20251029-P1073693)",
+      "author": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "Close-up of a forged wheel and yellow brake caliper on a matte black Porsche 911 GT3 RS, carbon vent above the arch",
+      "focus": "50% 50%",
+      "widths": [
+        640,
+        960,
+        1440
+      ],
+      "grade": {
+        "brightness": 0.88,
+        "saturation": 0.85,
+        "contrast": 1.1
+      },
+      "crop": [
+        0.2,
+        0.06,
+        0.66,
+        0.88
+      ]
+    },
+    "frame-4": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/0/03/Ferrari_296%2C_Auto_2024%2C_Zurich_%28PANA0685%29.jpg",
+      "sourceWidth": 5184,
+      "fetchWidth": 1920,
+      "page": "https://commons.wikimedia.org/wiki/File:Ferrari_296,_Auto_2024,_Zurich_(PANA0685).jpg",
+      "title": "Ferrari 296, Auto 2024, Zurich (PANA0685)",
+      "author": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "Ferrari 296 GTB from behind, tail lights glowing red against a dark hall",
+      "focus": "50% 55%",
+      "widths": [
+        640,
+        960,
+        1440
+      ],
+      "grade": {
+        "brightness": 0.98,
+        "saturation": 0.95,
+        "contrast": 1.05
+      },
+      "crop": [
+        0.04,
+        0.04,
+        0.86,
+        0.9
+      ]
+    },
+    "frame-5": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/5/51/Audi_RS6_C8_IAA_2019_JM_0588.jpg",
+      "sourceWidth": 5472,
+      "fetchWidth": 1920,
+      "page": "https://commons.wikimedia.org/wiki/File:Audi_RS6_C8_IAA_2019_JM_0588.jpg",
+      "title": "Audi RS6 C8 IAA 2019 JM 0588",
+      "author": "Johannes Maximilian",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "Audi RS 6 Avant steering wheel with perforated leather rim and the four rings on the boss",
+      "focus": "50% 50%",
+      "widths": [
+        640,
+        960,
+        1440
+      ],
+      "grade": {
+        "brightness": 0.92,
+        "saturation": 0.85,
+        "contrast": 1.08
+      },
+      "crop": [
+        0.12,
+        0.06,
+        0.8,
+        0.9
+      ]
+    },
+    "frame-6": {
+      "source": "https://upload.wikimedia.org/wikipedia/commons/a/af/Audi_RS6_Avant_C8_at_IAA_2019_IMG_0304.jpg",
+      "sourceWidth": 4645,
+      "fetchWidth": 1920,
+      "page": "https://commons.wikimedia.org/wiki/File:Audi_RS6_Avant_C8_at_IAA_2019_IMG_0304.jpg",
+      "title": "Audi RS6 Avant C8 at IAA 2019 IMG 0304",
+      "author": "Alexander Migl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "alt": "Red Audi RS 6 Avant from the rear three-quarter: wide arches, oval exhaust and the long estate roof",
+      "focus": "55% 55%",
+      "widths": [
+        640,
+        960,
+        1440
+      ],
+      "grade": {
+        "brightness": 0.92,
+        "saturation": 0.9,
+        "contrast": 1.06
+      },
+      "crop": [
+        0.1,
+        0.04,
+        0.9,
+        0.96
+      ],
+      "burn": [
+        {
+          "rect": [
+            0,
+            0,
+            0.215,
+            0.34
+          ],
+          "strength": 0.92,
+          "feather": 0.008,
+          "protect": 0.6
+        }
+      ]
+    }
+  }
+}

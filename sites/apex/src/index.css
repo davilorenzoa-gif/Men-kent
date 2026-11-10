@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+/* ───────────────────────── Design tokens ───────────────────────── */
+@theme {
+  --color-ink: #080808;
+  --color-graphite: #151515;
+  --color-carbon: #1c1c1d;
+  --color-line: #2b2c2e;
+  --color-gunmetal: #5a5d61;
+  --color-steel: #8d9095;
+  --color-silver: #c5c8cc;
+  --color-paper: #f5f5f5;
+  --color-apex: #e32636;
+
+  --font-sans: "Archivo Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-cine: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --breakpoint-3xl: 112rem;
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+  html {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+    scrollbar-color: var(--color-line) var(--color-ink);
+    /* clip (not hidden) keeps position: sticky working; set on the root too so
+       a transformed element can never widen the page on a phone */
+    overflow-x: clip;
+  }
+
+  /* Lenis (desktop smooth scroll) */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  html.scroll-locked {
+    overflow: hidden;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-weight: 350;
+    font-stretch: 100%;
+    line-height: 1.55;
+    /* clip (not hidden) so position: sticky keeps working */
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-apex);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-apex);
+    outline-offset: 4px;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+}
+
+/* ───────────────────────── Type system ─────────────────────────
+   One variable family, three voices:
+   display — Archivo at its narrowest width: monumental headlines.
+   wide    — Archivo at its widest: wordmark, navigation, buttons.
+   data    — Geist Mono: every figure and technical label.            */
+@utility display {
+  font-stretch: 62%;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.86;
+  letter-spacing: -0.012em;
+}
+
+@utility wide {
+  font-stretch: 125%;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+}
+
+@utility data {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+@utility figure {
+  font-stretch: 62%;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums lining-nums;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+
+/* Page gutter shared by every section */
+@utility gutter {
+  padding-inline: clamp(1.25rem, 4.2vw, 4.5rem);
+}
+
+/* Scroll-snap containers: snap points respect the page gutter instead of the edge */
+@utility gutter-snap {
+  scroll-padding-inline: clamp(1.25rem, 4.2vw, 4.5rem);
+}
+
+/* Hairline that draws itself: set --draw (0 → 1) from JS or a parent state */
+@utility hairline {
+  height: 1px;
+  background: var(--color-line);
+  transform-origin: left center;
+}
+
+/* ───────────────────────── Texture ───────────────────────── */
+/* Film grain: one small SVG turbulence tile, rasterised once by the browser. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.09;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+}
+
+/* Technical grid used by the Performance section. --mx/--my follow the pointer. */
+.blueprint {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-paper) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-paper) 5%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(620px circle at var(--mx, 50%) var(--my, 30%), #000 0%, rgba(0, 0, 0, 0.28) 55%, rgba(0, 0, 0, 0.12) 100%);
+  mask-image: radial-gradient(620px circle at var(--mx, 50%) var(--my, 30%), #000 0%, rgba(0, 0, 0, 0.28) 55%, rgba(0, 0, 0, 0.12) 100%);
+}
+
+/* ───────────────────────── Keyframes ───────────────────────── */
+@keyframes kenburns {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.09);
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.animate-kenburns {
+  animation: kenburns 22s ease-in-out infinite alternate;
+}
+.animate-scroll-cue {
+  animation: scroll-cue 2.4s var(--ease-cine) infinite;
+}
+
+/* Reduced motion: keep short fades (handled in JS), drop the endless loops. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns,
+  .animate-scroll-cue {
+    animation: none;
+  }
+}
+
+/* Native horizontal scroller (mobile filmstrip, tab rows) without a visible bar */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
