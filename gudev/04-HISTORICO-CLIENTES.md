@@ -22,7 +22,8 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - Endereço: Av. Jurema, 436, Parque Jurema, Guarulhos-SP, 07244-000.
   - Instagram @curtapecai, Facebook /curtapecai. Bio (pela busca): açaí, cupuaçu, sorvetes, tapioca e lanches; delivery e retirada no local.
   - Tem WhatsApp no Google, mas **o número ainda não foi pego**. Horário também não.
-  - Existe uma Peçaí no iFood no Parque das Nações ("Açaí, Sorvetes & Lanches"), pode ser 2ª unidade: confirmar.
+  - 2ª loja confirmada pelo Davi: Parque das Nações (Rua Campo Maior, 357, pelo registro), com iFood próprio.
+  - Telefone citado na busca (Facebook): (11) 96465-0080, **não confirmado**.
 - **Site:** `sites/pecai/` (veja o README). Antes era tratada como "marca fictícia" de demo: é loja real.
 - **Andamento:** site pronto pra mostrar. Fotos e vídeos estão em 2 pastas do Drive do Davi, que o ambiente não conseguiu abrir.
 

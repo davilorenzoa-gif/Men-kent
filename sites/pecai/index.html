@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Péçaí | Açaí, sorvete e lanche no Parque Jurema, Guarulhos</title>
-<meta name="description" content="Açaí, cupuaçu, sorvete, tapioca e lanche na Av. Jurema, 436, Parque Jurema, Guarulhos. Entrega ou retirada no local. 4,5 no Google.">
+<title>Péçaí | Açaí, sorvete e lanche em Guarulhos</title>
+<meta name="description" content="Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema e no Parque das Nações, Guarulhos. Entrega ou retirada. 4,5 no Google.">
 <meta name="theme-color" content="#3b0f4a">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Péçaí | Do pé direto pro copo">
@@ -30,6 +30,11 @@
     "addressRegion": "SP",
     "postalCode": "07244-000",
     "addressCountry": "BR"
+  },
+  "department": {
+    "@type": "IceCreamShop",
+    "name": "Péçaí Parque das Nações",
+    "address": {"@type": "PostalAddress","streetAddress": "Rua Campo Maior, 357 - Parque das Nações","addressLocality": "Guarulhos","addressRegion": "SP","addressCountry": "BR"}
   },
   "sameAs": ["https://www.instagram.com/curtapecai/", "https://www.facebook.com/curtapecai"]
 }
@@ -180,13 +185,30 @@ label.campo input:focus{outline:none;border-color:var(--palmeira)}
 .obrigado.on{display:block}
 .aviso{font-size:14px;color:#cdb6d6}
 
+/* avaliações */
+.notas{background:var(--pe-fundo);padding:88px 0}
+.notas .wrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:720px){.notas .wrap{grid-template-columns:minmax(0,1fr);gap:4px}}
+.notas .nota-grande{margin:0;max-width:none;font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(120px,22vw,240px);line-height:.85;color:var(--palmeira);letter-spacing:-.05em}
+.notas h2{font-size:clamp(32px,5vw,56px)}
+.notas .estrelas{color:#ffcf4a;font-size:30px;letter-spacing:4px;margin:8px 0 6px}
+.notas .estrelas .meia{background:linear-gradient(90deg,#ffcf4a 50%,#6b4a78 50%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.notas p{color:#e6d6ec;max-width:46ch;margin-bottom:22px}
+.lojas{display:grid;gap:12px;margin-bottom:22px}
+.loja{border-radius:18px;padding:18px 20px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.18);transition:background .25s,box-shadow .25s}
+.loja.on{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 2px var(--palmeira)}
+.loja h3{font-size:26px}
+.loja address{font-size:17px;margin:6px 0 8px}
+.loja .mini{display:flex;flex-wrap:wrap;gap:4px 18px}
+.loja .mini a,.loja .mini button{min-height:44px;display:inline-flex;align-items:center;font:inherit;font-weight:700;color:#fff;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.loja .mini button[aria-pressed="true"]{color:var(--palmeira)}
 /* onde fica */
 .onde{padding:96px 0;background:var(--pe)}
 .onde .grade{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;align-items:center}
 @media (max-width:860px){.onde .grade{grid-template-columns:minmax(0,1fr)}}
 .onde h2{font-size:clamp(40px,6.5vw,72px)}
 .onde address{font-style:normal;font-size:20px;margin:18px 0 6px}
-.onde .info{color:#e6d6ec;margin-bottom:24px}
+.onde .info{color:#e6d6ec;margin:16px 0 24px;max-width:46ch}
 .mapa{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;background:#2a0b33}
 .mapa iframe{width:100%;height:100%;border:0;display:block}
 
@@ -241,7 +263,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
     </a>
     <nav aria-label="Principal">
       <a class="l" href="#cardapio">Cardápio</a>
-      <a class="l" href="#onde">Onde fica</a>
+      <a class="l" href="#onde">Lojas</a>
       <a class="btn btn-pedir js-pedir" href="#colha">Fazer pedido</a>
     </nav>
   </div>
@@ -255,7 +277,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
         <span class="selo entra"><span class="estrela" aria-hidden="true">★</span> 4,5 no Google, 1,4 mil avaliações</span>
         <h1 id="titulo" class="entra d2"><span class="pe">Pé</span>çaí</h1>
         <p class="frase entra d2">Do pé direto pro copo.</p>
-        <p class="sub entra d3">Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema, em Guarulhos. Peça pra entregar ou passe pra retirar.</p>
+        <p class="sub entra d3">Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema e no Parque das Nações, em Guarulhos. Peça pra entregar ou passe pra retirar.</p>
         <div class="acoes entra d3">
           <a class="btn btn-pedir" href="#colha">Fazer pedido</a>
           <a class="btn btn-linha" href="#cardapio">Ver o que tem</a>
@@ -381,6 +403,13 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
                 <button type="button" aria-pressed="false" data-modo="retirada">Retirar na loja</button>
               </div>
             </div>
+            <div id="campo-loja" hidden>
+              <p class="passo" style="color:#e6d6ec">Em qual loja?</p>
+              <div class="troca" role="group" aria-label="Loja pra retirar">
+                <button type="button" aria-pressed="true" data-loja="Parque Jurema">Parque Jurema</button>
+                <button type="button" aria-pressed="false" data-loja="Parque das Nações">Parque das Nações</button>
+              </div>
+            </div>
             <label class="campo" id="campo-end">Endereço da entrega
               <input id="endereco" name="endereco" autocomplete="street-address" placeholder="Rua, número e bairro">
             </label>
@@ -407,19 +436,48 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
     </div>
   </section>
 
+  <section class="notas" id="avaliacoes" aria-labelledby="t-notas">
+    <div class="wrap">
+      <p class="nota-grande" aria-hidden="true">4,5</p>
+      <div>
+        <h2 id="t-notas">1,4 mil avaliações no Google</h2>
+        <p class="estrelas" aria-label="4,5 de 5 estrelas"><span aria-hidden="true">★★★★</span><span class="meia" aria-hidden="true">★</span></p>
+        <p>A maior parte das notas é 5 estrelas. Leia o que o pessoal do bairro escreve.</p>
+        <a class="btn btn-linha" href="https://www.google.com/maps/search/?api=1&amp;query=P%C3%A9%C3%A7a%C3%AD+Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Ler as avaliações no Google</a>
+      </div>
+    </div>
+  </section>
+
   <section class="onde" id="onde" aria-labelledby="t-onde">
     <div class="wrap grade">
       <div>
-        <h2 id="t-onde">No Parque Jurema</h2>
-        <address>Av. Jurema, 436, Parque Jurema<br>Guarulhos, SP, 07244-000</address>
+        <h2 id="t-onde">Duas lojas em Guarulhos</h2>
         <p class="info">Entrega ou retirada no local. Gasto médio de R$ 20 a 100 por pessoa, segundo o Google. Antes de sair, confira o horário no Instagram.</p>
+        <div class="lojas" role="group" aria-label="Escolha a loja no mapa">
+          <article class="loja on" data-mapa="Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000">
+            <h3>Parque Jurema</h3>
+            <address>Av. Jurema, 436, Parque Jurema<br>Guarulhos, SP, 07244-000</address>
+            <div class="mini">
+              <button type="button" class="ver" aria-pressed="true">Ver no mapa</button>
+              <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Como chegar</a>
+            </div>
+          </article>
+          <article class="loja" data-mapa="Rua+Campo+Maior,+357+-+Parque+das+Na%C3%A7%C3%B5es,+Guarulhos+-+SP">
+            <h3>Parque das Nações</h3>
+            <address>Rua Campo Maior, 357, Parque das Nações<br>Guarulhos, SP</address>
+            <div class="mini">
+              <button type="button" class="ver" aria-pressed="false">Ver no mapa</button>
+              <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Rua+Campo+Maior,+357+-+Parque+das+Na%C3%A7%C3%B5es,+Guarulhos+-+SP" target="_blank" rel="noopener">Como chegar</a>
+              <a href="https://www.ifood.com.br/delivery/guarulhos-sp/pecai---acai-sorvetes--lanches-parque-das-nacoes/8c30e22b-8b78-4158-983c-360e89616f6c" target="_blank" rel="noopener">Pedir no iFood</a>
+            </div>
+          </article>
+        </div>
         <div class="acoes">
-          <a class="btn btn-pedir" href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Como chegar</a>
           <a class="btn btn-linha" href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">@curtapecai</a>
         </div>
       </div>
       <div class="mapa">
-        <iframe title="Mapa da Péçaí na Av. Jurema, 436, Guarulhos" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000&amp;output=embed"></iframe>
+        <iframe id="mapa" title="Mapa da loja Péçaí escolhida" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000&amp;output=embed"></iframe>
       </div>
     </div>
   </section>
@@ -428,7 +486,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
     <div class="wrap">
       <h2 id="t-faq">Perguntas de sempre</h2>
       <details><summary>Vocês entregam?</summary><p>Entregam. Também dá pra pedir e passar na loja pra retirar. No pedido você escolhe.</p></details>
-      <details><summary>Onde fica a loja?</summary><p>Av. Jurema, 436, no Parque Jurema, em Guarulhos. <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Abrir o caminho no mapa</a>.</p></details>
+      <details><summary>Onde ficam as lojas?</summary><p>São duas em Guarulhos: Av. Jurema, 436, no Parque Jurema, e Rua Campo Maior, 357, no Parque das Nações. <a href="#onde">Ver no mapa</a>.</p></details>
       <details><summary>Qual é o horário?</summary><p>O horário do dia sai no Instagram <a href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">@curtapecai</a>. Confira antes de sair de casa.</p></details>
       <details><summary>Tem cupuaçu?</summary><p>Tem. Açaí, cupuaçu, sorvete, tapioca e lanche.</p></details>
       <details><summary>Quanto custa?</summary><p>Pelo Google, o gasto fica entre R$ 20 e 100 por pessoa. Os valores de cada tamanho a Péçaí passa na hora do pedido.</p></details>
@@ -440,7 +498,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
 <footer>
   <div class="wrap">
     <a class="marca" href="#inicio" aria-label="Péçaí, voltar ao topo">Péçaí</a>
-    <p>Açaí, sorvetes e lanches. Av. Jurema, 436, Parque Jurema, Guarulhos, SP.</p>
+    <p>Açaí, sorvetes e lanches em Guarulhos, SP.<br>Av. Jurema, 436, Parque Jurema.<br>Rua Campo Maior, 357, Parque das Nações.</p>
     <div class="linha">
       <a href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">Instagram</a>
       <a href="https://www.facebook.com/curtapecai" target="_blank" rel="noopener">Facebook</a>
@@ -537,6 +595,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
   /* WOW 3: colha seu pedido */
   var escolhidos = [];
   var modo = 'entrega';
+  var loja = 'Parque Jurema';
   var bagas = document.getElementById('bagas');
   var dentro = document.getElementById('dentro');
   var vazio = document.getElementById('vazio');
@@ -553,7 +612,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
     var m = 'Oi, Péçaí! Vim pelo site.\n';
     m += escolhidos.length ? 'Quero: ' + escolhidos.join(', ') + '.\n' : 'Quero ver o cardápio de hoje.\n';
     if (modo === 'entrega') m += 'É pra entrega' + (limpa(endereco.value) ? ' em: ' + limpa(endereco.value) : '') + '.\n';
-    else m += 'Vou retirar na loja.\n';
+    else m += 'Vou retirar na loja do ' + loja + '.\n';
     if (limpa(nome.value)) m += 'Meu nome é ' + limpa(nome.value) + '.\n';
     m += 'Me passa os tamanhos e os valores?';
     return m;
@@ -608,12 +667,31 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
   document.querySelectorAll('.js-quero').forEach(function(a){
     a.addEventListener('click', function(){ if (escolhidos.indexOf(a.dataset.item) < 0) { escolhidos.push(a.dataset.item); atualiza(); } });
   });
-  document.querySelectorAll('.troca button').forEach(function(b){
+  document.querySelectorAll('.troca button[data-modo]').forEach(function(b){
     b.addEventListener('click', function(){
       modo = b.dataset.modo;
-      document.querySelectorAll('.troca button').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      document.getElementById('campo-loja').hidden = modo !== 'retirada';
+      document.querySelectorAll('.troca button[data-modo]').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       campoEnd.style.display = modo === 'entrega' ? '' : 'none';
       atualiza();
+    });
+  });
+  document.querySelectorAll('.troca button[data-loja]').forEach(function(b){
+    b.addEventListener('click', function(){
+      loja = b.dataset.loja;
+      document.querySelectorAll('.troca button[data-loja]').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      atualiza();
+    });
+  });
+  /* lojas: troca o mapa */
+  var mapa = document.getElementById('mapa');
+  document.querySelectorAll('.loja').forEach(function(l){
+    l.querySelector('.ver').addEventListener('click', function(){
+      document.querySelectorAll('.loja').forEach(function(x){
+        x.classList.toggle('on', x === l);
+        x.querySelector('.ver').setAttribute('aria-pressed', x === l ? 'true' : 'false');
+      });
+      mapa.src = 'https://www.google.com/maps?q=' + l.dataset.mapa + '&output=embed';
     });
   });
   endereco.addEventListener('input', atualiza);
