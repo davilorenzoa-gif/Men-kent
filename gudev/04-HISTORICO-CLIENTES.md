@@ -100,7 +100,9 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - Dono: Alexandre, o "Katraka". Nota 5,0 com 490 avaliações no Google (número passado pelo Alexandre em 09/11; nota no site: 4,9, confirmar o valor exato no Google).
   - Serviços (site oficial): suspensão, katraka (catraca pra rebaixar), regulagem de facão, encurtamento de quadro, freios, furação de discos e tambores, alinhamento, balanceamento, cambagem, pneus e rodas. Direção (Instagram).
   - Já saiu no Canal da Peça (como rebaixar um Fusca) e no blog Acelerada.
-- **Andamento:** o Davi acha que fecha. Prévia feita em 06/11 em `sites/katraka/` (ver o README de lá com o que confirmar).
+- **Andamento:** prévia feita em 06/11 em `sites/katraka/` (ver o README de lá com o que confirmar).
+- **Preço (07/11, confirmado pelo Davi em 10/11):** o Alexandre pediu desconto e, por ser a 1ª venda, Gu e Davi aceitaram **R$ 600 em 2x de R$ 300** (metade pra começar, metade no ar), com domínio no nome dele e oferta do plano de R$ 60.
+- **Pendente:** confirmar se ele já pagou a 1ª parcela. Quando pagar, vira o **1º cliente da GuDev**: atualizar o resumo do `CLAUDE.md` e, com autorização dele, a seção de cases.
 - **Pedidos dele (09/11):** quer poder mostrar os trabalhos todo dia → seção ligada no Instagram dele (Behold), sem custo extra por ser prévia. Não gostou do verde → site trocado pra laranja queimado. Prints estáticos enviados pra ele ler.
 - **Domínio:** já existe `katraka.com.br`; confirmar se é dele antes de registrar outro.
 - **Site:** Fusca desenhado em SVG que baixa dente por dente em cima do nome; interruptor do farol com foto; raio-x do Fusca; simulador "Gire a katraka"; ordem de serviço com carimbo. Fotos são conceito (do Davi), marcadas como ilustrativas.
@@ -109,10 +111,6 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Dados (conferir no Maps):** hamburgueria. Rua Rio Javari, 43, Nossa Senhora das Graças (Vieiralves). WhatsApp (92) 99213-6850. 4,7 no Google com 577 avaliações (via Wanderlog). Terça a domingo, 17h45 às 00h.
 - **Site:** `sites/malibu-vieiralves/` (burger que desmonta, rota pela costa, prancha de pedido). Fotos do catálogo do WhatsApp (300px): mandar pro Gu melhorar.
 - **Falta:** confirmar endereço, WhatsApp e cardápio.
-
-## Cliente da 1ª venda, nome a confirmar (mensagem de 07/11/2026)
-- Ele pediu desconto e, por ser a primeira venda, Gu e Davi aceitaram **R$ 600 em 2x de R$ 300**, com domínio no nome dele e plano de R$ 60 (confirmado pelo Davi em 10/11).
-- **Pendente:** o nome do cliente (pelo print não deu pra saber) e se já pagou. Quando fechar, atualizar aqui e no resumo do `CLAUDE.md`.
 
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.

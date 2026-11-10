@@ -13,7 +13,7 @@
 ## A oferta
 - **Preço (atualizado em 10/11/2026):** não tem mais tabela fixa. Gu e Davi decidiram cobrar mais caro e negociar caso a caso.
   - **Referência: R$ 800** por site. É a margem que eles estão usando.
-  - Desconto só com motivo. Exemplo: a 1ª venda saiu a **R$ 600 em 2x de R$ 300**, porque o cliente pediu desconto e era a primeira.
+  - Desconto só com motivo. Exemplo: a 1ª venda (Katraka) saiu a **R$ 600 em 2x de R$ 300**, porque o cliente pediu desconto e era a primeira.
   - Cliente maior pode pagar mais. O Davi está negociando um valor mais alto com o padrinho (Andrade Ferro e Aço); **R$ 1.200** foi uma ideia, nada fechado.
   - O antigo "R$ 500 → R$ 297 pros 3 primeiros" **acabou**. Não usar em mensagem nova.
 - **O que vem no site:**

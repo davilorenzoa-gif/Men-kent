@@ -22,12 +22,12 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `sites/<nome>/`: cada site de lead e cada conceito, com README do que falta confirmar
 
 ## Resumo rápido
-- Preço: sem tabela fixa, **referência R$ 800** por site, negociado caso a caso (desde 10/11/2026). Desconto só com motivo: a 1ª venda saiu a R$ 600 em 2x. O padrinho (Andrade) pode pagar mais; nada fechado. O antigo "R$ 297 pros 3 primeiros" acabou. Pix 50% pra começar, 50% no ar. Divisão 50/50 Gu/Davi. Detalhes em `01`.
+- Preço: sem tabela fixa, **referência R$ 800** por site, negociado caso a caso (desde 10/11/2026). Desconto só com motivo: a 1ª venda (Katraka) saiu a R$ 600 em 2x. O padrinho (Andrade) pode pagar mais; nada fechado. O antigo "R$ 297 pros 3 primeiros" acabou. Pix 50% pra começar, 50% no ar. Divisão 50/50 Gu/Davi. Detalhes em `01`.
 - Plano mensal opcional **R$ 60**: hospedagem + até ~4 alterações pequenas/mês. Coisa grande é orçada à parte.
 - WhatsApp comercial (Davi): (11) 96465-0141. Venda 100% pelo WhatsApp.
 - Hospedagem no Netlify da GuDev (`proposta-<nome>.netlify.app` → `<nome>.netlify.app`); domínio no nome do cliente no registro.br.
 - Prospecção: até 20 mensagens novas/dia por pessoa, blocos de 5 a cada ~30 min. Nunca disparo em massa. 1º contato manda vídeo de 15s, não link.
-- Nenhum cliente fechou ainda (10/11/2026) → seção de cases vazia. Leads mais quentes: Katraka (o Davi acha que fecha) e ENTRElinhas (avó do Davi).
+- 1ª venda combinada: **Katraka**, R$ 600 em 2x (10/11/2026). Falta confirmar o pagamento; até lá, seção de cases vazia. Outro lead quente: ENTRElinhas (avó do Davi).
 - Demos e conceitos, **nunca case**: Prumo, Peçaí, Fornalha, Faixa Vermelha, Lustro, Órbita, Vértice, 911, DOZE, Meridiano, Skyline, APEX, Espelho, Basalto, Moenda, Sulco. Lista em `04`.
 - `sites/glassy-dashboard` (painel em React/Tailwind): base se algum cliente pedir painel/sistema. É produto novo: preço e prazo a definir antes de oferecer.
 - Vídeo: os de 15s e os Reels saem de prompts pro Google Flow (Veo) + montagem no CapCut, ou edição feita aqui com ffmpeg. Claude não abre o CapCut. Lições em `05` e `08`.
