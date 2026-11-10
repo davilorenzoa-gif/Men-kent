@@ -18,6 +18,13 @@ O Davi mandou 4 vídeos. O que cada um faz:
 - **Marca discreta o tempo todo** (@ pequeno no canto) e um **CTA claro só no fim** (tela escurece, logo, "link na bio").
 - **Vertical 9:16, 20 a 30s, zero orçamento.** Criatividade em vez de equipamento.
 
+### Formato "marca fictícia, site real" (vídeo da Fervo, 10/11/2026)
+- Gravação de tela do site rolando, com música e o @ da GuDev. Abre com a tela do PC filmada ("Esse site enche de verdade") e corta pra gravação limpa.
+- A marca é inventada (Fervo, refrigerante), então dá pra ousar sem esperar cliente.
+- Fecha com o próprio site virando o CTA: "Você bebeu o site. Quer um site que as pessoas querem tocar? Chamar a GuDev na DM." e a linha "A Fervo é uma marca fictícia. O site é real."
+- Bom pra Reels: 1 conceito por vídeo, com um WOW que dá pra entender sem som. Nunca chamar de cliente nem de case.
+- Técnica do site: `03-PADRAO-DE-SITE.md`, bloco "Estudados nos vídeos Fervo e Madoska".
+
 ## Como traduzir pra GuDev
 O "produto" é um site, então o visual principal é **um celular rolando o site** (gravação de tela ou o celular filmado na mão).
 Os sites têm WOWs (animações, jogos, efeitos). **O WOW é o momento da revelação do vídeo.**

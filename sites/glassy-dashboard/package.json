@@ -11,10 +11,14 @@
     "build:single": "tsc -b && vite build --mode single"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.5.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "lucide-react": "^1.61.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "recharts": "^3.10.1"
+    "recharts": "^3.10.1",
+    "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",

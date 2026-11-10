@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fervo | Água com gás e fruta de verdade (projeto conceito GuDev)</title>
+<meta name="description" content="Fervo é uma marca fictícia, projeto conceito da GuDev: o site é o copo. Role pra encher, mexa na água, escolha o sabor e beba o site.">
+<meta name="theme-color" content="#F3EEDF">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23F3EEDF'/%3E%3Crect y='26' width='64' height='38' fill='%23B9E01E'/%3E%3Ccircle cx='22' cy='44' r='6' fill='%23F3EEDF'/%3E%3Ccircle cx='42' cy='36' r='4' fill='%23F3EEDF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Dela+Gothic+One&display=swap" rel="stylesheet">
+<style>
+:root{--creme:#F3EEDF;--tinta:#16130F;--cor:#B9E01E;--m:clamp(18px,3vw,44px)}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scrollbar-width:none;background:var(--creme)}
+html::-webkit-scrollbar{display:none}
+body{margin:0;background:var(--creme);color:var(--tinta);font:500 clamp(1.0625rem,1rem + .3vw,1.3125rem)/1.3 "Bricolage Grotesque",system-ui,sans-serif;overflow-x:clip}
+::selection{background:var(--tinta);color:var(--creme)}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid currentColor;outline-offset:3px}
+#gl{position:fixed;inset:0;width:100vw;height:100svh;display:block;touch-action:pan-y}
+.topo{position:fixed;inset:0 0 auto;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:16px var(--m);pointer-events:none}
+.topo a{font:400 1.25rem/1 "Dela Gothic One",sans-serif;text-decoration:none;pointer-events:auto}
+.topo span{font-size:.875rem}
+main{position:relative;height:900svh;pointer-events:none}
+.pedaco{position:absolute;left:0;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.fala{position:fixed;left:var(--m);right:var(--m);bottom:max(26px,5svh);z-index:4;max-width:34ch;opacity:0;transform:translateY(14px);transition:opacity .35s,transform .45s cubic-bezier(.2,.7,.1,1);pointer-events:none}
+.fala.on{opacity:1;transform:none;pointer-events:auto}
+.fala.agua{width:fit-content;padding:10px 14px;background:var(--tinta);color:var(--creme);border-radius:12px}
+.seta{display:inline-block;margin-top:8px;font-weight:700}
+.seta::after{content:"";display:inline-block;width:.5em;height:.5em;margin-left:.45em;border-right:2px solid;border-bottom:2px solid;transform:translateY(-.14em) rotate(45deg)}
+.sabores{display:flex;flex-wrap:wrap;gap:8px;max-width:none}
+.sabores button{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 16px 0 10px;background:var(--creme);color:var(--tinta);border:0;border-radius:999px;font-weight:700;transition:transform .15s,box-shadow .2s}
+.sabores button:active{transform:scale(.96)}
+.sabores button[aria-pressed=true]{box-shadow:0 0 0 3px var(--tinta)}
+.sabores i{display:block;width:28px;height:28px;border-radius:50%;background:var(--b)}
+.fecho{bottom:max(150px,23svh);max-width:32ch}
+.fecho p{margin:0 0 14px}
+.btn{display:inline-flex;align-items:center;min-height:54px;padding:0 26px;background:var(--tinta);color:var(--creme);border-radius:999px;font-weight:700;text-decoration:none;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.nota{display:block;margin-top:12px;font-size:.875rem}
+.semgl .pedaco{position:static;width:auto;height:auto;clip-path:none;white-space:normal;font:400 13vw/1 "Dela Gothic One",sans-serif;padding:20svh var(--m) 0}
+.semgl .fala{position:static;opacity:1;transform:none;color:var(--tinta);padding:16px var(--m);max-width:none}
+.semgl main{height:auto}
+.semgl #gl{display:none}
+@media (prefers-reduced-motion:reduce){.fala{transition:opacity .2s;transform:none}}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<header class="topo"><a href="#inicio">Fervo</a><span>Projeto conceito</span></header>
+<main id="inicio">
+  <h1 class="pedaco">Fervo: água com gás e fruta de verdade</h1>
+  <h2 class="pedaco">Cheio de gás</h2>
+  <h2 class="pedaco">Fruta de verdade</h2>
+  <h2 class="pedaco">Escolhe a sua</h2>
+  <h2 class="pedaco">Mais gelo</h2>
+  <h2 class="pedaco">Você bebeu o site</h2>
+</main>
+<p class="fala" data-de="0" data-ate=".055">Água com gás e fruta de verdade.<br><span class="seta">Role pra encher</span></p>
+<p class="fala agua" data-de=".2" data-ate=".335">Mexa o dedo na água. Ela responde.</p>
+<p class="fala agua" data-de=".405" data-ate=".5">Fatia inteira, sem xarope nenhum.</p>
+<div class="fala sabores" data-de=".55" data-ate=".665" role="group" aria-label="Escolha o sabor">
+  <button type="button" data-s="0" aria-pressed="true" style="--b:#B9E01E"><i></i>Limão</button>
+  <button type="button" data-s="1" aria-pressed="false" style="--b:#FF3D73"><i></i>Toranja</button>
+  <button type="button" data-s="2" aria-pressed="false" style="--b:#FF8A14"><i></i>Tangerina</button>
+</div>
+<p class="fala agua" data-de=".71" data-ate=".8">Zero açúcar. Gelada até o último gole.</p>
+<div class="fala fecho" data-de=".965" data-ate="1.1">
+  <p>Quer um site que as pessoas querem tocar?</p>
+  <a class="btn" href="https://www.instagram.com/gudev.ofc/" target="_blank" rel="noopener">Chamar a GuDev na DM</a>
+  <small class="nota">A Fervo é uma marca fictícia. O site é real.</small>
+</div>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" defer></script>
+<script>
+(function(){
+const D=document, R=D.documentElement, cv=D.getElementById("gl"), reduz=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const gl=cv.getContext("webgl2",{antialias:false,alpha:false,preserveDrawingBuffer:/rec/.test(location.search)});
+if(!gl){R.classList.add("semgl");return;}
+
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)), sv=t=>{t=clamp(t);return t*t*(3-2*t)}, faixa=(p,a,b)=>clamp((p-a)/(b-a));
+const hex=h=>[1,3,5].map(i=>parseInt(h.substr(i,2),16)/255);
+const SABOR=[
+  {topo:"#D6EE2E",fundo:"#3C9A1E",casca:"#4F8F14",polpa:"#D2E84A",miolo:"#F2F5B8"},
+  {topo:"#FF5C86",fundo:"#B3093F",casca:"#E8551C",polpa:"#FF4564",miolo:"#FFD3C4"},
+  {topo:"#FFB02E",fundo:"#E5420A",casca:"#EE7A0C",polpa:"#FF9A1F",miolo:"#FFE3A8"}
+];
+
+/* o shader: a água, as letras entortando por baixo dela, a cáustica e a inundação de cor do sabor */
+const VS=`#version 300 es
+in vec2 p;out vec2 vUv;void main(){vUv=vec2(p.x*.5+.5,.5-p.y*.5);gl_Position=vec4(p,0.,1.);}`;
+const FS=`#version 300 es
+precision highp float;
+in vec2 vUv;out vec4 o;
+uniform sampler2D uTA,uTB,uCol,uNrm;
+uniform float uYA,uYB,uLevel,uPour,uT,uAsp,uFlood;
+uniform vec2 uFloodC;
+uniform vec3 uTopo,uFundo,uTopo0,uFundo0,uRip;
+uniform float uW[64];
+const vec3 CREME=vec3(.953,.933,.875),TINTA=vec3(.086,.075,.059);
+float onda(float x){float f=clamp(x,0.,1.)*63.;int i=int(floor(f));int j=min(i+1,63);float k=f-float(i);k=k*k*(3.-2.*k);return mix(uW[i],uW[j],k);}
+float um(sampler2D s,vec2 uv,float y){uv.y-=y;if(uv.y<0.||uv.y>1.||uv.x<0.||uv.x>1.)return 0.;return texture(s,uv).a;}
+float txt(vec2 uv){return max(um(uTA,uv,uYA),um(uTB,uv,uYB));}
+float caustica(vec2 uv){
+  vec2 p=uv*vec2(uAsp,1.)*7.-250.,i=p;float c=1.,f=.005;
+  for(int n=0;n<3;n++){float t=uT*.42*(1.-3.5/float(n+1));i=p+vec2(cos(t-i.x)+sin(t+i.y),sin(t-i.y)+cos(t+i.x));c+=1./length(vec2(p.x/(sin(i.x+t)/f),p.y/(cos(i.y+t)/f)));}
+  c/=3.;c=1.17-pow(c,1.4);return clamp(pow(abs(c),8.),0.,1.4);
+}
+void main(){
+  vec2 uv=vUv;
+  float sup=1.-uLevel+onda(uv.x);
+  float xJato=.5+sin(uv.y*9.+uT*5.)*.004,lJato=uPour*(.016+.004*sin(uv.y*30.-uT*18.));
+  float jato=(uPour>.01&&uv.y<sup)?smoothstep(lJato,lJato*.55,abs(uv.x-xJato)/vec2(1.,1.).x):0.;
+  float d=uv.y-sup;
+  float dentro=smoothstep(-.0012,.0012,d);
+  vec2 a=(uv-uRip.xy)*vec2(uAsp,1.);float rr=length(a);
+  float frente=uRip.z*.55,anel=sin((rr-frente)*70.)*exp(-abs(rr-frente)*13.)*exp(-uRip.z*1.5);
+  vec2 off=(rr>.0001?a/rr:vec2(0.))*anel*.03;
+  vec4 n=texture(uNrm,uv);
+  float liq=max(dentro,jato);
+  if(liq>.01){
+    off+=vec2(sin(uv.y*17.+uT*1.5+sin(uv.x*8.+uT)),cos(uv.x*15.-uT*1.2+sin(uv.y*6.)))*.0075*liq;
+    off.y+=exp(-max(d,0.)*26.)*.05*dentro;
+    if(n.a>.02)off+=(n.rg-.5)*2.*.11*n.a*liq;
+  }
+  float tR=txt(uv+off*1.18),tG=txt(uv+off),tB=txt(uv+off*.82);
+  vec4 c=texture(uCol,uv+off);
+  vec3 seco=CREME*(1.-.05*length((uv-.5)*vec2(1.,1.2)));
+  seco=mix(seco,mix(uFundo,uTopo,.5),.1*exp(min(d,0.)*38.));
+  seco=mix(seco,c.rgb,c.a);
+  seco=mix(seco,TINTA,tG);
+  float dd=clamp(max(d,0.)*1.05,0.,1.);
+  vec2 q=(uv-uFloodC)*vec2(uAsp,1.);
+  float rd=length(q)+sin(atan(q.y,q.x)*9.+uT*3.)*.022,fr=smoothstep(uFlood-.02,uFlood+.012,rd);
+  vec3 top=mix(uTopo,uTopo0,fr),fun=mix(uFundo,uFundo0,fr);
+  vec3 ag=mix(top,fun,pow(dd,.8));
+  ag+=(top*.4+.3)*caustica(uv+off*.6)*(.5-.28*dd);
+  ag+=exp(-abs(rd-uFlood)*65.)*.3*step(uFlood,2.2);
+  ag=mix(ag,mix(c.rgb,fun,.2+.22*dd),c.a);
+  ag=mix(ag,CREME,vec3(tR,tG,tB));
+  vec3 cor=mix(seco,ag,liq);
+  if(liq>.01&&n.a>.02)cor+=n.b*n.a*.85*liq;
+  float borda=exp(-pow(d*210.,2.));cor=mix(cor,vec3(1.),borda*.72);
+  cor=mix(cor,fun*.72,exp(-pow((d-.012)*120.,2.))*.26);
+  o=vec4(cor,1.);
+}`;
+function sh(t,s){const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(x));return x;}
+const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);gl.useProgram(pr);
+const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+const lp=gl.getAttribLocation(pr,"p");gl.enableVertexAttribArray(lp);gl.vertexAttribPointer(lp,2,gl.FLOAT,false,0,0);
+const U=n=>gl.getUniformLocation(pr,n);
+const u={};["uTA","uTB","uCol","uNrm","uYA","uYB","uLevel","uPour","uT","uAsp","uFlood","uFloodC","uTopo","uFundo","uTopo0","uFundo0","uRip","uW"].forEach(n=>u[n]=U(n));
+function novaTex(){const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);return t;}
+gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,false);
+
+/* as letras gigantes: cada cena é uma textura; o shader decide tinta (fora d'água) ou creme (dentro) */
+const CENAS=[
+  {retrato:["FER","VO"],deitado:["FERVO"],ent:[-1,-1],sai:[.1,.2]},
+  {retrato:["CHEIO","DE","GÁS"],deitado:["CHEIO","DE GÁS"],ent:[.12,.22],sai:[.33,.4]},
+  {retrato:["FRUTA","DE","VERDADE"],deitado:["FRUTA DE","VERDADE"],ent:[.34,.41],sai:[.49,.55]},
+  {retrato:["ESCOLHE","A SUA"],deitado:["ESCOLHE","A SUA"],ent:[.49,.55],sai:[.655,.7]},
+  {retrato:["MAIS","GELO"],deitado:["MAIS GELO"],ent:[.655,.705],sai:[.8,.85]},
+  {retrato:["VOCÊ","BEBEU","O SITE"],deitado:["VOCÊ BEBEU","O SITE"],ent:[.9,.965],sai:[2,3],topo:1}
+];
+const texCena=CENAS.map(novaTex), texCol=novaTex(), texNrm=novaTex();
+const camada=D.createElement("canvas"), cc=camada.getContext("2d"), normal=D.createElement("canvas"), nc=normal.getContext("2d",{willReadFrequently:false});
+let W=0,H=0,LW=0,LH=0,asp=1;
+function desenhaCenas(){
+  const c=D.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
+  const deitado=W>H, mx=W*.045;
+  CENAS.forEach((cn,i)=>{
+    x.clearRect(0,0,W,H);x.fillStyle="#fff";x.textBaseline="alphabetic";
+    const ls=deitado?cn.deitado:cn.retrato, area=W-mx*2, topo=H*(cn.topo?.09:.09), alturaMax=H*(cn.topo?.52:.8);
+    let med=ls.map(t=>{x.font='400 200px "Dela Gothic One"';const m=x.measureText(t);return {t,w:m.width,asc:m.actualBoundingBoxAscent,desc:m.actualBoundingBoxDescent};});
+    let esc=med.map(m=>area/m.w), total=med.reduce((s,m,k)=>s+(m.asc+m.desc)*esc[k],0)+H*.016*(ls.length-1);
+    if(total>alturaMax){const f=alturaMax/total;esc=esc.map(e=>e*f);total=alturaMax;}
+    let y=cn.topo?topo:Math.max(topo,(H*.94-total)/2);
+    med.forEach((m,k)=>{const s=esc[k]*200;x.font=`400 ${s}px "Dela Gothic One"`;y+=m.asc*esc[k];x.fillText(m.t,mx,y);y+=m.desc*esc[k]+H*.016;});
+    gl.bindTexture(gl.TEXTURE_2D,texCena[i]);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,c);
+  });
+}
+function tam(){
+  const dpr=Math.min(devicePixelRatio||1,2), w=innerWidth,h=innerHeight, k=Math.min(1,1920/Math.max(w,h)/dpr);
+  W=Math.round(w*dpr*k);H=Math.round(h*dpr*k);asp=w/h;cv.width=W;cv.height=H;gl.viewport(0,0,W,H);
+  LW=Math.round(W/2);LH=Math.round(H/2);camada.width=normal.width=LW;camada.height=normal.height=LH;
+  if(D.fonts.check('40px "Dela Gothic One"'))desenhaCenas();
+}
+tam();addEventListener("resize",tam);
+Promise.all([D.fonts.load('40px "Dela Gothic One"',"FERVOÊÁ"),D.fonts.load('700 18px "Bricolage Grotesque"')]).then(desenhaCenas);
+
+/* sprites pré-desenhados: bolha e gelo guardam a direção da refração nos canais R e G, e o brilho no B */
+function sprite(tam,f){const c=D.createElement("canvas");c.width=c.height=tam;const x=c.getContext("2d"),im=x.createImageData(tam,tam);
+  for(let j=0;j<tam;j++)for(let i=0;i<tam;i++){const v=f((i+.5)/tam*2-1,(j+.5)/tam*2-1),o=(j*tam+i)*4;im.data[o]=v[0];im.data[o+1]=v[1];im.data[o+2]=v[2];im.data[o+3]=v[3];}
+  x.putImageData(im,0,0);return c;}
+const sBolha=sprite(96,(x,y)=>{const r=Math.hypot(x,y);if(r>1)return[128,128,0,0];const z=Math.pow(r,2.4);
+  const b=Math.max(0,1-Math.hypot(x+.36,y+.42)/.24)*.95+Math.pow(r,10)*.42;
+  return[128-x*z*127,128-y*z*127,clamp(b)*255,clamp((1-r)*24)*255];});
+const sGelo=sprite(160,(x,y)=>{const e=.9,qx=Math.max(Math.abs(x)-e+.2,0),qy=Math.max(Math.abs(y)-e+.2,0),dd=Math.hypot(qx,qy)-.2;if(dd>0.1)return[128,128,0,0];
+  const b=clamp(1-Math.min(e-Math.abs(x),e-Math.abs(y))/.2),m=clamp(-dd*30+1);
+  const nx=Math.sign(x)*(Math.abs(x)>Math.abs(y)?b:b*.2)+x*.4,ny=Math.sign(y)*(Math.abs(y)>Math.abs(x)?b:b*.2)+y*.4;
+  const br=(y<0?b*.8:b*.25)+Math.max(0,1-Math.abs(x+y+.5)/.16)*.45;
+  return[128+clamp(nx,-1,1)*127,128+clamp(ny,-1,1)*127,clamp(br)*255,m*255];});
+function gomo(s){const c=D.createElement("canvas"),t=360;c.width=c.height=t;const x=c.getContext("2d");x.translate(t/2,t/2);const R=t/2-4,N=10;
+  x.fillStyle=s.casca;x.beginPath();x.arc(0,0,R,0,7);x.fill();x.fillStyle=s.miolo;x.beginPath();x.arc(0,0,R*.91,0,7);x.fill();
+  for(let i=0;i<N;i++){x.save();x.rotate(i/N*Math.PI*2);const a=Math.PI/N*.86,r0=R*.1,r1=R*.84;
+    x.beginPath();x.moveTo(r0,0);x.quadraticCurveTo(r1*.5,-Math.tan(a)*r1*.55,r1*Math.cos(a),-r1*Math.sin(a));x.quadraticCurveTo(r1*1.03,0,r1*Math.cos(a),r1*Math.sin(a));x.quadraticCurveTo(r1*.5,Math.tan(a)*r1*.55,r0,0);x.closePath();
+    x.fillStyle=s.polpa;x.fill();x.clip();x.strokeStyle="rgba(255,255,255,.28)";x.lineWidth=2.2;
+    for(let k=-5;k<=5;k++){x.beginPath();x.moveTo(r0,0);x.lineTo(r1,k*14);x.stroke();}
+    x.restore();}
+  return c;}
+const sGomo=SABOR.map(gomo);
+
+/* a superfície: 64 pontos ligados por mola; dedo, gelo, gota e jato empurram a água e a onda corre sozinha */
+const N=64,h=new Float32Array(N),v=new Float32Array(N);
+function empurra(x,f,lg=4){const c=clamp(x)*(N-1);for(let i=0;i<N;i++){const dd=(i-c)/lg;v[i]+=f*Math.exp(-dd*dd);}}
+function passoOnda(){for(let s=0;s<2;s++){for(let i=0;i<N;i++){const e=h[Math.max(i-1,0)],d=h[Math.min(i+1,N-1)];v[i]+=(e+d-2*h[i])*.2-h[i]*.012;v[i]*=.988;}for(let i=0;i<N;i++)h[i]=clamp(h[i]+v[i],-.16,.16);}}
+
+const bolhas=[];for(let i=0;i<64;i++)bolhas.push({x:Math.random(),y:Math.random()*1.4,r:.004+Math.random()*Math.random()*.018,f:Math.random()*7,s:1});
+const lerpK=(p,k)=>{for(let i=1;i<k.length;i++)if(p<=k[i][0]){const a=k[i-1],b=k[i],t=sv((p-a[0])/(b[0]-a[0]));return a[1]+(b[1]-a[1])*t;}return k[k.length-1][1];};
+const NIVEL=[[0,.05],[.07,.05],[.3,.8],[.82,.8],[.955,0],[1,0]];
+const GOMOS=[{x:.14,d:.1,r:.1,g:.4},{x:.86,d:.16,r:.125,g:-.3},{x:.5,d:.46,r:.07,g:.7},{x:.9,d:.54,r:.085,g:-.6},{x:.08,d:.6,r:.11,g:.2}];
+const GELOS=[{x:.3,d:.06,r:.1,g:.5},{x:.62,d:.1,r:.12,g:-.4},{x:.47,d:.25,r:.09,g:1},{x:.8,d:.2,r:.08,g:.2}];
+
+const falas=[...D.querySelectorAll(".fala")].map(e=>({e,a:+e.dataset.de,b:+e.dataset.ate}));
+let sabor=0,saborAntes=0,floodT=99,floodC=[.5,.5],rip=[.5,.42,9],pAnt=0,alvoP=0,p=0,inicio=null,ult=null,acum=0,pxAnt=null,pingo=false;
+function trocaSabor(i,x,y){if(i===sabor)return;saborAntes=sabor;sabor=i;floodT=0;floodC=[x,y];
+  D.querySelectorAll(".sabores button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.s===i)));
+  empurra(x,.012,8);gl.useProgram(pr);}
+D.querySelectorAll(".sabores button").forEach(b=>b.addEventListener("click",()=>{const r=b.getBoundingClientRect();trocaSabor(+b.dataset.s,(r.left+r.width/2)/innerWidth,(r.top+r.height/2)/innerHeight);}));
+function toque(e){const x=e.clientX/innerWidth,y=e.clientY/innerHeight;rip=[x,y,0];empurra(x,-.012,5);for(let i=0;i<7;i++){const b=bolhas[i*9];b.x=x+(Math.random()-.5)*.1;b.y=y+Math.random()*.06;}}
+addEventListener("pointerdown",toque,{passive:true});
+addEventListener("pointermove",e=>{if(pxAnt!==null&&!reduz){const dx=(e.clientX-pxAnt)/innerWidth;empurra(e.clientX/innerWidth,clamp(dx*.3,-.014,.014),6);}pxAnt=e.clientX;},{passive:true});
+
+function camadas(nivel,t){
+  const sup=1-nivel;
+  cc.clearRect(0,0,LW,LH);nc.clearRect(0,0,LW,LH);
+  /* bolhas */
+  bolhas.forEach((b,i)=>{
+    const vel=(.0011+b.r*.09)*(1+pour*1.8);b.y-=vel;b.x+=Math.sin(t*2+b.f)*.0005;
+    if(b.y<sup+.012){if(nivel>.1&&Math.random()<.2)empurra(b.x,.0006,1.5);b.y=1+Math.random()*.2;b.x=pour>.1&&i%2?.5+(Math.random()-.5)*.22:Math.random();}
+    const r=b.r*LH*(1+.2*Math.sin(t*5+b.f)*.2);nc.drawImage(sBolha,b.x*LW-r,b.y*LH-r,r*2,r*2);
+  });
+  /* fatias: descem com a água e pousam no fundo quando ela acaba */
+  const ap=sv(faixa(p,.355,.43));
+  if(ap>0)GOMOS.forEach((g,i)=>{
+    const ch=sv(faixa(p,.355+i*.012,.41+i*.012)), r=g.r*Math.min(LW,LH*.62)*1.5, y=Math.min(1-r/LH*.75,sup+g.d+r/LH+.03)*ch-.3*(1-ch)+Math.sin(t*.7+i)*.008*Math.min(1,nivel*2);
+    cc.save();cc.translate(g.x*LW,y*LH);cc.rotate(g.g+t*.06*(i%2?1:-1)+p*6*g.g);cc.drawImage(sGomo[sabor],-r,-r,r*2,r*2);cc.restore();
+  });
+  /* gelo */
+  const gp=faixa(p,.665,.72);
+  if(gp>0)GELOS.forEach((g,i)=>{
+    const ch=sv(faixa(p,.665+i*.012,.7+i*.012)), derrete=1-sv(faixa(p,.86,.96))*.7, y=Math.min(.93,sup+g.d)*ch-.2*(1-ch)+Math.sin(t*1.1+i*2)*.009, r=g.r*Math.min(LW,LH*.62)*derrete, an=g.g+p*14*g.g;
+    nc.save();nc.translate(g.x*LW,y*LH);nc.rotate(an);nc.drawImage(sGelo,-r,-r,r*2,r*2);nc.restore();
+    cc.save();cc.translate(g.x*LW,y*LH);cc.rotate(an);cc.fillStyle="rgba(255,255,255,.2)";cc.beginPath();cc.roundRect(-r*.9,-r*.9,r*1.8,r*1.8,r*.26);cc.fill();cc.restore();
+  });
+  /* canudo */
+  const en=sv(faixa(p,.8,.84)),sa=sv(faixa(p,.955,.985));
+  if(en>0&&sa<1){const l=Math.max(26,LW*.062),alt=LH*1.3,yy=-alt+(LH*.97)*en-LH*1.2*sa;
+    cc.save();cc.translate(LW*.68,0);cc.rotate(.1);cc.translate(0,yy);cc.beginPath();cc.roundRect(-l/2,0,l,alt,l*.2);cc.clip();
+    cc.fillStyle="#F3EEDF";cc.fillRect(-l,0,l*2,alt);cc.fillStyle=SABOR[sabor].fundo;
+    for(let i=-2;i<34;i++){cc.save();cc.translate(0,i*l*2.2+t*40%(l*2.2));cc.transform(1,.7,0,1,0,0);cc.fillRect(-l,0,l*2,l*1.1);cc.restore();}
+    cc.fillStyle="rgba(0,0,0,.14)";cc.fillRect(l*.16,0,l,alt);cc.restore();}
+  gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,texCol);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,camada);
+  gl.activeTexture(gl.TEXTURE3);gl.bindTexture(gl.TEXTURE_2D,texNrm);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,normal);
+}
+function posCena(c){ // y da cena: sobe de baixo, descansa, sai por cima
+  const e=c.ent[0]<0?0:1-sv(faixa(p,c.ent[0],c.ent[1])), s=sv(faixa(p,c.sai[0],c.sai[1]));
+  return {y:e*1.05-s*1.05,vis:e<1&&s<1};
+}
+let pour=0;
+function quadro(ts){
+  if(inicio===null){inicio=ts;ult=ts;}
+  const dt=Math.min(.05,(ts-ult)/1000);ult=ts;const t=(ts-inicio)/1000;
+  const max=R.scrollHeight-innerHeight; alvoP=max>0?clamp(scrollY/max):0; p+= (alvoP-p)*(reduz?1:.22);
+  if(!pingo&&t>.55&&!reduz){pingo=true;rip=[.5,.46,0];empurra(.5,-.03,5);}
+  const nivel=lerpK(p,NIVEL)+(reduz?0:0);
+  pour=sv(faixa(p,.06,.085))*(1-sv(faixa(p,.27,.31)));
+  if(pour>.05)empurra(.5+Math.sin(t*9)*.02,-.0016*pour,3);
+  /* gelo e fatias caindo fazem espirro; quem manda é a passagem pelo ponto da rolagem */
+  GOMOS.forEach((g,i)=>{const m=.385+i*.012;if(pAnt<m&&p>=m)empurra(g.x,-.018,4);});
+  GELOS.forEach((g,i)=>{const m=.685+i*.012;if(pAnt<m&&p>=m)empurra(g.x,-.03,4);});
+  if(p>.84&&p<.95&&!reduz)empurra(.68,-.0006,3);
+  pAnt=p;
+  acum+=dt;let lim=0;while(acum>1/60&&lim++<3){passoOnda();acum-=1/60;}
+  camadas(nivel,t);
+  rip[2]+=dt;floodT+=dt;
+  const lado=(i,nm)=>hex(SABOR[i][nm]);
+  gl.useProgram(pr);
+  const vis=CENAS.map((c,i)=>({i,...posCena(c)})).filter(c=>c.vis);
+  const A=vis[0]||{i:0,y:-3},B=vis[1]||{i:0,y:-3};
+  gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,texCena[A.i]);gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,texCena[B.i]);
+  gl.uniform1i(u.uTA,0);gl.uniform1i(u.uTB,1);gl.uniform1i(u.uCol,2);gl.uniform1i(u.uNrm,3);
+  gl.uniform1f(u.uYA,A.y);gl.uniform1f(u.uYB,B.y);gl.uniform1f(u.uLevel,nivel);gl.uniform1f(u.uPour,pour);gl.uniform1f(u.uT,reduz?4:t);gl.uniform1f(u.uAsp,asp);
+  gl.uniform1f(u.uFlood,floodT>2?3:floodT*floodT*2.4+floodT*.5);gl.uniform2fv(u.uFloodC,floodC);
+  gl.uniform3fv(u.uTopo,lado(sabor,"topo"));gl.uniform3fv(u.uFundo,lado(sabor,"fundo"));gl.uniform3fv(u.uTopo0,lado(saborAntes,"topo"));gl.uniform3fv(u.uFundo0,lado(saborAntes,"fundo"));
+  gl.uniform3fv(u.uRip,rip);gl.uniform1fv(u.uW,h);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+  falas.forEach(f=>f.e.classList.toggle("on",p>=f.a&&p<f.b));
+  requestAnimationFrame(quadro);
+}
+requestAnimationFrame(quadro);
+addEventListener("load",()=>{if(!reduz&&window.Lenis){const l=window.lenis=new Lenis({lerp:.09,wheelMultiplier:.8});(function lp(t){l.raf(t);requestAnimationFrame(lp)})(performance.now());}});
+window.__fervo={set p(v){},trocaSabor};
+})();
+</script>
+</body>
+</html>

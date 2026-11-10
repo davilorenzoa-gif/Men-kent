@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Borbulha · demo WebGL</title>
+<meta name="description" content="Demo GuDev: o site é o copo. Enche com a rolagem, faz espuma, a fruta afunda, troca o sabor, inclina com o dedo e seca no fim. Marca fictícia.">
+<meta name="theme-color" content="#EEF2E8">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Familjen+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/*
+  Borbulha: demo do motor da Fervo (sites/fervo) com outra marca e outras cenas.
+  - Um canvas WebGL2 e UM shader desenham tudo: água, espuma, letras, cáustica, troca de sabor.
+  - Cada título é uma textura (fonte desenhada num canvas 2D). O shader pinta tinta fora d'água
+    e papel dentro, com separação RGB e ondulação.
+  - Bolhas são sprites de "normal" (R,G = direção da refração; B = brilho): entortam o que está atrás.
+  - Tudo sai de um progresso p (0..1) da rolagem. Cenas novas: espuma que sobe e copo que inclina.
+*/
+:root{--papel:#EEF2E8;--tinta:#101511;--m:clamp(18px,3vw,44px)}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--papel)}
+body{margin:0;background:var(--papel);color:var(--tinta);font:500 clamp(1.05rem,1rem + .3vw,1.3rem)/1.3 "Familjen Grotesk",system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid currentColor;outline-offset:3px}
+#gl{position:fixed;inset:0;width:100vw;height:100svh;display:block;touch-action:pan-y}
+.topo{position:fixed;inset:0 0 auto;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:16px var(--m);pointer-events:none}
+.topo a{font:400 1.3rem/1 "Bowlby One",sans-serif;text-decoration:none;pointer-events:auto}
+.topo span{font-size:.875rem}
+main{position:relative;height:820svh;pointer-events:none}
+.so-leitor{position:absolute;left:0;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.fala{position:fixed;left:var(--m);right:var(--m);bottom:max(26px,5svh);z-index:4;max-width:34ch;opacity:0;transform:translateY(14px);transition:opacity .35s,transform .45s cubic-bezier(.2,.7,.1,1);pointer-events:none}
+.fala.on{opacity:1;transform:none;pointer-events:auto}
+.fala.balao{width:fit-content;padding:10px 14px;background:var(--tinta);color:var(--papel);border-radius:6px}
+.desce{display:inline-block;margin-top:8px;font-weight:700}
+.desce::after{content:"";display:inline-block;width:.5em;height:.5em;margin-left:.45em;border-right:2px solid;border-bottom:2px solid;transform:translateY(-.14em) rotate(45deg)}
+.sabores{display:flex;flex-wrap:wrap;gap:8px;max-width:none}
+.sabores button{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 16px 0 8px;background:var(--papel);color:var(--tinta);border:2px solid var(--tinta);border-radius:6px;font-weight:700;transition:transform .15s}
+.sabores button:active{transform:scale(.96)}
+.sabores button[aria-pressed=true]{background:var(--tinta);color:var(--papel)}
+.sabores i{display:block;width:30px;height:30px;border-radius:4px;background:var(--b)}
+.fim{bottom:max(120px,20svh);max-width:34ch}
+.fim p{margin:0 0 14px}
+.btn{display:inline-flex;align-items:center;min-height:54px;padding:0 24px;background:var(--tinta);color:var(--papel);border-radius:6px;font-weight:700;text-decoration:none;border:0}
+.nota{display:block;margin-top:12px;font-size:.875rem}
+.semgl .so-leitor{position:static;width:auto;height:auto;clip-path:none;white-space:normal;font:400 12vw/1 "Bowlby One",sans-serif;padding:18svh var(--m) 0}
+.semgl .fala{position:static;opacity:1;transform:none;padding:16px var(--m);max-width:none}
+.semgl main{height:auto}
+.semgl #gl{display:none}
+@media (prefers-reduced-motion:reduce){.fala{transition:opacity .2s;transform:none}}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<header class="topo"><a href="#inicio">Borbulha</a><span>Marca fictícia</span></header>
+<main id="inicio">
+  <h1 class="so-leitor">Borbulha: refrigerante de fruta</h1>
+  <h2 class="so-leitor">Sobe espuma</h2>
+  <h2 class="so-leitor">Fruta no fundo</h2>
+  <h2 class="so-leitor">Troca o sabor</h2>
+  <h2 class="so-leitor">Inclina</h2>
+  <h2 class="so-leitor">Secou</h2>
+</main>
+<p class="fala" data-de="0" data-ate=".06">Refrigerante de fruta, feito devagar.<br><span class="desce">Rola pra encher o copo</span></p>
+<p class="fala balao" data-de=".2" data-ate=".33">Encosta na água. Ela mexe e solta bolha.</p>
+<p class="fala balao" data-de=".38" data-ate=".5">A fruta vai inteira pro fundo.</p>
+<div class="fala sabores" data-de=".53" data-ate=".655" role="group" aria-label="Escolha o sabor">
+  <button type="button" data-s="0" aria-pressed="true" style="--b:#FFB81C"><i></i>Maracujá</button>
+  <button type="button" data-s="1" aria-pressed="false" style="--b:#8E3BE0"><i></i>Uva</button>
+  <button type="button" data-s="2" aria-pressed="false" style="--b:#2CC995"><i></i>Hortelã</button>
+</div>
+<p class="fala balao" id="falaInclina" data-de=".69" data-ate=".81">Arrasta pro lado. O copo inclina.</p>
+<div class="fala fim" data-de=".955" data-ate="1.1">
+  <p>Secou. O texto que estava embaixo da água voltou a ficar escuro.</p>
+  <a class="btn" href="#inicio" id="denovo">Encher de novo</a>
+  <small class="nota">Demo de técnica da GuDev. A Borbulha não existe.</small>
+</div>
+
+<script>
+(function(){
+const D=document,R=D.documentElement,cv=D.getElementById("gl"),calmo=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const gl=cv.getContext("webgl2",{antialias:false,alpha:false});
+if(!gl){R.classList.add("semgl");return;}
+
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),sv=t=>{t=clamp(t);return t*t*(3-2*t)},faixa=(p,a,b)=>clamp((p-a)/(b-a));
+const hex=h=>[1,3,5].map(i=>parseInt(h.substr(i,2),16)/255);
+const SABOR=[
+  {cima:"#FFD23A",baixo:"#E06A00",casca:"#7A3E8A",polpa:"#FFC21A",semente:"#2A1A10"},
+  {cima:"#B068FF",baixo:"#3A0E6B",casca:"#3B1460",polpa:"#C9A2F2",semente:"#5A2A86"},
+  {cima:"#8BF5C8",baixo:"#0A7D5C",casca:"#1F7A4A",polpa:"#B9F2CF",semente:"#2E9C64"}
+];
+
+/* ---------------- shader ---------------- */
+const VS=`#version 300 es
+in vec2 a;out vec2 vUv;void main(){vUv=vec2(a.x*.5+.5,.5-a.y*.5);gl_Position=vec4(a,0.,1.);}`;
+const FS=`#version 300 es
+precision highp float;
+in vec2 vUv;out vec4 o;
+uniform sampler2D uTA,uTB,uCol,uNrm;
+uniform float uYA,uYB,uNivel,uT,uAsp,uRaio,uInclina,uEspuma,uJato;
+uniform vec2 uCentro;
+uniform vec3 uCima,uBaixo,uCima0,uBaixo0;
+uniform vec4 uOndas[6]; /* x, y, idade, força: toques e rastro do dedo */
+uniform vec3 uDedo;    /* x, y, força: o dedo afunda a superfície onde está */
+uniform float uW[64];
+const vec3 PAPEL=vec3(.933,.949,.910),TINTA=vec3(.063,.082,.067);
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float onda(float x){float f=clamp(x,0.,1.)*63.;int i=int(floor(f));int j=min(i+1,63);float k=f-float(i);k=k*k*(3.-2.*k);return mix(uW[i],uW[j],k);}
+float letra(sampler2D s,vec2 uv,float y){uv.y-=y;if(uv.y<0.||uv.y>1.||uv.x<0.||uv.x>1.)return 0.;return texture(s,uv).a;}
+float txt(vec2 uv){return max(letra(uTA,uv,uYA),letra(uTB,uv,uYB));}
+float luz(vec2 uv){ /* cáustica: linhas de luz que se cruzam e andam */
+  vec2 p=uv*vec2(uAsp,1.)*6.;float c=0.;
+  for(int n=0;n<3;n++){float t=uT*(.35+.12*float(n));p+=vec2(sin(p.y*1.3+t),cos(p.x*1.1-t))*.55;c+=.009/abs(sin(p.x)*sin(p.y)+.02);}
+  return clamp(c*.33-.08,0.,1.);
+}
+float espuma(vec2 uv,float d,float alt){ /* bolinhas de espuma em 2 tamanhos */
+  if(alt<=.001||d<0.)return 0.;
+  float borda=alt+sin(uv.x*38.+uT*1.7)*.004+sin(uv.x*11.-uT)*.006;
+  float m=smoothstep(borda,borda-.012,d);
+  vec2 g=uv*vec2(uAsp,1.)*90.;g.y+=uT*.6;vec2 i=floor(g),f=fract(g)-.5-(vec2(hash(i+3.),hash(i+9.))-.5)*.35;
+  float r=.18+hash(i)*.28,b=smoothstep(r,r-.1,length(f))-smoothstep(r-.12,r-.2,length(f));
+  vec2 g2=uv*vec2(uAsp,1.)*40.;g2.y+=uT*.3;vec2 i2=floor(g2),f2=fract(g2)-.5-(vec2(hash(i2+5.),hash(i2+1.))-.5)*.3;
+  float r2=.2+hash(i2+7.)*.25,b2=smoothstep(r2,r2-.06,length(f2))-smoothstep(r2-.08,r2-.14,length(f2));
+  return m*(.82+.18*(1.-max(b,b2)));
+}
+float relevo(vec2 uv){
+  float h=0.;
+  for(int i=0;i<6;i++){
+    vec4 w=uOndas[i];if(w.w<=0.)continue;
+    float rr=length((uv-w.xy)*vec2(uAsp,1.)),fr=w.z*.42;
+    h+=sin((rr-fr)*48.)*exp(-abs(rr-fr)*9.)*exp(-w.z*1.6)*w.w*smoothstep(0.,.08,w.z+.02);
+  }
+  vec2 a=(uv-uDedo.xy)*vec2(uAsp,1.);
+  h-=exp(-dot(a,a)*140.)*uDedo.z*1.6;
+  return h*.05;
+}
+void main(){
+  vec2 uv=vUv;
+  float sup=1.-uNivel+onda(uv.x)+uInclina*(uv.x-.5);
+  float d=uv.y-sup;
+  float dentro=smoothstep(-.0012,.0012,d);
+  /* jato que enche */
+  float xj=.5+sin(uv.y*8.+uT*5.)*.004,lj=uJato*(.014+.004*sin(uv.y*28.-uT*16.));
+  float jato=(uJato>.01&&uv.y<sup)?smoothstep(lj,lj*.5,abs(uv.x-xj)):0.;
+  float liq=max(dentro,jato);
+  /* relevo da tela inteira (papel e água): anéis dos toques + covinha do dedo */
+  vec2 ep=vec2(.0025,0.);
+  vec2 g=vec2(relevo(uv+ep.xy)-relevo(uv-ep.xy),relevo(uv+ep.yx)-relevo(uv-ep.yx))/(2.*ep.x);
+  vec2 off=g*.006;
+  vec4 n=texture(uNrm,uv);
+  if(liq>.01){
+    off+=vec2(sin(uv.y*15.+uT*1.4+sin(uv.x*7.+uT)),cos(uv.x*13.-uT*1.1+sin(uv.y*5.)))*.007*liq;
+    off.y+=exp(-max(d,0.)*24.)*.045*dentro;
+    if(n.a>.02)off+=(n.rg-.5)*2.*.1*n.a*liq;
+  }
+  float tR=txt(uv+off*1.2),tG=txt(uv+off),tB=txt(uv+off*.8);
+  vec4 c=texture(uCol,uv+off*.7);
+  /* fora d'água */
+  vec3 seco=PAPEL*(1.-.05*length((uv-.5)*vec2(1.,1.2)));
+  seco=mix(seco,mix(uBaixo,uCima,.5),.1*exp(min(d,0.)*36.));
+  seco=mix(seco,c.rgb,c.a);
+  seco=mix(seco,TINTA,vec3(tR,tG,tB));
+  /* luz e sombra do relevo no papel: parece uma lâmina macia */
+  float luzP=clamp(dot(g,normalize(vec2(-.55,-.85)))*.9,-1.,1.);
+  seco*=1.+luzP*.11;
+  seco+=vec3(1.)*pow(max(luzP,0.),3.)*.14;
+  /* dentro: cor do sabor com a troca espalhando em círculo */
+  vec2 q=(uv-uCentro)*vec2(uAsp,1.);
+  float rd=length(q)+sin(atan(q.y,q.x)*7.+uT*2.6)*.025,frente=smoothstep(uRaio-.02,uRaio+.012,rd);
+  vec3 cima=mix(uCima,uCima0,frente),baixo=mix(uBaixo,uBaixo0,frente);
+  float fundo=clamp(max(d,0.)*1.1,0.,1.);
+  vec3 ag=mix(cima,baixo,pow(fundo,.8));
+  ag+=(cima*.35+.3)*luz(uv+off*.5)*(.55-.3*fundo);
+  ag+=exp(-abs(rd-uRaio)*60.)*.28*step(uRaio,2.);
+  ag=mix(ag,mix(c.rgb,baixo,.15+.25*fundo),c.a);
+  ag=mix(ag,PAPEL,vec3(tR,tG,tB));
+  /* espuma por cima de tudo que está logo abaixo da superfície */
+  float e=espuma(uv,d,uEspuma)*dentro;
+  ag=mix(ag,mix(vec3(1.,.99,.95),cima,.18),e);
+  ag=mix(ag,mix(cima,baixo,.35),tG*e*.85); /* letra aparece na espuma, na cor do sabor */
+  vec3 cor=mix(seco,ag,liq);
+  if(liq>.01&&n.a>.02)cor+=n.b*n.a*.8*liq*(1.-e);
+  cor=mix(cor,vec3(1.),exp(-pow(d*200.,2.))*.7);
+  cor=mix(cor,baixo*.7,exp(-pow((d-.012-uEspuma)*110.,2.))*.22*step(.0,uNivel-.01));
+  o=vec4(cor,1.);
+}`;
+function sh(t,s){const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(x));return x;}
+const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);
+if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){R.classList.add("semgl");return;}
+gl.useProgram(pr);
+const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+const la=gl.getAttribLocation(pr,"a");gl.enableVertexAttribArray(la);gl.vertexAttribPointer(la,2,gl.FLOAT,false,0,0);
+const u={};["uTA","uTB","uCol","uNrm","uYA","uYB","uNivel","uT","uAsp","uRaio","uInclina","uEspuma","uJato","uCentro","uCima","uBaixo","uCima0","uBaixo0","uOndas","uDedo","uW"].forEach(k=>u[k]=gl.getUniformLocation(pr,k));
+function tex(){const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);[[gl.TEXTURE_MIN_FILTER,gl.LINEAR],[gl.TEXTURE_MAG_FILTER,gl.LINEAR],[gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE],[gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE]].forEach(([k,v])=>gl.texParameteri(gl.TEXTURE_2D,k,v));gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));return t;}
+
+/* ---------------- cenas (títulos como textura) ---------------- */
+const CENAS=[
+  {ret:["BOR","BU","LHA"],dei:["BORBULHA"],ent:[-1,-1],sai:[.09,.19]},
+  {ret:["SOBE","ESPU","MA"],dei:["SOBE","ESPUMA"],ent:[.11,.21],sai:[.32,.38]},
+  {ret:["FRUTA","NO","FUNDO"],dei:["FRUTA NO","FUNDO"],ent:[.33,.39],sai:[.48,.54]},
+  {ret:["TROCA","O","SABOR"],dei:["TROCA","O SABOR"],ent:[.48,.54],sai:[.645,.69]},
+  {ret:["INCLI","NA"],dei:["INCLINA"],ent:[.645,.7],sai:[.8,.86]},
+  {ret:["SECOU."],dei:["SECOU."],ent:[.89,.955],sai:[2,3],topo:1}
+];
+const texCena=CENAS.map(tex),texCol=tex(),texNrm=tex();
+const camada=D.createElement("canvas"),cc=camada.getContext("2d"),normal=D.createElement("canvas"),nc=normal.getContext("2d");
+let W=0,H=0,LW=0,LH=0,asp=1,larg=0,fonteOk=false;
+function desenhaCenas(){
+  if(!fonteOk||!W)return;
+  const c=D.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d"),deitado=W>H,mx=W*.05;
+  CENAS.forEach((cn,i)=>{
+    x.clearRect(0,0,W,H);x.fillStyle="#fff";
+    const ls=deitado?cn.dei:cn.ret,area=W-mx*2,topo=H*.1,altMax=H*(cn.topo?.4:.74);
+    x.font='400 200px "Bowlby One"';
+    const med=ls.map(t=>{const m=x.measureText(t);return{t,w:m.width,asc:m.actualBoundingBoxAscent,desc:m.actualBoundingBoxDescent}});
+    let esc=med.map(m=>area/m.w);esc=esc.map(e=>Math.min(e,Math.min(...esc)*1.6));
+    let total=med.reduce((s,m,k)=>s+(m.asc+m.desc)*esc[k],0)+H*.018*(ls.length-1);
+    if(total>altMax){const f=altMax/total;esc=esc.map(e=>e*f);total=altMax;}
+    let y=cn.topo?topo:Math.max(topo,(H*.9-total)/2);
+    med.forEach((m,k)=>{x.font=`400 ${esc[k]*200}px "Bowlby One"`;y+=m.asc*esc[k];x.fillText(m.t,mx,y);y+=m.desc*esc[k]+H*.018;});
+    gl.bindTexture(gl.TEXTURE_2D,texCena[i]);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,c);
+  });
+}
+function tamanho(){
+  const dpr=Math.min(devicePixelRatio||1,2),w=innerWidth,h=innerHeight,k=Math.min(1,1920/Math.max(w,h)/dpr);
+  W=Math.round(w*dpr*k);H=Math.round(h*dpr*k);asp=w/h;cv.width=W;cv.height=H;gl.viewport(0,0,W,H);
+  LW=Math.round(W/2);LH=Math.round(H/2);camada.width=normal.width=LW;camada.height=normal.height=LH;
+  if(w!==larg||!larg){larg=w;desenhaCenas();}
+}
+tamanho();addEventListener("resize",tamanho);
+Promise.all([D.fonts.load('40px "Bowlby One"',"BORULHAÇ."),D.fonts.load('700 18px "Familjen Grotesk"')]).then(()=>{fonteOk=true;desenhaCenas();},()=>{fonteOk=true;desenhaCenas();});
+
+/* ---------------- sprites ---------------- */
+function sprite(t,f){const c=D.createElement("canvas");c.width=c.height=t;const x=c.getContext("2d"),im=x.createImageData(t,t);
+  for(let j=0;j<t;j++)for(let i=0;i<t;i++){const v=f((i+.5)/t*2-1,(j+.5)/t*2-1),o=(j*t+i)*4;for(let k=0;k<4;k++)im.data[o+k]=v[k];}
+  x.putImageData(im,0,0);return c;}
+/* bolha: refração forte na borda, brilho em cima à esquerda */
+const sBolha=sprite(96,(x,y)=>{const r=Math.hypot(x,y);if(r>1)return[128,128,0,0];const z=Math.pow(r,2.2);
+  const b=Math.max(0,1-Math.hypot(x+.38,y+.4)/.26)+Math.pow(r,9)*.4;return[128-x*z*127,128-y*z*127,clamp(b)*255,clamp((1-r)*20)*255];});
+/* rodela de maracujá/uva/hortelã: desenhada, vai na camada de cor */
+function rodela(s,qual){const c=D.createElement("canvas"),t=320;c.width=c.height=t;const x=c.getContext("2d");x.translate(t/2,t/2);const R=t/2-4;
+  if(qual===2){ /* folha de hortelã */
+    x.fillStyle=s.casca;x.beginPath();x.moveTo(0,-R);x.bezierCurveTo(R*.9,-R*.5,R*.8,R*.6,0,R);x.bezierCurveTo(-R*.8,R*.6,-R*.9,-R*.5,0,-R);x.fill();
+    x.strokeStyle=s.polpa;x.lineWidth=5;x.beginPath();x.moveTo(0,-R*.9);x.lineTo(0,R*.95);x.stroke();
+    for(let k=-3;k<=3;k++){x.beginPath();x.moveTo(0,k*R*.24);x.quadraticCurveTo(R*.3,k*R*.24-R*.1,R*.55,k*R*.24-R*.25);x.moveTo(0,k*R*.24);x.quadraticCurveTo(-R*.3,k*R*.24-R*.1,-R*.55,k*R*.24-R*.25);x.lineWidth=2.5;x.stroke();}
+    return c;}
+  x.fillStyle=s.casca;x.beginPath();x.arc(0,0,R,0,7);x.fill();
+  x.fillStyle="#FFF6E0";x.beginPath();x.arc(0,0,R*.86,0,7);x.fill();
+  x.fillStyle=s.polpa;x.beginPath();x.arc(0,0,R*.74,0,7);x.fill();
+  let sd=7;const rnd=()=>{sd=sd*16807%2147483647;return sd/2147483647};
+  for(let k=0;k<(qual===0?46:12);k++){const a=rnd()*6.283,r=Math.sqrt(rnd())*R*.62;x.save();x.translate(Math.cos(a)*r,Math.sin(a)*r);x.rotate(a);
+    x.fillStyle="rgba(255,255,255,.35)";x.beginPath();x.ellipse(0,0,R*.075,R*.055,0,0,7);x.fill();
+    x.fillStyle=s.semente;x.beginPath();x.ellipse(0,0,R*.04,R*.028,0,0,7);x.fill();x.restore();}
+  return c;}
+const sFruta=SABOR.map(rodela);
+
+/* ---------------- superfície com mola ---------------- */
+const N=64,h=new Float32Array(N),v=new Float32Array(N);
+function empurra(x,f,lg=4){const c=clamp(x)*(N-1);for(let i=0;i<N;i++){const dd=(i-c)/lg;v[i]+=f*Math.exp(-dd*dd);}}
+function passo(){for(let s=0;s<2;s++){for(let i=0;i<N;i++){const e=h[Math.max(i-1,0)],d=h[Math.min(i+1,N-1)];v[i]+=(e+d-2*h[i])*.2-h[i]*.012;v[i]*=.986;}for(let i=0;i<N;i++)h[i]=clamp(h[i]+v[i],-.15,.15);}}
+
+const bolhas=[];for(let i=0;i<70;i++)bolhas.push({x:Math.random(),y:Math.random()*1.4,r:.004+Math.random()*Math.random()*.017,f:Math.random()*7});
+const chave=(p,k)=>{for(let i=1;i<k.length;i++)if(p<=k[i][0]){const a=k[i-1],b=k[i],t=sv((p-a[0])/(b[0]-a[0]));return a[1]+(b[1]-a[1])*t;}return k[k.length-1][1];};
+const NIVEL=[[0,.04],[.06,.04],[.27,.78],[.84,.78],[.95,0],[1,0]];
+const ESPUMA=[[0,0],[.2,.018],[.215,.018],[.27,.13],[.32,.13],[.39,.022],[.84,.022],[.92,0],[1,0]];
+const FRUTAS=[{x:.18,r:.11,g:.5},{x:.78,r:.13,g:-.4},{x:.5,r:.08,g:.9},{x:.9,r:.09,g:-.7},{x:.33,r:.1,g:.2}];
+
+const falas=[...D.querySelectorAll(".fala")].map(e=>({e,a:+e.dataset.de,b:+e.dataset.ate}));
+let sabor=0,saborAntes=0,tRaio=99,centro=[.5,.5],ondas=new Float32Array(24),proxOnda=0,dedo=[.5,.5,0],dedoAlvo=0,rastro=null,p=0,pAnt=0,ini=null,ult=0,acum=0,pxAnt=null,jatoV=0,inclina=0,alvoInclina=0,giro=null,pedido=false;
+function trocaSabor(i,x,y){if(i===sabor)return;saborAntes=sabor;sabor=i;tRaio=0;centro=[x,y];
+  D.querySelectorAll(".sabores button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.s===i)));empurra(x,.012,8);}
+D.querySelectorAll(".sabores button").forEach(b=>b.addEventListener("click",()=>{const r=b.getBoundingClientRect();trocaSabor(+b.dataset.s,(r.left+r.width/2)/innerWidth,(r.top+r.height/2)/innerHeight);}));
+D.getElementById("denovo").addEventListener("click",e=>{e.preventDefault();scrollTo({top:0,behavior:calmo?"auto":"smooth"});});
+
+/* inclinar: dedo/mouse em qualquer aparelho; giroscópio onde der (no iPhone pede permissão no 1º toque) */
+const pesoInclina=()=>sv(faixa(p,.67,.71))*(1-sv(faixa(p,.8,.84)));
+function pedeGiro(){if(pedido)return;pedido=true;
+  const liga=()=>addEventListener("deviceorientation",e=>{if(e.gamma!=null)giro=clamp(e.gamma/40,-1,1);});
+  if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==="function")DeviceOrientationEvent.requestPermission().then(r=>{if(r==="granted")liga();}).catch(()=>{});
+  else liga();}
+addEventListener("pointerdown",e=>{const x=e.clientX/innerWidth,y=e.clientY/innerHeight;onda(x,y,1);dedo[0]=x;dedo[1]=y;dedoAlvo=1;empurra(x,-.012,5);
+  for(let i=0;i<8;i++){const b=bolhas[i*8];b.x=x+(Math.random()-.5)*.1;b.y=y+Math.random()*.06;}
+  if(pesoInclina()>.5)pedeGiro();},{passive:true});
+function onda(x,y,f){const k=proxOnda*4;ondas[k]=x;ondas[k+1]=y;ondas[k+2]=0;ondas[k+3]=f;proxOnda=(proxOnda+1)%6;rastro=[x,y];}
+addEventListener("pointerup",()=>{dedoAlvo=0;},{passive:true});
+addEventListener("pointercancel",()=>{dedoAlvo=0;},{passive:true});
+addEventListener("pointermove",e=>{const x=e.clientX/innerWidth,y=e.clientY/innerHeight;
+  if(!calmo){
+    const vel=pxAnt===null?0:Math.abs(e.clientX-pxAnt)/innerWidth;
+    dedo[0]=x;dedo[1]=y;dedoAlvo=Math.max(e.buttons||e.pointerType==="touch"?1:.45,dedoAlvo);
+    if(!rastro||Math.hypot((x-rastro[0])*innerWidth/innerHeight,y-rastro[1])>.09)onda(x,y,.35+Math.min(vel*20,.4));
+  }
+  if(pxAnt!==null&&!calmo){const dx=(e.clientX-pxAnt)/innerWidth;empurra(x,clamp(dx*.3,-.014,.014),6);}
+  pxAnt=e.clientX;if(giro===null)alvoInclina=(x-.5)*2;},{passive:true});
+
+function camadas(nivel,t,sup){
+  cc.clearRect(0,0,LW,LH);nc.clearRect(0,0,LW,LH);
+  const sobe=(1+jatoV*1.8)*(1+Math.max(0,ESPUMA_atual-.05)*6);
+  bolhas.forEach((b,i)=>{
+    b.y-=(.0011+b.r*.09)*sobe;b.x+=Math.sin(t*2+b.f)*.0005;
+    const s=sup+inclina*(b.x-.5);
+    if(b.y<s+.012){if(nivel>.1&&Math.random()<.2)empurra(b.x,.0006,1.5);b.y=1+Math.random()*.2;b.x=jatoV>.1&&i%2?.5+(Math.random()-.5)*.2:Math.random();}
+    const r=b.r*LH;nc.drawImage(sBolha,b.x*LW-r,b.y*LH-r,r*2,r*2);
+  });
+  /* frutas: caem de cima, atravessam a água devagar e deitam no fundo */
+  const ap=faixa(p,.36,.44);
+  if(ap>0&&nivel>.02)FRUTAS.forEach((f,i)=>{
+    const ch=sv(faixa(p,.36+i*.014,.47+i*.014)),r=f.r*Math.min(LW,LH*.62)*1.4,fundo=1-r/LH*.6;
+    const y=(-.25)+(fundo+.25)*ch+Math.sin(t*.8+i)*.006*(1-ch*.6);
+    const s=sup+inclina*(f.x-.5);
+    cc.save();cc.translate(f.x*LW+Math.sin(t*.5+i)*LW*.01,y*LH);cc.rotate(f.g+ch*2.4*f.g+t*.05*(i%2?1:-1));cc.scale(1,.55+.45*(1-ch*.5));
+    cc.drawImage(sFruta[sabor],-r,-r,r*2,r*2);cc.restore();
+  });
+  gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,texCol);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,camada);
+  gl.activeTexture(gl.TEXTURE3);gl.bindTexture(gl.TEXTURE_2D,texNrm);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,normal);
+}
+let ESPUMA_atual=0;
+function posCena(c){const e=c.ent[0]<0?0:1-sv(faixa(p,c.ent[0],c.ent[1])),s=sv(faixa(p,c.sai[0],c.sai[1]));return{y:e*1.05-s*1.05,vis:e<1&&s<1};}
+gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,false);
+
+function quadro(ts){
+  requestAnimationFrame(quadro);
+  if(ini===null){ini=ts;ult=ts;}
+  const dt=Math.min(.05,(ts-ult)/1000);ult=ts;const t=(ts-ini)/1000;
+  const max=R.scrollHeight-innerHeight,alvo=max>0?clamp(scrollY/max):0;p+=(alvo-p)*(calmo?1:.2);
+  const nivel=chave(p,NIVEL);ESPUMA_atual=calmo?Math.min(.03,chave(p,ESPUMA)):chave(p,ESPUMA);
+  jatoV=sv(faixa(p,.05,.08))*(1-sv(faixa(p,.25,.29)));
+  if(jatoV>.05)empurra(.5+Math.sin(t*9)*.02,-.0016*jatoV,3);
+  FRUTAS.forEach((f,i)=>{const m=.4+i*.014;if(pAnt<m&&p>=m)empurra(f.x,-.02,4);});
+  /* inclinação: só pesa na cena "INCLINA"; o lado que desce empurra a onda */
+  const w=pesoInclina(),entrada=giro!==null?giro:alvoInclina,antes=inclina;
+  inclina+=((calmo?0:entrada*.32*w)-inclina)*.08;
+  const dInc=inclina-antes;if(Math.abs(dInc)>.0004){empurra(dInc>0?1:0,-dInc*.6,10);}
+  pAnt=p;
+  acum+=dt;let lim=0;while(acum>1/60&&lim++<3){passo();acum-=1/60;}
+  camadas(nivel,t,1-nivel);
+  for(let k=0;k<6;k++)ondas[k*4+2]+=dt;tRaio+=dt;
+  dedo[2]+=(dedoAlvo-dedo[2])*.15;dedoAlvo*=.94;
+  const vis=CENAS.map((c,i)=>({i,...posCena(c)})).filter(c=>c.vis),A=vis[0]||{i:0,y:-3},B=vis[1]||{i:0,y:-3};
+  gl.useProgram(pr);
+  gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,texCena[A.i]);gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,texCena[B.i]);
+  gl.uniform1i(u.uTA,0);gl.uniform1i(u.uTB,1);gl.uniform1i(u.uCol,2);gl.uniform1i(u.uNrm,3);
+  gl.uniform1f(u.uYA,A.y);gl.uniform1f(u.uYB,B.y);gl.uniform1f(u.uNivel,nivel);gl.uniform1f(u.uT,calmo?4:t);gl.uniform1f(u.uAsp,asp);
+  gl.uniform1f(u.uRaio,tRaio>2?3:tRaio*tRaio*2.4+tRaio*.5);gl.uniform2fv(u.uCentro,centro);
+  gl.uniform1f(u.uInclina,inclina);gl.uniform1f(u.uEspuma,ESPUMA_atual*Math.min(1,nivel*4));gl.uniform1f(u.uJato,calmo?0:jatoV);
+  const cor=(i,k)=>hex(SABOR[i][k]);
+  gl.uniform3fv(u.uCima,cor(sabor,"cima"));gl.uniform3fv(u.uBaixo,cor(sabor,"baixo"));gl.uniform3fv(u.uCima0,cor(saborAntes,"cima"));gl.uniform3fv(u.uBaixo0,cor(saborAntes,"baixo"));
+  gl.uniform4fv(u.uOndas,ondas);gl.uniform3fv(u.uDedo,dedo);gl.uniform1fv(u.uW,h);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+  falas.forEach(f=>f.e.classList.toggle("on",p>=f.a&&p<f.b));
+}
+requestAnimationFrame(quadro);
+})();
+</script>
+</body>
+</html>

@@ -25,3 +25,10 @@ npm run build:single   # dist-single/index.html → copiar para preview-glassy.h
 - "Repor" estoque atualiza o produto e os avisos. "Copiar link" copia o relatório com período e tela.
 - Configurações: tema, intensidade do vidro, animações on/off, resumo diário. Ficam salvas no navegador.
 - Celular: menu em gaveta, tabela vira cartões, blur menor pra rolar liso, inputs de 16px (sem zoom no iPhone), sem rolagem lateral.
+
+## Estrutura shadcn (desde 10/11/2026)
+- Componentes de terceiros (shadcn, 21st.dev etc.) vão em `src/components/ui/`. É a pasta que o CLI do shadcn usa (`components.json`), então `npx shadcn@latest add <componente>` cai no lugar certo e os imports `@/components/ui/...` funcionam sem editar nada.
+- Alias `@/` → `src/` (em `tsconfig.json`, `tsconfig.app.json` e `vite.config.ts`). `cn()` em `src/lib/utils.ts` (clsx + tailwind-merge).
+- Cores no formato shadcn (`bg-primary`, `ring-ring`, `bg-accent`...) estão no `@theme inline` do `src/index.css`, ligadas às variáveis do painel, então o tema claro/escuro continua funcionando. `dark:` = tema escuro do painel (sem `data-theme`).
+- `src/components/ui/liquid-glass-button.tsx`: `LiquidButton` (vidro líquido com distorção SVG), `MetalButton` e `Button`. Usado no "Entrar de novo" da tela de saída (perfil → Sair). O `demo.tsx` ao lado é só exemplo, não está montado no app.
+- Cuidado: o vidro líquido usa `backdrop-filter: url(#filtro)`, que só distorce de verdade no Chrome/Edge. No Safari e no Firefox fica só a borda de vidro (continua bonito, sem quebrar).
