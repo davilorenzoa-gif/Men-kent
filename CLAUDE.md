@@ -20,6 +20,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `gudev/exemplos/*.html`: sites reais (Açaí Happy, Chersoni, Dellart), nível mínimo de qualidade
 - `gudev/efeitos/`, `gudev/demos/`, `gudev/aprendizados/`: efeitos testados, demos de técnica e páginas de estudo
 - `gudev/aprendizados/guia-motion-premium.md` + `fusca-lab/`: guia de motion (stack, 60fps, mola, magnético, cursor, scroll storytelling, Flip, 3D) com tudo funcionando no Fusca Lab. Ler antes de criar WOW.
+- `gudev/ferramentas/previa_embutida.py`: gera a prévia num arquivo só (imagens + bibliotecas embutidas, SRI conferido) pra abrir no celular. Usar sempre que mandar prévia pro Davi.
 - `sites/<nome>/`: cada site de lead e cada conceito, com README do que falta confirmar
 
 ## Resumo rápido
@@ -31,6 +32,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - 1ª venda combinada: **Katraka**, R$ 600 em 2x (10/11/2026). Falta confirmar o pagamento; até lá, seção de cases vazia. Outro lead quente: ENTRElinhas (avó do Davi). Péçaí (açaí real em Guarulhos, `sites/pecai`) tem site pronto com logo e WhatsApp; faltam fotos e avaliações com nome.
 - Demos e conceitos, **nunca case**: Prumo, Fornalha, Faixa Vermelha, Lustro, Órbita, Vértice, 911, DOZE, Meridiano, Skyline, APEX, Espelho, Basalto, Moenda, Sulco. Lista em `04`.
 - `sites/glassy-dashboard` (painel em React/Tailwind): base se algum cliente pedir painel/sistema. É produto novo: preço e prazo a definir antes de oferecer.
+- Repertório de animação atualizado em 10/11 (logo em bolinhas, cortina que enche, máscara de texto, folha sobre o herói, gota no clique, borda que acende, obrigado em círculo): `03`, seção "Repertório".
 - Vídeo: os de 15s e os Reels saem de prompts pro Google Flow (Veo) + montagem no CapCut, ou edição feita aqui com ffmpeg. Claude não abre o CapCut. Lições em `05` e `08`.
 
 ## Regras que nunca quebram

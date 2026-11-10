@@ -69,3 +69,12 @@
 - **Nome de variável repetido no mesmo bloco de JS:** na Péçaí, `var pedido = {}` (o pedido) apagou o `var pedido = false` da rolagem, e o topo e a calda pararam de responder sem erro no console. Nomes de controle bem específicos (`quadroPedido`).
 - **Montar pedido com poucas opções fixas não serve pra cardápio grande.** Comércio com muitos itens: abas por categoria + quantidade.
 - **Arquivo HTML aberto no visualizador do app fica parado** quando depende de biblioteca de CDN (GSAP, Lenis): o visualizador bloqueia script externo, igual bloqueou o iframe do mapa. Pra mandar prévia pro celular, embutir as bibliotecas e as imagens no próprio arquivo, e o código precisa mostrar o estado final se `window.gsap` não existir (feito no Fusca Lab, 10/11).
+
+## Animação e processo (10/11/2026, Péçaí e Fusca Lab)
+- **`gsap.from()` guarda o valor FINAL no momento em que é criado.** Se uma classe CSS esconde o elemento (opacity 0) quando a timeline é montada, ele anima de 0 até 0 e some pra sempre. Tirar a classe de espera **antes** de criar a timeline.
+- **Rotação em SVG com GSAP:** usar `svgOrigin: "x y"` (coordenadas do viewBox), não `transform-origin` do CSS.
+- **Brilho em `div` por cima de PNG recortado vira um retângulo cinza.** Brilho tem que ser recortado pelo alfa da imagem (máscara SVG).
+- **CSS `transition` em `transform` + GSAP mexendo no mesmo elemento = briga** (fica atrasado e treme). Ou um ou outro. Na Péçaí a foto do herói ficou sem parallax por isso.
+- **Prompt gigante colado ("nível Awwwards, use todas as técnicas")**: primeiro perguntar QUAL site, depois aplicar só o que tem motivo e dizer o que ficou de fora e por quê (cursor em cardápio, vidro sem foto atrás, parágrafo animado). A regra do `03` vence o prompt.
+- **Davi não gostou do coqueiro em SVG** (palmeira desenhada na abertura da Péçaí). Ilustração genérica de "planta/árvore" em SVG tende a parecer clip-art. Preferir algo que venha da marca de verdade (a logo, a foto).
+- **Sem acesso ao Google Maps/Instagram/iFood daqui:** o print do Google que o Davi manda já dá nota, avaliações, endereço, faixa de preço e foto. A busca na web (WebSearch) traz nomes de itens do iFood/Anota AI. Preço só com fonte que bate.

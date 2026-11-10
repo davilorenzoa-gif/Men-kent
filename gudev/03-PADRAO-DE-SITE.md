@@ -117,6 +117,53 @@ Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS 
   - Reduzir as partículas com `prefers-reduced-motion`.
   - O botão que foge desvia do título e do outro botão.
 
+### Repertório aprendido em 10/11/2026 (Péçaí + Fusca Lab)
+Tudo testado no Playwright (390/768/1024/1440). O código está nos arquivos citados: copiar a **técnica**, nunca o visual de outro cliente.
+
+**Abertura**
+- **Logo em bolinhas a partir do PNG** (`sites/pecai`, bloco "WOW 1"): amostra o PNG da logo em 56 a 64 px e cada pixel vira uma bolinha com a cor dele. Funciona como "LED" da marca.
+  - Dedo empurra, toque espalha e elas voltam.
+  - Bolinhas agrupadas por cor = 1 `fill()` por cor (rápido até no celular).
+  - PNG pequeno embutido em data URI (canvas com imagem de outro domínio ou `file://` não deixa ler os pixels).
+- **Cortina "a logo enche"** (`sites/pecai`, "camada de movimento"): a logo cinza enche de cor de baixo pra cima (`clip-path: inset`) e a cortina sobe com uma borda de gotas em SVG.
+  - Só na 1ª visita da sessão (`sessionStorage`) e nunca com `?embed` ou movimento reduzido. Até ~2 s.
+  - Troca as gotas pela forma da marca: fumaça na pizzaria, faísca na oficina.
+- **Texto em máscara sem plugin:** `divideLetras()` e `dividePalavras()` em `sites/pecai`. As letras sobem de dentro da máscara e a frase sai do desfoque palavra por palavra.
+  - A máscara precisa de `padding: .12em 0 .22em` com margem negativa igual, senão corta o ç, o g e os acentos.
+- **Fusca entrando** (`gudev/aprendizados/fusca-lab`): `clip-path` revela + o carro anda + **a roda gira exatamente a distância andada** (`ângulo = distância ÷ raio`). A carroceria assenta com uma mola curta.
+  - Serve pra oficina, loja de carro e estética automotiva. Precisa da foto recortada em carroceria + rodas (`sites/katraka/img`).
+
+**Rolagem**
+- **Herói preso + folha que sobe por cima:** o herói fica `sticky` dentro de um wrapper que acaba no fim da seção seguinte, e a seção clara (com cantos de 40px) sobe por cima.
+  - `--abre-top = min(0, altura da tela − altura do herói)`, senão o herói alto do celular não rola.
+- **Barra de progresso** (scaleX) + **topo que some ao descer e volta ao subir.**
+- **Títulos de seção palavra por palavra:** é o ÚNICO reveal da página. Parágrafo nenhum anima (regra do filtro anti-IA).
+- **Foto que abre como gota:** `clip-path: inset(... round 120px)` até `round 22px`, com scrub, e a imagem por dentro com scale 1,2 → 1.
+- **Parallax de perfil em 3 camadas** (Fusca Lab): fundo lento, objeto 1×, chão 1,6×, e o chão repete com `% tamanho do padrão`.
+- **Câmera por rolagem** (Fusca Lab): uma timeline só, e cada capítulo é um trecho dela. A "câmera" é `scale + x + y` na mesma foto, com `transform-origin: 0 0`.
+  - Zoom acima de ~2,4× numa foto de 900 px borra.
+- **Número que conta até o valor real** (o 4,5 da Péçaí) + estrelas acendendo em sequência. Só com número real.
+
+**Microinterações**
+- **Gota no clique** em todo `.btn`: nasce no ponto do toque e serve no celular. É o feedback de "apertei".
+- **Brilho que segue o mouse** no botão (`--mx/--my` + radial-gradient no `::after`).
+- **Botão magnético leve** (0,22×), só no CTA de pedido e só com `pointer: fine`. Usa `gsap.quickTo`.
+- **Cartão com borda que acende onde o mouse está** (`mask-composite: exclude`) + inclinação 3D de até 8° (cartões de loja da Péçaí).
+- **Paneiro/carrinho que balança** quando o item cai, mais `navigator.vibrate(8)` no Android.
+- **"Obrigado" abrindo em círculo** a partir do ponto do toque (`clip-path: circle`). É o pico-fim da página.
+- **Brilho especular só na lataria** (Fusca Lab): `radialGradient` dentro do SVG com `<mask style="mask-type:alpha">` usando o próprio PNG recortado. O brilho anda contra o mouse.
+- **Cursor com mola + `mix-blend-mode: difference`** (Fusca Lab): só em vitrine (carro, estética, estúdio). Em cardápio, não.
+
+**Infra que todo site com animação deve ter**
+- **Classe de espera com saída garantida:** o `<head>` põe `anima-espera` e tira sozinho em 3 s se o GSAP não chegar. O site nunca fica em branco.
+- **Prévia num arquivo só:** `python3 gudev/ferramentas/previa_embutida.py sites/<nome>`. Embute imagens e bibliotecas (confere o SRI). É o arquivo que vai pro celular.
+- **Mapa em cartão:** pin + endereço + "Abrir no Google Maps"; o iframe só nasce se a pessoa tocar em "Ver o mapa aqui".
+- **View Transitions entre páginas:** `@view-transition{navigation:auto}` em todas as páginas do site. Sem flash branco.
+
+**Ainda não feito (ideias com referência no `07`)**
+- **Açaí líquido (metaballs em WebGL, estilo Shape Blend do Spline)** seguindo o dedo. É o próximo candidato pra açaí, sorvete e milkshake.
+- **Abertura editorial estilo Rolex** (palavras saindo do desfoque + produto recortado girando + objetos passando borrados). Precisa de foto recortada do produto.
+
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
 
