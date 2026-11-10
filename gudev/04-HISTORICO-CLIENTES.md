@@ -1,5 +1,6 @@
 # Histórico de leads e clientes (atualizado em 27/10/2026)
 # Histórico de leads e clientes (atualizado em 01/11/2026)
+# Histórico de leads e clientes (atualizado em 06/11/2026)
 
 Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o primeiro fechar, ele entra lá.
 
@@ -89,6 +90,18 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - Catálogo no WhatsApp: 12 gelatos especiais, base água (zero lactose, sem glúten, veganos), picolés, potes de 500 ml, tortas de sorvete (1 L, 1,8 L, 2,5 L) e casquinhas artesanais.
   - Não achamos Instagram, Maps nem avaliações na internet. Falta endereço.
 - **Site:** `sites/nonna-lina/`. Plano-sequência da casquinha (estilo Meridiano), vitrine embaçada, oficina de tortas, jogo Torre da Nonna.
+## Katraka Especializada VW Aircooled, Tatuapé, São Paulo (Zona Leste) · lead do Davi
+- **Dados (pesquisa pública, confirmar):** oficina especializada em Fusca e derivados (Brasília, Kombi, Variant, SP2), desde 2010 (o site antigo dizia 1995; o Alexandre corrigiu). Já apareceu na Band (Direção sobre Rodas).
+  - Endereço: Rua Serra de Bragança, 810.
+  - Fixo: (11) 3539-2100. Celular (usado como WhatsApp, confirmar): (11) 94745-6663.
+  - Instagram: @katrakavw. Facebook: katrakavws.
+  - Dono: Alexandre, o "Katraka". Nota 5,0 com 490 avaliações no Google (número passado pelo Alexandre em 09/11; nota no site: 4,9, confirmar o valor exato no Google).
+  - Serviços (site oficial): suspensão, katraka (catraca pra rebaixar), regulagem de facão, encurtamento de quadro, freios, furação de discos e tambores, alinhamento, balanceamento, cambagem, pneus e rodas. Direção (Instagram).
+  - Já saiu no Canal da Peça (como rebaixar um Fusca) e no blog Acelerada.
+- **Andamento:** o Davi acha que fecha. Prévia feita em 06/11 em `sites/katraka/` (ver o README de lá com o que confirmar).
+- **Pedidos dele (09/11):** quer poder mostrar os trabalhos todo dia → seção ligada no Instagram dele (Behold), sem custo extra por ser prévia. Não gostou do verde → site trocado pra laranja queimado. Prints estáticos enviados pra ele ler.
+- **Domínio:** já existe `katraka.com.br`; confirmar se é dele antes de registrar outro.
+- **Site:** Fusca desenhado em SVG que baixa dente por dente em cima do nome; interruptor do farol com foto; raio-x do Fusca; simulador "Gire a katraka"; ordem de serviço com carimbo. Fotos são conceito (do Davi), marcadas como ilustrativas.
 
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.
