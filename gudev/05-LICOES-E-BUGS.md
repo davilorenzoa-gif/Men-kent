@@ -64,3 +64,5 @@
 ## Ambiente do Claude (10/11/2026)
 - **Link do Google Drive, Instagram, Facebook e iFood não abrem daqui.** A rede do ambiente bloqueia, e o pedido de liberação pode nem aparecer no app do Davi. Caminhos: liberar `drive.google.com`, `drive.usercontent.google.com` e `lh3.googleusercontent.com` em Allowed domains do ambiente (e abrir uma conversa nova), subir os arquivos no GitHub em `sites/<nome>/assets/`, ou anexar direto na conversa.
 - **Print do Google Maps serve de fonte.** Na Péçaí, a foto do copo saiu recortada do print (373x576) e os dados (nota, endereço, faixa de preço) também.
+- **Mapa do Google em iframe quebra fora do navegador** (visualizador de arquivo do app, alguns apps): aparece "Página da Web não disponível / ERR_BLOCKED_BY_CSP". Usar cartão com endereço + "Abrir no Google Maps" e só criar o iframe se a pessoa tocar (feito na Péçaí).
+- **Nome de classe repetido apaga texto:** na Péçaí, `.cai` (bagas caindo, `opacity:0`) também estava no `<span>` do título e o "çaí" sumiu. Conferir no print antes de mandar.

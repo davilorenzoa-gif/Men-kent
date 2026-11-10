@@ -82,33 +82,16 @@ h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;t
 .btn svg{width:20px;height:20px;flex:none}
 @media (max-width:720px){.topo nav a.l{display:none}.topo .btn{min-height:44px;padding:10px 16px;font-size:15px}}
 
-/* WOW 1: o pé de açaí */
+/* WOW 1: a logo se monta com pontinhos */
 .abre{min-height:100svh;padding:88px 0 56px;display:flex;align-items:center;position:relative;background:radial-gradient(120% 80% at 70% 35%,#4c1660 0%,var(--pe) 55%,var(--pe-fundo) 100%)}
 .abre .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:40px;align-items:center}
-.cena{position:relative;width:min(100%,420px);aspect-ratio:300/440;margin-inline:auto;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.cena svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.cena .frente{z-index:3;pointer-events:none}
-.cena .foto{position:absolute;left:25%;top:45.5%;width:50%;z-index:2;border-radius:18px;overflow:hidden;box-shadow:0 0 0 5px var(--copo),0 30px 60px -20px rgba(0,0,0,.6)}
+.cena{position:relative;width:min(100%,460px);aspect-ratio:1/1.2;margin-inline:auto;-webkit-tap-highlight-color:transparent}
+.cena canvas{position:absolute;left:0;top:0;width:100%;aspect-ratio:1;touch-action:pan-y;cursor:pointer}
+.cena .foto{position:absolute;left:2%;bottom:0;width:31%;z-index:2;border-radius:16px;overflow:hidden;box-shadow:0 0 0 4px var(--copo),0 24px 50px -16px rgba(0,0,0,.65);opacity:0;transform:translate(-20px,24px) rotate(-14deg);transition:opacity .6s,transform .8s cubic-bezier(.3,1.4,.5,1)}
 .cena .foto img{width:100%}
-.cena .foto small{position:absolute;right:6px;bottom:6px;font-size:10px;background:rgba(0,0,0,.55);padding:2px 6px;border-radius:6px}
-.tronco{fill:none;stroke:#c79a63;stroke-width:9;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420}
-.aneis{fill:none;stroke:#9c7447;stroke-width:2;opacity:0}
-.folha{fill:#9cc94a;stroke:#fff;stroke-width:2.5;stroke-linejoin:round;transform-box:fill-box;transform-origin:0% 60%;transform:scale(0)}
-.folha.esc{fill:#709d36}
-.baga{fill:#fff;stroke:#5e1f73;stroke-width:1.5;transform-box:fill-box;transform-origin:50% 0;transform:scale(0)}
-.baga.esc{fill:#f1e4f4}
-.cai{fill:#8d36a8;opacity:0}
-.vai .tronco{animation:tronco 1s cubic-bezier(.5,0,.2,1) forwards}
-.vai .aneis{animation:aparece .4s .8s forwards}
-.vai .folha{animation:folha .7s cubic-bezier(.3,1.5,.5,1) forwards;animation-delay:calc(.75s + var(--i)*.07s)}
-.vai .baga{animation:folha .45s cubic-bezier(.3,1.6,.5,1) forwards;animation-delay:calc(1.35s + var(--i)*.04s)}
-.vai .cai{animation:cai .7s cubic-bezier(.55,0,.9,.5) forwards;animation-delay:calc(1.95s + var(--i)*.16s)}
-.vai .foto{animation:pulo .5s 2.75s}
-@keyframes tronco{to{stroke-dashoffset:0}}
-@keyframes aparece{to{opacity:1}}
-@keyframes folha{to{transform:scale(1)}}
-@keyframes cai{0%{opacity:1;transform:translateY(0)}85%{opacity:1}100%{opacity:0;transform:translateY(var(--y,128px))}}
-@keyframes pulo{0%,100%{transform:none}40%{transform:translateY(5px) scale(1.02,.97)}}
+.cena.pronta .foto{opacity:1;transform:rotate(-6deg)}
+.cena .dica{position:absolute;right:4%;bottom:6%;font-size:14px;color:#cdb6d6;opacity:0;transition:opacity .6s .4s}
+.cena.pronta .dica{opacity:1}
 .logo-abre{width:112px;height:112px;border-radius:50%;box-shadow:0 0 0 3px #fff,0 20px 40px -14px rgba(0,0,0,.6);margin-bottom:22px}
 @media (max-width:860px){.logo-abre{display:none}}
 .texto-abre .selo{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);padding:8px 14px;border-radius:999px;font-weight:600;font-size:15px;margin-bottom:20px}
@@ -125,7 +108,7 @@ h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;t
 @media (max-width:860px){
   .abre{padding-top:76px;min-height:auto}
   .abre .wrap{grid-template-columns:minmax(0,1fr);gap:8px}
-  .cena{width:min(78vw,330px);order:-1}
+  .cena{width:min(86vw,360px);order:-1}
   .texto-abre{text-align:center}
   .texto-abre p.sub{margin-inline:auto}
   .abre .acoes{justify-content:center}
@@ -216,7 +199,16 @@ label.campo input:focus{outline:none;border-color:var(--palmeira)}
 .onde address{font-style:normal;font-size:20px;margin:18px 0 6px}
 .onde .info{color:#e6d6ec;margin:16px 0 24px;max-width:46ch}
 .mapa{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;background:#2a0b33}
-.mapa iframe{width:100%;height:100%;border:0;display:block}
+.mapa{position:relative;background:
+  linear-gradient(90deg,transparent 47%,rgba(255,255,255,.09) 47% 53%,transparent 53%) 0 0/120px 120px,
+  linear-gradient(0deg,transparent 46%,rgba(255,255,255,.07) 46% 54%,transparent 54%) 0 0/90px 90px,
+  linear-gradient(35deg,transparent 49%,rgba(255,255,255,.12) 49% 51%,transparent 51%) 0 0/100% 100%,#2a0b33}
+.mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.mapa-cartao{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;gap:4px}
+.mapa-cartao .pin{width:44px;height:58px;margin-bottom:8px;filter:drop-shadow(0 10px 12px rgba(0,0,0,.45))}
+.mapa-loja{font-family:"Bricolage Grotesque";font-weight:800;font-size:24px}
+.mapa-end{color:#e6d6ec;margin-bottom:14px}
+.mapa-botoes{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 
 /* perguntas */
 .faq{background:var(--copo);color:var(--tinta);padding:96px 0}
@@ -245,14 +237,12 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 /* prévia estática e movimento reduzido */
-.embed .tronco{stroke-dashoffset:0}.embed .aneis{opacity:1}
-.embed .folha,.embed .baga{transform:none}
+.embed .cena .foto{opacity:1;transform:rotate(-6deg);transition:none}
 .embed .entra{opacity:1;transform:none}
 .embed .trilho .calda{transform:none}.embed .item h3{color:var(--polpa)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .tronco{stroke-dashoffset:0}.aneis{opacity:1}.folha,.baga{transform:none}
-  .vai .tronco,.vai .aneis,.vai .folha,.vai .baga,.vai .cai,.vai .foto{animation:none}
+  .cena .foto{transform:rotate(-6deg)}
   .cena{animation:fade .5s}
   .entra{transform:none}
   @keyframes fade{from{opacity:0}}
@@ -276,11 +266,10 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
 </header>
 
 <main id="inicio">
-  <!-- WOW 1: o pé cresce e as bagas caem no copo -->
+  <!-- WOW 1: a logo se monta com pontinhos -->
   <section class="abre" aria-labelledby="titulo">
     <div class="wrap">
       <div class="texto-abre">
-        <img class="logo-abre entra" src="img/logo-pecai.webp" width="112" height="112" alt="Logo da Péçaí">
         <span class="selo entra"><span class="estrela" aria-hidden="true">★</span> 4,5 no Google, 1,4 mil avaliações</span>
         <h1 id="titulo" class="entra d2"><span class="pe">Pé</span><span class="sufixo">çaí</span></h1>
         <p class="frase entra d2">Do pé direto pro copo.</p>
@@ -291,42 +280,10 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
         </div>
       </div>
 
-      <div class="cena" id="cena" role="img" aria-label="Um pé de açaí cresce atrás do copo da Péçaí e as bagas caem dentro dele. Toque pra derrubar mais.">
-        <svg viewBox="0 0 300 440" aria-hidden="true">
-          <path class="tronco" d="M150 400 C 146 330, 158 250, 150 160 S 148 90, 150 72"/>
-          <g class="aneis"><path d="M144 380h12M145 340h11M146 300h10M147 262h9M146 226h9M146 190h9M147 156h7M147 124h7"/></g>
-          <g transform="translate(150 72)">
-            <g transform="rotate(-160)"><path class="folha esc" style="--i:0" d="M0 0 C 30 -22, 80 -20, 128 14 C 80 -2, 30 4, 0 0Z"/></g>
-            <g transform="rotate(-125)"><path class="folha" style="--i:1" d="M0 0 C 30 -22, 80 -22, 120 0 C 80 -6, 30 4, 0 0Z"/></g>
-            <g transform="rotate(-95)"><path class="folha esc" style="--i:2" d="M0 0 C 26 -16, 60 -16, 92 -4 C 60 -6, 26 4, 0 0Z"/></g>
-            <g transform="rotate(-62)"><path class="folha" style="--i:3" d="M0 0 C 30 -22, 80 -22, 120 0 C 80 -6, 30 4, 0 0Z"/></g>
-            <g transform="rotate(-25)"><path class="folha esc" style="--i:4" d="M0 0 C 30 -22, 80 -20, 128 14 C 80 -2, 30 4, 0 0Z"/></g>
-            <g transform="rotate(10)"><path class="folha" style="--i:5" d="M0 0 C 30 -20, 70 -14, 104 24 C 66 4, 30 6, 0 0Z"/></g>
-            <g transform="rotate(170) scale(1 -1)"><path class="folha" style="--i:6" d="M0 0 C 30 -20, 70 -14, 104 24 C 66 4, 30 6, 0 0Z"/></g>
-          </g>
-          <g id="cacho">
-            <circle class="baga esc" style="--i:0" cx="138" cy="88" r="7"/>
-            <circle class="baga" style="--i:1" cx="152" cy="86" r="7"/>
-            <circle class="baga esc" style="--i:2" cx="165" cy="90" r="6.5"/>
-            <circle class="baga" style="--i:3" cx="131" cy="100" r="6.5"/>
-            <circle class="baga esc" style="--i:4" cx="145" cy="100" r="7"/>
-            <circle class="baga" style="--i:5" cx="159" cy="101" r="7"/>
-            <circle class="baga esc" style="--i:6" cx="171" cy="103" r="6"/>
-            <circle class="baga" style="--i:7" cx="139" cy="112" r="6.5"/>
-            <circle class="baga esc" style="--i:8" cx="153" cy="113" r="7"/>
-            <circle class="baga" style="--i:9" cx="165" cy="115" r="6"/>
-            <circle class="baga esc" style="--i:10" cx="147" cy="124" r="6"/>
-            <circle class="baga" style="--i:11" cx="160" cy="126" r="5.5"/>
-          </g>
-        </svg>
+      <div class="cena" id="cena">
+        <canvas id="pontos" role="img" aria-label="A logo da Péçaí se monta com pontinhos coloridos. Passe o dedo pra empurrar e toque pra espalhar."></canvas>
         <div class="foto"><img src="img/copo-pecai.webp" width="373" height="576" alt="Copo da Péçaí com açaí, calda de chocolate escorrendo, morango, kiwi e granola em volta"></div>
-        <svg class="frente" viewBox="0 0 300 440" aria-hidden="true" id="caindo">
-          <circle class="cai" style="--i:0" cx="140" cy="112" r="6.5"/>
-          <circle class="cai" style="--i:1" cx="158" cy="114" r="6.5"/>
-          <circle class="cai" style="--i:2" cx="148" cy="124" r="6"/>
-          <circle class="cai" style="--i:3" cx="164" cy="122" r="6"/>
-          <circle class="cai" style="--i:4" cx="134" cy="118" r="6"/>
-        </svg>
+        <p class="dica" aria-hidden="true">Toque na logo</p>
       </div>
     </div>
   </section>
@@ -484,8 +441,16 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
           <a class="btn btn-linha" href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">@curtapecai</a>
         </div>
       </div>
-      <div class="mapa">
-        <iframe id="mapa" title="Mapa da loja Péçaí escolhida" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000&amp;output=embed"></iframe>
+      <div class="mapa" id="mapa-box">
+        <div class="mapa-cartao">
+          <svg class="pin" viewBox="0 0 40 52" aria-hidden="true"><path d="M20 0C9 0 0 9 0 20c0 15 20 32 20 32s20-17 20-32C40 9 31 0 20 0z" fill="#3daa48"/><circle cx="20" cy="20" r="8" fill="#fff"/></svg>
+          <p class="mapa-loja" id="mapa-loja">Péçaí Parque Jurema</p>
+          <p class="mapa-end" id="mapa-end">Av. Jurema, 436, Parque Jurema</p>
+          <div class="mapa-botoes">
+            <a class="btn btn-pedir" id="mapa-abrir" href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Abrir no Google Maps</a>
+            <button class="btn btn-linha" type="button" id="mapa-carregar">Ver o mapa aqui</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -544,21 +509,91 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
   setTimeout(comeca, 1200);
 
   var cena = document.getElementById('cena');
-  var caindo = document.querySelectorAll('#caindo .cai');
-  var ocupado = false;
-  function derruba(){
-    if (ocupado || reduz) return;
-    ocupado = true;
-    caindo.forEach(function(c, i){
-      c.style.animation = 'none'; void c.getBoundingClientRect();
-      c.style.animation = 'cai .7s cubic-bezier(.55,0,.9,.5) ' + (i*0.12) + 's forwards';
-    });
-    var foto = cena.querySelector('.foto');
-    foto.style.animation = 'none'; void foto.offsetWidth;
-    foto.style.animation = 'pulo .5s .7s';
-    setTimeout(function(){ ocupado = false; }, 1400);
-  }
-  cena.addEventListener('click', derruba);
+  (function(){
+    var cv = document.getElementById('pontos');
+    var ctx = cv.getContext('2d');
+    var src = new Image();
+    var P = [], grupos = [], W = 0, cel = 0, pad = 0, dpr = 1, rodando = false, dedo = null, t0 = 0;
+    src.onload = monta;
+    src.src = 'data:image/png;base64,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';
+    function monta(){
+      var n = window.innerWidth < 600 ? 56 : 64;
+      var tmp = document.createElement('canvas'); tmp.width = tmp.height = n;
+      var tc = tmp.getContext('2d'); tc.drawImage(src, 0, 0, n, n);
+      var d; try { d = tc.getImageData(0, 0, n, n).data; } catch(e){ return; }
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = cv.clientWidth; if (!W) return;
+      cv.width = cv.height = Math.round(W * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      pad = W * 0.08; cel = (W - pad * 2) / n;
+      var velhos = P; P = [];
+      for (var y = 0; y < n; y++) for (var x = 0; x < n; x++){
+        var k = (y * n + x) * 4; if (d[k + 3] < 140) continue;
+        var tx = pad + x * cel, ty = pad + y * cel;
+        var lum = d[k] + d[k + 1] + d[k + 2];
+        var q = velhos[P.length];
+        var a = Math.random() * 6.283, r = W * (0.55 + Math.random() * 0.5);
+        P.push({
+          x: q ? q.x : W / 2 + Math.cos(a) * r, y: q ? q.y : W / 2 + Math.sin(a) * r,
+          vx: q ? q.vx : -Math.sin(a) * 6, vy: q ? q.vy : Math.cos(a) * 6,
+          tx: tx, ty: ty, c: 'rgb(' + d[k] + ',' + d[k + 1] + ',' + d[k + 2] + ')',
+          s: lum < 160 ? cel * 0.26 : cel * 0.56, atraso: Math.random() * 0.5,
+          g: ((d[k] >> 4) << 8) | ((d[k + 1] >> 4) << 4) | (d[k + 2] >> 4)
+        });
+      }
+      /* agrupa por cor pra desenhar cada cor num caminho só */
+      grupos = {};
+      P.forEach(function(p){ (grupos[p.g] = grupos[p.g] || { c: p.c, l: [] }).l.push(p); });
+      grupos = Object.keys(grupos).map(function(k){ return grupos[k]; });
+      if (embed || reduz){ P.forEach(function(p){ p.x = p.tx; p.y = p.ty; p.vx = p.vy = 0; }); desenha(); cena.classList.add('pronta'); return; }
+      t0 = performance.now(); liga();
+    }
+    function desenha(){
+      ctx.clearRect(0, 0, W, W);
+      for (var g = 0; g < grupos.length; g++){
+        var gr = grupos[g], l = gr.l; ctx.fillStyle = gr.c; ctx.beginPath();
+        for (var i = 0; i < l.length; i++){ var p = l[i], c = cel / 2; ctx.moveTo(p.x + c + p.s, p.y + c); ctx.arc(p.x + c, p.y + c, p.s, 0, 6.2832); }
+        ctx.fill();
+      }
+    }
+    function passo(t){
+      var tempo = (t - t0) / 1000, mexendo = 0;
+      for (var i = 0; i < P.length; i++){
+        var p = P[i];
+        var forca = Math.min(1, Math.max(0, (tempo - p.atraso) / 0.9));
+        var k = 0.012 + 0.07 * forca;
+        p.vx += (p.tx - p.x) * k; p.vy += (p.ty - p.y) * k;
+        if (dedo){
+          var dx = p.x - dedo.x, dy = p.y - dedo.y, dd = dx * dx + dy * dy, R = W * 0.16;
+          if (dd < R * R && dd > 0.01){ var f = (1 - Math.sqrt(dd) / R) * 3.2 / Math.sqrt(dd); p.vx += dx * f; p.vy += dy * f; }
+        }
+        p.vx *= 0.8; p.vy *= 0.8; p.x += p.vx; p.y += p.vy;
+        mexendo += Math.abs(p.vx) + Math.abs(p.vy) + Math.abs(p.tx - p.x) * 0.1;
+      }
+      desenha();
+      if (tempo > 1.4) cena.classList.add('pronta');
+      if (mexendo / P.length < 0.02 && !dedo && tempo > 1.5){ rodando = false; return; }
+      requestAnimationFrame(passo);
+    }
+    function liga(){ if (!rodando){ rodando = true; requestAnimationFrame(passo); } }
+    function ponto(e){ var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+    if (!embed && !reduz){
+      cv.addEventListener('pointermove', function(e){ if (e.pointerType === 'mouse' || e.buttons) { dedo = ponto(e); liga(); } });
+      cv.addEventListener('pointerleave', function(){ dedo = null; });
+      cv.addEventListener('pointerup', function(){ dedo = null; });
+      cv.addEventListener('pointercancel', function(){ dedo = null; });
+      cv.addEventListener('click', function(e){
+        var c = ponto(e);
+        P.forEach(function(p){
+          var dx = p.x - c.x, dy = p.y - c.y, d = Math.sqrt(dx * dx + dy * dy) + 1, f = 9 + Math.random() * 14;
+          p.vx += dx / d * f; p.vy += dy / d * f;
+        });
+        t0 = performance.now() - 2000; liga();
+      });
+    }
+    var larg = window.innerWidth;
+    window.addEventListener('resize', function(){ if (window.innerWidth !== larg){ larg = window.innerWidth; monta(); } });
+  })();
 
   /* topo sólido + botão flutuante */
   var topo = document.getElementById('topo');
@@ -692,15 +727,27 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
       atualiza();
     });
   });
-  /* lojas: troca o mapa */
-  var mapa = document.getElementById('mapa');
+  /* lojas: cartão do mapa; o mapa do Google só carrega se a pessoa pedir */
+  var mapaBox = document.getElementById('mapa-box'), mapa = null, lojaMapa = document.querySelector('.loja.on');
+  function urlMapa(l){ return 'https://www.google.com/maps?q=' + l.dataset.mapa + '&output=embed'; }
+  document.getElementById('mapa-carregar').addEventListener('click', function(){
+    mapa = document.createElement('iframe');
+    mapa.title = 'Mapa da loja Péçaí escolhida';
+    mapa.referrerPolicy = 'no-referrer-when-downgrade';
+    mapa.src = urlMapa(lojaMapa);
+    mapaBox.appendChild(mapa);
+  });
   document.querySelectorAll('.loja').forEach(function(l){
     l.querySelector('.ver').addEventListener('click', function(){
       document.querySelectorAll('.loja').forEach(function(x){
         x.classList.toggle('on', x === l);
         x.querySelector('.ver').setAttribute('aria-pressed', x === l ? 'true' : 'false');
       });
-      mapa.src = 'https://www.google.com/maps?q=' + l.dataset.mapa + '&output=embed';
+      lojaMapa = l;
+      document.getElementById('mapa-loja').textContent = 'Péçaí ' + l.querySelector('h3').textContent;
+      document.getElementById('mapa-end').textContent = l.querySelector('address').firstChild.textContent.trim();
+      document.getElementById('mapa-abrir').href = 'https://www.google.com/maps/search/?api=1&query=' + l.dataset.mapa;
+      if (mapa) mapa.src = urlMapa(l);
     });
   });
   endereco.addEventListener('input', atualiza);

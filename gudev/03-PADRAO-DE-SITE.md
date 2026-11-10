@@ -78,7 +78,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "rota pela costa": um carrinho desce o mapa e para em cada burger com nome de praia;
   - prancha de pedido: cada item vira um adesivo na prancha de surf e vai pro WhatsApp.
 - **Péçaí** (açaí, Guarulhos, `sites/pecai`):
-  - o pé de açaí cresce atrás do copo (tronco se desenha, folhas abrem, cacho aparece) e as bagas caem dentro da foto; tocar derruba mais;
+  - a logo se monta com ~1.500 a 2.500 bolinhas nas cores da própria logo (canvas, amostrada de um PNG 64px embutido); o dedo empurra, o toque espalha e elas voltam; a foto do copo entra de lado (o coqueiro em SVG da 1ª versão o Davi não gostou);
   - a calda de chocolate escorre por um trilho com a rolagem e "pinta" cada item do cardápio (nome vazado vira cheio);
   - "Colha seu pedido": cada item é uma baga do cacho que cai no paneiro; entrega/retirada + nome viram a mensagem.
 - **DOZE V12** (conceito, `sites/doze-v12`): segurar ENGINE START acende os 12 cilindros na ordem de ignição e o portão sobe; faixa de luz troca o carro no salão; a chave muda de cor e o cadeado pisca como seta antes de abrir o WhatsApp.

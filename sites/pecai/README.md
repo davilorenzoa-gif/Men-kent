@@ -6,9 +6,11 @@ Loja de açaí **real**: Av. Jurema, 436, Parque Jurema, Guarulhos-SP, 07244-000
 - `index.html` + `img/`: site pra subir no Netlify (`proposta-pecai` → `pecai`).
 - `404.html`, `privacidade.html`, `robots.txt`, `sitemap.xml`, `og.jpg` (imagem de compartilhamento).
 - Prévia estática pra proposta: `index.html?embed`.
+- `preview-pecai.html`: o mesmo site com as imagens embutidas, pra abrir direto no celular. Regerar se mexer no `index.html`.
+- Mapa: cartão leve com o endereço; o mapa do Google só carrega se a pessoa tocar em "Ver o mapa aqui" (dentro de app ou arquivo baixado o iframe era bloqueado).
 
 ## 3 WOWs
-1. **O pé de açaí:** o tronco se desenha atrás do copo, as folhas abrem, o cacho aparece e as bagas caem dentro da foto. Tocar na cena derruba mais.
+1. **Logo em bolinhas:** a logo da Péçaí se monta com bolinhas nas cores dela (canvas). O dedo empurra, o toque espalha e elas voltam. Depois a foto do copo entra de lado. (Substituiu o coqueiro em SVG, que o Davi não gostou.)
 2. **A calda escorre:** um fio de chocolate desce pelo trilho com a rolagem e "pinta" cada item do cardápio (nome vazado vira cheio).
 3. **Colha seu pedido:** cada item é uma baga do cacho; tocando, ela cai no paneiro. Entrega ou retirada, endereço e nome viram a mensagem pronta.
 
