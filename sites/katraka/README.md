@@ -69,3 +69,6 @@ Abas Fusca, Kombi, Variant, Brasília e SP2 no "Gire a katraka". Fotos que o Dav
 - Agendamento obrigatório (FAQ).
 
 - Avaliações: 490 no Google (informado pelo Alexandre). Nota no site: 4,9 (definido pelo Davi; confirmar com o Alexandre o valor exato no Google antes de publicar).
+
+- 10/11: o Fusca verde (foto ilustrativa) do "quem somos" foi trocado pelo vídeo do Fusca branco do Instagram dele (`img/fusca-oficina.mp4`, mudo, em repetição). A placa aparece no vídeo; confirmar se tudo bem.
+- Pagamento combinado: 1º pagamento quando subir no Netlify, 2º depois que o domínio katraka.com.br estiver ligado.
