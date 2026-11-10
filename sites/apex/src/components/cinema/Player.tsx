@@ -178,6 +178,7 @@ export function Player({ film, autoPlay = false }: PlayerProps) {
       aria-label={`Film player: ${film.title}`}
       onKeyDown={onKeyDown}
       onPointerMove={wake}
+      data-started={started}
       className={`group/stage relative w-full overflow-hidden bg-black outline-none focus-visible:ring-2 focus-visible:ring-apex ${
         fullscreen ? 'h-full' : 'aspect-video md:aspect-[21/9]'
       } ${playing && idle ? 'cursor-none' : ''}`}
@@ -237,7 +238,12 @@ export function Player({ film, autoPlay = false }: PlayerProps) {
       {/* ── Poster ── */}
       <AnimatePresence>
         {!started && (
-          <motion.div className="absolute inset-0" exit={{ opacity: 0 }} transition={{ duration: 0.8, ease: 'linear' }}>
+          // While it fades out the poster must not swallow clicks meant for the film underneath
+          <motion.div
+            className="absolute inset-0 group-data-[started=true]/stage:pointer-events-none"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: 'linear' }}
+          >
             <div className="absolute inset-0 animate-kenburns">
               <Picture id={film.poster} sizes="100vw" alt="" />
             </div>

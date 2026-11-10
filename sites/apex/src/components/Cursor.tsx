@@ -18,29 +18,35 @@ export function Cursor() {
 
   useEffect(() => {
     if (!fine) return
+    let lastX = -1
+    let lastY = -1
+    const read = (el: Element | null) => {
+      const host = el?.closest?.('[data-cursor]')
+      const next = host ? host.getAttribute('data-cursor') : null
+      setLabel((prev) => (prev === next ? prev : next))
+    }
     const onMove = (e: PointerEvent) => {
-      x.set(e.clientX)
-      y.set(e.clientY)
-      const host = (e.target as Element | null)?.closest?.('[data-cursor]')
-      setLabel(host ? host.getAttribute('data-cursor') : null)
+      lastX = e.clientX
+      lastY = e.clientY
+      x.set(lastX)
+      y.set(lastY)
+      read(e.target as Element | null)
     }
-    const onLeave = () => setLabel(null)
-    // A click can swap what is under a resting pointer (poster → player): look again.
-    let timer = 0
-    const onClick = (e: MouseEvent) => {
-      window.clearTimeout(timer)
-      timer = window.setTimeout(() => {
-        const host = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-cursor]')
-        setLabel(host ? host.getAttribute('data-cursor') : null)
-      }, 120)
+    const onLeave = () => {
+      lastX = -1
+      setLabel(null)
     }
+    // What sits under a resting pointer can change without the pointer moving
+    // (a poster fades into a playing film, play turns into pause): look again
+    // a few times a second while the pointer is over the page.
+    const timer = window.setInterval(() => {
+      if (lastX >= 0) read(document.elementFromPoint(lastX, lastY))
+    }, 300)
     window.addEventListener('pointermove', onMove, { passive: true })
-    window.addEventListener('click', onClick)
     document.documentElement.addEventListener('pointerleave', onLeave)
     return () => {
-      window.clearTimeout(timer)
+      window.clearInterval(timer)
       window.removeEventListener('pointermove', onMove)
-      window.removeEventListener('click', onClick)
       document.documentElement.removeEventListener('pointerleave', onLeave)
     }
   }, [fine, x, y])
