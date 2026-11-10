@@ -52,6 +52,15 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
 - **Lustro** (demo de estética automotiva): luzes do estúdio acendendo na abertura; a rolagem lava o carro quadro a quadro; lanterna de inspeção que mostra os micro-riscos e abre na pintura corrigida; cartão na cena que abre a gaveta de agendamento com tubo de LED.
 - **Vértice Reserva** (demo de locadora de carros premium, `site/projetos/vertice-reserva/`): dois faróis acendem e abrem a tela; a rolagem gira o carro (76 quadros num canvas, os mesmos do site da GuDev) com o título invertendo a cor onde cruza o carro; "Monte sua reserva" escreve a mensagem do WhatsApp ao vivo (marcada como teste enquanto for demo).
 - **Vértice** (conceito pro Instagram da GuDev, `site/projetos/vertice/`): no escuro, a lanterna traseira acende de dentro pra fora seguindo a curva dela, o carro aparece na chuva e VÉRTICE sobe por trás dele; a rolagem gira o carro e a frase passa por trás; carrossel 3D de detalhes; no fim o carro gira sozinho como vídeo, arraste pra girar, com "Sites que vendem." atrás.
+- **911 GT3 RS** (projeto conceito):
+  - o "911" com a foto dentro e o mergulho na haste do 1;
+  - o pôster quebrado em 3 cortes que se encaixam;
+  - o launch control (jogo de 0 a 200 km/h com ronco sintetizado);
+  - configurador de pintura que muda a cor do site.
+- **ENTRElinhas** (crochê da Sonia Maria):
+  - a linha sai do novelo e escreve o logo; depois a peça é crochetada ponto a ponto (carreiras ovais) e vira a foto, dentro de uma medalha com bico de crochê;
+  - "entre as linhas": um feixe de fios se abre com a rolagem e mostra cada peça entre eles (os fios vibram no toque);
+  - etiqueta de presente: a pessoa digita o nome e a linha escreve ao vivo; o pedido vai pro WhatsApp.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
@@ -128,6 +137,9 @@ Os três usam GSAP + Lenis, igual a gente. Os dois que usam 3D (Three.js) são p
 - gsap.com: o GSAP ficou 100% grátis em 2025, depois da compra pelo Webflow, incluindo os plugins que eram pagos. Os principais são SplitText (texto que entra letra por letra ou linha por linha), MorphSVG (uma forma vira outra) e ScrollSmoother. Estão no cdnjs na versão 3.13.0. Se usar plugin, carregar o `gsap` e o `ScrollTrigger` da mesma 3.13.0, nunca misturando com a 3.12.5. A vitrine (gsap.com/showcase) é boa fonte de ideia de WOW de rolagem.
 - motion.dev: grátis, funciona em HTML puro (`animate`, `scroll`, `inView`) e é bem leve. Não precisa, porque o GSAP já cobre tudo. Não colocar as duas bibliotecas no mesmo site. Serve pra olhar exemplos de animação de blocos.
 - threejs.org: 3D grátis. Pesa e esquenta celular fraco. Comida nunca em 3D (ver abaixo). Só vale pra um fundo abstrato leve, e mesmo assim desligado no celular. Na prática, quase nunca.
+- shaders.com: biblioteca de efeitos WebGPU/shader pra fundo e hero (visto num reel em 01/11/2026, ainda não testado). Pesa no celular: só usar com plano B em CSS e nunca no modo `?embed`.
+- ls.graphics: mockups de alta qualidade (celular, branding). Serve pra capa de proposta e posts do Instagram da GuDev. Conferir a licença antes de usar.
+- contentcore.xyz: mockups 3D e templates de motion. Serve pros vídeos de 15s da 1ª mensagem. Conferir a licença antes de usar.
 
 ## Tipografia e cor
 - Sempre um par com personalidade, que combine com o negócio. Exemplos:
