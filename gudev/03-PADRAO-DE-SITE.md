@@ -69,6 +69,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - portas de madeira da logo se abrem e a logo voa pro topo; a casquinha se desenha com a rolagem e as bolas caem e quicam;
   - vitrine de cubas em trilho com o vidro embaçado que limpa com o dedo;
   - oficina de tortas (tamanho + sabor, cobertura caindo) e o jogo "Torre da Nonna" (empilhar bolas).
+- **Órbita Seminovos** (demo de loja de carro, `sites/orbita-seminovos`): quase-acidente de moto que congela, mira trava no carro e a câmera mergulha nele; volta de 360 no carro guiada pela rolagem, com as qualidades trocando; "Gire você mesmo" com pergunta pelo WhatsApp sobre o lado que está na tela.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.

@@ -15,6 +15,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `gudev/07-REFERENCIAS-DESIGN.md` — 330 referências por nicho: padrões que funcionam, o que é template, ideias de WOW novas e onde dá pra buscar
 - `gudev/06-REFERENCIA-ORIGINKIT.md` — biblioteca de efeitos originkit.dev: o que é grátis, licença, como converter pra HTML puro
 - `gudev/06-CANVA-TRUQUES.md` — Canva: transições Combinar/Fluxo, efeito vidro, o que o conector faz vs. clique manual
+- `gudev/06-MARKETING-E-VIDEOS.md` — vídeos de referência, padrões de Reels e banco de ideias pro Instagram da GuDev
 - `gudev/exemplos/*.html` — sites reais (Açaí Happy, Chersoni, Dellart): nível mínimo de qualidade
 - `gudev/site/` — o site da própria GuDev (ver abaixo)
 
@@ -29,6 +30,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - Nenhum cliente fechou ainda (20/10/2026) → seção de cases vazia. Prumo e Peçaí são demos, nunca case.
 - Demos prontas em `sites/`: `porsche-911` (site conceito) e `glassy-dashboard` (painel de vendas em glassmorphism, React/Tailwind). Se algum cliente pedir painel/sistema, partir do glassy — mas isso é produto novo, preço e prazo a definir antes de oferecer.
 - Nenhum cliente fechou ainda (20/10/2026) → seção de cases vazia. Prumo, Peçaí e Lustro são demos, nunca case.
+- Nenhum cliente fechou ainda (20/10/2026) → seção de cases vazia. Prumo, Peçaí, Porsche 911 e Órbita Seminovos são demos, nunca case.
 
 ## Regras que nunca quebram
 - Nunca inventar avaliação, depoimento, cliente, número ou caso. Só dados reais (Google Maps, Instagram, cardápio).

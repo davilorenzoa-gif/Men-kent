@@ -49,6 +49,12 @@
 - **Página mais larga que a tela no celular:** foi causada por grid sem `minmax(0,1fr)`, `input date` e `radio` escondido com `width:100%`.
 - **Seção alta parada dentro da prévia parece "travado":** dentro da proposta, as animações de rolagem têm que estar ligadas.
 
+## Vídeo com IA (Google Flow)
+- **Mancha apagada vira parte do vídeo:** apagamos o logo e a legenda de um quadro e mandamos pro Flow. Ele copiou as manchas como se fossem parte da cena, e elas ficaram em todos os quadros. Pra mandar um quadro pro Flow, **corte** a parte com texto em vez de borrar.
+- **O Flow troca o carro:** cada geração pode virar outro modelo ou outra geração. Confira antes de juntar dois clipes como se fossem o mesmo carro.
+- **"A moto repele o carro":** no clipe da moto, o carro escorregava pro lado conforme a moto chegava, e parecia que ela empurrava o carro. Dá pra arrumar sem gerar de novo: rastrear um ponto do carro (o farol) e deslocar cada quadro pra ele ficar parado na tela. Carro parado no mesmo lugar e crescendo é o que o olho entende como rota de batida.
+- **Corte seco entre cenas incomoda o Davi.** Junte as cenas com movimento contínuo: pausa, mira, zoom com desfoque e a próxima cena saindo do desfoque.
+
 ## Vendas
 - **Lead que pede prévia, fala com o chefe e marca de pagar pode sumir.** Faça o follow-up em 3 passos (veja 02-VENDAS) e não corra atrás demais.
 - **Não colocar demo fictícia como case.** Só clientes reais.

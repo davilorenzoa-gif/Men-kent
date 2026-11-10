@@ -96,4 +96,5 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 
 ## Demos (NÃO são clientes, nunca usar como case)
 - **Prumo Materiais:** depósito de construção fictício, pra mostrar aos ~20 leads de depósito do Davi.
+- **Órbita Seminovos:** loja de seminovos fictícia (Honda City em 360, imagens do Google Flow), com Reel pronto. Pra mostrar a lojas de carro e estéticas.
 - **Peçaí:** marca de açaí fictícia, peça de portfólio pro Instagram da GuDev.
