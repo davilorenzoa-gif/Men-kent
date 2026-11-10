@@ -61,6 +61,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - a linha sai do novelo e escreve o logo; depois a peça é crochetada ponto a ponto (carreiras ovais) e vira a foto, dentro de uma medalha com bico de crochê;
   - "entre as linhas": um feixe de fios se abre com a rolagem e mostra cada peça entre eles (os fios vibram no toque);
   - etiqueta de presente: a pessoa digita o nome e a linha escreve ao vivo; o pedido vai pro WhatsApp.
+- **Meridiano** (demo pro Instagram, feita com vídeos do Google Flow, em `sites/meridiano`):
+  - a marca se desfaz na névoa e as nuvens se abrem na torre;
+  - a câmera mergulha no mostrador e a lente troca o foco pro outro relógio;
+  - a rolagem pilota a câmera de um filme só, com voo pra dentro da fachada, sol estourando e os horizontes se alinhando.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.

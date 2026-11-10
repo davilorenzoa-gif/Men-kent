@@ -7,6 +7,13 @@
 - **Foto pequena esticada na tela inteira fica borrada.** Mostre a foto no tamanho dela (por exemplo, num círculo ou num card) ou melhore antes.
 - **Zoom "atravessando" uma letra:** mire numa parte cheia da letra, nunca no buraco do "O". Senão a tela vai pro fundo escuro e a foto "brota do nada".
 - **Texto com a cor da marca em cima de fundo da mesma cor some.** Exemplo: o nome roxo do açaí sobre a prévia roxa. Teste o contraste.
+- **Bodoni Moda gigante perde os traços finos:** o "M" parece "VI". Use `font-variation-settings:'opsz' 22` nos títulos grandes.
+- **Vídeo de IA inventa coisas:** no Meridiano, o Flow pôs um drone na marina e uma logo de marca real no relógio. Revise frame a frame antes de publicar.
+- **Transição que parece montagem foi reprovada** (Meridiano, 02/11): relógio colado dentro do outro "parece PNG" e a lâmina de vidro com linhas brancas pareceu efeito barato. A transição tem que parecer câmera ou lente (voo com borrão, troca de foco, luz). Para ficar perfeito, gere a ponte no Flow com primeiro e último frame.
+- **Cena-ponte com outro prédio quebra a ilusão** (Meridiano): a ponte do Flow mostrava uma fachada diferente por 3 s e o Davi achou que "o prédio muda". Um prédio só: a câmera entra pela janela em vez de mostrar outra fachada. E nenhum clipe pode ficar congelado durante a emenda.
+- **Vídeo de 720p esticado no celular fica pixelado:** WebP qualidade 70 com recorte largo, esticado 3x pelo navegador. Resolvido com recorte de 480 px, qualidade 86, desenho na resolução real da tela e filtro bicúbico no shader. Se der, baixe do Flow em 1080p.
+- **Título animado pela rolagem fica pela metade quando a pessoa para** (aconteceu de novo no Meridiano). Título e texto entram por tempo quando a cena chega.
+- **Vídeo rolando com a página:** `<video>` com `currentTime` engasga. Use frames WebP empacotados + WebGL, como no `sites/meridiano`.
 
 ## Vídeo de IA (Google Flow, Veo)
 - **Peça só o carro.** Se o prompt falar de site (menu, botão, título), o Veo desenha a interface dentro do vídeo, com texto torto. Prompt de vídeo é só cena: carro, câmera, luz, chão.

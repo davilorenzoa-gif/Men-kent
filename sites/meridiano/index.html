@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="pt-BR" class="carregando">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meridiano | Site conceito da GuDev</title>
+<meta name="description" content="Um plano-sequência que você pilota com a rolagem: das nuvens até a decolagem. Projeto conceito da GuDev, sites que vendem.">
+<meta name="theme-color" content="#121821">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Meridiano | Site conceito da GuDev">
+<meta property="og:description" content="Role e pilote a câmera: das nuvens até a decolagem.">
+<meta property="og:image" content="og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23121821'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='none' stroke='%23D4A25A' stroke-width='1.6'/%3E%3Cpath d='M16 6.5v19' stroke='%23D4A25A' stroke-width='1.6'/%3E%3C/svg%3E">
+<script>
+/* Começa a baixar o 1º pacote de frames antes das fontes e do resto da página. */
+(function(){try{var q=location.search;if(/[?&]embed\b/.test(q)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var s=innerWidth/innerHeight<.9?'m':'d',ac=window.AbortController?new AbortController():null;
+window.__mer={set:s,ac:ac,res:fetch('frames/'+s+'-1.webp?v=3',ac?{signal:ac.signal}:{})};window.__mer.res.catch(function(){});}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Geist:wght@300..600&display=swap" rel="stylesheet">
+<style>
+/* Paleta: Névoa #EFE8DD (texto claro) · Ouro poente #D4A25A (acento) · Âmbar #9C6B3C · Ardósia #121821 (fundo e texto escuro) · Céu #A9BCCB */
+:root{
+  --nevoa:#EFE8DD;--ouro:#D4A25A;--ambar:#9C6B3C;--ardosia:#121821;--ceu:#A9BCCB;
+  --tinta-topo:#121821;--tinta-nav:#121821;
+  --serif:'Bodoni Moda','Bodoni 72','Didot',Georgia,serif;
+  --sans:'Geist',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --chao:11vh;color-scheme:dark;
+}
+@supports (height:100svh){:root{--chao:calc(100vh - 100svh + 11svh)}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;background:var(--ardosia)}
+body{background:var(--ardosia);color:var(--nevoa);font-family:var(--sans);font-size:16px;line-height:1.5;overflow-x:clip;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html.carregando body{overflow:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ouro);outline-offset:4px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+
+/* ---------- carregando ---------- */
+#carregando{position:fixed;inset:0;z-index:60;background:var(--ardosia);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity 1.3s cubic-bezier(.4,0,.2,1),visibility 0s 1.3s}
+html.pronto #carregando{opacity:0;visibility:hidden}
+.c-marca{font-family:var(--serif);font-size:clamp(20px,2.8vw,36px);letter-spacing:.42em;margin-right:-.42em;color:var(--nevoa)}
+.c-linha{width:min(220px,52vw);height:1px;background:rgba(239,232,221,.14);overflow:hidden}
+.c-linha i{display:block;height:100%;background:var(--ouro);transform-origin:left center;transform:scaleX(0);transition:transform .35s linear}
+.c-pct{font-size:12px;letter-spacing:.14em;font-variant-numeric:tabular-nums;color:rgba(239,232,221,.55)}
+
+/* ---------- topo ---------- */
+.topo{position:fixed;top:0;left:0;right:0;z-index:30;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding:max(16px,env(safe-area-inset-top)) max(5.5vw,20px) 0;color:var(--tinta-topo);transition:color .8s ease;pointer-events:none}
+.topo a,.topo button{pointer-events:auto;text-decoration:none}
+.t-marca{justify-self:start;font-family:var(--serif);font-size:15px;letter-spacing:.32em;opacity:0;min-height:36px;display:inline-flex;align-items:center}
+.t-hora{justify-self:center;font-size:12px;letter-spacing:.05em;font-variant-numeric:tabular-nums;display:flex;gap:.8em;opacity:0;transition:opacity .8s}
+.t-hora span{opacity:.7}
+html.pronto .t-hora{opacity:.9}
+.t-gudev{justify-self:end;font-size:12.5px;letter-spacing:.03em;display:inline-flex;align-items:center;gap:9px;min-height:36px;opacity:0;transition:opacity .8s}
+html.pronto .t-gudev{opacity:1}
+.t-gudev i{width:6px;height:6px;border-radius:50%;background:var(--ouro);box-shadow:0 0 0 3px rgba(212,162,90,.18)}
+@media (max-width:720px){.t-hora{display:none}.topo{grid-template-columns:1fr auto}}
+
+/* ---------- filme ---------- */
+#filme{position:relative;height:1545vh}
+.palco{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--ardosia);transition:opacity .22s ease}
+#tela{position:absolute;inset:0;width:100%;height:100%;display:block}
+.veu{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(to top,rgba(9,12,17,.66) 0%,rgba(9,12,17,.32) 30%,rgba(9,12,17,0) 58%)}
+.veu-centro{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(75% 62% at 50% 52%,rgba(9,12,17,.5),rgba(9,12,17,0) 78%)}
+.cenas{position:absolute;inset:0;pointer-events:none}
+.cena{position:absolute;inset:0;visibility:hidden}
+.cena.on{visibility:visible}
+.l{display:inline-block;white-space:pre;will-change:transform,opacity,filter}
+[data-x]{will-change:opacity,filter}
+
+/* abertura */
+#abertura{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:16.5vh;color:var(--ardosia)}
+.marca-h{font-family:var(--serif);font-weight:400;font-variation-settings:'opsz' 22;font-size:clamp(44px,13.2vw,236px);line-height:1;letter-spacing:.03em;white-space:nowrap;transform-origin:50% 60%}
+.lema{margin-top:clamp(16px,2.4vh,30px);font-size:clamp(15px,1.25vw,20px);letter-spacing:.01em}
+.dica{position:absolute;left:50%;bottom:calc(var(--chao) - 6vh);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;font-size:12px;letter-spacing:.08em;color:var(--ardosia);opacity:0}
+.dica i{display:block;width:1px;height:42px;background:linear-gradient(to bottom,rgba(18,24,33,0),currentColor);animation:desce 2.4s cubic-bezier(.6,0,.3,1) infinite}
+@keyframes desce{0%{transform:scaleY(0);transform-origin:50% 0}45%{transform:scaleY(1);transform-origin:50% 0}55%{transform:scaleY(1);transform-origin:50% 100%}100%{transform:scaleY(0);transform-origin:50% 100%}}
+
+/* capítulos */
+.cap{display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:0 max(5.5vw,20px) var(--chao);color:var(--nevoa);text-shadow:0 1px 28px rgba(8,10,14,.3)}
+.cap h2{font-family:var(--serif);font-weight:400;font-variation-settings:'opsz' 30;font-size:clamp(46px,9vw,152px);line-height:.95;letter-spacing:-.005em;white-space:nowrap;display:flex;align-items:flex-start}
+.num{font-style:italic;font-size:max(17px,.2em);color:var(--ouro);margin:.36em .55em 0 0;letter-spacing:.06em;line-height:1}
+.cap p{margin-top:clamp(14px,2.2vh,26px);max-width:34ch;font-size:clamp(15px,1.2vw,19px);font-weight:300;line-height:1.5;color:rgba(239,232,221,.93)}
+.cap p+p{margin-top:8px}
+.agora{font-variant-numeric:tabular-nums}
+.agora time{font-weight:500;color:var(--nevoa)}
+#nota1{display:flex;align-items:flex-end;justify-content:flex-end;padding:0 max(9vw,20px) var(--chao)}
+#nota1 p{font-family:var(--serif);font-variation-settings:'opsz' 36;font-size:clamp(26px,3vw,50px);line-height:1.12;max-width:15ch;text-align:right;color:var(--nevoa);text-shadow:0 1px 30px rgba(8,10,14,.4)}
+@media (max-width:600px){.cap h2{font-size:12.4vw}#nota1{justify-content:flex-start}#nota1 p{text-align:left;font-size:8vw}}
+
+/* fim */
+#fim{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-bottom:4vh;color:var(--ardosia)}
+.marca-f{font-family:var(--serif);font-weight:400;font-variation-settings:'opsz' 22;font-size:clamp(40px,10.5vw,190px);letter-spacing:.03em;line-height:1;white-space:nowrap}
+#gudev{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 22px;color:var(--nevoa)}
+.g-selo{font-size:13px;letter-spacing:.04em;color:rgba(239,232,221,.8)}
+.g-selo b{font-weight:600;color:var(--nevoa)}
+.g-tit{font-family:var(--serif);font-weight:400;font-variation-settings:'opsz' 30;font-size:clamp(34px,5.6vw,94px);line-height:1.02;max-width:13ch;margin:18px 0 22px;text-wrap:balance}
+.g-txt{max-width:44ch;font-weight:300;color:rgba(239,232,221,.86);font-size:clamp(15px,1.15vw,18px)}
+.g-acoes{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px}
+.g-botao,.r-zap{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;background:var(--nevoa);color:var(--ardosia);font-weight:500;text-decoration:none;transition:transform .35s cubic-bezier(.2,.8,.2,1),background .3s}
+.g-botao:hover,.r-zap:hover{background:#fff;transform:translateY(-2px)}
+.g-botao svg,.r-zap svg{width:19px;height:19px;flex:none}
+.g-rever{min-height:52px;padding:0 22px;border-radius:999px;border:1px solid rgba(239,232,221,.36);transition:border-color .3s}
+.g-rever:hover{border-color:var(--nevoa)}
+.cena.on .g-botao,.cena.on .g-rever{pointer-events:auto}
+.g-slogan{margin-top:30px;font-size:12.5px;letter-spacing:.04em;color:rgba(239,232,221,.6)}
+
+/* régua lateral */
+.bezel{position:fixed;z-index:30;right:max(2.2vw,14px);top:50%;height:44vh;width:52px;margin-top:-22vh;color:var(--tinta-nav);transition:color .8s ease,opacity .8s;opacity:0}
+html.pronto .bezel{opacity:1}
+.bz-ticks{position:absolute;right:0;top:0;bottom:0;width:8px;background:repeating-linear-gradient(to bottom,currentColor 0,currentColor 1px,transparent 1px,transparent 9px);opacity:.36}
+.bz-mark{position:absolute;right:0;top:0;width:24px;height:1px;background:var(--ouro);box-shadow:0 0 12px rgba(212,162,90,.7)}
+.bezel button{position:absolute;right:15px;transform:translateY(-50%);font-family:var(--serif);font-style:italic;font-size:14px;line-height:1;padding:9px 6px;min-width:38px;text-align:right;opacity:.5;transition:opacity .3s,color .3s}
+.bezel button:hover,.bezel button.ativo{opacity:1}
+.bezel button.ativo{color:var(--ouro)}
+@media (max-width:720px){.bezel{width:10px;right:7px;height:34vh;margin-top:-17vh}.bezel button{display:none}.bz-mark{width:10px}}
+
+/* modo tour (gravação) */
+.tour-dica{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:70;font-size:12px;letter-spacing:.06em;color:var(--ardosia);background:rgba(239,232,221,.8);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:10px 16px;border-radius:999px;display:none;pointer-events:auto}
+html.tour-pronto .tour-dica{display:block}
+html.tour-rodando .tour-dica{display:none}
+html.tour-rodando,html.tour-rodando *{cursor:none!important}
+html.modo-tour{scrollbar-width:none}
+html.modo-tour::-webkit-scrollbar{display:none}
+
+/* rodapé */
+.rodape{position:relative;background:var(--ardosia);padding:56px max(5.5vw,20px) calc(44px + env(safe-area-inset-bottom));display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px 40px;align-items:center;border-top:1px solid rgba(239,232,221,.08)}
+.r-marca{font-family:var(--serif);font-size:20px;letter-spacing:.26em}
+.r-marca span{display:block;font-family:var(--sans);font-size:14px;letter-spacing:.01em;color:rgba(239,232,221,.7);margin-top:8px}
+.r-nota{grid-column:1/-1;font-size:13px;color:rgba(239,232,221,.5);max-width:72ch}
+@media (max-width:640px){.rodape{grid-template-columns:minmax(0,1fr)}.r-zap{justify-self:start}}
+
+/* ---------- modo estático: ?embed, "reduzir movimento" ou sem WebGL ---------- */
+html.estatico #filme{height:auto}
+html.estatico .palco{position:relative;height:auto;overflow:visible;background:none}
+html.estatico #tela,html.estatico .veu,html.estatico .veu-centro,html.estatico .dica,html.estatico .bezel,html.estatico #carregando{display:none}
+html.estatico .cenas{position:relative}
+html.estatico .cena{position:relative;inset:auto;visibility:visible;min-height:100vh;background:center/cover no-repeat}
+@supports (height:100svh){html.estatico .cena{min-height:100svh}}
+html.estatico .cap::before,html.estatico #nota1::before,html.estatico #gudev::before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(9,12,17,.7),rgba(9,12,17,0) 62%)}
+html.estatico #gudev::before{background:rgba(14,19,27,.74)}
+html.estatico .cena>*{position:relative}
+html.estatico .t-marca,html.estatico .t-hora,html.estatico .t-gudev{opacity:1}
+html.estatico .topo{color:var(--nevoa);mix-blend-mode:difference}
+html.reduz .cena>*{opacity:0;transition:opacity .6s ease}
+html.reduz .cena.visto>*{opacity:1}
+</style>
+</head>
+<body>
+
+<div id="carregando" role="status" aria-live="polite">
+  <div class="c-marca" aria-hidden="true">MERIDIANO</div>
+  <div class="c-linha"><i></i></div>
+  <div class="c-pct"><span id="pct">0</span>%</div>
+</div>
+
+<header class="topo">
+  <a class="t-marca" href="#abertura" data-ir="0" aria-label="Meridiano, voltar ao início">MERIDIANO</a>
+  <div class="t-hora" aria-hidden="true"><span>São Paulo</span><time class="relogio">--:--:--</time></div>
+  <a class="t-gudev" href="#gudev" data-ir="1421"><i aria-hidden="true"></i>Conceito GuDev</a>
+</header>
+
+<main>
+  <section id="filme" aria-label="Meridiano, um plano-sequência controlado pela rolagem">
+    <div class="palco">
+      <canvas id="tela" aria-hidden="true"></canvas>
+      <div class="veu"></div>
+      <div class="veu-centro"></div>
+      <div class="cenas">
+
+        <div class="cena" id="abertura" data-poster="poster-c1-inicio">
+          <h1 class="marca-h"><span class="sr">Meridiano</span><span data-letras aria-hidden="true">MERIDIANO</span></h1>
+          <p class="lema" data-x="0.25">Tudo começa lá de cima.</p>
+        </div>
+
+        <div class="cena cap" id="cap1" data-poster="poster-c2">
+          <h2><span class="num" data-x="0">I</span><span class="sr">Residências</span><span data-letras aria-hidden="true">Residências</span></h2>
+          <p data-x="0.4">Uma torre de vidro de frente para o mar, com a cidade inteira lá embaixo.</p>
+        </div>
+
+        <div class="cena" id="nota1" data-poster="poster-c3">
+          <p data-x="0">Do chão ao teto,<br>o mar inteiro<br>dentro da sala.</p>
+        </div>
+
+        <div class="cena cap" id="cap2" data-poster="poster-c4">
+          <h2><span class="num" data-x="0">II</span><span class="sr">Relojoaria</span><span data-letras aria-hidden="true">Relojoaria</span></h2>
+          <p data-x="0.4">Peças raras, montadas engrenagem por engrenagem.</p>
+          <p class="agora" data-x="0.55">Agora são <time class="relogio">--:--:--</time> em São Paulo.</p>
+        </div>
+
+        <div class="cena cap" id="cap3" data-poster="poster-c5">
+          <h2><span class="num" data-x="0">III</span><span class="sr">Marina</span><span data-letras aria-hidden="true">Marina</span></h2>
+          <p data-x="0.4">Da sala de estar ao cais em poucos passos.</p>
+        </div>
+
+        <div class="cena cap" id="cap4" data-poster="poster-c6">
+          <h2><span class="num" data-x="0">IV</span><span class="sr">Aviação</span><span data-letras aria-hidden="true">Aviação</span></h2>
+          <p data-x="0.4">Quando o mar fica pequeno, a pista já está pronta.</p>
+        </div>
+
+        <div class="cena" id="fim" data-poster="poster-c1">
+          <p class="marca-f"><span class="sr">Meridiano</span><span data-letras aria-hidden="true">MERIDIANO</span></p>
+          <p class="lema" data-x="0.35">O tempo é seu.</p>
+        </div>
+
+        <div class="cena" id="gudev" data-poster="poster-c1">
+          <p class="g-selo" data-x="0">Site conceito criado pela <b>GuDev</b></p>
+          <h2 class="g-tit"><span class="sr">Um site que faz o cliente parar de rolar.</span><span data-palavras aria-hidden="true">Um site que faz o cliente parar de rolar.</span></h2>
+          <p class="g-txt" data-x="0.3">A Meridiano não existe: é uma marca fictícia, criada pra mostrar até onde um site pode ir. As cenas foram geradas com IA.</p>
+          <div class="g-acoes" data-x="0.42">
+            <a class="g-botao zap" href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>Chamar a GuDev no WhatsApp</a>
+            <button class="g-rever" type="button" data-ir="0">Ver de novo</button>
+          </div>
+          <p class="g-slogan" data-x="0.55">GuDev. Sites que vendem.</p>
+        </div>
+
+      </div>
+      <div class="dica" aria-hidden="true">Role para descer<i></i></div>
+    </div>
+  </section>
+</main>
+
+<nav class="bezel" aria-label="Capítulos">
+  <div class="bz-ticks"></div>
+  <div class="bz-mark"></div>
+</nav>
+
+<div class="tour-dica" role="button" tabindex="0">Aperte espaço ou toque para iniciar o tour</div>
+
+<footer class="rodape">
+  <p class="r-marca">MERIDIANO<span>Um projeto conceito da GuDev.</span></p>
+  <a class="r-zap zap" href="https://wa.me/5511964650141" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>Chamar a GuDev no WhatsApp</a>
+  <p class="r-nota">Meridiano é uma marca fictícia, sem relação com empresas reais. Cenas geradas com IA. © 2026 GuDev. Sites que vendem.</p>
+</footer>
+
+<script>
+(function(){
+'use strict';
+var D=document,R=D.documentElement,W=window;
+var Q=location.search;
+var EMBED=/[?&]embed\b/.test(Q);
+var REDUZ=!!(W.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+var HASH=location.hash||'';
+var TOUR=/[?&]tour\b/.test(Q)||/^#tour\b/.test(HASH);
+var AUTO=/[?&]auto\b/.test(Q)||/^#tour-auto\b/.test(HASH);
+var COARSE=!!(W.matchMedia&&matchMedia('(pointer: coarse)').matches);
+var MER=W.__mer||{};
+
+/* Gerado por gerar-frames.py: ordem dos frames dentro de cada pacote. */
+var MAN=/*MANIFESTO*/{"d":{"w":1280,"h":720,"n":192,"crop":[0.0,0.0,1.0,1.0],"packs":[{"url":"frames/d-1.webp","bytes":4577120,"order":[1000,1008,1016,1024,1032,1040,1048,1056,1064,1072,1080,1088,1096,1104,1112,1120,1128,1136,1144,1152,1160,1168,1176,1184,1191,1004,1012,1020,1028,1036,1044,1052,1060,1068,1076,1084,1092,1100,1108,1116,1124,1132,1140,1148,1156,1164,1172,1180,1188,1002,1006,1010,1014,1018,1022,1026,1030,1034,1038,1042,1046,1050,1054,1058,1062,1066,1070,1074,1078,1082,1086,1090,1094,1098,1102,1106,1110,1114,1118,1122,1126,1130,1134,1138,1142,1146,1150,1154,1158,1162,1166,1170,1174,1178,1182,1186,1190,1001,1003,1005,1007,1009,1011,1013,1015,1017,1019,1021,1023,1025,1027,1029,1031,1033,1035,1037,1039,1041,1043,1045,1047,1049,1051,1053,1055,1057,1059,1061,1063,1065,1067,1069,1071,1073,1075,1077,1079,1081,1083,1085,1087,1089,1091,1093,1095,1097,1099,1101,1103,1105,1107,1109,1111,1113,1115,1117,1119,1121,1123,1125,1127,1129,1131,1133,1135,1137,1139,1141,1143,1145,1147,1149,1151,1153,1155,1157,1159,1161,1163,1165,1167,1169,1171,1173,1175,1177,1179,1181,1183,1185,1187,1189,2000,2008,2016,2024,2032,2040,2048,2056,2064,2072,2080,2088,2096,2104,2112,2120,2128,2136]},{"url":"frames/d-2.webp","bytes":4591392,"order":[2144,2152,2160,2168,2176,2184,2191,3032,3040,3048,3056,3064,3072,3080,3088,3096,3104,3112,3120,3128,3136,3144,3152,3160,3168,3176,3184,3191,4000,4008,4016,4024,4032,4040,4048,4056,4064,4072,4080,4088,4096,4104,4112,4120,4128,4136,4144,4152,4160,4168,4176,4184,4191,5000,5008,5016,5024,5032,5040,5048,5056,5064,5072,5080,5088,5096,5104,5112,5120,5128,5136,5144,5152,5160,5168,5176,5184,5191,6000,6008,6016,6024,6032,6040,6048,6056,6064,6072,6080,6088,6096,6104,6112,6120,6128,6136,6144,6152,6160,6168,6176,6184,6191,2004,2012,2020,2028,2036,2044,2052,2060,2068,2076,2084,2092,2100,2108,2116,2124,2132,2140,2148,2156,2164,2172,2180,2188,2002,2006,2010,2014,2018,2022,2026,2030,2034,2038,2042,2046,2050,2054,2058,2062]},{"url":"frames/d-3.webp","bytes":4575122,"order":[2066,2070,2074,2078,2082,2086,2090,2094,2098,2102,2106,2110,2114,2118,2122,2126,2130,2134,2138,2142,2146,2150,2154,2158,2162,2166,2170,2174,2178,2182,2186,2190,2001,2003,2005,2007,2009,2011,2013,2015,2017,2019,2021,2023,2025,2027,2029,2031,2033,2035,2037,2039,2041,2043,2045,2047,2049,2051,2053,2055,2057,2059,2061,2063,2065,2067,2069,2071,2073,2075,2077,2079,2081,2083,2085,2087,2089,2091,2093,2095,2097,2099,2101,2103,2105,2107,2109,2111,2113,2115,2117,2119,2121,2123,2125,2127,2129,2131,2133,2135,2137,2139,2141,2143,2145,2147]},{"url":"frames/d-4.webp","bytes":4594720,"order":[2149,2151,2153,2155,2157,2159,2161,2163,2165,2167,2169,2171,2173,2175,2177,2179,2181,2183,2185,2187,2189,3028,3036,3044,3052,3060,3068,3076,3084,3092,3100,3108,3116,3124,3132,3140,3148,3156,3164,3172,3180,3188,4004,4012,4020,4028,4036,4044,4052,4060,4068,4076,4084,4092,4100,4108,4116,4124,4132,4140,4148,4156,4164,4172,4180,4188,5004,5012,5020,5028,5036,5044,5052,5060,5068,5076,5084,5092,5100,5108,5116,5124,5132,5140,5148,5156,5164,5172,5180,5188,6004,6012,6020,6028,6036,6044,6052,6060,6068,6076,6084,6092,6100,6108,6116,6124,6132,6140,6148,6156,6164,6172,6180,6188,3030,3034,3038,3042,3046,3050,3054,3058,3062,3066,3070,3074,3078,3082,3086,3090,3094,3098,3102,3106,3110,3114,3118,3122,3126,3130,3134,3138,3142,3146,3150,3154,3158,3162,3166]},{"url":"frames/d-5.webp","bytes":4586870,"order":[3170,3174,3178,3182,3186,3190,3029,3031,3033,3035,3037,3039,3041,3043,3045,3047,3049,3051,3053,3055,3057,3059,3061,3063,3065,3067,3069,3071,3073,3075,3077,3079,3081,3083,3085,3087,3089,3091,3093,3095,3097,3099,3101,3103,3105,3107,3109,3111,3113,3115,3117,3119,3121,3123,3125,3127,3129,3131,3133,3135,3137,3139,3141,3143,3145,3147,3149,3151,3153,3155,3157,3159,3161,3163,3165,3167,3169,3171,3173,3175,3177,3179,3181,3183,3185,3187,3189,4002,4006,4010,4014,4018,4022,4026,4030,4034,4038,4042,4046,4050,4054,4058,4062,4066,4070,4074,4078,4082,4086,4090,4094,4098,4102,4106,4110,4114,4118,4122,4126,4130,4134,4138,4142,4146,4150,4154,4158,4162,4166,4170,4174,4178,4182,4186,4190,5002,5006,5010,5014,5018,5022,5026,5030,5034]},{"url":"frames/d-6.webp","bytes":4565760,"order":[5038,5042,5046,5050,5054,5058,5062,5066,5070,5074,5078,5082,5086,5090,5094,5098,5102,5106,5110,5114,5118,5122,5126,5130,5134,5138,5142,5146,5150,5154,5158,5162,5166,5170,5174,5178,5182,5186,5190,6002,6006,6010,6014,6018,6022,6026,6030,6034,6038,6042,6046,6050,6054,6058,6062,6066,6070,6074,6078,6082,6086,6090,6094,6098,6102,6106,6110,6114,6118,6122,6126,6130,6134,6138,6142,6146,6150,6154,6158,6162,6166,6170,6174,6178,6182,6186,6190,4001,4003,4005,4007,4009,4011,4013,4015,4017,4019,4021,4023,4025,4027,4029,4031,4033,4035,4037,4039,4041,4043,4045,4047,4049,4051,4053,4055,4057,4059,4061,4063,4065,4067,4069,4071,4073,4075,4077,4079,4081,4083,4085,4087,4089,4091,4093,4095,4097,4099,4101,4103,4105,4107,4109,4111]},{"url":"frames/d-7.webp","bytes":4595204,"order":[4113,4115,4117,4119,4121,4123,4125,4127,4129,4131,4133,4135,4137,4139,4141,4143,4145,4147,4149,4151,4153,4155,4157,4159,4161,4163,4165,4167,4169,4171,4173,4175,4177,4179,4181,4183,4185,4187,4189,5001,5003,5005,5007,5009,5011,5013,5015,5017,5019,5021,5023,5025,5027,5029,5031,5033,5035,5037,5039,5041,5043,5045,5047,5049,5051,5053,5055,5057,5059,5061,5063,5065,5067,5069,5071,5073,5075,5077,5079,5081,5083,5085,5087,5089,5091,5093,5095,5097,5099,5101,5103,5105,5107,5109,5111,5113,5115,5117,5119,5121,5123,5125,5127,5129,5131,5133,5135,5137,5139,5141,5143,5145,5147,5149,5151,5153,5155,5157,5159,5161,5163,5165,5167,5169,5171,5173,5175,5177,5179,5181,5183,5185,5187,5189,6001,6003,6005,6007,6009,6011,6013]},{"url":"frames/d-8.webp","bytes":1416142,"order":[6015,6017,6019,6021,6023,6025,6027,6029,6031,6033,6035,6037,6039,6041,6043,6045,6047,6049,6051,6053,6055,6057,6059,6061,6063,6065,6067,6069,6071,6073,6075,6077,6079,6081,6083,6085,6087,6089,6091,6093,6095,6097,6099,6101,6103,6105,6107,6109,6111,6113,6115,6117,6119,6121,6123,6125,6127,6129,6131,6133,6135,6137,6139,6141,6143,6145,6147,6149,6151,6153,6155,6157,6159,6161,6163,6165,6167,6169,6171,6173,6175,6177,6179,6181,6183,6185,6187,6189]}]},"m":{"w":480,"h":720,"n":96,"crop":[0.3125,0.0,0.375,1.0],"packs":[{"url":"frames/m-1.webp","bytes":3596104,"order":[1000,1004,1008,1012,1016,1020,1024,1028,1032,1036,1040,1044,1048,1052,1056,1060,1064,1068,1072,1076,1080,1084,1088,1092,1095,1002,1006,1010,1014,1018,1022,1026,1030,1034,1038,1042,1046,1050,1054,1058,1062,1066,1070,1074,1078,1082,1086,1090,1094,1001,1003,1005,1007,1009,1011,1013,1015,1017,1019,1021,1023,1025,1027,1029,1031,1033,1035,1037,1039,1041,1043,1045,1047,1049,1051,1053,1055,1057,1059,1061,1063,1065,1067,1069,1071,1073,1075,1077,1079,1081,1083,1085,1087,1089,1091,1093,2000,2004,2008,2012,2016,2020,2024,2028,2032,2036,2040,2044,2048,2052,2056,2060,2064,2068,2072,2076,2080,2084,2088,2092,2095,3016,3020,3024,3028,3032,3036,3040,3044,3048,3052,3056,3060,3064,3068,3072,3076,3080,3084,3088,3092,3095,4000,4004,4008,4012,4016,4020,4024,4028,4032,4036,4040,4044,4048,4052,4056,4060,4064,4068,4072,4076,4080,4084,4088,4092,4095,5000,5004,5008,5012,5016,5020,5024,5028,5032,5036,5040,5044,5048,5052,5056,5060,5064,5068,5072,5076,5080,5084,5088,5092,5095,6000,6004,6008,6012,6016,6020,6024,6028,6032,6036,6040,6044,6048,6052,6056,6060,6064,6068,6072,6076,6080,6084,6088,6092,6095,2002,2006,2010,2014,2018,2022,2026,2030,2034,2038,2042,2046,2050,2054]},{"url":"frames/m-2.webp","bytes":3589922,"order":[2058,2062,2066,2070,2074,2078,2082,2086,2090,2094,2001,2003,2005,2007,2009,2011,2013,2015,2017,2019,2021,2023,2025,2027,2029,2031,2033,2035,2037,2039,2041,2043,2045,2047,2049,2051,2053,2055,2057,2059,2061,2063,2065,2067,2069,2071,2073,2075,2077,2079,2081,2083,2085,2087,2089,2091,2093,3014,3018,3022,3026,3030,3034,3038,3042,3046,3050,3054,3058,3062,3066,3070,3074,3078,3082,3086,3090,3094,4002,4006,4010,4014,4018,4022,4026,4030,4034,4038,4042,4046,4050,4054,4058,4062,4066,4070,4074,4078,4082,4086,4090,4094,5002,5006,5010,5014,5018,5022,5026,5030,5034,5038,5042,5046,5050,5054,5058,5062,5066,5070,5074,5078,5082,5086,5090,5094,6002,6006,6010,6014,6018,6022,6026,6030,6034,6038,6042,6046,6050,6054,6058,6062,6066,6070,6074,6078,6082,6086,6090,6094,3015,3017,3019,3021,3023,3025,3027,3029,3031,3033,3035,3037,3039,3041,3043,3045,3047,3049,3051,3053,3055,3057,3059,3061,3063,3065,3067,3069,3071,3073,3075,3077,3079,3081,3083,3085,3087,3089,3091]},{"url":"frames/m-3.webp","bytes":2283916,"order":[3093,4001,4003,4005,4007,4009,4011,4013,4015,4017,4019,4021,4023,4025,4027,4029,4031,4033,4035,4037,4039,4041,4043,4045,4047,4049,4051,4053,4055,4057,4059,4061,4063,4065,4067,4069,4071,4073,4075,4077,4079,4081,4083,4085,4087,4089,4091,4093,5001,5003,5005,5007,5009,5011,5013,5015,5017,5019,5021,5023,5025,5027,5029,5031,5033,5035,5037,5039,5041,5043,5045,5047,5049,5051,5053,5055,5057,5059,5061,5063,5065,5067,5069,5071,5073,5075,5077,5079,5081,5083,5085,5087,5089,5091,5093,6001,6003,6005,6007,6009,6011,6013,6015,6017,6019,6021,6023,6025,6027,6029,6031,6033,6035,6037,6039,6041,6043,6045,6047,6049,6051,6053,6055,6057,6059,6061,6063,6065,6067,6069,6071,6073,6075,6077,6079,6081,6083,6085,6087,6089,6091,6093]}]}}/*FIM*/;
+/* Brilho médio (0 a 9) do topo e da lateral, a cada 4 frames: decide a cor do menu. */
+var LUM=/*LUMA*/{"dTop":["666666666666666666666666666666666666666666666666","666777777777777777777777777777777766665555444443","444443222333333233333333332333334677777666666666","444444444443332222233333222222222345432134577777","222224357777777777777777777777777777777777777766","777777777777777666666666666666666655555555555555"],"dNav":["555555555555555555555555555555555555555555555655","666666666655444444444444444444445555555566666655","233333223123433455544566555555443333334544444444","111111111211233343323332223322223333111111111222","422114553333333333455554433333333333333333233445","444444444444444445555555556666666666655555555555"],"mTop":["666666666666666666666666666666666666666666666666","666777777777777777777777777777777766544444333443","333432112223333333333333333333333555555555555555","667778766654332122355544332211222468762255799999","223223367777777777777777777777777777777777777777","777777777776666666666666666666665555555555555555"]}/*FIM*/;
+
+/* ---------- linha do tempo, em "vh de rolagem" ---------- */
+/* 1 nuvens · 2 torre · 3 cobertura · 4 relógio · 5 marina · 6 jato · NUV = nuvens do fim */
+var FIM=1445,NUV=99;
+/* [início, fim] da rolagem em que o clipe anda; [.., .., de, até] = trecho usado (0 a 1).
+   Cada clipe continua andando durante as emendas: nada fica congelado. */
+var PLAY={1:[0,250],2:[205,465],3:[420,634,28/191,1],4:[564,830],5:[790,1045],6:[995,1285]};
+var TR=[
+  {a:1,b:2,s:[205,250],m:1,fa:[.5,.45],fb:[.5,.6]},             /* névoa: a nuvem abre e mostra a torre */
+  {a:2,b:3,s:[420,465],m:2,fa:[.55,.45],fb:[.55,.45]},           /* voo: a câmera entra pela janela da torre */
+  {a:3,b:4,s:[564,634],m:3,fa:[.48,.55],fb:[.49,.49]},           /* foco: do relógio da sala pro mecanismo */
+  {a:4,b:5,s:[790,830],m:4,fa:[.5,.02],fa2:[.48,.40],fb:[.5,.45]},/* sol: a luz da janela estoura (o sol desce no quadro) */
+  {a:5,b:6,s:[995,1045],m:5,fa:[.5,.487],fb:[.5,.505]},          /* horizonte: os dois horizontes se alinham */
+  {a:6,b:NUV,s:[1215,1285],m:6,fa:[.5,.5],fb:[.5,.5]}            /* a câmera desce do céu de volta às nuvens */
+];
+var CENAS=[
+  {id:'abertura',out:[16,150],abre:1,esp:.95},
+  {id:'cap1',in:[290,320],out:[395,425]},
+  {id:'nota1',in:[470,500],out:[548,578]},
+  {id:'cap2',in:[650,680],out:[735,765]},
+  {id:'cap3',in:[880,910],out:[985,1015]},
+  {id:'cap4',in:[1058,1088],out:[1160,1190]},
+  {id:'fim',in:[1280,1310],out:[1345,1375],esp:.5},
+  {id:'gudev',in:[1365,1395],esp:.18}
+];
+var NAV=[['I',300,'Residências',250,564],['II',660,'Relojoaria',564,790],['III',890,'Marina',790,995],['IV',1068,'Aviação',995,1215]];
+var BEATS=[[0,2.4,24],[320,1.5,40],[440,.8,30],[510,1.1,40],[600,1.0,40],[690,1.5,40],[810,.7,30],[930,1.5,40],[1020,.7,30],[1100,1.4,32],[1250,.8,35],[1310,1.7,32],[1425,2.6,26]];
+var FIM_TOUR=1425;
+
+function cl(x,a,b){a=a==null?0:a;b=b==null?1:b;return x<a?a:x>b?b:x;}
+function ez(x){x=cl(x);return x*x*(3-2*x);}
+function ss(a,b,x){return ez((x-a)/(b-a));}
+
+/* ---------- relógio de São Paulo (dado real) ---------- */
+var relogios=D.querySelectorAll('.relogio'),fmt=null;
+try{fmt=new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'});}catch(e){}
+function hora(){var d=new Date(),t=fmt?fmt.format(d):d.toTimeString().slice(0,8);for(var i=0;i<relogios.length;i++)relogios[i].textContent=t;}
+hora();setInterval(hora,1000);
+
+/* ---------- WhatsApp com mensagem pronta ---------- */
+var MSG='Oi! Vi o site conceito Meridiano da GuDev e quero um site assim pro meu negócio.';
+[].forEach.call(D.querySelectorAll('.zap'),function(a){a.href='https://wa.me/5511964650141?text='+encodeURIComponent(MSG);});
+
+/* ---------- textos: letras e palavras ---------- */
+function divide(el,porPalavra){
+  var t=el.textContent,f=D.createDocumentFragment(),arr=[],partes=porPalavra?t.split(/(\s+)/):t.split('');
+  el.textContent='';
+  for(var i=0;i<partes.length;i++){
+    if(!partes[i])continue;
+    if(porPalavra&&/^\s+$/.test(partes[i])){f.appendChild(D.createTextNode(' '));continue;}
+    var sp=D.createElement('span');sp.className='l';sp.textContent=partes[i];f.appendChild(sp);arr.push(sp);
+  }
+  el.appendChild(f);return arr;
+}
+CENAS.forEach(function(c){
+  c.el=D.getElementById(c.id);
+  var w=c.el.querySelector('[data-letras]'),p=c.el.querySelector('[data-palavras]');
+  c.L=w?divide(w,false):p?divide(p,true):[];
+  c.X=[].map.call(c.el.querySelectorAll('[data-x]'),function(x){return{el:x,d:+x.getAttribute('data-x')};});
+  c.on=false;c.k=-1;c.vi=0;c.vo=0;
+});
+var marcaH=D.querySelector('.marca-h');
+
+/* ---------- navegação ---------- */
+var bezel=D.querySelector('.bezel'),bzMark=D.querySelector('.bz-mark');
+NAV.forEach(function(n){
+  var b=D.createElement('button');b.type='button';b.textContent=n[0];
+  b.setAttribute('aria-label','Ir para o capítulo '+n[0]+', '+n[2]);
+  b.style.top=(n[1]/FIM*100)+'%';b.setAttribute('data-ir',n[1]);
+  bezel.appendChild(b);n.el=b;
+});
+
+/* ================================================================
+   MODO ESTÁTICO (?embed, "reduzir movimento" ou sem WebGL)
+   ================================================================ */
+function modoEstatico(){
+  try{MER.ac&&MER.ac.abort();}catch(e){}
+  R.classList.remove('carregando');R.classList.add('estatico','pronto');
+  if(REDUZ&&!EMBED)R.classList.add('reduz');
+  CENAS.forEach(function(c){
+    c.el.style.backgroundImage='url(frames/'+c.el.getAttribute('data-poster')+'.webp?v=3)';
+    c.L.forEach(function(s){s.style.cssText='';});
+  });
+  if(R.classList.contains('reduz')&&W.IntersectionObserver){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visto');});},{threshold:.25});
+    CENAS.forEach(function(c){io.observe(c.el);});
+  }
+  D.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('[data-ir]');if(!a)return;
+    var v=+a.getAttribute('data-ir');e.preventDefault();
+    var alvo=v<=0?D.getElementById('abertura'):D.getElementById('gudev');
+    alvo.scrollIntoView({behavior:'auto',block:'start'});
+  });
+}
+
+/* ================================================================
+   WEBGL: o filme
+   ================================================================ */
+var VS='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+var FS=[
+'#ifdef GL_FRAGMENT_PRECISION_HIGH',
+'precision highp float;',
+'#else',
+'precision mediump float;',
+'#endif',
+'uniform sampler2D uA0,uA1,uB0,uB1;',
+'uniform float uAm,uBm,uMode,uP,uTime,uZA,uZB,uDusk,uGrain,uSharp;',
+'uniform vec2 uRes,uK,uFA,uFB,uPar,uTexel;',
+'vec3 tA(vec2 u){return mix(texture2D(uA0,u).rgb,texture2D(uA1,u).rgb,uAm);}',
+'vec3 tB(vec2 u){return mix(texture2D(uB0,u).rgb,texture2D(uB1,u).rgb,uBm);}',
+'vec3 crA(vec2 u){vec2 sp=u/uTexel,t1=floor(sp-.5)+.5,f=sp-t1,f2=f*f,f3=f2*f;vec2 w0=f2-.5*(f3+f),w1=1.5*f3-2.5*f2+1.,w3=.5*(f3-f2),w2=1.-w0-w1-w3,w12=w1+w2;vec2 c0=(t1-1.)*uTexel,c3=(t1+2.)*uTexel,c12=(t1+w2/w12)*uTexel;float a=w12.x*w0.y,b=w0.x*w12.y,c=w12.x*w12.y,d=w3.x*w12.y,e=w12.x*w3.y;return(tA(vec2(c12.x,c0.y))*a+tA(vec2(c0.x,c12.y))*b+tA(c12)*c+tA(vec2(c3.x,c12.y))*d+tA(vec2(c12.x,c3.y))*e)/(a+b+c+d+e);}',
+'vec3 crB(vec2 u){vec2 sp=u/uTexel,t1=floor(sp-.5)+.5,f=sp-t1,f2=f*f,f3=f2*f;vec2 w0=f2-.5*(f3+f),w1=1.5*f3-2.5*f2+1.,w3=.5*(f3-f2),w2=1.-w0-w1-w3,w12=w1+w2;vec2 c0=(t1-1.)*uTexel,c3=(t1+2.)*uTexel,c12=(t1+w2/w12)*uTexel;float a=w12.x*w0.y,b=w0.x*w12.y,c=w12.x*w12.y,d=w3.x*w12.y,e=w12.x*w3.y;return(tB(vec2(c12.x,c0.y))*a+tB(vec2(c0.x,c12.y))*b+tB(c12)*c+tB(vec2(c3.x,c12.y))*d+tB(vec2(c12.x,c3.y))*e)/(a+b+c+d+e);}',
+'vec3 sA(vec2 u){vec3 c=crA(u);return c+(c-tA(u))*uSharp;}',
+'vec3 sB(vec2 u){vec3 c=crB(u);return c+(c-tB(u))*uSharp;}',
+'float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}',
+'float vn(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}',
+'float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*vn(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return v;}',
+'float ez(float x){x=clamp(x,0.,1.);return x*x*(3.-2.*x);}',
+'float ez3(float x){x=clamp(x,0.,1.);return x<.5?4.*x*x*x:1.-pow(2.-2.*x,3.)*.5;}',
+'vec2 sfp(vec2 f){return .5+(f-.5)/uK;}',
+'vec2 mz(vec2 s,vec2 f,vec2 c,float z){return f+(s-c)*uK/z+uPar*uK;}',
+'vec3 zbA(vec2 u,vec2 c,float k){vec3 a=vec3(0.);for(int i=0;i<12;i++){a+=tA(c+(u-c)*(1.-k*float(i)/11.));}return a/12.;}',
+'vec3 zbB(vec2 u,vec2 c,float k){vec3 a=vec3(0.);for(int i=0;i<12;i++){a+=tB(c+(u-c)*(1.-k*float(i)/11.));}return a/12.;}',
+'vec3 dfA(vec2 s,vec2 f,vec2 c,float z,float R,float j){float ar=uRes.x/uRes.y;vec3 a=vec3(0.);float t=0.;for(int i=0;i<12;i++){float fi=float(i)+.5,rr=sqrt(fi/12.)*R,an=fi*2.39996+j;vec3 x=tA(mz(s+vec2(cos(an)*rr/ar,sin(an)*rr),f,c,z));float w=1.+4.*pow(dot(x,vec3(.3,.59,.11)),4.);a+=x*w;t+=w;}return a/t;}',
+'vec3 dfB(vec2 s,vec2 f,vec2 c,float z,float R,float j){float ar=uRes.x/uRes.y;vec3 a=vec3(0.);float t=0.;for(int i=0;i<12;i++){float fi=float(i)+.5,rr=sqrt(fi/12.)*R,an=fi*2.39996+j;vec3 x=tB(mz(s+vec2(cos(an)*rr/ar,sin(an)*rr),f,c,z));float w=1.+4.*pow(dot(x,vec3(.3,.59,.11)),4.);a+=x*w;t+=w;}return a/t;}',
+'void main(){',
+' vec2 s=vec2(gl_FragCoord.x/uRes.x,1.-gl_FragCoord.y/uRes.y);',
+' float ar=uRes.x/uRes.y,p=uP;vec3 col;',
+' if(uMode<.5){',
+'  col=sA(mz(s,uFA,sfp(uFA),uZA));',
+' }else if(uMode<1.5){',                       /* névoa */
+'  float e=ez(p);',
+'  vec3 a=sA(mz(s,uFA,sfp(uFA),uZA*(1.+.12*e)));',
+'  vec3 b=sB(mz(s,uFB,sfp(uFB),uZB*(1.16-.16*e)));',
+'  float n=clamp((fbm(s*vec2(ar,1.)*1.6+vec2(uTime*.015,-p*.9))-.22)/.52,0.,1.);',
+'  float sf=.34,th=mix(-sf,1.+sf,e);',
+'  float m=1.-smoothstep(th-sf,th+sf,n);',
+'  col=mix(a,b,m);',
+'  float g=sin(3.14159*p);',
+'  col=mix(col,vec3(1.,.93,.84),g*(.12+(1.-abs(m-.5)*2.)*.18));',
+' }else if(uMode<2.5){',                       /* voo: a câmera acelera pra dentro da fachada e chega na sacada */
+'  float e1=ez(p/.62),e2=ez((p-.38)/.62);',
+'  vec2 ua=mz(s,uFA,sfp(uFA),uZA*(1.+.40*e1));',
+'  vec2 ub=mz(s,uFB,sfp(uFB),uZB*(1.30-.30*e2));',
+'  float kA=.15*e1,kB=.15*(1.-e2);',
+'  vec3 a=kA>.003?zbA(ua,uFA,kA):sA(ua);',
+'  vec3 b=kB>.003?zbB(ub,uFB,kB):sB(ub);',
+'  col=mix(a,b,smoothstep(.40,.60,p));',
+'  col*=1.+.14*sin(3.14159*p);',
+' }else if(uMode<3.5){',                       /* foco: mergulha no mostrador, a lente desfoca e foca no outro relógio */
+'  float e1=ez(p/.58),e2=ez((p-.42)/.58),j=hash(gl_FragCoord.xy)*6.2832;',
+'  vec2 ca=sfp(uFA),cb=sfp(uFB);',
+'  float zA=uZA*(1.+.8*e1),zB=uZB*(1.55-.55*e2);',
+'  float RA=.045*e1,RB=.05*(1.-ez((p-.55)/.45));',
+'  vec3 a=RA>.0015?dfA(s,uFA,ca,zA,RA,j):sA(mz(s,uFA,ca,zA));',
+'  vec3 b=RB>.0015?dfB(s,uFB,cb,zB,RB,j):sB(mz(s,uFB,cb,zB));',
+'  col=mix(a,b,smoothstep(.40,.60,p));',
+'  col*=1.+.06*sin(3.14159*p);',
+' }else if(uMode<4.5){',                       /* sol */
+'  float e=ez(p);vec2 su=sfp(uFA);',
+'  vec3 a=sA(mz(s,uFA,su,uZA*(1.+.10*e)));',
+'  vec3 b=sB(mz(s,uFB,sfp(uFB),uZB*(1.12-.12*e)));',
+'  col=mix(a,b,smoothstep(.40,.62,p));',
+'  float k=pow(sin(3.14159*p),1.3);',
+'  vec2 q=(s-su)*vec2(ar,1.);float d2=dot(q,q);',
+'  float gw=exp(-d2/(.012+.42*k))*1.1*k;',
+'  float st=exp(-abs(q.y)*70.)*exp(-abs(q.x)*1.2)*.85*k;',
+'  vec3 L=vec3(1.,.88,.70)*(gw+st+.40*k*k);',
+'  col=1.-(1.-col)*(1.-clamp(L,0.,1.));',
+' }else if(uMode<5.5){',                       /* horizonte: as duas linhas do mar se alinham e a pista surge do céu pra baixo */
+'  float e=ez(p),hA=sfp(uFA).y;',
+'  vec3 a=sA(mz(s,uFA,sfp(uFA),uZA*(1.+.07*e)));',
+'  vec2 fB=sfp(uFB);',
+'  vec3 b=sB(mz(s,uFB,vec2(fB.x,mix(hA,fB.y,e)),uZB*(1.12-.12*e)));',
+'  col=mix(a,b,smoothstep(0.,1.,p*1.8-.4+(hA-s.y)*.8));',
+'  col+=vec3(1.,.86,.62)*.12*sin(3.14159*p)*exp(-abs(s.y-hA)*7.);',
+' }else{',                                     /* céu -> nuvens */
+'  float e=ez3(p);',
+'  vec3 a=sA(mz(s+vec2(0.,e*.55),uFA,sfp(uFA),uZA));',
+'  vec3 b=sB(mz(s-vec2(0.,(1.-e)*.55),uFB,sfp(uFB),uZB));',
+'  float eg=1.15-e*1.5;',
+'  col=mix(a,b,smoothstep(eg-.32,eg+.32,s.y));',
+' }',
+' if(uDusk>0.){float l=dot(col,vec3(.2126,.7152,.0722));vec3 n=vec3(.06,.09,.15)+l*vec3(.40,.50,.68)+smoothstep(.75,1.,l)*vec3(.32,.19,.06);col=mix(col,n,uDusk);}',
+' float vd=length((s-.5)*vec2(1.,.92));col*=mix(1.,smoothstep(.98,.30,vd),.26);',
+' col+=(hash(gl_FragCoord.xy+fract(uTime*7.31)*vec2(97.,41.))-.5)*uGrain;',
+' gl_FragColor=vec4(clamp(col,0.,1.),1.);',
+'}'].join('\n');
+
+var cv=D.getElementById('tela'),gl=null,prog=null,U={},perdido=false;
+function sh(t,src){var s=gl.createShader(t);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){console.warn(gl.getShaderInfoLog(s));return null;}return s;}
+function glInit(){
+  try{gl=cv.getContext('webgl',{alpha:false,antialias:false,depth:false,stencil:false,premultipliedAlpha:false,preserveDrawingBuffer:false,powerPreference:'high-performance'});}catch(e){gl=null;}
+  if(!gl)return false;
+  var v=sh(gl.VERTEX_SHADER,VS),f=sh(gl.FRAGMENT_SHADER,FS);if(!v||!f)return false;
+  prog=gl.createProgram();gl.attachShader(prog,v);gl.attachShader(prog,f);gl.linkProgram(prog);
+  if(!gl.getProgramParameter(prog,gl.LINK_STATUS))return false;
+  gl.useProgram(prog);
+  var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+  var lp=gl.getAttribLocation(prog,'p');gl.enableVertexAttribArray(lp);gl.vertexAttribPointer(lp,2,gl.FLOAT,false,0,0);
+  'uA0 uA1 uB0 uB1 uAm uBm uMode uP uTime uZA uZB uDusk uGrain uSharp uRes uK uFA uFB uPar uTexel'.split(' ').forEach(function(n){U[n]=gl.getUniformLocation(prog,n);});
+  gl.uniform1i(U.uA0,0);gl.uniform1i(U.uA1,1);gl.uniform1i(U.uB0,2);gl.uniform1i(U.uB1,3);
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,false);gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL,gl.NONE);
+  return true;
+}
+
+if(EMBED||REDUZ||!MAN||!W.createImageBitmap||!glInit()){modoEstatico();return;}
+
+/* ---------- conjunto de frames (computador ou celular em pé) ---------- */
+var SET=MER.set||(innerWidth/innerHeight<.9?'m':'d');
+var SM=MAN[SET],NF=SM.n,TW=SM.w,TH=SM.h,CROP=SM.crop;
+var DESK=SET==='d';
+var MAXT=DESK?40:36,MAXINF=DESK?6:4;
+var IDLE0=0,IDLE1=DESK?48:24,IDLE_STEP=DESK?2:1;
+var ZG=COARSE?1:1.025;
+var GRAIN=DESK?.03:.02,SHARP=DESK?.30:.22;
+if(MER.set&&MER.set!==SET){try{MER.ac&&MER.ac.abort();}catch(e){}MER.res=null;}
+if(TOUR)R.classList.add('modo-tour');
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+W.scrollTo(0,0);
+
+function conv(pt){return[(pt[0]-CROP[0])/CROP[2],(pt[1]-CROP[1])/CROP[3]];}
+TR.forEach(function(t){t.FA=conv(t.fa);t.FB=conv(t.fb);t.FA2=t.fa2?conv(t.fa2):null;});
+var CENTRO=conv([.5,.5]);
+
+/* ---------- download em streaming dos pacotes (WebP animado) ---------- */
+var blobs={},cnt={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0},total=0,got=0,tudo=false,liberado=false;
+SM.packs.forEach(function(p){total+=p.bytes;});
+function cc4(b,i){return String.fromCharCode(b[i],b[i+1],b[i+2],b[i+3]);}
+function u32(b,i){return(b[i]|b[i+1]<<8|b[i+2]<<16|b[i+3]<<24)>>>0;}
+function embrulha(b,off,len){
+  var pad=len&1,o=new Uint8Array(12+len+pad),sz=4+len+pad;
+  o[0]=82;o[1]=73;o[2]=70;o[3]=70;o[4]=sz&255;o[5]=sz>>8&255;o[6]=sz>>16&255;o[7]=sz>>>24&255;
+  o[8]=87;o[9]=69;o[10]=66;o[11]=80;o.set(b.subarray(off,off+len),12);
+  return new Blob([o],{type:'image/webp'});
+}
+function chega(key,blob){if(blobs[key])return;blobs[key]=blob;cnt[(key/1000)|0]++;checa();}
+function baixa(pk,resP){
+  var ordem=pk.order,idx=0,pend=new Uint8Array(0),cab=false;
+  function come(){
+    var b=pend,i=0;
+    if(!cab){if(b.length<12)return;i=12;cab=true;}
+    while(b.length-i>=8){
+      var sz=u32(b,i+4),tot=8+sz+(sz&1);
+      if(b.length-i<tot)break;
+      if(cc4(b,i)==='ANMF'){
+        var j=i+24,fim=i+8+sz;
+        while(j+8<=fim){var c2=cc4(b,j),s2=u32(b,j+4);if(c2==='VP8 '||c2==='VP8L'){if(idx<ordem.length)chega(ordem[idx],embrulha(b,j,8+s2));idx++;break;}j+=8+s2+(s2&1);}
+      }
+      i+=tot;
+    }
+    pend=i?b.slice(i):b;
+  }
+  return(resP||fetch(pk.url+'?v=3')).then(function(res){
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    if(!res.body||!res.body.getReader)return res.arrayBuffer().then(function(ab){got+=ab.byteLength;pend=new Uint8Array(ab);come();checa();});
+    var rd=res.body.getReader();
+    return(function le(){return rd.read().then(function(r){
+      if(r.done)return;var v=r.value;got+=v.length;
+      var nb=new Uint8Array(pend.length+v.length);nb.set(pend,0);nb.set(v,pend.length);pend=nb;come();checa();return le();
+    });})();
+  });
+}
+function corrente(i){
+  if(i>=SM.packs.length){tudo=true;checa();return;}
+  var tent=0;
+  (function vai(){
+    var r=(i===0&&MER.res)?MER.res:null;if(i===0)MER.res=null;
+    baixa(SM.packs[i],r).then(function(){corrente(i+1);},function(){if(++tent<3)setTimeout(vai,1200*tent);else corrente(i+1);});
+  })();
+}
+var barraEl=D.querySelector('.c-linha i'),pctEl=D.getElementById('pct'),ultPct=-1;
+function checa(){
+  var pr=TOUR?got/total:(Math.min(cnt[1],NF)+Math.min(cnt[2],25))/(NF+25);
+  var pc=Math.min(100,Math.floor(cl(pr)*100));
+  if(pc!==ultPct){ultPct=pc;pctEl.textContent=pc;barraEl.style.transform='scaleX('+(pc/100)+')';}
+  if(!liberado&&(TOUR?tudo:(cnt[1]>=NF&&cnt[2]>=25)))liberado=true;
+}
+corrente(0);
+
+var fontesOk=false;
+(function(){
+  var ps=[];try{ps.push(D.fonts.load('400 80px "Bodoni Moda"'),D.fonts.load('300 16px Geist'),D.fonts.load('400 16px Geist'));}catch(e){}
+  Promise.all(ps).then(function(){fontesOk=true;},function(){fontesOk=true;});
+  setTimeout(function(){fontesOk=true;},2600);
+})();
+
+/* ---------- texturas: piscina reaproveitada + decodificação fora da thread ---------- */
+var POOL=[],slotOf={},inflight={},nInf=0,upq=[],rank={},quadro=0;
+function texParams(){gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);}
+function vitima(){
+  var best=null,br=-1;
+  for(var i=0;i<POOL.length;i++){var sl=POOL[i];if(sl.used===quadro)continue;var r=rank[sl.key];r=r==null?1e9-sl.used:r;if(r>br){br=r;best=sl;}}
+  return best;
+}
+function sobe(key,bmp){
+  if(perdido||slotOf[key]){if(bmp.close)bmp.close();return;}
+  var sl;
+  if(POOL.length<MAXT){sl={tex:gl.createTexture(),key:-1,used:0,ok:false};POOL.push(sl);}
+  else{sl=vitima();var rk=rank[key],vr=sl?rank[sl.key]:null;if(!sl||(vr!=null&&(rk==null||vr<rk))){if(bmp.close)bmp.close();return;}delete slotOf[sl.key];}
+  gl.bindTexture(gl.TEXTURE_2D,sl.tex);
+  if(!sl.ok){gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,bmp);texParams();sl.ok=true;}
+  else gl.texSubImage2D(gl.TEXTURE_2D,0,0,0,gl.RGBA,gl.UNSIGNED_BYTE,bmp);
+  sl.key=key;sl.used=quadro;slotOf[key]=sl;
+  if(bmp.close)bmp.close();
+}
+function pede(key){
+  if(slotOf[key]||inflight[key]||!blobs[key]||nInf>=MAXINF)return;
+  inflight[key]=1;nInf++;
+  createImageBitmap(blobs[key],{premultiplyAlpha:'none',colorSpaceConversion:'none'}).then(function(bmp){upq.push([key,bmp]);},function(){delete inflight[key];nInf--;});
+}
+function processaFila(){
+  var n=0,t0=performance.now(),orc=upq.length>3?10:6;
+  while(upq.length&&n<5&&(n===0||performance.now()-t0<orc)){var it=upq.shift();sobe(it[0],it[1]);delete inflight[it[0]];nInf--;n++;}
+}
+
+/* ---------- estado do filme em uma posição s ---------- */
+var tNow=0;
+function idleF(){return IDLE0+(IDLE1-IDLE0)*(.5-.5*Math.cos(tNow/1000*2*Math.PI/26));}
+function posClip(c,s){if(c===NUV)return idleF();var r=PLAY[c],f0=r[2]||0,f1=r[3]==null?1:r[3];return(f0+(f1-f0)*cl((s-r[0])/(r[1]-r[0])))*(NF-1);}
+function estado(s){
+  var st={m:0,p:0,a:1,b:0,fa:0,fb:0,t:null},i,x;
+  s=cl(s,0,FIM);
+  for(i=0;i<TR.length;i++){
+    x=TR[i];
+    if(s<x.s[0]){st.a=x.a;break;}
+    if(s<=x.s[1]){st.m=x.m;st.p=(s-x.s[0])/(x.s[1]-x.s[0]);st.a=x.a;st.b=x.b;st.t=x;break;}
+  }
+  if(i===TR.length)st.a=TR[TR.length-1].b;
+  st.fa=posClip(st.a,s);if(st.m)st.fb=posClip(st.b,s);
+  return st;
+}
+function par(c,f){
+  c=c===NUV?1:c;var base=c*1000,lo=Math.max(0,Math.min(NF-1,Math.floor(f))),hi=Math.min(NF-1,lo+1),m=f-lo;
+  var a=slotOf[base+lo],b=slotOf[base+hi];
+  if(!(a&&b)){
+    var L=-1,Uu=-1,i;
+    for(i=lo;i>=0&&lo-i<64;i--)if(slotOf[base+i]){L=i;break;}
+    for(i=hi;i<NF&&i-hi<64;i++)if(slotOf[base+i]){Uu=i;break;}
+    if(L<0&&Uu<0)return null;
+    if(L<0){a=b=slotOf[base+Uu];m=0;}
+    else if(Uu<0){a=b=slotOf[base+L];m=0;}
+    else{a=slotOf[base+L];b=slotOf[base+Uu];m=Uu===L?0:cl((f-L)/(Uu-L));}
+  }
+  a.used=b.used=quadro;
+  return[a,b,m];
+}
+function exato(c,f){c=c===NUV?1:c;var lo=Math.max(0,Math.min(NF-1,Math.floor(f))),hi=Math.min(NF-1,lo+1);return!!(slotOf[c*1000+lo]&&slotOf[c*1000+hi]);}
+
+/* lista do que precisa estar decodificado, em ordem de prioridade */
+function lista(sC,dir,passo,lead){
+  var out=[],seen={},lim=MAXT-4,stp=230/NF*passo,a=1,b=1,g=1;
+  function push(k){if(!seen[k]){seen[k]=1;out.push(k);}}
+  function add(c,f){c=c===NUV?1:c;var lo=Math.max(0,Math.min(NF-1,Math.floor(f/g)*g));push(c*1000+lo);push(c*1000+Math.min(NF-1,lo+g));}
+  function addS(s){var e=estado(s);add(e.a,e.fa);if(e.m)add(e.b,e.fb);}
+  /* rolando: pede primeiro onde a câmera vai estar quando o frame ficar pronto */
+  if(lead>1){addS(sC+dir*lead);g=passo;addS(sC);sC+=dir*lead;}
+  else{addS(sC);g=passo;}
+  if(sC>1165)for(var f=IDLE0;f<=IDLE1;f+=IDLE_STEP)push(1000+f);
+  while(out.length<lim&&(a<90||b<30)){
+    for(var r=0;r<3&&out.length<lim;r++){addS(sC+dir*a*stp);a++;}
+    if(b<30){addS(sC-dir*b*stp);b++;}
+  }
+  return out;
+}
+
+/* ---------- medidas ---------- */
+var trilho=D.getElementById('filme'),palco=D.querySelector('.palco'),cenasEl=D.querySelector('.cenas');
+var sonda=D.createElement('div');sonda.style.cssText='position:absolute;top:0;left:0;width:1px;height:100vh;visibility:hidden;pointer-events:none';D.body.appendChild(sonda);
+var vhPx=W.innerHeight/100,K=[1,1],larg=W.innerWidth,bzH=0;
+function mede(){
+  vhPx=(sonda.offsetHeight||W.innerHeight)/100;
+  var cw=cv.clientWidth||W.innerWidth,ch=cv.clientHeight||W.innerHeight;
+  var dpr=Math.min(W.devicePixelRatio||1,COARSE?3:2),maxPx=COARSE?2.4e6:3.6e6,sc=Math.min(dpr,Math.sqrt(maxPx/(cw*ch)));
+  cv.width=Math.max(2,Math.round(cw*sc));cv.height=Math.max(2,Math.round(ch*sc));
+  var ar=cv.width/cv.height,at=TW/TH;K=ar>at?[1,at/ar]:[ar/at,1];
+  bzH=bezel.clientHeight;
+}
+mede();
+W.addEventListener('resize',function(){if(!COARSE||W.innerWidth!==larg){larg=W.innerWidth;mede();}});
+function topoTrilho(){return trilho.getBoundingClientRect().top+W.scrollY;}
+function lerS(){return cl(-trilho.getBoundingClientRect().top/vhPx,0,FIM);}
+
+/* ---------- mouse: paralaxe leve (só computador) ---------- */
+var mx=0,my=0,pmx=0,pmy=0;
+if(!COARSE)W.addEventListener('pointermove',function(e){if(tour.on)return;mx=e.clientX/W.innerWidth*2-1;my=e.clientY/W.innerHeight*2-1;},{passive:true});
+
+/* ---------- textos ---------- */
+var veu=D.querySelector('.veu'),veuC=D.querySelector('.veu-centro'),dica=D.querySelector('.dica'),tMarca=D.querySelector('.t-marca');
+var introT0=0,introE=0,revelado=false;
+function cena(c,s,dt){
+  var vin,vout;
+  if(c.abre){vin=introE;vout=cl((s-c.out[0])/(c.out[1]-c.out[0]));}
+  else{
+    /* a rolagem só decide SE o texto aparece; a animação corre sozinha, com folga pra não piscar */
+    var h=c.on?6:0,tv=s>=c.in[0]-h&&(!c.out||s<c.out[0]+h);
+    if(tv){if(c.vo>0)c.vo=Math.max(0,c.vo-dt/.55);else c.vi=Math.min(1,c.vi+dt/1.25);}
+    else if(c.vi>=1){c.vo=Math.min(1,c.vo+dt/.8);if(c.vo>=1)c.vi=c.vo=0;}
+    else{c.vi=Math.max(0,c.vi-dt/.6);c.vo=0;}
+    vin=c.vi;vout=c.vo;
+  }
+  var on=vin>.001&&vout<.999;
+  if(on!==c.on){c.on=on;c.el.classList.toggle('on',on);}
+  if(!on)return 0;
+  var k=Math.round(vin*1000)*2000+Math.round(vout*1000);
+  if(k!==c.k){
+    c.k=k;
+    var n=c.L.length,mid=(n-1)/2,stg=n>1?.5/(n-1):0,esp=c.esp||.28,i;
+    for(i=0;i<n;i++){
+      var li=ez((vin-i*stg)/.5);
+      var dd=n>1?Math.abs(i-mid)/mid:0;
+      var lo=ez((vout-(1-dd)*.35)/.65);
+      var o=li*(1-lo),bl=(1-li)*10+lo*16,x=(i-mid)*((1-li)*.09+lo*esp),y=-lo*.05,sc=1+(1-li)*.04+lo*.1;
+      var sp=c.L[i].style;
+      sp.opacity=o.toFixed(3);
+      sp.filter=bl>.08?'blur('+bl.toFixed(2)+'px)':'none';
+      sp.transform='translate3d('+x.toFixed(3)+'em,'+y.toFixed(3)+'em,0) scale('+sc.toFixed(4)+')';
+    }
+    for(i=0;i<c.X.length;i++){
+      var X=c.X[i],e=ez((vin-X.d)/(1-X.d))*(1-ez(vout/.6)),bx=(1-e)*7;
+      X.el.style.opacity=e.toFixed(3);X.el.style.filter=bx>.08?'blur('+bx.toFixed(2)+'px)':'none';
+    }
+    if(c.abre)marcaH.style.transform='scale('+(1+vout*.16).toFixed(4)+')';
+  }
+  return Math.min(vin,1-vout);
+}
+
+/* ---------- cor do menu conforme o brilho do frame ---------- */
+var tintaTopo=1,tintaNav=1;
+function lumAt(tb,c,f){var str=tb[(c===NUV?1:c)-1];var i=Math.min(str.length-1,Math.max(0,Math.round(f*(192/NF)/4)));return(+str.charAt(i)+.5)/10;}
+function tinta(st,dusk){
+  var tTop=DESK?LUM.dTop:LUM.mTop,tNav=LUM.dNav;
+  var lt=lumAt(tTop,st.a,st.fa),ln=lumAt(tNav,st.a,st.fa);
+  if(st.m){var w=ez(st.p);lt=lt+(lumAt(tTop,st.b,st.fb)-lt)*w;ln=ln+(lumAt(tNav,st.b,st.fb)-ln)*w;}
+  lt*=1-dusk*.85;ln*=1-dusk*.85;
+  var nt=lt>.56?1:lt<.47?0:tintaTopo,nn=ln>.56?1:ln<.47?0:tintaNav;
+  if(nt!==tintaTopo){tintaTopo=nt;R.style.setProperty('--tinta-topo',nt?'#121821':'#EFE8DD');}
+  if(nn!==tintaNav){tintaNav=nn;R.style.setProperty('--tinta-nav',nn?'#121821':'#EFE8DD');}
+}
+
+/* ---------- tour automático (pra gravar o Reels) ---------- */
+var tour={on:false,pronto:false,t0:0,tbl:null,dur:50};
+(function(){var m=Q.match(/[?&]tour=(\d+)/)||HASH.match(/^#tour-(?:auto-)?(\d+)/);if(m)tour.dur=cl(+m[1],15,180);})();
+function tabela(){var t=new Float64Array(FIM_TOUR+1);for(var s=1;s<=FIM_TOUR;s++){var w=1;for(var j=0;j<BEATS.length;j++){var b=BEATS[j],z=(s-b[0])/b[2];w+=b[1]*Math.exp(-z*z);}t[s]=t[s-1]+w;}return t;}
+function tourS(ts){
+  var hold=1.4;if(ts<hold)return 0;
+  var u=Math.min(1,(ts-hold)/(tour.dur-hold));u=u+(u*u*(3-2*u)-u)*.5;
+  var tb=tour.tbl,tg=u*tb[FIM_TOUR],lo=0,hi=FIM_TOUR;
+  while(hi-lo>1){var md=(lo+hi)>>1;if(tb[md]<tg)lo=md;else hi=md;}
+  return lo+(tg-tb[lo])/Math.max(1e-6,tb[hi]-tb[lo]);
+}
+function tourInicia(){
+  if(!tour.pronto||tour.on)return;
+  if(sCur>8){salto(0,function(){setTimeout(tourInicia,700);});return;}
+  if(!tour.tbl)tour.tbl=tabela();
+  mx=my=0;tour.on=true;tour.t0=performance.now();R.classList.add('tour-rodando');
+}
+function tourPara(){if(!tour.on)return;tour.on=false;R.classList.remove('tour-rodando');}
+D.querySelector('.tour-dica').addEventListener('click',tourInicia);
+W.addEventListener('wheel',tourPara,{passive:true});
+W.addEventListener('touchstart',function(){if(tour.on)tourPara();else if(TOUR&&tour.pronto&&R.classList.contains('tour-pronto'))tourInicia();},{passive:true});
+W.addEventListener('keydown',function(e){
+  if(TOUR&&(e.key===' '||e.key==='Enter')&&!tour.on&&tour.pronto){e.preventDefault();tourInicia();return;}
+  if(tour.on&&['Shift','Control','Alt','Meta'].indexOf(e.key)<0)tourPara();
+});
+
+/* ---------- saltos (menu, régua, "ver de novo") ---------- */
+var sCur=0,sTgt=0,saltando=false;
+function salto(alvo,cb){
+  tourPara();saltando=true;palco.style.opacity='0';
+  setTimeout(function(){
+    W.scrollTo(0,topoTrilho()+alvo*vhPx);sCur=sTgt=alvo;
+    var t0=performance.now();
+    (function chk(){
+      var st=estado(sCur);
+      if((exato(st.a,st.fa)&&(!st.m||exato(st.b,st.fb)))||performance.now()-t0>800){palco.style.opacity='1';saltando=false;if(cb)cb();}
+      else setTimeout(chk,40);
+    })();
+  },240);
+}
+D.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('[data-ir]');if(!a)return;
+  e.preventDefault();salto(+a.getAttribute('data-ir'));
+});
+
+/* ---------- laço principal ---------- */
+var ult=performance.now(),dir=1,ultDesenho=0,ultS=-1,ultAtivo=-1,velS=0;
+function desenha(st){
+  var A=par(st.a,st.fa);if(!A)return false;
+  var B=st.m?par(st.b,st.fb):null,m=st.m&&B?st.m:0,t=st.t;
+  gl.viewport(0,0,cv.width,cv.height);
+  gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,A[0].tex);
+  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,A[1].tex);
+  gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,(B||A)[0].tex);
+  gl.activeTexture(gl.TEXTURE3);gl.bindTexture(gl.TEXTURE_2D,(B||A)[1].tex);
+  var resp=1+.016*(.5-.5*Math.cos(tNow/1000*.32));
+  var zA=ZG*((st.a===1||st.a===NUV)?1+(resp-1)*(st.a===NUV?1:1-cl(sCur/70)):1);
+  var zB=ZG*(st.b===NUV?resp:1);
+  gl.uniform1f(U.uAm,A[2]);gl.uniform1f(U.uBm,B?B[2]:0);
+  gl.uniform1f(U.uMode,m);gl.uniform1f(U.uP,st.p);
+  gl.uniform1f(U.uTime,(tNow/1000)%1000);
+  gl.uniform1f(U.uZA,zA);gl.uniform1f(U.uZB,zB);
+  var fa=m?t.FA:CENTRO,fb=m?t.FB:CENTRO;
+  if(m&&t.FA2)fa=[fa[0]+(t.FA2[0]-fa[0])*st.p,fa[1]+(t.FA2[1]-fa[1])*st.p];
+  gl.uniform2f(U.uFA,fa[0],fa[1]);gl.uniform2f(U.uFB,fb[0],fb[1]);
+  gl.uniform2f(U.uRes,cv.width,cv.height);gl.uniform2f(U.uK,K[0],K[1]);
+  gl.uniform2f(U.uTexel,1/TW,1/TH);
+  gl.uniform2f(U.uPar,pmx*.006,pmy*.004);
+  gl.uniform1f(U.uDusk,ss(1341,1397,sCur)*.9);
+  gl.uniform1f(U.uGrain,GRAIN);gl.uniform1f(U.uSharp,SHARP);
+  gl.drawArrays(gl.TRIANGLES,0,6);
+  return true;
+}
+cv.addEventListener('webglcontextlost',function(e){e.preventDefault();perdido=true;},false);
+cv.addEventListener('webglcontextrestored',function(){POOL=[];slotOf={};inflight={};nInf=0;upq=[];perdido=!glInit();},false);
+
+function revela(){
+  revelado=true;introT0=performance.now();
+  R.classList.remove('carregando');R.classList.add('pronto');
+  if(TOUR){tour.pronto=true;R.classList.add('tour-pronto');if(AUTO)setTimeout(tourInicia,1600);}
+}
+
+var DBG=/[?&]debug\b/.test(Q)?(W.__dbg={exato:0,aprox:0,vazio:0,s:0,tudo:false}):null;
+function laco(now){
+  requestAnimationFrame(laco);
+  quadro++;tNow=now;
+  var dt=Math.min(.1,(now-ult)/1000);ult=now;
+  var prev=sCur;
+  if(tour.on){
+    var ts=(now-tour.t0)/1000;sCur=sTgt=tourS(ts);
+    W.scrollTo(0,topoTrilho()+sCur*vhPx);
+    if(ts>=tour.dur)tourPara();
+  }else if(!saltando){
+    sTgt=lerS();
+    if(Math.abs(sTgt-sCur)>140)prev=sCur=sTgt-Math.sign(sTgt-sCur)*50;
+    sCur+=(sTgt-sCur)*(1-Math.exp(-dt/.12));
+    if(Math.abs(sTgt-sCur)<.004)sCur=sTgt;
+  }
+  if(sCur!==prev)dir=sCur>prev?1:-1;
+  if(dt>0)velS+=(Math.abs(sCur-prev)/dt-velS)*.15;
+  var k2=1-Math.exp(-dt/.35);pmx+=(mx-pmx)*k2;pmy+=(my-pmy)*k2;
+
+  if(perdido)return;
+  processaFila();
+  /* rolando rápido: busca 1 a cada 2 (ou 4) frames à frente; o shader mistura os vizinhos */
+  var lst=lista(sCur,dir,DESK?(velS>150?4:velS>70?2:1):(velS>220?2:1),Math.min(velS*.16,45));rank={};
+  for(var i=0;i<lst.length;i++){rank[lst[i]]=i;pede(lst[i]);}
+
+  var st=estado(sCur);
+  if(liberado&&!revelado&&fontesOk&&exato(1,0))revela();
+  /* redesenha quando muda algo; parado, só o grão a ~20 qps */
+  var mexe=sCur!==ultS||st.a===NUV||st.b===NUV||sCur<70||st.m;
+  if(mexe||now-ultDesenho>48){if(desenha(st))ultDesenho=now;ultS=sCur;}
+  if(DBG&&revelado){var ok=exato(st.a,st.fa)&&(!st.m||exato(st.b,st.fb));if(ok)DBG.exato++;else if(par(st.a,st.fa))DBG.aprox++;else DBG.vazio++;DBG.s=sCur;DBG.tudo=tudo;}
+  if(!revelado)return;
+
+  introE=ez((now-introT0)/2300);
+  var vs=0,vg=0,vf=0,v;
+  for(i=0;i<CENAS.length;i++){
+    v=cena(CENAS[i],sCur,dt);
+    var id=CENAS[i].id;
+    if(id==='gudev')vg=v;else if(id==='fim')vf=v;else if(id!=='abertura')vs=Math.max(vs,v);
+  }
+  veu.style.opacity=vs.toFixed(3);veuC.style.opacity=vg.toFixed(3);
+  dica.style.opacity=(introE*(1-cl(sCur/12))).toFixed(3);
+  tMarca.style.opacity=(cl((sCur-100)/50)*(1-vf)).toFixed(3);
+  if(!COARSE)cenasEl.style.transform='translate3d('+(-pmx*8).toFixed(2)+'px,'+(-pmy*5).toFixed(2)+'px,0)';
+  tinta(st,ss(1341,1397,sCur)*.9);
+  bzMark.style.transform='translateY('+(sCur/FIM*bzH).toFixed(1)+'px)';
+  var at=-1;for(i=0;i<NAV.length;i++)if(sCur>=NAV[i][3]&&sCur<NAV[i][4])at=i;
+  if(at!==ultAtivo){if(ultAtivo>=0)NAV[ultAtivo].el.classList.remove('ativo');if(at>=0)NAV[at].el.classList.add('ativo');ultAtivo=at;}
+}
+requestAnimationFrame(laco);
+})();
+</script>
+</body>
+</html>
