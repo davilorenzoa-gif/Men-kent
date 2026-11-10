@@ -20,7 +20,7 @@
 - Em vez de guardar o carro recortado em cor, guarde só a **máscara** (WebP sem perda, só alfa, ~10 KB) e recorte no navegador com `destination-in`. Fica bem mais leve.
 - **Vídeo de IA em 720p pixela no celular** (tela de 3x). Antes de usar em tela cheia: upscale com Real-ESRGAN (`realesr-general-x4v3` pros quadros, rápido; `RealESRGAN_x4plus` pra foto parada, mais nítido). Roda no PC do Gu ou aqui com torch + spandrel.
 - **Chuva (referência do Davi):** gotas retas (sem inclinação), finas, com rastro que some em cima; 3 camadas (fundo pequenas e apagadas, meio, poucas grandes e borradas na frente); só aparecem onde tem luz (mais forte em cima, some embaixo). Desenhar no canvas na resolução da tela (até 2x), senão pixela.
-
+- **Mancha apagada vira parte do vídeo:** apagamos o logo e a legenda de um quadro e mandamos pro Flow. Ele copiou as manchas como se fossem parte da cena, e elas ficaram em todos os quadros. Pra mandar um quadro pro Flow, **corte** a parte com texto em vez de borrar.
 - **O Flow troca o carro:** cada geração pode virar outro modelo ou outra geração. Confira antes de juntar dois clipes como se fossem o mesmo carro.
 - **"A moto repele o carro":** no clipe da moto, o carro escorregava pro lado conforme a moto chegava, e parecia que ela empurrava o carro. Dá pra arrumar sem gerar de novo: rastrear um ponto do carro (o farol) e deslocar cada quadro pra ele ficar parado na tela. Carro parado no mesmo lugar e crescendo é o que o olho entende como rota de batida.
 - **Corte seco entre cenas incomoda o Davi.** Junte as cenas com movimento contínuo: pausa, mira, zoom com desfoque e a próxima cena saindo do desfoque.
