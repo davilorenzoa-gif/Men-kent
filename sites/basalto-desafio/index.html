@@ -1,0 +1,996 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Basalto Materiais de Construção | Orçamento pelo WhatsApp</title>
+<meta name="description" content="Cimento, ferragem, hidráulica, elétrica e acabamento. Monte sua lista no site, calcule o material da obra e peça o orçamento pelo WhatsApp.">
+<meta property="og:title" content="Basalto Materiais de Construção">
+<meta property="og:description" content="Monte sua lista, calcule o material e peça o orçamento pelo WhatsApp.">
+<meta property="og:image" content="img/og.jpg">
+<meta name="theme-color" content="#141618">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Demo GuDev (desafio). Empresa fictícia: sem preços, avaliações ou números inventados. */
+:root{
+  --bg:#141618;--s1:#1b1e21;--s2:#24272b;--line:rgba(228,225,217,.1);--line2:rgba(228,225,217,.18);
+  --tx:#e4e1d9;--mut:#9a9488;--lime:#c6ff3d;--lime-d:#9fd61a;--bloco:#9c5a3c;
+  --fd:"Archivo",system-ui,sans-serif;--fm:"IBM Plex Mono",ui-monospace,monospace;
+  --m:clamp(16px,4.5vw,72px);--max:1240px;--r:14px;--ease:cubic-bezier(.2,.7,.1,1);
+  --glass:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.02));
+  --glass-b:1px solid rgba(255,255,255,.09);--glass-in:inset 0 1px 0 rgba(255,255,255,.08);
+  --blur:16px;
+}
+@media (max-width:640px){:root{--blur:10px}}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg);color:var(--tx);font-family:var(--fd);font-size:clamp(15px,1.05vw,17px);line-height:1.55;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+svg{display:block}
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px;border-radius:6px}
+.mono{font-family:var(--fm);font-size:.82em;letter-spacing:.01em}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--m)}
+.skip{position:fixed;left:12px;top:-60px;z-index:100;background:var(--lime);color:#111;padding:10px 16px;border-radius:8px;font-weight:600}
+.skip:focus{top:12px}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:12px;font-weight:600;text-decoration:none;transition:background .25s,transform .25s var(--ease),border-color .25s;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-lime{background:var(--lime);color:#121410}
+.btn-lime:hover{background:#d5ff6b}
+.btn-ghost{border:1px solid var(--line2);background:var(--glass)}
+.btn-ghost:hover{border-color:var(--tx)}
+.btn[disabled],.btn[aria-disabled=true]{opacity:.4;pointer-events:none}
+.btn svg{width:20px;height:20px;flex:none}
+
+/* header de vidro */
+.top{position:fixed;inset:0 0 auto;z-index:40;padding:10px var(--m)}
+.top-in{max-width:var(--max);margin:0 auto;display:flex;align-items:center;gap:18px;height:56px;padding:0 10px 0 18px;border-radius:16px;
+  background:rgba(27,30,33,.92);border:var(--glass-b);box-shadow:var(--glass-in)}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .top-in,.fab,.sheet{background:rgba(27,30,33,.55);-webkit-backdrop-filter:blur(var(--blur)) saturate(140%);backdrop-filter:blur(var(--blur)) saturate(140%)}
+}
+@media (prefers-reduced-transparency:reduce){.top-in,.fab,.sheet{background:var(--s1)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-stretch:125%;letter-spacing:-.01em;text-decoration:none;font-size:18px}
+.logo i{width:18px;height:18px;border:2px solid var(--tx);border-radius:4px;position:relative}
+.logo i::after{content:"";position:absolute;left:-5px;right:-5px;top:50%;height:2px;margin-top:-1px;background:var(--lime)}
+.nav{display:flex;gap:4px;margin-left:auto}
+.nav a{padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--mut);font-size:15px}
+.nav a:hover{color:var(--tx);background:rgba(255,255,255,.05)}
+.list-btn{display:flex;align-items:center;gap:8px;min-height:42px;padding:0 14px;border-radius:10px;border:1px solid var(--line2);font-size:15px;font-weight:600}
+.list-btn:hover{border-color:var(--tx)}
+.count{min-width:22px;height:22px;padding:0 6px;border-radius:99px;background:var(--s2);font-family:var(--fm);font-size:12px;display:grid;place-items:center;transition:background .2s,color .2s}
+.count.has{background:var(--lime);color:#121410}
+.count.bump{animation:bump .35s var(--ease)}
+@keyframes bump{40%{transform:scale(1.3)}}
+@media (max-width:860px){.nav{display:none}.list-btn{margin-left:auto}}
+
+/* ===== WOW 1: hero com laser ===== */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:120px 0 72px;isolation:isolate;overflow:hidden}
+.hero-wall{position:absolute;inset:auto 0 0;height:62%;z-index:-2;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='%237a4630'%3E%3Crect x='1' y='1' width='78' height='38' rx='1.5'/%3E%3Crect x='-39' y='41' width='78' height='38' rx='1.5'/%3E%3Crect x='41' y='41' width='78' height='38' rx='1.5'/%3E%3C/g%3E%3Cg fill='%233a2219'%3E%3Crect x='8' y='9' width='18' height='8'/%3E%3Crect x='31' y='9' width='18' height='8'/%3E%3Crect x='54' y='9' width='18' height='8'/%3E%3Crect x='8' y='23' width='18' height='8'/%3E%3Crect x='31' y='23' width='18' height='8'/%3E%3Crect x='54' y='23' width='18' height='8'/%3E%3Crect x='-12' y='49' width='18' height='8'/%3E%3Crect x='14' y='49' width='18' height='8'/%3E%3Crect x='48' y='49' width='18' height='8'/%3E%3Crect x='74' y='49' width='18' height='8'/%3E%3Crect x='-12' y='63' width='18' height='8'/%3E%3Crect x='14' y='63' width='18' height='8'/%3E%3Crect x='48' y='63' width='18' height='8'/%3E%3Crect x='74' y='63' width='18' height='8'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(70% 90% at var(--lx,30%) 100%,#000 0,rgba(0,0,0,.25) 55%,transparent 80%);
+          mask-image:radial-gradient(70% 90% at var(--lx,30%) 100%,#000 0,rgba(0,0,0,.25) 55%,transparent 80%)}
+.hero-light{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(40% 50% at var(--lx,30%) var(--ly,40%),rgba(255,247,225,.09),transparent 70%),
+             linear-gradient(180deg,rgba(20,22,24,.2),var(--bg) 96%)}
+.hero-in{width:100%}
+.kicker{color:var(--mut);margin-bottom:clamp(10px,2vw,22px)}
+.ht-box{position:relative}
+.ht{position:relative;display:block;font-weight:800;font-stretch:125%;line-height:.86;letter-spacing:-.025em;
+  font-size:clamp(3.1rem,17.5vw,14.5rem);padding-bottom:.04em;
+  clip-path:inset(0 0 calc((1 - var(--scan,1)) * 100%) 0)}
+.ht span{display:block;-webkit-background-clip:text;background-clip:text;color:transparent}
+.ht-base{background-image:var(--noise,none),linear-gradient(180deg,#5d6064,#2b2e31)}
+.ht-lit{position:absolute;inset:0;background-image:var(--noise,none),linear-gradient(180deg,#f6f3ea,#aaa59b);
+  -webkit-mask-image:radial-gradient(circle at var(--tx-x,30%) var(--tx-y,50%),#000 0,rgba(0,0,0,.4) 22%,transparent 46%);
+          mask-image:radial-gradient(circle at var(--tx-x,30%) var(--tx-y,50%),#000 0,rgba(0,0,0,.4) 22%,transparent 46%)}
+.laser{position:absolute;left:calc(50% - 50vw);width:100vw;height:2px;top:calc(var(--scan,1) * 100%);margin-top:-1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--lime) 12%,var(--lime) 88%,transparent);
+  box-shadow:0 0 14px 1px rgba(198,255,61,.55),0 0 2px var(--lime)}
+.laser::before{content:"";position:absolute;left:max(var(--m),calc(50vw - var(--max)/2 + var(--m)));top:-5px;width:12px;height:12px;border-radius:50%;background:var(--lime);box-shadow:0 0 18px 4px rgba(198,255,61,.6)}
+.laser-read{position:absolute;right:max(var(--m),calc(50vw - var(--max)/2 + var(--m)));top:10px;color:var(--lime);opacity:var(--done,1);transition:opacity .4s}
+.hero-sub{max-width:34ch;margin-top:clamp(28px,4vw,44px);font-size:clamp(17px,1.5vw,21px);color:#cfcbc2}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.hero-fade{opacity:var(--done,1);transform:translateY(calc((1 - var(--done,1)) * 10px));transition:opacity .6s,transform .6s var(--ease)}
+@media (max-width:520px){.hero-cta .btn{flex:1 1 100%}}
+
+/* atalhos de categoria */
+.cats{border-block:1px solid var(--line)}
+.cats ul{list-style:none;display:flex;gap:6px;overflow-x:auto;padding:12px var(--m);max-width:var(--max);margin:0 auto;scrollbar-width:none}
+.cats ul::-webkit-scrollbar{display:none}
+.cats button{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;white-space:nowrap;color:var(--mut);font-size:15px}
+.cats button:hover{color:var(--tx);background:rgba(255,255,255,.05)}
+.cats svg{width:18px;height:18px}
+
+/* seções */
+.sec{padding:clamp(72px,10vw,140px) 0}
+.h2{font-weight:800;font-stretch:112%;font-size:clamp(34px,5vw,68px);line-height:1;letter-spacing:-.02em;max-width:16ch}
+.lead{color:var(--mut);max-width:52ch;margin-top:16px;font-size:clamp(16px,1.2vw,18px)}
+
+/* ===== WOW 2: parede em camadas ===== */
+.cam{position:relative;height:330vh}
+.cam-st{position:sticky;top:0;height:100svh;display:grid;align-items:center;overflow:hidden}
+.cam-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,4vw,64px);align-items:center}
+.scene{height:min(70svh,560px);display:grid;place-items:center;perspective:1400px}
+.stack{position:relative;width:clamp(170px,26vw,300px);aspect-ratio:1;transform-style:preserve-3d;transform:rotateY(-34deg) rotateX(14deg) translateZ(-120px)}
+.lay{position:absolute;inset:0;transform-style:preserve-3d;transform:translateZ(calc(var(--i) * 7px + var(--acc,0) * var(--gap,64px)));border-radius:2px}
+.lay .f{position:absolute;inset:0;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.lay .ex,.lay .ey{position:absolute;background:var(--edge)}
+.lay .ex{left:0;right:0;top:0;height:7px;transform-origin:top;transform:rotateX(-90deg)}
+.lay .ey{top:0;bottom:0;left:0;width:7px;transform-origin:left;transform:rotateY(90deg)}
+.l0 .f{background-color:#874b31;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 0h40v40H0z' fill='%23874b31'/%3E%3Cpath d='M0 19.5h40M20 0v19.5M0 39.5h40M0 20v20M40 20v20' stroke='%23d9d3c4' stroke-opacity='.35'/%3E%3C/svg%3E");background-size:24% 24%}
+.l0{--edge:#5f3523}
+.l1 .f{background:radial-gradient(circle at 30% 40%,#6f6c66 0 1.4px,transparent 2px) 0 0/9px 9px,radial-gradient(circle at 70% 70%,#4c4a46 0 1.2px,transparent 2px) 0 0/7px 7px,#5b5853}
+.l1{--edge:#3e3c39}
+.l2 .f{background:var(--noise,none),#85827b}
+.l2{--edge:#5f5c56}
+.l3 .f{background:var(--noise,none),#cdc8bd}
+.l3{--edge:#9d988c}
+.l4 .f{background:linear-gradient(135deg,rgba(255,255,255,.12),transparent 60%),#55705d}
+.l4{--edge:#3a4e40}
+.lay.on .f{box-shadow:0 0 0 1.5px var(--lime),0 0 24px rgba(198,255,61,.25)}
+.cam .h2{font-size:clamp(30px,3.6vw,52px)}
+.steps-l{list-style:none;display:grid;gap:4px;margin-top:26px;counter-reset:c}
+.steps-l li{border-top:1px solid var(--line);padding:12px 0;transition:opacity .35s}
+.steps-l li:not(.on){opacity:.42}
+.steps-l b{display:flex;gap:12px;align-items:baseline;font-size:clamp(18px,1.6vw,22px);font-weight:700}
+.steps-l b::before{counter-increment:c;content:counter(c);font-family:var(--fm);font-weight:400;font-size:13px;color:var(--mut);width:16px}
+.steps-l li.on b::before{color:var(--lime)}
+.steps-l .dsc{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+.steps-l li.on .dsc{grid-template-rows:1fr}
+.steps-l .dsc>div{overflow:hidden;padding-left:28px}
+.steps-l p{color:var(--mut);padding-top:6px;max-width:44ch}
+.link{display:inline-flex;margin-top:8px;color:var(--lime);font-weight:600;text-decoration:underline;text-underline-offset:4px;padding:4px 0}
+@media (max-width:860px){
+  .cam{height:300vh}
+  .cam-grid{grid-template-columns:minmax(0,1fr);gap:0;align-content:center}
+  .scene{height:34svh;margin-top:56px}
+  .stack{width:min(46vw,210px)}
+  .cam .h2{font-size:clamp(26px,7vw,38px)}
+  .stack{--gap:30px}
+  .cam .lead{display:none}
+  .steps-l{margin-top:14px}
+  .steps-l li{padding:8px 0}
+  .steps-l b{font-size:17px}
+}
+
+/* ===== catálogo ===== */
+.tools{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;margin-top:34px;position:sticky;top:74px;z-index:5;padding:12px 0;background:linear-gradient(var(--bg) 80%,transparent)}
+.search{position:relative;max-width:560px}
+.search input{width:100%;height:56px;border-radius:14px;padding:0 52px 0 50px;background:var(--s1);border:1px solid var(--line2);font-size:17px;outline:none;transition:border-color .2s}
+.search input:focus{border-color:var(--lime)}
+.search input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.search input::placeholder{color:#77726a}
+.search>svg{position:absolute;left:16px;top:50%;width:20px;height:20px;margin-top:-10px;color:var(--mut)}
+.search kbd{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:var(--fm);font-size:12px;color:var(--mut);border:1px solid var(--line2);border-radius:6px;padding:2px 8px}
+.search .clear{position:absolute;right:8px;top:8px;width:40px;height:40px;border-radius:10px;display:none;place-items:center;color:var(--mut)}
+.search.has-q .clear{display:grid}.search.has-q kbd{display:none}
+@media (hover:none){.search kbd{display:none}}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{padding:8px 14px;border-radius:10px;border:1px solid var(--line);color:var(--mut);white-space:nowrap;font-size:15px;transition:all .2s}
+.chip:hover{color:var(--tx);border-color:var(--line2)}
+.chip[aria-pressed=true]{color:#121410;background:var(--tx);border-color:var(--tx)}
+.res{color:var(--mut);margin-top:6px;min-height:1.4em}
+.grid{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px;margin-top:10px}
+@media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+.item{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+.item .ic{width:40px;height:40px;border-radius:10px;background:var(--s1);display:grid;place-items:center;color:var(--mut)}
+.item .ic svg{width:20px;height:20px}
+.item h3{font-size:16px;font-weight:600;line-height:1.3}
+.item .spec{color:var(--mut);display:block;margin-top:2px}
+.buy{display:flex;align-items:center;gap:6px}
+.qty{display:flex;align-items:center;border:1px solid var(--line2);border-radius:10px;height:42px}
+.qty button{width:34px;height:40px;display:grid;place-items:center;color:var(--mut);font-size:18px}
+.qty button:hover{color:var(--tx)}
+.qty input{width:44px;height:40px;text-align:center;background:none;border:0;font-family:var(--fm);font-size:14px;-moz-appearance:textfield;outline:none}
+.qty input::-webkit-inner-spin-button{-webkit-appearance:none}
+.add{height:42px;padding:0 14px;border-radius:10px;background:var(--s2);font-weight:600;font-size:14px;white-space:nowrap;transition:background .2s,color .2s}
+.add:hover{background:#30343a}
+.item.in .add{background:var(--lime);color:#121410}
+@media (max-width:520px){
+  .item{grid-template-columns:36px minmax(0,1fr)}
+  .item .ic{width:36px;height:36px}
+  .buy{grid-column:2;justify-content:flex-start}
+  .add{flex:1}
+}
+.empty{padding:40px 0;border-bottom:1px solid var(--line)}
+.empty p{margin-bottom:14px;color:var(--mut)}
+
+/* ===== WOW 3: calculadora ===== */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(24px,4vw,56px);margin-top:40px;align-items:start}
+@media (max-width:860px){.calc{grid-template-columns:minmax(0,1fr)}}
+.panel{border-radius:20px;background:var(--glass),var(--s1);border:var(--glass-b);box-shadow:var(--glass-in);padding:clamp(18px,2.4vw,28px)}
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border-radius:12px;background:var(--bg)}
+.seg button{min-height:44px;border-radius:9px;color:var(--mut);font-weight:600;font-size:15px}
+.seg button[aria-pressed=true]{background:var(--s2);color:var(--tx);box-shadow:var(--glass-in)}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+.fld label{display:block;font-size:14px;color:var(--mut);margin-bottom:6px}
+.fld .in{position:relative}
+.fld input,.fld select{width:100%;height:52px;border-radius:12px;background:var(--bg);border:1px solid var(--line2);padding:0 44px 0 14px;font-family:var(--fm);font-size:16px;outline:none;appearance:none}
+.fld select{padding-right:14px}
+.fld input:focus,.fld select:focus{border-color:var(--lime)}
+.fld .u{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--mut);font-family:var(--fm);font-size:13px;pointer-events:none}
+.fld.full{grid-column:1/-1}
+.fld[hidden]{display:none}
+.out{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.big{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big strong{font-family:var(--fm);font-weight:500;font-size:clamp(40px,5vw,60px);line-height:1;color:var(--lime);letter-spacing:-.03em}
+.big span{color:var(--mut)}
+.det{color:var(--mut);margin-top:10px;font-size:15px}
+.det li{list-style:none}
+.note{font-size:14px;color:var(--mut);margin-top:14px}
+.out .btn{margin-top:18px;width:100%}
+.draw{border-radius:20px;background:#101214;border:1px solid var(--line);padding:clamp(8px,2vw,22px);position:relative}
+.draw svg{width:100%;height:auto}
+.draw text{font-family:var(--fm);font-size:9px;fill:var(--lime)}
+.draw .t2{fill:var(--mut)}
+
+/* como funciona / faq / contato */
+.how{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,3vw,40px);margin-top:44px;counter-reset:h}
+@media (max-width:760px){.how{grid-template-columns:minmax(0,1fr)}}
+.how li{border-top:2px solid var(--line2);padding-top:18px}
+.how li::before{counter-increment:h;content:counter(h);font-family:var(--fm);color:var(--lime);display:block;margin-bottom:10px}
+.how b{display:block;font-size:20px;margin-bottom:6px}
+.how p{color:var(--mut);max-width:34ch}
+.faq{margin-top:36px;max-width:820px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;padding:20px 0;font-weight:600;font-size:clamp(16px,1.3vw,19px)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--fm);color:var(--mut);font-size:20px;line-height:1;transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg);color:var(--lime)}
+.faq p{color:var(--mut);padding:0 0 20px;max-width:64ch}
+.contact{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:end}
+@media (max-width:760px){.contact{grid-template-columns:minmax(0,1fr)}}
+.contact dl{display:grid;gap:14px}
+.contact dt{color:var(--mut);font-size:14px}
+.contact dd{font-size:17px}
+footer{border-top:1px solid var(--line);padding:28px 0 110px;color:var(--mut);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between}
+footer a{text-underline-offset:3px}
+
+/* barra flutuante (celular) */
+.fab{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:30;display:none;gap:8px;padding:8px;border-radius:16px;border:var(--glass-b);box-shadow:var(--glass-in),0 10px 30px rgba(0,0,0,.4);
+  transform:translateY(140%);transition:transform .35s var(--ease)}
+.fab.show{transform:none}
+.fab .btn{min-height:48px;flex:1;padding:0 12px;font-size:14px;white-space:normal;line-height:1.15;text-align:center}
+.fab .list-btn{flex:none;min-height:48px}
+@media (max-width:860px){.fab{display:flex}}
+.is-dentro .fab{display:none}
+
+/* gaveta da lista (dialog) */
+.sheet{border:0;padding:0;color:var(--tx);max-width:none;max-height:none;margin:0 0 0 auto;width:min(440px,100vw);height:100dvh;border-left:var(--glass-b);box-shadow:var(--glass-in)}
+.sheet::backdrop{background:rgba(8,9,10,.6)}
+.sheet[open]{animation:sheetIn .35s var(--ease)}
+@keyframes sheetIn{from{transform:translateX(30px);opacity:0}}
+@media (max-width:640px){
+  .sheet{margin:auto 0 0;width:100vw;height:auto;max-height:88dvh;border-left:0;border-top:var(--glass-b);border-radius:20px 20px 0 0}
+  @keyframes sheetIn{from{transform:translateY(40px);opacity:0}}
+}
+.sh{display:flex;flex-direction:column;height:100%;max-height:inherit}
+.sh-hd{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 12px}
+.sh-hd h2{font-size:22px;font-weight:800;font-stretch:112%}
+.x{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:var(--mut)}
+.x:hover{color:var(--tx);background:rgba(255,255,255,.06)}
+.sh-body{flex:1;overflow:auto;padding:0 20px;overscroll-behavior:contain}
+.li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.li h3{font-size:15px;font-weight:600}
+.li .spec{color:var(--mut);display:block}
+.li .row{display:flex;gap:6px;align-items:center}
+.rm{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;color:var(--mut)}
+.rm:hover{color:#ff8a7a;background:rgba(255,255,255,.05)}
+.sh-empty{color:var(--mut);padding:30px 0}
+.sh-ft{padding:16px 20px calc(18px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:grid;gap:10px}
+.sh-ft .fld input{padding-right:14px;font-family:var(--fd)}
+.sh-ft .btn{width:100%}
+.done{padding:36px 20px;text-align:left}
+.done strong{display:block;font-size:22px;margin-bottom:8px}
+.done p{color:var(--mut);margin-bottom:18px}
+.done .btn{width:100%;margin-top:8px}
+
+/* modos: prévia e movimento reduzido */
+.is-embed .cam{height:auto}.is-embed .cam-st{position:relative;height:auto;padding:80px 0}
+.is-embed .ht{clip-path:none}.is-embed .fab{display:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}
+  .hero-fade{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#catalogo">Pular para o catálogo</a>
+
+<header class="top">
+  <div class="top-in">
+    <a class="logo" href="#topo" aria-label="Basalto, início"><i aria-hidden="true"></i>Basalto</a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#calculadora">Calculadora</a>
+      <a href="#como">Como funciona</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <button class="list-btn" type="button" data-open-list aria-haspopup="dialog">Minha lista <span class="count" data-count aria-label="0 itens">0</span></button>
+  </div>
+</header>
+
+<main id="conteudo">
+  <section class="hero" id="topo" aria-labelledby="ht">
+    <div class="hero-wall" aria-hidden="true"></div>
+    <div class="hero-light" aria-hidden="true"></div>
+    <div class="hero-in wrap">
+      <p class="kicker mono hero-fade">Depósito de materiais de construção</p>
+      <div class="ht-box">
+        <h1 class="ht" id="ht"><span class="ht-base">Basalto</span><span class="ht-lit" aria-hidden="true">Basalto</span></h1>
+        <div class="laser" aria-hidden="true"><span class="laser-read mono">nível 0,00 m</span></div>
+      </div>
+      <p class="hero-sub hero-fade">Do cimento ao acabamento. Monte sua lista aqui, mande pelo WhatsApp e receba o orçamento já com o frete.</p>
+      <div class="hero-cta hero-fade">
+        <a class="btn btn-lime" data-wa-generic href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
+          Pedir orçamento pelo WhatsApp</a>
+        <a class="btn btn-ghost" href="#catalogo">Ver o catálogo</a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="cats" aria-label="Categorias">
+    <ul data-cat-links></ul>
+  </nav>
+
+  <section class="cam" id="camadas" aria-labelledby="cam-t">
+    <div class="cam-st">
+      <div class="wrap cam-grid">
+        <div class="scene" aria-hidden="true">
+          <div class="stack" data-stack>
+            <div class="lay l0" style="--i:0"><div class="f"></div><div class="ex"></div><div class="ey"></div></div>
+            <div class="lay l1" style="--i:1"><div class="f"></div><div class="ex"></div><div class="ey"></div></div>
+            <div class="lay l2" style="--i:2"><div class="f"></div><div class="ex"></div><div class="ey"></div></div>
+            <div class="lay l3" style="--i:3"><div class="f"></div><div class="ex"></div><div class="ey"></div></div>
+            <div class="lay l4" style="--i:4"><div class="f"></div><div class="ex"></div><div class="ey"></div></div>
+          </div>
+        </div>
+        <div>
+          <h2 class="h2" id="cam-t">Uma parede tem cinco camadas. A gente vende todas.</h2>
+          <p class="lead">Role para abrir a parede. Cada camada leva direto ao material certo no catálogo.</p>
+          <ol class="steps-l" data-steps>
+            <li class="on"><b>Bloco cerâmico</b><div class="dsc"><div><p>A estrutura da parede, assentada com argamassa.</p><button class="link" type="button" data-goto="bloco">Ver blocos e argamassa</button></div></div></li>
+            <li><b>Chapisco</b><div class="dsc"><div><p>Cimento e areia grossa jogados no bloco para o reboco agarrar.</p><button class="link" type="button" data-goto="cimento areia">Ver cimento e areia</button></div></div></li>
+            <li><b>Reboco</b><div class="dsc"><div><p>Deixa a parede no prumo e lisa o bastante para o acabamento.</p><button class="link" type="button" data-goto="cal argamassa">Ver cal e argamassa</button></div></div></li>
+            <li><b>Massa corrida</b><div class="dsc"><div><p>Corrige as imperfeições finas antes da tinta.</p><button class="link" type="button" data-goto="massa selador">Ver massa e selador</button></div></div></li>
+            <li><b>Tinta</b><div class="dsc"><div><p>Duas demãos e a parede está pronta. Calcule quanto precisa logo abaixo.</p><button class="link" type="button" data-goto="tinta">Ver tintas</button></div></div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="catalogo" aria-labelledby="cat-t">
+    <div class="wrap">
+      <h2 class="h2" id="cat-t">Catálogo</h2>
+      <p class="lead">Escolha a quantidade e ponha na lista. O preço e o frete vêm no orçamento pelo WhatsApp.</p>
+      <div class="tools">
+        <div class="search" data-search>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <label class="sr" for="q">Buscar material</label>
+          <input id="q" type="search" autocomplete="off" enterkeyhint="search" placeholder="Ex.: cimento, tubo 25, porcelanato" aria-describedby="res">
+          <kbd aria-hidden="true">/</kbd>
+          <button class="clear" type="button" aria-label="Limpar busca" data-clear><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </div>
+        <div class="chips" role="group" aria-label="Filtrar por categoria" data-chips></div>
+      </div>
+      <p class="res mono" id="res" aria-live="polite" data-res></p>
+      <ul class="grid" data-grid></ul>
+      <div class="empty" data-empty hidden>
+        <p data-empty-txt></p>
+        <a class="btn btn-ghost" data-wa-ask href="#" target="_blank" rel="noopener">Perguntar pelo WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="calculadora" aria-labelledby="calc-t" style="padding-top:0">
+    <div class="wrap">
+      <h2 class="h2" id="calc-t">Quanto material a sua obra leva?</h2>
+      <p class="lead">Digite as medidas. A conta sai na hora e vai direto pra sua lista.</p>
+      <div class="calc">
+        <div class="panel">
+          <div class="seg" role="group" aria-label="Tipo de cálculo" data-mode>
+            <button type="button" data-m="parede" aria-pressed="true">Parede</button>
+            <button type="button" data-m="piso" aria-pressed="false">Piso</button>
+            <button type="button" data-m="pintura" aria-pressed="false">Pintura</button>
+          </div>
+          <div class="fields">
+            <div class="fld"><label for="c-l">Largura</label><div class="in"><input id="c-l" inputmode="decimal" value="4" autocomplete="off"><span class="u">m</span></div></div>
+            <div class="fld"><label for="c-h" data-h-lbl>Altura</label><div class="in"><input id="c-h" inputmode="decimal" value="2,8" autocomplete="off"><span class="u">m</span></div></div>
+            <div class="fld full" data-f-desc><label for="c-d">Descontar portas e janelas</label><div class="in"><input id="c-d" inputmode="decimal" value="0" autocomplete="off"><span class="u">m²</span></div></div>
+            <div class="fld full" data-f-dem hidden><label for="c-n">Demãos</label><select id="c-n"><option value="1">1 demão</option><option value="2" selected>2 demãos</option><option value="3">3 demãos</option></select></div>
+          </div>
+          <div class="out" aria-live="polite">
+            <div class="big"><strong data-big>0</strong><span data-unit></span></div>
+            <ul class="det" data-det></ul>
+            <p class="note" data-note></p>
+            <button class="btn btn-lime" type="button" data-calc-add>Pôr na lista</button>
+          </div>
+        </div>
+        <div class="draw" aria-hidden="true">
+          <svg viewBox="0 0 320 220" data-svg>
+            <defs>
+              <pattern id="pt" patternUnits="userSpaceOnUse" width="20" height="20" data-pt>
+                <rect data-pt-r width="20" height="20" fill="#874b31"/>
+                <path data-pt-p d="" fill="none" stroke="#101214" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect data-wall x="40" y="30" width="240" height="160" fill="url(#pt)"/>
+            <rect data-hole x="0" y="0" width="0" height="0" fill="#101214" stroke="#9a9488" stroke-dasharray="3 3"/>
+            <g stroke="#c6ff3d" stroke-width="1">
+              <path data-dw d=""/><path data-dh d=""/>
+            </g>
+            <text data-tw text-anchor="middle"></text>
+            <text data-th text-anchor="middle"></text>
+            <text class="t2" data-ta x="160" y="214" text-anchor="middle"></text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="como" aria-labelledby="como-t" style="padding-top:0">
+    <div class="wrap">
+      <h2 class="h2" id="como-t">Como funciona o orçamento</h2>
+      <ol class="how">
+        <li><b>Monte a lista</b><p>Pelo catálogo, pela calculadora ou pelas camadas da parede.</p></li>
+        <li><b>Mande no WhatsApp</b><p>A mensagem já sai pronta, com cada item e quantidade.</p></li>
+        <li><b>Confirme e receba</b><p>Você recebe preço e frete, confirma e combina a entrega ou a retirada.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="duvidas" aria-labelledby="faq-t" style="padding-top:0">
+    <div class="wrap">
+      <h2 class="h2" id="faq-t">Dúvidas</h2>
+      <div class="faq">
+        <details><summary>Por que não tem preço no site?</summary><p>Preço de cimento, ferro e areia muda toda semana. No WhatsApp você recebe o valor do dia, sem surpresa.</p></details>
+        <details><summary>Vocês entregam na obra?</summary><p>Sim. O frete depende do bairro e do volume e vem junto no orçamento.</p></details>
+        <details><summary>Posso retirar no depósito?</summary><p>Pode. Avise no WhatsApp que a gente separa o material antes de você chegar.</p></details>
+        <details><summary>A calculadora é exata?</summary><p>É uma estimativa com sobra para perda e recorte. O vendedor confere as medidas antes de fechar.</p></details>
+        <details><summary>Vende areia e pedra em quantidade pequena?</summary><p>Vende. Pergunte no WhatsApp as medidas disponíveis para a sua obra.</p></details>
+        <details><summary>Minha lista fica salva?</summary><p>Fica salva neste aparelho até você limpar. Nada é enviado sem você apertar o botão do WhatsApp.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="contato" aria-labelledby="ct-t" style="padding-top:0">
+    <div class="wrap contact">
+      <div>
+        <h2 class="h2" id="ct-t">Sua obra começa numa mensagem.</h2>
+        <p class="lead">Mande a lista ou só uma foto do projeto. A gente responde no horário comercial.</p>
+        <div class="hero-cta"><a class="btn btn-lime" data-wa-generic href="#" target="_blank" rel="noopener">Pedir orçamento pelo WhatsApp</a></div>
+      </div>
+      <dl>
+        <div><dt>Endereço</dt><dd>Endereço do depósito (demo)</dd></div>
+        <div><dt>Horário</dt><dd>Segunda a sexta, 7h às 18h<br>Sábado, 7h às 12h</dd></div>
+        <div><dt>WhatsApp</dt><dd><a data-wa-generic href="#" target="_blank" rel="noopener">(11) 96465-0141</a></dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Basalto Materiais de Construção. Demonstração da GuDev com empresa fictícia.</span>
+    <a href="#topo">Voltar ao topo</a>
+  </div>
+</footer>
+
+<div class="fab" data-fab>
+  <button class="list-btn" type="button" data-open-list aria-haspopup="dialog">Lista <span class="count" data-count aria-label="0 itens">0</span></button>
+  <a class="btn btn-lime" data-wa-generic href="#" target="_blank" rel="noopener">Pedir orçamento pelo WhatsApp</a>
+</div>
+
+<dialog class="sheet" data-sheet aria-labelledby="sh-t">
+  <div class="sh">
+    <div class="sh-hd"><h2 id="sh-t">Minha lista</h2><button class="x" type="button" data-close aria-label="Fechar lista"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="sh-body" data-sh-body></div>
+    <div class="sh-ft" data-sh-ft>
+      <div class="fld"><label for="nm">Seu nome (opcional)</label><input id="nm" autocomplete="name"></div>
+      <div class="fld"><label for="bairro">Bairro ou CEP da entrega (opcional)</label><input id="bairro" autocomplete="postal-code"></div>
+      <a class="btn btn-lime" data-send href="#" target="_blank" rel="noopener">Pedir orçamento pelo WhatsApp</a>
+    </div>
+    <div class="done" data-done hidden>
+      <strong>Pronto, abriu no WhatsApp.</strong>
+      <p>Confira a mensagem e aperte enviar por lá. Sua lista continua salva aqui.</p>
+      <button class="btn btn-ghost" type="button" data-clear-list>Limpar a lista</button>
+      <button class="btn btn-ghost" type="button" data-close>Voltar ao site</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+"use strict";
+var WA = "5511964650141"; // demo: número da GuDev. Trocar pelo do cliente.
+var root = document.documentElement;
+var embed = /[?&]embed\b/.test(location.search);
+var dentro = window.parent !== window;
+var mqReduce = matchMedia("(prefers-reduced-motion: reduce)");
+var reduce = mqReduce.matches || embed;
+if (embed) root.classList.add("is-embed");
+if (dentro) root.classList.add("is-dentro");
+
+function $(s, c){ return (c || document).querySelector(s); }
+function $$(s, c){ return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+function el(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+function clamp(v, a, b){ return Math.min(b, Math.max(a, v)); }
+function norm(s){ return String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); }
+function waLink(msg){ return "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg); }
+function fmt(n, d){ return n.toLocaleString("pt-BR", { maximumFractionDigits: d == null ? 2 : d }); }
+
+/* textura de concreto: gerada uma vez, sem imagem externa */
+(function(){
+  try {
+    var c = document.createElement("canvas"), s = 120; c.width = c.height = s;
+    var x = c.getContext("2d"), d = x.createImageData(s, s);
+    for (var i = 0; i < d.data.length; i += 4){
+      var v = Math.random() * 255;
+      d.data[i] = d.data[i+1] = d.data[i+2] = v;
+      d.data[i+3] = Math.random() < .5 ? 26 : 8;
+    }
+    x.putImageData(d, 0, 0);
+    root.style.setProperty("--noise", "url(" + c.toDataURL() + ")");
+  } catch (e) {}
+})();
+
+/* ===== dados ===== */
+var ICON = {
+  basico:'<path d="M6 4h12l2 4v11.5a.5.5 0 0 1-.5.5h-15a.5.5 0 0 1-.5-.5V8z"/><path d="M4 8h16M9 13h6"/>',
+  alvenaria:'<rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 12h18M12 5v7M8 12v7M16 12v7"/>',
+  hidraulica:'<path d="M3 9h8a3 3 0 0 1 3 3v9"/><path d="M3 5h8a7 7 0 0 1 7 7v9"/>',
+  eletrica:'<path d="M13 2 5 13.5h6L10 22l8-11.5h-6z"/>',
+  acabamento:'<rect x="3" y="3" width="14" height="6" rx="1"/><path d="M17 6h3v5h-9v3"/><rect x="10" y="14" width="2" height="7"/>',
+  ferramentas:'<path d="M3 21h4l11-11-4-4L3 17z"/><path d="m14 6 2-2 4 4-2 2"/>'
+};
+var CATS = [
+  ["basico","Básico"],["alvenaria","Alvenaria"],["hidraulica","Hidráulica"],
+  ["eletrica","Elétrica"],["acabamento","Acabamento"],["ferramentas","Ferramentas"]
+];
+var P = [
+  ["cimento","basico","Cimento CP II-E 32","saco 50 kg","saco","cimento"],
+  ["areia","basico","Areia média lavada","por m³","m³","areia"],
+  ["areia-g","basico","Areia grossa","por m³","m³","areia chapisco"],
+  ["brita","basico","Pedra brita 1","por m³","m³","pedra brita concreto"],
+  ["cal","basico","Cal hidratada CH-III","saco 20 kg","saco","cal reboco"],
+  ["arg-ac1","basico","Argamassa AC-I","saco 20 kg, uso interno","saco","argamassa piso colante"],
+  ["arg-ac3","basico","Argamassa AC-III","saco 20 kg, porcelanato","saco","argamassa porcelanato colante"],
+  ["arg-ass","basico","Argamassa de assentamento","saco 20 kg","saco","argamassa bloco tijolo"],
+  ["bloco-9","alvenaria","Bloco cerâmico 9×19×19","8 furos, unidade","un","bloco tijolo baiano ceramico"],
+  ["bloco-c","alvenaria","Bloco de concreto 14×19×39","unidade","un","bloco concreto"],
+  ["tijolo","alvenaria","Tijolo maciço","unidade","un","tijolo"],
+  ["ca50","alvenaria","Vergalhão CA-50 10 mm","barra 12 m","barra","ferro vergalhao ferragem"],
+  ["ca60","alvenaria","Vergalhão CA-60 4,2 mm","barra 12 m","barra","ferro vergalhao ferragem estribo"],
+  ["arame","alvenaria","Arame recozido nº 18","por kg","kg","arame ferragem"],
+  ["pvc25","hidraulica","Tubo PVC soldável 25 mm","barra 6 m","barra","cano tubo agua"],
+  ["pvc100","hidraulica","Tubo de esgoto 100 mm","barra 6 m","barra","cano tubo esgoto"],
+  ["joelho25","hidraulica","Joelho 90° soldável 25 mm","unidade","un","conexao joelho cotovelo"],
+  ["registro","hidraulica","Registro de gaveta 3/4\"","unidade","un","registro"],
+  ["caixa","hidraulica","Caixa d'água 1.000 L","polietileno, com tampa","un","caixa dagua reservatorio"],
+  ["fio25","eletrica","Cabo flexível 2,5 mm²","rolo 100 m","rolo","fio cabo tomada"],
+  ["fio4","eletrica","Cabo flexível 4 mm²","rolo 100 m","rolo","fio cabo chuveiro"],
+  ["conduite","eletrica","Eletroduto corrugado 3/4\"","rolo 50 m","rolo","conduite eletroduto mangueira"],
+  ["disj","eletrica","Disjuntor DIN 20 A","unipolar","un","disjuntor quadro"],
+  ["porc","acabamento","Porcelanato 60×60","por m²","m²","piso porcelanato revestimento"],
+  ["piso45","acabamento","Piso cerâmico 45×45","por m²","m²","piso ceramico revestimento"],
+  ["rejunte","acabamento","Rejunte flexível","saco 1 kg","saco","rejunte"],
+  ["massa","acabamento","Massa corrida PVA","balde 25 kg","balde","massa corrida parede"],
+  ["selador","acabamento","Selador acrílico","lata 18 L","lata","selador fundo parede"],
+  ["tinta18","acabamento","Tinta acrílica fosca","lata 18 L","lata","tinta parede pintura"],
+  ["tinta36","acabamento","Tinta acrílica fosca","galão 3,6 L","galão","tinta parede pintura"],
+  ["carrinho","ferramentas","Carrinho de mão","caçamba metálica","un","carrinho"],
+  ["colher","ferramentas","Colher de pedreiro","unidade","un","colher pedreiro"],
+  ["nivel","ferramentas","Nível de bolha 40 cm","unidade","un","nivel prumo"],
+  ["trena","ferramentas","Trena 5 m","unidade","un","trena medida"],
+  ["rolo","ferramentas","Rolo de lã 23 cm","com cabo","un","rolo pintura"]
+].map(function(r){
+  return { id:r[0], cat:r[1], name:r[2], spec:r[3], unit:r[4], key:norm(r[2] + " " + r[3] + " " + r[5] + " " + r[1]) };
+});
+var BY = {}; P.forEach(function(p){ BY[p.id] = p; });
+function catName(id){ for (var i = 0; i < CATS.length; i++) if (CATS[i][0] === id) return CATS[i][1]; return ""; }
+function icon(cat){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true">' + ICON[cat] + '</svg>'; }
+
+/* ===== lista (estado) ===== */
+var LIST = {};
+try { var saved = JSON.parse(localStorage.getItem("basalto-lista") || "{}"); for (var k in saved) if (BY[k] && saved[k] > 0) LIST[k] = Math.min(9999, Math.floor(saved[k])); } catch (e) {}
+function save(){ try { localStorage.setItem("basalto-lista", JSON.stringify(LIST)); } catch (e) {} }
+function totalItems(){ return Object.keys(LIST).length; }
+function setQty(id, q, add){
+  q = Math.floor(Number(q) || 0);
+  var n = add ? (LIST[id] || 0) + q : q;
+  if (n > 0) LIST[id] = Math.min(9999, n); else delete LIST[id];
+  save(); syncAll(true);
+}
+
+/* ===== links de WhatsApp genéricos ===== */
+$$("[data-wa-generic]").forEach(function(a){
+  a.href = waLink("Olá, Basalto! Vim pelo site e quero um orçamento.");
+});
+
+/* ===== catálogo ===== */
+var grid = $("[data-grid]"), qIn = $("#q"), chipsBox = $("[data-chips]"), resEl = $("[data-res]");
+var cat = "todos", rows = {};
+function mkChip(id, label){
+  var b = el("button", "chip", label); b.type = "button"; b.dataset.cat = id;
+  b.setAttribute("aria-pressed", id === cat ? "true" : "false");
+  b.addEventListener("click", function(){ setCat(id); });
+  chipsBox.appendChild(b);
+}
+mkChip("todos", "Tudo"); CATS.forEach(function(c){ mkChip(c[0], c[1]); });
+
+var catLinks = $("[data-cat-links]");
+CATS.forEach(function(c){
+  var li = el("li"), b = el("button"); b.type = "button";
+  b.innerHTML = icon(c[0]); b.appendChild(document.createTextNode(c[1]));
+  b.addEventListener("click", function(){ qIn.value = ""; setCat(c[0]); goCatalog(); });
+  li.appendChild(b); catLinks.appendChild(li);
+});
+
+P.forEach(function(p){
+  var li = el("li", "item"); li.dataset.id = p.id;
+  var ic = el("div", "ic"); ic.innerHTML = icon(p.cat);
+  var tx = el("div"); var h = el("h3", null, p.name); var sp = el("span", "spec mono", p.spec);
+  tx.appendChild(h); tx.appendChild(sp);
+  var buy = el("div", "buy");
+  var qty = el("div", "qty");
+  var minus = el("button", null, "−"); minus.type = "button"; minus.setAttribute("aria-label", "Menos " + p.name);
+  var inp = el("input"); inp.type = "number"; inp.min = "1"; inp.max = "9999"; inp.value = "1"; inp.inputMode = "numeric";
+  inp.setAttribute("aria-label", "Quantidade de " + p.name + " (" + p.unit + ")");
+  var plus = el("button", null, "+"); plus.type = "button"; plus.setAttribute("aria-label", "Mais " + p.name);
+  qty.appendChild(minus); qty.appendChild(inp); qty.appendChild(plus);
+  var add = el("button", "add", "Pôr na lista"); add.type = "button";
+  minus.addEventListener("click", function(){ inp.value = Math.max(1, (parseInt(inp.value, 10) || 1) - 1); });
+  plus.addEventListener("click", function(){ inp.value = Math.min(9999, (parseInt(inp.value, 10) || 0) + 1); });
+  add.addEventListener("click", function(){
+    var n = clamp(parseInt(inp.value, 10) || 1, 1, 9999);
+    setQty(p.id, n, true);
+    announce(n + " " + p.unit + " de " + p.name + " na lista.");
+  });
+  buy.appendChild(qty); buy.appendChild(add);
+  li.appendChild(ic); li.appendChild(tx); li.appendChild(buy);
+  rows[p.id] = { li: li, add: add, p: p };
+  grid.appendChild(li);
+});
+
+function setCat(id){
+  cat = id;
+  $$(".chip", chipsBox).forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.cat === id ? "true" : "false"); });
+  filter();
+}
+function filter(){
+  var q = norm(qIn.value.trim()), toks = q.split(/\s+/).filter(Boolean), n = 0;
+  $("[data-search]").classList.toggle("has-q", !!q);
+  P.forEach(function(p){
+    var ok = (cat === "todos" || p.cat === cat) && toks.every(function(t){ return p.key.indexOf(t) > -1; });
+    rows[p.id].li.hidden = !ok; if (ok) n++;
+  });
+  var emptyBox = $("[data-empty]");
+  emptyBox.hidden = n > 0;
+  if (!n){
+    var raw = qIn.value.trim();
+    $("[data-empty-txt]").textContent = raw ? "Nada com “" + raw + "” por aqui. A gente provavelmente tem: pergunte." : "Nada nessa categoria.";
+    $("[data-wa-ask]").href = waLink("Olá, Basalto! Vocês têm " + (raw || "um material") + "?");
+  }
+  var where = cat === "todos" ? "" : " em " + catName(cat);
+  resEl.textContent = n === 1 ? "1 item" + where : n + " itens" + where;
+}
+// busca por palavras-chave (vindo das camadas): mostra qualquer item que bata com pelo menos uma
+function gotoTerms(terms){
+  cat = "todos"; setCat("todos");
+  var ts = norm(terms).split(/\s+/), n = 0;
+  qIn.value = "";
+  $("[data-search]").classList.remove("has-q");
+  P.forEach(function(p){
+    var ok = ts.some(function(t){ return p.key.indexOf(t) > -1; });
+    rows[p.id].li.hidden = !ok; if (ok) n++;
+  });
+  $("[data-empty]").hidden = true;
+  resEl.textContent = n + " itens para essa camada";
+  goCatalog();
+}
+function goCatalog(){
+  $("#catalogo").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+}
+qIn.addEventListener("input", filter);
+$("[data-clear]").addEventListener("click", function(){ qIn.value = ""; filter(); qIn.focus(); });
+document.addEventListener("keydown", function(e){
+  if (e.key === "/" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && !sheet.open){
+    e.preventDefault(); qIn.focus(); qIn.select();
+  }
+});
+$$("[data-goto]").forEach(function(b){ b.addEventListener("click", function(){ gotoTerms(b.dataset.goto); }); });
+filter();
+
+/* aviso para leitor de tela */
+var live = el("div", "sr"); live.setAttribute("aria-live", "polite"); document.body.appendChild(live);
+function announce(t){ live.textContent = ""; setTimeout(function(){ live.textContent = t; }, 30); }
+
+/* ===== gaveta da lista ===== */
+var sheet = $("[data-sheet]"), body = $("[data-sh-body]"), send = $("[data-send]"), doneBox = $("[data-done]"), ft = $("[data-sh-ft]");
+var nm = $("#nm"), bairro = $("#bairro");
+var lastFocus = null;
+function openSheet(){
+  lastFocus = document.activeElement;
+  doneBox.hidden = true; ft.hidden = false; body.hidden = false;
+  renderSheet();
+  if (typeof sheet.showModal === "function") sheet.showModal(); else sheet.setAttribute("open", "");
+}
+function closeSheet(){
+  if (typeof sheet.close === "function") sheet.close(); else sheet.removeAttribute("open");
+}
+sheet.addEventListener("close", function(){ if (lastFocus && lastFocus.focus) lastFocus.focus(); });
+sheet.addEventListener("click", function(e){ if (e.target === sheet) closeSheet(); });
+$$("[data-open-list]").forEach(function(b){ b.addEventListener("click", openSheet); });
+$$("[data-close]").forEach(function(b){ b.addEventListener("click", closeSheet); });
+$("[data-clear-list]").addEventListener("click", function(){ LIST = {}; save(); syncAll(); closeSheet(); });
+
+function renderSheet(){
+  body.textContent = "";
+  var ids = Object.keys(LIST);
+  if (!ids.length){
+    var e = el("p", "sh-empty", "Sua lista está vazia. Ponha materiais pelo catálogo ou pela calculadora.");
+    body.appendChild(e);
+  }
+  ids.forEach(function(id){
+    var p = BY[id], row = el("div", "li");
+    var t = el("div"); t.appendChild(el("h3", null, p.name)); t.appendChild(el("span", "spec mono", p.spec));
+    var r = el("div", "row"), q = el("div", "qty");
+    var m = el("button", null, "−"); m.type = "button"; m.setAttribute("aria-label", "Menos " + p.name);
+    var i = el("input"); i.type = "number"; i.min = "1"; i.max = "9999"; i.value = LIST[id]; i.inputMode = "numeric";
+    i.setAttribute("aria-label", "Quantidade de " + p.name + " (" + p.unit + ")");
+    var pl = el("button", null, "+"); pl.type = "button"; pl.setAttribute("aria-label", "Mais " + p.name);
+    m.addEventListener("click", function(){ if (LIST[id] > 1){ LIST[id]--; i.value = LIST[id]; save(); syncAll(); } });
+    pl.addEventListener("click", function(){ LIST[id] = Math.min(9999, LIST[id] + 1); i.value = LIST[id]; save(); syncAll(); });
+    i.addEventListener("change", function(){ var v = clamp(parseInt(i.value, 10) || 1, 1, 9999); LIST[id] = v; i.value = v; save(); syncAll(); });
+    q.appendChild(m); q.appendChild(i); q.appendChild(pl);
+    var rm = el("button", "rm"); rm.type = "button"; rm.setAttribute("aria-label", "Tirar " + p.name + " da lista");
+    rm.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>';
+    rm.addEventListener("click", function(){ delete LIST[id]; save(); syncAll(); renderSheet(); var f = $(".rm", body) || $("[data-close]", sheet); if (f) f.focus(); });
+    r.appendChild(q); r.appendChild(rm);
+    row.appendChild(t); row.appendChild(r); body.appendChild(row);
+  });
+  updateSend();
+}
+function message(){
+  var lines = ["Olá, Basalto! Quero um orçamento:", ""];
+  Object.keys(LIST).forEach(function(id){
+    var p = BY[id]; lines.push("• " + LIST[id] + " " + p.unit + " de " + p.name + " (" + p.spec + ")");
+  });
+  var n = nm.value.trim().slice(0, 60), b = bairro.value.trim().slice(0, 80);
+  lines.push("");
+  if (n) lines.push("Nome: " + n);
+  if (b) lines.push("Entrega: " + b);
+  lines.push("(Lista montada pelo site)");
+  return lines.join("\n");
+}
+function updateSend(){
+  var has = totalItems() > 0;
+  send.setAttribute("aria-disabled", has ? "false" : "true");
+  send.href = has ? waLink(message()) : "#";
+  if (!has) send.setAttribute("tabindex", "-1"); else send.removeAttribute("tabindex");
+}
+nm.addEventListener("input", updateSend); bairro.addEventListener("input", updateSend);
+send.addEventListener("click", function(e){
+  if (!totalItems()){ e.preventDefault(); return; }
+  updateSend();
+  setTimeout(function(){ body.hidden = true; ft.hidden = true; doneBox.hidden = false; $("button", doneBox).focus(); }, 60);
+});
+
+function syncAll(bump){
+  var n = totalItems();
+  $$("[data-count]").forEach(function(c){
+    c.textContent = n; c.setAttribute("aria-label", n === 1 ? "1 item" : n + " itens");
+    c.classList.toggle("has", n > 0);
+    if (bump && !reduce){ c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump"); }
+  });
+  P.forEach(function(p){
+    var r = rows[p.id], q = LIST[p.id];
+    r.li.classList.toggle("in", !!q);
+    r.add.textContent = q ? "Na lista: " + q : "Pôr na lista";
+  });
+  if (sheet.open) updateSend();
+}
+syncAll();
+
+/* ===== WOW 3: calculadora ===== */
+var mode = "parede";
+var cL = $("#c-l"), cH = $("#c-h"), cD = $("#c-d"), cN = $("#c-n");
+var calcRes = {};
+function num(i){ var v = parseFloat(String(i.value).replace(",", ".")); return isFinite(v) ? clamp(v, 0, 500) : 0; }
+$$("[data-mode] button").forEach(function(b){
+  b.addEventListener("click", function(){
+    mode = b.dataset.m;
+    $$("[data-mode] button").forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    $("[data-h-lbl]").textContent = mode === "piso" ? "Comprimento" : "Altura";
+    $("[data-f-desc]").hidden = mode === "piso";
+    $("[data-f-dem]").hidden = mode !== "pintura";
+    if (mode === "piso" && num(cH) < 1.5) cH.value = "3";
+    calc();
+  });
+});
+[cL, cH, cD].forEach(function(i){ i.addEventListener("input", calc); });
+cN.addEventListener("change", calc);
+
+function calc(){
+  var L = num(cL), H = num(cH), D = mode === "piso" ? 0 : num(cD);
+  var area = Math.max(0, L * H - D), big, unit, det = [], note, items = [];
+  if (mode === "parede"){
+    // bloco 19×19 cm + 1 cm de junta = 25 por m², mais 5% de perda
+    var bl = Math.ceil(area * 25 * 1.05);
+    big = fmt(bl, 0); unit = bl === 1 ? "bloco cerâmico" : "blocos cerâmicos";
+    det = ["Parede de " + fmt(area) + " m²", "25 blocos por m² + 5% de perda"];
+    note = "Estimativa para bloco 9×19×19. O vendedor confere tudo antes de fechar.";
+    if (bl) items = [["bloco-9", bl]];
+  } else if (mode === "piso"){
+    var m2 = Math.ceil(area * 1.1);
+    big = fmt(m2, 0); unit = "m² de porcelanato";
+    det = ["Ambiente de " + fmt(area) + " m²", "10% a mais para recorte"];
+    note = "A quantidade de caixas depende do modelo. O vendedor confere tudo antes de fechar.";
+    if (m2) items = [["porc", m2]];
+  } else {
+    var dem = parseInt(cN.value, 10) || 2;
+    // rendimento conservador: 10 m² por litro por demão
+    var lt = area * dem / 10, latas = Math.floor(lt / 18), resto = lt - latas * 18, gal = Math.ceil(resto / 3.6 - 1e-9);
+    if (gal >= 5){ latas++; gal = 0; }
+    big = fmt(Math.ceil(lt), 0); unit = "litros de tinta";
+    var parts = [];
+    if (latas) parts.push(latas + (latas > 1 ? " latas" : " lata") + " de 18 L");
+    if (gal) parts.push(gal + (gal > 1 ? " galões" : " galão") + " de 3,6 L");
+    det = ["Parede de " + fmt(area) + " m², " + dem + (dem > 1 ? " demãos" : " demão"), parts.length ? parts.join(" + ") : "Nada a pintar"];
+    note = "Conta com rendimento conservador de 10 m² por litro por demão. Cada tinta rende diferente.";
+    if (latas) items.push(["tinta18", latas]);
+    if (gal) items.push(["tinta36", gal]);
+  }
+  $("[data-big]").textContent = big; $("[data-unit]").textContent = unit;
+  var ul = $("[data-det]"); ul.textContent = "";
+  det.forEach(function(t){ ul.appendChild(el("li", null, t)); });
+  $("[data-note]").textContent = note;
+  var btn = $("[data-calc-add]");
+  btn.disabled = !items.length;
+  calcRes = items;
+  draw(L, H, D, area);
+}
+$("[data-calc-add]").addEventListener("click", function(){
+  if (!calcRes.length) return;
+  calcRes.forEach(function(it){ setQty(it[0], it[1], true); });
+  var b = this; b.textContent = "Na lista";
+  announce("Resultado da calculadora posto na lista.");
+  setTimeout(function(){ b.textContent = "Pôr na lista"; }, 1600);
+});
+
+/* desenho da parede em escala */
+var svgW = $("[data-wall]"), hole = $("[data-hole]"), pt = $("[data-pt]"), ptR = $("[data-pt-r]"), ptP = $("[data-pt-p]");
+function draw(L, H, D, area){
+  var maxW = 240, maxH = 150;
+  if (!L || !H){ svgW.setAttribute("width", 0); hole.setAttribute("width", 0); $("[data-tw]").textContent = ""; $("[data-th]").textContent = ""; $("[data-ta]").textContent = "Digite as medidas"; $("[data-dw]").setAttribute("d",""); $("[data-dh]").setAttribute("d",""); return; }
+  var s = Math.min(maxW / L, maxH / H), w = L * s, h = H * s, x = 160 - w / 2 + 10, y = 22 + (maxH - h) / 2 + 8;
+  svgW.setAttribute("x", x); svgW.setAttribute("y", y); svgW.setAttribute("width", w); svgW.setAttribute("height", h);
+  var tile, color, path;
+  if (mode === "parede"){
+    tile = .2 * s; color = "#874b31";
+    path = "M0 " + tile + "H" + (tile * 2) + "M0 " + (tile * 2) + "H" + (tile * 2) + "M" + tile + " 0V" + tile + "M0 " + tile + "V" + (tile * 2) + "M" + (tile * 2) + " " + tile + "V" + (tile * 2);
+    pt.setAttribute("width", tile * 2); pt.setAttribute("height", tile * 2);
+  } else if (mode === "piso"){
+    tile = .6 * s; color = "#8f8b84";
+    path = "M0 " + tile + "H" + tile + "M" + tile + " 0V" + tile;
+    pt.setAttribute("width", tile); pt.setAttribute("height", tile);
+  } else {
+    tile = 40; color = "#55705d"; path = "";
+    pt.setAttribute("width", tile); pt.setAttribute("height", tile);
+  }
+  if (tile < 2.5) path = "";
+  pt.setAttribute("x", x); pt.setAttribute("y", y + h);
+  ptR.setAttribute("width", 400); ptR.setAttribute("height", 400); ptR.setAttribute("fill", color);
+  ptP.setAttribute("d", path); ptP.setAttribute("stroke", mode === "piso" ? "#5e5b55" : "#101214");
+  // abertura: porta desenhada na proporção da área descontada
+  if (mode !== "piso" && D > 0 && D < L * H){
+    var dh = Math.min(H * .8, 2.1), dw = Math.min(D / dh, L * .9), hx = x + w * .62 - dw * s / 2;
+    hole.setAttribute("x", clamp(hx, x, x + w - dw * s)); hole.setAttribute("y", y + h - dh * s);
+    hole.setAttribute("width", dw * s); hole.setAttribute("height", dh * s);
+  } else hole.setAttribute("width", 0);
+  var by = y + h + 12, lx = x - 12;
+  $("[data-dw]").setAttribute("d", "M" + x + " " + by + "H" + (x + w) + "M" + x + " " + (by - 4) + "v8M" + (x + w) + " " + (by - 4) + "v8");
+  $("[data-dh]").setAttribute("d", "M" + lx + " " + y + "V" + (y + h) + "M" + (lx - 4) + " " + y + "h8M" + (lx - 4) + " " + (y + h) + "h8");
+  var tw = $("[data-tw]"); tw.setAttribute("x", x + w / 2); tw.setAttribute("y", by + 12); tw.textContent = fmt(L) + " m";
+  var th = $("[data-th]"); th.setAttribute("x", lx - 6); th.setAttribute("y", y + h / 2); th.setAttribute("transform", "rotate(-90 " + (lx - 6) + " " + (y + h / 2) + ")"); th.textContent = fmt(H) + " m";
+  $("[data-ta]").textContent = "";
+}
+calc();
+
+/* ===== WOW 1: laser no topo ===== */
+var hero = $(".hero"), htBox = $(".ht-box");
+function setDone(v){ hero.style.setProperty("--done", v); }
+if (reduce){
+  htBox.style.setProperty("--scan", 1); setDone(1);
+} else {
+  htBox.style.setProperty("--scan", 0); setDone(0);
+  var t0 = null, dur = 1500;
+  var start = function(){
+    requestAnimationFrame(function step(t){
+      if (t0 === null) t0 = t;
+      var k = clamp((t - t0) / dur, 0, 1), e = 1 - Math.pow(1 - k, 3);
+      htBox.style.setProperty("--scan", e);
+      if (k < 1) requestAnimationFrame(step); else setDone(1);
+    });
+  };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function(){ setTimeout(start, 150); });
+  setTimeout(function(){ if (t0 === null){ htBox.style.setProperty("--scan", 1); setDone(1); } }, 3500); // garantia
+}
+// luz segue o dedo/mouse; sem ponteiro, deriva sozinha só enquanto o topo está visível
+var heroVis = true, lx = 30, ly = 40, tx = 30, ty = 40, pointer = false;
+function applyLight(){
+  hero.style.setProperty("--lx", lx + "%"); hero.style.setProperty("--ly", ly + "%");
+  var r = hero.getBoundingClientRect(), hr = htBox.getBoundingClientRect();
+  var px = r.left + r.width * lx / 100, py = r.top + r.height * ly / 100;
+  htBox.style.setProperty("--tx-x", ((px - hr.left) / hr.width * 100) + "%");
+  htBox.style.setProperty("--tx-y", ((py - hr.top) / hr.height * 100) + "%");
+}
+hero.addEventListener("pointermove", function(e){
+  var r = hero.getBoundingClientRect();
+  tx = (e.clientX - r.left) / r.width * 100; ty = (e.clientY - r.top) / r.height * 100; pointer = true;
+});
+hero.addEventListener("pointerleave", function(){ pointer = false; });
+if ("IntersectionObserver" in window) new IntersectionObserver(function(es){ heroVis = es[0].isIntersecting; }, { threshold: 0 }).observe(hero);
+applyLight();
+if (!reduce){
+  (function loop(t){
+    if (heroVis){
+      if (!pointer){ tx = 50 + Math.sin(t / 2600) * 32; ty = 46 + Math.cos(t / 3400) * 14; }
+      lx += (tx - lx) * .08; ly += (ty - ly) * .08;
+      applyLight();
+    }
+    requestAnimationFrame(loop);
+  })(0);
+}
+
+/* ===== WOW 2: parede em camadas (sticky + uma fonte de progresso, sem pin) ===== */
+var cam = $("#camadas"), lays = $$(".lay", cam), steps = $$("[data-steps] li"), cur = 0;
+function camUpdate(){
+  var r = cam.getBoundingClientRect(), vh = window.innerHeight;
+  var p = embed ? 1 : clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
+  var s = p * 5.2; // 0..5.2
+  var acc = 0;
+  lays.forEach(function(l, i){
+    var k = reduce ? 1 : clamp(s - i * .9, 0, 1), e = k * k * (3 - 2 * k);
+    if (i) acc += e;
+    l.style.setProperty("--acc", acc);
+  });
+  // troca de texto com folga de ~8% pra não ficar piscando
+  var cand = clamp(Math.floor(s), 0, 4);
+  if (cand !== cur && Math.abs(s - (cand > cur ? cand : cur)) > .08 * 5) cur = cand;
+  if (embed) cur = 4;
+  steps.forEach(function(li, i){ li.classList.toggle("on", embed || i === cur); });
+  lays.forEach(function(l, i){ l.classList.toggle("on", !embed && i === cur); });
+}
+var camTick = false;
+function onScroll(){ if (!camTick){ camTick = true; requestAnimationFrame(function(){ camTick = false; camUpdate(); fabUpdate(); }); } }
+addEventListener("scroll", onScroll, { passive: true });
+setInterval(camUpdate, 600); // garantia
+var lastW = innerWidth;
+addEventListener("resize", function(){ if (innerWidth !== lastW){ lastW = innerWidth; camUpdate(); } });
+camUpdate();
+
+/* barra flutuante aparece depois do topo */
+var fab = $("[data-fab]");
+function fabUpdate(){ fab.classList.toggle("show", scrollY > innerHeight * .7); }
+fabUpdate();
+
+mqReduce.addEventListener && mqReduce.addEventListener("change", function(){ location.reload(); });
+})();
+</script>
+</body>
+</html>
