@@ -195,6 +195,41 @@ h2.titulo{font-size:clamp(2.3rem,6.4vw,5.2rem)}
   .rolar{left:var(--gut);transform:none;justify-items:start}
 }
 
+/* ============ FILME (vídeo preso + frases) ============ */
+.filme{position:relative;background:var(--preto)}
+.filme-palco{position:relative;overflow:hidden}
+.filme-video{position:absolute;inset:0}
+.filme-video video{width:100%;height:100%;object-fit:cover;object-position:50% 60%;transform:scale(calc(1.12 - var(--fp,0)*.12));will-change:transform}
+.filme-veu{position:absolute;inset:0;background:linear-gradient(180deg,var(--preto) 0%,rgba(8,9,11,.35) 18%,rgba(8,9,11,.25) 50%,rgba(8,9,11,.8) 85%,var(--preto) 100%)}
+.frases{position:relative;z-index:2;padding:22vh var(--gut);display:grid;gap:40vh}
+.frase{max-width:var(--max);margin:0 auto;width:100%}
+.frase .n{display:block;margin-bottom:14px;color:var(--gelo);opacity:.7}
+.frase .t{display:block;font-weight:800;font-variation-settings:"wdth" 74;text-transform:uppercase;line-height:.92;font-size:clamp(2.9rem,12.5vw,8.4rem);max-width:11ch;text-wrap:balance;text-shadow:0 4px 40px rgba(0,0,0,.55)}
+.frase .btn{margin-top:28px}
+.filme-barra{display:none}
+.filme .ilustrativa{bottom:auto;top:84px}
+.js .filme{height:560vh;height:560svh}
+.js .filme-palco{position:sticky;top:0;height:100vh;height:100svh}
+.js .frases{position:absolute;inset:0;padding:0 var(--gut);display:block}
+.js .frase{position:absolute;left:var(--gut);right:var(--gut);bottom:calc(16svh + env(safe-area-inset-bottom));width:auto;max-width:var(--max);margin:0 auto;pointer-events:none}
+.js .frase .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.05em;margin-bottom:-.05em}
+.js .frase .w>span{display:inline-block;transform:translateY(105%);transition:transform .75s var(--ease);transition-delay:calc(var(--i)*60ms)}
+.js .frase .n,.js .frase .btn{opacity:0;transform:translateY(14px);transition:opacity .5s,transform .6s var(--ease)}
+.js .frase{opacity:0;transition:opacity .35s .3s}
+.js .frase.ativa{pointer-events:auto;opacity:1;transition-delay:0s}
+.js .frase.ativa .w>span{transform:none}
+.js .frase.ativa .n{opacity:.7;transform:none;transition-delay:.1s}
+.js .frase.ativa .btn{opacity:1;transform:none;transition-delay:.45s}
+.js .frase.saiu .w>span{transform:translateY(-105%);transition-duration:.5s;transition-delay:calc(var(--i)*30ms)}
+.js .filme-barra{display:block;position:absolute;right:max(16px,env(safe-area-inset-right));top:50%;height:34vh;width:2px;margin-top:-17vh;background:rgba(244,244,244,.18);z-index:3}
+.js .filme-barra i{position:absolute;inset:0;background:var(--vermelho);transform-origin:top;transform:scaleY(var(--fp,0));box-shadow:0 0 10px var(--vermelho)}
+@media (min-width:1024px){.js .frase{bottom:auto;top:50%;transform:translateY(-50%)}.frase .t{font-size:clamp(4rem,8.4vw,9rem)}.js .filme-barra{right:var(--gut)}}
+.embed .filme{height:auto}.embed .filme-palco{position:relative;height:auto}
+.embed .frases{position:relative;display:grid;gap:12vh;padding:20vh var(--gut)}
+.embed .frase{position:relative;left:auto;right:auto;bottom:auto;top:auto;transform:none;opacity:1}
+.embed .frase .w>span,.embed .frase .n,.embed .frase .btn{transform:none!important;opacity:1!important}
+.embed .filme-barra{display:none}
+
 /* ============ SOBRE ============ */
 section{position:relative}
 .sobre{padding:clamp(96px,14vw,180px) 0 clamp(80px,10vw,140px)}
@@ -473,6 +508,9 @@ section{position:relative}
   .js .aparece,.js .hero [data-in],.js .hero h1 .l,.js .sobe .p>span{transition:opacity .4s!important}
   .js .aparece,.js .hero [data-in]{transform:none!important}
   .mapa .sombra,.mapa .anel{transition:opacity .3s!important}
+  .js .frase .w>span{transform:none!important;opacity:0;transition:opacity .4s!important}
+  .js .frase.ativa .w>span{opacity:1}
+  .filme-video video{transform:none!important}
 }
 </style>
 <script>document.documentElement.classList.add('js');if(/[?&]embed\b/.test(location.search))document.documentElement.classList.add('embed');</script>
@@ -557,7 +595,24 @@ section{position:relative}
       <div class="regua"></div>
     </div>
   </div>
-  <a class="rolar mono" href="#sobre" data-in style="--d:1200"><span class="trilho" aria-hidden="true"></span><span>role</span></a>
+  <a class="rolar mono" href="#filme" data-in style="--d:1200"><span class="trilho" aria-hidden="true"></span><span>role</span></a>
+</section>
+
+<!-- Filme: a moto em vídeo presa no fundo e as frases passando com a rolagem -->
+<section class="filme" id="filme" aria-label="Como a Mestre das Motos trabalha">
+  <div class="filme-palco">
+    <div class="filme-video"><video id="vid-filme" muted playsinline loop preload="none" poster="media/m1000rr-poster.webp" aria-hidden="true"><source data-src="media/m1000rr-garagem.mp4" type="video/mp4"></video></div>
+    <div class="filme-veu" aria-hidden="true"></div>
+    <div class="frases">
+      <p class="frase"><span class="mono n">01 / 05</span><span class="t">Toda moto tem um som certo.</span></p>
+      <p class="frase"><span class="mono n">02 / 05</span><span class="t">A gente escuta antes de mexer.</span></p>
+      <p class="frase"><span class="mono n">03 / 05</span><span class="t">Cada detalhe conferido de perto.</span></p>
+      <p class="frase"><span class="mono n">04 / 05</span><span class="t">Você aprova antes de começar.</span></p>
+      <p class="frase"><span class="mono n">05 / 05</span><span class="t">E ela volta pronta pra rodar.</span><a class="btn btn-verm mag" data-zap="agendar" href="#contato" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-zap"/></svg>Agendar manutenção</a></p>
+    </div>
+    <div class="filme-barra" aria-hidden="true"><i></i></div>
+    <span class="ilustrativa">vídeo ilustrativo</span>
+  </div>
 </section>
 
 <section class="sobre" id="sobre" aria-labelledby="h-sobre">
@@ -774,9 +829,9 @@ section{position:relative}
       <div class="mapa-emb" id="mapa-emb">
         <div class="mapa-vazio"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><p>O mapa aparece aqui assim que o endereço da oficina for confirmado.</p></div></div>
       </div>
-      <div class="video-lado" aria-hidden="true">
-        <video id="vid-contato" muted playsinline loop preload="none" poster="media/m1000rr-poster.webp"><source data-src="media/m1000rr-garagem.mp4" type="video/mp4"></video>
-        <span class="ilustrativa">vídeo ilustrativo</span>
+      <div class="video-lado">
+        <img src="img/r6-tres-quartos.webp" width="720" height="1280" loading="lazy" decoding="async" alt="Moto esportiva verde fosco estacionada numa garagem de concreto">
+        <span class="ilustrativa">foto ilustrativa</span>
       </div>
     </div>
   </div>
@@ -959,7 +1014,8 @@ var MSG_PADRAO = 'Olá! Conheci a Oficina Mestre das Motos pelo site e gostaria 
   /* ---------- vídeos: só carregam quando perto da tela ---------- */
   function ligaVideo(v){
     if (!v || v.dataset.ok) return; v.dataset.ok = 1;
-    $$('source[data-src]', v).forEach(function(s){ s.src = s.getAttribute('data-src'); });
+    // MIDIA: na versão de arquivo único, os vídeos vêm embutidos uma vez só (sem repetir nos dois vídeos do topo)
+    $$('source[data-src]', v).forEach(function(s){ var k = s.getAttribute('data-src'); s.src = (window.MIDIA && window.MIDIA[k]) || k; });
     v.load();
   }
   var mob = matchMedia('(max-width:1023px)');
@@ -968,7 +1024,7 @@ var MSG_PADRAO = 'Olá! Conheci a Oficina Mestre das Motos pelo site e gostaria 
     var vio = new IntersectionObserver(function(es){
       es.forEach(function(e){
         var v = e.target;
-        if (getComputedStyle(v.closest('.hero-fundo,.visor,.video-lado')).display === 'none') return;
+        if (getComputedStyle(v.closest('.hero-fundo,.visor,.filme-video')).display === 'none') return;
         if (e.isIntersecting) {
           ligaVideo(v);
           if (!reduz && !embed) { var p = v.play(); if (p && p.catch) p.catch(function(){}); }
@@ -996,7 +1052,7 @@ var MSG_PADRAO = 'Olá! Conheci a Oficina Mestre das Motos pelo site e gostaria 
     if (alvo) { ind.style.opacity = 1; ind.style.width = (alvo.offsetWidth - 28) + 'px'; ind.style.transform = 'translateX(' + (alvo.offsetLeft + 14) + 'px)'; }
     else ind.style.opacity = 0;
   }
-  var secoes = { inicio:'inicio', sobre:'sobre', servicos:'servicos', galeria:'galeria', diferenciais:'sobre', processo:'contato', avaliacoes:'contato', agendar:'contato', contato:'contato' };
+  var secoes = { inicio:'inicio', filme:'inicio', sobre:'sobre', servicos:'servicos', galeria:'galeria', diferenciais:'sobre', processo:'contato', avaliacoes:'contato', agendar:'contato', contato:'contato' };
   if ('IntersectionObserver' in window) {
     var nio = new IntersectionObserver(function(es){
       es.forEach(function(e){ if (e.isIntersecting) marcaNav(secoes[e.target.id]); });
@@ -1155,6 +1211,46 @@ var MSG_PADRAO = 'Olá! Conheci a Oficina Mestre das Motos pelo site e gostaria 
     }, { rootMargin: '-40% 0px -40% 0px' });
     difs.forEach(function(l){ dio.observe(l); });
   } else difs.forEach(function(l){ l.classList.add('aceso'); });
+
+  /* ---------- filme: frases passando com a rolagem ---------- */
+  var filme = $('#filme'), frases = $$('#filme .frase'), fAtual = -1, fUltima = 0, fTimer = null;
+  frases.forEach(function(f){
+    var t = $('.t', f), i = 0, frag = document.createDocumentFragment();
+    t.textContent.split(/\s+/).forEach(function(w, k){
+      if (k) frag.appendChild(document.createTextNode(' '));
+      var o = document.createElement('span'); o.className = 'w';
+      var s = document.createElement('span'); s.textContent = w; s.style.setProperty('--i', i++);
+      o.appendChild(s); frag.appendChild(o);
+    });
+    t.textContent = ''; t.appendChild(frag);
+  });
+  function trocaFrase(n){
+    // uma troca por vez: se a anterior acabou de acontecer, espera e confere de novo
+    var agora = performance.now();
+    if (agora - fUltima < 380) { clearTimeout(fTimer); fTimer = setTimeout(filmeTick, 400 - (agora - fUltima)); return; }
+    fUltima = agora;
+    frases.forEach(function(f, k){
+      f.classList.toggle('ativa', k === n);
+      f.classList.toggle('saiu', k < n);
+      if (k === n) f.removeAttribute('aria-hidden'); else f.setAttribute('aria-hidden', 'true');
+    });
+    fAtual = n;
+  }
+  function filmeTick(){
+    if (embed) return;
+    var r = filme.getBoundingClientRect(), total = r.height - innerHeight;
+    var p = total > 0 ? Math.max(0, Math.min(1, -r.top / total)) : 0;
+    filme.style.setProperty('--fp', p.toFixed(4));
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    var x = p * frases.length, n = Math.min(frases.length - 1, Math.floor(x));
+    // folga de ~8% do trecho perto da troca, pra não ficar trocando quando a pessoa para no meio
+    if (fAtual >= 0 && n !== fAtual && Math.abs(x - Math.max(n, fAtual)) < .08) return;
+    if (n !== fAtual) trocaFrase(n);
+  }
+  var fPend = false;
+  addEventListener('scroll', function(){ if (!fPend) { fPend = true; requestAnimationFrame(function(){ fPend = false; filmeTick(); }); } }, { passive: true });
+  addEventListener('resize', filmeTick); setInterval(filmeTick, 500);
+  if (embed) frases.forEach(function(f){ f.classList.add('ativa'); }); else filmeTick();
 
   /* ---------- processo: linha de progresso pela rolagem ---------- */
   var etapas = $('#etapas'), lis = $$('#etapas li'), tick = false;

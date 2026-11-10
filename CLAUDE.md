@@ -48,7 +48,8 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 ## Quando pedirem um site
 1. Pegar nome + cidade e os dados disponíveis (fotos, Instagram, cardápio, Maps).
 2. Propor em 3 linhas a direção (paleta, fontes, 3 WOWs) e construir: um único HTML seguindo `gudev/03-PADRAO-DE-SITE.md`.
-3. No fim, listar o que precisa confirmar e lembrar: "manda o HTML pro Gu finalizar, gerar a proposta e subir no Netlify". O link pro cliente é sempre o do Netlify.
+3. **Entregar pro Davi em HTML (preferência dele desde 10/11/2026):** um arquivo só, com fotos e vídeos dentro, gerado por `python3 gudev/ferramentas/arquivo_unico.py sites/<nome> <saida>.html` (fica abaixo de ~2 MB, que é o que a prévia do app abre). O zip da pasta é só pro Gu subir no Netlify.
+4. No fim, listar o que precisa confirmar e lembrar: "manda o HTML pro Gu finalizar, gerar a proposta e subir no Netlify". O link pro cliente é sempre o do Netlify.
 
 ## Design e engenharia (todo site ou app, de cliente ou não)
 - Skills em `.claude/skills/`: `impeccable` (processo: init, document, shape, craft, extract, critique, audit, polish) e `design-taste-frontend` (anti-"cara de IA" + redesign). As clássicas (`minimalist-ui`, `industrial-brutalist-ui`, `high-end-visual-design`, `gpt-taste`, `stitch-design-taste`, `design-taste-frontend-v1`) só quando o Davi chamar pelo nome.

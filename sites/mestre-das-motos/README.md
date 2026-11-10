@@ -12,6 +12,8 @@ Site de página única em `index.html`. Pedido do Davi com um briefing completo 
 2. **Mapa da moto (serviços):** cada serviço acende o ponto da moto onde ele acontece, com holofote, anel tracejado e etiqueta. No computador, passar o mouse; no celular, a foto fica presa no topo e o cartão que passa pelo meio da tela acende sozinho.
 3. **Painel de alertas (agendar):** a pessoa acende as luzes do que a moto está fazendo (óleo, freio, injeção, bateria, temperatura, revisão), digita moto, km e nome, vê tudo no visor LCD e a mensagem vai pronta pro WhatsApp. Progresso "x de 3" e tela de "valeu".
 
+Extra: **filme** logo depois do topo, com a M1000RR em vídeo preso no fundo e 5 frases que passam com a rolagem (troca com folga de 8%, uma por vez, barra vermelha de progresso). O vídeo do contato virou foto pra não repetir a moto.
+
 Apoio: título por palavra, foto revelada por cortina, botões magnéticos, luz que segue o mouse no topo, parallax leve, cartão com inclinação 3D, galeria com lightbox (setas, teclado, arrastar) e cursor "Ver", diferenciais que acendem no meio da tela, linha do atendimento que enche com a rolagem, linha vermelha no rodapé.
 
 ## Técnica
@@ -46,3 +48,6 @@ No começo do `<script>` do `index.html` tem o objeto `CONFIG`. Campo vazio apar
 - **Não verificado:** celular de verdade (iPhone/Android), vídeo rodando no Netlify e o link do WhatsApp com número (está vazio).
 
 Manda o HTML pro Gu finalizar, gerar a proposta e subir no Netlify. O link pro cliente é sempre o do Netlify.
+
+## Versão pro celular (arquivo único)
+`python3 gudev/ferramentas/arquivo_unico.py sites/mestre-das-motos mestre-das-motos.html` gera um HTML de ~1,7 MB com fotos e vídeos dentro (vídeos em 480 px, via `window.MIDIA`). É o que o Davi abre na prévia do app.

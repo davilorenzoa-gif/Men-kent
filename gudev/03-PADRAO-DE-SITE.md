@@ -90,6 +90,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - ignição: o conta-giros faz a varredura de quando a moto liga e a tela abre em duas metades;
   - mapa da moto: cada serviço acende o ponto da moto onde ele acontece (holofote + anel), com a foto presa no topo no celular;
   - painel de alertas: acender as luzes-espia do que a moto está fazendo, visor LCD com moto e km, mensagem pro WhatsApp.
+  - extra (pedido do Davi): "filme" logo depois do topo, vídeo da moto preso no fundo e 5 frases gigantes que passam com a rolagem (palavras sobem por tempo, troca com folga, barra vermelha de progresso).
 - **Site da própria GuDev** (página de venda, `sites/gudev`, 05/11/2026):
   - porta de aço laranja que sobe com a rolagem e mostra a rua, com um celular subindo e pedidos chegando;
   - conversa de WhatsApp que se escreve com a rolagem;
