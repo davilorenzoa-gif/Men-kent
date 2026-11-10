@@ -113,13 +113,13 @@ export function Hero({ ready }: { ready: boolean }) {
           <div className="mb-5 flex flex-col gap-6 md:mb-6 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="max-w-[19rem] text-[1.0625rem] leading-snug font-light text-silver sm:max-w-none sm:text-xl">
-                <SplitText text="Engineering emotions. Defining performance." play={ready} delay={1.25} stagger={0.05} duration={0.9} />
+                <SplitText text="Engineering emotions. Defining performance." play={ready} delay={0.85} stagger={0.05} duration={0.9} />
               </p>
               <motion.div
                 className="mt-6"
                 initial={{ opacity: 0, y: reduced ? 0 : 14 }}
                 animate={ready ? { opacity: 1, y: 0 } : undefined}
-                transition={{ duration: 0.9, ease: EASE_EXPO, delay: reduced ? 0.2 : 1.7 }}
+                transition={{ duration: 0.9, ease: EASE_EXPO, delay: reduced ? 0.2 : 1.15 }}
               >
                 <Magnetic>
                   <Button variant="solid" icon={<Plus strokeWidth={1.75} />} onClick={() => scrollTo('#collection')}>
@@ -134,7 +134,7 @@ export function Hero({ ready }: { ready: boolean }) {
               className="hidden text-right md:block"
               initial={{ opacity: 0 }}
               animate={ready ? { opacity: 1 } : undefined}
-              transition={{ duration: 1.2, delay: reduced ? 0.2 : 1.9 }}
+              transition={{ duration: 1.2, delay: reduced ? 0.2 : 1.3 }}
             >
               <dt className="data text-steel">In frame</dt>
               <dd className="mt-1.5 text-[0.9375rem] text-paper">
@@ -153,25 +153,25 @@ export function Hero({ ready }: { ready: boolean }) {
             className="mb-4 h-px origin-left bg-paper/25 sm:mb-5"
             initial={{ scaleX: 0 }}
             animate={ready ? { scaleX: 1 } : undefined}
-            transition={{ duration: reduced ? 0.3 : 1.6, ease: EASE_EXPO, delay: reduced ? 0 : 0.7 }}
+            transition={{ duration: reduced ? 0.3 : 1.6, ease: EASE_EXPO, delay: reduced ? 0 : 0.45 }}
           />
 
           {/* Monumental title: one line on wide screens, a justified two-line block on phones */}
           <h1 className="display text-paper">
             <span className="hidden md:block">
               <FitText>
-                <SplitText text="THE ART OF PERFORMANCE" by="char" play={ready} delay={0.55} stagger={0.03} duration={1.25} />
+                <SplitText text="THE ART OF PERFORMANCE" by="char" play={ready} delay={0.3} stagger={0.028} duration={1.25} />
               </FitText>
             </span>
             <span className="block md:hidden">
               <span className="block">
                 <FitText>
-                  <SplitText text="THE ART OF" by="char" play={ready} delay={0.55} stagger={0.035} duration={1.2} />
+                  <SplitText text="THE ART OF" by="char" play={ready} delay={0.3} stagger={0.035} duration={1.2} />
                 </FitText>
               </span>
               <span className="block">
                 <FitText>
-                  <SplitText text="PERFORMANCE" by="char" play={ready} delay={0.8} stagger={0.035} duration={1.2} />
+                  <SplitText text="PERFORMANCE" by="char" play={ready} delay={0.5} stagger={0.035} duration={1.2} />
                 </FitText>
               </span>
             </span>
@@ -185,7 +185,7 @@ export function Hero({ ready }: { ready: boolean }) {
         className="absolute top-1/2 right-[clamp(1.25rem,4.2vw,4.5rem)] hidden -translate-y-1/2 flex-col items-center gap-4 lg:flex xl:hidden"
         initial={{ opacity: 0 }}
         animate={ready ? { opacity: 1 } : undefined}
-        transition={{ delay: 2.2, duration: 1 }}
+        transition={{ delay: 1.6, duration: 1 }}
       >
         <span className="data text-silver [writing-mode:vertical-rl]">Scroll</span>
         <span className="relative block h-16 w-px overflow-hidden bg-paper/20">

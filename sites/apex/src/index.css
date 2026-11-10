@@ -24,6 +24,8 @@
 /* ───────────────────────── Base ───────────────────────── */
 @layer base {
   html {
+    /* One deliberate look: dark, in every viewer theme */
+    color-scheme: dark;
     background: var(--color-ink);
     color: var(--color-paper);
     -webkit-font-smoothing: antialiased;
@@ -128,13 +130,6 @@
 /* Scroll-snap containers: snap points respect the page gutter instead of the edge */
 @utility gutter-snap {
   scroll-padding-inline: clamp(1.25rem, 4.2vw, 4.5rem);
-}
-
-/* Hairline that draws itself: set --draw (0 → 1) from JS or a parent state */
-@utility hairline {
-  height: 1px;
-  background: var(--color-line);
-  transform-origin: left center;
 }
 
 /* ───────────────────────── Texture ───────────────────────── */

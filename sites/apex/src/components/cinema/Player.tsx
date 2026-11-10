@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import {
   AnimatePresence,
   motion,
@@ -364,7 +364,7 @@ export function kindLabel(film: Film): string {
   return film.provider === 'youtube' ? 'YouTube' : 'Vimeo'
 }
 
-function TransportButton({ label, onClick, children }: { label: string; onClick: () => void; children: React.ReactNode }) {
+function TransportButton({ label, onClick, children }: { label: string; onClick: () => void; children: ReactNode }) {
   return (
     <button
       type="button"

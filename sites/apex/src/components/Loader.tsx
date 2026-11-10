@@ -16,7 +16,7 @@ type LoaderProps = {
  * Opening sequence: a rev counter sweeps to the redline while the hero image
  * loads, then the two halves of the screen part like a shutter.
  * The sweep is tied to real loading: it holds near the redline until the
- * assets are in, and never runs for less than ~1.6 s or more than ~7 s.
+ * assets are in, and never runs for less than ~1.4 s or more than ~7 s.
  */
 export function Loader({ ready, onDone }: LoaderProps) {
   const reduced = useReducedMotion()
@@ -34,11 +34,11 @@ export function Loader({ ready, onDone }: LoaderProps) {
     }
 
     // Phase 1: run up to 86% on a timer…
-    const ramp = animate(0, 0.86, { duration: reduced ? 0.4 : 1.7, ease: [0.3, 0, 0.2, 1], onUpdate: set })
+    const ramp = animate(0, 0.86, { duration: reduced ? 0.4 : 1.45, ease: [0.3, 0, 0.2, 1], onUpdate: set })
 
     // …phase 2: finish once the assets are really there (or after a ceiling).
     const ceiling = new Promise((resolve) => setTimeout(resolve, 7000))
-    const floor = new Promise((resolve) => setTimeout(resolve, reduced ? 400 : 1600))
+    const floor = new Promise((resolve) => setTimeout(resolve, reduced ? 400 : 1400))
     let finish: ReturnType<typeof animate> | undefined
     Promise.all([Promise.race([ready, ceiling]), floor]).then(() => {
       if (cancelled) return
@@ -69,7 +69,7 @@ export function Loader({ ready, onDone }: LoaderProps) {
       ? { animate: { opacity: leaving ? 0 : 1 }, transition: { duration: 0.35 } }
       : {
           animate: { y: leaving ? `${direction * 101}%` : '0%' },
-          transition: { duration: 1.15, ease: EASE_CINE, delay: 0.18 },
+          transition: { duration: 1.05, ease: EASE_CINE, delay: 0.12 },
         }
 
   return (

@@ -19,6 +19,19 @@ import { VehicleDetail } from './sections/VehicleDetail'
 
 const readCarFromUrl = () => new URLSearchParams(window.location.search).get('car')
 
+/** Mirrors the open car in the address bar. Embedded viewers may refuse it; the page works regardless. */
+function writeCarToUrl(slug: string | null, mode: 'push' | 'replace') {
+  try {
+    const url = new URL(window.location.href)
+    if (slug) url.searchParams.set('car', slug)
+    else url.searchParams.delete('car')
+    if (mode === 'push') window.history.pushState(null, '', url)
+    else window.history.replaceState(null, '', url)
+  } catch {
+    /* sandboxed frame: keep the state in memory only */
+  }
+}
+
 export default function App() {
   return (
     <MotionConfig reducedMotion="user">
@@ -46,18 +59,13 @@ function Page() {
   }, [])
 
   const openCar = useCallback((slug: string) => {
-    const url = new URL(window.location.href)
-    url.searchParams.set('car', slug)
     // Opening pushes one history entry; stepping between cars replaces it.
-    if (readCarFromUrl()) window.history.replaceState(null, '', url)
-    else window.history.pushState(null, '', url)
+    writeCarToUrl(slug, readCarFromUrl() ? 'replace' : 'push')
     setCarSlug(slug)
   }, [])
 
   const closeCar = useCallback(() => {
-    const url = new URL(window.location.href)
-    url.searchParams.delete('car')
-    window.history.replaceState(null, '', url)
+    writeCarToUrl(null, 'replace')
     setCarSlug(null)
   }, [])
 

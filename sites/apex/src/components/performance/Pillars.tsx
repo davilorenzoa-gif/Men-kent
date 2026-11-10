@@ -35,7 +35,7 @@ function PillarCell({ pillar }: { pillar: Pillar }) {
         <p className="data text-right text-steel">{pillar.subject}</p>
       </header>
 
-      <div className="mt-7 h-44 sm:h-52">
+      <div className="mt-7 h-48 sm:h-60">
         {pillar.id === 'aero' && <AeroDiagram />}
         {pillar.id === 'engine' && <EngineDiagram />}
         {pillar.id === 'transmission' && <GearDiagram />}
