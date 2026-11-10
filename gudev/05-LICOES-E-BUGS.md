@@ -68,3 +68,4 @@
 - **Nome de classe repetido apaga texto:** na Péçaí, `.cai` (bagas caindo, `opacity:0`) também estava no `<span>` do título e o "çaí" sumiu. Conferir no print antes de mandar.
 - **Nome de variável repetido no mesmo bloco de JS:** na Péçaí, `var pedido = {}` (o pedido) apagou o `var pedido = false` da rolagem, e o topo e a calda pararam de responder sem erro no console. Nomes de controle bem específicos (`quadroPedido`).
 - **Montar pedido com poucas opções fixas não serve pra cardápio grande.** Comércio com muitos itens: abas por categoria + quantidade.
+- **Arquivo HTML aberto no visualizador do app fica parado** quando depende de biblioteca de CDN (GSAP, Lenis): o visualizador bloqueia script externo, igual bloqueou o iframe do mapa. Pra mandar prévia pro celular, embutir as bibliotecas e as imagens no próprio arquivo, e o código precisa mostrar o estado final se `window.gsap` não existir (feito no Fusca Lab, 10/11).

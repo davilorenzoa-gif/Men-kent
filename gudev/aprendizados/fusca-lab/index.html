@@ -254,6 +254,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 <script>
 (function(){
   'use strict';
+  /* Se as bibliotecas não carregaram (sem internet, CDN bloqueado, visualizador de arquivo do app),
+     mostra tudo no estado final em vez de deixar o carro escondido. */
+  if (!window.gsap || !window.ScrollTrigger || !window.Flip || !window.SplitText) {
+    document.querySelectorAll('.revela').forEach(function(el){ el.style.clipPath = 'none'; });
+    document.querySelectorAll('.cap').forEach(function(el, i){ if (i === 0) el.style.opacity = 1; });
+    return;
+  }
   gsap.registerPlugin(ScrollTrigger, Flip);
   var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var mouseFino = matchMedia('(pointer: fine)').matches;
