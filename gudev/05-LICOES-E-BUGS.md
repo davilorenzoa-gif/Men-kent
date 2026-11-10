@@ -48,6 +48,7 @@
 - **Sabores que ficavam trocando sem parar:** duas contas de rolagem diferentes discordavam quando a barra do navegador aparecia e sumia. Use uma só, com folga e fila.
 - **Página mais larga que a tela no celular:** foi causada por grid sem `minmax(0,1fr)`, `input date` e `radio` escondido com `width:100%`.
 - **Seção alta parada dentro da prévia parece "travado":** dentro da proposta, as animações de rolagem têm que estar ligadas.
+- **HTML "não funciona" aberto pela prévia de arquivo do app:** a prévia pode não rodar o JS. Página que depende de JS pra aparecer fica só com o fundo. Teste sempre pelo navegador ou pelo link do Netlify, e deixe a primeira tela visível mesmo sem JS.
 
 ## Vídeo com IA (Google Flow)
 - **Mancha apagada vira parte do vídeo:** apagamos o logo e a legenda de um quadro e mandamos pro Flow. Ele copiou as manchas como se fossem parte da cena, e elas ficaram em todos os quadros. Pra mandar um quadro pro Flow, **corte** a parte com texto em vez de borrar.

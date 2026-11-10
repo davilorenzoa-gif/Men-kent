@@ -76,6 +76,26 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - simulador que monta um mini site com o nome, o tipo e a cor do comércio, e faz chegar uma notificação de pedido;
   - apoio: faixa que inclina com a velocidade, preço que conta de 500 até 297, cupom que sai da impressora, porta que desce no fim.
 
+## Repertório de efeitos prontos (testados, ainda não usados em cliente)
+Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS puro em canvas, sem biblioteca. Testado no celular (09/11/2026). O Davi gostou. Ponto de partida pra variar, nunca pra colar igual.
+- **Nome em partículas:** o texto se forma com ~2.000 pontinhos que voam de todo lado. O dedo empurra e o toque explode, e eles voltam pro lugar.
+  - Em cliente: o nome da loja na abertura (WOW 1). Funciona com 3 a 12 letras.
+  - Dá pra amostrar um logo PNG no lugar do texto, do mesmo jeito.
+- **Poeira → forma:** as partículas se soltam e flutuam como poeira de fundo. Depois se juntam numa forma que pulsa, com um estouro de confete.
+  - No original a forma é um coração. Em cliente pode ser o produto: pizza, copo, tesoura, gota.
+  - Basta trocar o contorno (polígono) da forma.
+  - Momento bom: depois que a pessoa clica em "Pedir pelo WhatsApp" ou termina de montar o pedido.
+- **Texto digitando:** frases aparecem letra a letra, com cursor piscando.
+  - Usar com moderação. Bom pra 1 frase de efeito, não pra seção inteira.
+- **Botão que foge:** o "não" pula pra outro lugar quando o dedo chega perto, muda de texto, e o "sim" cresce.
+  - **Não usar em site de cliente:** atrapalha e parece pegadinha.
+  - Só serve pra brincadeira, quiz ou campanha.
+- Cuidados que já estão no código:
+  - Esperar a fonte carregar antes de desenhar o texto em partículas.
+  - Não rodar com tela de tamanho 0.
+  - Reduzir as partículas com `prefers-reduced-motion`.
+  - O botão que foge desvia do título e do outro botão.
+
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
 
