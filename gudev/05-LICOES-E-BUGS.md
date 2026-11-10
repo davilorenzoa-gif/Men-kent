@@ -69,3 +69,10 @@
 - **Lead que pede prévia, fala com o chefe e marca de pagar pode sumir.** Faça o follow-up em 3 passos (veja 02-VENDAS) e não corra atrás demais.
 - **Não colocar demo fictícia como case.** Só clientes reais.
 - **No dia do pagamento:** confira o Pix no app do banco e deixe o site pronto no ar antes.
+
+## App/SaaS (PrecificaFood, 10/11/2026)
+- **decimal.js: `isPositive()` é verdadeiro para zero.** Usar sempre `.gt(0)`. Pegou num teste de "0 pedidos por mês" (ia dividir por zero).
+- **Dízima no preço exato:** R$ 15 ÷ 0,538 dá margem 24,9999…%, e o app dizia "abaixo da meta de 25%". Comparar margem com 8 casas.
+- **`sr-only` dentro de tabela rolável** escapa do container e cria rolagem horizontal na página. O container com `overflow-x-auto` precisa de `relative`.
+- **Matar `next start`** não mata o `next-server`: a porta continua ocupada com o build velho e o teste roda contra código antigo. Usar `pkill -f next-server`.
+- Sem Docker no ambiente: dá pra testar Supabase de ponta a ponta com Postgres local + shim do `auth` + servidor de QA (`sites/precificafood/scripts/qa-supabase.mjs`), com RLS valendo.

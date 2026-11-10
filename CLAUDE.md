@@ -31,6 +31,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - Demos e conceitos, **nunca case**: Prumo, Peçaí, Fornalha, Faixa Vermelha, Lustro, Órbita, Vértice, 911, DOZE, Meridiano, Skyline, APEX, Espelho, Basalto, Moenda, Sulco, Fervo (`sites/fervo`, conceito pro Instagram). Lista em `04`.
 - Técnicas novas (10/11/2026, vídeos Fervo e Madoska): página que enche de líquido e reage ao dedo (original WebGL em `sites/fervo/`, versão simples em `gudev/demos/borbulha-liquido-rolagem.html`, mesmo motor com outra marca em `gudev/demos/borbulha-webgl.html`) e câmera passeando pela vitrine com colher provando (`gudev/demos/pingo-vitrine-provas.html`). Passo a passo no `03`.
 - `sites/glassy-dashboard` (painel em React/Tailwind): base se algum cliente pedir painel/sistema. É produto novo: preço e prazo a definir antes de oferecer.
+- `sites/precificafood` (10/11/2026): SaaS de precificação pra restaurante no iFood (Next.js 16 + Supabase + RLS). Motor testado, E2E 26/26 local. Falta: projeto Supabase real, deploy, cobrança, preço do plano. Nunca vender como pronto antes disso. Como rodar no README de lá.
 - Vídeo: os de 15s e os Reels saem de prompts pro Google Flow (Veo) + montagem no CapCut, ou edição feita aqui com ffmpeg. Claude não abre o CapCut. Lições em `05` e `08`.
 
 ## Regras que nunca quebram
