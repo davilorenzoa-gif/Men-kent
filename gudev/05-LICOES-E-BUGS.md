@@ -66,3 +66,5 @@
 - **Print do Google Maps serve de fonte.** Na Péçaí, a foto do copo saiu recortada do print (373x576) e os dados (nota, endereço, faixa de preço) também.
 - **Mapa do Google em iframe quebra fora do navegador** (visualizador de arquivo do app, alguns apps): aparece "Página da Web não disponível / ERR_BLOCKED_BY_CSP". Usar cartão com endereço + "Abrir no Google Maps" e só criar o iframe se a pessoa tocar (feito na Péçaí).
 - **Nome de classe repetido apaga texto:** na Péçaí, `.cai` (bagas caindo, `opacity:0`) também estava no `<span>` do título e o "çaí" sumiu. Conferir no print antes de mandar.
+- **Nome de variável repetido no mesmo bloco de JS:** na Péçaí, `var pedido = {}` (o pedido) apagou o `var pedido = false` da rolagem, e o topo e a calda pararam de responder sem erro no console. Nomes de controle bem específicos (`quadroPedido`).
+- **Montar pedido com poucas opções fixas não serve pra cardápio grande.** Comércio com muitos itens: abas por categoria + quantidade.

@@ -145,19 +145,29 @@ h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;t
 .colha .grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
 @media (max-width:860px){.colha .grade{grid-template-columns:minmax(0,1fr)}}
 .passo{font-weight:700;color:var(--palmeira);font-size:15px;margin-bottom:10px}
-.cacho{position:relative;background:#3b0f4a;border-radius:var(--r);padding:26px 18px 30px;overflow:hidden}
-.cacho .galho{position:absolute;left:50%;top:-10px;width:6px;height:40px;background:#c79a63;border-radius:4px;transform:translateX(-50%)}
-.bagas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;position:relative}
-.bagas button{width:92px;height:92px;border-radius:50%;border:0;cursor:pointer;font:inherit;font-weight:700;font-size:15px;color:#fff;background:radial-gradient(circle at 32% 28%,#c27ad8 0,#8d36a8 30%,#4f1a62 100%);box-shadow:inset -6px -8px 14px rgba(0,0,0,.35);transition:transform .15s,opacity .25s;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.1;padding:6px}
-.bagas button:nth-child(even){transform:translateY(16px)}
-.bagas button:active{transform:scale(.92)}
-.bagas button[aria-pressed="true"]{opacity:.28}
+.pedido{position:relative;background:#3b0f4a;border-radius:var(--r);padding:16px 14px 22px;overflow:hidden}
+.abas{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;scrollbar-width:thin;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.abas button{flex:none;scroll-snap-align:start;border:0;border-radius:999px;min-height:44px;padding:8px 16px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;background:rgba(255,255,255,.08);color:#e6d6ec;position:relative}
+.abas button[aria-pressed="true"]{background:var(--copo);color:var(--pe)}
+.abas button .n{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:10px;background:var(--palmeira);color:var(--tinta);font-size:12px;margin-left:6px;padding:0 5px}
+.lista{display:grid;gap:8px;min-height:120px}
+.linha{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;background:rgba(255,255,255,.05);border-radius:16px;padding:10px 10px 10px 16px}
+.linha .nome{font-weight:700;line-height:1.25}
+.linha .nota{display:block;font-weight:400;font-size:13px;color:#cdb6d6;margin-top:2px}
+.qtd{display:flex;align-items:center;gap:6px}
+.qtd button{width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;font:inherit;font-weight:800;font-size:22px;line-height:1;color:#fff}
+.qtd .mais{background:radial-gradient(circle at 32% 28%,#c27ad8 0,#8d36a8 35%,#4f1a62 100%);box-shadow:inset -4px -5px 10px rgba(0,0,0,.35)}
+.qtd .menos{background:rgba(255,255,255,.1)}
+.qtd .menos:disabled{opacity:.3;cursor:default}
+.qtd output{min-width:22px;text-align:center;font-weight:800}
+.qtd button:active{transform:scale(.9)}
+.fonte{font-size:13px;color:#cdb6d6;margin-top:10px}
 .paneiro{margin-top:18px;position:relative;min-height:150px;border-radius:0 0 90px 90px / 0 0 60px 60px;padding:22px 18px 30px;background:
   repeating-linear-gradient(45deg,rgba(0,0,0,.12) 0 6px,transparent 6px 12px),
   repeating-linear-gradient(-45deg,rgba(255,255,255,.08) 0 6px,transparent 6px 12px),#b0844f;color:var(--tinta);box-shadow:inset 0 10px 0 #8d6436}
 .paneiro .vazio{font-weight:600;text-align:center;color:#3a2412;padding-top:20px}
 .paneiro .dentro{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.paneiro .dentro button{border:0;background:var(--copo);color:var(--pe);font:inherit;font-weight:700;border-radius:999px;padding:8px 14px;min-height:44px;cursor:pointer;animation:chega .35s cubic-bezier(.3,1.6,.5,1)}
+.paneiro .dentro button{border:0;font-size:15px;background:var(--copo);color:var(--pe);font:inherit;font-weight:700;border-radius:999px;padding:8px 14px;min-height:44px;cursor:pointer;animation:chega .35s cubic-bezier(.3,1.6,.5,1)}
 @keyframes chega{from{transform:translateY(-14px) scale(.6);opacity:0}}
 .voa{position:fixed;width:26px;height:26px;border-radius:50%;background:#8d36a8;z-index:60;pointer-events:none;left:0;top:0}
 .form{display:grid;gap:22px}
@@ -292,7 +302,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
   <section class="cardapio" id="cardapio" aria-labelledby="t-cardapio">
     <div class="wrap">
       <h2 id="t-cardapio">O que sai do pé</h2>
-      <p class="intro">Cinco jeitos de matar a vontade. Os tamanhos, os adicionais e os valores do dia a gente passa na hora, pelo pedido.</p>
+      <p class="intro">O básico do pé. No pedido tem mais: barca, milk shake, suco de açaí, salgado, caldo, churros e sobremesa.</p>
       <div class="grade">
         <div class="trilho" id="trilho">
           <span class="fio" aria-hidden="true"></span>
@@ -301,27 +311,27 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
           <article class="item">
             <h3>Açaí</h3>
             <p>O carro-chefe. No copo, com fruta, granola e calda por cima.</p>
-            <a class="js-quero" data-item="Açaí" href="#colha">Quero açaí</a>
+            <a class="js-quero" data-cat="Açaí" href="#colha">Ver os açaís</a>
           </article>
           <article class="item">
             <h3>Cupuaçu</h3>
             <p>O creme do Norte, pra quem é do time cupuaçu.</p>
-            <a class="js-quero" data-item="Cupuaçu" href="#colha">Quero cupuaçu</a>
+            <a class="js-quero" data-cat="Cupuaçu" href="#colha">Pedir cupuaçu</a>
           </article>
           <article class="item">
             <h3>Sorvete</h3>
             <p>Na taça, montado na hora.</p>
-            <a class="js-quero" data-item="Sorvete" href="#colha">Quero sorvete</a>
+            <a class="js-quero" data-cat="Sorvetes" href="#colha">Ver os sorvetes</a>
           </article>
           <article class="item">
             <h3>Tapioca</h3>
             <p>Pra quando a fome pede mais que um doce.</p>
-            <a class="js-quero" data-item="Tapioca" href="#colha">Quero tapioca</a>
+            <a class="js-quero" data-cat="Tapioca" href="#colha">Pedir tapioca</a>
           </article>
           <article class="item">
             <h3>Lanche</h3>
             <p>O salgado antes do açaí. Ou depois.</p>
-            <a class="js-quero" data-item="Lanche" href="#colha">Quero lanche</a>
+            <a class="js-quero" data-cat="Lanches" href="#colha">Pedir lanche</a>
           </article>
         </div>
         <div class="lado">
@@ -338,23 +348,18 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
   <section class="colha" id="colha" aria-labelledby="t-colha">
     <div class="wrap">
       <h2 id="t-colha">Colha seu pedido</h2>
-      <p class="intro">Toque nas bagas do que você quer. Elas caem no paneiro e o pedido sai pronto.</p>
+      <p class="intro">Escolha no cardápio e toque na baga de cada item. Ele cai no paneiro e o pedido sai pronto.</p>
       <div class="grade">
         <div>
           <p class="passo" id="p1">1 de 3: o que vai querer</p>
-          <div class="cacho">
-            <span class="galho" aria-hidden="true"></span>
-            <div class="bagas" id="bagas" role="group" aria-labelledby="p1">
-              <button type="button" aria-pressed="false" data-item="Açaí">Açaí</button>
-              <button type="button" aria-pressed="false" data-item="Cupuaçu">Cupuaçu</button>
-              <button type="button" aria-pressed="false" data-item="Sorvete">Sorvete</button>
-              <button type="button" aria-pressed="false" data-item="Tapioca">Tapioca</button>
-              <button type="button" aria-pressed="false" data-item="Lanche">Lanche</button>
-            </div>
+          <div class="pedido">
+            <div class="abas" id="abas" role="group" aria-labelledby="p1"></div>
+            <div class="lista" id="lista" aria-live="polite"></div>
             <div class="paneiro" id="paneiro" aria-live="polite">
               <p class="vazio" id="vazio">O paneiro está vazio.</p>
               <div class="dentro" id="dentro"></div>
             </div>
+            <p class="fonte">Itens do cardápio da Péçaí no iFood. Tamanho, sabor e valor eles confirmam na conversa.</p>
           </div>
         </div>
 
@@ -376,6 +381,9 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
             </div>
             <label class="campo" id="campo-end">Endereço da entrega
               <input id="endereco" name="endereco" autocomplete="street-address" placeholder="Rua, número e bairro">
+            </label>
+            <label class="campo">Observação (opcional)
+              <input id="obs" name="obs" placeholder="Tamanho, adicionais, sabor do sorvete...">
             </label>
             <div>
               <p class="passo">3 de 3: seu nome</p>
@@ -461,7 +469,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
       <details><summary>Vocês entregam?</summary><p>Entregam. Também dá pra pedir e passar na loja pra retirar. No pedido você escolhe.</p></details>
       <details><summary>Onde ficam as lojas?</summary><p>São duas em Guarulhos: Av. Jurema, 436, no Parque Jurema, e Rua Campo Maior, 357, no Parque das Nações. <a href="#onde">Ver no mapa</a>.</p></details>
       <details><summary>Qual é o horário?</summary><p>O horário do dia sai no Instagram <a href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">@curtapecai</a>. Confira antes de sair de casa.</p></details>
-      <details><summary>Tem cupuaçu?</summary><p>Tem. Açaí, cupuaçu, sorvete, tapioca e lanche.</p></details>
+      <details><summary>O que tem no cardápio?</summary><p>Açaí (no copo, trufado, marmita de 700 ml e caixa de 10 litros), cupuaçu, sorvete, barca, milk shake, suco de açaí, tapioca, lanche, salgado, caldo, churros e sobremesa. <a href="#colha">Monte o pedido</a>.</p></details>
       <details><summary>Quanto custa?</summary><p>Pelo Google, o gasto fica entre R$ 20 e 100 por pessoa. Os valores de cada tamanho a Péçaí passa na hora do pedido.</p></details>
       <details><summary>Como faço o pedido?</summary><p>Monte em <a href="#colha">Colha seu pedido</a>: a mensagem sai pronta e é só enviar.</p></details>
     </div>
@@ -628,54 +636,109 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
       it.classList.toggle('pego', h + folga > y);
     });
   }
-  var pedido = false;
-  function pede(){ if (!pedido){ pedido = true; requestAnimationFrame(function(){ pedido = false; calcula(); }); } }
+  var quadroPedido = false;
+  function pede(){ if (!quadroPedido){ quadroPedido = true; requestAnimationFrame(function(){ quadroPedido = false; calcula(); }); } }
   window.addEventListener('scroll', pede, {passive:true});
   var largura = window.innerWidth;
   window.addEventListener('resize', function(){ if (window.innerWidth !== largura){ largura = window.innerWidth; ultimoP = -1; pede(); } });
   setInterval(pede, 500);
   calcula();
 
-  /* WOW 3: colha seu pedido */
-  var escolhidos = [];
+  /* WOW 3: colha seu pedido (cardápio real do iFood da Péçaí, sem preço) */
+  var CARDAPIO = [
+    { cat: 'Açaí', itens: ['Açaí no copo', 'Açaí Supremo Cherry', 'Açaí Truffaninho', 'Marmita de Açaí 700 ml', 'Caixa de açaí 10 litros'] },
+    { cat: 'Cupuaçu', itens: ['Cupuaçu no copo'] },
+    { cat: 'Sorvetes', itens: ['Sorvete Supremo Leitinho', 'Sunday', 'Outro sorvete'] },
+    { cat: 'Barca', itens: ['Barca 40 cm'] },
+    { cat: 'Milk shake', itens: ['Milk shake'] },
+    { cat: 'Sucos', itens: ['Suco de Açaí 500 ml'] },
+    { cat: 'Tapioca', itens: ['Tapioca'] },
+    { cat: 'Lanches', itens: ['Lanche'] },
+    { cat: 'Salgados', itens: ['Salgado'] },
+    { cat: 'Caldos', itens: ['Caldo'] },
+    { cat: 'Churros', itens: ['Churros'] },
+    { cat: 'Sobremesas', itens: ['Sobremesa'] }
+  ];
+  var pedido = {};              /* item -> quantidade */
+  var ordem = [];               /* ordem em que os itens entraram */
+  var abaAtual = 'Açaí';
   var modo = 'entrega';
   var loja = 'Parque Jurema';
-  var bagas = document.getElementById('bagas');
+  var abas = document.getElementById('abas');
+  var lista = document.getElementById('lista');
   var dentro = document.getElementById('dentro');
   var vazio = document.getElementById('vazio');
   var paneiro = document.getElementById('paneiro');
   var previa = document.getElementById('previa');
   var endereco = document.getElementById('endereco');
   var nome = document.getElementById('nome');
+  var obs = document.getElementById('obs');
   var campoEnd = document.getElementById('campo-end');
   var form = document.getElementById('form');
   var obrigado = document.getElementById('obrigado');
 
-  function limpa(s){ return String(s).replace(/\s+/g, ' ').trim().slice(0, 120); }
+  function limpa(s){ return String(s).replace(/\s+/g, ' ').trim().slice(0, 160); }
+  function catDe(item){ for (var i = 0; i < CARDAPIO.length; i++) if (CARDAPIO[i].itens.indexOf(item) > -1) return CARDAPIO[i]; }
   function mensagem(){
     var m = 'Oi, Péçaí! Vim pelo site.\n';
-    m += escolhidos.length ? 'Quero: ' + escolhidos.join(', ') + '.\n' : 'Quero ver o cardápio de hoje.\n';
+    if (ordem.length){ m += 'Quero:\n'; ordem.forEach(function(it){ m += '- ' + pedido[it] + 'x ' + it + '\n'; }); }
+    else m += 'Quero ver o cardápio de hoje.\n';
+    if (limpa(obs.value)) m += 'Obs.: ' + limpa(obs.value) + '\n';
     if (modo === 'entrega') m += 'É pra entrega' + (limpa(endereco.value) ? ' em: ' + limpa(endereco.value) : '') + '.\n';
     else m += 'Vou retirar na loja do ' + loja + '.\n';
     if (limpa(nome.value)) m += 'Meu nome é ' + limpa(nome.value) + '.\n';
     m += 'Me passa os tamanhos e os valores?';
     return m;
   }
-  function atualiza(){
+  function desenhaAbas(){
+    abas.textContent = '';
+    CARDAPIO.forEach(function(c){
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = c.cat;
+      b.setAttribute('aria-pressed', c.cat === abaAtual ? 'true' : 'false');
+      var n = c.itens.reduce(function(t, it){ return t + (pedido[it] || 0); }, 0);
+      if (n){ var s = document.createElement('span'); s.className = 'n'; s.textContent = n; b.appendChild(s); b.setAttribute('aria-label', c.cat + ', ' + n + ' no pedido'); }
+      b.addEventListener('click', function(){ abaAtual = c.cat; desenhaAbas(); desenhaLista(); });
+      abas.appendChild(b);
+    });
+  }
+  function desenhaLista(){
+    lista.textContent = '';
+    var c = CARDAPIO.filter(function(x){ return x.cat === abaAtual; })[0];
+    c.itens.forEach(function(it){
+      var q = pedido[it] || 0;
+      var l = document.createElement('div'); l.className = 'linha';
+      var nm = document.createElement('span'); nm.className = 'nome'; nm.textContent = it;
+      if (c.itens.length === 1 || /^Outro/.test(it)){ var nt = document.createElement('span'); nt.className = 'nota'; nt.textContent = 'Sabor e tamanho você combina na conversa'; nm.appendChild(nt); }
+      var qd = document.createElement('div'); qd.className = 'qtd';
+      var me = document.createElement('button'); me.type = 'button'; me.className = 'menos'; me.textContent = '−'; me.disabled = !q; me.setAttribute('aria-label', 'Tirar um ' + it);
+      var o = document.createElement('output'); o.textContent = q; o.setAttribute('aria-label', q + ' ' + it);
+      var ma = document.createElement('button'); ma.type = 'button'; ma.className = 'mais'; ma.textContent = '+'; ma.setAttribute('aria-label', 'Pôr um ' + it + ' no paneiro');
+      me.addEventListener('click', function(){ muda(it, -1); });
+      ma.addEventListener('click', function(){ voa(ma); muda(it, 1, true); });
+      qd.appendChild(me); qd.appendChild(o); qd.appendChild(ma);
+      l.appendChild(nm); l.appendChild(qd); lista.appendChild(l);
+    });
+  }
+  function desenhaPaneiro(){
     dentro.textContent = '';
-    escolhidos.forEach(function(it){
+    ordem.forEach(function(it){
       var b = document.createElement('button');
       b.type = 'button';
-      b.textContent = it + ' ×';
-      b.setAttribute('aria-label', 'Tirar ' + it + ' do paneiro');
-      b.addEventListener('click', function(){ alterna(it); });
+      b.textContent = pedido[it] + '× ' + it;
+      b.setAttribute('aria-label', 'Tirar um ' + it + ' do paneiro');
+      b.addEventListener('click', function(){ muda(it, -1); });
       dentro.appendChild(b);
     });
-    vazio.style.display = escolhidos.length ? 'none' : '';
-    bagas.querySelectorAll('button').forEach(function(b){
-      b.setAttribute('aria-pressed', escolhidos.indexOf(b.dataset.item) > -1 ? 'true' : 'false');
-    });
-    previa.textContent = mensagem();
+    vazio.style.display = ordem.length ? 'none' : '';
+  }
+  function atualiza(){ desenhaAbas(); desenhaLista(); desenhaPaneiro(); previa.textContent = mensagem(); }
+  function muda(it, d, atrasa){
+    var q = Math.max(0, Math.min(20, (pedido[it] || 0) + d));
+    if (q){ if (!pedido[it]) ordem.push(it); pedido[it] = q; }
+    else { delete pedido[it]; ordem = ordem.filter(function(x){ return x !== it; }); }
+    desenhaAbas(); desenhaLista(); previa.textContent = mensagem();
+    if (atrasa && !reduz) setTimeout(desenhaPaneiro, 380); else desenhaPaneiro();
   }
   function voa(botao){
     if (reduz) return;
@@ -690,27 +753,16 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
     function passo(t){
       if (!t0) t0 = t;
       var k = Math.min(1, (t - t0) / 420);
-      var e = k * k;
-      d.style.transform = 'translate(' + (x0 + (x1 - x0) * k) + 'px,' + (y0 + (y1 - y0) * e) + 'px) scale(' + (1 - k * .4) + ')';
+      d.style.transform = 'translate(' + (x0 + (x1 - x0) * k) + 'px,' + (y0 + (y1 - y0) * k * k) + 'px) scale(' + (1 - k * .4) + ')';
       if (k < 1) requestAnimationFrame(passo); else d.remove();
     }
     requestAnimationFrame(passo);
     setTimeout(function(){ if (d.parentNode) d.remove(); }, 1000);
   }
-  function alterna(item, botao){
-    var i = escolhidos.indexOf(item);
-    if (i > -1) { escolhidos.splice(i, 1); atualiza(); return; }
-    escolhidos.push(item);
-    if (botao) { voa(botao); setTimeout(atualiza, reduz ? 0 : 380); }
-    else atualiza();
-  }
-  bagas.addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
-    alterna(b.dataset.item, b);
-  });
   document.querySelectorAll('.js-quero').forEach(function(a){
-    a.addEventListener('click', function(){ if (escolhidos.indexOf(a.dataset.item) < 0) { escolhidos.push(a.dataset.item); atualiza(); } });
+    a.addEventListener('click', function(){ abaAtual = a.dataset.cat; desenhaAbas(); desenhaLista(); });
   });
+  obs.addEventListener('input', function(){ previa.textContent = mensagem(); });
   document.querySelectorAll('.troca button[data-modo]').forEach(function(b){
     b.addEventListener('click', function(){
       modo = b.dataset.modo;
@@ -779,7 +831,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
     obrigado.focus();
   });
   document.getElementById('denovo').addEventListener('click', function(){
-    escolhidos = []; nome.value = ''; endereco.value = '';
+    pedido = {}; ordem = []; nome.value = ''; endereco.value = ''; obs.value = '';
     obrigado.classList.remove('on'); form.style.display = '';
     atualiza();
   });
