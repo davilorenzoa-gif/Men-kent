@@ -29,3 +29,16 @@ Loja de açaí **real**: Av. Jurema, 436, Parque Jurema, Guarulhos-SP, 07244-000
 ## QA (10/11/2026, Playwright)
 - 390/768/1024/1440: sem rolagem lateral, sem erro no console, nenhum link vazio, calda pintando os itens, pedido montando a mensagem certa (entrega e retirada) e tela de "obrigado".
 - Não verificado aqui: mapa do Google e fontes externas (rede bloqueada no ambiente), clique real no Instagram/WhatsApp, celular de verdade.
+
+## Camada de movimento (10/11/2026, pedido do Davi: nível Awwwards)
+Linguagem única "viscosa como açaí": curva `--polpa-out` (cubic-bezier(.22,1,.36,1)), entra devagar e assenta macio. Os 3 WOWs continuam os mesmos; isto é o acabamento em volta.
+- **Carregamento (só 1ª visita na sessão):** a logo enche de açaí de baixo pra cima e a cortina sobe com borda de gotas.
+- **Entrada do herói:** letras do "Péçaí" sobem de dentro da máscara, "Do pé direto pro copo" sai do desfoque palavra por palavra, os pontinhos da logo só começam quando a cortina sobe. Fundo com 3 luzes da marca se mexendo quase parado.
+- **Rolagem:** barra de progresso verde no topo, o topo some ao descer e volta ao subir, o herói fica preso e a folha do cardápio sobe por cima dele (transição de seção), títulos de seção sobem palavra por palavra (o único reveal, de propósito), a foto do cardápio abre como gota e respira com a rolagem (computador), o 4,5 conta e as estrelas acendem.
+- **Microinterações:** gota no clique de todo botão (celular também), brilho que segue o mouse nos botões, botões de pedido magnéticos (de leve), cartões de loja com inclinação 3D e borda que acende onde o mouse está, paneiro balança e o celular vibra quando o item cai, "Pedido colhido" abre em círculo a partir do botão, pin do mapa quica ao trocar de loja, FAQ abre uma por vez e a resposta escorre.
+- **Entre páginas:** View Transitions (`@view-transition`) em index, privacidade e 404: sem tela branca.
+- **Rolagem macia (Lenis)** só no computador.
+- Bibliotecas: GSAP 3.13 + ScrollTrigger + Lenis 1.1.13 (CDN com SRI). Se não carregarem, o site mostra tudo parado e funciona igual.
+- `prefers-reduced-motion`: sem cortina, sem rolagem presa, tudo no estado final.
+- **De propósito, ficou de fora:** cursor customizado (atrapalha num cardápio), glassmorphism (a regra é só sobre imagem), animar todo parágrafo (o filtro anti-"cara de IA" proíbe tudo entrando de baixo pra cima).
+- `preview-pecai.html` agora leva as bibliotecas embutidas (abre no visualizador do app).

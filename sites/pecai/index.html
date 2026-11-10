@@ -13,6 +13,16 @@
 <meta property="og:locale" content="pt_BR">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>
+/* Camada de movimento: esconde o estado inicial do herói só enquanto o JS de animação carrega.
+   Se a biblioteca não carregar em 3 s, mostra tudo no estado final (nunca fica tela vazia). */
+(function(h){
+  var e = /[?&]embed\b/.test(location.search), r = matchMedia('(prefers-reduced-motion: reduce)').matches, primeira = true;
+  try { primeira = !sessionStorage.getItem('pecai-viu'); } catch(x){}
+  if (!e && !r) { h.classList.add('anima-espera'); window.__pecaiEspera = true; if (primeira && window.parent === window) h.classList.add('carregando'); }
+  setTimeout(function(){ if (!window.gsap){ h.classList.remove('anima-espera','carregando'); window.__pecaiEspera = false; dispatchEvent(new Event('pecai:pronto')); } }, 3000);
+})(document.documentElement);
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
@@ -246,6 +256,96 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
 .toast{position:fixed;left:50%;bottom:86px;transform:translate(-50%,20px);opacity:0;background:var(--copo);color:var(--tinta);padding:12px 18px;border-radius:14px;font-weight:600;z-index:70;transition:.3s;max-width:calc(100% - 32px);text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
+
+/* =====================================================================
+   CAMADA DE MOVIMENTO (10/11/2026)
+   Linguagem: "viscoso como açaí". Tudo entra devagar e assenta macio,
+   máscaras escorrem de cima pra baixo, nada dá tranco.
+   Curva única: --polpa-out. Só transform e opacity (clip-path só em 2 momentos).
+   ===================================================================== */
+:root{--polpa-out:cubic-bezier(.22,1,.36,1);--polpa-in-out:cubic-bezier(.65,0,.35,1)}
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.45s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+
+/* carregamento: a logo enche de açaí e a cortina sobe escorrendo */
+.carrega{position:fixed;inset:0;z-index:200;background:var(--pe-fundo);display:none;place-items:center;will-change:transform}
+.carregando .carrega{display:grid}
+.carrega .logo-carga{position:relative;width:132px;height:132px}
+.carrega .logo-carga img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%}
+.carrega .logo-carga .base{filter:grayscale(1) brightness(.45)}
+.carrega .logo-carga .cheia{clip-path:inset(100% 0 0 0)}
+.carrega .borda{position:absolute;left:0;right:0;top:100%;width:100%;height:70px;display:block}
+.carregando body{overflow:hidden}
+
+/* estado inicial do herói enquanto espera o JS (some se o JS falhar) */
+.anima-espera .abre .texto-abre > *,.anima-espera .abre .cena{opacity:0}
+
+/* máscaras de texto */
+.mascara{display:inline-block;overflow:hidden;vertical-align:top;padding:.12em 0 .22em;margin:-.12em 0 -.22em}
+.mascara > span{display:inline-block;will-change:transform}
+.palavra-blur{display:inline-block;will-change:transform,opacity,filter}
+
+/* herói: fundo vivo quase imperceptível (só transform, blobs já desfocados no gradiente) */
+.abre{overflow:hidden;isolation:isolate}
+.abre .luz{position:absolute;border-radius:50%;pointer-events:none;z-index:-1;will-change:transform}
+.abre .luz.a{width:70vmax;height:70vmax;left:-20vmax;top:-30vmax;background:radial-gradient(circle,rgba(168,75,196,.35),transparent 60%);animation:deriva 22s var(--polpa-in-out) infinite alternate}
+.abre .luz.b{width:60vmax;height:60vmax;right:-25vmax;bottom:-30vmax;background:radial-gradient(circle,rgba(224,112,211,.22),transparent 60%);animation:deriva 26s var(--polpa-in-out) infinite alternate-reverse}
+.abre .luz.c{width:40vmax;height:40vmax;left:35%;top:40%;background:radial-gradient(circle,rgba(61,170,72,.10),transparent 60%);animation:deriva 30s var(--polpa-in-out) infinite alternate}
+@keyframes deriva{to{transform:translate3d(6vmax,4vmax,0) scale(1.08)}}
+.palco-abre{position:relative}
+.palco-abre .abre{position:sticky;top:var(--abre-top,0px);z-index:0}
+
+/* barra de progresso da rolagem */
+.progresso{position:fixed;left:0;right:0;top:0;height:3px;z-index:45;pointer-events:none}
+.progresso i{position:absolute;inset:0;background:linear-gradient(90deg,var(--palmeira),#9cc94a);transform-origin:left;transform:scaleX(0)}
+
+/* topo some ao descer e volta ao subir */
+.topo{transition:background .3s,transform .5s var(--polpa-out)}
+.topo.some{transform:translateY(-100%)}
+
+/* botões: brilho que segue o dedo/mouse + gota no clique */
+.btn{position:relative;overflow:hidden;isolation:isolate;transition:transform .2s var(--polpa-out),background .2s,box-shadow .2s}
+.btn::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.45),transparent 60%);opacity:0;transition:opacity .3s}
+.btn:hover::after{opacity:1}
+.btn-linha::after{background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.18),transparent 60%)}
+.btn .gota-clique{position:absolute;left:0;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:rgba(255,255,255,.55);pointer-events:none;z-index:-1;animation:gota .6s var(--polpa-out) forwards}
+@keyframes gota{from{transform:translate(var(--gx),var(--gy)) scale(0);opacity:1}to{transform:translate(var(--gx),var(--gy)) scale(22);opacity:0}}
+
+/* cardápio: a foto lateral se revela e respira com a rolagem */
+.cardapio .lado figure{will-change:clip-path}
+.cardapio .lado figure img{will-change:transform;transform-origin:50% 40%}
+
+/* pedido */
+.paneiro.balanca{animation:balanca .55s var(--polpa-out)}
+@keyframes balanca{30%{transform:rotate(-1.6deg) translateY(3px)}60%{transform:rotate(1.1deg)}}
+.linha{transition:transform .2s var(--polpa-out),background .2s}
+.linha:active{transform:scale(.985)}
+.abas button{transition:background .25s,color .25s,transform .2s var(--polpa-out)}
+.abas button:active{transform:scale(.95)}
+.obrigado{will-change:clip-path}
+
+/* cartões de loja: borda que acende onde o mouse está + inclinação 3D */
+.lojas{perspective:900px}
+.loja{position:relative;transform-style:preserve-3d;will-change:transform}
+.loja::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;pointer-events:none;
+  background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(156,201,74,.95),transparent 55%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s}
+.loja:hover::before{opacity:1}
+.loja:active{transform:scale(.985)}
+
+/* FAQ: a resposta escorre ao abrir */
+.faq details[open] p{animation:escorre .5s var(--polpa-out)}
+@keyframes escorre{from{opacity:0;transform:translateY(-8px)}}
+
+/* notas: estrelas acendem uma por uma */
+.notas .estrelas span{display:inline-block}
+
+@media (prefers-reduced-motion:reduce){
+  .abre .luz{animation:none}
+  .carrega{display:none!important}
+  .palco-abre .abre{position:relative}
+}
+
 /* prévia estática e movimento reduzido */
 .embed .cena .foto{opacity:1;transform:rotate(-6deg);transition:none}
 .embed .entra{opacity:1;transform:none}
@@ -260,6 +360,11 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
 </style>
 </head>
 <body>
+<div class="carrega" id="carrega" aria-hidden="true">
+  <div class="logo-carga"><img class="base" src="img/logo-pecai.webp" width="132" height="132" alt=""><img class="cheia" id="logoCheia" src="img/logo-pecai.webp" width="132" height="132" alt=""></div>
+  <svg class="borda" viewBox="0 0 1200 70" preserveAspectRatio="none"><path fill="#2a0b33" d="M0 0H1200V18C1160 18 1150 52 1128 52S1100 18 1060 18 980 30 950 30 930 64 905 64 880 22 840 22H700C660 22 655 44 630 44S600 22 560 22 470 34 440 34 425 58 400 58 380 20 340 20H260C230 20 222 48 200 48S172 20 140 20 60 30 30 30 10 18 0 18Z"/></svg>
+</div>
+<div class="progresso" aria-hidden="true"><i id="progresso"></i></div>
 
 <header class="topo" id="topo">
   <div class="wrap">
@@ -276,15 +381,17 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
 </header>
 
 <main id="inicio">
+  <div class="palco-abre" id="palcoAbre">
   <!-- WOW 1: a logo se monta com pontinhos -->
   <section class="abre" aria-labelledby="titulo">
+    <span class="luz a" aria-hidden="true"></span><span class="luz b" aria-hidden="true"></span><span class="luz c" aria-hidden="true"></span>
     <div class="wrap">
       <div class="texto-abre">
-        <span class="selo entra"><span class="estrela" aria-hidden="true">★</span> 4,5 no Google, 1,4 mil avaliações</span>
+        <span class="selo"><span class="estrela" aria-hidden="true">★</span> 4,5 no Google, 1,4 mil avaliações</span>
         <h1 id="titulo" class="entra d2"><span class="pe">Pé</span><span class="sufixo">çaí</span></h1>
-        <p class="frase entra d2">Do pé direto pro copo.</p>
-        <p class="sub entra d3">Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema e no Parque das Nações, em Guarulhos. Peça pra entregar ou passe pra retirar.</p>
-        <div class="acoes entra d3">
+        <p class="frase">Do pé direto pro copo.</p>
+        <p class="sub">Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema e no Parque das Nações, em Guarulhos. Peça pra entregar ou passe pra retirar.</p>
+        <div class="acoes">
           <a class="btn btn-pedir" href="#colha">Fazer pedido</a>
           <a class="btn btn-linha" href="#cardapio">Ver o que tem</a>
         </div>
@@ -343,6 +450,8 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
       </div>
     </div>
   </section>
+
+  </div>
 
   <!-- WOW 3: colha seu pedido no cacho e jogue no paneiro -->
   <section class="colha" id="colha" aria-labelledby="t-colha">
@@ -554,7 +663,8 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
       P.forEach(function(p){ (grupos[p.g] = grupos[p.g] || { c: p.c, l: [] }).l.push(p); });
       grupos = Object.keys(grupos).map(function(k){ return grupos[k]; });
       if (embed || reduz){ P.forEach(function(p){ p.x = p.tx; p.y = p.ty; p.vx = p.vy = 0; }); desenha(); cena.classList.add('pronta'); return; }
-      t0 = performance.now(); liga();
+      if (window.__pecaiEspera) addEventListener('pecai:pronto', function(){ t0 = performance.now(); liga(); }, { once: true });
+      else { t0 = performance.now(); liga(); }
     }
     function desenha(){
       ctx.clearRect(0, 0, W, W);
@@ -738,7 +848,8 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
     if (q){ if (!pedido[it]) ordem.push(it); pedido[it] = q; }
     else { delete pedido[it]; ordem = ordem.filter(function(x){ return x !== it; }); }
     desenhaAbas(); desenhaLista(); previa.textContent = mensagem();
-    if (atrasa && !reduz) setTimeout(desenhaPaneiro, 380); else desenhaPaneiro();
+    function cai(){ desenhaPaneiro(); if (d > 0) dispatchEvent(new CustomEvent('pecai:caiu')); }
+    if (atrasa && !reduz) setTimeout(cai, 380); else cai();
   }
   function voa(botao){
     if (reduz) return;
@@ -836,6 +947,239 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
     atualiza();
   });
   atualiza();
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
+<script>
+/* =====================================================================
+   CAMADA DE MOVIMENTO
+   Ordem: cortina (só 1ª visita) > entrada do herói > rolagem > microinterações.
+   Tudo aqui é extra: se o GSAP não carregar, o site funciona igual, parado.
+   ===================================================================== */
+(function(){
+  'use strict';
+  var root = document.documentElement;
+  var embed = /[?&]embed\b/.test(location.search);
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fino = matchMedia('(pointer: fine)').matches;
+  addEventListener('pecai:pronto', function(){ window.__pecaiEspera = false; });
+  function pronto(){ root.classList.remove('anima-espera', 'carregando'); dispatchEvent(new Event('pecai:pronto')); }
+  if (!window.gsap || !window.ScrollTrigger) { pronto(); return; }
+  gsap.registerPlugin(ScrollTrigger);
+  var POLPA = 'expo.out';   // a mesma família da --polpa-out do CSS
+  try { sessionStorage.setItem('pecai-viu', '1'); } catch(e){}
+
+  /* ---------- divisores de texto (sem plugin: menos peso) ---------- */
+  function divideLetras(el){
+    var letras = [];
+    Array.prototype.slice.call(el.childNodes).forEach(function(no){
+      if (no.nodeType === 3) {
+        var frag = document.createDocumentFragment();
+        no.textContent.split('').forEach(function(c){
+          var m = document.createElement('span'); m.className = 'mascara';
+          var l = document.createElement('span'); l.textContent = c; m.appendChild(l); frag.appendChild(m); letras.push(l);
+        });
+        no.parentNode.replaceChild(frag, no);
+      } else if (no.nodeType === 1) { letras = letras.concat(divideLetras(no)); }
+    });
+    return letras;
+  }
+  function dividePalavras(el, comMascara){
+    var txt = el.textContent.trim().split(/\s+/); el.textContent = '';
+    el.setAttribute('aria-label', txt.join(' '));
+    return txt.map(function(w, i){
+      var fora = document.createElement('span'); fora.setAttribute('aria-hidden', 'true');
+      var dentro = document.createElement('span'); dentro.textContent = w;
+      if (comMascara) { fora.className = 'mascara'; fora.appendChild(dentro); }
+      else { fora.className = 'palavra-blur'; fora.textContent = w; dentro = fora; }
+      el.appendChild(fora); if (i < txt.length - 1) el.appendChild(document.createTextNode(' '));
+      return dentro;
+    });
+  }
+
+  /* ---------- rolagem macia só no computador ---------- */
+  var lenis = null;
+  if (fino && !reduz && !embed && innerWidth > 900 && window.Lenis) {
+    lenis = new Lenis({ lerp: 0.09 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+    root.style.scrollBehavior = 'auto';
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var alvo = document.querySelector(a.getAttribute('href'));
+        if (alvo) { e.preventDefault(); lenis.scrollTo(alvo, { offset: -10, duration: 1.4 }); }
+      });
+    });
+  }
+
+  /* ---------- 1. ENTRADA: cortina + herói ---------- */
+  var h1 = document.getElementById('titulo');
+  var letras = divideLetras(h1);
+  h1.setAttribute('aria-label', 'Péçaí');
+  letras.forEach(function(l){ l.parentNode.setAttribute('aria-hidden', 'true'); });
+  var frase = document.querySelector('.texto-abre .frase');
+  var palavras = dividePalavras(frase, false);
+
+  root.classList.remove('anima-espera');   // a timeline abaixo assume o estado inicial (from() renderiza na hora)
+  var heroi = gsap.timeline({ paused: true, defaults: { ease: POLPA } });
+  heroi
+    .addLabel('ini')
+    .from('.abre .luz', { opacity: 0, duration: 2 }, 'ini')
+    .from('.texto-abre .selo', { y: 18, opacity: 0, duration: 1 }, 'ini+=.05')
+    .from(letras, { yPercent: 110, rotate: 8, duration: 1.3, stagger: 0.045 }, 'ini+=.1')
+    .from(palavras, { opacity: 0, y: 10, filter: 'blur(10px)', duration: 1, stagger: 0.07 }, 'ini+=.45')
+    .from('.texto-abre .sub', { opacity: 0, y: 16, duration: 1 }, 'ini+=.7')
+    .from('.texto-abre .acoes > *', { opacity: 0, y: 16, duration: 1, stagger: 0.08 }, 'ini+=.8')
+    .from('.abre .cena', { opacity: 0, scale: 0.92, duration: 1.4 }, 'ini+=.2')
+    .add(function(){ dispatchEvent(new Event('pecai:pronto')); }, 'ini+=.25');
+
+  function soltaHeroi(){
+    if (embed || reduz) { heroi.progress(1); dispatchEvent(new Event('pecai:pronto')); }
+    else heroi.play();
+  }
+
+  if (root.classList.contains('carregando') && !embed && !reduz) {
+    var carga = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
+    carga
+      .to('#logoCheia', { clipPath: 'inset(0% 0 0 0)', duration: 0.9 })         // a logo enche de açaí de baixo pra cima
+      .to('#carrega .logo-carga', { scale: 0.9, opacity: 0, duration: 0.45, ease: 'power2.in' }, '+=.1')
+      .to('#carrega', { yPercent: -112, duration: 1, ease: 'expo.inOut' }, '-=.2')   // a cortina sobe e as gotas da borda passam por último
+      .add(function(){ root.classList.remove('carregando'); gsap.set('#carrega', { display: 'none' }); }, '-=.05')
+      .add(soltaHeroi, '-=.55');
+  } else {
+    root.classList.remove('carregando');
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(soltaHeroi);
+  }
+
+  if (reduz || embed) { ScrollTrigger.refresh(); return; }
+
+  /* ---------- 2. ROLAGEM ---------- */
+  // barra de progresso
+  var barra = document.getElementById('progresso');
+  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: function(st){ barra.style.transform = 'scaleX(' + st.progress.toFixed(4) + ')'; } });
+
+  // topo some ao descer e volta ao subir
+  var topo = document.getElementById('topo');
+  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: function(st){
+    topo.classList.toggle('some', st.direction === 1 && st.scroll() > innerHeight * 0.8);
+  }});
+
+  // herói fica preso e a folha do cardápio sobe por cima dele (transição de seção)
+  var palco = document.getElementById('palcoAbre'), abre = document.querySelector('.abre');
+  function topoAbre(){ palco.style.setProperty('--abre-top', Math.min(0, innerHeight - abre.offsetHeight) + 'px'); }
+  topoAbre(); addEventListener('resize', topoAbre);
+  gsap.to('.abre .wrap', {
+    yPercent: -10, scale: 0.94, opacity: 0.15, ease: 'none',
+    scrollTrigger: { trigger: '#cardapio', start: 'top bottom', end: 'top 20%', scrub: true }
+  });
+
+  // títulos de seção: palavras sobem de dentro da máscara (o único "reveal" do site, de propósito)
+  gsap.utils.toArray('.cardapio h2, .colha h2, .notas h2, .onde h2, .faq h2').forEach(function(h){
+    var ws = dividePalavras(h, true);
+    gsap.from(ws, { yPercent: 110, duration: 1.1, ease: POLPA, stagger: 0.06, scrollTrigger: { trigger: h, start: 'top 88%', once: true } });
+  });
+
+  // cardápio: a foto lateral abre como uma gota e respira com a rolagem (só no computador, onde ela existe)
+  var mm = gsap.matchMedia();
+  mm.add('(min-width: 900px)', function(){
+    gsap.fromTo('.cardapio .lado figure', { clipPath: 'inset(18% 14% 30% 14% round 120px)' },
+      { clipPath: 'inset(0% 0% 0% 0% round 22px)', ease: 'none', scrollTrigger: { trigger: '.cardapio .grade', start: 'top 85%', end: 'top 30%', scrub: true } });
+    gsap.fromTo('.cardapio .lado figure img', { scale: 1.2, yPercent: -4 },
+      { scale: 1, yPercent: 4, ease: 'none', scrollTrigger: { trigger: '.cardapio .grade', start: 'top bottom', end: 'bottom top', scrub: true } });
+  });
+
+  // notas: o 4,5 conta de verdade e as estrelas acendem uma por uma
+  var nota = document.querySelector('.nota-grande');
+  var estrelas = document.querySelector('.notas .estrelas');
+  var cheias = estrelas.querySelector('span');
+  var txtCheias = cheias.textContent; cheias.textContent = '';
+  txtCheias.split('').forEach(function(c){ var e = document.createElement('span'); e.textContent = c; cheias.appendChild(e); });
+  var cont = { v: 0 };
+  gsap.timeline({ scrollTrigger: { trigger: '.notas', start: 'top 75%', once: true } })
+    .to(cont, { v: 4.5, duration: 1.6, ease: 'power3.out', onUpdate: function(){ nota.textContent = cont.v.toFixed(1).replace('.', ','); } })
+    .from(estrelas.querySelectorAll('span span, .meia'), { scale: 0, rotate: -40, duration: 0.7, ease: 'back.out(2.2)', stagger: 0.09 }, 0.3);
+
+  /* ---------- 3. MICROINTERAÇÕES ---------- */
+  // gota no clique (celular e computador): a resposta é imediata, a animação vem junto
+  document.addEventListener('pointerdown', function(e){
+    var b = e.target.closest('.btn'); if (!b) return;
+    var r = b.getBoundingClientRect();
+    var g = document.createElement('span'); g.className = 'gota-clique';
+    g.style.setProperty('--gx', (e.clientX - r.left) + 'px'); g.style.setProperty('--gy', (e.clientY - r.top) + 'px');
+    b.appendChild(g); setTimeout(function(){ g.remove(); }, 650);
+  });
+
+  // pedido: o paneiro balança quando o item cai, e o celular dá um toque leve
+  var paneiro = document.getElementById('paneiro');
+  addEventListener('pecai:caiu', function(){
+    paneiro.classList.remove('balanca'); void paneiro.offsetWidth; paneiro.classList.add('balanca');
+    if (navigator.vibrate) { try { navigator.vibrate(8); } catch(e){} }
+  });
+
+  // obrigado: abre como um círculo que nasce do botão de enviar
+  var form = document.getElementById('form'), obrigado = document.getElementById('obrigado');
+  var ultimoToque = { x: 0, y: 0 };
+  form.addEventListener('pointerdown', function(e){ ultimoToque = { x: e.clientX, y: e.clientY }; }, true);
+  form.addEventListener('submit', function(){
+    requestAnimationFrame(function(){
+      var r = obrigado.getBoundingClientRect();
+      var x = Math.max(0, Math.min(r.width, ultimoToque.x - r.left)), y = Math.max(0, Math.min(r.height, ultimoToque.y - r.top));
+      if (!ultimoToque.x) { x = r.width / 2; y = r.height; }
+      gsap.fromTo(obrigado, { clipPath: 'circle(0px at ' + x + 'px ' + y + 'px)' }, { clipPath: 'circle(150% at ' + x + 'px ' + y + 'px)', duration: 1.1, ease: 'expo.inOut', clearProps: 'clipPath' });
+      gsap.from(obrigado.children, { y: 24, opacity: 0, duration: 0.9, ease: POLPA, stagger: 0.08, delay: 0.35 });
+    });
+  });
+
+  // mapa: o pin quica quando troca de loja
+  document.querySelectorAll('.loja .ver').forEach(function(b){
+    b.addEventListener('click', function(){
+      gsap.fromTo('.mapa-cartao .pin', { y: -26, scaleY: 1.1 }, { y: 0, scaleY: 1, duration: 0.9, ease: 'bounce.out', transformOrigin: '50% 100%' });
+      gsap.fromTo(['#mapa-loja', '#mapa-end'], { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: POLPA, stagger: 0.06 });
+    });
+  });
+
+  // FAQ: o + gira e a resposta escorre (CSS); aqui só fecha as outras pra lista não virar um muro
+  document.querySelectorAll('.faq details').forEach(function(d){
+    d.addEventListener('toggle', function(){ if (d.open) document.querySelectorAll('.faq details[open]').forEach(function(o){ if (o !== d) o.open = false; }); });
+  });
+
+  if (!fino) { ScrollTrigger.refresh(); return; }
+
+  /* ---------- 4. SÓ COM MOUSE ---------- */
+  // brilho que segue o mouse nos botões
+  document.addEventListener('pointermove', function(e){
+    var b = e.target.closest && e.target.closest('.btn, .loja'); if (!b) return;
+    var r = b.getBoundingClientRect();
+    b.style.setProperty('--mx', (e.clientX - r.left) + 'px'); b.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }, { passive: true });
+
+  // botões de pedido: magnéticos, bem de leve (quickTo = uma tween reaproveitada)
+  document.querySelectorAll('.btn-pedir').forEach(function(b){
+    var qx = gsap.quickTo(b, 'x', { duration: 0.6, ease: 'power3.out' }), qy = gsap.quickTo(b, 'y', { duration: 0.6, ease: 'power3.out' });
+    b.addEventListener('pointermove', function(e){ var r = b.getBoundingClientRect(); qx((e.clientX - r.left - r.width / 2) * 0.22); qy((e.clientY - r.top - r.height / 2) * 0.3); });
+    b.addEventListener('pointerleave', function(){ gsap.to(b, { x: 0, y: 0, duration: 0.9, ease: 'elastic.out(1, .4)' }); });
+  });
+
+  // cartões de loja: inclinação 3D com mola
+  document.querySelectorAll('.loja').forEach(function(c){
+    var rx = gsap.quickTo(c, 'rotationX', { duration: 0.7, ease: 'power3.out' }), ry = gsap.quickTo(c, 'rotationY', { duration: 0.7, ease: 'power3.out' });
+    c.addEventListener('pointermove', function(e){ var r = c.getBoundingClientRect(); ry(((e.clientX - r.left) / r.width - 0.5) * 8); rx(((e.clientY - r.top) / r.height - 0.5) * -8); });
+    c.addEventListener('pointerleave', function(){ rx(0); ry(0); });
+  });
+
+  // herói: a cena da logo ganha profundidade com o mouse (camadas em velocidades diferentes)
+  var cx = gsap.quickTo('.abre .cena', 'x', { duration: 1.2, ease: 'power3.out' }), cy = gsap.quickTo('.abre .cena', 'y', { duration: 1.2, ease: 'power3.out' });
+  var tx = gsap.quickTo('.texto-abre', 'x', { duration: 1.4, ease: 'power3.out' });
+  abre.addEventListener('pointermove', function(e){
+    var nx = e.clientX / innerWidth - 0.5, ny = e.clientY / innerHeight - 0.5;
+    cx(nx * -18); cy(ny * -14); tx(nx * 10);
+  });
+
+  addEventListener('load', function(){ ScrollTrigger.refresh(); });
 })();
 </script>
 </body>
