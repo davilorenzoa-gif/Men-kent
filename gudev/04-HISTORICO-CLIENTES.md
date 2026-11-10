@@ -126,6 +126,6 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Skyline Motors:** aluguel de JDM fictício com R34 GT-R, conceito de portfólio (`sites/skyline-motors/`).
 - **Lustro:** estética automotiva fictícia (`sites/lustro-estetica/`, v1 em `sites/estetica-lustro/`).
 - **Faixa Vermelha:** garagem de seminovos fictícia (`sites/faixa-vermelha/`).
-- **Fornalha:** padaria fictícia (citada no padrão de site; a pasta `demos/fornalha/` não está no repositório).
+- **Fornalha:** padaria fictícia (`sites/fornalha/`, salva do artifact em 10/11).
 - **DOZE V12, Espelho, Basalto, Meridiano, APEX, Moenda, Sulco:** conceitos e demos de portfólio (`sites/` e `gudev/demos/`).
 - **Davi 26:** trabalho de escola do Davi (`sites/presidente-davi-26/`), nem é GuDev.

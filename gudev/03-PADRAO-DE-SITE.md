@@ -40,7 +40,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - "Monte o pedido da sua armação": escolhe a peça, digita as medidas, a peça se desenha (gira arrastando) e a lista vai pro WhatsApp.
   - extras: porta de enrolar de aço que sobe com a rolagem e revela a foto do caminhão; vídeo revelado por uma "serra" amarela; frase que acende palavra por palavra; minigame "Corte na medida".
 - **Prumo** (demo de depósito de construção): um prumo na abertura, um muro sendo construído e um trilho de caminhão.
-- **Fornalha** (demo de padaria, `demos/fornalha/`): pincelada que revela o pão + vapor subindo; "a noite do pão" (relógio 22h→6h, céu amanhece e a massa vira pão pela rolagem); "Monte sua cesta" com cartas pra arrastar (direita quero, esquerda passa) e comanda pro WhatsApp. Extras: painel de fornadas com letras que viram e selo giratório.
+- **Fornalha** (demo de padaria, `sites/fornalha`): pincelada que revela o pão + vapor subindo; "a noite do pão" (relógio 22h→6h, céu amanhece e a massa vira pão pela rolagem); "Monte sua cesta" com cartas pra arrastar (direita quero, esquerda passa) e comanda pro WhatsApp. Extras: painel de fornadas com letras que viram e selo giratório.
 - **Faixa Vermelha** (demo de garagem de seminovos, `sites/faixa-vermelha`):
   - portão de aço que sobe e fluorescentes que piscam até acender;
   - vitrine com placa Mercosul trocando letra por letra e odômetro de tambor;
