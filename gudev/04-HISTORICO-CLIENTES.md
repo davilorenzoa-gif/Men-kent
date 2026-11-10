@@ -83,6 +83,12 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Site (27/10/2026):** `sites/santo-mimo/`. Caixinha que se abre, zoom-out da xícara pra vitrine, "Mande um mimo".
   - Fotos de produto ainda são ilustrativas (Pexels). Pedir as fotos da casa pra trocar (lista no README do site).
 - **Andamento:** prévia pronta, ainda não enviada.
+## Sorvetes Nonna Lina, RJ (DDD 21) · lead do Davi (04/11/2026)
+- **Dados:** WhatsApp comercial verificado +55 21 98654-6556 (wa.me/nonnalina), "responde rapidamente".
+  - Gelato italiano. Terça 12h às 19h30 (os outros dias ainda não sabemos).
+  - Catálogo no WhatsApp: 12 gelatos especiais, base água (zero lactose, sem glúten, veganos), picolés, potes de 500 ml, tortas de sorvete (1 L, 1,8 L, 2,5 L) e casquinhas artesanais.
+  - Não achamos Instagram, Maps nem avaliações na internet. Falta endereço.
+- **Site:** `sites/nonna-lina/`. Plano-sequência da casquinha (estilo Meridiano), vitrine embaçada, oficina de tortas, jogo Torre da Nonna.
 
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.

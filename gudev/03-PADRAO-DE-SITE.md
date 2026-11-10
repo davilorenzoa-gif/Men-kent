@@ -65,6 +65,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - a tela abre em duas portas a partir de um meridiano dourado, a luz do sol vaza e a câmera recua de dentro do sol; depois a marca se desfaz na névoa e as nuvens se abrem na torre;
   - a câmera mergulha no mostrador e a lente troca o foco pro outro relógio;
   - a rolagem pilota a câmera de um filme só, com voo pra dentro da fachada, sol estourando e os horizontes se alinhando.
+- **Sorvetes Nonna Lina:**
+  - portas de madeira da logo se abrem e a logo voa pro topo; a casquinha se desenha com a rolagem e as bolas caem e quicam;
+  - vitrine de cubas em trilho com o vidro embaçado que limpa com o dedo;
+  - oficina de tortas (tamanho + sabor, cobertura caindo) e o jogo "Torre da Nonna" (empilhar bolas).
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
