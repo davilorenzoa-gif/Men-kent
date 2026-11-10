@@ -102,6 +102,9 @@ Pra achar uma referência: buscar o nome entre aspas no Behance ou no Dribbble.
   - Sushi Bowl: verde-limão + marquee.
 - **Doceria:** BakeJoy (fotos com borda de selo). O resto é quase tudo template rosa genérico.
 
+### Portfólio / estúdio (10/11/2026)
+- **herasymenkox.com (Yehor Herasymenko, designer de Kyiv):** uma tela só, sem rolagem. Slider WebGL de projetos, título gigante trocando letra por letra, régua e contador embaixo, interface toda em `difference`, pílulas com texto vazado. Fontes: PP Neue Montreal (bold + mono) e FH Phemister. Paleta: preto `#0b0b0b` + verde-claro `#cee49f`. Técnica estudada no `03`; demo em `demos/vitrine-conceitos/`.
+
 ## O que é template e a gente evita
 - Hero "Delicious [produto]" com a foto na direita e botão laranja. Aparece em quase todo nicho.
 - Barbearia preta e dourada com barbudo sério. É tudo igual.

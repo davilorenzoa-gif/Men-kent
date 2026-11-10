@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GuDev · Conceitos</title>
+<meta name="description" content="Demo GuDev: vitrine de projetos conceito num slider WebGL que entorta com a velocidade, com título trocando letra por letra e régua. Estudo do site do Yehor Herasymenko.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/*
+  ESTUDO: herasymenkox.com (portfólio do Yehor Herasymenko), 10/11/2026.
+  O que copiamos é a TÉCNICA, não o visual:
+  - Tudo medido em "px de design": --px = largura da tela / 1440 (375 no celular).
+    O layout escala inteiro, igual a um arquivo do Figma.
+  - Interface em mix-blend-mode: difference, então fica legível sobre papel e sobre foto.
+  - Slider num canvas WebGL: um shader só desenha todas as capas; a velocidade entorta
+    a fileira (curva) e separa o RGB. Rolar, arrastar ou setas; para sempre num slide.
+  - Título troca letra por letra: as letras saem pra cima e as novas sobem de baixo
+    (ou o contrário, se voltou). Régua e "001 / 005" mostram onde você está.
+  - Pílulas do menu com texto vazado (máscara SVG) no hover e no ativo.
+*/
+:root{
+  --design:1440;--px:calc(100vw / var(--design));
+  --papel:#E9E5DC;--tinta:#121110;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;--grot:"Schibsted Grotesk",system-ui,sans-serif;
+}
+@media (max-width:600px){:root{--design:375}}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--papel);color:var(--papel);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+p,h1,h2{margin:0;font-weight:inherit}
+:focus-visible{outline:2px solid var(--papel);outline-offset:3px}
+#gl{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#gl.arrastando{cursor:grabbing}
+.dif{position:fixed;mix-blend-mode:difference;color:var(--papel);z-index:3}
+.cap{font:800 calc(14*var(--px))/.8 var(--grot);letter-spacing:-.01em;text-transform:uppercase;white-space:nowrap}
+.mono{font:500 calc(10*var(--px))/1 var(--mono);text-transform:uppercase;white-space:nowrap}
+.tl{top:calc(16*var(--px));left:calc(16*var(--px))}
+.bl{bottom:calc(16*var(--px));left:calc(16*var(--px))}
+.br{bottom:calc(16*var(--px));right:calc(16*var(--px));text-align:right}
+.tr{top:calc(16*var(--px));right:calc(16*var(--px));text-align:right}
+
+/* menu de pílulas com texto vazado */
+.menu{top:calc(13*var(--px));left:50%;transform:translateX(-50%);display:flex;gap:calc(4*var(--px))}
+.pilula{position:relative;display:flex;align-items:center;justify-content:space-between;width:calc(120*var(--px));height:calc(16*var(--px));padding:0 calc(4.5*var(--px));border-radius:calc(2*var(--px));background:rgba(233,229,220,.14);font:500 calc(10*var(--px))/1 var(--mono);text-transform:uppercase;transition:color .2s,background-color .2s}
+.pilula sup{font-size:.6em;margin-left:.1em;vertical-align:top}
+.pilula svg{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .2s;pointer-events:none}
+.pilula svg rect.fundo{fill:var(--papel)}
+.pilula:hover,.pilula.ativa{background:transparent;color:transparent}
+.pilula:hover svg,.pilula.ativa svg{opacity:1}
+
+/* títulos letra por letra */
+.titulo{left:0;right:0;top:calc(50% - 40*var(--px));text-align:center;pointer-events:none;font:800 calc(112*var(--px))/.8 var(--grot);letter-spacing:-.045em;text-transform:uppercase;white-space:nowrap}
+.titulo .linha{display:flex;justify-content:center;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+.titulo .ch{display:block;transform:translate3d(0,110%,0);transition:transform .85s cubic-bezier(.625,.05,0,1);transition-delay:calc(var(--i)*22ms)}
+.titulo .ch.sp{width:.25em}
+.titulo.dentro .ch{transform:translate3d(0,0,0)}
+.titulo.sai-cima .ch{transform:translate3d(0,-110%,0)}
+.titulo.sai-baixo .ch{transform:translate3d(0,110%,0)}
+.titulo.sem-trans .ch{transition:none}
+.meta{left:0;right:0;top:calc(50% + 70*var(--px));text-align:center;overflow:hidden;pointer-events:none}
+.meta span{display:block;transform:translateY(200%);transition:transform .8s cubic-bezier(.625,.05,0,1) .1s}
+.meta.dentro span{transform:none}
+
+/* contador 001 [■|||] 005 */
+.passos{bottom:calc(17*var(--px));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:calc(24*var(--px));height:calc(8*var(--px))}
+.passos .num{overflow:hidden;height:1em}
+.passos .num span{display:block;transition:transform .6s cubic-bezier(.625,.05,0,1)}
+.trilho{position:relative;width:calc(32*var(--px));height:100%}
+.trilho i{position:absolute;top:0;height:100%;width:max(1px,calc(1*var(--px)));background:rgba(233,229,220,.25);transition:left .6s cubic-bezier(.625,.05,0,1)}
+.trilho b{position:absolute;top:0;height:100%;width:calc(12*var(--px));border:max(1px,calc(1*var(--px))) solid var(--papel);transition:left .6s cubic-bezier(.625,.05,0,1)}
+
+/* régua */
+#regua{position:fixed;left:50%;bottom:calc(34*var(--px));width:calc(229*var(--px));height:calc(26*var(--px));transform:translateX(-50%);z-index:3;mix-blend-mode:difference;pointer-events:none}
+
+/* cursor "Ver projeto" */
+.cursor{top:0;left:0;pointer-events:none;transform:translate(-50%,-50%) scale(0);transition:transform .35s cubic-bezier(.2,.8,.2,1);will-change:transform}
+.cursor.on{transform:translate(-50%,-50%) scale(1)}
+
+/* links de troca de visualização com sublinhado que entra e sai pelos lados */
+.troca{display:flex;gap:calc(10*var(--px))}
+.troca a{position:relative}
+.troca a::after{content:"";position:absolute;left:0;right:0;top:calc(100% + 4*var(--px));height:calc(1.5*var(--px));background:var(--papel);transform:scaleX(0);transform-origin:right;transition:transform .735s cubic-bezier(.625,.05,0,1)}
+.troca a:hover::after{transform:scaleX(1);transform-origin:left}
+
+.veu{position:fixed;inset:0;z-index:10;background:var(--tinta);opacity:0;pointer-events:none;transition:opacity .5s}
+.veu.on{opacity:1}
+.so-leitor{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.capas{display:none}
+.sem-gl{display:none}
+
+@media (max-width:600px){
+  .menu{top:auto;bottom:calc(16*var(--px));left:calc(16*var(--px));right:calc(16*var(--px));transform:none}
+  .pilula{flex:1;width:auto;height:calc(22*var(--px));font-size:calc(11*var(--px))}
+  .titulo{font-size:calc((100vw - 32*var(--px)) / 6.4);top:calc(50% - 20*var(--px))}
+  .meta{top:calc(50% + 60*var(--px))}
+  .mono{font-size:calc(11*var(--px))}
+  .cap{font-size:calc(13*var(--px))}
+  .bl,.br,#regua,.passos,.cursor{display:none}
+}
+@media (prefers-reduced-motion:reduce){.titulo .ch,.meta span{transition-duration:.2s;transition-delay:0s}}
+
+/* sem WebGL2: lista simples */
+.semgl{overflow:auto;height:auto}
+.semgl body{height:auto;overflow:auto;background:var(--papel);color:var(--tinta)}
+.semgl .sem-gl{display:block;padding:80px 16px;font:800 10vw/1 var(--grot);text-transform:uppercase}
+.semgl .sem-gl a{display:block;margin-bottom:12px}
+.semgl #gl,.semgl .dif,.semgl #regua{display:none}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-label="Vitrine de conceitos: arraste ou role pro lado"></canvas>
+
+<h1 class="so-leitor">GuDev: conceitos de site</h1>
+<a class="dif cap tl" href="#" id="inicio">GuDev</a>
+<nav class="dif menu" aria-label="Principal">
+  <a class="pilula ativa" href="#" aria-current="page" data-txt="Conceitos" data-sup="(05)"><span>Conceitos<sup>(05)</sup></span></a>
+  <a class="pilula" href="https://www.instagram.com/gudev.ofc/" target="_blank" rel="noopener" data-txt="Instagram"><span>Instagram</span></a>
+  <a class="pilula" href="https://wa.me/5511964650141?text=Oi!%20Vi%20os%20conceitos%20da%20GuDev." target="_blank" rel="noopener" data-txt="WhatsApp"><span>WhatsApp</span></a>
+</nav>
+<nav class="dif cap tr troca" aria-label="Navegar">
+  <a href="#" id="ant" aria-label="Conceito anterior">Ant</a><span aria-hidden="true">||</span><a href="#" id="prox" aria-label="Próximo conceito">Próx</a>
+</nav>
+
+<div id="titulos" aria-live="polite"></div>
+<p class="dif mono meta" id="meta"><span></span></p>
+
+<div class="dif mono passos" aria-hidden="true">
+  <span class="num"><span id="atual">001</span></span>
+  <span class="trilho" id="trilho"></span>
+  <span class="num"><span id="total">005</span></span>
+</div>
+<canvas id="regua" aria-hidden="true"></canvas>
+<p class="dif cap bl" id="relogio">São Paulo, BR_00:00:00</p>
+<p class="dif mono br">Conceitos, nenhum é cliente<br><br>©2026</p>
+<div class="dif cap cursor" id="cursor" aria-hidden="true">Ver projeto</div>
+<div class="veu" id="veu"></div>
+
+<div class="sem-gl" id="lista"></div>
+<div class="capas" aria-hidden="true">
+  <img src="img/fervo.jpg" alt="">
+  <img src="img/borbulha.jpg" alt="">
+  <img src="img/pingo.jpg" alt="">
+  <img src="img/moenda.jpg" alt="">
+  <img src="img/sulco.jpg" alt="">
+</div>
+
+<script>
+(function(){
+const D=document,R=D.documentElement,calmo=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const PROJ=[
+  {n:"Fervo",m:"Água com gás / conceito 2026",u:"../../../sites/fervo/index.html"},
+  {n:"Borbulha",m:"Refrigerante / demo de técnica",u:"../borbulha-webgl.html"},
+  {n:"Pingo",m:"Sorveteria / demo de técnica",u:"../pingo-vitrine-provas.html"},
+  {n:"Moenda",m:"Café / demo de técnica",u:"../moenda-cafe-demo.html"},
+  {n:"Sulco",m:"Discos / demo de técnica",u:"../sulco-vidro-liquido.html"}
+];
+const N=PROJ.length;
+const rg=D.getElementById("regua"),rx=rg.getContext("2d");
+const lista=D.getElementById("lista");PROJ.forEach(p=>{const a=D.createElement("a");a.href=p.u;a.textContent=p.n;lista.appendChild(a);});
+
+/* ---------- pílulas com texto vazado (máscara SVG) ---------- */
+let mk=0;
+function vazar(){
+  D.querySelectorAll(".pilula").forEach(p=>{
+    p.querySelector("svg")?.remove();
+    const r=p.getBoundingClientRect(),cs=getComputedStyle(p),w=r.width,h=r.height,pad=parseFloat(cs.paddingLeft),fs=parseFloat(cs.fontSize),id="vz"+(mk++);
+    const ns="http://www.w3.org/2000/svg",s=D.createElementNS(ns,"svg");s.setAttribute("viewBox",`0 0 ${w} ${h}`);s.setAttribute("aria-hidden","true");
+    s.innerHTML=`<defs><mask id="${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="${w}" height="${h}"><rect width="${w}" height="${h}" fill="#fff"/>`+
+      `<text x="${pad}" y="${h/2+fs*.36}" fill="#000" style="font:500 ${fs}px 'IBM Plex Mono',monospace;text-transform:uppercase">${p.dataset.txt.toUpperCase()}${p.dataset.sup?`<tspan dy="${-fs*.35}" style="font-size:${fs*.6}px">${p.dataset.sup}</tspan>`:""}</text>`+
+      `${p.classList.contains("ativa")?`<circle cx="${w-pad-fs*.2}" cy="${h/2}" r="${fs*.2}" fill="#000"/>`:""}</mask></defs>`+
+      `<rect class="fundo" width="${w}" height="${h}" rx="${parseFloat(cs.borderRadius)||2}" mask="url(#${id})"/>`;
+    p.appendChild(s);
+  });
+}
+
+/* ---------- títulos letra por letra ---------- */
+const caixa=D.getElementById("titulos");
+const titulos=PROJ.map(p=>{const h=D.createElement("h2");h.className="dif titulo";h.setAttribute("aria-hidden","true");
+  const l=D.createElement("span");l.className="linha";
+  [...p.n].forEach((c,i)=>{const s=D.createElement("span");s.className="ch"+(c===" "?" sp":"");s.style.setProperty("--i",i);s.textContent=c;l.appendChild(s);});
+  h.appendChild(l);caixa.appendChild(h);return h;});
+const meta=D.getElementById("meta"),metaS=meta.querySelector("span"),atualEl=D.getElementById("atual"),trilho=D.getElementById("trilho"),leitor=D.createElement("p");
+leitor.className="so-leitor";caixa.appendChild(leitor);
+for(let i=0;i<N;i++){trilho.appendChild(D.createElement("i"));}trilho.appendChild(D.createElement("b"));
+D.getElementById("total").textContent=String(N).padStart(3,"0");
+let mostrado=-1,fila=null;
+function mostra(i,dir){
+  if(i===mostrado)return;
+  const antes=mostrado;mostrado=i;
+  if(antes>=0){const o=titulos[antes];o.classList.remove("dentro","sai-cima","sai-baixo");o.classList.add(dir>0?"sai-cima":"sai-baixo");}
+  const t=titulos[i];t.classList.add("sem-trans");t.classList.remove("dentro","sai-cima","sai-baixo");t.classList.add(dir>0?"sai-baixo":"sai-cima");
+  void t.offsetWidth;t.classList.remove("sem-trans","sai-cima","sai-baixo");t.classList.add("dentro");
+  meta.classList.remove("dentro");clearTimeout(fila);fila=setTimeout(()=>{metaS.textContent=PROJ[i].m;meta.classList.add("dentro");},calmo?0:280);
+  atualEl.textContent=String(i+1).padStart(3,"0");
+  leitor.textContent=PROJ[i].n+": "+PROJ[i].m;
+  /* trilho: o atual vira quadrado, os outros são linhas */
+  const pxu=parseFloat(getComputedStyle(trilho).width)/32;
+  [...trilho.querySelectorAll("i")].forEach((el,k)=>{el.style.left=(k*5+(k>i?11:0))*pxu+"px";el.style.opacity=k===i?0:1;});
+  trilho.querySelector("b").style.left=i*5*pxu+"px";
+}
+
+/* ---------- WebGL ---------- */
+const cv=D.getElementById("gl"),gl=cv.getContext("webgl2",{antialias:true,alpha:false});
+if(!gl){R.classList.add("semgl");return;}
+const VS=`#version 300 es
+in vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
+const FS=`#version 300 es
+precision highp float;out vec4 o;
+uniform sampler2D uAtlas;uniform vec2 uTela,uSlide;uniform float uGap,uPos,uVel,uN,uHover,uT;uniform vec3 uFundo;
+vec3 capa(float idx,vec2 uv,float sh){
+  /* recorte "cover": as capas são 16:10 */
+  float aS=uSlide.x/uSlide.y,aI=1.6;vec2 c=uv-.5;
+  if(aS<aI)c.x*=aS/aI;else c.y*=aI/aS;
+  c*=1.-.06*sh;c+=.5;c=clamp(c,.002,.998);
+  float col=mod(idx,3.),lin=floor(idx/3.);
+  return texture(uAtlas,(vec2(col,lin)+c)/vec2(3.,2.)).rgb;
+}
+void main(){
+  vec2 p=vec2(gl_FragCoord.x,uTela.y-gl_FragCoord.y);
+  float xn=p.x/uTela.x-.5;
+  /* curva: a fileira inteira se dobra com a velocidade */
+  float dobra=uVel*uTela.y*1.7*xn*xn;
+  float passo=uSlide.x+uGap;
+  float X=p.x-uTela.x*.5+uPos*passo+uSlide.x*.5;
+  float k=floor(X/passo),lx=X-k*passo;
+  float Y=p.y-(uTela.y-uSlide.y)*.5-dobra;
+  vec3 cor=uFundo;
+  if(lx<uSlide.x&&Y>0.&&Y<uSlide.y){
+    vec2 uv=vec2(lx/uSlide.x,Y/uSlide.y);
+    float idx=mod(k,uN);
+    float sh=clamp(abs(uVel)*6.,0.,1.);
+    float s=uVel*.06;
+    vec3 c=vec3(capa(idx,uv+vec2(s,0.),sh).r,capa(idx,uv,sh).g,capa(idx,uv-vec2(s,0.),sh).b);
+    /* longe do centro fica cinza e mais escuro */
+    float dist=abs(k-uPos),perto=exp(-dist*dist*2.2);
+    float cinza=dot(c,vec3(.299,.587,.114));
+    c=mix(vec3(cinza)*.9,c,perto);
+    c*=1.-.04*uHover*perto;
+    cor=c;
+  }
+  o=vec4(cor,1.);
+}`;
+function sh(t,s){const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(x));return x;}
+const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);
+if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){R.classList.add("semgl");return;}
+gl.useProgram(pr);
+const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+const la=gl.getAttribLocation(pr,"a");gl.enableVertexAttribArray(la);gl.vertexAttribPointer(la,2,gl.FLOAT,false,0,0);
+const u={};["uAtlas","uTela","uSlide","uGap","uPos","uVel","uN","uHover","uT","uFundo"].forEach(k=>u[k]=gl.getUniformLocation(pr,k));
+const tex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tex);
+gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([200,196,188,255]));
+/* atlas 3x2 com as capas (uma textura só, cabe em qualquer celular) */
+const imgs=[...D.querySelectorAll(".capas img")];
+Promise.all(imgs.map(im=>im.decode?im.decode().catch(()=>{}):Promise.resolve())).then(()=>{
+  const cw=1024,ch=640,at=D.createElement("canvas");at.width=cw*3;at.height=ch*2;const x=at.getContext("2d");
+  x.fillStyle="#c8c4bc";x.fillRect(0,0,at.width,at.height);
+  imgs.forEach((im,i)=>{if(!im.naturalWidth)return;const c=i%3,l=Math.floor(i/3),s=Math.max(cw/im.naturalWidth,ch/im.naturalHeight),w=im.naturalWidth*s,h=im.naturalHeight*s;x.drawImage(im,c*cw+(cw-w)/2,l*ch+(ch-h)/2,w,h);});
+  gl.bindTexture(gl.TEXTURE_2D,tex);
+  try{gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,at);gl.generateMipmap(gl.TEXTURE_2D);}
+  catch(e){console.warn("Capas bloqueadas (abra por http ou use o arquivo único).",e);}
+});
+
+/* ---------- tamanho e escala ---------- */
+let W=0,H=0,dpr=1,sw=0,shh=0,gap=0,px=1,celular=false;
+function medir(){
+  dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;celular=W<=600;px=W/(celular?375:1440);
+  cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);gl.viewport(0,0,cv.width,cv.height);
+  if(celular){sw=255*px;shh=340*px;gap=12*px;}else{sw=Math.min(520*px,H*.62*1.6);shh=sw/1.6;gap=24*px;}
+  vazar();desenhaRegua();if(mostrado>=0){const i=mostrado;mostrado=-1;mostra(i,1);}
+}
+let largura=0;addEventListener("resize",()=>{if(innerWidth!==largura){largura=innerWidth;medir();}else{H=innerHeight;cv.height=Math.round(H*dpr);gl.viewport(0,0,cv.width,cv.height);}});
+largura=innerWidth;medir();
+D.fonts&&D.fonts.ready.then(vazar);
+
+/* ---------- movimento: alvo, inércia e encaixe ---------- */
+let pos=0,alvo=0,vel=0,arrasto=null,ultimoMov=0,hover=0,hoverAlvo=0;
+const mod=(a,n)=>((a%n)+n)%n;
+addEventListener("wheel",e=>{e.preventDefault();const d=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;alvo+=d*.0022;ultimoMov=performance.now();},{passive:false});
+cv.addEventListener("pointerdown",e=>{arrasto={x:e.clientX,a:alvo,t:performance.now(),moveu:false,vx:0,lx:e.clientX,lt:performance.now()};cv.setPointerCapture(e.pointerId);cv.classList.add("arrastando");});
+cv.addEventListener("pointermove",e=>{
+  mexeCursor(e);
+  if(!arrasto)return;const dx=e.clientX-arrasto.x;if(Math.abs(dx)>4)arrasto.moveu=true;
+  const agora=performance.now();arrasto.vx=(e.clientX-arrasto.lx)/Math.max(1,agora-arrasto.lt);arrasto.lx=e.clientX;arrasto.lt=agora;
+  alvo=arrasto.a-dx/(sw+gap)*1.15;ultimoMov=agora;
+});
+function solta(e){
+  if(!arrasto)return;cv.classList.remove("arrastando");
+  if(!arrasto.moveu){abrir(e);}
+  else{alvo-=arrasto.vx*18/(sw+gap)*16;ultimoMov=performance.now();}
+  arrasto=null;
+}
+cv.addEventListener("pointerup",solta);cv.addEventListener("pointercancel",()=>{arrasto=null;cv.classList.remove("arrastando");});
+addEventListener("keydown",e=>{if(e.key==="ArrowRight"){alvo=Math.round(alvo)+1;}if(e.key==="ArrowLeft"){alvo=Math.round(alvo)-1;}if(e.key==="Enter"&&D.activeElement===D.body)abrir();});
+D.getElementById("prox").addEventListener("click",e=>{e.preventDefault();alvo=Math.round(alvo)+1;});
+D.getElementById("ant").addEventListener("click",e=>{e.preventDefault();alvo=Math.round(alvo)-1;});
+D.getElementById("inicio").addEventListener("click",e=>{e.preventDefault();alvo=Math.round(alvo)-mod(Math.round(alvo),N);});
+
+/* cursor "Ver projeto" só em cima da capa do centro */
+const cursor=D.getElementById("cursor");let cx=-99,cy=-99,mx=-99,my=-99;
+function sobreCapa(x,y){return Math.abs(x-W/2)<sw/2&&Math.abs(y-H/2)<shh/2;}
+function mexeCursor(e){mx=e.clientX;my=e.clientY;const on=sobreCapa(mx,my)&&!arrasto;cursor.classList.toggle("on",on);hoverAlvo=on?1:0;}
+cv.addEventListener("pointerleave",()=>{cursor.classList.remove("on");hoverAlvo=0;});
+function abrir(e){
+  if(e&&!sobreCapa(e.clientX,e.clientY))return;
+  const i=mod(Math.round(pos),N),v=D.getElementById("veu");v.classList.add("on");
+  setTimeout(()=>{location.href=PROJ[i].u;},calmo?0:480);
+}
+addEventListener("pageshow",()=>D.getElementById("veu").classList.remove("on"));
+
+/* ---------- régua (canvas 2D): traços andam com a posição, o do atual cresce ---------- */
+function desenhaRegua(){const r=rg.getBoundingClientRect();rg.width=Math.max(1,Math.round(r.width*dpr));rg.height=Math.max(1,Math.round(r.height*dpr));}
+function regua(){
+  const w=rg.width,h=rg.height;if(!w)return;rx.clearRect(0,0,w,h);
+  const esp=w*.42,meio=w/2,un=w/229;
+  rx.font=`500 ${10*un}px "IBM Plex Mono",monospace`;rx.textAlign="center";rx.textBaseline="top";
+  for(let k=Math.floor(pos)-2;k<=Math.floor(pos)+3;k++){
+    const x0=meio+(k-pos)*esp;
+    for(let s=1;s<5;s++){const xs=x0+s*esp/5;rx.globalAlpha=.4*fade(xs,w);rx.fillStyle="#E9E5DC";rx.fillRect(xs,h-7*un,1*dpr,4*un);}
+    const d=Math.abs(k-pos),alto=8+8*Math.max(0,1-d*2.5);
+    rx.globalAlpha=(d<.5?1:.55)*fade(x0,w);rx.fillRect(x0-.5*dpr,h-3*un-alto*un+(alto>8?3*un:0),1*dpr,alto*un);
+    rx.fillText(String(mod(k,N)+1).padStart(2,"0"),x0,0);
+  }
+  rx.globalAlpha=1;
+}
+function fade(x,w){const e=Math.min(x,w-x)/(w*.35);return Math.max(0,Math.min(1,e));}
+
+/* relógio de canto */
+const rel=D.getElementById("relogio");
+function relogio(){const t=new Date().toLocaleTimeString("pt-BR",{timeZone:"America/Sao_Paulo",hour12:false});rel.textContent="São Paulo, BR_"+t;}
+relogio();setInterval(relogio,1000);
+
+/* ---------- laço ---------- */
+let ini=performance.now();
+function quadro(t){
+  requestAnimationFrame(quadro);
+  /* parado há um tempo: encaixa no slide mais perto */
+  if(!arrasto&&t-ultimoMov>140)alvo+=(Math.round(alvo)-alvo)*.12;
+  const antes=pos;pos+=(alvo-pos)*(calmo?1:.085);
+  const v=pos-antes;vel+=(v-vel)*.2;
+  hover+=(hoverAlvo-hover)*.1;
+  cx+=(mx-cx)*.2;cy+=(my-cy)*.2;cursor.style.left=cx+"px";cursor.style.top=cy+"px";
+  const i=mod(Math.round(pos),N);mostra(i,Math.sign(alvo-pos)||1);
+  gl.useProgram(pr);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex);gl.uniform1i(u.uAtlas,0);
+  gl.uniform2f(u.uTela,cv.width,cv.height);gl.uniform2f(u.uSlide,sw*dpr,shh*dpr);gl.uniform1f(u.uGap,gap*dpr);
+  gl.uniform1f(u.uPos,pos);gl.uniform1f(u.uVel,calmo?0:Math.max(-.12,Math.min(.12,vel)));gl.uniform1f(u.uN,N);gl.uniform1f(u.uHover,hover);
+  gl.uniform1f(u.uT,(t-ini)/1000);gl.uniform3f(u.uFundo,233/255,229/255,220/255);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+  regua();
+}
+requestAnimationFrame(quadro);
+})();
+</script>
+</body>
+</html>

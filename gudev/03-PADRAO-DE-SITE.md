@@ -159,6 +159,19 @@ O Davi mandou 2 vídeos de referência e pediu pra aprender a fazer igual. As de
 - O resto é calmo: barra simples, um botão verde de WhatsApp, "Aberto até 18h".
 - O fim fecha a piada: o líquido esvazia; a vitrine termina no "Já escolheu?".
 
+### Estudado no portfólio do Yehor Herasymenko (herasymenkox.com, 10/11/2026). Demo: `demos/vitrine-conceitos/`
+O Davi mandou o site salvo (.mht). Só veio HTML e CSS: o JavaScript e as imagens não vêm no arquivo, e o site é bloqueado na rede daqui. Então a demo **recria as técnicas** a partir da estrutura e do CSS, não copia o código dele.
+- **Escala de "px de design":** `--px: calc(100vw / 1440)` (375 no celular) e tudo é `calc(N * var(--px))`. O layout escala inteiro como um quadro do Figma, sem quebrar em tamanhos estranhos. Bom pra páginas de uma tela só (vitrine, cardápio, portfólio). Em site com muito texto corrido, não: a letra fica pequena demais em tela pequena de notebook.
+- **Interface em `mix-blend-mode: difference`:** cantos, menu, título e cursor ficam legíveis em cima do papel e em cima da foto, sem caixa nem sombra.
+- **Slider WebGL de capas:** uma textura só (atlas 3x2 de 1024x640, cabe em qualquer celular) e um shader que calcula, pixel a pixel, em que capa ele cai. A velocidade **entorta a fileira** (curva `vel * x²`) e **separa o RGB**. As capas longe do centro ficam cinza. Roda, arrasta com inércia, setas do teclado e botões Ant/Próx; parado, encaixa no slide mais perto.
+- **Título letra por letra:** cada letra é um `span` dentro de uma linha com `overflow:hidden`. Indo pra frente, as letras do título velho saem pra cima (-110%) e as do novo sobem de baixo (110% → 0), com 22 ms de atraso entre letras. Voltando, ao contrário. O texto pequeno embaixo (meta) entra depois, de 200%.
+- **Régua + "001 [■|||] 005":** a régua (canvas 2D) anda junto com a posição, e o traço do atual cresce. No contador, o atual vira quadrado e os outros são linhas.
+- **Pílula com texto vazado:** no hover e no ativo, a pílula vira um retângulo cheio com o texto **recortado** (máscara SVG com `<text>` preto). Fica com cara de etiqueta impressa.
+- **Detalhes de canto:** relógio ao vivo "SÃO PAULO, BR_15:12:27", cursor "Ver projeto" que só aparece em cima da capa do centro, sublinhado que entra pela esquerda e sai pela direita (`transform-origin` trocando no hover), véu escuro antes de abrir o projeto.
+- **Serve pra cliente:** cardápio de pratos (uma foto por prato, nome gigante trocando), carros de uma loja, cortes de um barbeiro, imóveis. **Não serve** quando o cliente precisa de muita informação por item: aí é lista ou grade.
+- **Pra própria GuDev:** a demo já é uma vitrine dos nossos conceitos (Fervo, Borbulha, Pingo, Moenda, Sulco). Sempre com "conceitos, nenhum é cliente".
+- Atenção: WebGL não lê imagem por `file://`. Pra abrir no celular, gerar o arquivo único (as fotos viram base64). A `arquivo_unico.py` reduz pra 560 px, o que borra capa grande; nessa demo usei 1100 px (0,24 MB no total).
+
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
 
