@@ -49,6 +49,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - o site abre como uma caixinha de presente: o laço dourado se desfaz, a tampa sobe e o selo (logo) voa pro topo;
   - zoom-out da xícara: começa com um café em tela cheia e a câmera se afasta até mostrar a vitrine (grade 3x3);
   - "Mande um mimo": bilhete escrito à mão ao vivo + doces + ocasião (cor da fita) que vira pedido no WhatsApp.
+- **Lustro** (demo de estética automotiva): luzes do estúdio acendendo na abertura; a rolagem lava o carro quadro a quadro; lanterna de inspeção que mostra os micro-riscos e abre na pintura corrigida; cartão na cena que abre a gaveta de agendamento com tubo de LED.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
