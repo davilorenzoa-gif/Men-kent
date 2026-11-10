@@ -50,6 +50,8 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - zoom-out da xícara: começa com um café em tela cheia e a câmera se afasta até mostrar a vitrine (grade 3x3);
   - "Mande um mimo": bilhete escrito à mão ao vivo + doces + ocasião (cor da fita) que vira pedido no WhatsApp.
 - **Lustro** (demo de estética automotiva): luzes do estúdio acendendo na abertura; a rolagem lava o carro quadro a quadro; lanterna de inspeção que mostra os micro-riscos e abre na pintura corrigida; cartão na cena que abre a gaveta de agendamento com tubo de LED.
+- **Vértice Reserva** (demo de locadora de carros premium, `site/projetos/vertice-reserva/`): dois faróis acendem e abrem a tela; a rolagem gira o carro (76 quadros num canvas, os mesmos do site da GuDev) com o título invertendo a cor onde cruza o carro; "Monte sua reserva" escreve a mensagem do WhatsApp ao vivo (marcada como teste enquanto for demo).
+- **Vértice** (conceito pro Instagram da GuDev, `site/projetos/vertice/`): no escuro, a lanterna traseira acende de dentro pra fora seguindo a curva dela, o carro aparece na chuva e VÉRTICE sobe por trás dele; a rolagem gira o carro e a frase passa por trás; carrossel 3D de detalhes; no fim o carro gira sozinho como vídeo, arraste pra girar, com "Sites que vendem." atrás.
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.
