@@ -113,6 +113,14 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Site:** `sites/malibu-vieiralves/` (burger que desmonta, rota pela costa, prancha de pedido). Fotos do catálogo do WhatsApp (300px): mandar pro Gu melhorar.
 - **Falta:** confirmar endereço, WhatsApp e cardápio.
 
+## Oficina Mestre das Motos · lead real do Davi (10/11/2026)
+- **É lead real** (confirmado pelo Davi em 10/11). WhatsApp: (11) 96950-1340. Falta cidade, endereço e quem é o dono.
+- O Davi mandou um briefing completo (paleta, textos, seções) e fotos/vídeos de moto tirados da internet.
+- **Site:** `sites/mestre-das-motos/` (ignição no conta-giros, mapa da moto, painel de alertas pro WhatsApp).
+- **Nenhum dado real ainda:** sem WhatsApp, endereço, cidade, horário, Instagram, números ou avaliações. Tudo fica no `CONFIG` do HTML e aparece como "a confirmar".
+- **Fotos da internet:** marcadas como ilustrativas; trocar por fotos da oficina antes de ir pro ar.
+- **Próximo passo:** pegar com o dono WhatsApp, endereço, horário, Instagram, link do Google, serviços que faz e fotos reais da oficina.
+
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.
 - O site dele virou **a régua mínima de qualidade**: fotos reais recortadas, slogan real, cardápio real e carrinho pro WhatsApp.

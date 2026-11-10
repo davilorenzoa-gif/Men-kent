@@ -7,6 +7,9 @@
 - **Foto pequena esticada na tela inteira fica borrada.** Mostre a foto no tamanho dela (por exemplo, num círculo ou num card) ou melhore antes.
 - **Zoom "atravessando" uma letra:** mire numa parte cheia da letra, nunca no buraco do "O". Senão a tela vai pro fundo escuro e a foto "brota do nada".
 - **Texto com a cor da marca em cima de fundo da mesma cor some.** Exemplo: o nome roxo do açaí sobre a prévia roxa. Teste o contraste.
+- **Acento solto em título que entra palavra por palavra** (Mestre das Motos, 10/11): as palavras escondidas ficam empurradas pra baixo dentro de um `overflow:hidden`, mas o acento (Ê, Ç, Ã) passa da caixa e aparece em cima da frase visível ("TEM̂ UM"). Esconder a frase inteira com `opacity:0` quando não está ativa.
+- **Briefing do cliente pedindo React/TypeScript/Tailwind:** fica em HTML único mesmo (padrão do `03`), e a gente explica o porquê: sobe direto no Netlify, abre rápido no 4G, o Gu edita sem build. Paleta, textos e seções do briefing a gente segue.
+- **Foto e vídeo da internet (Pinterest, Klickpin) mandados pelo Davi:** servem pra montar e apresentar, sempre com o selo "foto/vídeo ilustrativo", mas não vão pro ar em site de cliente sem direito de uso. Pedir as fotos reais da oficina na mesma mensagem dos dados.
 - **Bodoni Moda gigante perde os traços finos:** o "M" parece "VI". Use `font-variation-settings:'opsz' 22` nos títulos grandes.
 
 ## Vídeo de IA (Google Flow, Veo)
@@ -48,6 +51,12 @@
 - **Peso do giro:** os 76 quadros (+ máscaras) dão ~3 MB no celular. Baixe o 1º na hora e o resto só quando a pessoa mexer na página; com economia de dados, um quadro sim, um não.
 
 ## Celular
+- **Foto revelada com `clip-path` na própria figura nunca aparecia** (Mestre das Motos, 10/11): o `IntersectionObserver` do Chrome conta o recorte do elemento, então com `inset(100% 0 0 0)` ele nunca "entra na tela". Revele com uma cortina (`::after` que encolhe) ou recorte um filho, e observe o elemento sem recorte.
+- **Mandar só o `index.html` pro Davi abrir no celular = fotos quebradas** (Mestre das Motos, 10/11): as fotos ficam em `img/` e `media/`. Pra ele ver sozinho, mande também uma versão de arquivo único com as fotos dentro (base64), além do zip da pasta pro Gu subir no Netlify. **A prévia do app não abriu o arquivo de 7 MB** (com os vídeos dentro): "Não foi possível carregar a pré-visualização". A de 0,6 MB (fotos em WebP 560px qualidade 62, vídeos trocados pela capa) é a que mandar pra prévia; confirmar com o Davi que abriu. Pra ver os vídeos, baixar o arquivo grande e abrir no Chrome.
+- **Vídeo "travado" na versão leve:** pra caber na prévia eu tinha tirado os vídeos e só ficou a capa parada, e o Davi achou que travou. Vídeo entra comprimido (480 px, crf 31, sem som, ~300-450 KB cada) e embutido **uma vez só** (`window.MIDIA`), mesmo que dois `<video>` usem o mesmo arquivo. O `gudev/ferramentas/arquivo_unico.py` já faz isso.
+- **Pra o Davi ver o site completo pelo app:** subir um servidor aqui (`python3 -m http.server 8080` na pasta do site) e avisar a porta com `report_preview_port`. Não publicar como página do Claude (Artifact) site com nome e WhatsApp de comércio real: o link de fora é sempre o do Netlify.
+- **Daqui não dá pra baixar foto de banco:** a busca do Unsplash (`/napi`) e a API do Wikimedia são bloqueadas no container (só `images.unsplash.com` abre, e só com o ID da foto). Foto de banco: o Davi ou o Gu escolhe e manda, ou mandam o link direto da imagem.
+- **No container daqui, o CDN (cdnjs/unpkg) não abre:** pra testar no Playwright, sirva a biblioteca local com `page.route` (o `npm pack lenis@1.1.13` dá o mesmo arquivo, com o mesmo SRI).
 - **"Sugestão" de CSS de outra IA a partir do link de prévia:** o Gemini devolveu o esqueleto que o link de prévia do Claude põe em volta da página (`:root` com padding de safe-area, `body` 14px branco). Não é melhoria. O Meridiano agora zera o `padding` do `:root` pra esse esqueleto não empurrar a página.
 - **Proposta travando no celular do Davi:** o site rodando dentro da proposta pesava demais. A solução foi mostrar a prévia como imagem no celular, mais o botão "Ver o site animado", que abre numa gaveta dentro da proposta, travada nos 50%.
 - **O preço que mudava com a rolagem:** quem parava pra ler não via acontecer. Agora anima sozinho quando aparece na tela.
