@@ -83,6 +83,12 @@ Depois pergunte: **"isso ficaria igual pra qualquer pizzaria ou salão?"** Se fi
 - Texto simples, do ponto de vista do cliente, sem enrolação. Cada texto faz um trabalho só.
 - Antes de entregar, revisar e **tirar um enfeite**.
 
+## Vocabulário de estilos (vídeo @lucasvila.r, 31/10/2026)
+Só os quadros foram lidos (sem áudio). Lista que o vídeo mostra, em duas partes:
+- **Estilos de design:** 1 Minimalismo, 2 Glassmorfismo, 3 Neumorfismo, 4 Claymorfismo.
+- **"Estilos" de quem usa IA (o que denuncia site feito por IA):** 5 Brutalismo (genérico), 6 GPTismo, 7 Webclaudismo, 8 Codexismo, 9 Lovableismo, 10 Geminismo.
+- Uso na GuDev: escolher UM estilo de verdade por cliente (ex.: claymorfismo pra pet shop/doceria, minimalismo pra barbearia clean) e nunca cair no "visual padrão de IA" do filtro acima. Dá pra citar o estilo no plano de 3 linhas.
+
 ## Referências (olhar antes de criar)
 - **Primeiro:** `07-REFERENCIAS-DESIGN.md` (destaques por nicho e ideias de WOW ainda não usadas).
 - motionsites.ai: composição de hero e acabamento.
