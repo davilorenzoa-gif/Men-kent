@@ -98,3 +98,6 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Prumo Materiais:** depósito de construção fictício, pra mostrar aos ~20 leads de depósito do Davi.
 - **Órbita Seminovos:** loja de seminovos fictícia (Honda City em 360, imagens do Google Flow), com Reel pronto. Pra mostrar a lojas de carro e estéticas.
 - **Peçaí:** marca de açaí fictícia, peça de portfólio pro Instagram da GuDev.
+- **Vértice e Vértice Reserva:** locadora premium fictícia, sites conceito que aparecem no site da GuDev (`sites/gudev-site/projetos/`).
+- **Porsche 911 GT3 RS:** conceito de portfólio (`sites/porsche-911/`).
+- **Skyline Motors:** aluguel de JDM fictício com R34 GT-R, conceito de portfólio (`sites/skyline-motors/`).

@@ -32,6 +32,8 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - Demos prontas em `sites/`: `porsche-911` (site conceito) e `glassy-dashboard` (painel de vendas em glassmorphism, React/Tailwind). Se algum cliente pedir painel/sistema, partir do glassy — mas isso é produto novo, preço e prazo a definir antes de oferecer.
 - Nenhum cliente fechou ainda (20/10/2026) → seção de cases vazia. Prumo, Peçaí e Lustro são demos, nunca case.
 - Nenhum cliente fechou ainda (20/10/2026) → seção de cases vazia. Prumo, Peçaí, Porsche 911 e Órbita Seminovos são demos, nunca case.
+- Nenhum cliente fechou ainda (20/10/2026) → seção de cases vazia. Prumo, Peçaí, Vértice, 911 e Skyline Motors são demos, nunca case.
+- Site da própria GuDev salvo em `sites/gudev-site/`.
 
 ## Regras que nunca quebram
 - Nunca inventar avaliação, depoimento, cliente, número ou caso. Só dados reais (Google Maps, Instagram, cardápio).
