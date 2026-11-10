@@ -3,19 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Péçaí | Açaí, sorvete e lanche em Guarulhos</title>
-<meta name="description" content="Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema e no Parque das Nações, Guarulhos. Entrega ou retirada. 4,5 no Google.">
+<title>Péçaí Atacado | Açaí de 10 L e 2 L pra empresas em Guarulhos</title>
+<meta name="description" content="Açaí no atacado pra açaiterias, lanchonetes e sorveterias: 10 litros e 2 litros. Péçaí, Guarulhos. Pedido e tabela pelo WhatsApp.">
 <meta name="theme-color" content="#3b0f4a">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Péçaí | Do pé direto pro copo">
-<meta property="og:description" content="Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema, Guarulhos. Entrega ou retirada.">
+<meta property="og:title" content="Péçaí Atacado | Açaí de 10 L e 2 L">
+<meta property="og:description" content="Açaí no atacado pra sua empresa. Pedido e tabela pelo WhatsApp.">
 <meta property="og:image" content="https://proposta-pecai.netlify.app/og.jpg">
 <meta property="og:locale" content="pt_BR">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script>
-/* Camada de movimento: esconde o estado inicial do herói só enquanto o JS de animação carrega.
-   Se a biblioteca não carregar em 3 s, mostra tudo no estado final (nunca fica tela vazia). */
+/* Esconde o estado inicial só enquanto o JS de animação carrega. Sem GSAP em 3 s, mostra tudo parado. */
 (function(h){
   var e = /[?&]embed\b/.test(location.search), r = matchMedia('(prefers-reduced-motion: reduce)').matches, primeira = true;
   try { primeira = !sessionStorage.getItem('pecai-viu'); } catch(x){}
@@ -29,45 +28,28 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "IceCreamShop",
-  "name": "Péçaí",
-  "description": "Açaí, cupuaçu, sorvetes, tapioca e lanches. Entrega e retirada no local.",
-  "priceRange": "R$ 20–100",
+  "@type": "Store",
+  "name": "Péçaí Atacado",
+  "description": "Açaí no atacado pra empresas: embalagens de 10 litros e 2 litros.",
   "telephone": "+55 11 96465-0080",
-  "logo": "https://proposta-pecai.netlify.app/img/logo-pecai.png",
   "image": "https://proposta-pecai.netlify.app/og.jpg",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Av. Jurema, 436 - Parque Jurema",
-    "addressLocality": "Guarulhos",
-    "addressRegion": "SP",
-    "postalCode": "07244-000",
-    "addressCountry": "BR"
-  },
-  "department": {
-    "@type": "IceCreamShop",
-    "name": "Péçaí Parque das Nações",
-    "address": {"@type": "PostalAddress","streetAddress": "Rua Campo Maior, 357 - Parque das Nações","addressLocality": "Guarulhos","addressRegion": "SP","addressCountry": "BR"}
-  },
+  "logo": "https://proposta-pecai.netlify.app/img/logo-pecai.png",
+  "address": {"@type": "PostalAddress","streetAddress": "Av. Jurema, 436 - Parque Jurema","addressLocality": "Guarulhos","addressRegion": "SP","postalCode": "07244-000","addressCountry": "BR"},
+  "department": {"@type": "Store","name": "Péçaí Parque das Nações","address": {"@type": "PostalAddress","streetAddress": "Rua Campo Maior, 357 - Parque das Nações","addressLocality": "Guarulhos","addressRegion": "SP","addressCountry": "BR"}},
   "sameAs": ["https://www.instagram.com/curtapecai/", "https://www.facebook.com/curtapecai"]
 }
 </script>
 <style>
 :root{
-  --pe:#3b0f4a;        /* roxo do pé, fundo dominante */
-  --pe-fundo:#2a0b33;  /* roxo mais fundo */
-  --polpa:#7a2e8e;     /* roxo das letras do logo */
-  --polpa-clara:#a84bc4;
-  --palmeira:#3daa48;  /* verde das folhas do logo, acento do pedido */
-  --copo:#fbf8f3;      /* branco do copo */
-  --calda:#5a2e1a;     /* chocolate escorrendo */
-  --morango:#e0384a;
-  --tinta:#2a0b33;
-  --r:22px;
+  --pe:#3b0f4a; --pe-fundo:#2a0b33; --polpa:#7a2e8e; --polpa-clara:#a84bc4; --magenta:#e070d3;
+  --palmeira:#3daa48; --copo:#fbf8f3; --tinta:#2a0b33; --r:22px;
+  --polpa-out:cubic-bezier(.22,1,.36,1); --polpa-in-out:cubic-bezier(.65,0,.35,1);
 }
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.45s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{font-family:Figtree,system-ui,sans-serif;background:var(--pe);color:#fff;line-height:1.55;overflow-x:clip;font-size:17px}
+body{font-family:Figtree,system-ui,sans-serif;background:var(--pe);color:#fff;line-height:1.5;overflow-x:clip;font-size:17px}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--palmeira);outline-offset:3px;border-radius:6px}
@@ -75,287 +57,179 @@ h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;t
 .wrap{width:min(1120px,100% - 32px);margin-inline:auto}
 
 /* topo */
-.topo{position:fixed;inset:0 0 auto;z-index:40;transition:background .3s}
+.topo{position:fixed;inset:0 0 auto;z-index:40;transition:background .3s,transform .5s var(--polpa-out)}
 .topo.solido{background:rgba(42,11,51,.92);backdrop-filter:blur(8px)}
+.topo.some{transform:translateY(-100%)}
 .topo .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
-.marca{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:"Bricolage Grotesque";font-weight:800;font-size:24px;min-height:44px}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:"Bricolage Grotesque";font-weight:800;font-size:22px;min-height:44px}
 .marca img{width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+.marca small{font-family:Figtree;font-weight:700;font-size:12px;letter-spacing:.04em;background:var(--palmeira);color:var(--tinta);padding:3px 8px;border-radius:999px}
 .topo nav{display:flex;gap:6px;align-items:center}
 .topo nav a.l{text-decoration:none;font-weight:600;padding:10px 12px;border-radius:999px;min-height:44px;display:inline-flex;align-items:center}
 .topo nav a.l:hover{background:rgba(255,255,255,.1)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 22px;border-radius:999px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font:inherit;font-weight:700;transition:transform .15s}
+@media (max-width:720px){.topo nav a.l{display:none}.topo .btn{min-height:44px;padding:10px 16px;font-size:15px}}
+
+/* botões */
+.btn{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:12px 24px;border-radius:999px;font:inherit;font-weight:700;text-decoration:none;border:0;cursor:pointer;transition:transform .2s var(--polpa-out),background .2s,box-shadow .2s}
 .btn:active{transform:scale(.96)}
 .btn-pedir{background:var(--palmeira);color:var(--tinta)}
 .btn-pedir:hover{background:#4fc05b}
 .btn-linha{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.45)}
 .btn-linha:hover{box-shadow:inset 0 0 0 2px #fff}
-.btn svg{width:20px;height:20px;flex:none}
-@media (max-width:720px){.topo nav a.l{display:none}.topo .btn{min-height:44px;padding:10px 16px;font-size:15px}}
+.btn::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.45),transparent 60%);opacity:0;transition:opacity .3s}
+.btn-linha::after{background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.18),transparent 60%)}
+.btn:hover::after{opacity:1}
+.btn .gota-clique{position:absolute;left:0;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:rgba(255,255,255,.55);pointer-events:none;z-index:-1;animation:gota .6s var(--polpa-out) forwards}
+@keyframes gota{from{transform:translate(var(--gx),var(--gy)) scale(0);opacity:1}to{transform:translate(var(--gx),var(--gy)) scale(22);opacity:0}}
 
-/* WOW 1: a logo se monta com pontinhos */
-.abre{min-height:100svh;padding:88px 0 56px;display:flex;align-items:center;position:relative;background:radial-gradient(120% 80% at 70% 35%,#4c1660 0%,var(--pe) 55%,var(--pe-fundo) 100%)}
+/* carregamento */
+.carrega{position:fixed;inset:0;z-index:200;background:var(--pe-fundo);display:none;place-items:center;will-change:transform}
+.carregando .carrega{display:grid}
+.carregando body{overflow:hidden}
+.carrega .logo-carga{position:relative;width:132px;height:132px}
+.carrega .logo-carga img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%}
+.carrega .logo-carga .base{filter:grayscale(1) brightness(.45)}
+.carrega .logo-carga .cheia{clip-path:inset(100% 0 0 0)}
+.carrega .borda{position:absolute;left:0;right:0;top:100%;width:100%;height:70px;display:block}
+.progresso{position:fixed;left:0;right:0;top:0;height:3px;z-index:45;pointer-events:none}
+.progresso i{position:absolute;inset:0;background:linear-gradient(90deg,var(--palmeira),#9cc94a);transform-origin:left;transform:scaleX(0)}
+.anima-espera .abre .texto-abre > *,.anima-espera .abre .cena{opacity:0}
+.mascara{display:inline-block;overflow:hidden;vertical-align:top;padding:.12em 0 .22em;margin:-.12em 0 -.22em}
+.mascara > span{display:inline-block;will-change:transform}
+.palavra-blur{display:inline-block}
+
+/* WOW 1: herói com a logo em bolinhas */
+.palco-abre{position:relative}
+.abre{min-height:100svh;padding:88px 0 56px;display:flex;align-items:center;position:sticky;top:var(--abre-top,0px);z-index:0;overflow:hidden;isolation:isolate;
+  background:radial-gradient(120% 80% at 70% 35%,#4c1660 0%,var(--pe) 55%,var(--pe-fundo) 100%)}
+.abre .luz{position:absolute;border-radius:50%;pointer-events:none;z-index:-1;will-change:transform}
+.abre .luz.a{width:70vmax;height:70vmax;left:-20vmax;top:-30vmax;background:radial-gradient(circle,rgba(168,75,196,.35),transparent 60%);animation:deriva 22s var(--polpa-in-out) infinite alternate}
+.abre .luz.b{width:60vmax;height:60vmax;right:-25vmax;bottom:-30vmax;background:radial-gradient(circle,rgba(224,112,211,.22),transparent 60%);animation:deriva 26s var(--polpa-in-out) infinite alternate-reverse}
+@keyframes deriva{to{transform:translate3d(6vmax,4vmax,0) scale(1.08)}}
 .abre .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:40px;align-items:center}
-.cena{position:relative;width:min(100%,460px);aspect-ratio:1/1.2;margin-inline:auto;-webkit-tap-highlight-color:transparent}
+.cena{position:relative;width:min(100%,440px);aspect-ratio:1/1.15;margin-inline:auto;-webkit-tap-highlight-color:transparent}
 .cena canvas{position:absolute;left:0;top:0;width:100%;aspect-ratio:1;touch-action:pan-y;cursor:pointer}
 .cena .foto{position:absolute;left:2%;bottom:0;width:31%;z-index:2;border-radius:16px;overflow:hidden;box-shadow:0 0 0 4px var(--copo),0 24px 50px -16px rgba(0,0,0,.65);opacity:0;transform:translate(-20px,24px) rotate(-14deg);transition:opacity .6s,transform .8s cubic-bezier(.3,1.4,.5,1)}
-.cena .foto img{width:100%}
 .cena.pronta .foto{opacity:1;transform:rotate(-6deg)}
-.cena .dica{position:absolute;right:4%;bottom:6%;font-size:14px;color:#cdb6d6;opacity:0;transition:opacity .6s .4s}
-.cena.pronta .dica{opacity:1}
-.logo-abre{width:112px;height:112px;border-radius:50%;box-shadow:0 0 0 3px #fff,0 20px 40px -14px rgba(0,0,0,.6);margin-bottom:22px}
-@media (max-width:860px){.logo-abre{display:none}}
-.texto-abre .selo{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);padding:8px 14px;border-radius:999px;font-weight:600;font-size:15px;margin-bottom:20px}
-.selo .estrela{color:#ffcf4a}
-.texto-abre h1{font-size:clamp(64px,13vw,150px);font-weight:800;color:#fff}
-.texto-abre h1 .pe{color:#fff}
-.texto-abre h1 .sufixo{color:#e070d3}
-.texto-abre .frase{font-family:"Bricolage Grotesque";font-weight:600;font-size:clamp(24px,3.4vw,36px);margin:6px 0 18px;color:#e9d3f2}
-.texto-abre p.sub{max-width:44ch;color:#e6d6ec}
+.selo{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);padding:8px 14px;border-radius:999px;font-weight:600;font-size:15px;margin-bottom:20px}
+.selo b{color:var(--palmeira)}
+.texto-abre h1{font-size:clamp(64px,12vw,140px);font-weight:800}
+.texto-abre h1 .sufixo{color:var(--magenta)}
+.texto-abre .frase{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(30px,4.6vw,52px);margin:8px 0 14px;color:#f1e1f6}
+.texto-abre .sub{max-width:36ch;color:#e6d6ec}
 .acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.entra{opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s}
-.vai .entra{opacity:1;transform:none}
-.vai .entra.d2{transition-delay:.15s}.vai .entra.d3{transition-delay:.3s}
 @media (max-width:860px){
   .abre{padding-top:76px;min-height:auto}
   .abre .wrap{grid-template-columns:minmax(0,1fr);gap:8px}
-  .cena{width:min(86vw,360px);order:-1}
+  .cena{width:min(80vw,330px);order:-1}
   .texto-abre{text-align:center}
-  .texto-abre p.sub{margin-inline:auto}
+  .texto-abre .sub{margin-inline:auto}
   .abre .acoes{justify-content:center}
 }
 
-/* WOW 2: a calda escorre pelo cardápio */
-.cardapio{background:var(--copo);color:var(--tinta);padding:96px 0 110px;border-radius:40px 40px 0 0;position:relative;z-index:1}
-.cardapio h2{font-size:clamp(40px,7vw,80px);color:var(--pe);max-width:12ch}
-.cardapio .intro{max-width:52ch;margin:18px 0 56px;color:#4a3550}
-.trilho{position:relative;padding-left:72px;display:grid;gap:64px}
-.trilho .fio{position:absolute;left:22px;top:0;bottom:0;width:6px;border-radius:6px;background:#eadfd2}
-.trilho .calda{position:absolute;left:22px;top:0;bottom:0;width:6px;border-radius:6px;background:linear-gradient(var(--calda),#7a4126);transform-origin:top;transform:scaleY(0);will-change:transform}
-.trilho .gota{position:absolute;left:14px;top:-6px;width:22px;height:28px;will-change:transform}
-.item{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;position:relative}
-.item::before{content:"";position:absolute;left:-60px;top:14px;width:20px;height:20px;border-radius:50%;background:var(--copo);box-shadow:inset 0 0 0 3px #d9cabb;transition:background .3s,box-shadow .3s}
-.item.pego::before{background:var(--calda);box-shadow:inset 0 0 0 3px var(--calda)}
-.item h3{font-size:clamp(38px,6.5vw,72px);font-weight:800;color:transparent;-webkit-text-stroke:2px var(--polpa);transition:color .35s}
-.item.pego h3{color:var(--polpa)}
-.item p{max-width:46ch;color:#4a3550}
-.item a{font-weight:700;color:var(--pe);text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center;justify-self:start}
-.cardapio .obs{margin-top:56px;font-size:15px;color:#6b5872;max-width:56ch}
-@media (min-width:900px){
-  .cardapio .grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:64px;align-items:start}
-  .cardapio .lado{position:sticky;top:96px}
-}
-.cardapio .lado figure{border-radius:var(--r);overflow:hidden;max-width:360px;box-shadow:0 30px 60px -30px rgba(59,15,74,.5)}
-.cardapio .lado figcaption{font-size:13px;color:#6b5872;padding:10px 4px 0;background:var(--copo)}
-@media (max-width:899px){.cardapio .lado{display:none}}
+/* WOW 2: as duas medidas enchendo com a rolagem */
+.medidas{background:var(--copo);color:var(--tinta);border-radius:40px 40px 0 0;position:relative;z-index:1;height:260vh}
+.medidas .fixo{position:sticky;top:0;min-height:100svh;display:grid;align-content:center;gap:28px;padding:88px 0 40px}
+.medidas h2{font-size:clamp(44px,8vw,96px);color:var(--pe)}
+.baldes{display:flex;align-items:flex-end;justify-content:center;gap:clamp(24px,6vw,80px)}
+.balde{display:grid;justify-items:center;gap:12px}
+.balde svg{display:block;height:auto;overflow:visible}
+.balde.dez svg{width:clamp(170px,30vw,300px)}
+.balde.dois svg{width:clamp(100px,17.5vw,175px)}   /* 2 L tem 1/5 do volume: lado ≈ 1/∛5 ≈ 0,58 do de 10 L */
+.balde .litros{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(36px,6vw,64px);line-height:1;color:var(--pe)}
+.balde .litros small{font-size:.45em;margin-left:4px}
+.balde p{font-weight:600;color:#5d4866}
+.conta{text-align:center;font-weight:700;color:var(--polpa);font-size:clamp(17px,2vw,20px)}
+.conta span{display:inline-flex;gap:6px;align-items:center}
+.conta i{display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--polpa)}
+.nota-ilus{text-align:center;font-size:13px;color:#7b6782}
 
-/* WOW 3: colha seu pedido */
-.colha{background:var(--pe-fundo);padding:96px 0;position:relative}
-.colha h2{font-size:clamp(40px,7vw,80px)}
-.colha .intro{max-width:50ch;color:#e6d6ec;margin:14px 0 36px}
-.colha .grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
-@media (max-width:860px){.colha .grade{grid-template-columns:minmax(0,1fr)}}
-.passo{font-weight:700;color:var(--palmeira);font-size:15px;margin-bottom:10px}
-.pedido{position:relative;background:#3b0f4a;border-radius:var(--r);padding:16px 14px 22px;overflow:hidden}
-.abas{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;scrollbar-width:thin;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
-.abas button{flex:none;scroll-snap-align:start;border:0;border-radius:999px;min-height:44px;padding:8px 16px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;background:rgba(255,255,255,.08);color:#e6d6ec;position:relative}
-.abas button[aria-pressed="true"]{background:var(--copo);color:var(--pe)}
-.abas button .n{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:10px;background:var(--palmeira);color:var(--tinta);font-size:12px;margin-left:6px;padding:0 5px}
-.lista{display:grid;gap:8px;min-height:120px}
-.linha{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;background:rgba(255,255,255,.05);border-radius:16px;padding:10px 10px 10px 16px}
-.linha .nome{font-weight:700;line-height:1.25}
-.linha .nota{display:block;font-weight:400;font-size:13px;color:#cdb6d6;margin-top:2px}
-.qtd{display:flex;align-items:center;gap:6px}
-.qtd button{width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;font:inherit;font-weight:800;font-size:22px;line-height:1;color:#fff}
+/* WOW 3: monte o pedido (as caixas empilham no palete) */
+.pedido{background:var(--pe-fundo);padding:96px 0;position:relative}
+.pedido h2{font-size:clamp(44px,8vw,96px)}
+.pedido .grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start;margin-top:36px}
+@media (max-width:860px){.pedido .grade{grid-template-columns:minmax(0,1fr)}}
+.produto{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;background:rgba(255,255,255,.06);border-radius:18px;padding:14px 14px 14px 20px;margin-bottom:10px}
+.produto b{font-family:"Bricolage Grotesque";font-size:28px;font-weight:800;line-height:1}
+.produto span{display:block;font-size:14px;color:#cdb6d6}
+.qtd{display:flex;align-items:center;gap:8px}
+.qtd button{width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;font:inherit;font-weight:800;font-size:24px;line-height:1;color:#fff;transition:transform .15s var(--polpa-out)}
+.qtd button:active{transform:scale(.9)}
 .qtd .mais{background:radial-gradient(circle at 32% 28%,#c27ad8 0,#8d36a8 35%,#4f1a62 100%);box-shadow:inset -4px -5px 10px rgba(0,0,0,.35)}
 .qtd .menos{background:rgba(255,255,255,.1)}
 .qtd .menos:disabled{opacity:.3;cursor:default}
-.qtd output{min-width:22px;text-align:center;font-weight:800}
-.qtd button:active{transform:scale(.9)}
-.fonte{font-size:13px;color:#cdb6d6;margin-top:10px}
-.paneiro{margin-top:18px;position:relative;min-height:150px;border-radius:0 0 90px 90px / 0 0 60px 60px;padding:22px 18px 30px;background:
-  repeating-linear-gradient(45deg,rgba(0,0,0,.12) 0 6px,transparent 6px 12px),
-  repeating-linear-gradient(-45deg,rgba(255,255,255,.08) 0 6px,transparent 6px 12px),#b0844f;color:var(--tinta);box-shadow:inset 0 10px 0 #8d6436}
-.paneiro .vazio{font-weight:600;text-align:center;color:#3a2412;padding-top:20px}
-.paneiro .dentro{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.paneiro .dentro button{border:0;font-size:15px;background:var(--copo);color:var(--pe);font:inherit;font-weight:700;border-radius:999px;padding:8px 14px;min-height:44px;cursor:pointer;animation:chega .35s cubic-bezier(.3,1.6,.5,1)}
-@keyframes chega{from{transform:translateY(-14px) scale(.6);opacity:0}}
-.voa{position:fixed;width:26px;height:26px;border-radius:50%;background:#8d36a8;z-index:60;pointer-events:none;left:0;top:0}
-.form{display:grid;gap:22px}
-.troca{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;background:#3b0f4a;padding:6px;border-radius:999px}
-.troca button{border:0;border-radius:999px;min-height:48px;font:inherit;font-weight:700;background:transparent;color:#e6d6ec;cursor:pointer}
-.troca button[aria-pressed="true"]{background:var(--copo);color:var(--pe)}
+.qtd output{min-width:28px;text-align:center;font-weight:800;font-size:20px}
+.palete{position:relative;margin-top:18px;border-radius:18px;background:rgba(255,255,255,.04);padding:18px 18px 0;min-height:230px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.pilha{display:flex;flex-wrap:wrap-reverse;gap:6px;align-items:flex-end;justify-content:center;padding-bottom:6px}
+.cx{border-radius:6px;background:linear-gradient(180deg,#8d36a8,#5e1f73);box-shadow:inset 0 3px 0 rgba(255,255,255,.25),0 4px 0 rgba(0,0,0,.25);display:grid;place-items:center;font-weight:800;font-size:12px;color:#f1e1f6;animation:cai .5s var(--polpa-out) both}
+.cx.g{width:56px;height:44px}
+.cx.p{width:32px;height:26px;font-size:10px;background:linear-gradient(180deg,#e070d3,#a84bc4);color:var(--tinta)}
+@keyframes cai{from{transform:translateY(-120px);opacity:0}70%{transform:translateY(4px);opacity:1}to{transform:none}}
+.madeira{height:16px;margin:0 -18px;background:repeating-linear-gradient(90deg,#b0844f 0 44px,#8d6436 44px 52px)}
+.palete .vazio{position:absolute;inset:0;display:grid;place-items:center;color:#cdb6d6;font-weight:600;text-align:center;padding:20px}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;font-weight:700}
+.total strong{font-family:"Bricolage Grotesque";font-size:32px;color:var(--palmeira)}
+.form{display:grid;gap:18px}
+.passo{font-weight:700;color:var(--palmeira);font-size:15px;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{border:0;border-radius:999px;min-height:44px;padding:8px 16px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;background:rgba(255,255,255,.08);color:#e6d6ec;transition:background .25s,color .25s,transform .15s var(--polpa-out)}
+.chips button:active{transform:scale(.95)}
+.chips button[aria-pressed="true"]{background:var(--copo);color:var(--pe)}
 label.campo{display:grid;gap:6px;font-weight:600}
 label.campo input{font:inherit;font-size:17px;min-height:50px;border-radius:14px;border:2px solid #5e2a6f;background:#3b0f4a;color:#fff;padding:10px 14px;width:100%}
 label.campo input:focus{outline:none;border-color:var(--palmeira)}
-.previa{background:#e7ffdb;color:#16301a;border-radius:16px 16px 16px 4px;padding:14px 16px;font-size:15px;white-space:pre-wrap;min-height:72px}
+.previa{background:#e7ffdb;color:#16301a;border-radius:16px 16px 16px 4px;padding:14px 16px;font-size:15px;white-space:pre-wrap}
 .previa-rot{font-size:14px;color:#cdb6d6;margin-bottom:6px}
 .obrigado{display:none;background:var(--copo);color:var(--tinta);border-radius:var(--r);padding:28px}
-.obrigado h3{font-size:34px;color:var(--pe);margin-bottom:8px}
 .obrigado.on{display:block}
-.aviso{font-size:14px;color:#cdb6d6}
+.obrigado h3{font-size:34px;color:var(--pe);margin-bottom:8px}
 
-/* avaliações */
-.notas{background:var(--pe-fundo);padding:88px 0}
-.notas .wrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:40px;align-items:center}
-@media (max-width:720px){.notas .wrap{grid-template-columns:minmax(0,1fr);gap:4px}}
-.notas .nota-grande{margin:0;max-width:none;font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(120px,22vw,240px);line-height:.85;color:var(--palmeira);letter-spacing:-.05em}
-.notas h2{font-size:clamp(32px,5vw,56px)}
-.notas .estrelas{color:#ffcf4a;font-size:30px;letter-spacing:4px;margin:8px 0 6px}
-.notas .estrelas .meia{background:linear-gradient(90deg,#ffcf4a 50%,#6b4a78 50%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.notas p{color:#e6d6ec;max-width:46ch;margin-bottom:22px}
-.lojas{display:grid;gap:12px;margin-bottom:22px}
-.loja{border-radius:18px;padding:18px 20px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.18);transition:background .25s,box-shadow .25s}
-.loja.on{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 2px var(--palmeira)}
-.loja h3{font-size:26px}
-.loja address{font-size:17px;margin:6px 0 8px}
-.loja .mini{display:flex;flex-wrap:wrap;gap:4px 18px}
-.loja .mini a,.loja .mini button{min-height:44px;display:inline-flex;align-items:center;font:inherit;font-weight:700;color:#fff;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
-.loja .mini button[aria-pressed="true"]{color:var(--palmeira)}
-/* onde fica */
+/* onde estamos */
 .onde{padding:96px 0;background:var(--pe)}
 .onde .grade{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;align-items:center}
 @media (max-width:860px){.onde .grade{grid-template-columns:minmax(0,1fr)}}
-.onde h2{font-size:clamp(40px,6.5vw,72px)}
-.onde address{font-style:normal;font-size:20px;margin:18px 0 6px}
-.onde .info{color:#e6d6ec;margin:16px 0 24px;max-width:46ch}
-.mapa{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;background:#2a0b33}
-.mapa{position:relative;background:
+.onde h2{font-size:clamp(44px,7vw,84px);margin-bottom:22px}
+.lojas{display:grid;gap:12px;perspective:900px}
+.loja{position:relative;border-radius:18px;padding:18px 20px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.18);transition:background .25s,box-shadow .25s;transform-style:preserve-3d}
+.loja.on{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 2px var(--palmeira)}
+.loja::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;pointer-events:none;background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(156,201,74,.95),transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s}
+.loja:hover::before{opacity:1}
+.loja h3{font-size:24px}
+.loja address{font-style:normal;margin:4px 0 6px;color:#e6d6ec}
+.loja .mini{display:flex;flex-wrap:wrap;gap:4px 18px}
+.loja .mini a,.loja .mini button{min-height:44px;display:inline-flex;align-items:center;font:inherit;font-weight:700;color:#fff;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.loja .mini button[aria-pressed="true"]{color:var(--palmeira)}
+.mapa{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;background:
   linear-gradient(90deg,transparent 47%,rgba(255,255,255,.09) 47% 53%,transparent 53%) 0 0/120px 120px,
   linear-gradient(0deg,transparent 46%,rgba(255,255,255,.07) 46% 54%,transparent 54%) 0 0/90px 90px,
   linear-gradient(35deg,transparent 49%,rgba(255,255,255,.12) 49% 51%,transparent 51%) 0 0/100% 100%,#2a0b33}
-.mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .mapa-cartao{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;gap:4px}
 .mapa-cartao .pin{width:44px;height:58px;margin-bottom:8px;filter:drop-shadow(0 10px 12px rgba(0,0,0,.45))}
 .mapa-loja{font-family:"Bricolage Grotesque";font-weight:800;font-size:24px}
 .mapa-end{color:#e6d6ec;margin-bottom:14px}
 .mapa-botoes{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 
-/* perguntas */
-.faq{background:var(--copo);color:var(--tinta);padding:96px 0}
-.faq h2{font-size:clamp(36px,6vw,64px);color:var(--pe);margin-bottom:28px}
-.faq details{border-top:2px solid #eadfd2;padding:6px 0}
-.faq details:last-child{border-bottom:2px solid #eadfd2}
-.faq summary{cursor:pointer;font-weight:700;font-size:19px;min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-size:28px;color:var(--polpa);transition:transform .2s}
-.faq details[open] summary::after{transform:rotate(45deg)}
-.faq details p{padding:0 0 18px;max-width:60ch;color:#4a3550}
-.faq details a{color:var(--pe);font-weight:700}
-
-footer{background:var(--pe-fundo);padding:56px 0 110px;color:#d9c4e1;font-size:15px}
-footer .wrap{display:grid;gap:18px}
-footer .marca{color:#fff}
-footer a{text-underline-offset:3px}
+footer{background:var(--pe-fundo);padding:48px 0 110px;color:#d9c4e1;font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between}
 footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
+footer a{text-underline-offset:3px}
 
-/* botão flutuante (celular) */
-.flutua{position:fixed;left:16px;right:16px;bottom:14px;z-index:50;display:none;transform:translateY(120%);transition:transform .35s}
+.flutua{position:fixed;left:16px;right:16px;bottom:14px;z-index:50;display:none;transform:translateY(120%);transition:transform .35s var(--polpa-out)}
 .flutua.on{transform:none}
 .flutua .btn{width:100%;box-shadow:0 12px 30px -8px rgba(0,0,0,.6)}
 @media (max-width:720px){.flutua{display:block}}
-.toast{position:fixed;left:50%;bottom:86px;transform:translate(-50%,20px);opacity:0;background:var(--copo);color:var(--tinta);padding:12px 18px;border-radius:14px;font-weight:600;z-index:70;transition:.3s;max-width:calc(100% - 32px);text-align:center}
-.toast.on{opacity:1;transform:translate(-50%,0)}
-
-
-/* =====================================================================
-   CAMADA DE MOVIMENTO (10/11/2026)
-   Linguagem: "viscoso como açaí". Tudo entra devagar e assenta macio,
-   máscaras escorrem de cima pra baixo, nada dá tranco.
-   Curva única: --polpa-out. Só transform e opacity (clip-path só em 2 momentos).
-   ===================================================================== */
-:root{--polpa-out:cubic-bezier(.22,1,.36,1);--polpa-in-out:cubic-bezier(.65,0,.35,1)}
-@view-transition{navigation:auto}
-::view-transition-old(root),::view-transition-new(root){animation-duration:.45s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
-
-/* carregamento: a logo enche de açaí e a cortina sobe escorrendo */
-.carrega{position:fixed;inset:0;z-index:200;background:var(--pe-fundo);display:none;place-items:center;will-change:transform}
-.carregando .carrega{display:grid}
-.carrega .logo-carga{position:relative;width:132px;height:132px}
-.carrega .logo-carga img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%}
-.carrega .logo-carga .base{filter:grayscale(1) brightness(.45)}
-.carrega .logo-carga .cheia{clip-path:inset(100% 0 0 0)}
-.carrega .borda{position:absolute;left:0;right:0;top:100%;width:100%;height:70px;display:block}
-.carregando body{overflow:hidden}
-
-/* estado inicial do herói enquanto espera o JS (some se o JS falhar) */
-.anima-espera .abre .texto-abre > *,.anima-espera .abre .cena{opacity:0}
-
-/* máscaras de texto */
-.mascara{display:inline-block;overflow:hidden;vertical-align:top;padding:.12em 0 .22em;margin:-.12em 0 -.22em}
-.mascara > span{display:inline-block;will-change:transform}
-.palavra-blur{display:inline-block;will-change:transform,opacity,filter}
-
-/* herói: fundo vivo quase imperceptível (só transform, blobs já desfocados no gradiente) */
-.abre{overflow:hidden;isolation:isolate}
-.abre .luz{position:absolute;border-radius:50%;pointer-events:none;z-index:-1;will-change:transform}
-.abre .luz.a{width:70vmax;height:70vmax;left:-20vmax;top:-30vmax;background:radial-gradient(circle,rgba(168,75,196,.35),transparent 60%);animation:deriva 22s var(--polpa-in-out) infinite alternate}
-.abre .luz.b{width:60vmax;height:60vmax;right:-25vmax;bottom:-30vmax;background:radial-gradient(circle,rgba(224,112,211,.22),transparent 60%);animation:deriva 26s var(--polpa-in-out) infinite alternate-reverse}
-.abre .luz.c{width:40vmax;height:40vmax;left:35%;top:40%;background:radial-gradient(circle,rgba(61,170,72,.10),transparent 60%);animation:deriva 30s var(--polpa-in-out) infinite alternate}
-@keyframes deriva{to{transform:translate3d(6vmax,4vmax,0) scale(1.08)}}
-.palco-abre{position:relative}
-.palco-abre .abre{position:sticky;top:var(--abre-top,0px);z-index:0}
-
-/* barra de progresso da rolagem */
-.progresso{position:fixed;left:0;right:0;top:0;height:3px;z-index:45;pointer-events:none}
-.progresso i{position:absolute;inset:0;background:linear-gradient(90deg,var(--palmeira),#9cc94a);transform-origin:left;transform:scaleX(0)}
-
-/* topo some ao descer e volta ao subir */
-.topo{transition:background .3s,transform .5s var(--polpa-out)}
-.topo.some{transform:translateY(-100%)}
-
-/* botões: brilho que segue o dedo/mouse + gota no clique */
-.btn{position:relative;overflow:hidden;isolation:isolate;transition:transform .2s var(--polpa-out),background .2s,box-shadow .2s}
-.btn::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.45),transparent 60%);opacity:0;transition:opacity .3s}
-.btn:hover::after{opacity:1}
-.btn-linha::after{background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.18),transparent 60%)}
-.btn .gota-clique{position:absolute;left:0;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:rgba(255,255,255,.55);pointer-events:none;z-index:-1;animation:gota .6s var(--polpa-out) forwards}
-@keyframes gota{from{transform:translate(var(--gx),var(--gy)) scale(0);opacity:1}to{transform:translate(var(--gx),var(--gy)) scale(22);opacity:0}}
-
-/* cardápio: a foto lateral se revela e respira com a rolagem */
-.cardapio .lado figure{will-change:clip-path}
-.cardapio .lado figure img{will-change:transform;transform-origin:50% 40%}
-
-/* pedido */
-.paneiro.balanca{animation:balanca .55s var(--polpa-out)}
-@keyframes balanca{30%{transform:rotate(-1.6deg) translateY(3px)}60%{transform:rotate(1.1deg)}}
-.linha{transition:transform .2s var(--polpa-out),background .2s}
-.linha:active{transform:scale(.985)}
-.abas button{transition:background .25s,color .25s,transform .2s var(--polpa-out)}
-.abas button:active{transform:scale(.95)}
-.obrigado{will-change:clip-path}
-
-/* cartões de loja: borda que acende onde o mouse está + inclinação 3D */
-.lojas{perspective:900px}
-.loja{position:relative;transform-style:preserve-3d;will-change:transform}
-.loja::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;pointer-events:none;
-  background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(156,201,74,.95),transparent 55%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s}
-.loja:hover::before{opacity:1}
-.loja:active{transform:scale(.985)}
-
-/* FAQ: a resposta escorre ao abrir */
-.faq details[open] p{animation:escorre .5s var(--polpa-out)}
-@keyframes escorre{from{opacity:0;transform:translateY(-8px)}}
-
-/* notas: estrelas acendem uma por uma */
-.notas .estrelas span{display:inline-block}
-
-@media (prefers-reduced-motion:reduce){
-  .abre .luz{animation:none}
-  .carrega{display:none!important}
-  .palco-abre .abre{position:relative}
-}
 
 /* prévia estática e movimento reduzido */
 .embed .cena .foto{opacity:1;transform:rotate(-6deg);transition:none}
-.embed .entra{opacity:1;transform:none}
-.embed .trilho .calda{transform:none}.embed .item h3{color:var(--polpa)}
+.embed .medidas{height:auto}.embed .medidas .fixo{position:relative}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .cena .foto{transform:rotate(-6deg)}
-  .cena{animation:fade .5s}
-  .entra{transform:none}
-  @keyframes fade{from{opacity:0}}
+  .abre .luz{animation:none}
+  .carrega{display:none!important}
+  .abre{position:relative}
+  .medidas{height:auto}.medidas .fixo{position:relative}
+  .cx{animation:none}
 }
 </style>
 </head>
@@ -368,163 +242,133 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
 
 <header class="topo" id="topo">
   <div class="wrap">
-    <a class="marca" href="#inicio" aria-label="Péçaí, voltar ao topo">
-      <img src="img/logo-pecai.webp" width="40" height="40" alt="">
-      Péçaí
-    </a>
+    <a class="marca" href="#inicio" aria-label="Péçaí Atacado, voltar ao topo"><img src="img/logo-pecai.webp" width="40" height="40" alt="">Péçaí <small>ATACADO</small></a>
     <nav aria-label="Principal">
-      <a class="l" href="#cardapio">Cardápio</a>
+      <a class="l" href="#medidas">Medidas</a>
       <a class="l" href="#onde">Lojas</a>
-      <a class="btn btn-pedir js-pedir" href="#colha">Fazer pedido</a>
+      <a class="btn btn-pedir" href="#pedido">Fazer pedido</a>
     </nav>
   </div>
 </header>
 
 <main id="inicio">
   <div class="palco-abre" id="palcoAbre">
-  <!-- WOW 1: a logo se monta com pontinhos -->
-  <section class="abre" aria-labelledby="titulo">
-    <span class="luz a" aria-hidden="true"></span><span class="luz b" aria-hidden="true"></span><span class="luz c" aria-hidden="true"></span>
-    <div class="wrap">
-      <div class="texto-abre">
-        <span class="selo"><span class="estrela" aria-hidden="true">★</span> 4,5 no Google, 1,4 mil avaliações</span>
-        <h1 id="titulo" class="entra d2"><span class="pe">Pé</span><span class="sufixo">çaí</span></h1>
-        <p class="frase">Do pé direto pro copo.</p>
-        <p class="sub">Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema e no Parque das Nações, em Guarulhos. Peça pra entregar ou passe pra retirar.</p>
-        <div class="acoes">
-          <a class="btn btn-pedir" href="#colha">Fazer pedido</a>
-          <a class="btn btn-linha" href="#cardapio">Ver o que tem</a>
+    <!-- WOW 1: a logo se monta com bolinhas -->
+    <section class="abre" aria-labelledby="titulo">
+      <span class="luz a" aria-hidden="true"></span><span class="luz b" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="texto-abre">
+          <span class="selo"><b>Atacado</b> pra empresas</span>
+          <h1 id="titulo">Pé<span class="sufixo">çaí</span></h1>
+          <p class="frase">Açaí de 10 L e 2 L.</p>
+          <p class="sub">Pra sua açaiteria, lanchonete ou sorveteria. Pedido e tabela pelo WhatsApp.</p>
+          <div class="acoes">
+            <a class="btn btn-pedir js-tabela" href="https://wa.me/5511964650080" target="_blank" rel="noopener">Pedir tabela no WhatsApp</a>
+            <a class="btn btn-linha" href="#pedido">Montar pedido</a>
+          </div>
+        </div>
+        <div class="cena" id="cena">
+          <canvas id="pontos" role="img" aria-label="A logo da Péçaí se monta com bolinhas. Passe o dedo pra empurrar e toque pra espalhar."></canvas>
+          <div class="foto"><img src="img/copo-pecai.webp" width="373" height="576" alt="Açaí da Péçaí com calda de chocolate"></div>
         </div>
       </div>
+    </section>
 
-      <div class="cena" id="cena">
-        <canvas id="pontos" role="img" aria-label="A logo da Péçaí se monta com pontinhos coloridos. Passe o dedo pra empurrar e toque pra espalhar."></canvas>
-        <div class="foto"><img src="img/copo-pecai.webp" width="373" height="576" alt="Copo da Péçaí com açaí, calda de chocolate escorrendo, morango, kiwi e granola em volta"></div>
-        <p class="dica" aria-hidden="true">Toque na logo</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- WOW 2: a calda escorre e marca cada item do cardápio -->
-  <section class="cardapio" id="cardapio" aria-labelledby="t-cardapio">
-    <div class="wrap">
-      <h2 id="t-cardapio">O que sai do pé</h2>
-      <p class="intro">O básico do pé. No pedido tem mais: barca, milk shake, suco de açaí, salgado, caldo, churros e sobremesa.</p>
-      <div class="grade">
-        <div class="trilho" id="trilho">
-          <span class="fio" aria-hidden="true"></span>
-          <span class="calda" id="calda" aria-hidden="true"></span>
-          <svg class="gota" id="gota" viewBox="0 0 22 28" aria-hidden="true"><path d="M11 0 C 11 8, 22 14, 22 19 A 11 9 0 0 1 0 19 C 0 14, 11 8, 11 0Z" fill="#5a2e1a"/></svg>
-          <article class="item">
-            <h3>Açaí</h3>
-            <p>O carro-chefe. No copo, com fruta, granola e calda por cima.</p>
-            <a class="js-quero" data-cat="Açaí" href="#colha">Ver os açaís</a>
-          </article>
-          <article class="item">
-            <h3>Cupuaçu</h3>
-            <p>O creme do Norte, pra quem é do time cupuaçu.</p>
-            <a class="js-quero" data-cat="Cupuaçu" href="#colha">Pedir cupuaçu</a>
-          </article>
-          <article class="item">
-            <h3>Sorvete</h3>
-            <p>Na taça, montado na hora.</p>
-            <a class="js-quero" data-cat="Sorvetes" href="#colha">Ver os sorvetes</a>
-          </article>
-          <article class="item">
-            <h3>Tapioca</h3>
-            <p>Pra quando a fome pede mais que um doce.</p>
-            <a class="js-quero" data-cat="Tapioca" href="#colha">Pedir tapioca</a>
-          </article>
-          <article class="item">
-            <h3>Lanche</h3>
-            <p>O salgado antes do açaí. Ou depois.</p>
-            <a class="js-quero" data-cat="Lanches" href="#colha">Pedir lanche</a>
-          </article>
+    <!-- WOW 2: as duas medidas enchem de açaí com a rolagem -->
+    <section class="medidas" id="medidas" aria-labelledby="t-medidas">
+      <div class="fixo wrap">
+        <h2 id="t-medidas">Duas medidas.</h2>
+        <div class="baldes">
+          <div class="balde dez">
+            <svg viewBox="0 0 200 220" role="img" aria-label="Embalagem de 10 litros enchendo de açaí">
+              <defs><clipPath id="cDez"><path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z"/></clipPath></defs>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="#efe6f2"/>
+              <g clip-path="url(#cDez)"><g id="nivelDez" style="transform:translateY(190px)">
+                <path d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V240 H0Z" fill="#5e1f73"/>
+                <path d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V40 H0Z" fill="#8d36a8"/>
+              </g></g>
+              <rect x="14" y="20" width="172" height="18" rx="6" fill="#3b0f4a"/>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="none" stroke="#3b0f4a" stroke-width="4"/>
+            </svg>
+            <span class="litros"><span id="lDez">10</span><small>L</small></span>
+          </div>
+          <div class="balde dois">
+            <svg viewBox="0 0 200 220" role="img" aria-label="Embalagem de 2 litros enchendo de açaí">
+              <defs><clipPath id="cDois"><path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z"/></clipPath></defs>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="#efe6f2"/>
+              <g clip-path="url(#cDois)"><g id="nivelDois" style="transform:translateY(190px)">
+                <path d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V240 H0Z" fill="#a84bc4"/>
+                <path d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V40 H0Z" fill="#e070d3"/>
+              </g></g>
+              <rect x="14" y="20" width="172" height="18" rx="6" fill="#3b0f4a"/>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="none" stroke="#3b0f4a" stroke-width="5"/>
+            </svg>
+            <span class="litros"><span id="lDois">2</span><small>L</small></span>
+          </div>
         </div>
-        <div class="lado">
-          <figure>
-            <img src="img/copo-pecai.webp" width="373" height="576" loading="lazy" alt="Copo da Péçaí com açaí e calda de chocolate">
-            <figcaption>Foto da própria Péçaí.</figcaption>
-          </figure>
-        </div>
+        <p class="conta"><span>5 de 2 L = 1 de 10 L</span></p>
+        <p class="nota-ilus">Desenho em escala de volume. Embalagem ilustrativa.</p>
       </div>
-    </div>
-  </section>
-
+    </section>
   </div>
 
-  <!-- WOW 3: colha seu pedido no cacho e jogue no paneiro -->
-  <section class="colha" id="colha" aria-labelledby="t-colha">
+  <!-- WOW 3: monte o pedido, as caixas empilham no palete -->
+  <section class="pedido" id="pedido" aria-labelledby="t-pedido">
     <div class="wrap">
-      <h2 id="t-colha">Colha seu pedido</h2>
-      <p class="intro">Escolha no cardápio e toque na baga de cada item. Ele cai no paneiro e o pedido sai pronto.</p>
+      <h2 id="t-pedido">Monte o pedido.</h2>
       <div class="grade">
         <div>
-          <p class="passo" id="p1">1 de 3: o que vai querer</p>
-          <div class="pedido">
-            <div class="abas" id="abas" role="group" aria-labelledby="p1"></div>
-            <div class="lista" id="lista" aria-live="polite"></div>
-            <div class="paneiro" id="paneiro" aria-live="polite">
-              <p class="vazio" id="vazio">O paneiro está vazio.</p>
-              <div class="dentro" id="dentro"></div>
-            </div>
-            <p class="fonte">Itens do cardápio da Péçaí no iFood. Tamanho, sabor e valor eles confirmam na conversa.</p>
+          <div class="produto"><div><b>10 L</b><span>Açaí</span></div>
+            <div class="qtd"><button type="button" class="menos" data-p="10" data-d="-1" aria-label="Tirar um de 10 litros" disabled>−</button><output id="q10" aria-live="polite">0</output><button type="button" class="mais" data-p="10" data-d="1" aria-label="Pôr um de 10 litros">+</button></div></div>
+          <div class="produto"><div><b>2 L</b><span>Açaí</span></div>
+            <div class="qtd"><button type="button" class="menos" data-p="2" data-d="-1" aria-label="Tirar um de 2 litros" disabled>−</button><output id="q2" aria-live="polite">0</output><button type="button" class="mais" data-p="2" data-d="1" aria-label="Pôr um de 2 litros">+</button></div></div>
+          <div class="palete" aria-hidden="true">
+            <p class="vazio" id="vazio">O palete está vazio.</p>
+            <div class="pilha" id="pilha"></div>
+            <div class="madeira"></div>
           </div>
+          <p class="total">Total <strong><span id="total">0</span> L</strong></p>
         </div>
 
         <div>
           <form class="form" id="form" novalidate>
             <div>
-              <p class="passo" id="p2">2 de 3: como vai receber</p>
-              <div class="troca" role="group" aria-labelledby="p2">
-                <button type="button" aria-pressed="true" data-modo="entrega">Entrega</button>
-                <button type="button" aria-pressed="false" data-modo="retirada">Retirar na loja</button>
+              <p class="passo" id="pFreq">Com que frequência?</p>
+              <div class="chips" role="group" aria-labelledby="pFreq" id="freq">
+                <button type="button" aria-pressed="true" data-v="Só desta vez">Só desta vez</button>
+                <button type="button" aria-pressed="false" data-v="Toda semana">Toda semana</button>
+                <button type="button" aria-pressed="false" data-v="A cada 15 dias">A cada 15 dias</button>
               </div>
             </div>
-            <div id="campo-loja" hidden>
-              <p class="passo" style="color:#e6d6ec">Em qual loja?</p>
-              <div class="troca" role="group" aria-label="Loja pra retirar">
-                <button type="button" aria-pressed="true" data-loja="Parque Jurema">Parque Jurema</button>
-                <button type="button" aria-pressed="false" data-loja="Parque das Nações">Parque das Nações</button>
-              </div>
-            </div>
-            <label class="campo" id="campo-end">Endereço da entrega
-              <input id="endereco" name="endereco" autocomplete="street-address" placeholder="Rua, número e bairro">
-            </label>
-            <label class="campo">Observação (opcional)
-              <input id="obs" name="obs" placeholder="Tamanho, adicionais, sabor do sorvete...">
-            </label>
             <div>
-              <p class="passo">3 de 3: seu nome</p>
-              <label class="campo">Nome
-                <input id="nome" name="nome" autocomplete="given-name" placeholder="Como te chamamos?">
-              </label>
+              <p class="passo" id="pReceb">Como recebe?</p>
+              <div class="chips" role="group" aria-labelledby="pReceb" id="receb">
+                <button type="button" aria-pressed="true" data-v="entrega">Entrega</button>
+                <button type="button" aria-pressed="false" data-v="Parque Jurema">Retiro no Parque Jurema</button>
+                <button type="button" aria-pressed="false" data-v="Parque das Nações">Retiro no Parque das Nações</button>
+              </div>
             </div>
+            <label class="campo" id="campoEnd">Endereço da entrega
+              <input id="endereco" autocomplete="street-address" placeholder="Rua, número, bairro e cidade">
+            </label>
+            <label class="campo">Empresa
+              <input id="empresa" autocomplete="organization" placeholder="Nome do seu comércio">
+            </label>
+            <label class="campo">Seu nome
+              <input id="nome" autocomplete="given-name" placeholder="Com quem a gente fala?">
+            </label>
             <div>
               <p class="previa-rot">A mensagem que vai sair:</p>
               <p class="previa" id="previa"></p>
             </div>
-            <button class="btn btn-pedir js-enviar" type="submit">Pedir pelo WhatsApp</button>
-            <p class="aviso" id="aviso">Abre o WhatsApp da Péçaí com a mensagem pronta. Valores e tempo de entrega eles confirmam na conversa.</p>
+            <button class="btn btn-pedir" type="submit">Pedir pelo WhatsApp</button>
           </form>
           <div class="obrigado" id="obrigado" role="status" tabindex="-1">
-            <h3>Pedido colhido.</h3>
-            <p id="obrigado-txt">Agora é só mandar a mensagem. A Péçaí responde com os valores e o tempo.</p>
-            <button class="btn btn-pedir" type="button" id="denovo" style="margin-top:18px">Fazer outro pedido</button>
+            <h3>Pedido montado.</h3>
+            <p>A mensagem abriu no WhatsApp da Péçaí. É só tocar em enviar.</p>
+            <button class="btn btn-pedir" type="button" id="denovo" style="margin-top:18px">Montar outro</button>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="notas" id="avaliacoes" aria-labelledby="t-notas">
-    <div class="wrap">
-      <p class="nota-grande" aria-hidden="true">4,5</p>
-      <div>
-        <h2 id="t-notas">1,4 mil avaliações no Google</h2>
-        <p class="estrelas" aria-label="4,5 de 5 estrelas"><span aria-hidden="true">★★★★</span><span class="meia" aria-hidden="true">★</span></p>
-        <p>A maior parte das notas é 5 estrelas. Leia o que o pessoal do bairro escreve.</p>
-        <a class="btn btn-linha" href="https://www.google.com/maps/search/?api=1&amp;query=P%C3%A9%C3%A7a%C3%AD+Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Ler as avaliações no Google</a>
       </div>
     </div>
   </section>
@@ -532,99 +376,58 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
   <section class="onde" id="onde" aria-labelledby="t-onde">
     <div class="wrap grade">
       <div>
-        <h2 id="t-onde">Duas lojas em Guarulhos</h2>
-        <p class="info">Entrega ou retirada no local. Gasto médio de R$ 20 a 100 por pessoa, segundo o Google. Antes de sair, confira o horário no Instagram.</p>
+        <h2 id="t-onde">Onde estamos</h2>
         <div class="lojas" role="group" aria-label="Escolha a loja no mapa">
           <article class="loja on" data-mapa="Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000">
             <h3>Parque Jurema</h3>
-            <address>Av. Jurema, 436, Parque Jurema<br>Guarulhos, SP, 07244-000</address>
-            <div class="mini">
-              <button type="button" class="ver" aria-pressed="true">Ver no mapa</button>
-              <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Como chegar</a>
-            </div>
+            <address>Av. Jurema, 436, Guarulhos</address>
+            <div class="mini"><button type="button" class="ver" aria-pressed="true">Ver no mapa</button><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Como chegar</a></div>
           </article>
           <article class="loja" data-mapa="Rua+Campo+Maior,+357+-+Parque+das+Na%C3%A7%C3%B5es,+Guarulhos+-+SP">
             <h3>Parque das Nações</h3>
-            <address>Rua Campo Maior, 357, Parque das Nações<br>Guarulhos, SP</address>
-            <div class="mini">
-              <button type="button" class="ver" aria-pressed="false">Ver no mapa</button>
-              <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Rua+Campo+Maior,+357+-+Parque+das+Na%C3%A7%C3%B5es,+Guarulhos+-+SP" target="_blank" rel="noopener">Como chegar</a>
-              <a href="https://www.ifood.com.br/delivery/guarulhos-sp/pecai---acai-sorvetes--lanches-parque-das-nacoes/8c30e22b-8b78-4158-983c-360e89616f6c" target="_blank" rel="noopener">Pedir no iFood</a>
-            </div>
+            <address>Rua Campo Maior, 357, Guarulhos</address>
+            <div class="mini"><button type="button" class="ver" aria-pressed="false">Ver no mapa</button><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Rua+Campo+Maior,+357+-+Parque+das+Na%C3%A7%C3%B5es,+Guarulhos+-+SP" target="_blank" rel="noopener">Como chegar</a></div>
           </article>
         </div>
-        <div class="acoes">
-          <a class="btn btn-pedir" href="https://wa.me/5511964650080" target="_blank" rel="noopener">WhatsApp (11) 96465-0080</a>
-          <a class="btn btn-linha" href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">@curtapecai</a>
-        </div>
       </div>
-      <div class="mapa" id="mapa-box">
+      <div class="mapa" id="mapaBox">
         <div class="mapa-cartao">
           <svg class="pin" viewBox="0 0 40 52" aria-hidden="true"><path d="M20 0C9 0 0 9 0 20c0 15 20 32 20 32s20-17 20-32C40 9 31 0 20 0z" fill="#3daa48"/><circle cx="20" cy="20" r="8" fill="#fff"/></svg>
-          <p class="mapa-loja" id="mapa-loja">Péçaí Parque Jurema</p>
-          <p class="mapa-end" id="mapa-end">Av. Jurema, 436, Parque Jurema</p>
+          <p class="mapa-loja" id="mapaLoja">Péçaí Parque Jurema</p>
+          <p class="mapa-end" id="mapaEnd">Av. Jurema, 436, Guarulhos</p>
           <div class="mapa-botoes">
-            <a class="btn btn-pedir" id="mapa-abrir" href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Abrir no Google Maps</a>
-            <button class="btn btn-linha" type="button" id="mapa-carregar">Ver o mapa aqui</button>
+            <a class="btn btn-pedir" id="mapaAbrir" href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Abrir no Google Maps</a>
+            <button class="btn btn-linha" type="button" id="mapaCarregar">Ver o mapa aqui</button>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="faq" aria-labelledby="t-faq">
-    <div class="wrap">
-      <h2 id="t-faq">Perguntas de sempre</h2>
-      <details><summary>Vocês entregam?</summary><p>Entregam. Também dá pra pedir e passar na loja pra retirar. No pedido você escolhe.</p></details>
-      <details><summary>Onde ficam as lojas?</summary><p>São duas em Guarulhos: Av. Jurema, 436, no Parque Jurema, e Rua Campo Maior, 357, no Parque das Nações. <a href="#onde">Ver no mapa</a>.</p></details>
-      <details><summary>Qual é o horário?</summary><p>O horário do dia sai no Instagram <a href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">@curtapecai</a>. Confira antes de sair de casa.</p></details>
-      <details><summary>O que tem no cardápio?</summary><p>Açaí (no copo, trufado, marmita de 700 ml e caixa de 10 litros), cupuaçu, sorvete, barca, milk shake, suco de açaí, tapioca, lanche, salgado, caldo, churros e sobremesa. <a href="#colha">Monte o pedido</a>.</p></details>
-      <details><summary>Quanto custa?</summary><p>Pelo Google, o gasto fica entre R$ 20 e 100 por pessoa. Os valores de cada tamanho a Péçaí passa na hora do pedido.</p></details>
-      <details><summary>Como faço o pedido?</summary><p>Monte em <a href="#colha">Colha seu pedido</a>: a mensagem sai pronta e é só enviar.</p></details>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <a class="marca" href="#inicio" aria-label="Péçaí, voltar ao topo"><img src="img/logo-pecai.webp" width="72" height="72" loading="lazy" alt="Logo da Péçaí" style="width:72px;height:72px"></a>
-    <p>Açaí, sorvetes e lanches em Guarulhos, SP.<br>Av. Jurema, 436, Parque Jurema.<br>Rua Campo Maior, 357, Parque das Nações.</p>
+    <a class="marca" href="#inicio" aria-label="Péçaí Atacado, voltar ao topo"><img src="img/logo-pecai.webp" width="56" height="56" loading="lazy" alt="Logo da Péçaí" style="width:56px;height:56px"></a>
     <div class="linha">
       <a href="https://wa.me/5511964650080" target="_blank" rel="noopener">WhatsApp (11) 96465-0080</a>
-      <a href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.facebook.com/curtapecai" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">@curtapecai</a>
       <a href="privacidade.html">Privacidade</a>
     </div>
     <p>Site feito pela GuDev.</p>
   </div>
 </footer>
 
-<div class="flutua" id="flutua"><a class="btn btn-pedir" href="#colha">Fazer pedido</a></div>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="flutua" id="flutua"><a class="btn btn-pedir" href="#pedido">Fazer pedido</a></div>
 
 <script>
 (function(){
-  /* Contato: quando a Péçaí confirmar o WhatsApp, coloque aqui só os números com DDD (ex.: '11999999999').
-     Com o número vazio, o pedido vai pelo direct do Instagram (a mensagem é copiada antes). */
-  var WHATS = '11964650080';
-  var INSTA = 'curtapecai';
-
+  var WHATS = '5511964650080';
   var embed = /[?&]embed\b/.test(location.search);
-  var dentroProposta = window.parent !== window;
-  var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var root = document.documentElement;
   if (embed) root.classList.add('embed');
 
-  /* rótulo do botão segue o canal real */
-  var canal = WHATS ? 'WhatsApp' : 'Instagram';
-  document.querySelectorAll('.js-enviar').forEach(function(b){ b.textContent = 'Pedir pelo ' + canal; });
-
-  /* WOW 1 */
-  var abre = document.querySelector('.abre');
-  function comeca(){ if (!embed) abre.classList.add('vai'); else abre.classList.add('vai'); }
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(comeca); else comeca();
-  setTimeout(comeca, 1200);
-
+  /* WOW 1: logo em bolinhas (mesma técnica da versão anterior) */
   var cena = document.getElementById('cena');
   (function(){
     var cv = document.getElementById('pontos');
@@ -713,240 +516,109 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
     window.addEventListener('resize', function(){ if (window.innerWidth !== larg){ larg = window.innerWidth; monta(); } });
   })();
 
-  /* topo sólido + botão flutuante */
-  var topo = document.getElementById('topo');
-  var flutua = document.getElementById('flutua');
-  var colha = document.getElementById('colha');
-  if (dentroProposta) flutua.style.display = 'none';
 
-  /* WOW 2: a calda escorre com a rolagem */
-  var trilho = document.getElementById('trilho');
-  var calda = document.getElementById('calda');
-  var gota = document.getElementById('gota');
-  var itens = Array.prototype.slice.call(trilho.querySelectorAll('.item'));
-  var ultimoP = -1;
-  function calcula(){
-    var vh = window.innerHeight;
-    topo.classList.toggle('solido', window.scrollY > 40);
-    var rc = colha.getBoundingClientRect();
-    flutua.classList.toggle('on', window.scrollY > vh * 0.7 && !(rc.top < vh && rc.bottom > 0));
+  /* botão "Pedir tabela": já abre o WhatsApp com a mensagem */
+  document.querySelectorAll('.js-tabela').forEach(function(a){
+    a.href = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent('Oi, Péçaí! Vim pelo site. Tenho um comércio e quero a tabela do açaí no atacado (10 L e 2 L).');
+  });
 
-    if (embed) { itens.forEach(function(it){ it.classList.add('pego'); }); return; }
-    var r = trilho.getBoundingClientRect();
-    var p = (vh * 0.62 - r.top) / r.height;
-    p = Math.max(0, Math.min(1, p));
-    if (Math.abs(p - ultimoP) < 0.001) return;
-    ultimoP = p;
-    var h = r.height * p;
-    calda.style.transform = 'scaleY(' + p.toFixed(4) + ')';
-    gota.style.transform = 'translateY(' + h.toFixed(1) + 'px)';
-    itens.forEach(function(it){
-      var y = it.offsetTop + 22;
-      var folga = it.classList.contains('pego') ? -16 : 0; /* folga pra não piscar parado no meio */
-      it.classList.toggle('pego', h + folga > y);
-    });
+  /* topo sólido, botão flutuante */
+  var topo = document.getElementById('topo'), flutua = document.getElementById('flutua'), secPedido = document.getElementById('pedido');
+  if (window.parent !== window) flutua.style.display = 'none';
+  function rolou(){
+    topo.classList.toggle('solido', scrollY > 40);
+    var r = secPedido.getBoundingClientRect();
+    flutua.classList.toggle('on', scrollY > innerHeight * 0.7 && !(r.top < innerHeight && r.bottom > 0));
   }
-  var quadroPedido = false;
-  function pede(){ if (!quadroPedido){ quadroPedido = true; requestAnimationFrame(function(){ quadroPedido = false; calcula(); }); } }
-  window.addEventListener('scroll', pede, {passive:true});
-  var largura = window.innerWidth;
-  window.addEventListener('resize', function(){ if (window.innerWidth !== largura){ largura = window.innerWidth; ultimoP = -1; pede(); } });
-  setInterval(pede, 500);
-  calcula();
+  addEventListener('scroll', rolou, { passive: true }); rolou();
 
-  /* WOW 3: colha seu pedido (cardápio real do iFood da Péçaí, sem preço) */
-  var CARDAPIO = [
-    { cat: 'Açaí', itens: ['Açaí no copo', 'Açaí Supremo Cherry', 'Açaí Truffaninho', 'Marmita de Açaí 700 ml', 'Caixa de açaí 10 litros'] },
-    { cat: 'Cupuaçu', itens: ['Cupuaçu no copo'] },
-    { cat: 'Sorvetes', itens: ['Sorvete Supremo Leitinho', 'Sunday', 'Outro sorvete'] },
-    { cat: 'Barca', itens: ['Barca 40 cm'] },
-    { cat: 'Milk shake', itens: ['Milk shake'] },
-    { cat: 'Sucos', itens: ['Suco de Açaí 500 ml'] },
-    { cat: 'Tapioca', itens: ['Tapioca'] },
-    { cat: 'Lanches', itens: ['Lanche'] },
-    { cat: 'Salgados', itens: ['Salgado'] },
-    { cat: 'Caldos', itens: ['Caldo'] },
-    { cat: 'Churros', itens: ['Churros'] },
-    { cat: 'Sobremesas', itens: ['Sobremesa'] }
-  ];
-  var pedido = {};              /* item -> quantidade */
-  var ordem = [];               /* ordem em que os itens entraram */
-  var abaAtual = 'Açaí';
-  var modo = 'entrega';
-  var loja = 'Parque Jurema';
-  var abas = document.getElementById('abas');
-  var lista = document.getElementById('lista');
-  var dentro = document.getElementById('dentro');
-  var vazio = document.getElementById('vazio');
-  var paneiro = document.getElementById('paneiro');
-  var previa = document.getElementById('previa');
-  var endereco = document.getElementById('endereco');
-  var nome = document.getElementById('nome');
-  var obs = document.getElementById('obs');
-  var campoEnd = document.getElementById('campo-end');
-  var form = document.getElementById('form');
-  var obrigado = document.getElementById('obrigado');
-
-  function limpa(s){ return String(s).replace(/\s+/g, ' ').trim().slice(0, 160); }
-  function catDe(item){ for (var i = 0; i < CARDAPIO.length; i++) if (CARDAPIO[i].itens.indexOf(item) > -1) return CARDAPIO[i]; }
+  /* WOW 3: pedido */
+  var qtd = { 10: 0, 2: 0 }, freq = 'Só desta vez', receb = 'entrega';
+  var pilha = document.getElementById('pilha'), vazio = document.getElementById('vazio');
+  var previa = document.getElementById('previa'), endereco = document.getElementById('endereco');
+  var empresa = document.getElementById('empresa'), nome = document.getElementById('nome');
+  var campoEnd = document.getElementById('campoEnd'), form = document.getElementById('form'), obrigado = document.getElementById('obrigado');
+  function limpa(s){ return String(s).replace(/\s+/g, ' ').trim().slice(0, 120); }
   function mensagem(){
     var m = 'Oi, Péçaí! Vim pelo site.\n';
-    if (ordem.length){ m += 'Quero:\n'; ordem.forEach(function(it){ m += '- ' + pedido[it] + 'x ' + it + '\n'; }); }
-    else m += 'Quero ver o cardápio de hoje.\n';
-    if (limpa(obs.value)) m += 'Obs.: ' + limpa(obs.value) + '\n';
-    if (modo === 'entrega') m += 'É pra entrega' + (limpa(endereco.value) ? ' em: ' + limpa(endereco.value) : '') + '.\n';
-    else m += 'Vou retirar na loja do ' + loja + '.\n';
+    if (limpa(empresa.value)) m += 'Empresa: ' + limpa(empresa.value) + '.\n';
+    if (qtd[10] || qtd[2]) {
+      m += 'Quero açaí no atacado:\n';
+      if (qtd[10]) m += '- ' + qtd[10] + 'x 10 L\n';
+      if (qtd[2]) m += '- ' + qtd[2] + 'x 2 L\n';
+      m += 'Total: ' + (qtd[10] * 10 + qtd[2] * 2) + ' litros.\n';
+    } else m += 'Quero a tabela do açaí no atacado (10 L e 2 L).\n';
+    m += 'Frequência: ' + freq.toLowerCase() + '.\n';
+    if (receb === 'entrega') m += 'Entrega' + (limpa(endereco.value) ? ' em: ' + limpa(endereco.value) : '') + '.\n';
+    else m += 'Retiro na loja do ' + receb + '.\n';
     if (limpa(nome.value)) m += 'Meu nome é ' + limpa(nome.value) + '.\n';
-    m += 'Me passa os tamanhos e os valores?';
+    m += 'Pode me mandar os valores?';
     return m;
   }
-  function desenhaAbas(){
-    abas.textContent = '';
-    CARDAPIO.forEach(function(c){
-      var b = document.createElement('button');
-      b.type = 'button'; b.textContent = c.cat;
-      b.setAttribute('aria-pressed', c.cat === abaAtual ? 'true' : 'false');
-      var n = c.itens.reduce(function(t, it){ return t + (pedido[it] || 0); }, 0);
-      if (n){ var s = document.createElement('span'); s.className = 'n'; s.textContent = n; b.appendChild(s); b.setAttribute('aria-label', c.cat + ', ' + n + ' no pedido'); }
-      b.addEventListener('click', function(){ abaAtual = c.cat; desenhaAbas(); desenhaLista(); });
-      abas.appendChild(b);
+  function desenha(novo){
+    pilha.textContent = '';
+    var n = 0;
+    [10, 2].forEach(function(p){
+      for (var i = 0; i < qtd[p]; i++){
+        var c = document.createElement('span'); c.className = 'cx ' + (p === 10 ? 'g' : 'p'); c.textContent = p + 'L';
+        if (!(novo === p && i === qtd[p] - 1)) c.style.animation = 'none';
+        pilha.appendChild(c); n++;
+      }
     });
+    vazio.style.display = n ? 'none' : '';
+    document.getElementById('q10').textContent = qtd[10];
+    document.getElementById('q2').textContent = qtd[2];
+    document.querySelectorAll('.qtd .menos').forEach(function(b){ b.disabled = !qtd[b.dataset.p]; });
+    document.getElementById('total').textContent = qtd[10] * 10 + qtd[2] * 2;
+    previa.textContent = mensagem();
   }
-  function desenhaLista(){
-    lista.textContent = '';
-    var c = CARDAPIO.filter(function(x){ return x.cat === abaAtual; })[0];
-    c.itens.forEach(function(it){
-      var q = pedido[it] || 0;
-      var l = document.createElement('div'); l.className = 'linha';
-      var nm = document.createElement('span'); nm.className = 'nome'; nm.textContent = it;
-      if (c.itens.length === 1 || /^Outro/.test(it)){ var nt = document.createElement('span'); nt.className = 'nota'; nt.textContent = 'Sabor e tamanho você combina na conversa'; nm.appendChild(nt); }
-      var qd = document.createElement('div'); qd.className = 'qtd';
-      var me = document.createElement('button'); me.type = 'button'; me.className = 'menos'; me.textContent = '−'; me.disabled = !q; me.setAttribute('aria-label', 'Tirar um ' + it);
-      var o = document.createElement('output'); o.textContent = q; o.setAttribute('aria-label', q + ' ' + it);
-      var ma = document.createElement('button'); ma.type = 'button'; ma.className = 'mais'; ma.textContent = '+'; ma.setAttribute('aria-label', 'Pôr um ' + it + ' no paneiro');
-      me.addEventListener('click', function(){ muda(it, -1); });
-      ma.addEventListener('click', function(){ voa(ma); muda(it, 1, true); });
-      qd.appendChild(me); qd.appendChild(o); qd.appendChild(ma);
-      l.appendChild(nm); l.appendChild(qd); lista.appendChild(l);
-    });
-  }
-  function desenhaPaneiro(){
-    dentro.textContent = '';
-    ordem.forEach(function(it){
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.textContent = pedido[it] + '× ' + it;
-      b.setAttribute('aria-label', 'Tirar um ' + it + ' do paneiro');
-      b.addEventListener('click', function(){ muda(it, -1); });
-      dentro.appendChild(b);
-    });
-    vazio.style.display = ordem.length ? 'none' : '';
-  }
-  function atualiza(){ desenhaAbas(); desenhaLista(); desenhaPaneiro(); previa.textContent = mensagem(); }
-  function muda(it, d, atrasa){
-    var q = Math.max(0, Math.min(20, (pedido[it] || 0) + d));
-    if (q){ if (!pedido[it]) ordem.push(it); pedido[it] = q; }
-    else { delete pedido[it]; ordem = ordem.filter(function(x){ return x !== it; }); }
-    desenhaAbas(); desenhaLista(); previa.textContent = mensagem();
-    function cai(){ desenhaPaneiro(); if (d > 0) dispatchEvent(new CustomEvent('pecai:caiu')); }
-    if (atrasa && !reduz) setTimeout(cai, 380); else cai();
-  }
-  function voa(botao){
-    if (reduz) return;
-    var a = botao.getBoundingClientRect(), b = paneiro.getBoundingClientRect();
-    var d = document.createElement('span');
-    d.className = 'voa';
-    document.body.appendChild(d);
-    var x0 = a.left + a.width/2 - 13, y0 = a.top + a.height/2 - 13;
-    var x1 = b.left + b.width/2 - 13, y1 = b.top + 40;
-    d.style.transform = 'translate(' + x0 + 'px,' + y0 + 'px)';
-    var t0 = null;
-    function passo(t){
-      if (!t0) t0 = t;
-      var k = Math.min(1, (t - t0) / 420);
-      d.style.transform = 'translate(' + (x0 + (x1 - x0) * k) + 'px,' + (y0 + (y1 - y0) * k * k) + 'px) scale(' + (1 - k * .4) + ')';
-      if (k < 1) requestAnimationFrame(passo); else d.remove();
-    }
-    requestAnimationFrame(passo);
-    setTimeout(function(){ if (d.parentNode) d.remove(); }, 1000);
-  }
-  document.querySelectorAll('.js-quero').forEach(function(a){
-    a.addEventListener('click', function(){ abaAtual = a.dataset.cat; desenhaAbas(); desenhaLista(); });
-  });
-  obs.addEventListener('input', function(){ previa.textContent = mensagem(); });
-  document.querySelectorAll('.troca button[data-modo]').forEach(function(b){
+  document.querySelectorAll('.qtd button').forEach(function(b){
     b.addEventListener('click', function(){
-      modo = b.dataset.modo;
-      document.getElementById('campo-loja').hidden = modo !== 'retirada';
-      document.querySelectorAll('.troca button[data-modo]').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      campoEnd.style.display = modo === 'entrega' ? '' : 'none';
-      atualiza();
+      var p = +b.dataset.p, d = +b.dataset.d;
+      qtd[p] = Math.max(0, Math.min(40, qtd[p] + d));
+      desenha(d > 0 ? p : null);
+      if (d > 0 && navigator.vibrate) { try { navigator.vibrate(8); } catch(e){} }
     });
   });
-  document.querySelectorAll('.troca button[data-loja]').forEach(function(b){
-    b.addEventListener('click', function(){
-      loja = b.dataset.loja;
-      document.querySelectorAll('.troca button[data-loja]').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      atualiza();
+  function grupo(id, cb){
+    var g = document.getElementById(id);
+    g.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b) return;
+      g.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      cb(b.dataset.v); previa.textContent = mensagem();
     });
+  }
+  grupo('freq', function(v){ freq = v; });
+  grupo('receb', function(v){ receb = v; campoEnd.style.display = v === 'entrega' ? '' : 'none'; });
+  [endereco, empresa, nome].forEach(function(i){ i.addEventListener('input', function(){ previa.textContent = mensagem(); }); });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    window.open('https://wa.me/' + WHATS + '?text=' + encodeURIComponent(mensagem()), '_blank', 'noopener');
+    form.style.display = 'none'; obrigado.classList.add('on'); obrigado.focus();
   });
-  /* lojas: cartão do mapa; o mapa do Google só carrega se a pessoa pedir */
-  var mapaBox = document.getElementById('mapa-box'), mapa = null, lojaMapa = document.querySelector('.loja.on');
+  document.getElementById('denovo').addEventListener('click', function(){
+    qtd = { 10: 0, 2: 0 }; empresa.value = nome.value = endereco.value = '';
+    obrigado.classList.remove('on'); form.style.display = ''; desenha();
+  });
+  desenha();
+
+  /* lojas e mapa (o iframe só nasce se a pessoa pedir) */
+  var mapaBox = document.getElementById('mapaBox'), mapa = null, lojaMapa = document.querySelector('.loja.on');
   function urlMapa(l){ return 'https://www.google.com/maps?q=' + l.dataset.mapa + '&output=embed'; }
-  document.getElementById('mapa-carregar').addEventListener('click', function(){
-    mapa = document.createElement('iframe');
-    mapa.title = 'Mapa da loja Péçaí escolhida';
-    mapa.referrerPolicy = 'no-referrer-when-downgrade';
-    mapa.src = urlMapa(lojaMapa);
-    mapaBox.appendChild(mapa);
+  document.getElementById('mapaCarregar').addEventListener('click', function(){
+    mapa = document.createElement('iframe'); mapa.title = 'Mapa da loja Péçaí escolhida';
+    mapa.referrerPolicy = 'no-referrer-when-downgrade'; mapa.src = urlMapa(lojaMapa); mapaBox.appendChild(mapa);
   });
   document.querySelectorAll('.loja').forEach(function(l){
     l.querySelector('.ver').addEventListener('click', function(){
-      document.querySelectorAll('.loja').forEach(function(x){
-        x.classList.toggle('on', x === l);
-        x.querySelector('.ver').setAttribute('aria-pressed', x === l ? 'true' : 'false');
-      });
       lojaMapa = l;
-      document.getElementById('mapa-loja').textContent = 'Péçaí ' + l.querySelector('h3').textContent;
-      document.getElementById('mapa-end').textContent = l.querySelector('address').firstChild.textContent.trim();
-      document.getElementById('mapa-abrir').href = 'https://www.google.com/maps/search/?api=1&query=' + l.dataset.mapa;
+      document.querySelectorAll('.loja').forEach(function(x){ x.classList.toggle('on', x === l); x.querySelector('.ver').setAttribute('aria-pressed', x === l ? 'true' : 'false'); });
+      document.getElementById('mapaLoja').textContent = 'Péçaí ' + l.querySelector('h3').textContent;
+      document.getElementById('mapaEnd').textContent = l.querySelector('address').textContent;
+      document.getElementById('mapaAbrir').href = 'https://www.google.com/maps/search/?api=1&query=' + l.dataset.mapa;
       if (mapa) mapa.src = urlMapa(l);
     });
   });
-  endereco.addEventListener('input', atualiza);
-  nome.addEventListener('input', atualiza);
-
-  var toast = document.getElementById('toast');
-  function avisa(t){ toast.textContent = t; toast.classList.add('on'); setTimeout(function(){ toast.classList.remove('on'); }, 3800); }
-
-  function copia(texto){
-    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(texto).catch(function(){});
-    var ta = document.createElement('textarea'); ta.value = texto; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(e){} ta.remove();
-    return Promise.resolve();
-  }
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var msg = mensagem();
-    var txt = document.getElementById('obrigado-txt');
-    if (WHATS) {
-      window.open('https://wa.me/55' + WHATS.replace(/\D/g, '') + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
-      txt.textContent = 'A mensagem abriu no WhatsApp da Péçaí. É só tocar em enviar.';
-    } else {
-      var janela = window.open('https://ig.me/m/' + INSTA, '_blank', 'noopener');
-      copia(msg).then(function(){ avisa('Mensagem copiada. Cole no direct da Péçaí.'); });
-      txt.textContent = 'Copiamos a mensagem. No direct da Péçaí, é só colar e enviar.';
-    }
-    form.style.display = 'none';
-    obrigado.classList.add('on');
-    obrigado.focus();
-  });
-  document.getElementById('denovo').addEventListener('click', function(){
-    pedido = {}; ordem = []; nome.value = ''; endereco.value = ''; obs.value = '';
-    obrigado.classList.remove('on'); form.style.display = '';
-    atualiza();
-  });
-  atualiza();
 })();
 </script>
 
@@ -954,11 +626,7 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
 <script>
-/* =====================================================================
-   CAMADA DE MOVIMENTO
-   Ordem: cortina (só 1ª visita) > entrada do herói > rolagem > microinterações.
-   Tudo aqui é extra: se o GSAP não carregar, o site funciona igual, parado.
-   ===================================================================== */
+/* CAMADA DE MOVIMENTO ("viscoso como açaí"). Tudo extra: sem GSAP o site funciona parado. */
 (function(){
   'use strict';
   var root = document.documentElement;
@@ -969,216 +637,141 @@ footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
   function pronto(){ root.classList.remove('anima-espera', 'carregando'); dispatchEvent(new Event('pecai:pronto')); }
   if (!window.gsap || !window.ScrollTrigger) { pronto(); return; }
   gsap.registerPlugin(ScrollTrigger);
-  var POLPA = 'expo.out';   // a mesma família da --polpa-out do CSS
+  var POLPA = 'expo.out';
   try { sessionStorage.setItem('pecai-viu', '1'); } catch(e){}
 
-  /* ---------- divisores de texto (sem plugin: menos peso) ---------- */
   function divideLetras(el){
     var letras = [];
     Array.prototype.slice.call(el.childNodes).forEach(function(no){
       if (no.nodeType === 3) {
         var frag = document.createDocumentFragment();
         no.textContent.split('').forEach(function(c){
-          var m = document.createElement('span'); m.className = 'mascara';
+          var m = document.createElement('span'); m.className = 'mascara'; m.setAttribute('aria-hidden', 'true');
           var l = document.createElement('span'); l.textContent = c; m.appendChild(l); frag.appendChild(m); letras.push(l);
         });
         no.parentNode.replaceChild(frag, no);
-      } else if (no.nodeType === 1) { letras = letras.concat(divideLetras(no)); }
+      } else if (no.nodeType === 1) letras = letras.concat(divideLetras(no));
     });
     return letras;
   }
-  function dividePalavras(el, comMascara){
-    var txt = el.textContent.trim().split(/\s+/); el.textContent = '';
-    el.setAttribute('aria-label', txt.join(' '));
+  function dividePalavras(el, mascara){
+    var txt = el.textContent.trim().split(/\s+/); el.textContent = ''; el.setAttribute('aria-label', txt.join(' '));
     return txt.map(function(w, i){
       var fora = document.createElement('span'); fora.setAttribute('aria-hidden', 'true');
-      var dentro = document.createElement('span'); dentro.textContent = w;
-      if (comMascara) { fora.className = 'mascara'; fora.appendChild(dentro); }
-      else { fora.className = 'palavra-blur'; fora.textContent = w; dentro = fora; }
+      var dentro = fora;
+      if (mascara) { fora.className = 'mascara'; dentro = document.createElement('span'); dentro.textContent = w; fora.appendChild(dentro); }
+      else { fora.className = 'palavra-blur'; fora.textContent = w; }
       el.appendChild(fora); if (i < txt.length - 1) el.appendChild(document.createTextNode(' '));
       return dentro;
     });
   }
 
-  /* ---------- rolagem macia só no computador ---------- */
   var lenis = null;
   if (fino && !reduz && !embed && innerWidth > 900 && window.Lenis) {
     lenis = new Lenis({ lerp: 0.09 });
     lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.add(function(t){ lenis.raf(t * 1000); }); gsap.ticker.lagSmoothing(0);
     root.style.scrollBehavior = 'auto';
     document.querySelectorAll('a[href^="#"]').forEach(function(a){
-      a.addEventListener('click', function(e){
-        var alvo = document.querySelector(a.getAttribute('href'));
-        if (alvo) { e.preventDefault(); lenis.scrollTo(alvo, { offset: -10, duration: 1.4 }); }
-      });
+      a.addEventListener('click', function(e){ var alvo = document.querySelector(a.getAttribute('href')); if (alvo) { e.preventDefault(); lenis.scrollTo(alvo, { offset: -10, duration: 1.4 }); } });
     });
   }
 
-  /* ---------- 1. ENTRADA: cortina + herói ---------- */
-  var h1 = document.getElementById('titulo');
+  /* 1. entrada */
+  var h1 = document.getElementById('titulo'); h1.setAttribute('aria-label', 'Péçaí');
   var letras = divideLetras(h1);
-  h1.setAttribute('aria-label', 'Péçaí');
-  letras.forEach(function(l){ l.parentNode.setAttribute('aria-hidden', 'true'); });
-  var frase = document.querySelector('.texto-abre .frase');
-  var palavras = dividePalavras(frase, false);
-
-  root.classList.remove('anima-espera');   // a timeline abaixo assume o estado inicial (from() renderiza na hora)
-  var heroi = gsap.timeline({ paused: true, defaults: { ease: POLPA } });
-  heroi
-    .addLabel('ini')
-    .from('.abre .luz', { opacity: 0, duration: 2 }, 'ini')
-    .from('.texto-abre .selo', { y: 18, opacity: 0, duration: 1 }, 'ini+=.05')
-    .from(letras, { yPercent: 110, rotate: 8, duration: 1.3, stagger: 0.045 }, 'ini+=.1')
-    .from(palavras, { opacity: 0, y: 10, filter: 'blur(10px)', duration: 1, stagger: 0.07 }, 'ini+=.45')
-    .from('.texto-abre .sub', { opacity: 0, y: 16, duration: 1 }, 'ini+=.7')
-    .from('.texto-abre .acoes > *', { opacity: 0, y: 16, duration: 1, stagger: 0.08 }, 'ini+=.8')
-    .from('.abre .cena', { opacity: 0, scale: 0.92, duration: 1.4 }, 'ini+=.2')
-    .add(function(){ dispatchEvent(new Event('pecai:pronto')); }, 'ini+=.25');
-
-  function soltaHeroi(){
-    if (embed || reduz) { heroi.progress(1); dispatchEvent(new Event('pecai:pronto')); }
-    else heroi.play();
-  }
-
+  var palavras = dividePalavras(document.querySelector('.texto-abre .frase'), false);
+  root.classList.remove('anima-espera');   // antes da timeline: o from() guarda o valor final na hora
+  var heroi = gsap.timeline({ paused: true, defaults: { ease: POLPA } })
+    .from('.abre .luz', { opacity: 0, duration: 2 }, 0)
+    .from('.texto-abre .selo', { y: 18, opacity: 0, duration: 1 }, 0.05)
+    .from(letras, { yPercent: 110, rotate: 8, duration: 1.3, stagger: 0.05 }, 0.1)
+    .from(palavras, { opacity: 0, y: 10, filter: 'blur(10px)', duration: 1, stagger: 0.08 }, 0.45)
+    .from('.texto-abre .sub', { opacity: 0, y: 16, duration: 1 }, 0.7)
+    .from('.texto-abre .acoes > *', { opacity: 0, y: 16, duration: 1, stagger: 0.08 }, 0.8)
+    .from('.abre .cena', { opacity: 0, scale: 0.92, duration: 1.4 }, 0.2)
+    .add(function(){ dispatchEvent(new Event('pecai:pronto')); }, 0.25);
+  function soltaHeroi(){ if (embed || reduz) { heroi.progress(1); dispatchEvent(new Event('pecai:pronto')); } else heroi.play(); }
   if (root.classList.contains('carregando') && !embed && !reduz) {
-    var carga = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
-    carga
-      .to('#logoCheia', { clipPath: 'inset(0% 0 0 0)', duration: 0.9 })         // a logo enche de açaí de baixo pra cima
+    gsap.timeline({ defaults: { ease: 'power3.inOut' } })
+      .to('#logoCheia', { clipPath: 'inset(0% 0 0 0)', duration: 0.9 })
       .to('#carrega .logo-carga', { scale: 0.9, opacity: 0, duration: 0.45, ease: 'power2.in' }, '+=.1')
-      .to('#carrega', { yPercent: -112, duration: 1, ease: 'expo.inOut' }, '-=.2')   // a cortina sobe e as gotas da borda passam por último
+      .to('#carrega', { yPercent: -112, duration: 1, ease: 'expo.inOut' }, '-=.2')
       .add(function(){ root.classList.remove('carregando'); gsap.set('#carrega', { display: 'none' }); }, '-=.05')
       .add(soltaHeroi, '-=.55');
-  } else {
-    root.classList.remove('carregando');
-    (document.fonts ? document.fonts.ready : Promise.resolve()).then(soltaHeroi);
+  } else { root.classList.remove('carregando'); (document.fonts ? document.fonts.ready : Promise.resolve()).then(soltaHeroi); }
+
+  /* WOW 2: as embalagens enchem com a rolagem e os litros contam (vale também sem animação: estado final cheio) */
+  var nDez = document.getElementById('nivelDez'), nDois = document.getElementById('nivelDois');
+  var lDez = document.getElementById('lDez'), lDois = document.getElementById('lDois');
+  function enche(p){
+    var a = Math.min(1, p / 0.8);                 // termina de encher em 80% da seção e fica cheio
+    gsap.set(nDez, { y: 190 * (1 - a) }); gsap.set(nDois, { y: 190 * (1 - a) });
+    lDez.textContent = Math.round(10 * a); lDois.textContent = (2 * a).toFixed(a < 1 ? 1 : 0).replace('.', ',');
   }
+  if (reduz || embed) { enche(1); ScrollTrigger.refresh(); return; }
+  enche(0);
+  ScrollTrigger.create({ trigger: '#medidas', start: 'top 60%', end: 'bottom bottom', scrub: 0.5, onUpdate: function(st){ enche(st.progress); } });
+  gsap.from('.conta', { opacity: 0, y: 12, duration: 0.9, ease: POLPA, scrollTrigger: { trigger: '#medidas', start: '55% bottom', once: true } });
 
-  if (reduz || embed) { ScrollTrigger.refresh(); return; }
-
-  /* ---------- 2. ROLAGEM ---------- */
-  // barra de progresso
-  var barra = document.getElementById('progresso');
-  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: function(st){ barra.style.transform = 'scaleX(' + st.progress.toFixed(4) + ')'; } });
-
-  // topo some ao descer e volta ao subir
-  var topo = document.getElementById('topo');
+  /* 2. rolagem */
+  var barra = document.getElementById('progresso'), topo = document.getElementById('topo');
   ScrollTrigger.create({ start: 0, end: 'max', onUpdate: function(st){
+    barra.style.transform = 'scaleX(' + st.progress.toFixed(4) + ')';
     topo.classList.toggle('some', st.direction === 1 && st.scroll() > innerHeight * 0.8);
   }});
-
-  // herói fica preso e a folha do cardápio sobe por cima dele (transição de seção)
   var palco = document.getElementById('palcoAbre'), abre = document.querySelector('.abre');
   function topoAbre(){ palco.style.setProperty('--abre-top', Math.min(0, innerHeight - abre.offsetHeight) + 'px'); }
   topoAbre(); addEventListener('resize', topoAbre);
-  gsap.to('.abre .wrap', {
-    yPercent: -10, scale: 0.94, opacity: 0.15, ease: 'none',
-    scrollTrigger: { trigger: '#cardapio', start: 'top bottom', end: 'top 20%', scrub: true }
-  });
-
-  // títulos de seção: palavras sobem de dentro da máscara (o único "reveal" do site, de propósito)
-  gsap.utils.toArray('.cardapio h2, .colha h2, .notas h2, .onde h2, .faq h2').forEach(function(h){
+  gsap.to('.abre .wrap', { yPercent: -10, scale: 0.94, opacity: 0.15, ease: 'none', scrollTrigger: { trigger: '#medidas', start: 'top bottom', end: 'top 20%', scrub: true } });
+  gsap.utils.toArray('.medidas h2, .pedido h2, .onde h2').forEach(function(h){
     var ws = dividePalavras(h, true);
-    gsap.from(ws, { yPercent: 110, duration: 1.1, ease: POLPA, stagger: 0.06, scrollTrigger: { trigger: h, start: 'top 88%', once: true } });
+    gsap.from(ws, { yPercent: 110, duration: 1.1, ease: POLPA, stagger: 0.07, scrollTrigger: { trigger: h, start: 'top 88%', once: true } });
   });
 
-  // cardápio: a foto lateral abre como uma gota e respira com a rolagem (só no computador, onde ela existe)
-  var mm = gsap.matchMedia();
-  mm.add('(min-width: 900px)', function(){
-    gsap.fromTo('.cardapio .lado figure', { clipPath: 'inset(18% 14% 30% 14% round 120px)' },
-      { clipPath: 'inset(0% 0% 0% 0% round 22px)', ease: 'none', scrollTrigger: { trigger: '.cardapio .grade', start: 'top 85%', end: 'top 30%', scrub: true } });
-    gsap.fromTo('.cardapio .lado figure img', { scale: 1.2, yPercent: -4 },
-      { scale: 1, yPercent: 4, ease: 'none', scrollTrigger: { trigger: '.cardapio .grade', start: 'top bottom', end: 'bottom top', scrub: true } });
-  });
-
-  // notas: o 4,5 conta de verdade e as estrelas acendem uma por uma
-  var nota = document.querySelector('.nota-grande');
-  var estrelas = document.querySelector('.notas .estrelas');
-  var cheias = estrelas.querySelector('span');
-  var txtCheias = cheias.textContent; cheias.textContent = '';
-  txtCheias.split('').forEach(function(c){ var e = document.createElement('span'); e.textContent = c; cheias.appendChild(e); });
-  var cont = { v: 0 };
-  gsap.timeline({ scrollTrigger: { trigger: '.notas', start: 'top 75%', once: true } })
-    .to(cont, { v: 4.5, duration: 1.6, ease: 'power3.out', onUpdate: function(){ nota.textContent = cont.v.toFixed(1).replace('.', ','); } })
-    .from(estrelas.querySelectorAll('span span, .meia'), { scale: 0, rotate: -40, duration: 0.7, ease: 'back.out(2.2)', stagger: 0.09 }, 0.3);
-
-  /* ---------- 3. MICROINTERAÇÕES ---------- */
-  // gota no clique (celular e computador): a resposta é imediata, a animação vem junto
+  /* 3. microinterações */
   document.addEventListener('pointerdown', function(e){
     var b = e.target.closest('.btn'); if (!b) return;
-    var r = b.getBoundingClientRect();
-    var g = document.createElement('span'); g.className = 'gota-clique';
+    var r = b.getBoundingClientRect(), g = document.createElement('span'); g.className = 'gota-clique';
     g.style.setProperty('--gx', (e.clientX - r.left) + 'px'); g.style.setProperty('--gy', (e.clientY - r.top) + 'px');
     b.appendChild(g); setTimeout(function(){ g.remove(); }, 650);
   });
-
-  // pedido: o paneiro balança quando o item cai, e o celular dá um toque leve
-  var paneiro = document.getElementById('paneiro');
-  addEventListener('pecai:caiu', function(){
-    paneiro.classList.remove('balanca'); void paneiro.offsetWidth; paneiro.classList.add('balanca');
-    if (navigator.vibrate) { try { navigator.vibrate(8); } catch(e){} }
-  });
-
-  // obrigado: abre como um círculo que nasce do botão de enviar
-  var form = document.getElementById('form'), obrigado = document.getElementById('obrigado');
-  var ultimoToque = { x: 0, y: 0 };
-  form.addEventListener('pointerdown', function(e){ ultimoToque = { x: e.clientX, y: e.clientY }; }, true);
+  var form = document.getElementById('form'), obrigado = document.getElementById('obrigado'), toque = { x: 0, y: 0 };
+  form.addEventListener('pointerdown', function(e){ toque = { x: e.clientX, y: e.clientY }; }, true);
   form.addEventListener('submit', function(){
     requestAnimationFrame(function(){
       var r = obrigado.getBoundingClientRect();
-      var x = Math.max(0, Math.min(r.width, ultimoToque.x - r.left)), y = Math.max(0, Math.min(r.height, ultimoToque.y - r.top));
-      if (!ultimoToque.x) { x = r.width / 2; y = r.height; }
+      var x = toque.x ? Math.max(0, Math.min(r.width, toque.x - r.left)) : r.width / 2, y = toque.y ? Math.max(0, Math.min(r.height, toque.y - r.top)) : r.height;
       gsap.fromTo(obrigado, { clipPath: 'circle(0px at ' + x + 'px ' + y + 'px)' }, { clipPath: 'circle(150% at ' + x + 'px ' + y + 'px)', duration: 1.1, ease: 'expo.inOut', clearProps: 'clipPath' });
       gsap.from(obrigado.children, { y: 24, opacity: 0, duration: 0.9, ease: POLPA, stagger: 0.08, delay: 0.35 });
     });
   });
-
-  // mapa: o pin quica quando troca de loja
   document.querySelectorAll('.loja .ver').forEach(function(b){
     b.addEventListener('click', function(){
-      gsap.fromTo('.mapa-cartao .pin', { y: -26, scaleY: 1.1 }, { y: 0, scaleY: 1, duration: 0.9, ease: 'bounce.out', transformOrigin: '50% 100%' });
-      gsap.fromTo(['#mapa-loja', '#mapa-end'], { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: POLPA, stagger: 0.06 });
+      gsap.fromTo('.mapa-cartao .pin', { y: -26 }, { y: 0, duration: 0.9, ease: 'bounce.out' });
+      gsap.fromTo(['#mapaLoja', '#mapaEnd'], { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: POLPA, stagger: 0.06 });
     });
   });
 
-  // FAQ: o + gira e a resposta escorre (CSS); aqui só fecha as outras pra lista não virar um muro
-  document.querySelectorAll('.faq details').forEach(function(d){
-    d.addEventListener('toggle', function(){ if (d.open) document.querySelectorAll('.faq details[open]').forEach(function(o){ if (o !== d) o.open = false; }); });
-  });
-
-  if (!fino) { ScrollTrigger.refresh(); return; }
-
-  /* ---------- 4. SÓ COM MOUSE ---------- */
-  // brilho que segue o mouse nos botões
-  document.addEventListener('pointermove', function(e){
-    var b = e.target.closest && e.target.closest('.btn, .loja'); if (!b) return;
-    var r = b.getBoundingClientRect();
-    b.style.setProperty('--mx', (e.clientX - r.left) + 'px'); b.style.setProperty('--my', (e.clientY - r.top) + 'px');
-  }, { passive: true });
-
-  // botões de pedido: magnéticos, bem de leve (quickTo = uma tween reaproveitada)
-  document.querySelectorAll('.btn-pedir').forEach(function(b){
-    var qx = gsap.quickTo(b, 'x', { duration: 0.6, ease: 'power3.out' }), qy = gsap.quickTo(b, 'y', { duration: 0.6, ease: 'power3.out' });
-    b.addEventListener('pointermove', function(e){ var r = b.getBoundingClientRect(); qx((e.clientX - r.left - r.width / 2) * 0.22); qy((e.clientY - r.top - r.height / 2) * 0.3); });
-    b.addEventListener('pointerleave', function(){ gsap.to(b, { x: 0, y: 0, duration: 0.9, ease: 'elastic.out(1, .4)' }); });
-  });
-
-  // cartões de loja: inclinação 3D com mola
-  document.querySelectorAll('.loja').forEach(function(c){
-    var rx = gsap.quickTo(c, 'rotationX', { duration: 0.7, ease: 'power3.out' }), ry = gsap.quickTo(c, 'rotationY', { duration: 0.7, ease: 'power3.out' });
-    c.addEventListener('pointermove', function(e){ var r = c.getBoundingClientRect(); ry(((e.clientX - r.left) / r.width - 0.5) * 8); rx(((e.clientY - r.top) / r.height - 0.5) * -8); });
-    c.addEventListener('pointerleave', function(){ rx(0); ry(0); });
-  });
-
-  // herói: a cena da logo ganha profundidade com o mouse (camadas em velocidades diferentes)
-  var cx = gsap.quickTo('.abre .cena', 'x', { duration: 1.2, ease: 'power3.out' }), cy = gsap.quickTo('.abre .cena', 'y', { duration: 1.2, ease: 'power3.out' });
-  var tx = gsap.quickTo('.texto-abre', 'x', { duration: 1.4, ease: 'power3.out' });
-  abre.addEventListener('pointermove', function(e){
-    var nx = e.clientX / innerWidth - 0.5, ny = e.clientY / innerHeight - 0.5;
-    cx(nx * -18); cy(ny * -14); tx(nx * 10);
-  });
-
+  if (fino) {
+    document.addEventListener('pointermove', function(e){
+      var b = e.target.closest && e.target.closest('.btn, .loja'); if (!b) return;
+      var r = b.getBoundingClientRect(); b.style.setProperty('--mx', (e.clientX - r.left) + 'px'); b.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+    document.querySelectorAll('.btn-pedir').forEach(function(b){
+      var qx = gsap.quickTo(b, 'x', { duration: 0.6, ease: 'power3.out' }), qy = gsap.quickTo(b, 'y', { duration: 0.6, ease: 'power3.out' });
+      b.addEventListener('pointermove', function(e){ var r = b.getBoundingClientRect(); qx((e.clientX - r.left - r.width / 2) * 0.22); qy((e.clientY - r.top - r.height / 2) * 0.3); });
+      b.addEventListener('pointerleave', function(){ gsap.to(b, { x: 0, y: 0, duration: 0.9, ease: 'elastic.out(1, .4)' }); });
+    });
+    document.querySelectorAll('.loja').forEach(function(c){
+      var rx = gsap.quickTo(c, 'rotationX', { duration: 0.7, ease: 'power3.out' }), ry = gsap.quickTo(c, 'rotationY', { duration: 0.7, ease: 'power3.out' });
+      c.addEventListener('pointermove', function(e){ var r = c.getBoundingClientRect(); ry(((e.clientX - r.left) / r.width - 0.5) * 8); rx(((e.clientY - r.top) / r.height - 0.5) * -8); });
+      c.addEventListener('pointerleave', function(){ rx(0); ry(0); });
+    });
+    var cx = gsap.quickTo('.abre .cena', 'x', { duration: 1.2, ease: 'power3.out' }), cy = gsap.quickTo('.abre .cena', 'y', { duration: 1.2, ease: 'power3.out' });
+    var tx = gsap.quickTo('.texto-abre', 'x', { duration: 1.4, ease: 'power3.out' });
+    abre.addEventListener('pointermove', function(e){ var nx = e.clientX / innerWidth - 0.5, ny = e.clientY / innerHeight - 0.5; cx(nx * -18); cy(ny * -14); tx(nx * 10); });
+  }
   addEventListener('load', function(){ ScrollTrigger.refresh(); });
 })();
 </script>
