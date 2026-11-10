@@ -86,6 +86,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
 - **Skyline Motors** (conceito JDM com R34, `sites/skyline-motors`): o farol acende e o site acende junto; a rolagem gira o R34 em 360° (192 quadros recortados) e o céu vira estúdio; estúdio 360° com arraste, zoom, troca de cor e painel de largada com som real.
 - **APEX Automotive** (conceito, `sites/apex`): **exceção ao HTML único**, feito em React + Vite + Tailwind. Filmes montados com fotos (sem MP4), fotos do Wikimedia com crédito, ficha técnica com link pra fonte oficial.
 - **Davi 26** (trabalho de escola, não é GuDev, `sites/presidente-davi-26`): poeira verde e amarela que pinta o nome; globo da bandeira com uma estrela por proposta; urna eletrônica de simulação.
+- **Oficina Mestre das Motos** (oficina de motos, `sites/mestre-das-motos`, 10/11/2026):
+  - ignição: o conta-giros faz a varredura de quando a moto liga e a tela abre em duas metades;
+  - mapa da moto: cada serviço acende o ponto da moto onde ele acontece (holofote + anel), com a foto presa no topo no celular;
+  - painel de alertas: acender as luzes-espia do que a moto está fazendo, visor LCD com moto e km, mensagem pro WhatsApp.
 - **Site da própria GuDev** (página de venda, `sites/gudev`, 05/11/2026):
   - porta de aço laranja que sobe com a rolagem e mostra a rua, com um celular subindo e pedidos chegando;
   - conversa de WhatsApp que se escreve com a rolagem;

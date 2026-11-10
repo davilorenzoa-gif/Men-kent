@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Página não encontrada | Oficina Mestre das Motos</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#08090B">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Saira:wdth,wght@75..100,400..800&display=swap">
+<style>
+:root{--preto:#08090B;--grafite:#15171B;--metal:#292D33;--gelo:#F4F4F4;--vermelho:#E63936;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;min-height:100svh;background:radial-gradient(800px 500px at 50% 40%,#1b1e23,var(--preto) 70%);color:var(--gelo);font-family:"Saira",system-ui,sans-serif;display:grid;place-items:center;padding:40px 16px;text-align:center;overflow-x:clip}
+:focus-visible{outline:2px solid var(--vermelho);outline-offset:3px;border-radius:4px}
+svg{width:min(70vw,260px);height:auto;margin:0 auto 18px;display:block}
+.mono{font-family:"JetBrains Mono",monospace;font-size:13px;color:#9BA1AA;letter-spacing:.06em}
+h1{font-weight:800;font-variation-settings:"wdth" 76;text-transform:uppercase;font-size:clamp(2.4rem,9vw,4.6rem);line-height:.95;margin:12px 0 14px;text-wrap:balance}
+p{color:#C9CDD3;max-width:40ch;margin:0 auto}
+.acoes{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:28px}
+a.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 26px;border-radius:999px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:15px;text-decoration:none}
+.v{background:var(--vermelho);color:#fff}.l{border:1px solid rgba(244,244,244,.28);color:var(--gelo)}
+@keyframes cai{0%{transform:rotate(90deg)}100%{transform:rotate(-125deg)}}
+#ag{transform-origin:150px 150px;animation:cai 1.6s cubic-bezier(.2,.7,.1,1) both}
+@media (prefers-reduced-motion:reduce){#ag{animation:none;transform:rotate(-125deg)}}
+</style>
+</head>
+<body>
+<main>
+  <svg viewBox="0 0 300 210" aria-hidden="true"><path d="M66.6 233.4A118 118 0 1 1 233.4 233.4" fill="none" stroke="#292D33" stroke-width="10" transform="translate(0 -40)"/><g transform="translate(0 -40)"><line id="ag" x1="150" y1="150" x2="150" y2="44" stroke="#E63936" stroke-width="3" stroke-linecap="round"/><circle cx="150" cy="150" r="9" fill="#15171B" stroke="#E63936" stroke-width="2"/></g></svg>
+  <p class="mono">Erro 404</p>
+  <h1>Essa página morreu na estrada.</h1>
+  <p>O endereço não existe ou mudou. Volte pro início ou chame a oficina no WhatsApp.</p>
+  <div class="acoes">
+    <a class="btn v" id="zap" href="https://wa.me/?text=Ol%C3%A1!%20Conheci%20a%20Oficina%20Mestre%20das%20Motos%20pelo%20site%20e%20gostaria%20de%20obter%20informa%C3%A7%C3%B5es%20sobre%20um%20servi%C3%A7o%20para%20minha%20motocicleta." target="_blank" rel="noopener">Chamar no WhatsApp</a>
+    <a class="btn l" href="/">Voltar ao início</a>
+  </div>
+</main>
+</body>
+</html>

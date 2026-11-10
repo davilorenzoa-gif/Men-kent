@@ -48,6 +48,8 @@
 - **Peso do giro:** os 76 quadros (+ máscaras) dão ~3 MB no celular. Baixe o 1º na hora e o resto só quando a pessoa mexer na página; com economia de dados, um quadro sim, um não.
 
 ## Celular
+- **Foto revelada com `clip-path` na própria figura nunca aparecia** (Mestre das Motos, 10/11): o `IntersectionObserver` do Chrome conta o recorte do elemento, então com `inset(100% 0 0 0)` ele nunca "entra na tela". Revele com uma cortina (`::after` que encolhe) ou recorte um filho, e observe o elemento sem recorte.
+- **No container daqui, o CDN (cdnjs/unpkg) não abre:** pra testar no Playwright, sirva a biblioteca local com `page.route` (o `npm pack lenis@1.1.13` dá o mesmo arquivo, com o mesmo SRI).
 - **"Sugestão" de CSS de outra IA a partir do link de prévia:** o Gemini devolveu o esqueleto que o link de prévia do Claude põe em volta da página (`:root` com padding de safe-area, `body` 14px branco). Não é melhoria. O Meridiano agora zera o `padding` do `:root` pra esse esqueleto não empurrar a página.
 - **Proposta travando no celular do Davi:** o site rodando dentro da proposta pesava demais. A solução foi mostrar a prévia como imagem no celular, mais o botão "Ver o site animado", que abre numa gaveta dentro da proposta, travada nos 50%.
 - **O preço que mudava com a rolagem:** quem parava pra ler não via acontecer. Agora anima sozinho quando aparece na tela.
