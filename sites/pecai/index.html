@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Péçaí | Açaí, sorvete e lanche no Parque Jurema, Guarulhos</title>
+<meta name="description" content="Açaí, cupuaçu, sorvete, tapioca e lanche na Av. Jurema, 436, Parque Jurema, Guarulhos. Entrega ou retirada no local. 4,5 no Google.">
+<meta name="theme-color" content="#3b0f4a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Péçaí | Do pé direto pro copo">
+<meta property="og:description" content="Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema, Guarulhos. Entrega ou retirada.">
+<meta property="og:image" content="https://proposta-pecai.netlify.app/og.jpg">
+<meta property="og:locale" content="pt_BR">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233b0f4a'/%3E%3Cpath d='M16 30V13' stroke='%23c79a63' stroke-width='3'/%3E%3Cpath d='M16 13c-3-6-9-6-12-3 4-1 8 0 12 3zm0 0c3-6 9-6 12-3-4-1-8 0-12 3zm0 0c-1-5 1-9 5-10-2 3-4 6-5 10zm0 0c1-5-1-9-5-10 2 3 4 6 5 10z' fill='%233daa48'/%3E%3Ccircle cx='14' cy='17' r='2' fill='%23a84bc4'/%3E%3Ccircle cx='18' cy='17' r='2' fill='%23a84bc4'/%3E%3Ccircle cx='16' cy='20' r='2' fill='%23a84bc4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "IceCreamShop",
+  "name": "Péçaí",
+  "description": "Açaí, cupuaçu, sorvetes, tapioca e lanches. Entrega e retirada no local.",
+  "priceRange": "R$ 20–100",
+  "image": "https://proposta-pecai.netlify.app/og.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Jurema, 436 - Parque Jurema",
+    "addressLocality": "Guarulhos",
+    "addressRegion": "SP",
+    "postalCode": "07244-000",
+    "addressCountry": "BR"
+  },
+  "sameAs": ["https://www.instagram.com/curtapecai/", "https://www.facebook.com/curtapecai"]
+}
+</script>
+<style>
+:root{
+  --pe:#3b0f4a;        /* roxo do pé, fundo dominante */
+  --pe-fundo:#2a0b33;  /* roxo mais fundo */
+  --polpa:#7a2e8e;     /* roxo das letras do logo */
+  --polpa-clara:#a84bc4;
+  --palmeira:#3daa48;  /* verde das folhas do logo, acento do pedido */
+  --copo:#fbf8f3;      /* branco do copo */
+  --calda:#5a2e1a;     /* chocolate escorrendo */
+  --morango:#e0384a;
+  --tinta:#2a0b33;
+  --r:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:Figtree,system-ui,sans-serif;background:var(--pe);color:#fff;line-height:1.55;overflow-x:clip;font-size:17px}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--palmeira);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;text-wrap:balance;letter-spacing:-.02em}
+.wrap{width:min(1120px,100% - 32px);margin-inline:auto}
+
+/* topo */
+.topo{position:fixed;inset:0 0 auto;z-index:40;transition:background .3s}
+.topo.solido{background:rgba(42,11,51,.92);backdrop-filter:blur(8px)}
+.topo .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.marca{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:"Bricolage Grotesque";font-weight:800;font-size:24px;min-height:44px}
+.marca svg{width:30px;height:30px}
+.topo nav{display:flex;gap:6px;align-items:center}
+.topo nav a.l{text-decoration:none;font-weight:600;padding:10px 12px;border-radius:999px;min-height:44px;display:inline-flex;align-items:center}
+.topo nav a.l:hover{background:rgba(255,255,255,.1)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 22px;border-radius:999px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font:inherit;font-weight:700;transition:transform .15s}
+.btn:active{transform:scale(.96)}
+.btn-pedir{background:var(--palmeira);color:var(--tinta)}
+.btn-pedir:hover{background:#4fc05b}
+.btn-linha{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.45)}
+.btn-linha:hover{box-shadow:inset 0 0 0 2px #fff}
+.btn svg{width:20px;height:20px;flex:none}
+@media (max-width:720px){.topo nav a.l{display:none}.topo .btn{min-height:44px;padding:10px 16px;font-size:15px}}
+
+/* WOW 1: o pé de açaí */
+.abre{min-height:100svh;padding:88px 0 56px;display:flex;align-items:center;position:relative;background:radial-gradient(120% 80% at 70% 35%,#4c1660 0%,var(--pe) 55%,var(--pe-fundo) 100%)}
+.abre .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:40px;align-items:center}
+.cena{position:relative;width:min(100%,420px);aspect-ratio:300/440;margin-inline:auto;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cena svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.cena .frente{z-index:3;pointer-events:none}
+.cena .foto{position:absolute;left:25%;top:45.5%;width:50%;z-index:2;border-radius:18px;overflow:hidden;box-shadow:0 0 0 5px var(--copo),0 30px 60px -20px rgba(0,0,0,.6)}
+.cena .foto img{width:100%}
+.cena .foto small{position:absolute;right:6px;bottom:6px;font-size:10px;background:rgba(0,0,0,.55);padding:2px 6px;border-radius:6px}
+.tronco{fill:none;stroke:#c79a63;stroke-width:9;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420}
+.aneis{fill:none;stroke:#9c7447;stroke-width:2;opacity:0}
+.folha{fill:var(--palmeira);transform-box:fill-box;transform-origin:0% 60%;transform:scale(0)}
+.folha.esc{fill:#2b8a37}
+.baga{fill:var(--polpa-clara);transform-box:fill-box;transform-origin:50% 0;transform:scale(0)}
+.baga.esc{fill:#5e1f73}
+.cai{fill:#8d36a8;opacity:0}
+.vai .tronco{animation:tronco 1s cubic-bezier(.5,0,.2,1) forwards}
+.vai .aneis{animation:aparece .4s .8s forwards}
+.vai .folha{animation:folha .7s cubic-bezier(.3,1.5,.5,1) forwards;animation-delay:calc(.75s + var(--i)*.07s)}
+.vai .baga{animation:folha .45s cubic-bezier(.3,1.6,.5,1) forwards;animation-delay:calc(1.35s + var(--i)*.04s)}
+.vai .cai{animation:cai .7s cubic-bezier(.55,0,.9,.5) forwards;animation-delay:calc(1.95s + var(--i)*.16s)}
+.vai .foto{animation:pulo .5s 2.75s}
+@keyframes tronco{to{stroke-dashoffset:0}}
+@keyframes aparece{to{opacity:1}}
+@keyframes folha{to{transform:scale(1)}}
+@keyframes cai{0%{opacity:1;transform:translateY(0)}85%{opacity:1}100%{opacity:0;transform:translateY(var(--y,128px))}}
+@keyframes pulo{0%,100%{transform:none}40%{transform:translateY(5px) scale(1.02,.97)}}
+.texto-abre .selo{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);padding:8px 14px;border-radius:999px;font-weight:600;font-size:15px;margin-bottom:20px}
+.selo .estrela{color:#ffcf4a}
+.texto-abre h1{font-size:clamp(64px,13vw,150px);font-weight:800;color:#fff}
+.texto-abre h1 .pe{color:var(--palmeira)}
+.texto-abre .frase{font-family:"Bricolage Grotesque";font-weight:600;font-size:clamp(24px,3.4vw,36px);margin:6px 0 18px;color:#e9d3f2}
+.texto-abre p.sub{max-width:44ch;color:#e6d6ec}
+.acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.entra{opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s}
+.vai .entra{opacity:1;transform:none}
+.vai .entra.d2{transition-delay:.15s}.vai .entra.d3{transition-delay:.3s}
+@media (max-width:860px){
+  .abre{padding-top:76px;min-height:auto}
+  .abre .wrap{grid-template-columns:minmax(0,1fr);gap:8px}
+  .cena{width:min(78vw,330px);order:-1}
+  .texto-abre{text-align:center}
+  .texto-abre p.sub{margin-inline:auto}
+  .abre .acoes{justify-content:center}
+}
+
+/* WOW 2: a calda escorre pelo cardápio */
+.cardapio{background:var(--copo);color:var(--tinta);padding:96px 0 110px;border-radius:40px 40px 0 0;position:relative;z-index:1}
+.cardapio h2{font-size:clamp(40px,7vw,80px);color:var(--pe);max-width:12ch}
+.cardapio .intro{max-width:52ch;margin:18px 0 56px;color:#4a3550}
+.trilho{position:relative;padding-left:72px;display:grid;gap:64px}
+.trilho .fio{position:absolute;left:22px;top:0;bottom:0;width:6px;border-radius:6px;background:#eadfd2}
+.trilho .calda{position:absolute;left:22px;top:0;bottom:0;width:6px;border-radius:6px;background:linear-gradient(var(--calda),#7a4126);transform-origin:top;transform:scaleY(0);will-change:transform}
+.trilho .gota{position:absolute;left:14px;top:-6px;width:22px;height:28px;will-change:transform}
+.item{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;position:relative}
+.item::before{content:"";position:absolute;left:-60px;top:14px;width:20px;height:20px;border-radius:50%;background:var(--copo);box-shadow:inset 0 0 0 3px #d9cabb;transition:background .3s,box-shadow .3s}
+.item.pego::before{background:var(--calda);box-shadow:inset 0 0 0 3px var(--calda)}
+.item h3{font-size:clamp(38px,6.5vw,72px);font-weight:800;color:transparent;-webkit-text-stroke:2px var(--polpa);transition:color .35s}
+.item.pego h3{color:var(--polpa)}
+.item p{max-width:46ch;color:#4a3550}
+.item a{font-weight:700;color:var(--pe);text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center;justify-self:start}
+.cardapio .obs{margin-top:56px;font-size:15px;color:#6b5872;max-width:56ch}
+@media (min-width:900px){
+  .cardapio .grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:64px;align-items:start}
+  .cardapio .lado{position:sticky;top:96px}
+}
+.cardapio .lado figure{border-radius:var(--r);overflow:hidden;max-width:360px;box-shadow:0 30px 60px -30px rgba(59,15,74,.5)}
+.cardapio .lado figcaption{font-size:13px;color:#6b5872;padding:10px 4px 0;background:var(--copo)}
+@media (max-width:899px){.cardapio .lado{display:none}}
+
+/* WOW 3: colha seu pedido */
+.colha{background:var(--pe-fundo);padding:96px 0;position:relative}
+.colha h2{font-size:clamp(40px,7vw,80px)}
+.colha .intro{max-width:50ch;color:#e6d6ec;margin:14px 0 36px}
+.colha .grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:860px){.colha .grade{grid-template-columns:minmax(0,1fr)}}
+.passo{font-weight:700;color:var(--palmeira);font-size:15px;margin-bottom:10px}
+.cacho{position:relative;background:#3b0f4a;border-radius:var(--r);padding:26px 18px 30px;overflow:hidden}
+.cacho .galho{position:absolute;left:50%;top:-10px;width:6px;height:40px;background:#c79a63;border-radius:4px;transform:translateX(-50%)}
+.bagas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;position:relative}
+.bagas button{width:92px;height:92px;border-radius:50%;border:0;cursor:pointer;font:inherit;font-weight:700;font-size:15px;color:#fff;background:radial-gradient(circle at 32% 28%,#c27ad8 0,#8d36a8 30%,#4f1a62 100%);box-shadow:inset -6px -8px 14px rgba(0,0,0,.35);transition:transform .15s,opacity .25s;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.1;padding:6px}
+.bagas button:nth-child(even){transform:translateY(16px)}
+.bagas button:active{transform:scale(.92)}
+.bagas button[aria-pressed="true"]{opacity:.28}
+.paneiro{margin-top:18px;position:relative;min-height:150px;border-radius:0 0 90px 90px / 0 0 60px 60px;padding:22px 18px 30px;background:
+  repeating-linear-gradient(45deg,rgba(0,0,0,.12) 0 6px,transparent 6px 12px),
+  repeating-linear-gradient(-45deg,rgba(255,255,255,.08) 0 6px,transparent 6px 12px),#b0844f;color:var(--tinta);box-shadow:inset 0 10px 0 #8d6436}
+.paneiro .vazio{font-weight:600;text-align:center;color:#3a2412;padding-top:20px}
+.paneiro .dentro{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.paneiro .dentro button{border:0;background:var(--copo);color:var(--pe);font:inherit;font-weight:700;border-radius:999px;padding:8px 14px;min-height:44px;cursor:pointer;animation:chega .35s cubic-bezier(.3,1.6,.5,1)}
+@keyframes chega{from{transform:translateY(-14px) scale(.6);opacity:0}}
+.voa{position:fixed;width:26px;height:26px;border-radius:50%;background:#8d36a8;z-index:60;pointer-events:none;left:0;top:0}
+.form{display:grid;gap:22px}
+.troca{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;background:#3b0f4a;padding:6px;border-radius:999px}
+.troca button{border:0;border-radius:999px;min-height:48px;font:inherit;font-weight:700;background:transparent;color:#e6d6ec;cursor:pointer}
+.troca button[aria-pressed="true"]{background:var(--copo);color:var(--pe)}
+label.campo{display:grid;gap:6px;font-weight:600}
+label.campo input{font:inherit;font-size:17px;min-height:50px;border-radius:14px;border:2px solid #5e2a6f;background:#3b0f4a;color:#fff;padding:10px 14px;width:100%}
+label.campo input:focus{outline:none;border-color:var(--palmeira)}
+.previa{background:#e7ffdb;color:#16301a;border-radius:16px 16px 16px 4px;padding:14px 16px;font-size:15px;white-space:pre-wrap;min-height:72px}
+.previa-rot{font-size:14px;color:#cdb6d6;margin-bottom:6px}
+.obrigado{display:none;background:var(--copo);color:var(--tinta);border-radius:var(--r);padding:28px}
+.obrigado h3{font-size:34px;color:var(--pe);margin-bottom:8px}
+.obrigado.on{display:block}
+.aviso{font-size:14px;color:#cdb6d6}
+
+/* onde fica */
+.onde{padding:96px 0;background:var(--pe)}
+.onde .grade{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;align-items:center}
+@media (max-width:860px){.onde .grade{grid-template-columns:minmax(0,1fr)}}
+.onde h2{font-size:clamp(40px,6.5vw,72px)}
+.onde address{font-style:normal;font-size:20px;margin:18px 0 6px}
+.onde .info{color:#e6d6ec;margin-bottom:24px}
+.mapa{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;background:#2a0b33}
+.mapa iframe{width:100%;height:100%;border:0;display:block}
+
+/* perguntas */
+.faq{background:var(--copo);color:var(--tinta);padding:96px 0}
+.faq h2{font-size:clamp(36px,6vw,64px);color:var(--pe);margin-bottom:28px}
+.faq details{border-top:2px solid #eadfd2;padding:6px 0}
+.faq details:last-child{border-bottom:2px solid #eadfd2}
+.faq summary{cursor:pointer;font-weight:700;font-size:19px;min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:28px;color:var(--polpa);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 18px;max-width:60ch;color:#4a3550}
+.faq details a{color:var(--pe);font-weight:700}
+
+footer{background:var(--pe-fundo);padding:56px 0 110px;color:#d9c4e1;font-size:15px}
+footer .wrap{display:grid;gap:18px}
+footer .marca{color:#fff}
+footer a{text-underline-offset:3px}
+footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
+
+/* botão flutuante (celular) */
+.flutua{position:fixed;left:16px;right:16px;bottom:14px;z-index:50;display:none;transform:translateY(120%);transition:transform .35s}
+.flutua.on{transform:none}
+.flutua .btn{width:100%;box-shadow:0 12px 30px -8px rgba(0,0,0,.6)}
+@media (max-width:720px){.flutua{display:block}}
+.toast{position:fixed;left:50%;bottom:86px;transform:translate(-50%,20px);opacity:0;background:var(--copo);color:var(--tinta);padding:12px 18px;border-radius:14px;font-weight:600;z-index:70;transition:.3s;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* prévia estática e movimento reduzido */
+.embed .tronco{stroke-dashoffset:0}.embed .aneis{opacity:1}
+.embed .folha,.embed .baga{transform:none}
+.embed .entra{opacity:1;transform:none}
+.embed .trilho .calda{transform:none}.embed .item h3{color:var(--polpa)}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .tronco{stroke-dashoffset:0}.aneis{opacity:1}.folha,.baga{transform:none}
+  .vai .tronco,.vai .aneis,.vai .folha,.vai .baga,.vai .cai,.vai .foto{animation:none}
+  .cena{animation:fade .5s}
+  .entra{transform:none}
+  @keyframes fade{from{opacity:0}}
+}
+</style>
+</head>
+<body>
+
+<header class="topo" id="topo">
+  <div class="wrap">
+    <a class="marca" href="#inicio" aria-label="Péçaí, voltar ao topo">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 30V13" stroke="#c79a63" stroke-width="3"/><path d="M16 13c-3-6-9-6-12-3 4-1 8 0 12 3zm0 0c3-6 9-6 12-3-4-1-8 0-12 3zm0 0c-1-5 1-9 5-10-2 3-4 6-5 10zm0 0c1-5-1-9-5-10 2 3 4 6 5 10z" fill="#3daa48"/><circle cx="14" cy="17" r="2" fill="#a84bc4"/><circle cx="18" cy="17" r="2" fill="#a84bc4"/><circle cx="16" cy="20" r="2" fill="#a84bc4"/></svg>
+      Péçaí
+    </a>
+    <nav aria-label="Principal">
+      <a class="l" href="#cardapio">Cardápio</a>
+      <a class="l" href="#onde">Onde fica</a>
+      <a class="btn btn-pedir js-pedir" href="#colha">Fazer pedido</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <!-- WOW 1: o pé cresce e as bagas caem no copo -->
+  <section class="abre" aria-labelledby="titulo">
+    <div class="wrap">
+      <div class="texto-abre">
+        <span class="selo entra"><span class="estrela" aria-hidden="true">★</span> 4,5 no Google, 1,4 mil avaliações</span>
+        <h1 id="titulo" class="entra d2"><span class="pe">Pé</span>çaí</h1>
+        <p class="frase entra d2">Do pé direto pro copo.</p>
+        <p class="sub entra d3">Açaí, cupuaçu, sorvete, tapioca e lanche no Parque Jurema, em Guarulhos. Peça pra entregar ou passe pra retirar.</p>
+        <div class="acoes entra d3">
+          <a class="btn btn-pedir" href="#colha">Fazer pedido</a>
+          <a class="btn btn-linha" href="#cardapio">Ver o que tem</a>
+        </div>
+      </div>
+
+      <div class="cena" id="cena" role="img" aria-label="Um pé de açaí cresce atrás do copo da Péçaí e as bagas caem dentro dele. Toque pra derrubar mais.">
+        <svg viewBox="0 0 300 440" aria-hidden="true">
+          <path class="tronco" d="M150 400 C 146 330, 158 250, 150 160 S 148 90, 150 72"/>
+          <g class="aneis"><path d="M144 380h12M145 340h11M146 300h10M147 262h9M146 226h9M146 190h9M147 156h7M147 124h7"/></g>
+          <g transform="translate(150 72)">
+            <g transform="rotate(-160)"><path class="folha esc" style="--i:0" d="M0 0 C 30 -22, 80 -20, 128 14 C 80 -2, 30 4, 0 0Z"/></g>
+            <g transform="rotate(-125)"><path class="folha" style="--i:1" d="M0 0 C 30 -22, 80 -22, 120 0 C 80 -6, 30 4, 0 0Z"/></g>
+            <g transform="rotate(-95)"><path class="folha esc" style="--i:2" d="M0 0 C 26 -16, 60 -16, 92 -4 C 60 -6, 26 4, 0 0Z"/></g>
+            <g transform="rotate(-62)"><path class="folha" style="--i:3" d="M0 0 C 30 -22, 80 -22, 120 0 C 80 -6, 30 4, 0 0Z"/></g>
+            <g transform="rotate(-25)"><path class="folha esc" style="--i:4" d="M0 0 C 30 -22, 80 -20, 128 14 C 80 -2, 30 4, 0 0Z"/></g>
+            <g transform="rotate(10)"><path class="folha" style="--i:5" d="M0 0 C 30 -20, 70 -14, 104 24 C 66 4, 30 6, 0 0Z"/></g>
+            <g transform="rotate(170) scale(1 -1)"><path class="folha" style="--i:6" d="M0 0 C 30 -20, 70 -14, 104 24 C 66 4, 30 6, 0 0Z"/></g>
+          </g>
+          <g id="cacho">
+            <circle class="baga esc" style="--i:0" cx="138" cy="88" r="7"/>
+            <circle class="baga" style="--i:1" cx="152" cy="86" r="7"/>
+            <circle class="baga esc" style="--i:2" cx="165" cy="90" r="6.5"/>
+            <circle class="baga" style="--i:3" cx="131" cy="100" r="6.5"/>
+            <circle class="baga esc" style="--i:4" cx="145" cy="100" r="7"/>
+            <circle class="baga" style="--i:5" cx="159" cy="101" r="7"/>
+            <circle class="baga esc" style="--i:6" cx="171" cy="103" r="6"/>
+            <circle class="baga" style="--i:7" cx="139" cy="112" r="6.5"/>
+            <circle class="baga esc" style="--i:8" cx="153" cy="113" r="7"/>
+            <circle class="baga" style="--i:9" cx="165" cy="115" r="6"/>
+            <circle class="baga esc" style="--i:10" cx="147" cy="124" r="6"/>
+            <circle class="baga" style="--i:11" cx="160" cy="126" r="5.5"/>
+          </g>
+        </svg>
+        <div class="foto"><img src="img/copo-pecai.webp" width="373" height="576" alt="Copo da Péçaí com açaí, calda de chocolate escorrendo, morango, kiwi e granola em volta"></div>
+        <svg class="frente" viewBox="0 0 300 440" aria-hidden="true" id="caindo">
+          <circle class="cai" style="--i:0" cx="140" cy="112" r="6.5"/>
+          <circle class="cai" style="--i:1" cx="158" cy="114" r="6.5"/>
+          <circle class="cai" style="--i:2" cx="148" cy="124" r="6"/>
+          <circle class="cai" style="--i:3" cx="164" cy="122" r="6"/>
+          <circle class="cai" style="--i:4" cx="134" cy="118" r="6"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- WOW 2: a calda escorre e marca cada item do cardápio -->
+  <section class="cardapio" id="cardapio" aria-labelledby="t-cardapio">
+    <div class="wrap">
+      <h2 id="t-cardapio">O que sai do pé</h2>
+      <p class="intro">Cinco jeitos de matar a vontade. Os tamanhos, os adicionais e os valores do dia a gente passa na hora, pelo pedido.</p>
+      <div class="grade">
+        <div class="trilho" id="trilho">
+          <span class="fio" aria-hidden="true"></span>
+          <span class="calda" id="calda" aria-hidden="true"></span>
+          <svg class="gota" id="gota" viewBox="0 0 22 28" aria-hidden="true"><path d="M11 0 C 11 8, 22 14, 22 19 A 11 9 0 0 1 0 19 C 0 14, 11 8, 11 0Z" fill="#5a2e1a"/></svg>
+          <article class="item">
+            <h3>Açaí</h3>
+            <p>O carro-chefe. No copo, com fruta, granola e calda por cima.</p>
+            <a class="js-quero" data-item="Açaí" href="#colha">Quero açaí</a>
+          </article>
+          <article class="item">
+            <h3>Cupuaçu</h3>
+            <p>O creme do Norte, pra quem é do time cupuaçu.</p>
+            <a class="js-quero" data-item="Cupuaçu" href="#colha">Quero cupuaçu</a>
+          </article>
+          <article class="item">
+            <h3>Sorvete</h3>
+            <p>Na taça, montado na hora.</p>
+            <a class="js-quero" data-item="Sorvete" href="#colha">Quero sorvete</a>
+          </article>
+          <article class="item">
+            <h3>Tapioca</h3>
+            <p>Pra quando a fome pede mais que um doce.</p>
+            <a class="js-quero" data-item="Tapioca" href="#colha">Quero tapioca</a>
+          </article>
+          <article class="item">
+            <h3>Lanche</h3>
+            <p>O salgado antes do açaí. Ou depois.</p>
+            <a class="js-quero" data-item="Lanche" href="#colha">Quero lanche</a>
+          </article>
+        </div>
+        <div class="lado">
+          <figure>
+            <img src="img/copo-pecai.webp" width="373" height="576" loading="lazy" alt="Copo da Péçaí com açaí e calda de chocolate">
+            <figcaption>Foto da própria Péçaí.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WOW 3: colha seu pedido no cacho e jogue no paneiro -->
+  <section class="colha" id="colha" aria-labelledby="t-colha">
+    <div class="wrap">
+      <h2 id="t-colha">Colha seu pedido</h2>
+      <p class="intro">Toque nas bagas do que você quer. Elas caem no paneiro e o pedido sai pronto.</p>
+      <div class="grade">
+        <div>
+          <p class="passo" id="p1">1 de 3: o que vai querer</p>
+          <div class="cacho">
+            <span class="galho" aria-hidden="true"></span>
+            <div class="bagas" id="bagas" role="group" aria-labelledby="p1">
+              <button type="button" aria-pressed="false" data-item="Açaí">Açaí</button>
+              <button type="button" aria-pressed="false" data-item="Cupuaçu">Cupuaçu</button>
+              <button type="button" aria-pressed="false" data-item="Sorvete">Sorvete</button>
+              <button type="button" aria-pressed="false" data-item="Tapioca">Tapioca</button>
+              <button type="button" aria-pressed="false" data-item="Lanche">Lanche</button>
+            </div>
+            <div class="paneiro" id="paneiro" aria-live="polite">
+              <p class="vazio" id="vazio">O paneiro está vazio.</p>
+              <div class="dentro" id="dentro"></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <form class="form" id="form" novalidate>
+            <div>
+              <p class="passo" id="p2">2 de 3: como vai receber</p>
+              <div class="troca" role="group" aria-labelledby="p2">
+                <button type="button" aria-pressed="true" data-modo="entrega">Entrega</button>
+                <button type="button" aria-pressed="false" data-modo="retirada">Retirar na loja</button>
+              </div>
+            </div>
+            <label class="campo" id="campo-end">Endereço da entrega
+              <input id="endereco" name="endereco" autocomplete="street-address" placeholder="Rua, número e bairro">
+            </label>
+            <div>
+              <p class="passo">3 de 3: seu nome</p>
+              <label class="campo">Nome
+                <input id="nome" name="nome" autocomplete="given-name" placeholder="Como te chamamos?">
+              </label>
+            </div>
+            <div>
+              <p class="previa-rot">A mensagem que vai sair:</p>
+              <p class="previa" id="previa"></p>
+            </div>
+            <button class="btn btn-pedir js-enviar" type="submit">Pedir pelo Instagram</button>
+            <p class="aviso" id="aviso">Os valores e o tempo de entrega a Péçaí confirma na conversa.</p>
+          </form>
+          <div class="obrigado" id="obrigado" role="status" tabindex="-1">
+            <h3>Pedido colhido.</h3>
+            <p id="obrigado-txt">Agora é só mandar a mensagem. A Péçaí responde com os valores e o tempo.</p>
+            <button class="btn btn-pedir" type="button" id="denovo" style="margin-top:18px">Fazer outro pedido</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="onde" id="onde" aria-labelledby="t-onde">
+    <div class="wrap grade">
+      <div>
+        <h2 id="t-onde">No Parque Jurema</h2>
+        <address>Av. Jurema, 436, Parque Jurema<br>Guarulhos, SP, 07244-000</address>
+        <p class="info">Entrega ou retirada no local. Gasto médio de R$ 20 a 100 por pessoa, segundo o Google. Antes de sair, confira o horário no Instagram.</p>
+        <div class="acoes">
+          <a class="btn btn-pedir" href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Como chegar</a>
+          <a class="btn btn-linha" href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">@curtapecai</a>
+        </div>
+      </div>
+      <div class="mapa">
+        <iframe title="Mapa da Péçaí na Av. Jurema, 436, Guarulhos" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000&amp;output=embed"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" aria-labelledby="t-faq">
+    <div class="wrap">
+      <h2 id="t-faq">Perguntas de sempre</h2>
+      <details><summary>Vocês entregam?</summary><p>Entregam. Também dá pra pedir e passar na loja pra retirar. No pedido você escolhe.</p></details>
+      <details><summary>Onde fica a loja?</summary><p>Av. Jurema, 436, no Parque Jurema, em Guarulhos. <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Abrir o caminho no mapa</a>.</p></details>
+      <details><summary>Qual é o horário?</summary><p>O horário do dia sai no Instagram <a href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">@curtapecai</a>. Confira antes de sair de casa.</p></details>
+      <details><summary>Tem cupuaçu?</summary><p>Tem. Açaí, cupuaçu, sorvete, tapioca e lanche.</p></details>
+      <details><summary>Quanto custa?</summary><p>Pelo Google, o gasto fica entre R$ 20 e 100 por pessoa. Os valores de cada tamanho a Péçaí passa na hora do pedido.</p></details>
+      <details><summary>Como faço o pedido?</summary><p>Monte em <a href="#colha">Colha seu pedido</a>: a mensagem sai pronta e é só enviar.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="marca" href="#inicio" aria-label="Péçaí, voltar ao topo">Péçaí</a>
+    <p>Açaí, sorvetes e lanches. Av. Jurema, 436, Parque Jurema, Guarulhos, SP.</p>
+    <div class="linha">
+      <a href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/curtapecai" target="_blank" rel="noopener">Facebook</a>
+      <a href="privacidade.html">Privacidade</a>
+    </div>
+    <p>Site feito pela GuDev.</p>
+  </div>
+</footer>
+
+<div class="flutua" id="flutua"><a class="btn btn-pedir" href="#colha">Fazer pedido</a></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  /* Contato: quando a Péçaí confirmar o WhatsApp, coloque aqui só os números com DDD (ex.: '11999999999').
+     Com o número vazio, o pedido vai pelo direct do Instagram (a mensagem é copiada antes). */
+  var WHATS = '';
+  var INSTA = 'curtapecai';
+
+  var embed = /[?&]embed\b/.test(location.search);
+  var dentroProposta = window.parent !== window;
+  var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+  if (embed) root.classList.add('embed');
+
+  /* rótulo do botão segue o canal real */
+  var canal = WHATS ? 'WhatsApp' : 'Instagram';
+  document.querySelectorAll('.js-enviar').forEach(function(b){ b.textContent = 'Pedir pelo ' + canal; });
+
+  /* WOW 1 */
+  var abre = document.querySelector('.abre');
+  function comeca(){ if (!embed) abre.classList.add('vai'); else abre.classList.add('vai'); }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(comeca); else comeca();
+  setTimeout(comeca, 1200);
+
+  var cena = document.getElementById('cena');
+  var caindo = document.querySelectorAll('#caindo .cai');
+  var ocupado = false;
+  function derruba(){
+    if (ocupado || reduz) return;
+    ocupado = true;
+    caindo.forEach(function(c, i){
+      c.style.animation = 'none'; void c.getBoundingClientRect();
+      c.style.animation = 'cai .7s cubic-bezier(.55,0,.9,.5) ' + (i*0.12) + 's forwards';
+    });
+    var foto = cena.querySelector('.foto');
+    foto.style.animation = 'none'; void foto.offsetWidth;
+    foto.style.animation = 'pulo .5s .7s';
+    setTimeout(function(){ ocupado = false; }, 1400);
+  }
+  cena.addEventListener('click', derruba);
+
+  /* topo sólido + botão flutuante */
+  var topo = document.getElementById('topo');
+  var flutua = document.getElementById('flutua');
+  var colha = document.getElementById('colha');
+  if (dentroProposta) flutua.style.display = 'none';
+
+  /* WOW 2: a calda escorre com a rolagem */
+  var trilho = document.getElementById('trilho');
+  var calda = document.getElementById('calda');
+  var gota = document.getElementById('gota');
+  var itens = Array.prototype.slice.call(trilho.querySelectorAll('.item'));
+  var ultimoP = -1;
+  function calcula(){
+    var vh = window.innerHeight;
+    topo.classList.toggle('solido', window.scrollY > 40);
+    var rc = colha.getBoundingClientRect();
+    flutua.classList.toggle('on', window.scrollY > vh * 0.7 && !(rc.top < vh && rc.bottom > 0));
+
+    if (embed) { itens.forEach(function(it){ it.classList.add('pego'); }); return; }
+    var r = trilho.getBoundingClientRect();
+    var p = (vh * 0.62 - r.top) / r.height;
+    p = Math.max(0, Math.min(1, p));
+    if (Math.abs(p - ultimoP) < 0.001) return;
+    ultimoP = p;
+    var h = r.height * p;
+    calda.style.transform = 'scaleY(' + p.toFixed(4) + ')';
+    gota.style.transform = 'translateY(' + h.toFixed(1) + 'px)';
+    itens.forEach(function(it){
+      var y = it.offsetTop + 22;
+      var folga = it.classList.contains('pego') ? -16 : 0; /* folga pra não piscar parado no meio */
+      it.classList.toggle('pego', h + folga > y);
+    });
+  }
+  var pedido = false;
+  function pede(){ if (!pedido){ pedido = true; requestAnimationFrame(function(){ pedido = false; calcula(); }); } }
+  window.addEventListener('scroll', pede, {passive:true});
+  var largura = window.innerWidth;
+  window.addEventListener('resize', function(){ if (window.innerWidth !== largura){ largura = window.innerWidth; ultimoP = -1; pede(); } });
+  setInterval(pede, 500);
+  calcula();
+
+  /* WOW 3: colha seu pedido */
+  var escolhidos = [];
+  var modo = 'entrega';
+  var bagas = document.getElementById('bagas');
+  var dentro = document.getElementById('dentro');
+  var vazio = document.getElementById('vazio');
+  var paneiro = document.getElementById('paneiro');
+  var previa = document.getElementById('previa');
+  var endereco = document.getElementById('endereco');
+  var nome = document.getElementById('nome');
+  var campoEnd = document.getElementById('campo-end');
+  var form = document.getElementById('form');
+  var obrigado = document.getElementById('obrigado');
+
+  function limpa(s){ return String(s).replace(/\s+/g, ' ').trim().slice(0, 120); }
+  function mensagem(){
+    var m = 'Oi, Péçaí! Vim pelo site.\n';
+    m += escolhidos.length ? 'Quero: ' + escolhidos.join(', ') + '.\n' : 'Quero ver o cardápio de hoje.\n';
+    if (modo === 'entrega') m += 'É pra entrega' + (limpa(endereco.value) ? ' em: ' + limpa(endereco.value) : '') + '.\n';
+    else m += 'Vou retirar na loja.\n';
+    if (limpa(nome.value)) m += 'Meu nome é ' + limpa(nome.value) + '.\n';
+    m += 'Me passa os tamanhos e os valores?';
+    return m;
+  }
+  function atualiza(){
+    dentro.textContent = '';
+    escolhidos.forEach(function(it){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = it + ' ×';
+      b.setAttribute('aria-label', 'Tirar ' + it + ' do paneiro');
+      b.addEventListener('click', function(){ alterna(it); });
+      dentro.appendChild(b);
+    });
+    vazio.style.display = escolhidos.length ? 'none' : '';
+    bagas.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', escolhidos.indexOf(b.dataset.item) > -1 ? 'true' : 'false');
+    });
+    previa.textContent = mensagem();
+  }
+  function voa(botao){
+    if (reduz) return;
+    var a = botao.getBoundingClientRect(), b = paneiro.getBoundingClientRect();
+    var d = document.createElement('span');
+    d.className = 'voa';
+    document.body.appendChild(d);
+    var x0 = a.left + a.width/2 - 13, y0 = a.top + a.height/2 - 13;
+    var x1 = b.left + b.width/2 - 13, y1 = b.top + 40;
+    d.style.transform = 'translate(' + x0 + 'px,' + y0 + 'px)';
+    var t0 = null;
+    function passo(t){
+      if (!t0) t0 = t;
+      var k = Math.min(1, (t - t0) / 420);
+      var e = k * k;
+      d.style.transform = 'translate(' + (x0 + (x1 - x0) * k) + 'px,' + (y0 + (y1 - y0) * e) + 'px) scale(' + (1 - k * .4) + ')';
+      if (k < 1) requestAnimationFrame(passo); else d.remove();
+    }
+    requestAnimationFrame(passo);
+    setTimeout(function(){ if (d.parentNode) d.remove(); }, 1000);
+  }
+  function alterna(item, botao){
+    var i = escolhidos.indexOf(item);
+    if (i > -1) { escolhidos.splice(i, 1); atualiza(); return; }
+    escolhidos.push(item);
+    if (botao) { voa(botao); setTimeout(atualiza, reduz ? 0 : 380); }
+    else atualiza();
+  }
+  bagas.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    alterna(b.dataset.item, b);
+  });
+  document.querySelectorAll('.js-quero').forEach(function(a){
+    a.addEventListener('click', function(){ if (escolhidos.indexOf(a.dataset.item) < 0) { escolhidos.push(a.dataset.item); atualiza(); } });
+  });
+  document.querySelectorAll('.troca button').forEach(function(b){
+    b.addEventListener('click', function(){
+      modo = b.dataset.modo;
+      document.querySelectorAll('.troca button').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      campoEnd.style.display = modo === 'entrega' ? '' : 'none';
+      atualiza();
+    });
+  });
+  endereco.addEventListener('input', atualiza);
+  nome.addEventListener('input', atualiza);
+
+  var toast = document.getElementById('toast');
+  function avisa(t){ toast.textContent = t; toast.classList.add('on'); setTimeout(function(){ toast.classList.remove('on'); }, 3800); }
+
+  function copia(texto){
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(texto).catch(function(){});
+    var ta = document.createElement('textarea'); ta.value = texto; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(e){} ta.remove();
+    return Promise.resolve();
+  }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var msg = mensagem();
+    var txt = document.getElementById('obrigado-txt');
+    if (WHATS) {
+      window.open('https://wa.me/55' + WHATS.replace(/\D/g, '') + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+      txt.textContent = 'A mensagem abriu no WhatsApp da Péçaí. É só tocar em enviar.';
+    } else {
+      var janela = window.open('https://ig.me/m/' + INSTA, '_blank', 'noopener');
+      copia(msg).then(function(){ avisa('Mensagem copiada. Cole no direct da Péçaí.'); });
+      txt.textContent = 'Copiamos a mensagem. No direct da Péçaí, é só colar e enviar.';
+    }
+    form.style.display = 'none';
+    obrigado.classList.add('on');
+    obrigado.focus();
+  });
+  document.getElementById('denovo').addEventListener('click', function(){
+    escolhidos = []; nome.value = ''; endereco.value = '';
+    obrigado.classList.remove('on'); form.style.display = '';
+    atualiza();
+  });
+  atualiza();
+})();
+</script>
+</body>
+</html>

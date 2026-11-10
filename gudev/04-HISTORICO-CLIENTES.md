@@ -17,6 +17,15 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - **Falta confirmar:** cidade e entrega, o "responde em até 1 dia", se todas as fotos são dela (a da Santa Teresinha parece de catálogo) e as fotos originais em alta.
 - **Se fechar:** vira o 1º case real da GuDev, com autorização dela.
 
+## Péçaí, Parque Jurema, Guarulhos-SP · lead do Davi (10/11/2026)
+- **Dados reais (print do Google que o Davi mandou):** 4,5 no Google, "1,4 mil" avaliações, R$ 20–100 por pessoa, loja de açaí.
+  - Endereço: Av. Jurema, 436, Parque Jurema, Guarulhos-SP, 07244-000.
+  - Instagram @curtapecai, Facebook /curtapecai. Bio (pela busca): açaí, cupuaçu, sorvetes, tapioca e lanches; delivery e retirada no local.
+  - Tem WhatsApp no Google, mas **o número ainda não foi pego**. Horário também não.
+  - Existe uma Peçaí no iFood no Parque das Nações ("Açaí, Sorvetes & Lanches"), pode ser 2ª unidade: confirmar.
+- **Site:** `sites/pecai/` (veja o README). Antes era tratada como "marca fictícia" de demo: é loja real.
+- **Andamento:** site pronto pra mostrar. Fotos e vídeos estão em 2 pastas do Drive do Davi, que o ambiente não conseguiu abrir.
+
 ## Açaí Happy (Açaí Heaven), Parque Prado, Campinas-SP · lead do Davi
 - **Dados:** 4,8 no Google, 701 avaliações.
   - Endereço: Av. Washington Luís, 1220.
@@ -120,7 +129,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 ## Demos (NÃO são clientes, nunca usar como case)
 - **Prumo Materiais:** depósito de construção fictício, pra mostrar aos ~20 leads de depósito do Davi.
 - **Órbita Seminovos:** loja de seminovos fictícia (Honda City em 360, imagens do Google Flow), com Reel pronto. Pra mostrar a lojas de carro e estéticas.
-- **Peçaí:** marca de açaí fictícia, peça de portfólio pro Instagram da GuDev.
+- **Peçaí (o nome antigo de demo):** a Péçaí é uma loja **real** de Guarulhos (ver a seção dela acima). Não tratar mais como marca fictícia.
 - **Vértice e Vértice Reserva:** locadora premium fictícia, sites conceito que aparecem no site da GuDev (`sites/gudev-site/projetos/`).
 - **Porsche 911 GT3 RS:** conceito de portfólio (`sites/porsche-911/`).
 - **Skyline Motors:** aluguel de JDM fictício com R34 GT-R, conceito de portfólio (`sites/skyline-motors/`).

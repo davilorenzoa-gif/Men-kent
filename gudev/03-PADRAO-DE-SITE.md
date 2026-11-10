@@ -77,6 +77,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - o burger (quadros do Google Flow) desmonta camada por camada com a rolagem e monta de volta;
   - "rota pela costa": um carrinho desce o mapa e para em cada burger com nome de praia;
   - prancha de pedido: cada item vira um adesivo na prancha de surf e vai pro WhatsApp.
+- **Péçaí** (açaí, Guarulhos, `sites/pecai`):
+  - o pé de açaí cresce atrás do copo (tronco se desenha, folhas abrem, cacho aparece) e as bagas caem dentro da foto; tocar derruba mais;
+  - a calda de chocolate escorre por um trilho com a rolagem e "pinta" cada item do cardápio (nome vazado vira cheio);
+  - "Colha seu pedido": cada item é uma baga do cacho que cai no paneiro; entrega/retirada + nome viram a mensagem.
 - **DOZE V12** (conceito, `sites/doze-v12`): segurar ENGINE START acende os 12 cilindros na ordem de ignição e o portão sobe; faixa de luz troca o carro no salão; a chave muda de cor e o cadeado pisca como seta antes de abrir o WhatsApp.
 - **Lustro v2** (conceito de estética automotiva, `sites/lustro-estetica`; a v1 está em `sites/estetica-lustro`): luzes do estúdio acendendo na abertura; a rolagem lava o carro quadro a quadro; lanterna de inspeção que mostra os micro-riscos e abre na pintura corrigida; cartão "Qual é o carro?" que abre a gaveta de agendamento com tubo de LED.
 - **Espelho** (conceito de estética automotiva com vídeos do BMW M4, `sites/espelho`).

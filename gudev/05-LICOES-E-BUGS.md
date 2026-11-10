@@ -60,3 +60,7 @@
 - **Lead que pede prévia, fala com o chefe e marca de pagar pode sumir.** Faça o follow-up em 3 passos (veja 02-VENDAS) e não corra atrás demais.
 - **Não colocar demo fictícia como case.** Só clientes reais.
 - **No dia do pagamento:** confira o Pix no app do banco e deixe o site pronto no ar antes.
+
+## Ambiente do Claude (10/11/2026)
+- **Link do Google Drive, Instagram, Facebook e iFood não abrem daqui.** A rede do ambiente bloqueia, e o pedido de liberação pode nem aparecer no app do Davi. Caminhos: liberar `drive.google.com`, `drive.usercontent.google.com` e `lh3.googleusercontent.com` em Allowed domains do ambiente (e abrir uma conversa nova), subir os arquivos no GitHub em `sites/<nome>/assets/`, ou anexar direto na conversa.
+- **Print do Google Maps serve de fonte.** Na Péçaí, a foto do copo saiu recortada do print (373x576) e os dados (nota, endereço, faixa de preço) também.
