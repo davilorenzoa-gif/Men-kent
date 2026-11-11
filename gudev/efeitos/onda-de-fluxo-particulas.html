@@ -21,6 +21,8 @@ html,body{margin:0;padding:0;background:#000}
 <canvas id="scene"></canvas>
 <div id="scroll-host" style="height:620vh"></div>
 <div id="scroll-hint">scroll ↓</div>
+<p id="aviso" hidden style="position:fixed;left:16px;right:16px;top:40%;margin:0;text-align:center;font:500 15px/1.5 system-ui,sans-serif;color:#9fdcbc">O efeito não carregou aqui. Abra este arquivo no Chrome (a prévia do app às vezes não roda o código 3D).</p>
+<script>setTimeout(function(){ if(!window.__ondaOk){ var a=document.getElementById("aviso"); if(a) a.hidden=false; } },4000)</script>
 
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.143.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.143.0/examples/jsm/"}}</script>
 <script type="module">
@@ -368,6 +370,7 @@ function loop() {
   requestAnimationFrame(loop)
 }
 requestAnimationFrame(loop)
+window.__ondaOk = true
 </script>
 </body>
 </html>

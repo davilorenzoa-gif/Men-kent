@@ -131,7 +131,7 @@ Veio de um prompt da ferramenta Refract do getlayers.ai (padrão "Frosted") que 
 - Serve pra: fundo de topo atrás do título (estética, barbearia, bar à noite, box de banheiro numa marmoraria/vidraçaria), revelar a foto "tirando o vidro" na rolagem (animar `relief` até 0), vitrine de loja com chuva (padrão 4). Atenção: título em cima precisa de contraste, o vidro deixa a foto mais ruidosa.
 
 ### Onda de Fluxo: mar de partículas em 3D (11/11/2026, `efeitos/onda-de-fluxo-particulas.html`, Three.js r0.143)
-Recriado de um prompt de biblioteca de efeitos (card "Onda de Fluxo", grátis, licença comercial) que o Davi gravou no celular. Testado no Playwright em 390 e 1440 (sem erro, sem rolagem lateral, prints batem com o vídeo); falta celular de verdade.
+Pra ver no celular/prévia: `efeitos/onda-de-fluxo-particulas-arquivo-unico.html` (Three.js embutido, sem internet). Recriado de um prompt de biblioteca de efeitos (card "Onda de Fluxo", grátis, licença comercial) que o Davi gravou no celular. Testado no Playwright em 390 e 1440 (sem erro, sem rolagem lateral, prints batem com o vídeo); falta celular de verdade.
 - O que faz: um mar verde-esmeralda de colinas feitas de ~120 mil pontinhos que brilham, rolando com ruído. Na rolagem, a câmera mergulha de cima até rasar as ondas e o mar cresce. O mouse dá parallax e abre um buraco na superfície onde aponta. Chama verde suave no canto e poeira flutuando presa na câmera.
 - O segredo:
   - **A geometria é uma esfera (`SphereGeometry(4.2,200,600)`) que o vertex shader achata num lençol.** A esfera só serve como "saco de pontos". A altura sai de 2 oitavas de Simplex; `uStream` desliza o ruído pra parecer que a gente voa pra frente.

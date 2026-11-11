@@ -81,6 +81,7 @@
   - Na borda da foto, espelhar a coordenada em vez de prender (`clamp` vira listra).
   - Controles independentes (relevo × espessura) em vez de um "força" só: dá pra ajustar o visual sem quebrar.
 - **Vídeo da tela + prompt de Three.js** (Onda de Fluxo, 11/11): o vídeo serve de gabarito visual (tirar 1 quadro a cada 3 s com ffmpeg e comparar com o print do Playwright). Pra testar aqui, o unpkg não abre: `npm pack three@<versão>` e servir com `page.route`. Chromium headless renderiza WebGL com `--use-angle=swiftshader --enable-unsafe-swiftshader`.
+- **"Está escrito só scroll e não acontece nada"** (Onda de Fluxo, 11/11): o arquivo puxava o Three.js do unpkg por importmap e, na prévia do app, não carregou. Pra mandar efeito 3D pro Davi ver, **embutir a biblioteca no HTML**: `npm i three@<versão> esbuild`, trocar `three/addons/` por `three/examples/jsm/`, `esbuild entrada.js --bundle --minify --format=iife` e colar num `<script>` comum (~440 KB com Three + bloom). E pôr um aviso que aparece se o efeito não arrancar em 4 s (`window.__ondaOk`), pra nunca sobrar tela preta muda. Guardar as duas: a legível (com CDN, pra editar) e a `-arquivo-unico` (pra ver).
 - **Bloqueio de `git push --force`:** quando o PR anterior já foi mergeado e a branch recomeça da branch padrão, o push normal basta (avança sem forçar). Não usar `--force`.
 
 ## Vendas
