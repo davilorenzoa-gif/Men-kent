@@ -143,6 +143,11 @@ Pra ver no celular/prévia: `efeitos/onda-de-fluxo-particulas-arquivo-unico.html
 - Cuidados se for pra cliente: pesa (3 composers com bloom + pixel ratio cheio). No celular, limitar `setPixelRatio(Math.min(2, dpr))` e pausar quando a aba some. O mouse não existe no celular: o efeito do cursor some, o resto funciona.
 - Serve pra: fundo de topo de academia, tabacaria/narguilé, bar, energia solar, empresa de tecnologia; trocar as cores pelas da marca (`colorLow/colorHigh/bgColor/flame`). Texto em cima com contraste.
 
+### Túnel: buraco de minhoca de partículas (11/11/2026, `efeitos/tunel-particulas.html` + `-arquivo-unico.html`)
+Mesmo esqueleto da Onda de Fluxo (3 composers com bloom, FinalPass com fundo e chama nos cantos, poeira presa na câmera). A diferença é o shader: o mesmo "saco de pontos" da esfera vira um **cilindro** (ângulo = posição x normalizada pela largura da fatia, raio 12 menos o ruído), com tremida e redemoinho de ruído. A câmera fica dentro do tubo e voa 34 unidades pra frente com a rolagem; o grupo gira devagar no eixo z (mais rápido com a rolagem). Cores: anil `#180a3a` → ciano `#2bf0ff`, fundo `#0a0524`, chama violeta `#7a3cff`.
+- Serve pra: topo de festa/balada, tabacaria, estúdio de tatuagem, gamer/LAN house, "entrar" num produto. Trocar as cores pelas da marca. Pesado como a Onda: no celular limitar o pixel ratio.
+- **Lição:** ao copiar um efeito de outro arquivo, trocar **todas** as marcas internas (`window.__ondaOk` → `__tunelOk`), senão o aviso "não carregou" aparece à toa.
+
 ### Kimi: site de piloto de F1 (11/11/2026, estudo em `aprendizados/kimi/`, Three.js + Lenis)
 Recriado de um prompt grande do getlayers.ai (card "Kimi"). **Só estudo:** usa rosto e marcas reais (Kimi Antonelli, Mercedes), nunca vira case nem vai pra cliente. O que dá pra levar pra cliente, trocando o assunto:
 - **Pilha de cartas na rolagem:** cada bloco `position: sticky; top: 0` e o próximo passa por cima; o de baixo encolhe até 0,9 e escurece 55% conforme o próximo sobe (`1 - next.top / altura da tela`). O `scale` vai num wrapper **dentro** do sticky (transform no próprio sticky quebra o grudar). No celular só escurece.
