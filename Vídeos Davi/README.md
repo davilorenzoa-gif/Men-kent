@@ -8,6 +8,7 @@ As edições usam fotos de figuras públicas e música de terceiros. Elas são p
 | Pasta | O que é | Versões |
 |---|---|---|
 | `2026-10-xo-sai-pra-la/` | Edição "xô sai pra lá" estilo TikTok (verde e amarelo, letra animada) com fotos do Lula, do Flávio e um meme | v1 (igual à referência), v2 (transições, Juliet, corrente, enfeites) |
+| `2026-11-nizia-figueira-whiteboard/` | Trabalho de Literatura: documentário de 4 min sobre "Nízia Figueira, sua criada" refeito em whiteboard animation (mão desenhando), áudio original intacto | v1 |
 
 ## Como fazer uma edição nova a partir de um vídeo de referência
 
@@ -36,6 +37,14 @@ Tudo roda numa pasta de trabalho temporária (`$T`), fora do repositório. No re
 - **Zoom com blur:** usar 6 cópias com passo pequeno. Com 3 cópias aparece imagem tripla.
 - **Tamanho do arquivo:** o granulado deixa o arquivo pesado. Pra mandar pro celular, `-crf 21`; pra guardar no repositório, `-crf 25`.
 - **Tempo de render:** 25 s em 1080p levam cerca de 2 min com 4 processos.
+
+## Whiteboard animation (mão desenhando no quadro)
+
+Motor separado, em HTML/SVG + Playwright: `2026-11-nizia-figueira-whiteboard/projeto/` (ver o README de lá).
+- **Sincronia com a fala:** transcrever com sherpa-onnx (Whisper turbo + VAD do Silero, modelos baixados das releases do GitHub `k2-fsa/sherpa-onnx`; o Hugging Face é bloqueado aqui). A troca de quem fala aparece com embeddings de voz (modelo 3D-Speaker, mesma página).
+- **Áudio intacto:** juntar com `-c:a copy` e conferir com `ffmpeg -i X -map 0:a -c copy -f md5 -` nos dois arquivos.
+- **Fotos históricas:** Wikimedia Commons limita muito a taxa daqui (erro 429): baixar uma por vez, com espera longa. Miniaturas (`thumb.wikimedia.org`) são bloqueadas; o original em `upload.wikimedia.org` passa.
+- **Render:** ~90 ms por quadro; 4 min a 24 fps levam ~3 min com 4 processos.
 
 ## Uso futuro na GuDev
 
