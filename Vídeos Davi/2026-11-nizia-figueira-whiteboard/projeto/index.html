@@ -20,7 +20,8 @@ svg{display:block}
 <script>window.HAS_MUNI=true</script><script src="timeline.js"></script>
 <script>
 window.READY=(async()=>{await document.fonts.load('700 40px Kalam');await document.fonts.load('400 40px Kalam');await document.fonts.load('700 40px Caveat');
+ buildHand(document.getElementById('hand')); build();
  const imgs=[...document.querySelectorAll('image')];
  await Promise.all(imgs.map(i=>new Promise(r=>{const im=new Image();im.onload=im.onerror=r;im.src=i.getAttribute('href');})));
- buildHand(document.getElementById('hand')); build(); mount(); render(0); return true;})();
+ mount(); render(0); return true;})();
 </script></body></html>

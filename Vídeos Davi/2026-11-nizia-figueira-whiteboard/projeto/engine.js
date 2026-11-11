@@ -154,6 +154,7 @@ function mount() {
   drawSpans.sort((a, b) => a.a - b.a);
 }
 
+function prog(it, t) { const k = clamp((t - it.at) / it.dur, 0, 1); return lerp(k, ease(k), .45); }
 function visibility(it, t) {
   if (t < it.at - .001) return 0;
   let o = 1;
@@ -164,7 +165,7 @@ function visibility(it, t) {
 
 // posição da caneta (em coords da tela) para um item num instante
 function penPoint(it, t) {
-  const k = clamp((t - it.at) / it.dur, 0, 1);
+  const k = prog(it, t);
   if (it.type === 'draw') {
     let r = k * it.total;
     for (let i = 0; i < it.strokes.length; i++) {
@@ -201,7 +202,14 @@ function camAt(t) {
     const k = ease(clamp((t - t0) / d, 0, 1));
     x = lerp(x, nx, k); y = lerp(y, ny, k); s = lerp(s, ns, k);
   }
-  return { x, y, s };
+  // aproximação lenta dentro de cada parte (profundidade discreta); volta a 1 durante o deslize
+  const ps = CAM.map(c => c[0]); let i = -1; for (let j = 0; j < ps.length; j++) if (t >= ps[j]) i = j;
+  const a = i < 0 ? 0 : ps[i] + CAM[i][1], b = i + 1 < ps.length ? ps[i + 1] : 1e9, Z = .028;
+  const zin = z0 => z0;
+  let z = 1;
+  if (t >= a && b < 1e8) z = 1 + Z * clamp((t - a) / (b - a), 0, 1);
+  else if (i >= 0 && t < a) z = 1 + Z * (1 - ease(clamp((t - ps[i]) / CAM[i][1], 0, 1)));
+  return { x, y, s: s * z };
 }
 
 function render(t) {
@@ -209,13 +217,22 @@ function render(t) {
   document.getElementById('world').setAttribute('transform', `translate(${W / 2},${H / 2}) scale(${cam.s}) translate(${-cam.x - W / 2},${-cam.y - H / 2})`);
   for (const it of items) {
     const v = visibility(it, t);
-    if (v <= 0) { it.g.setAttribute('display', 'none'); continue; }
+    if (v <= 0) {
+      // perto de entrar/sair: mantém posicionado (invisível) para a mão saber aonde ir
+      const near = (t < it.at && t > it.at - 2.5) || (t >= it.at && t < it.out + it.outDur + 2.5);
+      if (!near) { it.g.setAttribute('display', 'none'); continue; }
+      it.g.removeAttribute('display'); it.g.setAttribute('opacity', 0);
+      const p0 = poseAt(it, t);
+      it.g.setAttribute('transform', `translate(${p0.x},${p0.y}) rotate(${p0.r}) scale(${p0.s * it.flip},${p0.s})`);
+      continue;
+    }
     it.g.removeAttribute('display');
     const p = poseAt(it, t);
-    const bob = it.bob ? Math.sin(t * 2.2) * it.bob : 0;
-    it.g.setAttribute('transform', `translate(${p.x},${p.y + bob}) rotate(${p.r}) scale(${p.s * it.flip},${p.s})`);
+    let bob = 0, sway = 0;
+    if (it.walk && t > it.walk[0] && t < it.walk[1]) { const env = Math.min(1, (t - it.walk[0]) * 4, (it.walk[1] - t) * 4); bob = -Math.abs(Math.sin((t - it.walk[0]) * 8.5)) * 7 * env; sway = Math.sin((t - it.walk[0]) * 8.5) * 1.6 * env; }
+    it.g.setAttribute('transform', `translate(${p.x},${p.y + bob}) rotate(${p.r + sway}) scale(${p.s * it.flip},${p.s})`);
     it.g.setAttribute('opacity', v);
-    const k = clamp((t - it.at) / it.dur, 0, 1);
+    const k = prog(it, t);
     if (it.type === 'draw') {
       let r = k * it.total;
       it.strokes.forEach((e, i) => {
@@ -261,30 +278,27 @@ function render(t) {
 }
 
 // ---------- a mão ----------
-const OFF = { x: 1250, y: 2250 };
-function placeHand(t) {
-  const hand = document.getElementById('hand');
-  let pos = null, drawing = false;
+const OFF = { x: 1500, y: 2300 };
+function rawHand(t) {
   let prev = null, next = null;
   for (const s of drawSpans) {
-    if (t >= s.a && t <= s.b) { pos = penPoint(s.it, t); drawing = true; break; }
-    if (s.b < t) prev = s;
+    if (t >= s.a && t <= s.b) return penPoint(s.it, t);
+    if (s.b < t) { if (!prev || s.b > prev.b) prev = s; }
     if (s.a > t && !next) next = s;
   }
-  if (!pos) {
-    const pEnd = prev ? penPoint(prev.it, prev.b) : OFF;
-    const nStart = next ? penPoint(next.it, next.a) : OFF;
-    const ta = prev ? prev.b : -10, tb = next ? next.a : 1e9;
-    const gap = tb - ta;
-    if (gap < 1.3) pos = lv(pEnd, nStart, ease((t - ta) / gap));
-    else if (t - ta < .55) pos = lv(pEnd, OFF, ease((t - ta) / .55));
-    else if (tb - t < .55) pos = lv(OFF, nStart, ease(1 - (tb - t) / .55));
-    else pos = OFF;
-  }
-  // tremidinha natural da mão durante o traço
-  const jx = drawing ? Math.sin(t * 37) * 1.5 : 0, jy = drawing ? Math.cos(t * 29) * 1.5 : 0;
-  // inclinação varia um pouco com a posição (mão "do lado direito")
-  const rot = -4 + (pos.x - 540) / 540 * 6;
-  hand.setAttribute('transform', `translate(${pos.x + jx},${pos.y + jy}) rotate(${rot})`);
+  const pEnd = prev ? penPoint(prev.it, prev.b) : OFF;
+  const nStart = next ? penPoint(next.it, next.a) : OFF;
+  const ta = prev ? prev.b : -10, tb = next ? next.a : 1e9, gap = tb - ta;
+  if (gap < 1.5) return lv(pEnd, nStart, ease((t - ta) / gap));
+  if (t - ta < .7) return lv(pEnd, OFF, ease((t - ta) / .7) ** 1.5);
+  if (tb - t < .7) return lv(OFF, nStart, 1 - (1 - ease(1 - (tb - t) / .7)) ** 1.5);
+  return OFF;
+}
+function placeHand(t) {
+  // média de alguns instantes: tira os "teleportes" entre um traço e outro
+  const wts = [.34, .24, .17, .12, .08, .05]; let x = 0, y = 0;
+  wts.forEach((w, i) => { const p = rawHand(t - i * .028); x += p.x * w; y += p.y * w; });
+  const rot = (x - 540) / 540 * 5 + (y - 960) / 960 * 3;
+  document.getElementById('hand').setAttribute('transform', `translate(${x},${y}) rotate(${rot})`);
 }
 function lv(a, b, k) { k = clamp(k, 0, 1); return { x: lerp(a.x, b.x, k), y: lerp(a.y, b.y, k) }; }

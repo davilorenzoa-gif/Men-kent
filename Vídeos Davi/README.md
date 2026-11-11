@@ -8,7 +8,7 @@ As edições usam fotos de figuras públicas e música de terceiros. Elas são p
 | Pasta | O que é | Versões |
 |---|---|---|
 | `2026-10-xo-sai-pra-la/` | Edição "xô sai pra lá" estilo TikTok (verde e amarelo, letra animada) com fotos do Lula, do Flávio e um meme | v1 (igual à referência), v2 (transições, Juliet, corrente, enfeites) |
-| `2026-11-nizia-figueira-whiteboard/` | Trabalho de Literatura: documentário de 4 min sobre "Nízia Figueira, sua criada" refeito em whiteboard animation (mão desenhando), áudio original intacto | v1 |
+| `2026-11-nizia-figueira-whiteboard/` | Trabalho de Literatura: documentário de 4 min sobre "Nízia Figueira, sua criada" refeito em whiteboard animation (mão desenhando), áudio original intacto | v2 (mão real, movimentos suavizados) |
 
 ## Como fazer uma edição nova a partir de um vídeo de referência
 

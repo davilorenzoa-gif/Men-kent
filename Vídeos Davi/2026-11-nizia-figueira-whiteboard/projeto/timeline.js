@@ -79,7 +79,6 @@ function build() {
     else d(art, { x: 190, y: i === 0 ? y : y - 15, s, at, dur: .4 });
     t_(label, { x: 300, y: y + 18, size: 54, anchor: 'start', at: at + .45, dur: Math.min(1.3, label.length * .05) });
   });
-  t_('na obra', { x: 300, y: 1640, size: 40, weight: 400, anchor: 'start', at: 26.2, dur: .4, color: C.red });
 
   // ===================== PARTE 2 · O AUTOR (27 – 65) =====================
   part(2);
@@ -194,7 +193,7 @@ function build() {
   const iso = d([S(ell(0, 0, 150, 215), 4, C.red)], { x: 330, y: 1300, s: 1, at: 102.75, dur: .55 });
   const isol = t_('isolada', { x: 330, y: 1680, size: 50, at: 103.35, dur: .45 });
   mv(rf, [103.3, .6, 720, 1480, .62]); mv(rf, [104.0, 2.0, 800, 1480, .62]);
-  rf.bob = 0;
+  rf.walk = [104.0, 106.0];
   mv(rfl, [103.3, .6, 720, 1580, 1]); mv(rfl, [104.0, 2.0, 800, 1580, 1]);
   const street = d([S('M-230,0 L230,0', 4), S('M-150,24 L-60,24 M40,24 L150,24', 4, '#9a9a9a')], { x: 800, y: 1492, s: 1, at: 104.3, dur: .4 });
   const vend = t_('vende nas ruas', { x: 800, y: 1680, size: 46, at: 105.5, dur: .7 });
@@ -217,10 +216,11 @@ function build() {
   const rg = d(ART.ring(), { x: 540, y: 800, s: 2.0, at: 117.7, dur: .5, fillAt: 118.2 });
   const cs = t_('casamento?', { x: 540, y: 1020, size: 58, at: 118.3, dur: .6 });
   // Lemos vai embora
-  out([rg, cs], 120.4);
+  out([rg, cs], 119.7, .3);
   mv(lm, [120.2, 2.0, 1350, 1560, .78]);
+  lm.walk = [120.2, 122.4];
   mv(lml, [120.2, 2.0, 1350, 1660, 1]);
-  const hh = m_(MORPH.circle(70), MORPH.heart, { x: 540, y: 800, s: 1.4, at: 119.85, drawDur: .5, morphAt: 120.4, dur: .6, fillA: 'none', fillB: C.red, color: C.red });
+  const hh = m_(MORPH.circle(70), MORPH.heart, { x: 540, y: 800, s: 1.4, at: 120.05, drawDur: .45, morphAt: 120.55, dur: .6, fillA: 'none', fillB: C.red, color: C.red });
   const crk = d(ART.crack(), { x: 540, y: 800, s: 1.4, at: 121.4, dur: .4 });
   const dv = t_('deixa de visitá-la', { x: 540, y: 1010, size: 58, at: 122.0, dur: .8 });
   const nzS = swap(nzH, nizia('sad'), 122.2);

@@ -206,7 +206,7 @@ const ART = {
   phone: () => [S('M-60,-110 L60,-110 Q74,-110 74,-96 L74,96 Q74,110 60,110 L-60,110 Q-74,110 -74,96 L-74,-96 Q-74,-110 -60,-110 Z'), F('M-58,-88 L58,-88 L58,82 L-58,82 Z', C.blue), S('M-14,96 L14,96', 5)],
   sun: () => [F(circ(0, 0, 60), C.yellow), S(circ(0, 0, 60)), ...[...Array(10)].map((_, i) => { const a = i * Math.PI / 5; return S(`M${Math.cos(a) * 82},${Math.sin(a) * 82} L${Math.cos(a) * 118},${Math.sin(a) * 118}`, 5, C.yellow); })],
   chair: () => [S('M-60,-200 L-60,0 M-60,-90 L60,-90 L60,0 M-60,-200 Q-50,-215 -30,-200 L-30,-90', 6)],
-  loop: () => [S('M0,-90 A90,90 0 1,1 -90,0', 6), S('M-118,-26 L-90,4 L-62,-26', 6), S('M0,90 A90,90 0 0,1 -78,45', 6, '#9a948a')],
+  loop: () => [S('M78,-45 A90,90 0 1,1 45,-78', 6), S('M45,-78 l-14,-31 M45,-78 l-34,3', 6)],
   quill: () => [F('M40,-130 C90,-110 60,-20 -10,40 L-30,30 C-10,-40 0,-110 40,-130 Z', C.blue), S('M40,-130 C90,-110 60,-20 -10,40 L-30,30 C-10,-40 0,-110 40,-130 Z'), S('M30,-100 L-30,60 L-44,96', 4), S('M10,-60 l26,-6 M0,-30 l22,-2 M-10,0 l18,0', 3)],
   frameOld: () => [S('M-160,-200 L160,-200 L160,200 L-160,200 Z', 6), S('M-136,-176 L136,-176 L136,176 L-136,176 Z', 3), S('M-160,-200 l24,24 M160,-200 l-24,24 M160,200 l-24,-24 M-160,200 l24,-24', 3),
     S('M-100,120 L-40,0 L0,60 L50,-40 L110,120 Z', 3.5)],
@@ -230,38 +230,8 @@ const MORPH = {
   page: 'M-170,-220 L170,-220 L170,220 L-170,220 Z',
 };
 
-// ---- a mão segurando a caneta: ponta em (0,0); caneta e braço descem pra direita ----
+// ---- a mão: foto real recortada (assets/hand.png, gerada por preparar_mao.py); ponta da caneta em (0,0) ----
+const HAND = { tipX: 390, tipY: 270, w: 1993, h: 3360, k: .74, rot: -19 };
 function buildHand(g) {
-  const sk = '#ecbd98', sh = '#d9a07a', ln = '#a96b4b', nail = '#f7dfcf';
-  g.innerHTML = `
-  <g transform="rotate(36) scale(.95)">
-    <g opacity=".17" filter="url(#blur8)" transform="translate(18,46)">
-      <path d="M60,-10 L260,-50 L900,-90 L900,190 L260,120 L120,40 Z" fill="#000"/>
-    </g>
-    <!-- caneta -->
-    <path d="M0,0 L28,-8 L28,8 Z" fill="#111"/>
-    <path d="M26,-11 L58,-16 L58,16 L26,11 Z" fill="#3b3b3b"/>
-    <rect x="56" y="-18" width="330" height="36" rx="9" fill="#1b1b1b"/>
-    <rect x="66" y="-12" width="120" height="6" rx="3" fill="#5c5c5c" opacity=".8"/>
-    <!-- dedo médio (por baixo da caneta) -->
-    <path d="M150,14 C128,14 116,26 120,40 C124,54 140,58 160,56 C200,52 240,58 270,70 L290,30 C250,20 190,14 150,14 Z" fill="${sh}" stroke="${ln}" stroke-width="3.5" stroke-linejoin="round"/>
-    <path d="M122,32 C124,24 132,20 142,20 L144,36 C134,38 126,38 122,32 Z" fill="${nail}" opacity=".8"/>
-    <!-- polegar (do lado de cima, encostando na caneta) -->
-    <path d="M128,-20 C118,-30 124,-46 142,-48 C180,-52 230,-74 270,-96 L300,-50 C260,-34 210,-18 170,-14 C150,-12 136,-12 128,-20 Z" fill="${sk}" stroke="${ln}" stroke-width="3.5" stroke-linejoin="round"/>
-    <path d="M126,-28 C128,-40 138,-44 150,-44 L150,-28 C140,-26 132,-24 126,-28 Z" fill="${nail}"/>
-    <!-- costas da mão + antebraço -->
-    <path d="M250,-100 C300,-120 380,-112 440,-96 L900,-110 L900,200 L460,150 C400,148 330,120 290,80 C250,44 230,-10 236,-50 C238,-74 242,-92 250,-100 Z" fill="${sk}"/>
-    <path d="M250,-100 C300,-120 380,-112 440,-96 L900,-110" fill="none" stroke="${ln}" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M460,150 C400,148 330,120 290,80" fill="none" stroke="${ln}" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M330,-70 C360,-40 390,-20 430,-10 M320,-30 C350,0 380,20 420,30" fill="none" stroke="${sh}" stroke-width="3" stroke-linecap="round" opacity=".9"/>
-    <!-- indicador, por cima da caneta -->
-    <path d="M300,-40 C250,-34 190,-30 140,-26 C112,-24 98,-14 100,0 C102,14 118,20 140,18 C190,14 250,20 300,34 Z" fill="${sk}" stroke="${ln}" stroke-width="3.5" stroke-linejoin="round"/>
-    <path d="M104,-8 C106,-18 116,-22 128,-22 L130,-4 C120,-2 110,-2 104,-8 Z" fill="${nail}"/>
-    <path d="M190,-26 C186,-14 186,2 192,14 M236,-28 C232,-14 232,4 238,16" fill="none" stroke="${ln}" stroke-width="3" stroke-linecap="round"/>
-    <!-- anelar/mindinho dobrados -->
-    <path d="M300,70 C280,90 290,120 320,124 C360,128 400,140 440,150 L450,110 C410,96 360,84 330,72 Z" fill="${sh}" stroke="${ln}" stroke-width="3.5" stroke-linejoin="round"/>
-    <!-- manga -->
-    <path d="M600,-130 L960,-150 L960,240 L600,200 Z" fill="#2f4f6f"/>
-    <path d="M600,-130 L600,200" stroke="#1f3a55" stroke-width="14" stroke-linecap="round"/>
-  </g>`;
+  g.innerHTML = `<g transform="rotate(${HAND.rot})"><image href="assets/hand.png" x="${-HAND.tipX * HAND.k}" y="${-HAND.tipY * HAND.k}" width="${HAND.w * HAND.k}" height="${HAND.h * HAND.k}"/></g>`;
 }
