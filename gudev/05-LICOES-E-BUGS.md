@@ -80,6 +80,7 @@
   - Foto parada = desenhar só quando muda (rAF curto que se desliga sozinho). Não deixar laço infinito rodando à toa.
   - Na borda da foto, espelhar a coordenada em vez de prender (`clamp` vira listra).
   - Controles independentes (relevo × espessura) em vez de um "força" só: dá pra ajustar o visual sem quebrar.
+- **Vídeo da tela + prompt de Three.js** (Onda de Fluxo, 11/11): o vídeo serve de gabarito visual (tirar 1 quadro a cada 3 s com ffmpeg e comparar com o print do Playwright). Pra testar aqui, o unpkg não abre: `npm pack three@<versão>` e servir com `page.route`. Chromium headless renderiza WebGL com `--use-angle=swiftshader --enable-unsafe-swiftshader`.
 - **Bloqueio de `git push --force`:** quando o PR anterior já foi mergeado e a branch recomeça da branch padrão, o push normal basta (avança sem forçar). Não usar `--force`.
 
 ## Vendas

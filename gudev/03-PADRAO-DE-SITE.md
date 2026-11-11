@@ -130,6 +130,19 @@ Veio de um prompt da ferramenta Refract do getlayers.ai (padrão "Frosted") que 
 - Como usar a foto: escolher/arrastar, ou `?img=foto.webp` na URL, ou trocar `FOTO` no código.
 - Serve pra: fundo de topo atrás do título (estética, barbearia, bar à noite, box de banheiro numa marmoraria/vidraçaria), revelar a foto "tirando o vidro" na rolagem (animar `relief` até 0), vitrine de loja com chuva (padrão 4). Atenção: título em cima precisa de contraste, o vidro deixa a foto mais ruidosa.
 
+### Onda de Fluxo: mar de partículas em 3D (11/11/2026, `efeitos/onda-de-fluxo-particulas.html`, Three.js r0.143)
+Recriado de um prompt de biblioteca de efeitos (card "Onda de Fluxo", grátis, licença comercial) que o Davi gravou no celular. Testado no Playwright em 390 e 1440 (sem erro, sem rolagem lateral, prints batem com o vídeo); falta celular de verdade.
+- O que faz: um mar verde-esmeralda de colinas feitas de ~120 mil pontinhos que brilham, rolando com ruído. Na rolagem, a câmera mergulha de cima até rasar as ondas e o mar cresce. O mouse dá parallax e abre um buraco na superfície onde aponta. Chama verde suave no canto e poeira flutuando presa na câmera.
+- O segredo:
+  - **A geometria é uma esfera (`SphereGeometry(4.2,200,600)`) que o vertex shader achata num lençol.** A esfera só serve como "saco de pontos". A altura sai de 2 oitavas de Simplex; `uStream` desliza o ruído pra parecer que a gente voa pra frente.
+  - Pontos com `AdditiveBlending`: onde sobrepõem, clareiam sozinhos (dá o brilho sem luz).
+  - Cursor: projeta o mouse no plano z=0 e empurra os pontos num raio (`smoothstep`), com "atividade" que some depois de 3 s parado.
+  - Rolagem **amortecida 2 vezes** (`Lerp` .10 e depois .06): a câmera nunca dá tranco.
+  - Câmera: `smoothstep` nos primeiros 35% da rolagem (de y7/z16 pra y0,8/z-2), `lookAt` andando junto.
+  - Fundo: um `ShaderPass` final pinta o verde-escuro com vinheta e a "chama" (função `warp3d`) só nos cantos, e soma bloom.
+- Cuidados se for pra cliente: pesa (3 composers com bloom + pixel ratio cheio). No celular, limitar `setPixelRatio(Math.min(2, dpr))` e pausar quando a aba some. O mouse não existe no celular: o efeito do cursor some, o resto funciona.
+- Serve pra: fundo de topo de academia, tabacaria/narguilé, bar, energia solar, empresa de tecnologia; trocar as cores pelas da marca (`colorLow/colorHigh/bgColor/flame`). Texto em cima com contraste.
+
 ### Efeitos do Mestre das Motos (10/11/2026, código em `sites/mestre-das-motos/index.html`, JS puro)
 Já usados nesse cliente: pra outro, variar a ideia, não colar igual.
 - **Filme com frases (o Davi pediu e gostou da ideia):** seção alta (`560svh`) com palco `sticky`; vídeo de fundo em loop (não preso na rolagem, então nunca parece "travado"); 5 frases gigantes que trocam pela rolagem. Uma fonte de progresso só, folga de 8% perto da troca, uma troca a cada 380 ms, palavras entram por tempo (CSS), a frase que sai sobe e some com `opacity`. Barra vermelha de progresso e zoom leve no vídeo seguem a rolagem direto. Serve pra qualquer negócio com vídeo bom: estética, academia, restaurante.
