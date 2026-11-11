@@ -143,6 +143,18 @@ Pra ver no celular/prévia: `efeitos/onda-de-fluxo-particulas-arquivo-unico.html
 - Cuidados se for pra cliente: pesa (3 composers com bloom + pixel ratio cheio). No celular, limitar `setPixelRatio(Math.min(2, dpr))` e pausar quando a aba some. O mouse não existe no celular: o efeito do cursor some, o resto funciona.
 - Serve pra: fundo de topo de academia, tabacaria/narguilé, bar, energia solar, empresa de tecnologia; trocar as cores pelas da marca (`colorLow/colorHigh/bgColor/flame`). Texto em cima com contraste.
 
+### Kimi: site de piloto de F1 (11/11/2026, estudo em `aprendizados/kimi/`, Three.js + Lenis)
+Recriado de um prompt grande do getlayers.ai (card "Kimi"). **Só estudo:** usa rosto e marcas reais (Kimi Antonelli, Mercedes), nunca vira case nem vai pra cliente. O que dá pra levar pra cliente, trocando o assunto:
+- **Pilha de cartas na rolagem:** cada bloco `position: sticky; top: 0` e o próximo passa por cima; o de baixo encolhe até 0,9 e escurece 55% conforme o próximo sobe (`1 - next.top / altura da tela`). O `scale` vai num wrapper **dentro** do sticky (transform no próprio sticky quebra o grudar). No celular só escurece.
+- **Véu de carregamento honesto:** a barra sobe devagar até 70% sozinha e só completa quando a cena 3D realmente compilou; sai em 3 tempos (conteúdo some, pausa, véu sobe) e a entrada da página começa junto.
+- **Objeto que "queima" e depois só aparece onde o mouse passou:** shader com limiar por altura + ruído (borda brilhando na cor da marca) e uma máscara feita do rastro do cursor (cápsulas entre as últimas posições, borda líquida com ruído, some com o mouse parado). Serve pra produto em 3D: capacete, tênis, garrafa, joia.
+- **Emenda de bandeira quadriculada:** canvas no topo do bloco escuro com a cor do bloco anterior; linhas sólidas que viram xadrez e somem com a rolagem (ruído por célula, 6% na cor de destaque). Combina com oficina, kart, autopeças, lava-rápido.
+- **Traçado que se desenha numa volta:** a velocidade vem da curvatura do caminho (freia nas curvas, acelera nas retas), com brilho somado e um filamento branco na ponta; marcadores acendem quando a linha passa. Bom pra rota de entrega, trajeto de corrida, mapa de cidade.
+- **Mapa de pontos com mira:** 8 mil pontos desenhados uma vez num canvas escondido; por quadro só os pontos acesos são redesenhados (achados por conta de grade, não por busca). O mouse acende linha + coluna e os pontos viram xadrez.
+- **Motor próprio de molas** (tension/friction, igual ao react-spring) em vez de animação CSS, um laço `requestAnimationFrame` só pra tudo, e revelação de texto palavra a palavra / letra a letra com cópia escondida pra leitor de tela.
+- **Medidas em `cqw`:** `px(v) = v/1440*100 cqw` com `container-type: inline-size` no bloco: o bloco é a arte de 1440 em qualquer largura; texto pequeno ganha piso `max(..., 13px)`.
+- **Falha visível:** todo arquivo que não carrega vira uma faixa laranja com o endereço. Nada de véu travado pra sempre.
+
 ### Efeitos do Mestre das Motos (10/11/2026, código em `sites/mestre-das-motos/index.html`, JS puro)
 Já usados nesse cliente: pra outro, variar a ideia, não colar igual.
 - **Filme com frases (o Davi pediu e gostou da ideia):** seção alta (`560svh`) com palco `sticky`; vídeo de fundo em loop (não preso na rolagem, então nunca parece "travado"); 5 frases gigantes que trocam pela rolagem. Uma fonte de progresso só, folga de 8% perto da troca, uma troca a cada 380 ms, palavras entram por tempo (CSS), a frase que sai sobe e some com `opacity`. Barra vermelha de progresso e zoom leve no vídeo seguem a rolagem direto. Serve pra qualquer negócio com vídeo bom: estética, academia, restaurante.
