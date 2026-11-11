@@ -309,6 +309,14 @@ O vídeo junta 4 coisas: Claude Code + skill UI UX Pro Max + componentes do 21st
 - Cuidado com fontes cujo acento fica estranho em tamanho gigante. No Cormorant, o "ê" de "você" parece bug. Se acontecer, troque a palavra.
 - A paleta sai da fachada, do logo e das fotos. Uma cor domina, e o acento vem da marca.
 
+### Fontes baixadas (Dafont, Creative Fabrica, sites de autor) — 11/11/2026
+Ferramenta: `python3 gudev/ferramentas/fonte_para_site.py fonte.zip saida/` (precisa `pip install fonttools brotli`). Ela abre o zip, lê a licença (readme **e** o nome interno da fonte), confere os acentos do português e o "R$", gera `.woff2` (até 80% menor que o .ttf/.otf) + um subset latino e cospe o `@font-face` pronto (arquivo ou base64 pro HTML único).
+- **Licença primeiro.** Site de cliente é uso comercial. "Demo", "Personal Use Only" ou "free for personal use" = **não pode** sem comprar a licença comercial. Só usar fonte com licença comercial clara (ou Google Fonts) e guardar o readme junto do site.
+- **Demo vem sabotada:** além da licença, a versão demo costuma trocar números e pontuação por enfeite ou carimbo ("PERSONAL USE ONLY") e às vezes não tem acento. Sempre testar com `Pão quentinho às 6h` e `R$ 19,90` antes de mostrar pro cliente.
+- **No CSS:** `@font-face` com `font-display: swap`, formato `woff2`, e sempre uma fonte de reserva parecida depois (`font-family: "Super Warming", "Baloo 2", system-ui`). Display decorada só em título; texto corrido continua numa fonte de leitura.
+- **No HTML único:** embutir o subset latino em base64 (30–50 KB por fonte), não a fonte cheia.
+- Catálogo com as 4 que o Davi mandou: `aprendizados/catalogo-fontes.html`. Liberada pra cliente: **Super Warming** (`gudev/fontes/`). Parceh, Inktera e Acthirey: só se o cliente comprar a licença.
+
 ## Técnica (obrigatório)
 - **Um único arquivo HTML**, com CSS e JS dentro. As imagens ficam em `img/`.
 - **Bibliotecas por CDN, versão fixa:**

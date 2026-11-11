@@ -88,6 +88,9 @@
 - **Página com importmap de CDN:** se a biblioteca não chega, o módulo inteiro não roda e o véu fica pra sempre. Pôr um vigia em `<script>` comum (12 s sem `window.__kimiBoot` → tira o véu e mostra o aviso).
 - **Bloqueio de `git push --force`:** quando o PR anterior já foi mergeado e a branch recomeça da branch padrão, o push normal basta (avança sem forçar). Não usar `--force`.
 
+## Fontes (11/11/2026)
+- **Fonte demo em site de cliente = problema duplo:** a licença proíbe uso comercial **e** a demo vem sabotada (Parceh troca números, "$", ":" e "," por enfeites; Inktera troca números por um carimbo "PERSONAL USE ONLY"; Acthirey não tem acento e "Pão" sai com o "ã" em outra fonte). Testar sempre com preço e acento antes de mostrar. Ferramenta: `gudev/ferramentas/fonte_para_site.py`.
+
 ## Vendas
 - **Lead que pede prévia, fala com o chefe e marca de pagar pode sumir.** Faça o follow-up em 3 passos (veja 02-VENDAS) e não corra atrás demais.
 - **Não colocar demo fictícia como case.** Só clientes reais.
