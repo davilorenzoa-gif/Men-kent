@@ -17,6 +17,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `gudev/08-MARKETING-E-VIDEOS.md`: vídeos de referência, padrões de Reels e banco de ideias pro Instagram da GuDev
 - `gudev/09-CANVA-TRUQUES.md`: Canva (transições Combinar/Fluxo, efeito vidro, o que o conector faz vs. clique manual)
 - `gudev/10-REFERENCIA-ORIGINKIT.md`: biblioteca de efeitos originkit.dev (o que é grátis, licença, como converter)
+- `gudev/11-GOOGLE-EM-DIA.md`: **oferta de entrada atual** (perfil do Google Maps por R$ 97), pontos por lead no Radar, o que o Claude faz no perfil e regras. Ler inteiro antes de qualquer tarefa de venda.
 - `gudev/exemplos/*.html`: sites reais (Açaí Happy, Chersoni, Dellart), nível mínimo de qualidade
 - `gudev/efeitos/`, `gudev/demos/`, `gudev/aprendizados/`: efeitos testados, demos de técnica e páginas de estudo
 - `gudev/aprendizados/guia-motion-premium.md` + `fusca-lab/`: guia de motion (stack, 60fps, mola, magnético, cursor, scroll storytelling, Flip, 3D) com tudo funcionando no Fusca Lab. Ler antes de criar WOW.
@@ -24,6 +25,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `sites/<nome>/`: cada site de lead e cada conceito, com README do que falta confirmar
 
 ## Resumo rápido
+- **Desde 11/11/2026 a 1ª oferta é o Google em Dia** (arrumar o perfil do Maps por R$ 97, paga depois de ver pronto); site (R$ 800 − 97) só depois do Pix e pedindo permissão. Pontos de cada lead no Radar, botão "Pontos e escada". Cliente adicionou a GuDev como administradora: entrar pelo Chrome (logado na conta do Google da GuDev), mostrar ao Davi o que vai mudar e **só salvar depois que ele aprovar**. Tudo em `gudev/11`.
 - Preço: sem tabela fixa, **referência R$ 800** por site, negociado caso a caso (desde 10/11/2026). Desconto só com motivo: a 1ª venda (Katraka) saiu a R$ 600 em 2x. O padrinho (Andrade) pode pagar mais; nada fechado. O antigo "R$ 297 pros 3 primeiros" acabou. Pix 50% pra começar, 50% no ar. Divisão 50/50 Gu/Davi. Detalhes em `01`.
 - Plano mensal opcional **R$ 60**: hospedagem + até ~4 alterações pequenas/mês. Coisa grande é orçada à parte.
 - WhatsApp comercial (Davi): (11) 96465-0141. Venda 100% pelo WhatsApp.
