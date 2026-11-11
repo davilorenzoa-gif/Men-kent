@@ -91,6 +91,11 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - mapa da moto: cada serviço acende o ponto da moto onde ele acontece (holofote + anel), com a foto presa no topo no celular;
   - painel de alertas: acender as luzes-espia do que a moto está fazendo, visor LCD com moto e km, mensagem pro WhatsApp.
   - extra (pedido do Davi): "filme" logo depois do topo, vídeo da moto preso no fundo e 5 frases gigantes que passam com a rolagem (palavras sobem por tempo, troca com folga, barra vermelha de progresso).
+- **Eduburger's** (sanduicheria, Maceió-AL, prévia em `sites/eduburgers`, 11/11/2026):
+  - os adesivos de lanche voam pras bordas, o título afunda com blur, o beirute sobe e o selo "4,7 no Google" bate;
+  - painel de palhetas (split-flap) com o cardápio inteiro, uma categoria por trecho da rolagem;
+  - "Marque na caixa": formulário que imita a caixa kraft real, visto de caneta, total ao vivo, a caixa fecha com fita e vai pro WhatsApp.
+- **Lume** (conceito de joalheria de alianças, `sites/lume`, 11/11/2026): aliança 3D (Three.js) nasce em brasa e esfria até virar ouro; a câmera atravessa a aliança por dentro; os nomes digitados aparecem gravados por dentro, arrastar pra girar, e o par encaixa com tranco e brilho.
 - **Site da própria GuDev** (página de venda, `sites/gudev`, 05/11/2026):
   - porta de aço laranja que sobe com a rolagem e mostra a rua, com um celular subindo e pedidos chegando;
   - conversa de WhatsApp que se escreve com a rolagem;
@@ -126,6 +131,17 @@ Já usados nesse cliente: pra outro, variar a ideia, não colar igual.
   - Não rodar com tela de tamanho 0.
   - Reduzir as partículas com `prefers-reduced-motion`.
   - O botão que foge desvia do título e do outro botão.
+
+### Efeitos da Eduburger's e da Lume (11/11/2026, o Davi mandou os 2 HTMLs pra aprender)
+Código em `sites/eduburgers/index.html` (JS puro) e `sites/lume/index.html` (Three.js). Detalhe nos READMEs de cada um.
+- **Formulário que imita o objeto real do comércio** (Eduburger's): a caixa kraft do beirute com os mesmos quadradinhos. Visto de caneta em SVG (`stroke-dasharray`/`dashoffset` de 60 → 0 no `:checked`), quantidade só aparece no item marcado, total ao vivo, validação curta ("Marque pelo menos um beirute"). Ao enviar: a caixa balança (`rotateX`), a fita passa (`scaleX` 0→1) e só depois abre o WhatsApp. Serve pra qualquer comércio com embalagem/comanda marcante: pizzaria (caixa), açaí (copo), barbearia (comanda).
+- **Painel de palhetas guiado pela rolagem:** seção alta (`N*75+100` vh) com palco `sticky`; cada categoria = 1/N do progresso, troca com folga de 8% e fila (`ocupado`/`pendente`, 650 ms por troca), cada célula sorteia 3-6 letras antes de parar. Abas fazem `scrollTo` pro meio do trecho da categoria. Variação do painel de fornadas (Fornalha): aqui é o cardápio inteiro com preço.
+- **Abertura que espalha os adesivos:** recortes dos lanches com `data-dx/dy/dr/p` (destino em vw/vh, rotação e força do parallax); o laço só recalcula quando a rolagem ou o mouse mudou (economiza no celular parado).
+- **Objeto 3D feito no código que faz sentido** (Lume): aliança é só um perfil girado (`LatheGeometry`) com material metálico e `RoomEnvironment` de reflexo; não precisa de modelo nem HDR. Diferente da comida em 3D (rejeitada, ver `05`): metal liso fica convincente em código. Bom pra joia, relógio, anel, peça usinada, garrafa de vidro.
+- **Personalização que aparece no produto:** o que a pessoa digita vira `CanvasTexture` no próprio objeto (gravação por dentro da aliança). Serve pra gravação, bordado, estampa de camiseta, nome no bolo, placa.
+- **Poses por seção (`data-pose`):** uma tabela de poses por seção (e outra pro celular), interpolação entre a seção que passou do meio da tela e a próxima, e a pose atual persegue o alvo. Jeito simples de "coreografar" um objeto 3D fixo atrás do site inteiro.
+- **Arrastar o 3D sem travar a rolagem:** `main{pointer-events:none}` + `auto` só no que é clicável, canvas com `touch-action:pan-y`.
+- **"Material que muda de estado"** (brasa → ouro): interpolar cor, `emissive`, `metalness`, `roughness` nos primeiros segundos. Dá pra variar: ferro que esfria (serralheria), vidro que embaça, couro que escurece.
 
 ### Estudados nos vídeos Fervo e Madoska (10/11/2026, demos em `demos/`)
 O Davi mandou 2 vídeos de referência e pediu pra aprender a fazer igual. As demos são técnica com marca fictícia: pra cliente, trocar marca, texto e fotos, e variar a coreografia.
