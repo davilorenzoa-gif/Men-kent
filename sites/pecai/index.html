@@ -51,6 +51,7 @@
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{font-family:Figtree,system-ui,sans-serif;background:var(--pe);color:#fff;line-height:1.5;overflow-x:clip;font-size:17px}
 img{max-width:100%;height:auto;display:block}
+[hidden]{display:none!important}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--palmeira);outline-offset:3px;border-radius:6px}
 h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;text-wrap:balance;letter-spacing:-.02em}
@@ -128,7 +129,7 @@ h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;t
 }
 
 /* WOW 2: as duas medidas enchendo com a rolagem */
-.medidas{background:var(--copo);color:var(--tinta);border-radius:40px 40px 0 0;position:relative;z-index:1;height:260vh}
+.medidas{background:#faf5ec;color:var(--tinta);border-radius:40px 40px 0 0;position:relative;z-index:1;height:260vh}
 .medidas .fixo{position:sticky;top:0;min-height:100svh;display:grid;align-content:center;gap:28px;padding:88px 0 40px}
 .medidas h2{font-size:clamp(44px,8vw,96px);color:var(--pe)}
 .baldes{display:flex;align-items:flex-end;justify-content:center;gap:clamp(24px,6vw,80px)}
@@ -138,6 +139,16 @@ h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;t
 .balde.dois svg{width:clamp(100px,17.5vw,175px)}   /* 2 L tem 1/5 do volume: lado ≈ 1/∛5 ≈ 0,58 do de 10 L */
 .balde.um svg{width:clamp(79px,13.9vw,139px)}      /* 1 L tem 1/10 do volume: lado ≈ 1/∛10 ≈ 0,46 do de 10 L */
 @media (max-width:520px){.baldes{gap:14px}.balde.dez svg{width:140px}.balde.dois svg{width:81px}.balde.um svg{width:65px}}
+/* açaí: potes de verdade (quadros do vídeo, guiados pela rolagem); cupuaçu: o desenho em escala */
+.potes{position:relative;width:min(100%,640px);margin-inline:auto}
+.potes canvas{display:block;width:100%;height:auto;aspect-ratio:540/304;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent),linear-gradient(transparent,#000 6%,#000 94%,transparent);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent),linear-gradient(transparent,#000 6%,#000 94%,transparent);mask-composite:intersect}
+.potes .rotulos{position:relative;height:clamp(44px,7vw,72px)}
+.potes .rotulos .litros{position:absolute;top:6px;transform:translateX(-50%);white-space:nowrap}
+.potes .litros{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(30px,5.4vw,56px);line-height:1;color:var(--pe)}
+.potes .litros small{font-size:.45em;margin-left:3px}
+.medidas.cupuacu .potes,.medidas:not(.cupuacu) .baldes,.medidas.cupuacu .so-acai,.medidas:not(.cupuacu) .so-cupuacu{display:none}
 .liq,.liq-topo{transition:fill .6s cubic-bezier(.22,1,.36,1)}
 [data-sabor="cupuacu"] .dez .liq{fill:#d9b86a}[data-sabor="cupuacu"] .dez .liq-topo{fill:#ecd28e}
 [data-sabor="cupuacu"] .dois .liq{fill:#e6c983}[data-sabor="cupuacu"] .dois .liq-topo{fill:#f3dfa6}
@@ -291,6 +302,15 @@ footer a{text-underline-offset:3px}
       <div class="fixo wrap">
         <h2 id="t-medidas">Três medidas.</h2>
         <div class="chips sabor" role="group" aria-label="Sabor" id="sabor"><button type="button" aria-pressed="true" data-v="acai">Açaí</button><button type="button" aria-pressed="false" data-v="cupuacu">Cupuaçu</button></div>
+        <div class="potes" id="potes">
+          <canvas id="potesTela" width="540" height="304" role="img" aria-label="Potes de 10 litros, 2 litros e 1 litro enchendo de açaí. Imagem ilustrativa."></canvas>
+          <img id="potesQuadros" src="img/pote-acai-quadros.webp" width="3240" height="2432" alt="" hidden decoding="async">
+          <div class="rotulos" aria-hidden="true">
+            <span class="litros" style="left:21%"><span id="pDez">10</span><small>L</small></span>
+            <span class="litros" style="left:55%"><span id="pDois">2</span><small>L</small></span>
+            <span class="litros" style="left:84%"><span id="pUm">1</span><small>L</small></span>
+          </div>
+        </div>
         <div class="baldes" id="baldes" data-sabor="acai">
           <div class="balde dez">
             <svg viewBox="0 0 200 220" role="img" aria-label="Embalagem de 10 litros enchendo">
@@ -333,7 +353,8 @@ footer a{text-underline-offset:3px}
           </div>
         </div>
         <p class="conta"><span>1 de 10 L = 5 de 2 L = 10 de 1 L</span></p>
-        <p class="nota-ilus">Desenho em escala de volume. Embalagem ilustrativa.</p>
+        <p class="nota-ilus so-acai">Imagem ilustrativa.</p>
+        <p class="nota-ilus so-cupuacu">Desenho em escala de volume. Embalagem ilustrativa.</p>
       </div>
     </section>
   </div>
@@ -629,7 +650,12 @@ footer a{text-underline-offset:3px}
     });
   }
   grupo('freq', function(v){ freq = v; });
-  grupo('sabor', function(v){ document.getElementById('baldes').setAttribute('data-sabor', v); });
+  grupo('sabor', function(v){ document.getElementById('baldes').setAttribute('data-sabor', v); document.getElementById('medidas').classList.toggle('cupuacu', v === 'cupuacu'); });
+
+  /* potes de açaí: desenha um quadro da folha de quadros (48 quadros, 6 por linha). Sem animação, mostra o último (cheio). */
+  var tela = document.getElementById('potesTela'), folha = document.getElementById('potesQuadros'), ctx2 = tela.getContext('2d'), quadroAtual = 47;
+  window.__pecaiQuadro = function(i){ quadroAtual = i; if (!folha.complete || !folha.naturalWidth) return; ctx2.drawImage(folha, (i % 6) * 540, Math.floor(i / 6) * 304, 540, 304, 0, 0, 540, 304); };
+  if (folha.complete) window.__pecaiQuadro(quadroAtual); else folha.addEventListener('load', function(){ window.__pecaiQuadro(quadroAtual); });
   grupo('receb', function(v){ receb = v; campoEnd.style.display = v === 'entrega' ? '' : 'none'; });
   [endereco, empresa, nome].forEach(function(i){ i.addEventListener('input', function(){ previa.textContent = mensagem(); }); });
   form.addEventListener('submit', function(e){
@@ -750,6 +776,8 @@ footer a{text-underline-offset:3px}
     var a = Math.min(1, p / 0.8);                 // termina de encher em 80% da seção e fica cheio
     gsap.set([nDez, nDois, nUm], { y: 190 * (1 - a) });
     lDez.textContent = Math.round(10 * a); lDois.textContent = (2 * a).toFixed(a < 1 ? 1 : 0).replace('.', ','); lUm.textContent = a.toFixed(a < 1 ? 1 : 0).replace('.', ',');
+    document.getElementById('pDez').textContent = lDez.textContent; document.getElementById('pDois').textContent = lDois.textContent; document.getElementById('pUm').textContent = lUm.textContent;
+    if (window.__pecaiQuadro) window.__pecaiQuadro(Math.round(a * 47));
   }
   if (reduz || embed) { enche(1); ScrollTrigger.refresh(); return; }
   enche(0);
