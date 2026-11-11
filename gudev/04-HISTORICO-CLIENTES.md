@@ -125,6 +125,19 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Site:** `sites/malibu-vieiralves/` (burger que desmonta, rota pela costa, prancha de pedido). Fotos do catálogo do WhatsApp (300px): mandar pro Gu melhorar.
 - **Falta:** confirmar endereço, WhatsApp e cardápio.
 
+## Oficina Mestre das Motos · lead real do Davi (10/11/2026)
+- **É lead real** (confirmado pelo Davi em 10/11). WhatsApp: (11) 96950-1340. Falta cidade, endereço e quem é o dono.
+- O Davi mandou um briefing completo (paleta, textos, seções) e fotos/vídeos de moto tirados da internet.
+- **Site:** `sites/mestre-das-motos/` (ignição no conta-giros, mapa da moto, painel de alertas pro WhatsApp).
+- **Nenhum dado real ainda:** sem WhatsApp, endereço, cidade, horário, Instagram, números ou avaliações. Tudo fica no `CONFIG` do HTML e aparece como "a confirmar".
+- **Fotos da internet:** marcadas como ilustrativas; trocar por fotos da oficina antes de ir pro ar.
+- **Próximo passo:** pegar com o dono WhatsApp, endereço, horário, Instagram, link do Google, serviços que faz e fotos reais da oficina.
+
+## Eduburger's, Cidade Universitária, Maceió-AL (11/11/2026)
+- Sanduicheria desde 2015 (beirutes, passaportes, hambúrgueres), WhatsApp (82) 98804-7362, Instagram @eduburgers, 4,7 no Google (295 avaliações).
+- O Davi mandou o HTML da prévia pronto pra eu aprender (`sites/eduburgers/`). O rodapé diz "prévia feita pela GuDev, projeto conceito, ainda não é o site oficial".
+- **A confirmar com o Davi:** se é lead (quem achou, se já houve contato), status e preço. Faltam as fotos (`img/`) no repositório. Não usar como case.
+
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.
 - O site dele virou **a régua mínima de qualidade**: fotos reais recortadas, slogan real, cardápio real e carrinho pro WhatsApp.
@@ -139,5 +152,6 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Lustro:** estética automotiva fictícia (`sites/lustro-estetica/`, v1 em `sites/estetica-lustro/`).
 - **Faixa Vermelha:** garagem de seminovos fictícia (`sites/faixa-vermelha/`).
 - **Fornalha:** padaria fictícia (`sites/fornalha/`, salva do artifact em 10/11).
-- **DOZE V12, Espelho, Basalto, Meridiano, APEX, Moenda, Sulco:** conceitos e demos de portfólio (`sites/` e `gudev/demos/`).
+- **Lume:** joalheria de alianças fictícia, conceito pro Instagram com aliança em 3D (`sites/lume/`, 11/11/2026).
+- **DOZE V12, Espelho, Basalto, Meridiano, APEX, Moenda, Sulco, Fervo:** conceitos e demos de portfólio (`sites/` e `gudev/demos/`).
 - **Davi 26:** trabalho de escola do Davi (`sites/presidente-davi-26/`), nem é GuDev.

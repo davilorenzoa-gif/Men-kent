@@ -1,6 +1,27 @@
 @import 'tailwindcss';
 
 @custom-variant light (&:where([data-theme='light'], [data-theme='light'] *));
+/* o painel é escuro por padrão (sem data-theme); o `dark:` dos componentes shadcn segue isso */
+@custom-variant dark (&:where(:root:not([data-theme='light']) *));
+
+/* Tokens no formato shadcn (bg-primary, text-primary-foreground, ring-ring...),
+   apontando pras variáveis do painel, então o tema claro/escuro continua valendo. */
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--accent-ink);
+  --color-secondary: var(--glass-3);
+  --color-secondary-foreground: var(--ink);
+  --color-muted: var(--glass-2);
+  --color-muted-foreground: var(--ink-3);
+  --color-accent: var(--glass-3);
+  --color-accent-foreground: var(--ink);
+  --color-destructive: #ef4462;
+  --color-border: var(--line);
+  --color-input: var(--line-strong);
+  --color-ring: var(--accent);
+}
 
 @theme {
   --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;

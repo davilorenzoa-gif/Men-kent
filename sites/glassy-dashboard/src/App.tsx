@@ -19,6 +19,7 @@ import {
 } from './lib/data'
 import { moeda, moedaCurta } from './lib/format'
 import { lerPref, salvarPref, Toasts, type Toast } from './lib/ui'
+import { LiquidButton } from '@/components/ui/liquid-glass-button'
 
 const PADRAO: Prefs = { tema: 'dark', blur: 'medio', movimento: true, resumoDiario: true }
 const VISTAS: Vista[] = ['visao', 'pedidos', 'clientes', 'produtos', 'config']
@@ -147,9 +148,11 @@ export default function App() {
         <div className="glass rise relative w-full max-w-sm p-6 text-center">
           <h1 className="text-lg font-semibold tracking-tight">Você saiu do painel</h1>
           <p className="mt-2 text-sm text-[var(--ink-3)]">É uma demonstração, então dá pra entrar de novo sem senha.</p>
-          <button className="btn btn-primary mt-5 w-full" onClick={() => setSaiu(false)}>
-            <LogIn size={16} /> Entrar de novo
-          </button>
+          <LiquidButton size="xl" className="mt-5 w-full rounded-full font-semibold [&>div]:rounded-full" onClick={() => setSaiu(false)}>
+            <span className="inline-flex items-center gap-2">
+              <LogIn size={16} /> Entrar de novo
+            </span>
+          </LiquidButton>
         </div>
       </div>
     )

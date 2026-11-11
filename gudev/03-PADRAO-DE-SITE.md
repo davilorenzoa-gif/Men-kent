@@ -92,6 +92,16 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
 - **Skyline Motors** (conceito JDM com R34, `sites/skyline-motors`): o farol acende e o site acende junto; a rolagem gira o R34 em 360° (192 quadros recortados) e o céu vira estúdio; estúdio 360° com arraste, zoom, troca de cor e painel de largada com som real.
 - **APEX Automotive** (conceito, `sites/apex`): **exceção ao HTML único**, feito em React + Vite + Tailwind. Filmes montados com fotos (sem MP4), fotos do Wikimedia com crédito, ficha técnica com link pra fonte oficial.
 - **Davi 26** (trabalho de escola, não é GuDev, `sites/presidente-davi-26`): poeira verde e amarela que pinta o nome; globo da bandeira com uma estrela por proposta; urna eletrônica de simulação.
+- **Oficina Mestre das Motos** (oficina de motos, `sites/mestre-das-motos`, 10/11/2026):
+  - ignição: o conta-giros faz a varredura de quando a moto liga e a tela abre em duas metades;
+  - mapa da moto: cada serviço acende o ponto da moto onde ele acontece (holofote + anel), com a foto presa no topo no celular;
+  - painel de alertas: acender as luzes-espia do que a moto está fazendo, visor LCD com moto e km, mensagem pro WhatsApp.
+  - extra (pedido do Davi): "filme" logo depois do topo, vídeo da moto preso no fundo e 5 frases gigantes que passam com a rolagem (palavras sobem por tempo, troca com folga, barra vermelha de progresso).
+- **Eduburger's** (sanduicheria, Maceió-AL, prévia em `sites/eduburgers`, 11/11/2026):
+  - os adesivos de lanche voam pras bordas, o título afunda com blur, o beirute sobe e o selo "4,7 no Google" bate;
+  - painel de palhetas (split-flap) com o cardápio inteiro, uma categoria por trecho da rolagem;
+  - "Marque na caixa": formulário que imita a caixa kraft real, visto de caneta, total ao vivo, a caixa fecha com fita e vai pro WhatsApp.
+- **Lume** (conceito de joalheria de alianças, `sites/lume`, 11/11/2026): aliança 3D (Three.js) nasce em brasa e esfria até virar ouro; a câmera atravessa a aliança por dentro; os nomes digitados aparecem gravados por dentro, arrastar pra girar, e o par encaixa com tranco e brilho.
 - **Site da própria GuDev** (página de venda, `sites/gudev`, 05/11/2026):
   - porta de aço laranja que sobe com a rolagem e mostra a rua, com um celular subindo e pedidos chegando;
   - conversa de WhatsApp que se escreve com a rolagem;
@@ -114,6 +124,56 @@ Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS 
   - Só serve pra brincadeira, quiz ou campanha.
 - Cuidados que já estão no código:
   - Esperar a fonte carregar antes de desenhar o texto em partículas.
+  - (continua abaixo)
+
+### Vidro fosco com refração (11/11/2026, `efeitos/vidro-fosco-refracao.html`, WebGL puro)
+Veio de um prompt da ferramenta Refract do getlayers.ai (padrão "Frosted") que o Davi mandou. Testado no Playwright em 390 e 1440 (sem erro no console, sem rolagem lateral); falta testar em celular de verdade.
+- O que faz: a foto aparece como se estivesse atrás de um vidro canelado/fosco. Com franja de cor nas bordas e brilho onde o vidro curva. O mouse/dedo inclina o olhar: o vidro anda pouco e o fundo anda muito (parallax de 2 camadas).
+- O segredo: **refratar, não deslocar.** Um mapa de relevo (ruído em 3 tamanhos), a normal dele e `refract()` do GLSL com IOR 1,50 entortam o raio. "Relevo" (curvatura) e "espessura" (quanto o raio anda) são controles separados. Vermelho, verde e azul refratam com IOR um pouco diferente (dispersão).
+- Tamanhos em "unidade de projeto" contra borda longa de 1200 px, então exportar maior mostra o mesmo vidro. Bordas da foto espelhadas (nunca `clamp`, que vira listra).
+- Desenha **uma vez** e só redesenha quando algo muda (rAF curto no parallax): quase zero de bateria, bom pra celular.
+- 9 padrões no mesmo shader (`pattern`): 0 canelado, 1 cruz, 2 bloco de vidro (com rejunte), 3 ondas em círculo, 4 gotas de chuva, 5 onda, 6 martelado, 7 flamengo, 8 fosco. Trocar com `vidroAjustes({pattern:2})` no console.
+- Como usar a foto: escolher/arrastar, ou `?img=foto.webp` na URL, ou trocar `FOTO` no código.
+- Serve pra: fundo de topo atrás do título (estética, barbearia, bar à noite, box de banheiro numa marmoraria/vidraçaria), revelar a foto "tirando o vidro" na rolagem (animar `relief` até 0), vitrine de loja com chuva (padrão 4). Atenção: título em cima precisa de contraste, o vidro deixa a foto mais ruidosa.
+
+### Onda de Fluxo: mar de partículas em 3D (11/11/2026, `efeitos/onda-de-fluxo-particulas.html`, Three.js r0.143)
+Pra ver no celular/prévia: `efeitos/onda-de-fluxo-particulas-arquivo-unico.html` (Three.js embutido, sem internet). Recriado de um prompt de biblioteca de efeitos (card "Onda de Fluxo", grátis, licença comercial) que o Davi gravou no celular. Testado no Playwright em 390 e 1440 (sem erro, sem rolagem lateral, prints batem com o vídeo); falta celular de verdade.
+- O que faz: um mar verde-esmeralda de colinas feitas de ~120 mil pontinhos que brilham, rolando com ruído. Na rolagem, a câmera mergulha de cima até rasar as ondas e o mar cresce. O mouse dá parallax e abre um buraco na superfície onde aponta. Chama verde suave no canto e poeira flutuando presa na câmera.
+- O segredo:
+  - **A geometria é uma esfera (`SphereGeometry(4.2,200,600)`) que o vertex shader achata num lençol.** A esfera só serve como "saco de pontos". A altura sai de 2 oitavas de Simplex; `uStream` desliza o ruído pra parecer que a gente voa pra frente.
+  - Pontos com `AdditiveBlending`: onde sobrepõem, clareiam sozinhos (dá o brilho sem luz).
+  - Cursor: projeta o mouse no plano z=0 e empurra os pontos num raio (`smoothstep`), com "atividade" que some depois de 3 s parado.
+  - Rolagem **amortecida 2 vezes** (`Lerp` .10 e depois .06): a câmera nunca dá tranco.
+  - Câmera: `smoothstep` nos primeiros 35% da rolagem (de y7/z16 pra y0,8/z-2), `lookAt` andando junto.
+  - Fundo: um `ShaderPass` final pinta o verde-escuro com vinheta e a "chama" (função `warp3d`) só nos cantos, e soma bloom.
+- Cuidados se for pra cliente: pesa (3 composers com bloom + pixel ratio cheio). No celular, limitar `setPixelRatio(Math.min(2, dpr))` e pausar quando a aba some. O mouse não existe no celular: o efeito do cursor some, o resto funciona.
+- Serve pra: fundo de topo de academia, tabacaria/narguilé, bar, energia solar, empresa de tecnologia; trocar as cores pelas da marca (`colorLow/colorHigh/bgColor/flame`). Texto em cima com contraste.
+
+### Túnel: buraco de minhoca de partículas (11/11/2026, `efeitos/tunel-particulas.html` + `-arquivo-unico.html`)
+Mesmo esqueleto da Onda de Fluxo (3 composers com bloom, FinalPass com fundo e chama nos cantos, poeira presa na câmera). A diferença é o shader: o mesmo "saco de pontos" da esfera vira um **cilindro** (ângulo = posição x normalizada pela largura da fatia, raio 12 menos o ruído), com tremida e redemoinho de ruído. A câmera fica dentro do tubo e voa 34 unidades pra frente com a rolagem; o grupo gira devagar no eixo z (mais rápido com a rolagem). Cores: anil `#180a3a` → ciano `#2bf0ff`, fundo `#0a0524`, chama violeta `#7a3cff`.
+- Serve pra: topo de festa/balada, tabacaria, estúdio de tatuagem, gamer/LAN house, "entrar" num produto. Trocar as cores pelas da marca. Pesado como a Onda: no celular limitar o pixel ratio.
+- **Lição:** ao copiar um efeito de outro arquivo, trocar **todas** as marcas internas (`window.__ondaOk` → `__tunelOk`), senão o aviso "não carregou" aparece à toa.
+
+### Kimi: site de piloto de F1 (11/11/2026, estudo em `aprendizados/kimi/`, Three.js + Lenis)
+Recriado de um prompt grande do getlayers.ai (card "Kimi"). **Só estudo:** usa rosto e marcas reais (Kimi Antonelli, Mercedes), nunca vira case nem vai pra cliente. O que dá pra levar pra cliente, trocando o assunto:
+- **Pilha de cartas na rolagem:** cada bloco `position: sticky; top: 0` e o próximo passa por cima; o de baixo encolhe até 0,9 e escurece 55% conforme o próximo sobe (`1 - next.top / altura da tela`). O `scale` vai num wrapper **dentro** do sticky (transform no próprio sticky quebra o grudar). No celular só escurece.
+- **Véu de carregamento honesto:** a barra sobe devagar até 70% sozinha e só completa quando a cena 3D realmente compilou; sai em 3 tempos (conteúdo some, pausa, véu sobe) e a entrada da página começa junto.
+- **Objeto que "queima" e depois só aparece onde o mouse passou:** shader com limiar por altura + ruído (borda brilhando na cor da marca) e uma máscara feita do rastro do cursor (cápsulas entre as últimas posições, borda líquida com ruído, some com o mouse parado). Serve pra produto em 3D: capacete, tênis, garrafa, joia.
+- **Emenda de bandeira quadriculada:** canvas no topo do bloco escuro com a cor do bloco anterior; linhas sólidas que viram xadrez e somem com a rolagem (ruído por célula, 6% na cor de destaque). Combina com oficina, kart, autopeças, lava-rápido.
+- **Traçado que se desenha numa volta:** a velocidade vem da curvatura do caminho (freia nas curvas, acelera nas retas), com brilho somado e um filamento branco na ponta; marcadores acendem quando a linha passa. Bom pra rota de entrega, trajeto de corrida, mapa de cidade.
+- **Mapa de pontos com mira:** 8 mil pontos desenhados uma vez num canvas escondido; por quadro só os pontos acesos são redesenhados (achados por conta de grade, não por busca). O mouse acende linha + coluna e os pontos viram xadrez.
+- **Motor próprio de molas** (tension/friction, igual ao react-spring) em vez de animação CSS, um laço `requestAnimationFrame` só pra tudo, e revelação de texto palavra a palavra / letra a letra com cópia escondida pra leitor de tela.
+- **Medidas em `cqw`:** `px(v) = v/1440*100 cqw` com `container-type: inline-size` no bloco: o bloco é a arte de 1440 em qualquer largura; texto pequeno ganha piso `max(..., 13px)`.
+- **Falha visível:** todo arquivo que não carrega vira uma faixa laranja com o endereço. Nada de véu travado pra sempre.
+
+### Efeitos do Mestre das Motos (10/11/2026, código em `sites/mestre-das-motos/index.html`, JS puro)
+Já usados nesse cliente: pra outro, variar a ideia, não colar igual.
+- **Filme com frases (o Davi pediu e gostou da ideia):** seção alta (`560svh`) com palco `sticky`; vídeo de fundo em loop (não preso na rolagem, então nunca parece "travado"); 5 frases gigantes que trocam pela rolagem. Uma fonte de progresso só, folga de 8% perto da troca, uma troca a cada 380 ms, palavras entram por tempo (CSS), a frase que sai sobe e some com `opacity`. Barra vermelha de progresso e zoom leve no vídeo seguem a rolagem direto. Serve pra qualquer negócio com vídeo bom: estética, academia, restaurante.
+- **Holofote em ponto da foto (mapa do produto):** `@property --x/--y/--r` + `radial-gradient` escurecendo o resto da foto, anel SVG tracejado girando e etiqueta. Cada cartão tem `data-x/data-y` em % da foto. No celular a foto fica `sticky` no topo e o cartão que passa pelo meio da tela acende sozinho (sem hover). Serve pra carro, cozinha, salão (onde cada serviço acontece).
+- **Painel que monta o pedido:** botões que "acendem" (luz-espia com piscada em `steps`), visor LCD com o que a pessoa digita e progresso "x de 3". Formato bom pra qualquer "diga o problema e mande no WhatsApp".
+- **Abertura de conta-giros:** agulha em SVG vai ao máximo e volta, segmentos acendem; só na 1ª visita (`sessionStorage`), toque pula, garantia de 4,5 s.
+- **Revelar foto com cortina:** `::after` da cor do fundo que encolhe (`scaleY`), nunca `clip-path` na própria figura (ver `05`).
+- Cuidados do bloco anterior que continuam valendo:
   - Não rodar com tela de tamanho 0.
   - Reduzir as partículas com `prefers-reduced-motion`.
   - O botão que foge desvia do título e do outro botão.
@@ -166,6 +226,49 @@ Tudo testado no Playwright (390/768/1024/1440). O código está nos arquivos cit
 **Ainda não feito (ideias com referência no `07`)**
 - **Açaí líquido (metaballs em WebGL, estilo Shape Blend do Spline)** seguindo o dedo. É o próximo candidato pra açaí, sorvete e milkshake.
 - **Abertura editorial estilo Rolex** (palavras saindo do desfoque + produto recortado girando + objetos passando borrados). Precisa de foto recortada do produto.
+
+### Efeitos da Eduburger's e da Lume (11/11/2026, o Davi mandou os 2 HTMLs pra aprender)
+Código em `sites/eduburgers/index.html` (JS puro) e `sites/lume/index.html` (Three.js). Detalhe nos READMEs de cada um.
+- **Formulário que imita o objeto real do comércio** (Eduburger's): a caixa kraft do beirute com os mesmos quadradinhos. Visto de caneta em SVG (`stroke-dasharray`/`dashoffset` de 60 → 0 no `:checked`), quantidade só aparece no item marcado, total ao vivo, validação curta ("Marque pelo menos um beirute"). Ao enviar: a caixa balança (`rotateX`), a fita passa (`scaleX` 0→1) e só depois abre o WhatsApp. Serve pra qualquer comércio com embalagem/comanda marcante: pizzaria (caixa), açaí (copo), barbearia (comanda).
+- **Painel de palhetas guiado pela rolagem:** seção alta (`N*75+100` vh) com palco `sticky`; cada categoria = 1/N do progresso, troca com folga de 8% e fila (`ocupado`/`pendente`, 650 ms por troca), cada célula sorteia 3-6 letras antes de parar. Abas fazem `scrollTo` pro meio do trecho da categoria. Variação do painel de fornadas (Fornalha): aqui é o cardápio inteiro com preço.
+- **Abertura que espalha os adesivos:** recortes dos lanches com `data-dx/dy/dr/p` (destino em vw/vh, rotação e força do parallax); o laço só recalcula quando a rolagem ou o mouse mudou (economiza no celular parado).
+- **Objeto 3D feito no código que faz sentido** (Lume): aliança é só um perfil girado (`LatheGeometry`) com material metálico e `RoomEnvironment` de reflexo; não precisa de modelo nem HDR. Diferente da comida em 3D (rejeitada, ver `05`): metal liso fica convincente em código. Bom pra joia, relógio, anel, peça usinada, garrafa de vidro.
+- **Personalização que aparece no produto:** o que a pessoa digita vira `CanvasTexture` no próprio objeto (gravação por dentro da aliança). Serve pra gravação, bordado, estampa de camiseta, nome no bolo, placa.
+- **Poses por seção (`data-pose`):** uma tabela de poses por seção (e outra pro celular), interpolação entre a seção que passou do meio da tela e a próxima, e a pose atual persegue o alvo. Jeito simples de "coreografar" um objeto 3D fixo atrás do site inteiro.
+- **Arrastar o 3D sem travar a rolagem:** `main{pointer-events:none}` + `auto` só no que é clicável, canvas com `touch-action:pan-y`.
+- **"Material que muda de estado"** (brasa → ouro): interpolar cor, `emissive`, `metalness`, `roughness` nos primeiros segundos. Dá pra variar: ferro que esfria (serralheria), vidro que embaça, couro que escurece.
+
+### Estudados nos vídeos Fervo e Madoska (10/11/2026, demos em `demos/`)
+O Davi mandou 2 vídeos de referência e pediu pra aprender a fazer igual. As demos são técnica com marca fictícia: pra cliente, trocar marca, texto e fotos, e variar a coreografia.
+
+**1. A página enche de líquido (Fervo, água com gás). Site original da GuDev: `sites/fervo/index.html`. Versão simples (Canvas 2D) pra estudar: `demos/borbulha-liquido-rolagem.html`.**
+- O que acontece: um jato cai do topo e o líquido sobe com a rolagem. O título que fica embaixo do líquido vira cor clara, com borda RGB e meio torto. O dedo mexe a água. Bolhas sobem e rodelas de fruta boiam. Os botões de sabor trocam a cor do líquido. Numa seção, cai gelo. No fim, o líquido esvazia e o texto volta a ficar escuro.
+- O segredo: o texto existe **2 vezes**. A cópia escura fica embaixo do canvas. A cópia clara (`cloneNode`) fica em cima, recortada com `clip-path: polygon(...)` no formato da superfície. As duas rolam nativas, então nunca desalinham; só o recorte é refeito por quadro (em coordenadas da página: `scrollY + y da onda`).
+- Superfície = ondas fixas (3 senos) + mola de 72 pontos (o dedo dá "velocidade" no ponto mais perto). Nível = rolagem: enche na 1ª tela, esvazia quando a última seção entra.
+- Legenda, botões e CTA ficam com `z-index` acima do canvas e escondidos na cópia clara. O título fica embaixo.
+- Distorção: `feTurbulence` + `feDisplacementMap` **estático** só no computador. Animar a turbulência pesa.
+- Serve pra: bebida, açaí, sorvete, suco, cervejaria, lava-rápido (espuma), piscina.
+- **Como a Fervo de verdade faz (WebGL2, nível acima da demo):**
+  - Um shader só desenha tudo. Cada título gigante vira textura (fonte desenhada num canvas 2D); o shader pinta tinta acima da água e creme embaixo, com separação RGB (amostra a textura 3 vezes com deslocamentos diferentes) e ondulação.
+  - Bolhas e cubos de gelo são sprites de "normal": R e G = direção da refração, B = brilho. O shader desloca o fundo e as letras por eles, então o gelo parece vidro de verdade.
+  - Cáustica (luz no fundo) calculada no shader; troca de sabor é uma "inundação" de cor que se espalha em círculo a partir do botão tocado.
+  - Tudo sai de um progresso `p` (0 a 1) da página de 900svh: tabela de nível `[[0,.05],[.07,.05],[.3,.8],[.82,.8],[.955,0]]`, janelas de entrada/saída de cada cena, falas com `data-de`/`data-ate`. Fatia e gelo fazem "espirro" quando `p` passa pelo ponto deles.
+  - Sem WebGL2, cai pra texto normal (classe `semgl`).
+  - **Demo com o mesmo motor e outra marca: `demos/borbulha-webgl.html`** (10/11/2026). Variações que dá pra levar pra cliente: espuma que sobe (bolinhas com `hash` no shader, a letra aparece dentro dela na cor do sabor), fruta que afunda e deita no fundo, e **copo que inclina** (dedo/mouse em qualquer aparelho; giroscópio onde der, no iPhone pede permissão no 1º toque). Sem Lenis (padrão: Lenis só no computador). **O papel também reage** (pedido do Davi): uma função `relevo(uv)` no shader soma até 6 ondas em anel (toque e rastro do dedo, um anel novo a cada ~9% de tela andada) e uma covinha onde o dedo está; o gradiente dela desloca as letras (com RGB) e vira luz e sombra no papel, então ele parece uma lâmina macia. Vale pra tela toda, seca ou molhada.
+
+**2. A câmera passeia pela vitrine e a colher prova (Madoska, sorveteria). Demo: `demos/pingo-vitrine-provas.html`.**
+- O que acontece: o topo é a vitrine inteira vista de cima, com o lado do texto "lavado" de branco. Na rolagem, a câmera chega perto de uma cuba e uma colherzinha vermelha mergulha. Do lado, sai uma bola do sabor. Uma bandeirinha com o nome desce balançando, o título troca, aparece "2 de 9 provas" e os pontinhos do lado marcam onde você está.
+- O segredo: uma "mesa" grande (a vitrine) dentro de um palco `sticky`. A câmera é só `translate + scale` na mesa. Cada sabor é um estado de câmera `{centro, escala, âncora na tela}`. Em cada trecho da rolagem, a 1ª metade é viagem e a 2ª é parada; a colher prova na parada.
+- Colher e bola ficam **dentro da mesa**, então andam com a câmera sem conta nenhuma. A bola usa a própria textura da cuba como fundo, com sombra interna de esfera.
+- Troca do texto com folga (só depois de 55% da viagem) e um `setTimeout` por troca. Os pontinhos levam pro sabor.
+- No cliente de verdade: **uma foto real da vitrine de cima** (ou foto de cada cuba montada em grade) e recorte real da bola. As cubas da demo são desenhadas no código só pra não usar foto de ninguém. A frase de cada sabor sai do cardápio e das avaliações reais (com nome, como a Madoska faz).
+- Serve pra: sorveteria, açaí (toppings), doceria (vitrine de doces), padaria, hortifruti, pizzaria (pizzas inteiras de cima), loja de tintas.
+
+**O que os dois têm em comum (é isso que faz parecer caro):**
+- Uma ideia só, ligada ao produto ("esse site enche", "prova antes"), levada até o fim da página.
+- Frase-gancho pequena dizendo o que fazer: "Mexa o dedo na água", "Rola devagar".
+- O resto é calmo: barra simples, um botão verde de WhatsApp, "Aberto até 18h".
+- O fim fecha a piada: o líquido esvazia; a vitrine termina no "Já escolheu?".
 
 ## Filtro anti-"cara de IA" (vale a partir de 21/10/2026, para os sites NOVOS)
 Mantenha os 3 WOWs. Este filtro é para limpar **o que fica em volta deles**.

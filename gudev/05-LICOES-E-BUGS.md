@@ -7,6 +7,9 @@
 - **Foto pequena esticada na tela inteira fica borrada.** Mostre a foto no tamanho dela (por exemplo, num círculo ou num card) ou melhore antes.
 - **Zoom "atravessando" uma letra:** mire numa parte cheia da letra, nunca no buraco do "O". Senão a tela vai pro fundo escuro e a foto "brota do nada".
 - **Texto com a cor da marca em cima de fundo da mesma cor some.** Exemplo: o nome roxo do açaí sobre a prévia roxa. Teste o contraste.
+- **Acento solto em título que entra palavra por palavra** (Mestre das Motos, 10/11): as palavras escondidas ficam empurradas pra baixo dentro de um `overflow:hidden`, mas o acento (Ê, Ç, Ã) passa da caixa e aparece em cima da frase visível ("TEM̂ UM"). Esconder a frase inteira com `opacity:0` quando não está ativa.
+- **Briefing do cliente pedindo React/TypeScript/Tailwind:** fica em HTML único mesmo (padrão do `03`), e a gente explica o porquê: sobe direto no Netlify, abre rápido no 4G, o Gu edita sem build. Paleta, textos e seções do briefing a gente segue.
+- **Foto e vídeo da internet (Pinterest, Klickpin) mandados pelo Davi:** servem pra montar e apresentar, sempre com o selo "foto/vídeo ilustrativo", mas não vão pro ar em site de cliente sem direito de uso. Pedir as fotos reais da oficina na mesma mensagem dos dados.
 - **Bodoni Moda gigante perde os traços finos:** o "M" parece "VI". Use `font-variation-settings:'opsz' 22` nos títulos grandes.
 
 ## Vídeo de IA (Google Flow, Veo)
@@ -48,6 +51,14 @@
 - **Peso do giro:** os 76 quadros (+ máscaras) dão ~3 MB no celular. Baixe o 1º na hora e o resto só quando a pessoa mexer na página; com economia de dados, um quadro sim, um não.
 
 ## Celular
+- **WhatsApp bloqueado como pop-up depois de uma animação** (visto na Eduburger's, 11/11): `window.open` dentro de `setTimeout` é barrado pelo navegador. Abra a janela vazia **no clique** (`var j = window.open("", "_blank")`), rode a animação e depois troque o endereço (`j.opener = null; j.location.href = url`); se `j` vier nulo, use `location.href = url`.
+- **Duas animações de opacidade no mesmo texto se anulam:** entrada com `opacity` e sumiço pela rolagem com `filter: opacity(var(--vis))` (Lume, 11/11). Cada uma mexe numa propriedade, então nenhuma sobrescreve a outra.
+- **Foto revelada com `clip-path` na própria figura nunca aparecia** (Mestre das Motos, 10/11): o `IntersectionObserver` do Chrome conta o recorte do elemento, então com `inset(100% 0 0 0)` ele nunca "entra na tela". Revele com uma cortina (`::after` que encolhe) ou recorte um filho, e observe o elemento sem recorte.
+- **Mandar só o `index.html` pro Davi abrir no celular = fotos quebradas** (Mestre das Motos, 10/11): as fotos ficam em `img/` e `media/`. Pra ele ver sozinho, mande também uma versão de arquivo único com as fotos dentro (base64), além do zip da pasta pro Gu subir no Netlify. **A prévia do app não abriu o arquivo de 7 MB** (com os vídeos dentro): "Não foi possível carregar a pré-visualização". A de 0,6 MB (fotos em WebP 560px qualidade 62, vídeos trocados pela capa) é a que mandar pra prévia; confirmar com o Davi que abriu. Pra ver os vídeos, baixar o arquivo grande e abrir no Chrome.
+- **Vídeo "travado" na versão leve:** pra caber na prévia eu tinha tirado os vídeos e só ficou a capa parada, e o Davi achou que travou. Vídeo entra comprimido (480 px, crf 31, sem som, ~300-450 KB cada) e embutido **uma vez só** (`window.MIDIA`), mesmo que dois `<video>` usem o mesmo arquivo. O `gudev/ferramentas/arquivo_unico.py` já faz isso.
+- **Pra o Davi ver o site completo pelo app:** subir um servidor aqui (`python3 -m http.server 8080` na pasta do site) e avisar a porta com `report_preview_port`. Não publicar como página do Claude (Artifact) site com nome e WhatsApp de comércio real: o link de fora é sempre o do Netlify.
+- **Daqui não dá pra baixar foto de banco:** a busca do Unsplash (`/napi`) e a API do Wikimedia são bloqueadas no container (só `images.unsplash.com` abre, e só com o ID da foto). Foto de banco: o Davi ou o Gu escolhe e manda, ou mandam o link direto da imagem.
+- **No container daqui, o CDN (cdnjs/unpkg) não abre:** pra testar no Playwright, sirva a biblioteca local com `page.route` (o `npm pack lenis@1.1.13` dá o mesmo arquivo, com o mesmo SRI).
 - **"Sugestão" de CSS de outra IA a partir do link de prévia:** o Gemini devolveu o esqueleto que o link de prévia do Claude põe em volta da página (`:root` com padding de safe-area, `body` 14px branco). Não é melhoria. O Meridiano agora zera o `padding` do `:root` pra esse esqueleto não empurrar a página.
 - **Proposta travando no celular do Davi:** o site rodando dentro da proposta pesava demais. A solução foi mostrar a prévia como imagem no celular, mais o botão "Ver o site animado", que abre numa gaveta dentro da proposta, travada nos 50%.
 - **O preço que mudava com a rolagem:** quem parava pra ler não via acontecer. Agora anima sozinho quando aparece na tela.
@@ -55,6 +66,27 @@
 - **Página mais larga que a tela no celular:** foi causada por grid sem `minmax(0,1fr)`, `input date` e `radio` escondido com `width:100%`.
 - **Seção alta parada dentro da prévia parece "travado":** dentro da proposta, as animações de rolagem têm que estar ligadas.
 - **HTML "não funciona" aberto pela prévia de arquivo do app:** a prévia pode não rodar o JS. Página que depende de JS pra aparecer fica só com o fundo. Teste sempre pelo navegador ou pelo link do Netlify, e deixe a primeira tela visível mesmo sem JS.
+
+## Prompt pronto de ferramenta de efeito (getlayers.ai, 11/11/2026)
+- **A imagem que vem junto do prompt é o RESULTADO, não a foto original.** O prompt do Refract falava de uma foto de 1080×2340 que o Davi subiu na ferramenta; a que chegou aqui era o print com o vidro já aplicado. Usar ela como fundo dá "vidro em cima de vidro". Pedir a foto original (o prompt mesmo manda nunca trocar por outra) e, enquanto isso, deixar a página pedindo a foto (escolher, arrastar ou `?img=`).
+- **Como converter um prompt desses pro padrão GuDev:**
+  1. Usar o código e as constantes do prompt **exatos** (shader, IOR, fórmulas). Não "melhorar" de cabeça: o visual foi aprovado naqueles números.
+  2. Por cima, o que é nosso: tudo num HTML só, sem biblioteca, comentários em português, fallback sem WebGL (foto pura), `prefers-reduced-motion` desliga o parallax, `touch-action:pan-y` pra não travar a rolagem no celular, nada de rolagem lateral.
+  3. Tamanho responsivo: o prompt traz o tamanho da prévia da ferramenta só como referência, não pra fixar.
+  4. Testar no Playwright comparando o tamanho interno do canvas com o do prompt (no Refract: 554×1200) e olhar o print.
+  5. Guardar em `gudev/efeitos/` e anotar no `03` (o que faz, o segredo, onde usar em cliente).
+- **Ideias de engenharia que valem pra outros efeitos:**
+  - Tamanho em "unidade de projeto" (contra uma borda de 1200 px) em vez de pixel: no celular, no PC e na exportação o efeito fica igual.
+  - Foto parada = desenhar só quando muda (rAF curto que se desliga sozinho). Não deixar laço infinito rodando à toa.
+  - Na borda da foto, espelhar a coordenada em vez de prender (`clamp` vira listra).
+  - Controles independentes (relevo × espessura) em vez de um "força" só: dá pra ajustar o visual sem quebrar.
+- **Vídeo da tela + prompt de Three.js** (Onda de Fluxo, 11/11): o vídeo serve de gabarito visual (tirar 1 quadro a cada 3 s com ffmpeg e comparar com o print do Playwright). Pra testar aqui, o unpkg não abre: `npm pack three@<versão>` e servir com `page.route`. Chromium headless renderiza WebGL com `--use-angle=swiftshader --enable-unsafe-swiftshader`.
+- **"Está escrito só scroll e não acontece nada"** (Onda de Fluxo, 11/11): o arquivo puxava o Three.js do unpkg por importmap e, na prévia do app, não carregou. Pra mandar efeito 3D pro Davi ver, **embutir a biblioteca no HTML**: `npm i three@<versão> esbuild`, trocar `three/addons/` por `three/examples/jsm/`, `esbuild entrada.js --bundle --minify --format=iife` e colar num `<script>` comum (~440 KB com Three + bloom). E pôr um aviso que aparece se o efeito não arrancar em 4 s (`window.__ondaOk`), pra nunca sobrar tela preta muda. Guardar as duas: a legível (com CDN, pra editar) e a `-arquivo-unico` (pra ver).
+- **Prompt gigante com arquivos num servidor bloqueado daqui** (Kimi, 11/11): o container não abre `storage.getlayers.ai` nem o jsdelivr. Como testar mesmo assim: Three/Lenis do npm na mesma versão + arquivos **falsos** gerados aqui (uma esfera `.glb` feita em Python no lugar do capacete, silhueta no lugar do retrato, um `.hdr` de 8x4), tudo servido com `page.route`. Testa código, shaders e layout; **não** testa o visual real, e isso tem que ser dito.
+- **Kimi na prévia de arquivo do app = só um retângulo cinza** (11/11): a prévia não carrega nada de fora (Three.js, fotos, capacete 3D), então fica parado no véu de carregamento. Site que depende de arquivos de outro servidor: mandar abrir **no Chrome** (baixar o arquivo e abrir com o Chrome) ou pela porta de prévia, e dizer isso **antes** de mandar o arquivo.
+- **Nome de classe repetido quebra outro bloco:** os cantos de painel chamados `tl` (top-left) pegaram o CSS da seção `.tl` (timeline) e viraram uma barra preta. Em arquivo grande, prefixar classes pequenas (`c-tl`).
+- **Página com importmap de CDN:** se a biblioteca não chega, o módulo inteiro não roda e o véu fica pra sempre. Pôr um vigia em `<script>` comum (12 s sem `window.__kimiBoot` → tira o véu e mostra o aviso).
+- **Bloqueio de `git push --force`:** quando o PR anterior já foi mergeado e a branch recomeça da branch padrão, o push normal basta (avança sem forçar). Não usar `--force`.
 
 ## Vendas
 - **Lead que pede prévia, fala com o chefe e marca de pagar pode sumir.** Faça o follow-up em 3 passos (veja 02-VENDAS) e não corra atrás demais.
