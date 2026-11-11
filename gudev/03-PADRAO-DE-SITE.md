@@ -161,6 +161,8 @@ Tudo testado no Playwright (390/768/1024/1440). O código está nos arquivos cit
 - **Mapa em cartão:** pin + endereço + "Abrir no Google Maps"; o iframe só nasce se a pessoa tocar em "Ver o mapa aqui".
 - **View Transitions entre páginas:** `@view-transition{navigation:auto}` em todas as páginas do site. Sem flash branco.
 
+- **Cubo 3D translúcido com a logo** (`sites/pecai/cubo-3d.html`, 11/11): CSS 3D puro, cubo dentro de cubo, gira com roda/dedo só sobre ele, inércia `vel *= 0,95`. Serve de abertura ou brinde de marca.
+
 **Ainda não feito (ideias com referência no `07`)**
 - **Açaí líquido (metaballs em WebGL, estilo Shape Blend do Spline)** seguindo o dedo. É o próximo candidato pra açaí, sorvete e milkshake.
 - **Abertura editorial estilo Rolex** (palavras saindo do desfoque + produto recortado girando + objetos passando borrados). Precisa de foto recortada do produto.

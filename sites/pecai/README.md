@@ -25,3 +25,6 @@ Camada de movimento igual à versão anterior (cortina, máscaras, folha sobre o
 
 ## QA (10/11/2026, Playwright)
 390/768/1024/1440: sem rolagem lateral, sem erro, embalagens enchem até 10 L e 2 L, pedido soma os litros certo (11/11: 3 açaí 10 L + 1 açaí 1 L + 1 cupuaçu de cada = 44 L) e a mensagem sai completa. Sem GSAP: tudo aparece parado e cheio. Não verificado: celular de verdade e fontes do Google (bloqueadas aqui).
+
+## Extra: cubo 3D (11/11/2026)
+`cubo-3d.html`: um arquivo só, pedido do Davi com o vídeo "AmazingCube" de referência. Cubo translúcido com a logo nas 6 faces (sem distorcer, `contain`) e um cubo menor dentro girando ao contrário. Gira com a roda do mouse ou deslizando o dedo **só em cima do cubo** (a página não rola nessa hora), com inércia e atrito, e para sozinho. A logo vai embutida; pra usar a imagem `1000365996.jpg`, trocar `--textura` no topo do CSS (o arquivo na mesma pasta). Não está no site do atacado: dá pra virar a abertura ou uma seção se quiserem.
