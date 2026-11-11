@@ -23,7 +23,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - Instagram @curtapecai, Facebook /curtapecai. Bio (pela busca): açaí, cupuaçu, sorvetes, tapioca e lanches; delivery e retirada no local.
   - Horário ainda não foi pego.
   - 2ª loja confirmada pelo Davi: Parque das Nações (Rua Campo Maior, 357, pelo registro), com iFood próprio.
-  - WhatsApp: (11) 96465-0080 (confirmado pelo Davi em 10/11).
+  - WhatsApp do atacado (o que vai no site): (11) 92563-9960 (Davi, 11/11). O da loja de varejo é (11) 96465-0080.
   - Logo: círculo roxo, palmeira verde-clara com contorno branco, "Pé" roxo-escuro com bagas brancas e "ÇAÍ" magenta (`sites/pecai/img/logo-pecai.png`).
 - **Site:** `sites/pecai/` (veja o README). Antes era tratada como "marca fictícia" de demo: é loja real.
 - **10/11/2026: o site virou só ATACADO (B2B):** açaí e cupuaçu de 10 L, 2 L e 1 L pra empresas (1 L e cupuaçu desde 11/11), pouco texto, pedido com frequência e palete. Falta: embalagem real, preço, pedido mínimo, região de entrega.

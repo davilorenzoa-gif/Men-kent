@@ -3,7 +3,7 @@
 **Desde 10/11/2026 o site é só de atacado (B2B):** açaí e cupuaçu de **10 L, 2 L e 1 L** pra empresas (o 1 L e o cupuaçu entraram em 11/11, informação da mãe do Davi) (açaiteria, lanchonete, sorveteria). O Davi pediu menos texto e tirar todo o resto do cardápio.
 A versão de varejo (cardápio completo, avaliações, FAQ) está no histórico do git (commit "Péçaí: camada de movimento...").
 
-Loja real: Av. Jurema, 436, Parque Jurema, Guarulhos-SP, e Rua Campo Maior, 357, Parque das Nações. WhatsApp (11) 96465-0080. Instagram @curtapecai. 4,5 no Google (1,4 mil avaliações).
+Loja real: Av. Jurema, 436, Parque Jurema, Guarulhos-SP, e Rua Campo Maior, 357, Parque das Nações. WhatsApp do atacado (11) 92563-9960 (trocado pelo Davi em 11/11; o antigo da loja era (11) 96465-0080). Instagram @curtapecai. 4,5 no Google (1,4 mil avaliações).
 
 - `index.html` + `img/`: site pra subir no Netlify (`proposta-pecai` → `pecai`).
 - `preview-pecai.html`: num arquivo só pro celular. Regerar com `python3 gudev/ferramentas/previa_embutida.py sites/pecai`.
@@ -20,7 +20,7 @@ Camada de movimento igual à versão anterior (cortina, máscaras, folha sobre o
 - Como é a embalagem de verdade de 10 L, 2 L e 1 L (balde, caixa, pote?) e foto dela. Hoje é desenho ilustrativo.
 - Preço, pedido mínimo, região e dia de entrega, forma de pagamento, nota fiscal. Nada disso está no site porque não temos o dado. Com isso dá pra pôr uma FAQ curta.
 - Se o atacado sai das duas lojas ou só de uma.
-- Se o WhatsApp do atacado é o mesmo (11) 96465-0080.
+- WhatsApp do atacado: (11) 92563-9960 (definido em 11/11). Confirmar que o DDD é 11.
 - Foto: só a do copo (recortada do print). Pedir fotos das embalagens.
 
 ## QA (10/11/2026, Playwright)
