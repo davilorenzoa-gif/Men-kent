@@ -77,7 +77,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - o burger (quadros do Google Flow) desmonta camada por camada com a rolagem e monta de volta;
   - "rota pela costa": um carrinho desce o mapa e para em cada burger com nome de praia;
   - prancha de pedido: cada item vira um adesivo na prancha de surf e vai pro WhatsApp.
-- **Péçaí Atacado** (versão B2B de 10/11, a que vale): logo em bolinhas; **no açaí, potes reais enchendo guiados pela rolagem (folha de quadros de um vídeo do Gemini, textos em HTML por cima); no cupuaçu, desenho em escala que troca de cor**; **monte o pedido com caixas caindo num palete** + total em litros + frequência.
+- **Péçaí Atacado** (versão B2B de 10/11, a que vale): cubo 3D translúcido com a logo na abertura (11/11, substituiu a logo em bolinhas); **no açaí, potes reais enchendo guiados pela rolagem (folha de quadros de um vídeo do Gemini, textos em HTML por cima); no cupuaçu, desenho em escala que troca de cor**; **monte o pedido com caixas caindo num palete** + total em litros + frequência.
 - **Péçaí** (açaí, Guarulhos, `sites/pecai`): (versão varejo, só no histórico)
   - a logo se monta com ~1.500 a 2.500 bolinhas nas cores da própria logo (canvas, amostrada de um PNG 64px embutido); o dedo empurra, o toque espalha e elas voltam; a foto do copo entra de lado (o coqueiro em SVG da 1ª versão o Davi não gostou);
   - a calda de chocolate escorre por um trilho com a rolagem e "pinta" cada item do cardápio (nome vazado vira cheio);
