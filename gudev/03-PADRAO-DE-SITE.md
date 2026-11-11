@@ -120,6 +120,46 @@ Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS 
   - Esperar a fonte carregar antes de desenhar o texto em partículas.
   - (continua abaixo)
 
+### Vidro fosco com refração (11/11/2026, `efeitos/vidro-fosco-refracao.html`, WebGL puro)
+Veio de um prompt da ferramenta Refract do getlayers.ai (padrão "Frosted") que o Davi mandou. Testado no Playwright em 390 e 1440 (sem erro no console, sem rolagem lateral); falta testar em celular de verdade.
+- O que faz: a foto aparece como se estivesse atrás de um vidro canelado/fosco. Com franja de cor nas bordas e brilho onde o vidro curva. O mouse/dedo inclina o olhar: o vidro anda pouco e o fundo anda muito (parallax de 2 camadas).
+- O segredo: **refratar, não deslocar.** Um mapa de relevo (ruído em 3 tamanhos), a normal dele e `refract()` do GLSL com IOR 1,50 entortam o raio. "Relevo" (curvatura) e "espessura" (quanto o raio anda) são controles separados. Vermelho, verde e azul refratam com IOR um pouco diferente (dispersão).
+- Tamanhos em "unidade de projeto" contra borda longa de 1200 px, então exportar maior mostra o mesmo vidro. Bordas da foto espelhadas (nunca `clamp`, que vira listra).
+- Desenha **uma vez** e só redesenha quando algo muda (rAF curto no parallax): quase zero de bateria, bom pra celular.
+- 9 padrões no mesmo shader (`pattern`): 0 canelado, 1 cruz, 2 bloco de vidro (com rejunte), 3 ondas em círculo, 4 gotas de chuva, 5 onda, 6 martelado, 7 flamengo, 8 fosco. Trocar com `vidroAjustes({pattern:2})` no console.
+- Como usar a foto: escolher/arrastar, ou `?img=foto.webp` na URL, ou trocar `FOTO` no código.
+- Serve pra: fundo de topo atrás do título (estética, barbearia, bar à noite, box de banheiro numa marmoraria/vidraçaria), revelar a foto "tirando o vidro" na rolagem (animar `relief` até 0), vitrine de loja com chuva (padrão 4). Atenção: título em cima precisa de contraste, o vidro deixa a foto mais ruidosa.
+
+### Onda de Fluxo: mar de partículas em 3D (11/11/2026, `efeitos/onda-de-fluxo-particulas.html`, Three.js r0.143)
+Pra ver no celular/prévia: `efeitos/onda-de-fluxo-particulas-arquivo-unico.html` (Three.js embutido, sem internet). Recriado de um prompt de biblioteca de efeitos (card "Onda de Fluxo", grátis, licença comercial) que o Davi gravou no celular. Testado no Playwright em 390 e 1440 (sem erro, sem rolagem lateral, prints batem com o vídeo); falta celular de verdade.
+- O que faz: um mar verde-esmeralda de colinas feitas de ~120 mil pontinhos que brilham, rolando com ruído. Na rolagem, a câmera mergulha de cima até rasar as ondas e o mar cresce. O mouse dá parallax e abre um buraco na superfície onde aponta. Chama verde suave no canto e poeira flutuando presa na câmera.
+- O segredo:
+  - **A geometria é uma esfera (`SphereGeometry(4.2,200,600)`) que o vertex shader achata num lençol.** A esfera só serve como "saco de pontos". A altura sai de 2 oitavas de Simplex; `uStream` desliza o ruído pra parecer que a gente voa pra frente.
+  - Pontos com `AdditiveBlending`: onde sobrepõem, clareiam sozinhos (dá o brilho sem luz).
+  - Cursor: projeta o mouse no plano z=0 e empurra os pontos num raio (`smoothstep`), com "atividade" que some depois de 3 s parado.
+  - Rolagem **amortecida 2 vezes** (`Lerp` .10 e depois .06): a câmera nunca dá tranco.
+  - Câmera: `smoothstep` nos primeiros 35% da rolagem (de y7/z16 pra y0,8/z-2), `lookAt` andando junto.
+  - Fundo: um `ShaderPass` final pinta o verde-escuro com vinheta e a "chama" (função `warp3d`) só nos cantos, e soma bloom.
+- Cuidados se for pra cliente: pesa (3 composers com bloom + pixel ratio cheio). No celular, limitar `setPixelRatio(Math.min(2, dpr))` e pausar quando a aba some. O mouse não existe no celular: o efeito do cursor some, o resto funciona.
+- Serve pra: fundo de topo de academia, tabacaria/narguilé, bar, energia solar, empresa de tecnologia; trocar as cores pelas da marca (`colorLow/colorHigh/bgColor/flame`). Texto em cima com contraste.
+
+### Túnel: buraco de minhoca de partículas (11/11/2026, `efeitos/tunel-particulas.html` + `-arquivo-unico.html`)
+Mesmo esqueleto da Onda de Fluxo (3 composers com bloom, FinalPass com fundo e chama nos cantos, poeira presa na câmera). A diferença é o shader: o mesmo "saco de pontos" da esfera vira um **cilindro** (ângulo = posição x normalizada pela largura da fatia, raio 12 menos o ruído), com tremida e redemoinho de ruído. A câmera fica dentro do tubo e voa 34 unidades pra frente com a rolagem; o grupo gira devagar no eixo z (mais rápido com a rolagem). Cores: anil `#180a3a` → ciano `#2bf0ff`, fundo `#0a0524`, chama violeta `#7a3cff`.
+- Serve pra: topo de festa/balada, tabacaria, estúdio de tatuagem, gamer/LAN house, "entrar" num produto. Trocar as cores pelas da marca. Pesado como a Onda: no celular limitar o pixel ratio.
+- **Lição:** ao copiar um efeito de outro arquivo, trocar **todas** as marcas internas (`window.__ondaOk` → `__tunelOk`), senão o aviso "não carregou" aparece à toa.
+
+### Kimi: site de piloto de F1 (11/11/2026, estudo em `aprendizados/kimi/`, Three.js + Lenis)
+Recriado de um prompt grande do getlayers.ai (card "Kimi"). **Só estudo:** usa rosto e marcas reais (Kimi Antonelli, Mercedes), nunca vira case nem vai pra cliente. O que dá pra levar pra cliente, trocando o assunto:
+- **Pilha de cartas na rolagem:** cada bloco `position: sticky; top: 0` e o próximo passa por cima; o de baixo encolhe até 0,9 e escurece 55% conforme o próximo sobe (`1 - next.top / altura da tela`). O `scale` vai num wrapper **dentro** do sticky (transform no próprio sticky quebra o grudar). No celular só escurece.
+- **Véu de carregamento honesto:** a barra sobe devagar até 70% sozinha e só completa quando a cena 3D realmente compilou; sai em 3 tempos (conteúdo some, pausa, véu sobe) e a entrada da página começa junto.
+- **Objeto que "queima" e depois só aparece onde o mouse passou:** shader com limiar por altura + ruído (borda brilhando na cor da marca) e uma máscara feita do rastro do cursor (cápsulas entre as últimas posições, borda líquida com ruído, some com o mouse parado). Serve pra produto em 3D: capacete, tênis, garrafa, joia.
+- **Emenda de bandeira quadriculada:** canvas no topo do bloco escuro com a cor do bloco anterior; linhas sólidas que viram xadrez e somem com a rolagem (ruído por célula, 6% na cor de destaque). Combina com oficina, kart, autopeças, lava-rápido.
+- **Traçado que se desenha numa volta:** a velocidade vem da curvatura do caminho (freia nas curvas, acelera nas retas), com brilho somado e um filamento branco na ponta; marcadores acendem quando a linha passa. Bom pra rota de entrega, trajeto de corrida, mapa de cidade.
+- **Mapa de pontos com mira:** 8 mil pontos desenhados uma vez num canvas escondido; por quadro só os pontos acesos são redesenhados (achados por conta de grade, não por busca). O mouse acende linha + coluna e os pontos viram xadrez.
+- **Motor próprio de molas** (tension/friction, igual ao react-spring) em vez de animação CSS, um laço `requestAnimationFrame` só pra tudo, e revelação de texto palavra a palavra / letra a letra com cópia escondida pra leitor de tela.
+- **Medidas em `cqw`:** `px(v) = v/1440*100 cqw` com `container-type: inline-size` no bloco: o bloco é a arte de 1440 em qualquer largura; texto pequeno ganha piso `max(..., 13px)`.
+- **Falha visível:** todo arquivo que não carrega vira uma faixa laranja com o endereço. Nada de véu travado pra sempre.
+
 ### Efeitos do Mestre das Motos (10/11/2026, código em `sites/mestre-das-motos/index.html`, JS puro)
 Já usados nesse cliente: pra outro, variar a ideia, não colar igual.
 - **Filme com frases (o Davi pediu e gostou da ideia):** seção alta (`560svh`) com palco `sticky`; vídeo de fundo em loop (não preso na rolagem, então nunca parece "travado"); 5 frases gigantes que trocam pela rolagem. Uma fonte de progresso só, folga de 8% perto da troca, uma troca a cada 380 ms, palavras entram por tempo (CSS), a frase que sai sobe e some com `opacity`. Barra vermelha de progresso e zoom leve no vídeo seguem a rolagem direto. Serve pra qualquer negócio com vídeo bom: estética, academia, restaurante.

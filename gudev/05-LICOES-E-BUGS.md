@@ -67,6 +67,27 @@
 - **Seção alta parada dentro da prévia parece "travado":** dentro da proposta, as animações de rolagem têm que estar ligadas.
 - **HTML "não funciona" aberto pela prévia de arquivo do app:** a prévia pode não rodar o JS. Página que depende de JS pra aparecer fica só com o fundo. Teste sempre pelo navegador ou pelo link do Netlify, e deixe a primeira tela visível mesmo sem JS.
 
+## Prompt pronto de ferramenta de efeito (getlayers.ai, 11/11/2026)
+- **A imagem que vem junto do prompt é o RESULTADO, não a foto original.** O prompt do Refract falava de uma foto de 1080×2340 que o Davi subiu na ferramenta; a que chegou aqui era o print com o vidro já aplicado. Usar ela como fundo dá "vidro em cima de vidro". Pedir a foto original (o prompt mesmo manda nunca trocar por outra) e, enquanto isso, deixar a página pedindo a foto (escolher, arrastar ou `?img=`).
+- **Como converter um prompt desses pro padrão GuDev:**
+  1. Usar o código e as constantes do prompt **exatos** (shader, IOR, fórmulas). Não "melhorar" de cabeça: o visual foi aprovado naqueles números.
+  2. Por cima, o que é nosso: tudo num HTML só, sem biblioteca, comentários em português, fallback sem WebGL (foto pura), `prefers-reduced-motion` desliga o parallax, `touch-action:pan-y` pra não travar a rolagem no celular, nada de rolagem lateral.
+  3. Tamanho responsivo: o prompt traz o tamanho da prévia da ferramenta só como referência, não pra fixar.
+  4. Testar no Playwright comparando o tamanho interno do canvas com o do prompt (no Refract: 554×1200) e olhar o print.
+  5. Guardar em `gudev/efeitos/` e anotar no `03` (o que faz, o segredo, onde usar em cliente).
+- **Ideias de engenharia que valem pra outros efeitos:**
+  - Tamanho em "unidade de projeto" (contra uma borda de 1200 px) em vez de pixel: no celular, no PC e na exportação o efeito fica igual.
+  - Foto parada = desenhar só quando muda (rAF curto que se desliga sozinho). Não deixar laço infinito rodando à toa.
+  - Na borda da foto, espelhar a coordenada em vez de prender (`clamp` vira listra).
+  - Controles independentes (relevo × espessura) em vez de um "força" só: dá pra ajustar o visual sem quebrar.
+- **Vídeo da tela + prompt de Three.js** (Onda de Fluxo, 11/11): o vídeo serve de gabarito visual (tirar 1 quadro a cada 3 s com ffmpeg e comparar com o print do Playwright). Pra testar aqui, o unpkg não abre: `npm pack three@<versão>` e servir com `page.route`. Chromium headless renderiza WebGL com `--use-angle=swiftshader --enable-unsafe-swiftshader`.
+- **"Está escrito só scroll e não acontece nada"** (Onda de Fluxo, 11/11): o arquivo puxava o Three.js do unpkg por importmap e, na prévia do app, não carregou. Pra mandar efeito 3D pro Davi ver, **embutir a biblioteca no HTML**: `npm i three@<versão> esbuild`, trocar `three/addons/` por `three/examples/jsm/`, `esbuild entrada.js --bundle --minify --format=iife` e colar num `<script>` comum (~440 KB com Three + bloom). E pôr um aviso que aparece se o efeito não arrancar em 4 s (`window.__ondaOk`), pra nunca sobrar tela preta muda. Guardar as duas: a legível (com CDN, pra editar) e a `-arquivo-unico` (pra ver).
+- **Prompt gigante com arquivos num servidor bloqueado daqui** (Kimi, 11/11): o container não abre `storage.getlayers.ai` nem o jsdelivr. Como testar mesmo assim: Three/Lenis do npm na mesma versão + arquivos **falsos** gerados aqui (uma esfera `.glb` feita em Python no lugar do capacete, silhueta no lugar do retrato, um `.hdr` de 8x4), tudo servido com `page.route`. Testa código, shaders e layout; **não** testa o visual real, e isso tem que ser dito.
+- **Kimi na prévia de arquivo do app = só um retângulo cinza** (11/11): a prévia não carrega nada de fora (Three.js, fotos, capacete 3D), então fica parado no véu de carregamento. Site que depende de arquivos de outro servidor: mandar abrir **no Chrome** (baixar o arquivo e abrir com o Chrome) ou pela porta de prévia, e dizer isso **antes** de mandar o arquivo.
+- **Nome de classe repetido quebra outro bloco:** os cantos de painel chamados `tl` (top-left) pegaram o CSS da seção `.tl` (timeline) e viraram uma barra preta. Em arquivo grande, prefixar classes pequenas (`c-tl`).
+- **Página com importmap de CDN:** se a biblioteca não chega, o módulo inteiro não roda e o véu fica pra sempre. Pôr um vigia em `<script>` comum (12 s sem `window.__kimiBoot` → tira o véu e mostra o aviso).
+- **Bloqueio de `git push --force`:** quando o PR anterior já foi mergeado e a branch recomeça da branch padrão, o push normal basta (avança sem forçar). Não usar `--force`.
+
 ## Vendas
 - **Lead que pede prévia, fala com o chefe e marca de pagar pode sumir.** Faça o follow-up em 3 passos (veja 02-VENDAS) e não corra atrás demais.
 - **Não colocar demo fictícia como case.** Só clientes reais.

@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vidro fosco (refração WebGL)</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--fundo:#0d0d0d;--texto:#e9e6df;--suave:#8d8a83;--raio:18px}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--fundo);color:var(--texto);font:500 15px/1.4 system-ui,sans-serif}
+/* o palco: a foto fica na largura do container, centrada; o que sobra de altura é cortado */
+.palco{position:relative;height:100svh;display:grid;place-items:center;overflow:hidden}
+#vidro{display:block;width:100%;max-width:100%;height:auto;border-radius:var(--raio);touch-action:pan-y}
+.vazio{position:absolute;inset:16px;display:grid;place-content:center;gap:14px;text-align:center;border:1.5px dashed #34322e;border-radius:var(--raio)}
+.vazio p{margin:0;color:var(--suave);max-width:30ch}
+.vazio.some{display:none}
+.btn{justify-self:center;display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;background:var(--texto);color:var(--fundo);font-weight:650;cursor:pointer;border:0}
+.btn:focus-within{outline:2px solid var(--texto);outline-offset:3px}
+.btn input{position:absolute;width:1px;height:1px;opacity:0}
+.erro{color:#ff8a7a}
+</style>
+</head>
+<body>
+<!--
+  Vidro fosco com refração de verdade (WebGL, um arquivo só, sem biblioteca).
+  Origem: prompt da ferramenta Refract do getlayers.ai que o Davi mandou em 11/11/2026 (padrão "Frosted").
+  Como usar a foto:
+    - abrir e escolher/arrastar uma foto, ou
+    - ?img=caminho/da/foto.webp na URL (mesma origem), ou
+    - em site de cliente: trocar FOTO abaixo pelo caminho da foto real.
+  Desenha uma vez quando a foto carrega e de novo só quando algo muda (rAF curto enquanto o parallax assenta).
+-->
+<main class="palco" id="palco">
+  <canvas id="vidro" aria-label="Foto vista através de um vidro fosco" role="img"></canvas>
+  <div class="vazio" id="vazio">
+    <p>Escolha a foto que vai ficar atrás do vidro (ou arraste ela pra cá).</p>
+    <label class="btn">Escolher foto<input type="file" id="arquivo" accept="image/*"></label>
+    <p class="erro" id="erro" hidden></p>
+  </div>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var FOTO = new URLSearchParams(location.search).get("img") || "";
+
+  // ajustes do vidro (comprimentos em "unidades de projeto" contra uma borda longa de 1200 px)
+  var AJ = {
+    pattern: 8,        // 0 canelado, 1 cruz, 2 bloco, 3 ondas, 4 chuva, 5 onda, 6 martelado, 7 flamengo, 8 fosco
+    scale: 48, relief: 1.3, thickness: 150, angle: 0,
+    dispersion: 0.18, specular: 0.32, gap: 0.06, seed: 11, parallax: 1
+  };
+  var BORDA = 1200;
+
+  var cv = document.getElementById("vidro"), vazio = document.getElementById("vazio"), erroEl = document.getElementById("erro");
+  var reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var opts = { alpha:false, antialias:false, depth:false, stencil:false, premultipliedAlpha:false, preserveDrawingBuffer:true };
+  var gl = cv.getContext("webgl2", opts) || cv.getContext("webgl", opts);
+  function erro(t){ erroEl.hidden = false; erroEl.textContent = t; }
+  if (!gl){ erro("Este aparelho não tem WebGL. A foto aparece sem o vidro."); }
+
+  var VS = "attribute vec2 aPos;\nvoid main(){ gl_Position = vec4(aPos, 0.0, 1.0); }";
+  var FS = [
+"precision highp float;",
+"uniform sampler2D uImage;",
+"uniform vec2  uResolution;",
+"uniform int   uPattern;",
+"uniform float uScale;",
+"uniform float uRelief;",
+"uniform float uThickness;",
+"uniform float uAngle;",
+"uniform float uDispersion;",
+"uniform float uSpecular;",
+"uniform float uGap;",
+"uniform float uSeed;",
+"uniform vec2  uParallax;",
+"const float IOR = 1.50;",
+"float hash(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }",
+"float tri(float x){ return abs(fract(x) - 0.5) * 2.0; }",
+"float valueNoise(vec2 p){",
+"  vec2 i = floor(p); vec2 f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);",
+"  float a = hash(i); float b = hash(i + vec2(1.0, 0.0)); float c = hash(i + vec2(0.0, 1.0)); float d = hash(i + vec2(1.0, 1.0));",
+"  return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);",
+"}",
+"float height(vec2 cell){",
+"  vec2 seed2 = vec2(uSeed, uSeed * 1.37);",
+"  if (uPattern == 0){ float t = fract(cell.x) * 2.0 - 1.0; return sqrt(max(0.0, 1.0 - t * t)); }",
+"  if (uPattern == 1){ float x = fract(cell.x) * 2.0 - 1.0; float y = fract(cell.y) * 2.0 - 1.0; return sqrt(max(0.0, 1.0 - x * x)) * sqrt(max(0.0, 1.0 - y * y)); }",
+"  if (uPattern == 2){ vec2 u = abs(fract(cell) - 0.5) * 2.0; return 1.0 - smoothstep(0.62, 1.0, max(u.x, u.y)); }",
+"  if (uPattern == 3){ float t = fract(length(cell)) * 2.0 - 1.0; return sqrt(max(0.0, 1.0 - t * t)); }",
+"  if (uPattern == 4){",
+"    vec2 id = floor(cell); vec2 f = fract(cell);",
+"    vec2 o = vec2(valueNoise(id + seed2), valueNoise(id + seed2 + 7.3));",
+"    float d = length(f - mix(vec2(0.25), vec2(0.75), o));",
+"    float r = 0.18 + 0.22 * valueNoise(id * 1.7 + seed2);",
+"    return smoothstep(r, 0.0, d);",
+"  }",
+"  if (uPattern == 5){ float zig = tri(cell.y * 0.5) * 2.0 - 1.0; float t = fract(cell.x + zig * 0.5) * 2.0 - 1.0; return sqrt(max(0.0, 1.0 - t * t)); }",
+"  if (uPattern == 6){",
+"    float a = tri(dot(cell, vec2( 1.0, 0.0))); float b = tri(dot(cell, vec2( 0.5, 0.8660254))); float c = tri(dot(cell, vec2(-0.5, 0.8660254)));",
+"    return (a + b + c) / 3.0;",
+"  }",
+"  if (uPattern == 7){",
+"    vec2 warp = vec2(valueNoise(cell * 0.7 + seed2), valueNoise(cell * 0.7 + seed2 + 3.1));",
+"    return smoothstep(0.15, 0.85, valueNoise(cell + warp * 2.0));",
+"  }",
+"  return valueNoise(cell + seed2) * 0.55 + valueNoise(cell * 2.7 + seed2) * 0.30 + valueNoise(cell * 6.9 + seed2) * 0.15;",
+"}",
+"bool masked(vec2 cell){",
+"  if (uPattern != 2 || uGap <= 0.0) return false;",
+"  vec2 u = abs(fract(cell) - 0.5) * 2.0;",
+"  return max(u.x, u.y) > 1.0 - uGap;",
+"}",
+"vec2 mirrorUV(vec2 uv){ return 1.0 - abs(mod(uv, 2.0) - 1.0); }",
+"vec3 sampleAt(vec3 normal, vec2 frag, float ior){",
+"  vec3 incident = normalize(vec3(uParallax, -1.0));",
+"  vec3 bent = refract(incident, normal, 1.0 / ior);",
+"  if (dot(bent, bent) == 0.0) bent = incident;",
+"  vec2 offset = bent.xy / max(abs(bent.z), 1e-4) * uThickness;",
+"  return texture2D(uImage, mirrorUV((frag + offset) / uResolution)).rgb;",
+"}",
+"void main(){",
+"  vec2 frag = gl_FragCoord.xy; vec2 centre = uResolution * 0.5; float cellPx = max(uScale, 2.0);",
+"  float a = radians(uAngle);",
+"  mat2 turn = mat2( cos(a), -sin(a),  sin(a), cos(a));",
+"  mat2 back = mat2( cos(a),  sin(a), -sin(a), cos(a));",
+"  vec2 surf = uParallax * (uResolution.y * 0.05);",
+"  vec2 cell = (turn * (frag - centre - surf)) / cellPx;",
+"  if (masked(cell)){ vec3 behind = texture2D(uImage, frag / uResolution).rgb; gl_FragColor = vec4(behind * 0.45, 1.0); return; }",
+"  float e = 1.0 / cellPx;",
+"  float hx = (height(cell + vec2(e, 0.0)) - height(cell - vec2(e, 0.0))) / (2.0 * e);",
+"  float hy = (height(cell + vec2(0.0, e)) - height(cell - vec2(0.0, e))) / (2.0 * e);",
+"  vec3 n = normalize(vec3(-hx * uRelief, -hy * uRelief, 1.0));",
+"  vec3 normal = normalize(vec3(back * n.xy, n.z));",
+"  vec3 colour;",
+"  if (uDispersion > 0.0){",
+"    float d = uDispersion * 0.06;",
+"    colour.r = sampleAt(normal, frag, IOR - d).r;",
+"    colour.g = sampleAt(normal, frag, IOR).g;",
+"    colour.b = sampleAt(normal, frag, IOR + d).b;",
+"  } else { colour = sampleAt(normal, frag, IOR); }",
+"  if (uSpecular > 0.0){ float fresnel = pow(max(0.0, 1.0 - normal.z), 5.0); colour += fresnel * uSpecular; }",
+"  gl_FragColor = vec4(colour, 1.0);",
+"}"].join("\n");
+
+  var prog, U = {}, tex, foto = null;
+  function shader(tipo, src){
+    var s = gl.createShader(tipo); gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+    return s;
+  }
+  function prepara(){
+    prog = gl.createProgram();
+    gl.attachShader(prog, shader(gl.VERTEX_SHADER, VS));
+    gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, FS));
+    gl.bindAttribLocation(prog, 0, "aPos");
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+    gl.useProgram(prog);
+    ["uImage","uResolution","uPattern","uScale","uRelief","uThickness","uAngle","uDispersion","uSpecular","uGap","uSeed","uParallax"]
+      .forEach(function(n){ U[n] = gl.getUniformLocation(prog, n); });
+    // um triângulo que cobre a tela toda
+    var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  }
+  if (gl){ try { prepara(); } catch (e){ gl = null; erro("O vidro não compilou neste aparelho. A foto aparece sem o efeito."); console.error(e); } }
+
+  // o quadro: proporção da foto, borda longa = 1200 px; a foto entra em "cover" num canvas 2D de rascunho
+  function monta(img){
+    foto = img;
+    var w = img.naturalWidth, h = img.naturalHeight, k = BORDA / Math.max(w, h);
+    cv.width = Math.round(w * k); cv.height = Math.round(h * k);
+    vazio.classList.add("some");
+    if (!gl){ desenha2D(img); return; }
+    var rasc = document.createElement("canvas"); rasc.width = cv.width; rasc.height = cv.height;
+    var c = rasc.getContext("2d"), s = Math.max(rasc.width / w, rasc.height / h);
+    c.drawImage(img, (rasc.width - w * s) / 2, (rasc.height - h * s) / 2, w * s, h * s);
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, rasc);
+    desenha();
+  }
+  function desenha2D(img){ // sem WebGL: mostra a foto pura num canvas 2D novo
+    var c2 = document.createElement("canvas"); c2.width = cv.width; c2.height = cv.height; c2.id = "vidro";
+    c2.getContext("2d").drawImage(img, 0, 0, c2.width, c2.height); cv.replaceWith(c2);
+  }
+
+  var tilt = [0, 0], alvo = [0, 0], rodando = false;
+  function desenha(){
+    if (!gl || !foto) return;
+    var unit = Math.max(cv.width, cv.height) / BORDA;
+    gl.viewport(0, 0, cv.width, cv.height);
+    gl.uniform1i(U.uImage, 0);
+    gl.uniform2f(U.uResolution, cv.width, cv.height);
+    gl.uniform1i(U.uPattern, AJ.pattern);
+    gl.uniform1f(U.uScale, AJ.scale * unit);
+    gl.uniform1f(U.uThickness, AJ.thickness * unit);
+    gl.uniform1f(U.uRelief, AJ.relief);
+    gl.uniform1f(U.uAngle, AJ.angle);
+    gl.uniform1f(U.uDispersion, AJ.dispersion);
+    gl.uniform1f(U.uSpecular, AJ.specular);
+    gl.uniform1f(U.uGap, AJ.gap);
+    gl.uniform1f(U.uSeed, AJ.seed);
+    gl.uniform2f(U.uParallax, tilt[0], tilt[1]);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+
+  // parallax: o dedo/mouse inclina o raio de visão; o vidro anda pouco e o fundo anda muito
+  function passo(){
+    tilt[0] += (alvo[0] - tilt[0]) * .16; tilt[1] += (alvo[1] - tilt[1]) * .16;
+    var dx = alvo[0] - tilt[0], dy = alvo[1] - tilt[1];
+    if (dx * dx + dy * dy < .0004){ tilt[0] = alvo[0]; tilt[1] = alvo[1]; desenha(); rodando = false; return; }
+    desenha(); requestAnimationFrame(passo);
+  }
+  function anima(){ if (!rodando){ rodando = true; requestAnimationFrame(passo); } }
+  function mira(e){
+    if (reduz || !foto) return;
+    var r = cv.getBoundingClientRect();
+    var nx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
+    var ny = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1));
+    alvo[0] = nx * .12 * AJ.parallax; alvo[1] = -ny * .12 * AJ.parallax; anima();
+  }
+  function solta(){ alvo[0] = 0; alvo[1] = 0; anima(); }
+  cv.addEventListener("pointermove", mira);
+  cv.addEventListener("pointerdown", mira);
+  cv.addEventListener("pointerleave", solta);
+  cv.addEventListener("pointercancel", solta);
+  cv.addEventListener("pointerup", function(e){ if (e.pointerType !== "mouse") solta(); });
+
+  // carregar a foto
+  function abre(src){
+    var img = new Image();
+    img.onload = function(){ monta(img); };
+    img.onerror = function(){ erro("Não consegui abrir essa foto."); };
+    img.src = src;
+  }
+  function deArquivo(f){
+    if (!f || !/^image\//.test(f.type)) { erro("Escolha um arquivo de imagem."); return; }
+    var url = URL.createObjectURL(f); abre(url);
+  }
+  document.getElementById("arquivo").addEventListener("change", function(e){ deArquivo(e.target.files[0]); });
+  var palco = document.getElementById("palco");
+  palco.addEventListener("dragover", function(e){ e.preventDefault(); });
+  palco.addEventListener("drop", function(e){ e.preventDefault(); deArquivo(e.dataTransfer.files[0]); });
+  if (FOTO) abre(FOTO);
+
+  // pra exportar o quadro como PNG: window.vidroPNG() (o preserveDrawingBuffer deixa o toBlob funcionar)
+  window.vidroPNG = function(cb){ cv.toBlob(cb, "image/png"); };
+  window.vidroAjustes = function(novos){ Object.assign(AJ, novos || {}); desenha(); return AJ; };
+})();
+</script>
+</body>
+</html>
