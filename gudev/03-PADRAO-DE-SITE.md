@@ -120,6 +120,16 @@ Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS 
   - Esperar a fonte carregar antes de desenhar o texto em partículas.
   - (continua abaixo)
 
+### Vidro fosco com refração (11/11/2026, `efeitos/vidro-fosco-refracao.html`, WebGL puro)
+Veio de um prompt da ferramenta Refract do getlayers.ai (padrão "Frosted") que o Davi mandou. Testado no Playwright em 390 e 1440 (sem erro no console, sem rolagem lateral); falta testar em celular de verdade.
+- O que faz: a foto aparece como se estivesse atrás de um vidro canelado/fosco. Com franja de cor nas bordas e brilho onde o vidro curva. O mouse/dedo inclina o olhar: o vidro anda pouco e o fundo anda muito (parallax de 2 camadas).
+- O segredo: **refratar, não deslocar.** Um mapa de relevo (ruído em 3 tamanhos), a normal dele e `refract()` do GLSL com IOR 1,50 entortam o raio. "Relevo" (curvatura) e "espessura" (quanto o raio anda) são controles separados. Vermelho, verde e azul refratam com IOR um pouco diferente (dispersão).
+- Tamanhos em "unidade de projeto" contra borda longa de 1200 px, então exportar maior mostra o mesmo vidro. Bordas da foto espelhadas (nunca `clamp`, que vira listra).
+- Desenha **uma vez** e só redesenha quando algo muda (rAF curto no parallax): quase zero de bateria, bom pra celular.
+- 9 padrões no mesmo shader (`pattern`): 0 canelado, 1 cruz, 2 bloco de vidro (com rejunte), 3 ondas em círculo, 4 gotas de chuva, 5 onda, 6 martelado, 7 flamengo, 8 fosco. Trocar com `vidroAjustes({pattern:2})` no console.
+- Como usar a foto: escolher/arrastar, ou `?img=foto.webp` na URL, ou trocar `FOTO` no código.
+- Serve pra: fundo de topo atrás do título (estética, barbearia, bar à noite, box de banheiro numa marmoraria/vidraçaria), revelar a foto "tirando o vidro" na rolagem (animar `relief` até 0), vitrine de loja com chuva (padrão 4). Atenção: título em cima precisa de contraste, o vidro deixa a foto mais ruidosa.
+
 ### Efeitos do Mestre das Motos (10/11/2026, código em `sites/mestre-das-motos/index.html`, JS puro)
 Já usados nesse cliente: pra outro, variar a ideia, não colar igual.
 - **Filme com frases (o Davi pediu e gostou da ideia):** seção alta (`560svh`) com palco `sticky`; vídeo de fundo em loop (não preso na rolagem, então nunca parece "travado"); 5 frases gigantes que trocam pela rolagem. Uma fonte de progresso só, folga de 8% perto da troca, uma troca a cada 380 ms, palavras entram por tempo (CSS), a frase que sai sobe e some com `opacity`. Barra vermelha de progresso e zoom leve no vídeo seguem a rolagem direto. Serve pra qualquer negócio com vídeo bom: estética, academia, restaurante.
