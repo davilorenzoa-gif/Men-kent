@@ -67,6 +67,21 @@
 - **Seção alta parada dentro da prévia parece "travado":** dentro da proposta, as animações de rolagem têm que estar ligadas.
 - **HTML "não funciona" aberto pela prévia de arquivo do app:** a prévia pode não rodar o JS. Página que depende de JS pra aparecer fica só com o fundo. Teste sempre pelo navegador ou pelo link do Netlify, e deixe a primeira tela visível mesmo sem JS.
 
+## Prompt pronto de ferramenta de efeito (getlayers.ai, 11/11/2026)
+- **A imagem que vem junto do prompt é o RESULTADO, não a foto original.** O prompt do Refract falava de uma foto de 1080×2340 que o Davi subiu na ferramenta; a que chegou aqui era o print com o vidro já aplicado. Usar ela como fundo dá "vidro em cima de vidro". Pedir a foto original (o prompt mesmo manda nunca trocar por outra) e, enquanto isso, deixar a página pedindo a foto (escolher, arrastar ou `?img=`).
+- **Como converter um prompt desses pro padrão GuDev:**
+  1. Usar o código e as constantes do prompt **exatos** (shader, IOR, fórmulas). Não "melhorar" de cabeça: o visual foi aprovado naqueles números.
+  2. Por cima, o que é nosso: tudo num HTML só, sem biblioteca, comentários em português, fallback sem WebGL (foto pura), `prefers-reduced-motion` desliga o parallax, `touch-action:pan-y` pra não travar a rolagem no celular, nada de rolagem lateral.
+  3. Tamanho responsivo: o prompt traz o tamanho da prévia da ferramenta só como referência, não pra fixar.
+  4. Testar no Playwright comparando o tamanho interno do canvas com o do prompt (no Refract: 554×1200) e olhar o print.
+  5. Guardar em `gudev/efeitos/` e anotar no `03` (o que faz, o segredo, onde usar em cliente).
+- **Ideias de engenharia que valem pra outros efeitos:**
+  - Tamanho em "unidade de projeto" (contra uma borda de 1200 px) em vez de pixel: no celular, no PC e na exportação o efeito fica igual.
+  - Foto parada = desenhar só quando muda (rAF curto que se desliga sozinho). Não deixar laço infinito rodando à toa.
+  - Na borda da foto, espelhar a coordenada em vez de prender (`clamp` vira listra).
+  - Controles independentes (relevo × espessura) em vez de um "força" só: dá pra ajustar o visual sem quebrar.
+- **Bloqueio de `git push --force`:** quando o PR anterior já foi mergeado e a branch recomeça da branch padrão, o push normal basta (avança sem forçar). Não usar `--force`.
+
 ## Vendas
 - **Lead que pede prévia, fala com o chefe e marca de pagar pode sumir.** Faça o follow-up em 3 passos (veja 02-VENDAS) e não corra atrás demais.
 - **Não colocar demo fictícia como case.** Só clientes reais.

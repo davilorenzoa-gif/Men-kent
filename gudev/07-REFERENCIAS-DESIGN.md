@@ -7,6 +7,7 @@ Pra achar uma referência: buscar o nome entre aspas no Behance ou no Dribbble.
 
 ## Onde dá pra buscar (testado)
 - **Abrem bem:** Behance (busca), Dribbble (busca), godly.website (hoje redireciona pra recent.design, mais tech que comércio), onepagelove.com (muitos sites antigos ou fora do ar), motionsites.ai, Framer Marketplace, originkit.dev, 21st.dev, naocodei.com, gsap.com/showcase, Google Maps, Google Fonts, GitHub.
+- **Ferramentas que geram prompt de efeito (o Davi copia e cola aqui):** getlayers.ai (Refract: vidro com refração; 9 padrões). O prompt já vem com o shader GLSL exato, os valores e o layout: é só converter pro padrão GuDev (ver `05`, "Prompt pronto de ferramenta de efeito"). Exemplo convertido: `efeitos/vidro-fosco-refracao.html`.
 - **Abre e bloqueia depois de algumas buscas:** land-book.com.
 - **Mostra só ~20 pins e pede login:** Pinterest.
 - **Bloqueados:** Instagram, iFood, CodePen, lapa.ninja, Awwwards, Pexels.
@@ -112,6 +113,7 @@ Pra achar uma referência: buscar o nome entre aspas no Behance ou no Dribbble.
 - Foto de banco de "chef sorrindo de braço cruzado".
 
 ## Ideias de WOW novas (ainda não usadas pela GuDev)
+- **Vidro que sai da frente** (com `efeitos/vidro-fosco-refracao.html`): a foto do comércio começa atrás de vidro canelado/fosco e a rolagem "limpa" o vidro (relevo de 1,3 até 0). Box de banheiro (vidraçaria/marmoraria), vitrine na chuva (padrão gota), bar à noite. O dedo inclina o vidro.
 - **Palavra gigante + produto recortado na frente com parallax:** na rolagem, as letras andam devagar e o produto anda mais rápido.
   - Pro Chersoni já usamos a pizza dentro do "O". Esta é outra composição.
 - **Foto pequena dentro do título** que cresce até virar a tela inteira na rolagem (salão, estética).
