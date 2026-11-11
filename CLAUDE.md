@@ -19,6 +19,8 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `gudev/10-REFERENCIA-ORIGINKIT.md`: biblioteca de efeitos originkit.dev (o que é grátis, licença, como converter)
 - `gudev/exemplos/*.html`: sites reais (Açaí Happy, Chersoni, Dellart), nível mínimo de qualidade
 - `gudev/efeitos/`, `gudev/demos/`, `gudev/aprendizados/`: efeitos testados, demos de técnica e páginas de estudo
+- `gudev/aprendizados/guia-motion-premium.md` + `fusca-lab/`: guia de motion (stack, 60fps, mola, magnético, cursor, scroll storytelling, Flip, 3D) com tudo funcionando no Fusca Lab. Ler antes de criar WOW.
+- `gudev/ferramentas/previa_embutida.py`: gera a prévia num arquivo só (imagens + bibliotecas embutidas, SRI conferido) pra abrir no celular. Usar sempre que mandar prévia pro Davi.
 - `sites/<nome>/`: cada site de lead e cada conceito, com README do que falta confirmar
 
 ## Resumo rápido
@@ -27,12 +29,13 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - WhatsApp comercial (Davi): (11) 96465-0141. Venda 100% pelo WhatsApp.
 - Hospedagem no Netlify da GuDev (`proposta-<nome>.netlify.app` → `<nome>.netlify.app`); domínio no nome do cliente no registro.br.
 - Prospecção: até 20 mensagens novas/dia por pessoa, blocos de 5 a cada ~30 min. Nunca disparo em massa. 1º contato manda vídeo de 15s, não link.
-- 1ª venda combinada: **Katraka**, R$ 600 em 2x (10/11/2026). Falta confirmar o pagamento; até lá, seção de cases vazia. Outro lead quente: ENTRElinhas (avó do Davi). Lead novo: **Oficina Mestre das Motos** (WhatsApp (11) 96950-1340), site pronto em `sites/mestre-das-motos`, faltam endereço, horário, serviços e fotos reais.
-- Demos e conceitos, **nunca case**: Prumo, Peçaí, Fornalha, Faixa Vermelha, Lustro, Órbita, Vértice, 911, DOZE, Meridiano, Skyline, APEX, Espelho, Basalto, Moenda, Sulco, Fervo (`sites/fervo`, conceito pro Instagram), Lume (`sites/lume`, aliança 3D em Three.js). Lista em `04`.
+- 1ª venda combinada: **Katraka**, R$ 600 em 2x (10/11/2026). Falta confirmar o pagamento; até lá, seção de cases vazia. Outro lead quente: ENTRElinhas (avó do Davi). Péçaí (açaí real em Guarulhos, `sites/pecai`): desde 10/11 o site é **só atacado B2B: açaí e cupuaçu de 10, 2 e 1 L**; falta embalagem real, preço, pedido mínimo e região de entrega. Lead novo: **Oficina Mestre das Motos** (WhatsApp (11) 96950-1340), site pronto em `sites/mestre-das-motos`, faltam endereço, horário, serviços e fotos reais.
+- Demos e conceitos, **nunca case**: Prumo, Fornalha, Faixa Vermelha, Lustro, Órbita, Vértice, 911, DOZE, Meridiano, Skyline, APEX, Espelho, Basalto, Moenda, Sulco, Fervo (`sites/fervo`, conceito pro Instagram), Lume (`sites/lume`, aliança 3D em Three.js). Lista em `04`.
 - Técnicas novas (10/11/2026, vídeos Fervo e Madoska): página que enche de líquido e reage ao dedo (original WebGL em `sites/fervo/`, versão simples em `gudev/demos/borbulha-liquido-rolagem.html`, mesmo motor com outra marca em `gudev/demos/borbulha-webgl.html`) e câmera passeando pela vitrine com colher provando (`gudev/demos/pingo-vitrine-provas.html`). Passo a passo no `03`.
 - Aprendido em 11/11/2026 (HTMLs do Davi): **Eduburger's** (`sites/eduburgers`, prévia de sanduicheria em Maceió: adesivos que voam, cardápio em palhetas, "Marque na caixa" igual à caixa real) e **Lume** (aliança 3D que nasce em brasa, túnel por dentro, gravação ao vivo). Técnicas no `03`. Status da Eduburger's como lead: confirmar com o Davi.
 - Efeito novo (11/11/2026): **vidro fosco com refração** em WebGL (`gudev/efeitos/vidro-fosco-refracao.html`, 9 padrões de vidro, parallax no dedo). Detalhe no `03`. Prompt pronto de ferramenta (getlayers.ai etc.): a imagem que vem junto é o resultado, não a foto; como converter está no `05`. **Onda de Fluxo** (`gudev/efeitos/onda-de-fluxo-particulas.html`): mar de partículas verdes em Three.js, câmera mergulha na rolagem. **Túnel** (`gudev/efeitos/tunel-particulas.html`): buraco de minhoca de partículas anil/ciano, a rolagem voa por dentro. **Kimi** (`gudev/aprendizados/kimi/`, estudo de site de piloto de F1 com rosto e marcas reais, nunca case): pilha de cartas, capacete 3D que queima e reaparece no rastro do mouse, circuito que se desenha. Técnicas no `03`.
 - `sites/glassy-dashboard` (painel em React/Tailwind): base se algum cliente pedir painel/sistema. É produto novo: preço e prazo a definir antes de oferecer.
+- Repertório de animação atualizado em 10/11 (logo em bolinhas, cortina que enche, máscara de texto, folha sobre o herói, gota no clique, borda que acende, obrigado em círculo): `03`, seção "Repertório".
 - Vídeo: os de 15s e os Reels saem de prompts pro Google Flow (Veo) + montagem no CapCut, ou edição feita aqui com ffmpeg. Claude não abre o CapCut. Lições em `05` e `08`.
 
 ## Regras que nunca quebram

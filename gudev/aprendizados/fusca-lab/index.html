@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fusca Lab | estudo de motion GuDev</title>
+<meta name="description" content="Laboratório de estudo da GuDev: reveal, parallax, 3D leve, microinterações e storytelling por rolagem com um Fusca bege.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#161412">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   FUSCA LAB · estudo de motion da GuDev
+   Regras deste arquivo (as mesmas do guia):
+   - só anima transform e opacity (clip-path só na abertura, 1x)
+   - toda leitura de layout (getBoundingClientRect) acontece antes de qualquer escrita
+   - nada de "pin" do GSAP no celular: seção alta + position:sticky + scrub
+   ============================================================ */
+:root{
+  --carvao:#161412;   /* fundo do estúdio */
+  --grafite:#211e1b;  /* superfícies */
+  --bege:#e4d6b8;     /* a cor do carro, vira a cor do texto de destaque */
+  --creme:#f2ece0;    /* texto */
+  --cinza:#9b9488;    /* texto secundário */
+  --ferrugem:#c4552b; /* acento: só nos botões de ação */
+  --linha:rgba(242,236,224,.12);
+  --mono:"Geist Mono",ui-monospace,monospace;
+  --serif:"Instrument Serif",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{font-family:Geist,system-ui,sans-serif;background:var(--carvao);color:var(--creme);line-height:1.5;overflow-x:clip;font-size:17px}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--bege);outline-offset:4px;border-radius:4px}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--cinza)}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:.95;letter-spacing:-.01em;text-wrap:balance}
+
+/* ---------- cursor: ponto + anel com mola, blend difference ---------- */
+.cursor{position:fixed;left:0;top:0;pointer-events:none;z-index:100;mix-blend-mode:difference;display:none}
+.cursor .ponto{position:fixed;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:#fff}
+.cursor .anel{position:fixed;left:-22px;top:-22px;width:44px;height:44px;border-radius:50%;border:1.5px solid #fff;transition:width .25s,height .25s,left .25s,top .25s,background .25s}
+.cursor.grande .anel{left:-40px;top:-40px;width:80px;height:80px;background:#fff}
+@media (pointer:fine){.cursor{display:block}body{cursor:none}a,button{cursor:none}}
+
+/* ---------- topo ---------- */
+.topo{position:fixed;inset:0 0 auto;z-index:50;padding:18px 0;mix-blend-mode:difference}
+.topo .wrap{display:flex;justify-content:space-between;align-items:center}
+.topo a{text-decoration:none;font-family:var(--mono);font-size:13px;color:#fff;min-height:44px;display:inline-flex;align-items:center}
+
+/* ---------- botão magnético ---------- */
+.mag{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 30px;border-radius:999px;border:0;font:inherit;font-weight:600;text-decoration:none;background:var(--ferrugem);color:#fff;will-change:transform}
+.mag span{display:inline-block;will-change:transform;pointer-events:none}
+.mag.claro{background:transparent;color:var(--creme);box-shadow:inset 0 0 0 1.5px var(--linha)}
+
+/* ---------- 1. HERO ---------- */
+.hero{min-height:100svh;display:grid;align-content:center;padding:96px 0 48px;position:relative;overflow:hidden;
+  background:radial-gradient(70% 55% at 50% 62%,#2b2723 0%,var(--carvao) 70%)}
+.hero .titulo{font-size:clamp(60px,11vw,160px);text-align:center}
+.hero .titulo em{font-style:italic;color:var(--bege)}
+.hero .linha-mascara{display:block;overflow:hidden;padding-bottom:.08em}
+.hero .linha-mascara > span{display:inline-block}
+.palco{position:relative;width:min(100%,900px);margin:-4vw auto 0;perspective:1200px}
+.carro3d{position:relative;transform-style:preserve-3d;will-change:transform}
+.carro3d svg{width:100%;height:auto;overflow:visible}
+.sombra{transform:translateZ(-60px)}
+.hero .rodape{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center;margin-top:28px}
+.hero .acoes{display:flex;gap:12px;flex-wrap:wrap}
+.revela{clip-path:inset(0 0 0 100%)}
+
+/* ---------- 2. PARALLAX PERFIL 90° ---------- */
+.perfil{height:320vh;position:relative}
+.perfil .fixo{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;align-items:center}
+.perfil .palavra{position:absolute;left:0;top:18%;white-space:nowrap;font-family:var(--serif);font-size:clamp(120px,24vw,360px);color:transparent;-webkit-text-stroke:1px rgba(228,214,184,.18);will-change:transform}
+.perfil .chao{position:absolute;left:-50%;right:-50%;bottom:16%;height:2px;background:repeating-linear-gradient(90deg,var(--linha) 0 60px,transparent 60px 120px);will-change:transform}
+.perfil .chao.b{bottom:9%;opacity:.5}
+.perfil .carro{position:relative;width:min(92vw,900px);margin-inline:auto;will-change:transform}
+.perfil .carro svg{width:100%;height:auto;overflow:visible}
+.perfil .leitura{position:absolute;left:16px;bottom:24px;right:16px;display:flex;justify-content:space-between;gap:12px}
+.perfil .cab{position:absolute;top:96px;left:0;right:0}
+.perfil h2{font-size:clamp(40px,6vw,84px);max-width:12ch}
+
+/* ---------- 3. STORYTELLING ---------- */
+.historia{height:420vh;position:relative}
+.historia .fixo{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);align-items:center;gap:24px;padding:0 max(16px,(100vw - 1200px)/2)}
+@media (max-width:860px){.historia .fixo{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;align-content:center;gap:28px;padding-top:56px}.capitulos{min-height:190px}}
+.capitulos{position:relative;min-height:220px}
+.cap{position:absolute;inset:0;opacity:0}
+.cap h3{font-size:clamp(44px,6vw,88px);margin:10px 0 14px}
+.cap h3 em{color:var(--bege)}
+.cap p{color:var(--cinza);max-width:34ch}
+.lente{position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;background:var(--grafite)}
+.lente .quadro{position:absolute;inset:0;will-change:transform;transform-origin:0 0}
+.lente svg{width:100%;height:100%}
+.barra{position:absolute;left:16px;right:16px;bottom:16px;height:2px;background:var(--linha)}
+.barra i{position:absolute;inset:0;background:var(--bege);transform-origin:left;transform:scaleX(0)}
+
+/* ---------- 4. FLIP ---------- */
+.galeria{padding:120px 0}
+.galeria h2{font-size:clamp(40px,6vw,84px);margin-bottom:12px}
+.galeria .sub{color:var(--cinza);margin-bottom:36px;max-width:52ch}
+.grade{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grade button{border:0;padding:0;background:none;border-radius:16px;overflow:hidden;aspect-ratio:3/4;position:relative}
+.grade button img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.grade button:hover img{transform:scale(1.04)}
+.grade button.destaque{grid-column:1 / -1;aspect-ratio:16/8}
+@media (max-width:640px){.grade{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---------- fim ---------- */
+.fim{padding:140px 0 120px;text-align:center}
+.fim h2{font-size:clamp(56px,10vw,150px);margin-bottom:36px}
+.fim h2 em{color:var(--bege)}
+footer{padding:32px 0 48px;border-top:1px solid var(--linha)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+
+/* medidor de FPS (abre com ?fps) */
+.fps{position:fixed;right:12px;bottom:12px;z-index:90;font-family:var(--mono);font-size:12px;background:#000;color:#9f9;padding:6px 10px;border-radius:8px;display:none}
+
+@media (prefers-reduced-motion:reduce){
+  .revela{clip-path:none}
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor" aria-hidden="true"><span class="ponto"></span><span class="anel"></span></div>
+<div class="fps" id="fps"></div>
+
+<header class="topo">
+  <div class="wrap">
+    <a href="#topo-da-pagina">FUSCA LAB</a>
+    <a href="#galeria">[ galeria ]</a>
+  </div>
+</header>
+
+<main id="topo-da-pagina">
+  <!-- 1. HERO: reveal + 3D leve que reage ao mouse -->
+  <section class="hero" aria-labelledby="t-hero">
+    <div class="wrap">
+      <h1 class="titulo" id="t-hero">
+        <span class="linha-mascara"><span>Fusca,</span></span>
+        <span class="linha-mascara"><span>em <em>bege</em>.</span></span>
+      </h1>
+      <div class="palco" id="palco">
+        <div class="carro3d" id="carro3d">
+          <svg class="sombra" viewBox="70 40 860 380" aria-hidden="true"><ellipse id="sombraHero" cx="500" cy="398" rx="400" ry="16" fill="rgba(0,0,0,.55)" style="filter:blur(8px)"/></svg>
+          <svg class="revela" id="carroHero" viewBox="70 40 860 380" role="img" aria-label="Fusca bege em perfil, entrando da direita com as rodas girando" style="position:absolute;inset:0">
+            <g id="hRodaD"><image href="img/fusca-roda-d.webp" x="163.25" y="263.25" width="137.5" height="137.5"/></g>
+            <g id="hRodaT"><image href="img/fusca-roda-t.webp" x="683.25" y="261.5" width="137.5" height="137.5"/></g>
+            <defs>
+              <!-- brilho especular: um gradiente que só aparece onde a carroceria existe (máscara pelo alfa do PNG) -->
+              <radialGradient id="gBrilho" cx="0.5" cy="0.3" r="0.35"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+              <mask id="mCorpo" style="mask-type:alpha"><image href="img/fusca-corpo.webp" x="97.1" y="59.6" width="809.1" height="291.7"/></mask>
+            </defs>
+            <g id="hCorpo">
+              <image href="img/fusca-corpo.webp" x="97.1" y="59.6" width="809.1" height="291.7"/>
+              <rect x="97.1" y="59.6" width="809.1" height="291.7" fill="url(#gBrilho)" mask="url(#mCorpo)" style="mix-blend-mode:soft-light"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="rodape">
+        <p class="mono">[ reveal: clip-path + rodas que giram na distância certa · 3D: perspective + mola ]</p>
+        <div class="acoes">
+          <a class="mag" href="#fim" data-mag data-cursor><span>Agendar visita</span></a>
+          <a class="mag claro" href="#perfil" data-mag data-cursor><span>Ver o perfil</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PARALLAX: perfil 90°, o carro anda e as rodas giram certinho -->
+  <section class="perfil" id="perfil" aria-labelledby="t-perfil">
+    <div class="fixo">
+      <span class="palavra" id="palavra" aria-hidden="true">Perfil 90°</span>
+      <span class="chao" id="chaoA" aria-hidden="true"></span>
+      <span class="chao b" id="chaoB" aria-hidden="true"></span>
+      <div class="cab wrap">
+        <p class="mono">[ 02 · parallax em 3 velocidades ]</p>
+        <h2 id="t-perfil">O perfil que todo mundo desenha de memória.</h2>
+      </div>
+      <div class="carro" id="carroPerfil">
+        <svg viewBox="70 40 860 380" role="img" aria-label="Fusca bege em perfil lateral andando conforme a rolagem">
+          <ellipse cx="500" cy="398" rx="400" ry="14" fill="rgba(0,0,0,.5)" style="filter:blur(8px)"/>
+          <g id="pRodaD"><image href="img/fusca-roda-d.webp" x="163.25" y="263.25" width="137.5" height="137.5"/></g>
+          <g id="pRodaT"><image href="img/fusca-roda-t.webp" x="683.25" y="261.5" width="137.5" height="137.5"/></g>
+          <image href="img/fusca-corpo.webp" x="97.1" y="59.6" width="809.1" height="291.7"/>
+        </svg>
+      </div>
+      <div class="leitura mono" aria-hidden="true"><span id="lDist">distância 0 px</span><span id="lRot">roda 0°</span></div>
+    </div>
+  </section>
+
+  <!-- 3. STORYTELLING: a "câmera" passeia pela mesma foto -->
+  <section class="historia" id="historia" aria-labelledby="t-hist">
+    <h2 id="t-hist" class="mono" style="position:absolute;left:-9999px">Três detalhes do Fusca</h2>
+    <div class="fixo">
+      <div class="capitulos">
+        <article class="cap" data-cap="0"><p class="mono">[ 03.1 ]</p><h3>O <em>farol</em> redondo.</h3><p>A câmera chega perto. A mesma foto, sem trocar imagem: só escala e posição.</p></article>
+        <article class="cap" data-cap="1"><p class="mono">[ 03.2 ]</p><h3>A <em>maçaneta</em> cromada.</h3><p>Cada capítulo é um trecho da mesma timeline, amarrada na rolagem.</p></article>
+        <article class="cap" data-cap="2"><p class="mono">[ 03.3 ]</p><h3>A <em>lanterna</em> de trás.</h3><p>No fim a câmera se afasta e o carro aparece inteiro.</p></article>
+      </div>
+      <div class="lente">
+        <div class="quadro" id="quadro">
+          <svg viewBox="70 40 860 380" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <image href="img/fusca-roda-d.webp" x="163.25" y="263.25" width="137.5" height="137.5"/>
+            <image href="img/fusca-roda-t.webp" x="683.25" y="261.5" width="137.5" height="137.5"/>
+            <image href="img/fusca-corpo.webp" x="97.1" y="59.6" width="809.1" height="291.7"/>
+          </svg>
+        </div>
+        <div class="barra" aria-hidden="true"><i id="barra"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. FLIP: troca de layout animada -->
+  <section class="galeria" id="galeria" aria-labelledby="t-gal">
+    <div class="wrap">
+      <p class="mono">[ 04 · GSAP Flip ]</p>
+      <h2 id="t-gal">Toque numa foto.</h2>
+      <p class="sub">O layout muda de verdade (a foto vira destaque na grade) e o Flip anima do lugar antigo pro novo.</p>
+      <div class="grade" id="grade">
+        <button type="button" class="destaque" data-cursor aria-pressed="true"><img src="img/fusca-estrada.jpg" alt="Fusca na estrada" loading="lazy" width="735" height="1105"></button>
+        <button type="button" data-cursor aria-pressed="false"><img src="img/fusca-rebaixado.jpg" alt="Fusca rebaixado" loading="lazy" width="675" height="1200"></button>
+        <button type="button" data-cursor aria-pressed="false"><img src="img/fusca-farol.jpg" alt="Farol do Fusca aceso" loading="lazy"></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="fim" id="fim" aria-labelledby="t-fim">
+    <div class="wrap">
+      <h2 id="t-fim">Agora é a <em>sua</em> vez.</h2>
+      <a class="mag" href="#topo-da-pagina" data-mag data-cursor><span>Voltar pro começo</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap mono">
+    <span>Fusca Lab · estudo interno da GuDev</span>
+    <span>Fotos: conceito (Pinterest), só pra estudo. Não publicar.</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Flip.min.js" integrity="sha384-lg3+EgIwmxYq9YD4ix279pdUEasqmOS17fF+2mI/NEg6JHkawYaWYpJ6nKZenPOy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js" integrity="sha384-xb96EMJeax+NLXMC88ZBa1xAeAW+kn+horHh/zFlbMLG2UPWhMJJSlv7fi57hS+Q" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
+<script>
+(function(){
+  'use strict';
+  /* Se as bibliotecas não carregaram (sem internet, CDN bloqueado, visualizador de arquivo do app),
+     mostra tudo no estado final em vez de deixar o carro escondido. */
+  if (!window.gsap || !window.ScrollTrigger || !window.Flip || !window.SplitText) {
+    document.querySelectorAll('.revela').forEach(function(el){ el.style.clipPath = 'none'; });
+    document.querySelectorAll('.cap').forEach(function(el, i){ if (i === 0) el.style.opacity = 1; });
+    return;
+  }
+  gsap.registerPlugin(ScrollTrigger, Flip);
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mouseFino = matchMedia('(pointer: fine)').matches;
+
+  /* ============================================================
+     0. ROLAGEM MACIA (Lenis) só no computador, sincronizada com o ScrollTrigger
+     ============================================================ */
+  var lenis = null;
+  if (mouseFino && !reduz && window.innerWidth > 900) {
+    lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1 });
+    lenis.on('scroll', ScrollTrigger.update);          // o ScrollTrigger lê a posição do Lenis
+    gsap.ticker.add(function(t){ lenis.raf(t * 1000); }); // um relógio só: o do GSAP
+    gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){ var alvo = document.querySelector(a.getAttribute('href')); if (alvo){ e.preventDefault(); lenis.scrollTo(alvo); } });
+    });
+  }
+
+  /* ============================================================
+     1a. REVEAL DE ENTRADA
+     O carro entra da direita andando pra esquerda (ele está virado pra esquerda).
+     Rodas: ângulo = distância / raio. Raio da roda = 68,75 unidades do viewBox.
+     ============================================================ */
+  var R = 68.75;
+  var GRAUS = 180 / Math.PI;
+  // origem de giro de cada roda = centro dela no viewBox (svgOrigin é o jeito certo em SVG)
+  gsap.set(['#hRodaD', '#pRodaD'], { svgOrigin: '232 332' });
+  gsap.set(['#hRodaT', '#pRodaT'], { svgOrigin: '752 330.25' });
+  var titulo = new SplitText('.hero .linha-mascara > span', { type: 'chars' });
+
+  var entrada = gsap.timeline({ defaults: { ease: 'expo.out' }, paused: true });
+  if (reduz) {
+    gsap.set('#carroHero', { clipPath: 'inset(0 0 0 0%)' });
+  } else {
+    var svgHero = document.getElementById('carroHero');
+    var andaPx = Math.min(innerWidth * 0.35, 320);                       // quanto o carro anda na tela (px)
+    var andaUn = andaPx * 860 / (svgHero.getBoundingClientRect().width || 860); // o mesmo em unidades do viewBox
+    entrada
+      .from(titulo.chars, { yPercent: 110, duration: 1.1, stagger: 0.035 })
+      .to('#carroHero', { clipPath: 'inset(0 0 0 0%)', duration: 1.4, ease: 'power3.inOut' }, 0.25)
+      .from('#carroHero', { x: andaPx, duration: 1.6, ease: 'power3.out' }, 0.25)
+      // andando pra esquerda a roda gira no sentido anti-horário: começa em +ângulo e termina em 0
+      .from(['#hRodaD', '#hRodaT'], { rotation: (andaUn / R) * GRAUS, duration: 1.6, ease: 'power3.out' }, 0.25)
+      // assentar a suspensão: o corpo desce 6 un. e volta com uma mola curta
+      .fromTo('#hCorpo', { y: -6 }, { y: 0, duration: 0.9, ease: 'elastic.out(1, 0.45)' }, 1.45)
+      .from('#sombraHero', { scaleX: 0.4, opacity: 0, transformOrigin: '50% 50%', duration: 1.4, ease: 'power3.out' }, 0.4)
+      .from('.hero .rodape', { opacity: 0, y: 20, duration: 0.8 }, 1.2);
+  }
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function(){ entrada.play(); });
+
+  /* ============================================================
+     1b. 3D LEVE NO HERO: perspective + mola
+     Mouse normalizado (-1..1) vira rotação. Uma mola (rigidez k, amortecimento c)
+     persegue o alvo a cada quadro: v += (alvo - x) * k; v *= c; x += v
+     ============================================================ */
+  if (mouseFino && !reduz) {
+    var carro = document.getElementById('carro3d');
+    var brilho = document.getElementById('gBrilho');
+    var palco = document.getElementById('palco');
+    var alvo = { rx: 0, ry: 0 }, atual = { rx: 0, ry: 0, vx: 0, vy: 0 };
+    var K = 0.06, C = 0.82;
+    var rect = null;
+    function mede(){ rect = palco.getBoundingClientRect(); }   // LER layout: só no resize/scroll, nunca no meio da escrita
+    mede(); addEventListener('resize', mede); addEventListener('scroll', mede, { passive: true });
+    addEventListener('pointermove', function(e){
+      var nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      var ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+      alvo.ry = gsap.utils.clamp(-1, 1, nx) * 9;   // até 9° de lado
+      alvo.rx = gsap.utils.clamp(-1, 1, ny) * -5;  // até 5° de cima
+      // a luz anda pro lado oposto da inclinação, como reflexo de estúdio
+      brilho.setAttribute('cx', (0.5 - nx * 0.3).toFixed(3));
+      brilho.setAttribute('cy', (0.3 - ny * 0.15).toFixed(3));
+    });
+    gsap.ticker.add(function(){
+      atual.vy += (alvo.ry - atual.ry) * K; atual.vy *= C; atual.ry += atual.vy;
+      atual.vx += (alvo.rx - atual.rx) * K; atual.vx *= C; atual.rx += atual.vx;
+      carro.style.transform = 'rotateX(' + atual.rx.toFixed(3) + 'deg) rotateY(' + atual.ry.toFixed(3) + 'deg)'; // ESCREVER: só transform
+    });
+  }
+
+  /* ============================================================
+     2. PARALLAX NO PERFIL 90°
+     3 camadas em velocidades diferentes. O carro anda e a roda gira
+     exatamente a distância percorrida (sem "patinar").
+     ============================================================ */
+  var perfil = document.getElementById('perfil');
+  var carroPerfil = document.getElementById('carroPerfil');
+  var lDist = document.getElementById('lDist'), lRot = document.getElementById('lRot');
+  var escalaSvg = 1; // px na tela por unidade do viewBox
+  function medePerfil(){ escalaSvg = carroPerfil.getBoundingClientRect().width / 860; }
+  medePerfil(); addEventListener('resize', medePerfil);
+
+  if (!reduz) {
+    ScrollTrigger.create({
+      trigger: perfil, start: 'top top', end: 'bottom bottom', scrub: true,
+      onUpdate: function(self){
+        var p = self.progress;
+        var vw = window.innerWidth;
+        var x = gsap.utils.interpolate(vw * 0.75, -vw * 0.75, p);   // camada do carro: velocidade 1
+        var angulo = (x / escalaSvg) / R * GRAUS;                   // anda pra esquerda (x diminui) => gira anti-horário
+        gsap.set(carroPerfil, { x: x });
+        gsap.set(['#pRodaD', '#pRodaT'], { rotation: angulo });
+        gsap.set('#palavra', { x: gsap.utils.interpolate(vw * 0.1, -vw * 0.6, p) });   // fundo: mais lento
+        gsap.set('#chaoA', { x: (x * 1.6) % 120 });                                     // chão perto: mais rápido
+        gsap.set('#chaoB', { x: (x * 1.25) % 120 });
+        lDist.textContent = 'distância ' + Math.round(vw * 0.75 - x) + ' px';
+        var andou = (vw * 0.75 - x) / escalaSvg;            // unidades do viewBox desde o começo
+        lRot.textContent = 'roda girou ' + Math.round(andou / R * GRAUS) + '° (= distância ÷ raio)';
+      }
+    });
+  }
+
+  /* ============================================================
+     3. STORYTELLING: uma timeline amarrada na rolagem
+     A "câmera" é só scale + translate no mesmo quadro (transform-origin 0 0).
+     zoom(z, cx, cy): leva o ponto (cx,cy) do viewBox pro centro da lente.
+     ============================================================ */
+  var quadro = document.getElementById('quadro');
+  var caps = gsap.utils.toArray('.cap');
+  function zoom(z, cx, cy){
+    return function(){
+      var w = quadro.offsetWidth, h = quadro.offsetHeight;
+      var s = Math.min(w / 860, h / 380);                 // escala do preserveAspectRatio meet
+      var ox = (w - 860 * s) / 2, oy = (h - 380 * s) / 2;  // sobra das laterais
+      var px = ox + (cx - 70) * s, py = oy + (cy - 40) * s;
+      return { scale: z, x: w / 2 - px * z, y: h / 2 - py * z };
+    };
+  }
+  var pontos = [ [2.3, 205, 215], [2.4, 548, 210], [2.2, 862, 255] ]; // zoom alto borra: a foto tem 918 px
+  var hist = gsap.timeline({
+    defaults: { ease: 'power2.inOut' },
+    scrollTrigger: { trigger: '#historia', start: 'top top', end: 'bottom bottom', scrub: reduz ? false : 0.6, invalidateOnRefresh: true }
+  });
+  pontos.forEach(function(pt, i){
+    var z = zoom(pt[0], pt[1], pt[2]);
+    hist.to(quadro, { scale: function(){ return z().scale; }, x: function(){ return z().x; }, y: function(){ return z().y; }, duration: 1 }, i * 1.4)
+        .to(caps[i], { opacity: 1, y: 0, duration: 0.4 }, i * 1.4 + 0.3)
+        .to(caps[i], { opacity: 0, y: -16, duration: 0.3 }, i * 1.4 + 1.25);
+  });
+  hist.to(quadro, { scale: 1, x: 0, y: 0, duration: 1 }, 3 * 1.4);
+  gsap.set(caps, { y: 16 });
+  gsap.to('#barra', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '#historia', start: 'top top', end: 'bottom bottom', scrub: true } });
+
+  /* ============================================================
+     4. FLIP: captura o estado, muda o DOM/classe, anima a diferença
+     ============================================================ */
+  var grade = document.getElementById('grade');
+  grade.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b || b.classList.contains('destaque')) return;
+    var estado = Flip.getState(grade.children);
+    grade.querySelector('.destaque').classList.remove('destaque');
+    grade.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', 'false'); });
+    b.classList.add('destaque'); b.setAttribute('aria-pressed', 'true');
+    grade.prepend(b);
+    Flip.from(estado, { duration: reduz ? 0 : 0.8, ease: 'expo.inOut', absolute: true, scale: true });
+  });
+
+  /* ============================================================
+     5. BOTÃO MAGNÉTICO
+     Dentro de um raio, o botão vai 35% na direção do mouse e o texto 55%
+     (o texto "flutua" dentro do botão). quickTo = uma tween reaproveitada.
+     ============================================================ */
+  if (mouseFino && !reduz) {
+    document.querySelectorAll('[data-mag]').forEach(function(el){
+      var txt = el.querySelector('span');
+      var bx = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });
+      var by = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3.out' });
+      var tx = gsap.quickTo(txt, 'x', { duration: 0.5, ease: 'power3.out' });
+      var ty = gsap.quickTo(txt, 'y', { duration: 0.5, ease: 'power3.out' });
+      el.addEventListener('pointermove', function(e){
+        var r = el.getBoundingClientRect();
+        var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+        bx(dx * 0.35); by(dy * 0.35); tx(dx * 0.2); ty(dy * 0.2);
+      });
+      el.addEventListener('pointerleave', function(){
+        gsap.to([el, txt], { x: 0, y: 0, duration: 0.9, ease: 'elastic.out(1, 0.35)' });
+      });
+    });
+  }
+
+  /* ============================================================
+     6. CURSOR COM MOLA + mix-blend-mode: difference
+     O ponto segue na hora; o anel segue com mola (fica "pra trás" e balança).
+     ============================================================ */
+  if (mouseFino) {
+    var cur = document.getElementById('cursor');
+    var ponto = cur.querySelector('.ponto'), anel = cur.querySelector('.anel');
+    var m = { x: innerWidth / 2, y: innerHeight / 2 }, a = { x: m.x, y: m.y, vx: 0, vy: 0 };
+    addEventListener('pointermove', function(e){ m.x = e.clientX; m.y = e.clientY; ponto.style.transform = 'translate(' + m.x + 'px,' + m.y + 'px)'; });
+    gsap.ticker.add(function(){
+      var k = reduz ? 1 : 0.18, c = reduz ? 0 : 0.62;
+      a.vx += (m.x - a.x) * k; a.vx *= c; a.x += a.vx;
+      a.vy += (m.y - a.y) * k; a.vy *= c; a.y += a.vy;
+      anel.style.transform = 'translate(' + a.x.toFixed(1) + 'px,' + a.y.toFixed(1) + 'px)';
+    });
+    document.querySelectorAll('[data-cursor]').forEach(function(el){
+      el.addEventListener('pointerenter', function(){ cur.classList.add('grande'); });
+      el.addEventListener('pointerleave', function(){ cur.classList.remove('grande'); });
+    });
+  }
+
+  /* ============================================================
+     7. MEDIDOR DE FPS (?fps) pra testar no celular
+     ============================================================ */
+  if (/[?&]fps\b/.test(location.search)) {
+    var el = document.getElementById('fps'); el.style.display = 'block';
+    var n = 0, t0 = performance.now();
+    (function loop(t){ n++; if (t - t0 >= 1000){ el.textContent = n + ' fps'; n = 0; t0 = t; } requestAnimationFrame(loop); })(t0);
+  }
+
+  addEventListener('load', function(){ ScrollTrigger.refresh(); });
+})();
+</script>
+</body>
+</html>

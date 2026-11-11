@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Péçaí Atacado | Açaí e cupuaçu de 10, 2 e 1 L pra empresas em Guarulhos</title>
+<meta name="description" content="Açaí e cupuaçu no atacado pra açaiterias, lanchonetes e sorveterias: 10, 2 e 1 litro. Péçaí, Guarulhos. Pedido e tabela pelo WhatsApp.">
+<meta name="theme-color" content="#3b0f4a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Péçaí Atacado | Açaí e cupuaçu de 10, 2 e 1 L">
+<meta property="og:description" content="Açaí no atacado pra sua empresa. Pedido e tabela pelo WhatsApp.">
+<meta property="og:image" content="https://proposta-pecai.netlify.app/og.jpg">
+<meta property="og:locale" content="pt_BR">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>
+/* Esconde o estado inicial só enquanto o JS de animação carrega. Sem GSAP em 3 s, mostra tudo parado. */
+(function(h){
+  var e = /[?&]embed\b/.test(location.search), r = matchMedia('(prefers-reduced-motion: reduce)').matches, primeira = true;
+  try { primeira = !sessionStorage.getItem('pecai-viu'); } catch(x){}
+  if (!e && !r) { h.classList.add('anima-espera'); window.__pecaiEspera = true; if (primeira && window.parent === window) h.classList.add('carregando'); }
+  setTimeout(function(){ if (!window.gsap){ h.classList.remove('anima-espera','carregando'); window.__pecaiEspera = false; dispatchEvent(new Event('pecai:pronto')); } }, 3000);
+})(document.documentElement);
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Péçaí Atacado",
+  "description": "Açaí e cupuaçu no atacado pra empresas: embalagens de 10, 2 e 1 litro.",
+  "telephone": "+55 11 92563-9960",
+  "image": "https://proposta-pecai.netlify.app/og.jpg",
+  "logo": "https://proposta-pecai.netlify.app/img/logo-pecai.png",
+  "address": {"@type": "PostalAddress","streetAddress": "Av. Jurema, 436 - Parque Jurema","addressLocality": "Guarulhos","addressRegion": "SP","postalCode": "07244-000","addressCountry": "BR"},
+  "department": {"@type": "Store","name": "Péçaí Parque das Nações","address": {"@type": "PostalAddress","streetAddress": "Rua Campo Maior, 357 - Parque das Nações","addressLocality": "Guarulhos","addressRegion": "SP","addressCountry": "BR"}},
+  "sameAs": ["https://www.instagram.com/curtapecai/", "https://www.facebook.com/curtapecai"]
+}
+</script>
+<style>
+:root{
+  --pe:#3b0f4a; --pe-fundo:#2a0b33; --polpa:#7a2e8e; --polpa-clara:#a84bc4; --magenta:#e070d3;
+  --palmeira:#3daa48; --copo:#fbf8f3; --tinta:#2a0b33; --r:22px;
+  --polpa-out:cubic-bezier(.22,1,.36,1); --polpa-in-out:cubic-bezier(.65,0,.35,1);
+}
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.45s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:Figtree,system-ui,sans-serif;background:var(--pe);color:#fff;line-height:1.5;overflow-x:clip;font-size:17px}
+img{max-width:100%;height:auto;display:block}
+[hidden]{display:none!important}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--palmeira);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;text-wrap:balance;letter-spacing:-.02em}
+.wrap{width:min(1120px,100% - 32px);margin-inline:auto}
+
+/* topo */
+.topo{position:fixed;inset:0 0 auto;z-index:40;transition:background .3s,transform .5s var(--polpa-out)}
+.topo.solido{background:rgba(42,11,51,.92);backdrop-filter:blur(8px)}
+.topo.some{transform:translateY(-100%)}
+.topo .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:"Bricolage Grotesque";font-weight:800;font-size:22px;min-height:44px}
+.marca img{width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+.marca small{font-family:Figtree;font-weight:700;font-size:12px;letter-spacing:.04em;background:var(--palmeira);color:var(--tinta);padding:3px 8px;border-radius:999px}
+.topo nav{display:flex;gap:6px;align-items:center}
+.topo nav a.l{text-decoration:none;font-weight:600;padding:10px 12px;border-radius:999px;min-height:44px;display:inline-flex;align-items:center}
+.topo nav a.l:hover{background:rgba(255,255,255,.1)}
+@media (max-width:720px){.topo nav a.l{display:none}.topo .btn{min-height:44px;padding:10px 16px;font-size:15px}}
+
+/* botões */
+.btn{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:12px 24px;border-radius:999px;font:inherit;font-weight:700;text-decoration:none;border:0;cursor:pointer;transition:transform .2s var(--polpa-out),background .2s,box-shadow .2s}
+.btn:active{transform:scale(.96)}
+.btn-pedir{background:var(--palmeira);color:var(--tinta)}
+.btn-pedir:hover{background:#4fc05b}
+.btn-linha{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.45)}
+.btn-linha:hover{box-shadow:inset 0 0 0 2px #fff}
+.btn::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.45),transparent 60%);opacity:0;transition:opacity .3s}
+.btn-linha::after{background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.18),transparent 60%)}
+.btn:hover::after{opacity:1}
+.btn .gota-clique{position:absolute;left:0;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:rgba(255,255,255,.55);pointer-events:none;z-index:-1;animation:gota .6s var(--polpa-out) forwards}
+@keyframes gota{from{transform:translate(var(--gx),var(--gy)) scale(0);opacity:1}to{transform:translate(var(--gx),var(--gy)) scale(22);opacity:0}}
+
+/* carregamento */
+.carrega{position:fixed;inset:0;z-index:200;background:var(--pe-fundo);display:none;place-items:center;will-change:transform}
+.carregando .carrega{display:grid}
+.carregando body{overflow:hidden}
+.carrega .logo-carga{position:relative;width:132px;height:132px}
+.carrega .logo-carga img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%}
+.carrega .logo-carga .base{filter:grayscale(1) brightness(.45)}
+.carrega .logo-carga .cheia{clip-path:inset(100% 0 0 0)}
+.carrega .borda{position:absolute;left:0;right:0;top:100%;width:100%;height:70px;display:block}
+.progresso{position:fixed;left:0;right:0;top:0;height:3px;z-index:45;pointer-events:none}
+.progresso i{position:absolute;inset:0;background:linear-gradient(90deg,var(--palmeira),#9cc94a);transform-origin:left;transform:scaleX(0)}
+.anima-espera .abre .texto-abre > *,.anima-espera .abre .cena{opacity:0}
+.mascara{display:inline-block;overflow:hidden;vertical-align:top;padding:.12em 0 .22em;margin:-.12em 0 -.22em}
+.mascara > span{display:inline-block;will-change:transform}
+.palavra-blur{display:inline-block}
+
+/* WOW 1: herói com a logo em bolinhas */
+.palco-abre{position:relative}
+.abre{min-height:100svh;padding:88px 0 56px;display:flex;align-items:center;position:sticky;top:var(--abre-top,0px);z-index:0;overflow:hidden;isolation:isolate;
+  background:radial-gradient(120% 80% at 70% 35%,#4c1660 0%,var(--pe) 55%,var(--pe-fundo) 100%)}
+.abre .luz{position:absolute;border-radius:50%;pointer-events:none;z-index:-1;will-change:transform}
+.abre .luz.a{width:70vmax;height:70vmax;left:-20vmax;top:-30vmax;background:radial-gradient(circle,rgba(168,75,196,.35),transparent 60%);animation:deriva 22s var(--polpa-in-out) infinite alternate}
+.abre .luz.b{width:60vmax;height:60vmax;right:-25vmax;bottom:-30vmax;background:radial-gradient(circle,rgba(224,112,211,.22),transparent 60%);animation:deriva 26s var(--polpa-in-out) infinite alternate-reverse}
+@keyframes deriva{to{transform:translate3d(6vmax,4vmax,0) scale(1.08)}}
+.abre .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:40px;align-items:center}
+.cena{position:relative;width:min(100%,440px);aspect-ratio:1/1.15;margin-inline:auto;-webkit-tap-highlight-color:transparent}
+/* cubo 3D da logo (no lugar das bolinhas, 11/11): gira arrastando e com a rolagem da página */
+.cubo-palco{position:absolute;left:0;top:0;width:100%;aspect-ratio:1;display:grid;place-items:center;--s:62%;perspective:1100px;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.cubo-palco:active{cursor:grabbing}
+.cubo3d{position:relative;width:var(--lado,260px);height:var(--lado,260px);transform-style:preserve-3d;will-change:transform}
+.cubo3d.dentro{position:absolute;inset:25%;width:50%;height:50%}
+.cubo3d .face{position:absolute;inset:0;background:var(--textura) center / contain no-repeat, rgba(53,19,52,.42);border:1px solid rgba(255,255,255,.22);
+  box-shadow:inset 0 0 calc(var(--lado,260px) * .12) rgba(224,112,211,.35),0 0 calc(var(--lado,260px) * .05) rgba(168,75,196,.25);backface-visibility:visible;opacity:.88}
+.cubo3d.dentro .face{background:var(--textura) center / contain no-repeat, rgba(53,19,52,.7);opacity:1;border-color:rgba(156,201,74,.45)}
+.cubo3d .f1{transform:rotateY(0deg) translateZ(var(--meio))}.cubo3d .f2{transform:rotateY(90deg) translateZ(var(--meio))}
+.cubo3d .f3{transform:rotateY(180deg) translateZ(var(--meio))}.cubo3d .f4{transform:rotateY(-90deg) translateZ(var(--meio))}
+.cubo3d .f5{transform:rotateX(90deg) translateZ(var(--meio))}.cubo3d .f6{transform:rotateX(-90deg) translateZ(var(--meio))}
+.cubo3d.fora{--meio:calc(var(--lado,260px) / 2)}.cubo3d.dentro{--meio:calc(var(--lado,260px) / 4)}
+.cena .foto{position:absolute;left:2%;bottom:0;width:31%;z-index:2;border-radius:16px;overflow:hidden;box-shadow:0 0 0 4px var(--copo),0 24px 50px -16px rgba(0,0,0,.65);opacity:0;transform:translate(-20px,24px) rotate(-14deg);transition:opacity .6s,transform .8s cubic-bezier(.3,1.4,.5,1)}
+.cena.pronta .foto{opacity:1;transform:rotate(-6deg)}
+.selo{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);padding:8px 14px;border-radius:999px;font-weight:600;font-size:15px;margin-bottom:20px}
+.selo b{color:var(--palmeira)}
+.texto-abre h1{font-size:clamp(64px,12vw,140px);font-weight:800}
+.texto-abre h1 .sufixo{color:var(--magenta)}
+.texto-abre .frase{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(30px,4.6vw,52px);margin:8px 0 14px;color:#f1e1f6}
+.texto-abre .sub{max-width:36ch;color:#e6d6ec}
+.acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+@media (max-width:860px){
+  .abre{padding-top:76px;min-height:auto}
+  .abre .wrap{grid-template-columns:minmax(0,1fr);gap:8px}
+  .cena{width:min(80vw,330px);order:-1}
+  .texto-abre{text-align:center}
+  .texto-abre .sub{margin-inline:auto}
+  .abre .acoes{justify-content:center}
+}
+
+/* WOW 2: as duas medidas enchendo com a rolagem */
+.medidas{background:#faf5ec;color:var(--tinta);border-radius:40px 40px 0 0;position:relative;z-index:1;height:260vh}
+.medidas .fixo{position:sticky;top:0;min-height:100svh;display:grid;align-content:center;gap:28px;padding:88px 0 40px}
+.medidas h2{font-size:clamp(44px,8vw,96px);color:var(--pe)}
+.baldes{display:flex;align-items:flex-end;justify-content:center;gap:clamp(24px,6vw,80px)}
+.balde{display:grid;justify-items:center;gap:12px}
+.balde svg{display:block;height:auto;overflow:visible}
+.balde.dez svg{width:clamp(170px,30vw,300px)}
+.balde.dois svg{width:clamp(100px,17.5vw,175px)}   /* 2 L tem 1/5 do volume: lado ≈ 1/∛5 ≈ 0,58 do de 10 L */
+.balde.um svg{width:clamp(79px,13.9vw,139px)}      /* 1 L tem 1/10 do volume: lado ≈ 1/∛10 ≈ 0,46 do de 10 L */
+@media (max-width:520px){.baldes{gap:14px}.balde.dez svg{width:140px}.balde.dois svg{width:81px}.balde.um svg{width:65px}}
+/* açaí: potes de verdade (quadros do vídeo, guiados pela rolagem); cupuaçu: o desenho em escala */
+.potes{position:relative;width:min(100%,640px);margin-inline:auto}
+.potes canvas{display:block;width:100%;height:auto;aspect-ratio:540/304;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent),linear-gradient(transparent,#000 6%,#000 94%,transparent);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent),linear-gradient(transparent,#000 6%,#000 94%,transparent);mask-composite:intersect}
+.potes .rotulos{position:relative;height:clamp(44px,7vw,72px)}
+.potes .rotulos .litros{position:absolute;top:6px;transform:translateX(-50%);white-space:nowrap}
+.potes .litros{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(30px,5.4vw,56px);line-height:1;color:var(--pe)}
+.potes .litros small{font-size:.45em;margin-left:3px}
+.medidas.cupuacu .potes,.medidas:not(.cupuacu) .baldes,.medidas.cupuacu .so-acai,.medidas:not(.cupuacu) .so-cupuacu{display:none}
+.liq,.liq-topo{transition:fill .6s cubic-bezier(.22,1,.36,1)}
+[data-sabor="cupuacu"] .dez .liq{fill:#d9b86a}[data-sabor="cupuacu"] .dez .liq-topo{fill:#ecd28e}
+[data-sabor="cupuacu"] .dois .liq{fill:#e6c983}[data-sabor="cupuacu"] .dois .liq-topo{fill:#f3dfa6}
+[data-sabor="cupuacu"] .um .liq{fill:#efd9a0}[data-sabor="cupuacu"] .um .liq-topo{fill:#f8eac4}
+.medidas .chips button{background:#efe6f2;color:var(--pe)}
+.medidas .chips button[aria-pressed="true"]{background:var(--pe);color:#fff}
+.sub-sabor{font-weight:700;color:#cdb6d6;font-size:14px;margin:14px 0 6px}
+.sub-sabor:first-child{margin-top:0}
+.cx.s{width:22px;height:20px;font-size:8px;background:linear-gradient(180deg,#eaa6e1,#c27ad8);color:var(--tinta)}
+.pilha .cx.cup{background:linear-gradient(180deg,#f6e3b4,#d9b86a);color:#4a3412}
+.balde .litros{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(36px,6vw,64px);line-height:1;color:var(--pe)}
+.balde .litros small{font-size:.45em;margin-left:4px}
+.balde p{font-weight:600;color:#5d4866}
+.conta{text-align:center;font-weight:700;color:var(--polpa);font-size:clamp(17px,2vw,20px)}
+.conta span{display:inline-flex;gap:6px;align-items:center}
+.conta i{display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--polpa)}
+.nota-ilus{text-align:center;font-size:13px;color:#7b6782}
+
+/* WOW 3: monte o pedido (as caixas empilham no palete) */
+.pedido{background:var(--pe-fundo);padding:96px 0;position:relative}
+.pedido h2{font-size:clamp(44px,8vw,96px)}
+.pedido .grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start;margin-top:36px}
+@media (max-width:860px){.pedido .grade{grid-template-columns:minmax(0,1fr)}}
+.produto{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;background:rgba(255,255,255,.06);border-radius:18px;padding:14px 14px 14px 20px;margin-bottom:10px}
+.produto b{font-family:"Bricolage Grotesque";font-size:28px;font-weight:800;line-height:1}
+.produto span{display:block;font-size:14px;color:#cdb6d6}
+.qtd{display:flex;align-items:center;gap:8px}
+.qtd button{width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;font:inherit;font-weight:800;font-size:24px;line-height:1;color:#fff;transition:transform .15s var(--polpa-out)}
+.qtd button:active{transform:scale(.9)}
+.qtd .mais{background:radial-gradient(circle at 32% 28%,#c27ad8 0,#8d36a8 35%,#4f1a62 100%);box-shadow:inset -4px -5px 10px rgba(0,0,0,.35)}
+.qtd .menos{background:rgba(255,255,255,.1)}
+.qtd .menos:disabled{opacity:.3;cursor:default}
+.qtd output{min-width:28px;text-align:center;font-weight:800;font-size:20px}
+.palete{position:relative;margin-top:18px;border-radius:18px;background:rgba(255,255,255,.04);padding:18px 18px 0;min-height:230px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.pilha{display:flex;flex-wrap:wrap-reverse;gap:6px;align-items:flex-end;justify-content:center;padding-bottom:6px}
+.cx{border-radius:6px;background:linear-gradient(180deg,#8d36a8,#5e1f73);box-shadow:inset 0 3px 0 rgba(255,255,255,.25),0 4px 0 rgba(0,0,0,.25);display:grid;place-items:center;font-weight:800;font-size:12px;color:#f1e1f6;animation:cai .5s var(--polpa-out) both}
+.cx.g{width:56px;height:44px}
+.cx.p{width:32px;height:26px;font-size:10px;background:linear-gradient(180deg,#e070d3,#a84bc4);color:var(--tinta)}
+@keyframes cai{from{transform:translateY(-120px);opacity:0}70%{transform:translateY(4px);opacity:1}to{transform:none}}
+.madeira{height:16px;margin:0 -18px;background:repeating-linear-gradient(90deg,#b0844f 0 44px,#8d6436 44px 52px)}
+.palete .vazio{position:absolute;inset:0;display:grid;place-items:center;color:#cdb6d6;font-weight:600;text-align:center;padding:20px}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;font-weight:700}
+.total strong{font-family:"Bricolage Grotesque";font-size:32px;color:var(--palmeira)}
+.form{display:grid;gap:18px}
+.passo{font-weight:700;color:var(--palmeira);font-size:15px;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{border:0;border-radius:999px;min-height:44px;padding:8px 16px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;background:rgba(255,255,255,.08);color:#e6d6ec;transition:background .25s,color .25s,transform .15s var(--polpa-out)}
+.chips button:active{transform:scale(.95)}
+.chips button[aria-pressed="true"]{background:var(--copo);color:var(--pe)}
+label.campo{display:grid;gap:6px;font-weight:600}
+label.campo input{font:inherit;font-size:17px;min-height:50px;border-radius:14px;border:2px solid #5e2a6f;background:#3b0f4a;color:#fff;padding:10px 14px;width:100%}
+label.campo input:focus{outline:none;border-color:var(--palmeira)}
+.previa{background:#e7ffdb;color:#16301a;border-radius:16px 16px 16px 4px;padding:14px 16px;font-size:15px;white-space:pre-wrap}
+.previa-rot{font-size:14px;color:#cdb6d6;margin-bottom:6px}
+.obrigado{display:none;background:var(--copo);color:var(--tinta);border-radius:var(--r);padding:28px}
+.obrigado.on{display:block}
+.obrigado h3{font-size:34px;color:var(--pe);margin-bottom:8px}
+
+/* onde estamos */
+.onde{padding:96px 0;background:var(--pe)}
+.onde .grade{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;align-items:center}
+@media (max-width:860px){.onde .grade{grid-template-columns:minmax(0,1fr)}}
+.onde h2{font-size:clamp(44px,7vw,84px);margin-bottom:22px}
+.lojas{display:grid;gap:12px;perspective:900px}
+.loja{position:relative;border-radius:18px;padding:18px 20px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.18);transition:background .25s,box-shadow .25s;transform-style:preserve-3d}
+.loja.on{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 2px var(--palmeira)}
+.loja::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;pointer-events:none;background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(156,201,74,.95),transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s}
+.loja:hover::before{opacity:1}
+.loja h3{font-size:24px}
+.loja address{font-style:normal;margin:4px 0 6px;color:#e6d6ec}
+.loja .mini{display:flex;flex-wrap:wrap;gap:4px 18px}
+.loja .mini a,.loja .mini button{min-height:44px;display:inline-flex;align-items:center;font:inherit;font-weight:700;color:#fff;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.loja .mini button[aria-pressed="true"]{color:var(--palmeira)}
+.mapa{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;background:
+  linear-gradient(90deg,transparent 47%,rgba(255,255,255,.09) 47% 53%,transparent 53%) 0 0/120px 120px,
+  linear-gradient(0deg,transparent 46%,rgba(255,255,255,.07) 46% 54%,transparent 54%) 0 0/90px 90px,
+  linear-gradient(35deg,transparent 49%,rgba(255,255,255,.12) 49% 51%,transparent 51%) 0 0/100% 100%,#2a0b33}
+.mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.mapa-cartao{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;gap:4px}
+.mapa-cartao .pin{width:44px;height:58px;margin-bottom:8px;filter:drop-shadow(0 10px 12px rgba(0,0,0,.45))}
+.mapa-loja{font-family:"Bricolage Grotesque";font-weight:800;font-size:24px}
+.mapa-end{color:#e6d6ec;margin-bottom:14px}
+.mapa-botoes{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+
+footer{background:var(--pe-fundo);padding:48px 0 110px;color:#d9c4e1;font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between}
+footer .linha{display:flex;flex-wrap:wrap;gap:8px 20px}
+footer a{text-underline-offset:3px}
+
+.flutua{position:fixed;left:16px;right:16px;bottom:14px;z-index:50;display:none;transform:translateY(120%);transition:transform .35s var(--polpa-out)}
+.flutua.on{transform:none}
+.flutua .btn{width:100%;box-shadow:0 12px 30px -8px rgba(0,0,0,.6)}
+@media (max-width:720px){.flutua{display:block}}
+
+/* prévia estática e movimento reduzido */
+.embed .cena .foto{opacity:1;transform:rotate(-6deg);transition:none}
+.embed .medidas{height:auto}.embed .medidas .fixo{position:relative}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .abre .luz{animation:none}
+  .carrega{display:none!important}
+  .abre{position:relative}
+  .medidas{height:auto}.medidas .fixo{position:relative}
+  .cx{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="carrega" id="carrega" aria-hidden="true">
+  <div class="logo-carga"><img class="base" src="img/logo-pecai.webp" width="132" height="132" alt=""><img class="cheia" id="logoCheia" src="img/logo-pecai.webp" width="132" height="132" alt=""></div>
+  <svg class="borda" viewBox="0 0 1200 70" preserveAspectRatio="none"><path fill="#2a0b33" d="M0 0H1200V18C1160 18 1150 52 1128 52S1100 18 1060 18 980 30 950 30 930 64 905 64 880 22 840 22H700C660 22 655 44 630 44S600 22 560 22 470 34 440 34 425 58 400 58 380 20 340 20H260C230 20 222 48 200 48S172 20 140 20 60 30 30 30 10 18 0 18Z"/></svg>
+</div>
+<div class="progresso" aria-hidden="true"><i id="progresso"></i></div>
+
+<header class="topo" id="topo">
+  <div class="wrap">
+    <a class="marca" href="#inicio" aria-label="Péçaí Atacado, voltar ao topo"><img src="img/logo-pecai.webp" width="40" height="40" alt="">Péçaí <small>ATACADO</small></a>
+    <nav aria-label="Principal">
+      <a class="l" href="#medidas">Medidas</a>
+      <a class="l" href="#onde">Lojas</a>
+      <a class="btn btn-pedir" href="#pedido">Fazer pedido</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="palco-abre" id="palcoAbre">
+    <!-- WOW 1: cubo 3D da logo (gira arrastando e com a rolagem) -->
+    <section class="abre" aria-labelledby="titulo">
+      <span class="luz a" aria-hidden="true"></span><span class="luz b" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="texto-abre">
+          <span class="selo"><b>Atacado</b> pra empresas</span>
+          <h1 id="titulo">Pé<span class="sufixo">çaí</span></h1>
+          <p class="frase">Açaí e cupuaçu de 10, 2 e 1 L.</p>
+          <p class="sub">Pra sua açaiteria, lanchonete ou sorveteria. Pedido e tabela pelo WhatsApp.</p>
+          <div class="acoes">
+            <a class="btn btn-pedir js-tabela" href="https://wa.me/5511925639960" target="_blank" rel="noopener">Pedir tabela no WhatsApp</a>
+            <a class="btn btn-linha" href="#pedido">Montar pedido</a>
+          </div>
+        </div>
+        <div class="cena" id="cena">
+          <div class="cubo-palco" id="cuboPalco" role="img" aria-label="Cubo 3D com a logo da Péçaí. Arraste pra girar.">
+            <img id="cuboTextura" src="img/logo-pecai.webp" alt="" hidden>
+            <div class="cubo3d fora" id="cubo3d">
+              <div class="face f1"></div><div class="face f2"></div><div class="face f3"></div><div class="face f4"></div><div class="face f5"></div><div class="face f6"></div>
+              <div class="cubo3d dentro" id="cubo3dDentro">
+                <div class="face f1"></div><div class="face f2"></div><div class="face f3"></div><div class="face f4"></div><div class="face f5"></div><div class="face f6"></div>
+              </div>
+            </div>
+          </div>
+          <div class="foto"><img src="img/copo-pecai.webp" width="373" height="576" alt="Açaí da Péçaí com calda de chocolate"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WOW 2: as duas medidas enchem de açaí com a rolagem -->
+    <section class="medidas" id="medidas" aria-labelledby="t-medidas">
+      <div class="fixo wrap">
+        <h2 id="t-medidas">Três medidas.</h2>
+        <div class="chips sabor" role="group" aria-label="Sabor" id="sabor"><button type="button" aria-pressed="true" data-v="acai">Açaí</button><button type="button" aria-pressed="false" data-v="cupuacu">Cupuaçu</button></div>
+        <div class="potes" id="potes">
+          <canvas id="potesTela" width="540" height="304" role="img" aria-label="Potes de 10 litros, 2 litros e 1 litro enchendo de açaí. Imagem ilustrativa."></canvas>
+          <img id="potesQuadros" src="img/pote-acai-quadros.webp" width="3240" height="2432" alt="" hidden decoding="async">
+          <div class="rotulos" aria-hidden="true">
+            <span class="litros" style="left:21%"><span id="pDez">10</span><small>L</small></span>
+            <span class="litros" style="left:55%"><span id="pDois">2</span><small>L</small></span>
+            <span class="litros" style="left:84%"><span id="pUm">1</span><small>L</small></span>
+          </div>
+        </div>
+        <div class="baldes" id="baldes" data-sabor="acai">
+          <div class="balde dez">
+            <svg viewBox="0 0 200 220" role="img" aria-label="Embalagem de 10 litros enchendo">
+              <defs><clipPath id="cDez"><path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z"/></clipPath></defs>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="#efe6f2"/>
+              <g clip-path="url(#cDez)"><g id="nivelDez" style="transform:translateY(190px)">
+                <path class="liq" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V240 H0Z" fill="#5e1f73"/>
+                <path class="liq-topo" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V40 H0Z" fill="#8d36a8"/>
+              </g></g>
+              <rect x="14" y="20" width="172" height="18" rx="6" fill="#3b0f4a"/>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="none" stroke="#3b0f4a" stroke-width="4"/>
+            </svg>
+            <span class="litros"><span id="lDez">10</span><small>L</small></span>
+          </div>
+          <div class="balde dois">
+            <svg viewBox="0 0 200 220" role="img" aria-label="Embalagem de 2 litros enchendo">
+              <defs><clipPath id="cDois"><path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z"/></clipPath></defs>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="#efe6f2"/>
+              <g clip-path="url(#cDois)"><g id="nivelDois" style="transform:translateY(190px)">
+                <path class="liq" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V240 H0Z" fill="#a84bc4"/>
+                <path class="liq-topo" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V40 H0Z" fill="#e070d3"/>
+              </g></g>
+              <rect x="14" y="20" width="172" height="18" rx="6" fill="#3b0f4a"/>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="none" stroke="#3b0f4a" stroke-width="5"/>
+            </svg>
+            <span class="litros"><span id="lDois">2</span><small>L</small></span>
+          </div>
+          <div class="balde um">
+            <svg viewBox="0 0 200 220" role="img" aria-label="Embalagem de 1 litro enchendo">
+              <defs><clipPath id="cUm"><path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z"/></clipPath></defs>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="#efe6f2"/>
+              <g clip-path="url(#cUm)"><g id="nivelUm" style="transform:translateY(190px)">
+                <path class="liq" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V240 H0Z" fill="#c27ad8"/>
+                <path class="liq-topo" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V40 H0Z" fill="#eaa6e1"/>
+              </g></g>
+              <rect x="14" y="20" width="172" height="18" rx="6" fill="#3b0f4a"/>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="none" stroke="#3b0f4a" stroke-width="6"/>
+            </svg>
+            <span class="litros"><span id="lUm">1</span><small>L</small></span>
+          </div>
+        </div>
+        <p class="conta"><span>1 de 10 L = 5 de 2 L = 10 de 1 L</span></p>
+        <p class="nota-ilus so-acai">Imagem ilustrativa.</p>
+        <p class="nota-ilus so-cupuacu">Desenho em escala de volume. Embalagem ilustrativa.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- WOW 3: monte o pedido, as caixas empilham no palete -->
+  <section class="pedido" id="pedido" aria-labelledby="t-pedido">
+    <div class="wrap">
+      <h2 id="t-pedido">Monte o pedido.</h2>
+      <div class="grade">
+        <div>
+          <p class="sub-sabor">Açaí</p>
+          <div class="produto"><div><b>10 L</b><span>Açaí</span></div>
+            <div class="qtd"><button type="button" class="menos" data-k="acai-10" data-d="-1" aria-label="Tirar um Açaí de 10 litros" disabled>−</button><output id="q-acai-10" aria-live="polite">0</output><button type="button" class="mais" data-k="acai-10" data-d="1" aria-label="Pôr um Açaí de 10 litros">+</button></div></div>
+          <div class="produto"><div><b>2 L</b><span>Açaí</span></div>
+            <div class="qtd"><button type="button" class="menos" data-k="acai-2" data-d="-1" aria-label="Tirar um Açaí de 2 litros" disabled>−</button><output id="q-acai-2" aria-live="polite">0</output><button type="button" class="mais" data-k="acai-2" data-d="1" aria-label="Pôr um Açaí de 2 litros">+</button></div></div>
+          <div class="produto"><div><b>1 L</b><span>Açaí</span></div>
+            <div class="qtd"><button type="button" class="menos" data-k="acai-1" data-d="-1" aria-label="Tirar um Açaí de 1 litro" disabled>−</button><output id="q-acai-1" aria-live="polite">0</output><button type="button" class="mais" data-k="acai-1" data-d="1" aria-label="Pôr um Açaí de 1 litro">+</button></div></div>
+          <p class="sub-sabor">Cupuaçu</p>
+          <div class="produto"><div><b>10 L</b><span>Cupuaçu</span></div>
+            <div class="qtd"><button type="button" class="menos" data-k="cupuacu-10" data-d="-1" aria-label="Tirar um Cupuaçu de 10 litros" disabled>−</button><output id="q-cupuacu-10" aria-live="polite">0</output><button type="button" class="mais" data-k="cupuacu-10" data-d="1" aria-label="Pôr um Cupuaçu de 10 litros">+</button></div></div>
+          <div class="produto"><div><b>2 L</b><span>Cupuaçu</span></div>
+            <div class="qtd"><button type="button" class="menos" data-k="cupuacu-2" data-d="-1" aria-label="Tirar um Cupuaçu de 2 litros" disabled>−</button><output id="q-cupuacu-2" aria-live="polite">0</output><button type="button" class="mais" data-k="cupuacu-2" data-d="1" aria-label="Pôr um Cupuaçu de 2 litros">+</button></div></div>
+          <div class="produto"><div><b>1 L</b><span>Cupuaçu</span></div>
+            <div class="qtd"><button type="button" class="menos" data-k="cupuacu-1" data-d="-1" aria-label="Tirar um Cupuaçu de 1 litro" disabled>−</button><output id="q-cupuacu-1" aria-live="polite">0</output><button type="button" class="mais" data-k="cupuacu-1" data-d="1" aria-label="Pôr um Cupuaçu de 1 litro">+</button></div></div>
+          <div class="palete" aria-hidden="true">
+            <p class="vazio" id="vazio">O palete está vazio.</p>
+            <div class="pilha" id="pilha"></div>
+            <div class="madeira"></div>
+          </div>
+          <p class="total">Total <strong><span id="total">0</span> L</strong></p>
+        </div>
+
+        <div>
+          <form class="form" id="form" novalidate>
+            <div>
+              <p class="passo" id="pFreq">Com que frequência?</p>
+              <div class="chips" role="group" aria-labelledby="pFreq" id="freq">
+                <button type="button" aria-pressed="true" data-v="Só desta vez">Só desta vez</button>
+                <button type="button" aria-pressed="false" data-v="Toda semana">Toda semana</button>
+                <button type="button" aria-pressed="false" data-v="A cada 15 dias">A cada 15 dias</button>
+              </div>
+            </div>
+            <div>
+              <p class="passo" id="pReceb">Como recebe?</p>
+              <div class="chips" role="group" aria-labelledby="pReceb" id="receb">
+                <button type="button" aria-pressed="true" data-v="entrega">Entrega</button>
+                <button type="button" aria-pressed="false" data-v="Parque Jurema">Retiro no Parque Jurema</button>
+                <button type="button" aria-pressed="false" data-v="Parque das Nações">Retiro no Parque das Nações</button>
+              </div>
+            </div>
+            <label class="campo" id="campoEnd">Endereço da entrega
+              <input id="endereco" autocomplete="street-address" placeholder="Rua, número, bairro e cidade">
+            </label>
+            <label class="campo">Empresa
+              <input id="empresa" autocomplete="organization" placeholder="Nome do seu comércio">
+            </label>
+            <label class="campo">Seu nome
+              <input id="nome" autocomplete="given-name" placeholder="Com quem a gente fala?">
+            </label>
+            <div>
+              <p class="previa-rot">A mensagem que vai sair:</p>
+              <p class="previa" id="previa"></p>
+            </div>
+            <button class="btn btn-pedir" type="submit">Pedir pelo WhatsApp</button>
+          </form>
+          <div class="obrigado" id="obrigado" role="status" tabindex="-1">
+            <h3>Pedido montado.</h3>
+            <p>A mensagem abriu no WhatsApp da Péçaí. É só tocar em enviar.</p>
+            <button class="btn btn-pedir" type="button" id="denovo" style="margin-top:18px">Montar outro</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="onde" id="onde" aria-labelledby="t-onde">
+    <div class="wrap grade">
+      <div>
+        <h2 id="t-onde">Onde estamos</h2>
+        <div class="lojas" role="group" aria-label="Escolha a loja no mapa">
+          <article class="loja on" data-mapa="Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000">
+            <h3>Parque Jurema</h3>
+            <address>Av. Jurema, 436, Guarulhos</address>
+            <div class="mini"><button type="button" class="ver" aria-pressed="true">Ver no mapa</button><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Como chegar</a></div>
+          </article>
+          <article class="loja" data-mapa="Rua+Campo+Maior,+357+-+Parque+das+Na%C3%A7%C3%B5es,+Guarulhos+-+SP">
+            <h3>Parque das Nações</h3>
+            <address>Rua Campo Maior, 357, Guarulhos</address>
+            <div class="mini"><button type="button" class="ver" aria-pressed="false">Ver no mapa</button><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Rua+Campo+Maior,+357+-+Parque+das+Na%C3%A7%C3%B5es,+Guarulhos+-+SP" target="_blank" rel="noopener">Como chegar</a></div>
+          </article>
+        </div>
+      </div>
+      <div class="mapa" id="mapaBox">
+        <div class="mapa-cartao">
+          <svg class="pin" viewBox="0 0 40 52" aria-hidden="true"><path d="M20 0C9 0 0 9 0 20c0 15 20 32 20 32s20-17 20-32C40 9 31 0 20 0z" fill="#3daa48"/><circle cx="20" cy="20" r="8" fill="#fff"/></svg>
+          <p class="mapa-loja" id="mapaLoja">Péçaí Parque Jurema</p>
+          <p class="mapa-end" id="mapaEnd">Av. Jurema, 436, Guarulhos</p>
+          <div class="mapa-botoes">
+            <a class="btn btn-pedir" id="mapaAbrir" href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Jurema,+436+-+Parque+Jurema,+Guarulhos+-+SP,+07244-000" target="_blank" rel="noopener">Abrir no Google Maps</a>
+            <button class="btn btn-linha" type="button" id="mapaCarregar">Ver o mapa aqui</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="marca" href="#inicio" aria-label="Péçaí Atacado, voltar ao topo"><img src="img/logo-pecai.webp" width="56" height="56" loading="lazy" alt="Logo da Péçaí" style="width:56px;height:56px"></a>
+    <div class="linha">
+      <a href="https://wa.me/5511925639960" target="_blank" rel="noopener">WhatsApp (11) 92563-9960</a>
+      <a href="https://www.instagram.com/curtapecai/" target="_blank" rel="noopener">@curtapecai</a>
+      <a href="privacidade.html">Privacidade</a>
+    </div>
+    <p>Site feito pela GuDev.</p>
+  </div>
+</footer>
+
+<div class="flutua" id="flutua"><a class="btn btn-pedir" href="#pedido">Fazer pedido</a></div>
+
+<script>
+(function(){
+  var WHATS = '5511925639960';
+  var embed = /[?&]embed\b/.test(location.search);
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+  if (embed) root.classList.add('embed');
+
+  /* WOW 1: cubo 3D da logo. Arrastar (dedo ou mouse) e a rolagem da página dão impulso; o atrito freia.
+     Diferente do cubo-3d.html sozinho: aqui a roda do mouse NÃO fica presa no cubo (senão a página trava). */
+  var cena = document.getElementById('cena');
+  (function(){
+    var palco = document.getElementById('cuboPalco'), cubo = document.getElementById('cubo3d'), dentro = document.getElementById('cubo3dDentro');
+    var tex = document.getElementById('cuboTextura');
+    function poeTextura(){ cubo.style.setProperty('--textura', 'url("' + (tex.currentSrc || tex.src) + '")'); }
+    if (tex.complete) poeTextura(); else tex.addEventListener('load', poeTextura);
+    function tamanho(){ cubo.style.setProperty('--lado', Math.round(palco.clientWidth * 0.6) + 'px'); }
+    tamanho(); addEventListener('resize', tamanho);
+    var rot = { x: -18, y: 28 }, vel = { x: 0, y: 0 }, ATRITO = reduz ? 0.8 : 0.95, rodando = false;
+    function aplica(){
+      cubo.style.transform = 'rotateX(' + rot.x.toFixed(2) + 'deg) rotateY(' + rot.y.toFixed(2) + 'deg)';
+      dentro.style.transform = 'rotateX(' + (-rot.x * 0.6).toFixed(2) + 'deg) rotateY(' + (-rot.y * 0.6).toFixed(2) + 'deg)';
+    }
+    function quadro(){
+      rot.x += vel.x; rot.y += vel.y; vel.x *= ATRITO; vel.y *= ATRITO; aplica();
+      if (Math.abs(vel.x) + Math.abs(vel.y) > 0.01) requestAnimationFrame(quadro); else rodando = false;
+    }
+    function empurra(dx, dy){
+      vel.y = Math.max(-24, Math.min(24, vel.y + dx)); vel.x = Math.max(-24, Math.min(24, vel.x + dy));
+      if (!rodando){ rodando = true; requestAnimationFrame(quadro); }
+    }
+    var ult = null;
+    palco.addEventListener('pointerdown', function(e){ ult = { x: e.clientX, y: e.clientY }; vel.x = vel.y = 0; });
+    palco.addEventListener('pointermove', function(e){
+      if (!ult) return;
+      var dx = e.clientX - ult.x, dy = e.clientY - ult.y; ult = { x: e.clientX, y: e.clientY };
+      empurra(dx * 0.16, -dy * 0.16);
+    });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function(ev){ palco.addEventListener(ev, function(){ ult = null; }); });
+    var ultScroll = scrollY;
+    addEventListener('scroll', function(){
+      var d = scrollY - ultScroll; ultScroll = scrollY;
+      if (scrollY < innerHeight * 1.5) empurra(d * 0.012, -d * 0.03);   // rolando a página o cubo gira junto (só enquanto o herói aparece)
+    }, { passive: true });
+    aplica();
+    function mostraFoto(){ setTimeout(function(){ cena.classList.add('pronta'); }, embed || reduz ? 0 : 900); }
+    if (window.__pecaiEspera) addEventListener('pecai:pronto', mostraFoto, { once: true }); else mostraFoto();
+  })();
+
+  /* botão "Pedir tabela": já abre o WhatsApp com a mensagem */
+  document.querySelectorAll('.js-tabela').forEach(function(a){
+    a.href = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent('Oi, Péçaí! Vim pelo site. Tenho um comércio e quero a tabela do açaí e do cupuaçu no atacado (10 L, 2 L e 1 L).');
+  });
+
+  /* topo sólido, botão flutuante */
+  var topo = document.getElementById('topo'), flutua = document.getElementById('flutua'), secPedido = document.getElementById('pedido');
+  if (window.parent !== window) flutua.style.display = 'none';
+  function rolou(){
+    topo.classList.toggle('solido', scrollY > 40);
+    var r = secPedido.getBoundingClientRect();
+    flutua.classList.toggle('on', scrollY > innerHeight * 0.7 && !(r.top < innerHeight && r.bottom > 0));
+  }
+  addEventListener('scroll', rolou, { passive: true }); rolou();
+
+  /* WOW 3: pedido */
+  var ITENS = [['acai-10','Açaí',10],['acai-2','Açaí',2],['acai-1','Açaí',1],['cupuacu-10','Cupuaçu',10],['cupuacu-2','Cupuaçu',2],['cupuacu-1','Cupuaçu',1]];
+  function zera(){ var q = {}; ITENS.forEach(function(it){ q[it[0]] = 0; }); return q; }
+  function litros(){ return ITENS.reduce(function(t, it){ return t + qtd[it[0]] * it[2]; }, 0); }
+  var qtd = zera(), freq = 'Só desta vez', receb = 'entrega';
+  var pilha = document.getElementById('pilha'), vazio = document.getElementById('vazio');
+  var previa = document.getElementById('previa'), endereco = document.getElementById('endereco');
+  var empresa = document.getElementById('empresa'), nome = document.getElementById('nome');
+  var campoEnd = document.getElementById('campoEnd'), form = document.getElementById('form'), obrigado = document.getElementById('obrigado');
+  function limpa(s){ return String(s).replace(/\s+/g, ' ').trim().slice(0, 120); }
+  function mensagem(){
+    var m = 'Oi, Péçaí! Vim pelo site.\n';
+    if (limpa(empresa.value)) m += 'Empresa: ' + limpa(empresa.value) + '.\n';
+    if (litros()) {
+      m += 'Quero no atacado:\n';
+      ITENS.forEach(function(it){ if (qtd[it[0]]) m += '- ' + qtd[it[0]] + 'x ' + it[1] + ' ' + it[2] + ' L\n'; });
+      m += 'Total: ' + litros() + ' litros.\n';
+    } else m += 'Quero a tabela do açaí e do cupuaçu no atacado (10 L, 2 L e 1 L).\n';
+    m += 'Frequência: ' + freq.toLowerCase() + '.\n';
+    if (receb === 'entrega') m += 'Entrega' + (limpa(endereco.value) ? ' em: ' + limpa(endereco.value) : '') + '.\n';
+    else m += 'Retiro na loja do ' + receb + '.\n';
+    if (limpa(nome.value)) m += 'Meu nome é ' + limpa(nome.value) + '.\n';
+    m += 'Pode me mandar os valores?';
+    return m;
+  }
+  function desenha(novo){
+    pilha.textContent = '';
+    var n = 0;
+    ITENS.forEach(function(it){
+      var k = it[0], L = it[2];
+      for (var i = 0; i < qtd[k]; i++){
+        var c = document.createElement('span');
+        c.className = 'cx ' + (L === 10 ? 'g' : L === 2 ? 'p' : 's') + (it[1] === 'Cupuaçu' ? ' cup' : '');
+        c.textContent = L + 'L';
+        if (!(novo === k && i === qtd[k] - 1)) c.style.animation = 'none';
+        pilha.appendChild(c); n++;
+      }
+    });
+    vazio.style.display = n ? 'none' : '';
+    ITENS.forEach(function(it){ document.getElementById('q-' + it[0]).textContent = qtd[it[0]]; });
+    document.querySelectorAll('.qtd .menos').forEach(function(b){ b.disabled = !qtd[b.dataset.k]; });
+    document.getElementById('total').textContent = litros();
+    previa.textContent = mensagem();
+  }
+  document.querySelectorAll('.qtd button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var k = b.dataset.k, d = +b.dataset.d;
+      qtd[k] = Math.max(0, Math.min(40, qtd[k] + d));
+      desenha(d > 0 ? k : null);
+      if (d > 0 && navigator.vibrate) { try { navigator.vibrate(8); } catch(e){} }
+    });
+  });
+  function grupo(id, cb){
+    var g = document.getElementById(id);
+    g.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b) return;
+      g.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      cb(b.dataset.v); previa.textContent = mensagem();
+    });
+  }
+  grupo('freq', function(v){ freq = v; });
+  grupo('sabor', function(v){ document.getElementById('baldes').setAttribute('data-sabor', v); document.getElementById('medidas').classList.toggle('cupuacu', v === 'cupuacu'); });
+
+  /* potes de açaí: desenha um quadro da folha de quadros (48 quadros, 6 por linha). Sem animação, mostra o último (cheio). */
+  var tela = document.getElementById('potesTela'), folha = document.getElementById('potesQuadros'), ctx2 = tela.getContext('2d'), quadroAtual = 47;
+  window.__pecaiQuadro = function(i){ quadroAtual = i; if (!folha.complete || !folha.naturalWidth) return; ctx2.drawImage(folha, (i % 6) * 540, Math.floor(i / 6) * 304, 540, 304, 0, 0, 540, 304); };
+  if (folha.complete) window.__pecaiQuadro(quadroAtual); else folha.addEventListener('load', function(){ window.__pecaiQuadro(quadroAtual); });
+  grupo('receb', function(v){ receb = v; campoEnd.style.display = v === 'entrega' ? '' : 'none'; });
+  [endereco, empresa, nome].forEach(function(i){ i.addEventListener('input', function(){ previa.textContent = mensagem(); }); });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    window.open('https://wa.me/' + WHATS + '?text=' + encodeURIComponent(mensagem()), '_blank', 'noopener');
+    form.style.display = 'none'; obrigado.classList.add('on'); obrigado.focus();
+  });
+  document.getElementById('denovo').addEventListener('click', function(){
+    qtd = zera(); empresa.value = nome.value = endereco.value = '';
+    obrigado.classList.remove('on'); form.style.display = ''; desenha();
+  });
+  desenha();
+
+  /* lojas e mapa (o iframe só nasce se a pessoa pedir) */
+  var mapaBox = document.getElementById('mapaBox'), mapa = null, lojaMapa = document.querySelector('.loja.on');
+  function urlMapa(l){ return 'https://www.google.com/maps?q=' + l.dataset.mapa + '&output=embed'; }
+  document.getElementById('mapaCarregar').addEventListener('click', function(){
+    mapa = document.createElement('iframe'); mapa.title = 'Mapa da loja Péçaí escolhida';
+    mapa.referrerPolicy = 'no-referrer-when-downgrade'; mapa.src = urlMapa(lojaMapa); mapaBox.appendChild(mapa);
+  });
+  document.querySelectorAll('.loja').forEach(function(l){
+    l.querySelector('.ver').addEventListener('click', function(){
+      lojaMapa = l;
+      document.querySelectorAll('.loja').forEach(function(x){ x.classList.toggle('on', x === l); x.querySelector('.ver').setAttribute('aria-pressed', x === l ? 'true' : 'false'); });
+      document.getElementById('mapaLoja').textContent = 'Péçaí ' + l.querySelector('h3').textContent;
+      document.getElementById('mapaEnd').textContent = l.querySelector('address').textContent;
+      document.getElementById('mapaAbrir').href = 'https://www.google.com/maps/search/?api=1&query=' + l.dataset.mapa;
+      if (mapa) mapa.src = urlMapa(l);
+    });
+  });
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
+<script>
+/* CAMADA DE MOVIMENTO ("viscoso como açaí"). Tudo extra: sem GSAP o site funciona parado. */
+(function(){
+  'use strict';
+  var root = document.documentElement;
+  var embed = /[?&]embed\b/.test(location.search);
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fino = matchMedia('(pointer: fine)').matches;
+  addEventListener('pecai:pronto', function(){ window.__pecaiEspera = false; });
+  function pronto(){ root.classList.remove('anima-espera', 'carregando'); dispatchEvent(new Event('pecai:pronto')); }
+  if (!window.gsap || !window.ScrollTrigger) { pronto(); return; }
+  gsap.registerPlugin(ScrollTrigger);
+  var POLPA = 'expo.out';
+  try { sessionStorage.setItem('pecai-viu', '1'); } catch(e){}
+
+  function divideLetras(el){
+    var letras = [];
+    Array.prototype.slice.call(el.childNodes).forEach(function(no){
+      if (no.nodeType === 3) {
+        var frag = document.createDocumentFragment();
+        no.textContent.split('').forEach(function(c){
+          var m = document.createElement('span'); m.className = 'mascara'; m.setAttribute('aria-hidden', 'true');
+          var l = document.createElement('span'); l.textContent = c; m.appendChild(l); frag.appendChild(m); letras.push(l);
+        });
+        no.parentNode.replaceChild(frag, no);
+      } else if (no.nodeType === 1) letras = letras.concat(divideLetras(no));
+    });
+    return letras;
+  }
+  function dividePalavras(el, mascara){
+    var txt = el.textContent.trim().split(/\s+/); el.textContent = ''; el.setAttribute('aria-label', txt.join(' '));
+    return txt.map(function(w, i){
+      var fora = document.createElement('span'); fora.setAttribute('aria-hidden', 'true');
+      var dentro = fora;
+      if (mascara) { fora.className = 'mascara'; dentro = document.createElement('span'); dentro.textContent = w; fora.appendChild(dentro); }
+      else { fora.className = 'palavra-blur'; fora.textContent = w; }
+      el.appendChild(fora); if (i < txt.length - 1) el.appendChild(document.createTextNode(' '));
+      return dentro;
+    });
+  }
+
+  var lenis = null;
+  if (fino && !reduz && !embed && innerWidth > 900 && window.Lenis) {
+    lenis = new Lenis({ lerp: 0.09 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function(t){ lenis.raf(t * 1000); }); gsap.ticker.lagSmoothing(0);
+    root.style.scrollBehavior = 'auto';
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){ var alvo = document.querySelector(a.getAttribute('href')); if (alvo) { e.preventDefault(); lenis.scrollTo(alvo, { offset: -10, duration: 1.4 }); } });
+    });
+  }
+
+  /* 1. entrada */
+  var h1 = document.getElementById('titulo'); h1.setAttribute('aria-label', 'Péçaí');
+  var letras = divideLetras(h1);
+  var palavras = dividePalavras(document.querySelector('.texto-abre .frase'), false);
+  root.classList.remove('anima-espera');   // antes da timeline: o from() guarda o valor final na hora
+  var heroi = gsap.timeline({ paused: true, defaults: { ease: POLPA } })
+    .from('.abre .luz', { opacity: 0, duration: 2 }, 0)
+    .from('.texto-abre .selo', { y: 18, opacity: 0, duration: 1 }, 0.05)
+    .from(letras, { yPercent: 110, rotate: 8, duration: 1.3, stagger: 0.05 }, 0.1)
+    .from(palavras, { opacity: 0, y: 10, filter: 'blur(10px)', duration: 1, stagger: 0.08 }, 0.45)
+    .from('.texto-abre .sub', { opacity: 0, y: 16, duration: 1 }, 0.7)
+    .from('.texto-abre .acoes > *', { opacity: 0, y: 16, duration: 1, stagger: 0.08 }, 0.8)
+    .from('.abre .cena', { opacity: 0, scale: 0.92, duration: 1.4 }, 0.2)
+    .add(function(){ dispatchEvent(new Event('pecai:pronto')); }, 0.25);
+  function soltaHeroi(){ if (embed || reduz) { heroi.progress(1); dispatchEvent(new Event('pecai:pronto')); } else heroi.play(); }
+  if (root.classList.contains('carregando') && !embed && !reduz) {
+    gsap.timeline({ defaults: { ease: 'power3.inOut' } })
+      .to('#logoCheia', { clipPath: 'inset(0% 0 0 0)', duration: 0.9 })
+      .to('#carrega .logo-carga', { scale: 0.9, opacity: 0, duration: 0.45, ease: 'power2.in' }, '+=.1')
+      .to('#carrega', { yPercent: -112, duration: 1, ease: 'expo.inOut' }, '-=.2')
+      .add(function(){ root.classList.remove('carregando'); gsap.set('#carrega', { display: 'none' }); }, '-=.05')
+      .add(soltaHeroi, '-=.55');
+  } else { root.classList.remove('carregando'); (document.fonts ? document.fonts.ready : Promise.resolve()).then(soltaHeroi); }
+
+  /* WOW 2: as embalagens enchem com a rolagem e os litros contam (vale também sem animação: estado final cheio) */
+  var nDez = document.getElementById('nivelDez'), nDois = document.getElementById('nivelDois');
+  var nUm = document.getElementById('nivelUm'), lUm = document.getElementById('lUm');
+  var lDez = document.getElementById('lDez'), lDois = document.getElementById('lDois');
+  function enche(p){
+    var a = Math.min(1, p / 0.8);                 // termina de encher em 80% da seção e fica cheio
+    gsap.set([nDez, nDois, nUm], { y: 190 * (1 - a) });
+    lDez.textContent = Math.round(10 * a); lDois.textContent = (2 * a).toFixed(a < 1 ? 1 : 0).replace('.', ','); lUm.textContent = a.toFixed(a < 1 ? 1 : 0).replace('.', ',');
+    document.getElementById('pDez').textContent = lDez.textContent; document.getElementById('pDois').textContent = lDois.textContent; document.getElementById('pUm').textContent = lUm.textContent;
+    if (window.__pecaiQuadro) window.__pecaiQuadro(Math.round(a * 47));
+  }
+  if (reduz || embed) { enche(1); ScrollTrigger.refresh(); return; }
+  enche(0);
+  ScrollTrigger.create({ trigger: '#medidas', start: 'top 60%', end: 'bottom bottom', scrub: 0.5, onUpdate: function(st){ enche(st.progress); } });
+  gsap.from('.conta', { opacity: 0, y: 12, duration: 0.9, ease: POLPA, scrollTrigger: { trigger: '#medidas', start: '55% bottom', once: true } });
+
+  /* 2. rolagem */
+  var barra = document.getElementById('progresso'), topo = document.getElementById('topo');
+  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: function(st){
+    barra.style.transform = 'scaleX(' + st.progress.toFixed(4) + ')';
+    topo.classList.toggle('some', st.direction === 1 && st.scroll() > innerHeight * 0.8);
+  }});
+  var palco = document.getElementById('palcoAbre'), abre = document.querySelector('.abre');
+  function topoAbre(){ palco.style.setProperty('--abre-top', Math.min(0, innerHeight - abre.offsetHeight) + 'px'); }
+  topoAbre(); addEventListener('resize', topoAbre);
+  gsap.to('.abre .wrap', { yPercent: -10, scale: 0.94, opacity: 0.15, ease: 'none', scrollTrigger: { trigger: '#medidas', start: 'top bottom', end: 'top 20%', scrub: true } });
+  gsap.utils.toArray('.medidas h2, .pedido h2, .onde h2').forEach(function(h){
+    var ws = dividePalavras(h, true);
+    gsap.from(ws, { yPercent: 110, duration: 1.1, ease: POLPA, stagger: 0.07, scrollTrigger: { trigger: h, start: 'top 88%', once: true } });
+  });
+
+  /* 3. microinterações */
+  document.addEventListener('pointerdown', function(e){
+    var b = e.target.closest('.btn'); if (!b) return;
+    var r = b.getBoundingClientRect(), g = document.createElement('span'); g.className = 'gota-clique';
+    g.style.setProperty('--gx', (e.clientX - r.left) + 'px'); g.style.setProperty('--gy', (e.clientY - r.top) + 'px');
+    b.appendChild(g); setTimeout(function(){ g.remove(); }, 650);
+  });
+  var form = document.getElementById('form'), obrigado = document.getElementById('obrigado'), toque = { x: 0, y: 0 };
+  form.addEventListener('pointerdown', function(e){ toque = { x: e.clientX, y: e.clientY }; }, true);
+  form.addEventListener('submit', function(){
+    requestAnimationFrame(function(){
+      var r = obrigado.getBoundingClientRect();
+      var x = toque.x ? Math.max(0, Math.min(r.width, toque.x - r.left)) : r.width / 2, y = toque.y ? Math.max(0, Math.min(r.height, toque.y - r.top)) : r.height;
+      gsap.fromTo(obrigado, { clipPath: 'circle(0px at ' + x + 'px ' + y + 'px)' }, { clipPath: 'circle(150% at ' + x + 'px ' + y + 'px)', duration: 1.1, ease: 'expo.inOut', clearProps: 'clipPath' });
+      gsap.from(obrigado.children, { y: 24, opacity: 0, duration: 0.9, ease: POLPA, stagger: 0.08, delay: 0.35 });
+    });
+  });
+  document.querySelectorAll('.loja .ver').forEach(function(b){
+    b.addEventListener('click', function(){
+      gsap.fromTo('.mapa-cartao .pin', { y: -26 }, { y: 0, duration: 0.9, ease: 'bounce.out' });
+      gsap.fromTo(['#mapaLoja', '#mapaEnd'], { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: POLPA, stagger: 0.06 });
+    });
+  });
+
+  if (fino) {
+    document.addEventListener('pointermove', function(e){
+      var b = e.target.closest && e.target.closest('.btn, .loja'); if (!b) return;
+      var r = b.getBoundingClientRect(); b.style.setProperty('--mx', (e.clientX - r.left) + 'px'); b.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+    document.querySelectorAll('.btn-pedir').forEach(function(b){
+      var qx = gsap.quickTo(b, 'x', { duration: 0.6, ease: 'power3.out' }), qy = gsap.quickTo(b, 'y', { duration: 0.6, ease: 'power3.out' });
+      b.addEventListener('pointermove', function(e){ var r = b.getBoundingClientRect(); qx((e.clientX - r.left - r.width / 2) * 0.22); qy((e.clientY - r.top - r.height / 2) * 0.3); });
+      b.addEventListener('pointerleave', function(){ gsap.to(b, { x: 0, y: 0, duration: 0.9, ease: 'elastic.out(1, .4)' }); });
+    });
+    document.querySelectorAll('.loja').forEach(function(c){
+      var rx = gsap.quickTo(c, 'rotationX', { duration: 0.7, ease: 'power3.out' }), ry = gsap.quickTo(c, 'rotationY', { duration: 0.7, ease: 'power3.out' });
+      c.addEventListener('pointermove', function(e){ var r = c.getBoundingClientRect(); ry(((e.clientX - r.left) / r.width - 0.5) * 8); rx(((e.clientY - r.top) / r.height - 0.5) * -8); });
+      c.addEventListener('pointerleave', function(){ rx(0); ry(0); });
+    });
+    var cx = gsap.quickTo('.abre .cena', 'x', { duration: 1.2, ease: 'power3.out' }), cy = gsap.quickTo('.abre .cena', 'y', { duration: 1.2, ease: 'power3.out' });
+    var tx = gsap.quickTo('.texto-abre', 'x', { duration: 1.4, ease: 'power3.out' });
+    abre.addEventListener('pointermove', function(e){ var nx = e.clientX / innerWidth - 0.5, ny = e.clientY / innerHeight - 0.5; cx(nx * -18); cy(ny * -14); tx(nx * 10); });
+  }
+  addEventListener('load', function(){ ScrollTrigger.refresh(); });
+})();
+</script>
+</body>
+</html>

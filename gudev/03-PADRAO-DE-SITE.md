@@ -77,6 +77,12 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - o burger (quadros do Google Flow) desmonta camada por camada com a rolagem e monta de volta;
   - "rota pela costa": um carrinho desce o mapa e para em cada burger com nome de praia;
   - prancha de pedido: cada item vira um adesivo na prancha de surf e vai pro WhatsApp.
+- **Péçaí Atacado** (versão B2B de 10/11, a que vale): cubo 3D translúcido com a logo na abertura (11/11, substituiu a logo em bolinhas); **no açaí, potes reais enchendo guiados pela rolagem (folha de quadros de um vídeo do Gemini, textos em HTML por cima); no cupuaçu, desenho em escala que troca de cor**; **monte o pedido com caixas caindo num palete** + total em litros + frequência.
+- **Péçaí** (açaí, Guarulhos, `sites/pecai`): (versão varejo, só no histórico)
+  - a logo se monta com ~1.500 a 2.500 bolinhas nas cores da própria logo (canvas, amostrada de um PNG 64px embutido); o dedo empurra, o toque espalha e elas voltam; a foto do copo entra de lado (o coqueiro em SVG da 1ª versão o Davi não gostou);
+  - a calda de chocolate escorre por um trilho com a rolagem e "pinta" cada item do cardápio (nome vazado vira cheio);
+  - "Colha seu pedido": cardápio em abas com quantidade, o "+" é uma baga que voa pro paneiro; entrega/retirada + loja + nome viram a mensagem. (A 1ª versão, 5 bagas fixas, foi trocada: o cardápio deles é bem maior.)
+  - acabamento (10/11): cortina em que a logo enche de açaí, letras em máscara, folha do cardápio subindo sobre o herói preso, barra de progresso, gota no clique, cartões com borda que acende, "obrigado" abrindo em círculo. Detalhes em `sites/pecai/README.md`.
 - **DOZE V12** (conceito, `sites/doze-v12`): segurar ENGINE START acende os 12 cilindros na ordem de ignição e o portão sobe; faixa de luz troca o carro no salão; a chave muda de cor e o cadeado pisca como seta antes de abrir o WhatsApp.
 - **Lustro v2** (conceito de estética automotiva, `sites/lustro-estetica`; a v1 está em `sites/estetica-lustro`): luzes do estúdio acendendo na abertura; a rolagem lava o carro quadro a quadro; lanterna de inspeção que mostra os micro-riscos e abre na pintura corrigida; cartão "Qual é o carro?" que abre a gaveta de agendamento com tubo de LED.
 - **Espelho** (conceito de estética automotiva com vídeos do BMW M4, `sites/espelho`).
@@ -171,6 +177,55 @@ Já usados nesse cliente: pra outro, variar a ideia, não colar igual.
   - Não rodar com tela de tamanho 0.
   - Reduzir as partículas com `prefers-reduced-motion`.
   - O botão que foge desvia do título e do outro botão.
+
+### Repertório aprendido em 10/11/2026 (Péçaí + Fusca Lab)
+Tudo testado no Playwright (390/768/1024/1440). O código está nos arquivos citados: copiar a **técnica**, nunca o visual de outro cliente.
+
+**Abertura**
+- **Logo em bolinhas a partir do PNG** (`sites/pecai`, bloco "WOW 1"): amostra o PNG da logo em 56 a 64 px e cada pixel vira uma bolinha com a cor dele. Funciona como "LED" da marca.
+  - Dedo empurra, toque espalha e elas voltam.
+  - Bolinhas agrupadas por cor = 1 `fill()` por cor (rápido até no celular).
+  - PNG pequeno embutido em data URI (canvas com imagem de outro domínio ou `file://` não deixa ler os pixels).
+- **Cortina "a logo enche"** (`sites/pecai`, "camada de movimento"): a logo cinza enche de cor de baixo pra cima (`clip-path: inset`) e a cortina sobe com uma borda de gotas em SVG.
+  - Só na 1ª visita da sessão (`sessionStorage`) e nunca com `?embed` ou movimento reduzido. Até ~2 s.
+  - Troca as gotas pela forma da marca: fumaça na pizzaria, faísca na oficina.
+- **Texto em máscara sem plugin:** `divideLetras()` e `dividePalavras()` em `sites/pecai`. As letras sobem de dentro da máscara e a frase sai do desfoque palavra por palavra.
+  - A máscara precisa de `padding: .12em 0 .22em` com margem negativa igual, senão corta o ç, o g e os acentos.
+- **Fusca entrando** (`gudev/aprendizados/fusca-lab`): `clip-path` revela + o carro anda + **a roda gira exatamente a distância andada** (`ângulo = distância ÷ raio`). A carroceria assenta com uma mola curta.
+  - Serve pra oficina, loja de carro e estética automotiva. Precisa da foto recortada em carroceria + rodas (`sites/katraka/img`).
+
+**Rolagem**
+- **Herói preso + folha que sobe por cima:** o herói fica `sticky` dentro de um wrapper que acaba no fim da seção seguinte, e a seção clara (com cantos de 40px) sobe por cima.
+  - `--abre-top = min(0, altura da tela − altura do herói)`, senão o herói alto do celular não rola.
+- **Barra de progresso** (scaleX) + **topo que some ao descer e volta ao subir.**
+- **Títulos de seção palavra por palavra:** é o ÚNICO reveal da página. Parágrafo nenhum anima (regra do filtro anti-IA).
+- **Foto que abre como gota:** `clip-path: inset(... round 120px)` até `round 22px`, com scrub, e a imagem por dentro com scale 1,2 → 1.
+- **Parallax de perfil em 3 camadas** (Fusca Lab): fundo lento, objeto 1×, chão 1,6×, e o chão repete com `% tamanho do padrão`.
+- **Câmera por rolagem** (Fusca Lab): uma timeline só, e cada capítulo é um trecho dela. A "câmera" é `scale + x + y` na mesma foto, com `transform-origin: 0 0`.
+  - Zoom acima de ~2,4× numa foto de 900 px borra.
+- **Número que conta até o valor real** (o 4,5 da Péçaí) + estrelas acendendo em sequência. Só com número real.
+
+**Microinterações**
+- **Gota no clique** em todo `.btn`: nasce no ponto do toque e serve no celular. É o feedback de "apertei".
+- **Brilho que segue o mouse** no botão (`--mx/--my` + radial-gradient no `::after`).
+- **Botão magnético leve** (0,22×), só no CTA de pedido e só com `pointer: fine`. Usa `gsap.quickTo`.
+- **Cartão com borda que acende onde o mouse está** (`mask-composite: exclude`) + inclinação 3D de até 8° (cartões de loja da Péçaí).
+- **Paneiro/carrinho que balança** quando o item cai, mais `navigator.vibrate(8)` no Android.
+- **"Obrigado" abrindo em círculo** a partir do ponto do toque (`clip-path: circle`). É o pico-fim da página.
+- **Brilho especular só na lataria** (Fusca Lab): `radialGradient` dentro do SVG com `<mask style="mask-type:alpha">` usando o próprio PNG recortado. O brilho anda contra o mouse.
+- **Cursor com mola + `mix-blend-mode: difference`** (Fusca Lab): só em vitrine (carro, estética, estúdio). Em cardápio, não.
+
+**Infra que todo site com animação deve ter**
+- **Classe de espera com saída garantida:** o `<head>` põe `anima-espera` e tira sozinho em 3 s se o GSAP não chegar. O site nunca fica em branco.
+- **Prévia num arquivo só:** `python3 gudev/ferramentas/previa_embutida.py sites/<nome>`. Embute imagens e bibliotecas (confere o SRI). É o arquivo que vai pro celular.
+- **Mapa em cartão:** pin + endereço + "Abrir no Google Maps"; o iframe só nasce se a pessoa tocar em "Ver o mapa aqui".
+- **View Transitions entre páginas:** `@view-transition{navigation:auto}` em todas as páginas do site. Sem flash branco.
+
+- **Cubo 3D translúcido com a logo** (`sites/pecai/cubo-3d.html`, 11/11): CSS 3D puro, cubo dentro de cubo, gira com roda/dedo só sobre ele, inércia `vel *= 0,95`. Serve de abertura ou brinde de marca.
+
+**Ainda não feito (ideias com referência no `07`)**
+- **Açaí líquido (metaballs em WebGL, estilo Shape Blend do Spline)** seguindo o dedo. É o próximo candidato pra açaí, sorvete e milkshake.
+- **Abertura editorial estilo Rolex** (palavras saindo do desfoque + produto recortado girando + objetos passando borrados). Precisa de foto recortada do produto.
 
 ### Efeitos da Eduburger's e da Lume (11/11/2026, o Davi mandou os 2 HTMLs pra aprender)
 Código em `sites/eduburgers/index.html` (JS puro) e `sites/lume/index.html` (Three.js). Detalhe nos READMEs de cada um.

@@ -125,3 +125,15 @@ Pra achar uma referência: buscar o nome entre aspas no Behance ou no Dribbble.
 - **Floricultura: o buquê se monta** flor por flor (a pessoa escolhe) e vai pro WhatsApp com o preço.
 - **Sushi: o nome do restaurante montado com as peças** (salmão, arroz, nori) caindo no lugar.
 - **Selo giratório da marca** com o ano de fundação ou o slogan real. Fica como detalhe, não como WOW.
+
+## Referências de motion que o Davi mandou (Pinterest, 10/11/2026)
+Gravações de tela, analisadas quadro a quadro com ffmpeg.
+- **"Rolex Luxury Branding" (Burzaev Studio):** vídeo editorial de marca em fundo cinza-claro com névoa.
+  - Tipografia mista: itálico serifado fino + caixa alta serifada na cor da marca ("watch how / ROLEX / became one of / THE MOST ICONIC").
+  - Palavras entram uma por vez, saindo do desfoque. Uma grade de pontinhos fica atrás do nome.
+  - Produto (relógio) entra girando com motion blur. Uma faixa diagonal varre a tela. Coroas grandes e desfocadas em primeiro plano. Notas de dinheiro voam com blur e fazem a transição.
+  - **Na web dá:** texto palavra por palavra com blur→nítido, produto entrando com rotação, faixa diagonal (clip-path/transform), objetos passando com blur. Precisa de **foto recortada (PNG sem fundo)** do produto pra ficar bom. Usar blur com moderação no celular (só em 2 ou 3 elementos).
+  - Serve pra: abertura de marca premium, Reels da GuDev, comércio com produto icônico.
+- **"Shape Blend" do Spline (fluido):** bolhas de líquido azul neon (metaballs) que se juntam, se separam e seguem o cursor.
+  - **Na web dá**, sem o Spline (o runtime dele pesa ~1 MB+): shader WebGL 2D de metaballs, leve, com plano B em canvas. Segue o dedo no celular.
+  - Serve pra: açaí/sorvete/milkshake (líquido na cor do produto), bebidas, estética. Fundo de hero ou "toque e mexa" numa seção.
