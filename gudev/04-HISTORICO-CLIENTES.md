@@ -121,6 +121,11 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Fotos da internet:** marcadas como ilustrativas; trocar por fotos da oficina antes de ir pro ar.
 - **Próximo passo:** pegar com o dono WhatsApp, endereço, horário, Instagram, link do Google, serviços que faz e fotos reais da oficina.
 
+## Eduburger's, Cidade Universitária, Maceió-AL (11/11/2026)
+- Sanduicheria desde 2015 (beirutes, passaportes, hambúrgueres), WhatsApp (82) 98804-7362, Instagram @eduburgers, 4,7 no Google (295 avaliações).
+- O Davi mandou o HTML da prévia pronto pra eu aprender (`sites/eduburgers/`). O rodapé diz "prévia feita pela GuDev, projeto conceito, ainda não é o site oficial".
+- **A confirmar com o Davi:** se é lead (quem achou, se já houve contato), status e preço. Faltam as fotos (`img/`) no repositório. Não usar como case.
+
 ## General Jonas Burger
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.
 - O site dele virou **a régua mínima de qualidade**: fotos reais recortadas, slogan real, cardápio real e carrinho pro WhatsApp.
@@ -135,5 +140,6 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Lustro:** estética automotiva fictícia (`sites/lustro-estetica/`, v1 em `sites/estetica-lustro/`).
 - **Faixa Vermelha:** garagem de seminovos fictícia (`sites/faixa-vermelha/`).
 - **Fornalha:** padaria fictícia (`sites/fornalha/`, salva do artifact em 10/11).
+- **Lume:** joalheria de alianças fictícia, conceito pro Instagram com aliança em 3D (`sites/lume/`, 11/11/2026).
 - **DOZE V12, Espelho, Basalto, Meridiano, APEX, Moenda, Sulco, Fervo:** conceitos e demos de portfólio (`sites/` e `gudev/demos/`).
 - **Davi 26:** trabalho de escola do Davi (`sites/presidente-davi-26/`), nem é GuDev.

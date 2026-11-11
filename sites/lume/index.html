@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lume | Alianças feitas à mão (projeto conceito GuDev)</title>
+<meta name="description" content="Lume é uma joalheria fictícia, projeto conceito da GuDev: a aliança em 3D gira com a rolagem e grava os nomes que você digitar.">
+<meta name="theme-color" content="#0A1A15">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230A1A15'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23D9B26A' stroke-width='6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --veludo:#0A1A15;--veludo-2:#10251E;--veludo-3:#173329;--osso:#EDE7DA;--osso-2:#B9B5A6;--suave:#7E8B82;--ouro:#D9B26A;--ouro-2:#C79E55;
+  --m:clamp(20px,3.4vw,52px);
+  --t-small:clamp(.8125rem,.79rem + .1vw,.875rem);--t-body:clamp(1.0625rem,1rem + .25vw,1.1875rem);--t-lead:clamp(1.25rem,1.1rem + .7vw,1.625rem);
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;accent-color:var(--ouro);caret-color:var(--ouro);scrollbar-width:none}
+html::-webkit-scrollbar{display:none}
+::selection{background:var(--ouro);color:var(--veludo)}
+body{margin:0;background:var(--veludo);color:var(--osso);font:400 var(--t-body)/1.55 "Manrope",system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+h1,h2,h3{margin:0;font-family:"Bodoni Moda",Georgia,serif;font-weight:400;letter-spacing:-.02em;line-height:.9;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:2px solid var(--ouro);outline-offset:3px}
+
+#joia{position:fixed;inset:0;width:100vw;height:100svh;z-index:0;display:block}
+main{position:relative;z-index:1}
+.topo{position:fixed;inset:0 0 auto;z-index:5;display:flex;align-items:center;gap:28px;height:70px;padding:0 var(--m);background:var(--veludo)}
+.topo .nome{font:500 1.5rem/1 "Bodoni Moda",serif;letter-spacing:.02em;text-decoration:none;margin-right:auto}
+.topo nav{display:flex;gap:26px}
+.topo nav a{text-decoration:none;color:var(--osso-2);font-size:.9375rem;transition:color .25s}
+.topo nav a:hover{color:var(--osso)}
+.selo{font-size:.8125rem;color:var(--suave)}
+@media (max-width:760px){.topo nav{display:none}}
+
+.parte{min-height:140svh;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;padding:0 var(--m);align-items:center}
+.esq .txt{grid-column:1/6}
+.dir .txt{grid-column:8/13}
+.txt h2{font-size:clamp(3rem,1.2rem + 5.4vw,7.4rem);line-height:.86}
+.txt p{margin-top:24px;font-size:var(--t-lead);line-height:1.38;color:var(--osso-2);max-width:28ch}
+
+.inicio{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--m) clamp(28px,6vh,72px)}
+.inicio h1{font-size:clamp(6rem,1rem + 21vw,25rem);line-height:.74;letter-spacing:-.045em;margin-left:-.03em}
+.inicio-pe{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-top:24px}
+.inicio-pe p{font-size:var(--t-lead);color:var(--osso-2);max-width:26ch;line-height:1.3}
+.dica{display:flex;align-items:center;gap:12px;color:var(--suave);font-size:var(--t-small)}
+.dica i{display:block;width:44px;height:2px;background:var(--ouro);transform-origin:left;animation:dica 2.6s var(--ease) infinite}
+@keyframes dica{0%{transform:scaleX(0)}50%{transform:scaleX(1)}100%{transform:scaleX(1);opacity:0}}
+
+/* a parte viva: você digita, a aliança grava */
+.grave{min-height:160svh;align-items:center}
+.grave .txt{grid-column:1/6}
+.campos{margin-top:36px;display:grid;gap:12px;max-width:440px}
+.campos label{display:grid;gap:6px;font-size:var(--t-small);color:var(--suave)}
+.campos input,.campos select{width:100%;min-width:0;height:56px;padding:0 18px;background:var(--veludo-2);border:0;border-bottom:2px solid var(--veludo-3);color:var(--osso);font-size:1.125rem;transition:border-color .2s}
+.campos input:focus,.campos select:focus{outline:0;border-bottom-color:var(--ouro)}
+.dupla{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:0 28px;background:var(--ouro);color:var(--veludo);border:0;border-radius:999px;font-weight:600;font-size:1rem;text-decoration:none;cursor:pointer;transition:background-color .2s,transform .15s}
+.btn:hover{background:var(--ouro-2)}
+.btn:active{transform:scale(.97)}
+.grave .btn{margin-top:20px;justify-self:start}
+.feito{display:none;margin-top:14px;color:var(--ouro);font-weight:500}
+.feito.on{display:block}
+
+.final{min-height:150svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--m) 10vh}
+.pergunta{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.pergunta h2{font-size:clamp(2.6rem,1.2rem + 4.4vw,6.4rem);max-width:9ch}
+.pergunta div{max-width:30ch;text-align:right}
+.pergunta p{color:var(--osso-2);font-size:var(--t-lead);line-height:1.35}
+.pergunta .btn{margin-top:24px}
+.fim{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:72px;font-size:var(--t-small);color:var(--suave)}
+
+@media (max-width:760px){
+  .parte{min-height:130svh;display:flex;align-items:flex-end;padding-bottom:10svh}
+  .grave{display:block;padding-top:58svh;padding-bottom:12svh}
+  .txt h2{font-size:15vw}
+  .inicio h1{font-size:34vw}
+  .pergunta div{text-align:left}
+}
+
+/* WOW 2: o túnel. a seção é alta e o texto fica no meio, dentro do furo da aliança */
+.tunel{min-height:240svh;display:flex;align-items:center;justify-content:center;text-align:center}
+.tunel .txt{max-width:560px}
+.tunel .txt p{margin-left:auto;margin-right:auto}
+/* WOW 3: dá pra arrastar a aliança. o conteúdo deixa o toque passar onde não tem nada */
+main{pointer-events:none}
+main a,main button,main input,main select,main label,main .txt{pointer-events:auto}
+#joia{touch-action:pan-y;cursor:grab}
+#joia.pega{cursor:grabbing}
+.arraste{margin-top:14px;font-size:var(--t-small);color:var(--suave)}
+.txt{filter:opacity(var(--vis,1))}
+.js .ent{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1.1s var(--ease)}
+.js .ent.on{opacity:1;transform:none}
+.sem3d #joia{display:none}
+@media (prefers-reduced-motion:reduce){.js .ent{transform:none;transition:opacity .4s}.dica i{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="joia" aria-hidden="true"></canvas>
+<header class="topo">
+  <a class="nome" href="#inicio">Lume</a>
+  <nav aria-label="Principal"><a href="#mao">A aliança</a><a href="#grave">Gravar</a><a href="#par">O par</a></nav>
+  <span class="selo">Projeto conceito</span>
+</header>
+
+<main>
+<section class="inicio" id="inicio" data-pose="inicio" aria-label="Abertura">
+  <h1>Lume</h1>
+  <div class="inicio-pe"><p>Alianças de ouro feitas à mão, sob medida pro casal.</p><p class="dica" aria-hidden="true"><i></i>Role devagar</p></div>
+</section>
+
+<section class="parte esq" id="mao" data-pose="perfil" aria-labelledby="t-mao">
+  <div class="txt ent"><h2 id="t-mao">Feita à mão</h2><p>Cada aliança é fundida, lixada e polida na bancada, uma de cada vez.</p></div>
+</section>
+
+<section class="parte dir" data-pose="dentro" aria-labelledby="t-dentro">
+  <div class="txt ent"><h2 id="t-dentro">O que fica por dentro</h2><p>A gravação mora do lado de dentro, encostada na pele. Só quem usa sabe o que está escrito.</p></div>
+</section>
+
+<section class="parte tunel" data-pose="tunel" aria-labelledby="t-tunel">
+  <div class="txt ent"><h2 id="t-tunel">Por dentro</h2><p>Atravesse a aliança. A gravação dá a volta inteira, encostada na pele.</p></div>
+</section>
+
+<section class="parte grave" id="grave" data-pose="gravar" aria-labelledby="t-grave">
+  <div class="txt">
+    <h2 id="t-grave" class="ent">Grave a sua</h2>
+    <p class="ent">Digite os nomes e a data. A gravação aparece na hora, dentro da aliança.</p>
+    <form class="campos" id="form" autocomplete="off">
+      <div class="dupla">
+        <label>Primeiro nome<input id="n1" maxlength="14" value="Ana"></label>
+        <label>Segundo nome<input id="n2" maxlength="14" value="Pedro"></label>
+      </div>
+      <label>Data<input id="dt" maxlength="10" value="12.06.2026" inputmode="numeric"></label>
+      <label>Letra<select id="letra"><option value="serif">Clássica</option><option value="script">Cursiva</option><option value="caps">Moderna</option></select></label>
+      <button class="btn" type="submit">Quero esta gravação</button>
+      <p class="arraste" aria-hidden="true">Arraste a aliança pra girar</p>
+      <p class="feito" id="feito" role="status">Gravação guardada! Num site de verdade, o pedido iria pronto pro WhatsApp da joalheria.</p>
+    </form>
+  </div>
+</section>
+
+<section class="parte dir" id="par" data-pose="par" aria-labelledby="t-par">
+  <div class="txt ent"><h2 id="t-par">O par</h2><p>Duas alianças feitas juntas, do mesmo ouro, pra se encaixarem pelo resto da vida.</p></div>
+</section>
+
+<section class="final" data-pose="final" aria-labelledby="t-final">
+  <div class="pergunta">
+    <h2 id="t-final" class="ent">Quer um site assim?</h2>
+    <div class="ent"><p>A Lume é uma joalheria fictícia. O site é real, e a gente faz um desses pro seu negócio.</p><a class="btn" href="https://www.instagram.com/gudev.ofc/" target="_blank" rel="noopener">Chamar a GuDev na DM</a></div>
+  </div>
+  <div class="fim"><span>Projeto conceito feito pela GuDev</span><span>A aliança é modelada em 3D, em código</span></div>
+</section>
+</main>
+
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" defer></script>
+<script>
+(function(){
+  var D=document; D.documentElement.classList.add("js");
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("on");io.unobserve(e.target)}})},{rootMargin:"0px 0px -12% 0px"});
+  [].forEach.call(D.querySelectorAll(".ent"),function(el){io.observe(el)});
+  var txts=[].slice.call(D.querySelectorAll(".parte:not(.tunel) .txt"));
+  function some(){
+    var cel=innerWidth<=760,h=innerHeight;
+    txts.forEach(function(el){
+      var ini=(el.closest(".grave")?.4:.54)*h,v=cel?Math.min(1,Math.max(0,(el.getBoundingClientRect().top-(ini-.16*h))/(.16*h))):1;
+      el.style.setProperty("--vis",v.toFixed(3));
+    });
+    requestAnimationFrame(some);
+  }
+  requestAnimationFrame(some);
+  D.getElementById("form").addEventListener("submit",function(e){e.preventDefault();D.getElementById("feito").classList.add("on")});
+  var reduz=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  addEventListener("load",function(){
+    if(!reduz&&window.Lenis){var l=window.lenis=new Lenis({lerp:.07,wheelMultiplier:.8});(function lp(t){l.raf(t);requestAnimationFrame(lp)})(performance.now());
+      [].forEach.call(D.querySelectorAll('a[href^="#"]'),function(a){a.addEventListener("click",function(ev){var id=a.getAttribute("href");if(id.length>1&&D.querySelector(id)){ev.preventDefault();l.scrollTo(id,{duration:1.8})}})})}
+  });
+})();
+</script>
+<script type="module">
+import * as THREE from "three";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const D=document, reduz=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const cv=D.getElementById("joia");
+let renderer;
+try{ renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true}); }catch(e){ D.documentElement.classList.add("sem3d"); throw e; }
+renderer.setPixelRatio(Math.min(2,devicePixelRatio||1));
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.05;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+
+const cena=new THREE.Scene();
+const pm=new THREE.PMREMGenerator(renderer);
+cena.environment=pm.fromScene(new RoomEnvironment(renderer),0.035).texture;
+const cam=new THREE.PerspectiveCamera(30,1,.1,100); cam.position.set(0,0,7.2);
+const luz=new THREE.DirectionalLight(0xfff1d6,2.2); luz.position.set(-3,4,5); cena.add(luz);
+const luz2=new THREE.DirectionalLight(0x9fd4bf,.6); luz2.position.set(4,-2,-3); cena.add(luz2);
+
+/* a aliança: perfil "conforto anatômico" (meia-cana por dentro e por fora), girado em volta do eixo */
+function perfil(rIn,esp,larg){
+  const pts=[], n=28;
+  for(let i=0;i<=n;i++){const a=-Math.PI/2+Math.PI*i/n; pts.push(new THREE.Vector2(rIn+esp*.5+Math.cos(a)*esp*.5, Math.sin(a)*larg*.5));}
+  for(let i=0;i<=n;i++){const a=Math.PI/2+Math.PI*i/n; pts.push(new THREE.Vector2(rIn+esp*.5+Math.cos(a)*esp*.18, Math.sin(a)*larg*.5));}
+  return pts;
+}
+function alianca(cor,rIn){
+  const g=new THREE.LatheGeometry(perfil(rIn,.2,.5),220);
+  const m=new THREE.MeshPhysicalMaterial({color:cor,metalness:1,roughness:.16,clearcoat:.4,clearcoatRoughness:.2,emissive:0x000000});
+  const mesh=new THREE.Mesh(g,m); const grupo=new THREE.Group(); grupo.add(mesh); return {grupo,mesh};
+}
+const A=alianca(0xE2B66E,1), B=alianca(0xEAC98C,.94);
+cena.add(A.grupo); cena.add(B.grupo);
+
+/* a gravação: uma faixa por dentro da aliança, com o texto desenhado num canvas */
+const tc=D.createElement("canvas"); tc.width=2048; tc.height=128;
+const tex=new THREE.CanvasTexture(tc); tex.colorSpace=THREE.SRGBColorSpace; tex.wrapS=THREE.RepeatWrapping; tex.repeat.x=-1; tex.anisotropy=8;
+const faixa=new THREE.Mesh(new THREE.CylinderGeometry(1.012,1.012,.34,220,1,true),
+  new THREE.MeshPhysicalMaterial({map:tex,transparent:true,metalness:.85,roughness:.42,side:THREE.BackSide,depthWrite:false}));
+A.grupo.add(faixa);
+function grava(){
+  const c=tc.getContext("2d"), n1=D.getElementById("n1").value.trim()||"Ana", n2=D.getElementById("n2").value.trim()||"Pedro", dt=D.getElementById("dt").value.trim(), l=D.getElementById("letra").value;
+  c.clearRect(0,0,tc.width,tc.height);
+  const fonte=l==="script"?'italic 400 74px "Bodoni Moda", serif':l==="caps"?'600 60px "Manrope", sans-serif':'400 72px "Bodoni Moda", serif';
+  let txt=n1+"  &  "+n2+(dt?"     "+dt:""); if(l==="caps")txt=txt.toUpperCase();
+  c.font=fonte; c.textAlign="center"; c.textBaseline="middle"; c.fillStyle="rgba(90,58,20,.92)";
+  c.fillText(txt,tc.width*.5,tc.height*.54);
+  tex.needsUpdate=true;
+}
+D.fonts.ready.then(grava);
+["n1","n2","dt","letra"].forEach(id=>D.getElementById(id).addEventListener("input",grava));
+
+/* poses: cada seção pede onde e como as alianças ficam; a pose muda devagar entre as seções.
+   z aproxima da câmera: no "túnel" a aliança passa em volta da tela e a gente atravessa por dentro. */
+const P={
+  inicio:{x:.9,y:.15,z:0,s:1,rx:.15,ry:0,rz:.25,b:0,gira:1},
+  perfil:{x:1.35,y:0,z:0,s:1.15,rx:0,ry:1.45,rz:.05,b:0,gira:.2},
+  dentro:{x:-1.3,y:-.1,z:0,s:1.12,rx:1.2,ry:-.75,rz:-.12,b:0,gira:0},
+  tunel:{x:0,y:-.05,z:3.05,s:1.2,rx:1.38,ry:-.75,rz:0,b:0,gira:.35},
+  gravar:{x:1.3,y:-.05,z:0,s:1.05,rx:.97,ry:-1.0,rz:.08,b:0,gira:0},
+  par:{x:-1.75,y:0,z:0,s:.9,rx:.5,ry:.6,rz:.2,b:1,gira:.25},
+  final:{x:-.35,y:.72,z:0,s:.72,rx:.7,ry:.4,rz:.1,b:1,gira:.4}
+};
+const PC={ // celular: alianças em cima, texto embaixo
+  inicio:{x:0,y:.75,z:0,s:.72,rx:.15,ry:0,rz:.25,b:0,gira:1}, perfil:{x:0,y:.8,z:0,s:.8,rx:0,ry:1.45,rz:.05,b:0,gira:.2},
+  dentro:{x:0,y:.85,z:0,s:.8,rx:1.2,ry:-.75,rz:-.1,b:0,gira:0}, tunel:{x:0,y:0,z:3.3,s:1.05,rx:1.42,ry:-.75,rz:0,b:0,gira:.35},
+  gravar:{x:0,y:1.25,z:0,s:.8,rx:.97,ry:-.75,rz:.06,b:0,gira:0},
+  par:{x:0,y:.8,z:0,s:.66,rx:.5,ry:.6,rz:.2,b:1,gira:.25}, final:{x:-.28,y:1.05,z:0,s:.6,rx:.7,ry:.4,rz:.1,b:1,gira:.4}
+};
+const secs=[...D.querySelectorAll("[data-pose]")], ks=["x","y","z","s","rx","ry","rz","b","gira"];
+const atual={...P.inicio};
+const lerp=(a,b,t)=>a+(b-a)*t, sv=t=>{t=Math.min(1,Math.max(0,t));return t*t*(3-2*t)};
+function alvo(){
+  const T=innerWidth<=760?PC:P, meio=innerHeight/2; let ant=null,prox=null;
+  for(const s of secs){const r=s.getBoundingClientRect(),c=r.top+r.height/2;if(c<=meio)ant={s,c};else if(!prox)prox={s,c};}
+  if(!ant)return T[prox.s.dataset.pose]; if(!prox)return T[ant.s.dataset.pose];
+  const k=sv((meio-ant.c)/(prox.c-ant.c)),a=T[ant.s.dataset.pose],b=T[prox.s.dataset.pose],o={};
+  ks.forEach(q=>o[q]=lerp(a[q],b[q],k)); return o;
+}
+function tam(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.fov=w<=760?42:30;cam.updateProjectionMatrix();}
+tam(); addEventListener("resize",tam);
+
+/* WOW 1: a aliança nasce em brasa e esfria até virar ouro */
+const OURO_A=new THREE.Color(0xE2B66E), OURO_B=new THREE.Color(0xEAC98C), BRASA=new THREE.Color(0x2a0e04);
+const inicio0=performance.now(); let calor=reduz?0:1;
+function esfria(t){
+  calor=reduz?0:Math.max(0,1-(t-inicio0)/3200); const c=Math.pow(calor,1.6);
+  [A,B].forEach((o,i)=>{const m=o.mesh.material; m.color.copy(i?OURO_B:OURO_A).lerp(BRASA,c); m.emissive.setRGB(1,.22,.02).multiplyScalar(c*1.7); m.metalness=1-c*.85; m.roughness=.16+c*.45; m.clearcoat=.4*(1-c); m.envMapIntensity=1-c*.92;});
+  faixa.visible=calor<.25;
+}
+
+/* WOW 3: arrastar pra girar */
+let arr=0, arrV=0, pega=false, px=0;
+cv.addEventListener("pointerdown",e=>{pega=true;px=e.clientX;cv.classList.add("pega");cv.setPointerCapture(e.pointerId)});
+cv.addEventListener("pointermove",e=>{if(!pega)return;const d=(e.clientX-px)*.012;px=e.clientX;arr+=d;arrV=d});
+const solta=()=>{pega=false;cv.classList.remove("pega")};
+cv.addEventListener("pointerup",solta); cv.addEventListener("pointercancel",solta);
+
+/* WOW 3: o encaixe do par tem "clique": um tranco e um brilho */
+let encaixe=0, bAnt=0;
+let giro=0, ult=performance.now();
+function quadro(t){
+  const dt=Math.min(.05,(t-ult)/1000); ult=t;
+  const a=alvo(), k=reduz?1:.075; ks.forEach(q=>atual[q]+= (a[q]-atual[q])*k);
+  esfria(t);
+  giro+=dt*(atual.gira*.6+calor*calor*9)*(reduz?0:1);
+  if(atual.gira<.3&&atual.z<1){const v=Math.round(giro/6.2832)*6.2832;giro+=(v-giro)*.14;} // parada: a gravação volta a ficar de frente
+  if(!pega){arr+=arrV;arrV*=.92;}
+  const esc=atual.s;
+  A.grupo.position.set(atual.x,atual.y,atual.z); A.grupo.scale.setScalar(esc);
+  A.grupo.rotation.set(atual.rx, atual.ry+giro+arr, atual.rz);
+  const b=sv(atual.b);
+  if(b>.93&&bAnt<=.93&&!reduz)encaixe=1; bAnt=b; encaixe=Math.max(0,encaixe-dt*2.4);
+  const tranco=Math.sin(encaixe*Math.PI*3)*encaixe*.06;
+  B.grupo.visible=b>.01;
+  B.grupo.position.set(atual.x+.95*esc*b+(1-b)*2.5, atual.y-.15*esc+(1-b)*-2.5, atual.z);
+  B.grupo.scale.setScalar(esc*(.98+tranco));
+  B.grupo.rotation.set(atual.rx+Math.PI/2*.92, atual.ry+giro*.8+.4+arr, atual.rz+.3);
+  if(encaixe>0&&calor<=0){const f=encaixe*encaixe*1.4;A.mesh.material.emissive.setRGB(1,.85,.55).multiplyScalar(f);B.mesh.material.emissive.setRGB(1,.85,.55).multiplyScalar(f);}
+  renderer.render(cena,cam); requestAnimationFrame(quadro);
+}
+requestAnimationFrame(quadro);
+</script>
+</body>
+</html>

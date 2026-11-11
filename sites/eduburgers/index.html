@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Eduburger's | Beirute, passaporte e hambúrguer na Cidade Universitária, Maceió</title>
+<meta name="description" content="Sanduicheria desde 2015 na Cidade Universitária, em Maceió. Beirutes, passaportes e hambúrgueres de terça a domingo, das 19h à 00h30. Peça pelo WhatsApp.">
+<meta property="og:title" content="Eduburger's: seu beirute tá na chapa">
+<meta property="og:description" content="Desde 2015 na Cidade Universitária, Maceió. 4,7 no Google com 295 avaliações.">
+<meta property="og:image" content="img/beirute.webp">
+<meta name="theme-color" content="#D3141C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Montagu+Slab:opsz,wght@16..144,500..700&family=Schibsted+Grotesk:wght@400..800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Restaurant","name":"Eduburger's","servesCuisine":"Lanches","priceRange":"R$ 20–40",
+"telephone":"+55 82 98804-7362","address":{"@type":"PostalAddress","streetAddress":"Av. Dr. André Papini Góis","addressLocality":"Maceió","addressRegion":"AL","postalCode":"57073-130","addressCountry":"BR"},
+"geo":{"@type":"GeoCoordinates","latitude":-9.5531332,"longitude":-35.7525713},
+"openingHours":"Tu-Su 19:00-00:30","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","reviewCount":"295"}}
+</script>
+<style>
+:root{
+  --vermelho:#D3141C;--vermelho-esc:#A50E14;--amarelo:#FFC21A;--preto:#15110E;--kraft:#C9A06F;--kraft-cl:#E3C79F;--pao:#FFF7E8;
+  --display:"Montagu Slab",Georgia,serif;--texto:"Schibsted Grotesk",system-ui,sans-serif;--caneta:"Kalam","Comic Sans MS",cursive;
+  --gut:clamp(16px,4vw,56px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{background:var(--vermelho);color:var(--preto);font-family:var(--texto);font-size:17px;line-height:1.5;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--amarelo);outline-offset:3px;border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{width:min(1200px,100% - var(--gut)*2);margin-inline:auto}
+
+/* botões: o mesmo nome do começo ao fim */
+.btn{display:inline-flex;align-items:center;gap:.6em;padding:.95em 1.5em;border-radius:999px;font-weight:750;font-size:16px;text-decoration:none;line-height:1;transition:transform .2s}
+.btn:active{transform:scale(.97)}
+.btn-preto{background:var(--preto);color:var(--amarelo)}
+.btn-amarelo{background:var(--amarelo);color:var(--preto)}
+.btn-linha{border:2px solid currentColor}
+.btn svg{width:20px;height:20px;flex:none}
+
+/* zigue-zague do cardápio: cada faixa morde a de cima */
+.zz{position:absolute;left:0;right:0;top:-13px;height:14px;background:
+  linear-gradient(135deg,var(--c) 33%,transparent 33%) 0 0/20px 14px,
+  linear-gradient(225deg,var(--c) 33%,transparent 33%) 0 0/20px 14px;pointer-events:none;z-index:2}
+.estrela{display:inline-block;width:1em;height:1em;background:currentColor;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+
+/* ---------- topo ---------- */
+.topo{position:fixed;z-index:50;top:12px;left:50%;transform:translateX(-50%);width:min(1100px,100% - 24px);display:flex;align-items:center;justify-content:space-between;
+  background:var(--pao);border-radius:18px;padding:8px 8px 8px 16px;border:2px solid var(--preto)}
+.logo{display:inline-flex;flex-direction:column;text-decoration:none;line-height:.82;width:max-content}
+.logo .l1{display:flex;align-items:flex-end;font-family:var(--display);font-weight:700;font-variation-settings:"opsz" 144}
+.logo b{color:var(--vermelho);font-size:30px;letter-spacing:-.02em}
+.logo span{font-size:19px;color:var(--preto);margin-left:2px;padding-bottom:2px}
+.logo .faixa{margin-top:4px;background:var(--vermelho);color:var(--amarelo);font-size:8px;letter-spacing:5px;text-align:center;padding:2px 0 7px;
+  clip-path:polygon(0 0,100% 0,100% 55%,50% 100%,0 55%)}
+.topo nav{display:flex;gap:22px;font-weight:650;font-size:15px}
+.topo nav a{text-decoration:none}
+.topo nav a:hover{text-decoration:underline;text-underline-offset:4px}
+.topo .btn{padding:.8em 1.15em;font-size:15px}
+@media(max-width:820px){.topo nav{display:none}.topo{padding:6px 6px 6px 12px}.topo .btn{font-size:13px;padding:.75em .95em}.logo b{font-size:24px}.logo span{font-size:15px}.logo .faixa{font-size:7px;letter-spacing:4px}}
+
+/* ---------- WOW 1: abertura ---------- */
+.abre{position:relative;height:270vh;background:var(--vermelho)}
+.palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
+.titulo{position:relative;z-index:4;text-align:center;padding-inline:var(--gut);will-change:transform,filter}
+.titulo h1{font-family:var(--display);font-weight:700;font-variation-settings:"opsz" 144;color:var(--amarelo);text-transform:uppercase;
+  font-size:clamp(50px,8.6vw,150px);line-height:.86;letter-spacing:-.025em}
+.titulo p{color:var(--pao);max-width:34ch;margin:22px auto 0;font-size:clamp(16px,1.5vw,19px);font-weight:500}
+.titulo .acoes{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.titulo .btn-linha{color:var(--pao)}
+.adesivo{position:absolute;z-index:3;will-change:transform}
+.adesivo.foto{background:var(--pao);padding:8px 8px 30px}
+.adesivo.foto figcaption{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-family:var(--caneta);font-size:15px;color:var(--preto)}
+.a1{width:min(22vw,320px);left:-1%;top:22%}
+.a2{width:min(18vw,270px);right:1%;top:15%}
+.a3{width:min(22vw,320px);left:3%;bottom:3%}
+.a4{width:min(17vw,250px);right:3%;bottom:4%}
+.a5{width:min(10vw,140px);left:21%;top:8%}
+.sobe{position:absolute;z-index:4;left:50%;top:50%;width:min(50vw,600px);transform:translate(-50%,120vh);will-change:transform;pointer-events:none}
+.sobe img{width:100%;filter:drop-shadow(0 30px 40px rgba(60,0,0,.35))}
+.selo{position:absolute;right:-6%;top:-8%;width:clamp(120px,13vw,170px);aspect-ratio:1;background:var(--amarelo);color:var(--preto);display:grid;place-content:center;text-align:center;
+  transform:scale(0) rotate(-30deg);line-height:1}
+.selo b{font-family:var(--display);font-weight:700;font-size:clamp(38px,4.2vw,56px);letter-spacing:-.03em}
+.selo small{display:block;font-weight:700;font-size:clamp(11px,1vw,13px);margin-top:4px}
+.selo.bateu{animation:bate .5s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes bate{0%{transform:scale(2.4) rotate(-30deg);opacity:0}60%{opacity:1}100%{transform:scale(1) rotate(-12deg);opacity:1}}
+.legenda-sobe{position:absolute;z-index:4;left:50%;bottom:clamp(18px,4vh,40px);transform:translateX(-50%);color:var(--pao);text-align:center;width:min(92%,520px);opacity:0;transition:opacity .4s}
+.legenda-sobe.on{opacity:1}
+.legenda-sobe b{font-family:var(--display);font-size:22px;color:var(--amarelo)}
+.legenda-sobe span{display:block;font-size:14px;opacity:.9}
+@media(max-width:820px){
+  .titulo h1{font-size:clamp(46px,14vw,90px)}
+  .a1{width:44vw;left:-6%;top:11%}.a2{width:38vw;right:-5%;top:10%}.a3{width:46vw;left:-8%;bottom:3%}.a4{width:38vw;right:-6%;bottom:4%}.a5{display:none}
+  .sobe{width:84vw}.selo{right:-2%;top:-14%}
+}
+
+/* faixa que corre */
+.faixa-corre{position:relative;background:var(--amarelo);border-block:2px solid var(--preto);overflow:hidden;padding:14px 0;--c:var(--amarelo)}
+.faixa-corre .trilho{display:flex;width:max-content;gap:28px;animation:corre 38s linear infinite;font-family:var(--display);font-weight:700;font-size:clamp(22px,2.6vw,34px);text-transform:uppercase;white-space:nowrap}
+.faixa-corre .trilho span{display:inline-flex;align-items:center;gap:28px}
+.faixa-corre .estrela{color:var(--vermelho);font-size:.7em}
+@keyframes corre{to{transform:translateX(-50%)}}
+
+/* ---------- WOW 2: painel da chapa ---------- */
+.painel{position:relative;background:var(--preto);color:var(--pao);--c:var(--preto);overflow-x:clip}
+.painel-cena{position:sticky;top:0;height:100vh;height:100svh;display:flex;align-items:center;padding-top:76px}
+.painel-grade{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(20px,4vw,64px);align-items:center;width:min(1240px,100% - var(--gut)*2);margin-inline:auto}
+.painel h2{font-family:var(--display);font-weight:700;font-size:clamp(28px,3.2vw,44px);line-height:1;color:var(--amarelo);margin-bottom:14px}
+.abas{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.abas button{padding:.5em .9em;border-radius:999px;border:1.5px solid #4a403a;font-size:14px;font-weight:650;color:#cfc4b6}
+.abas button[aria-selected=true]{background:var(--amarelo);border-color:var(--amarelo);color:var(--preto)}
+.quadro{background:#0b0908;border:2px solid #2c2521;border-radius:10px;padding:clamp(12px,1.6vw,20px)}
+.flaps{display:flex;gap:3px}
+.flap{position:relative;display:inline-grid;place-items:center;width:1.05em;height:1.4em;background:#221c19;border-radius:3px;color:var(--pao);font-family:var(--texto);font-weight:750;line-height:1;overflow:hidden}
+.flap:after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#0b0908}
+.flap.vira{animation:vira .07s linear}
+@keyframes vira{0%{transform:scaleY(1)}50%{transform:scaleY(.15)}100%{transform:scaleY(1)}}
+.quadro .titulo-flap{font-size:clamp(20px,2.5vw,32px);margin-bottom:14px}
+.quadro .titulo-flap .flap{color:var(--amarelo)}
+.linhas{list-style:none;display:grid;gap:2px}
+.linha{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:7px 0;border-top:1px solid #241e1b;min-height:52px}
+.linha .num{font-size:13px}
+.linha .num .flap{color:#a89a8a}
+.linha .nome{min-width:0}
+.linha .nome b{display:block;font-weight:700;font-size:clamp(15px,1.3vw,17px);line-height:1.2;transition:opacity .2s,transform .2s}
+.linha .nome small{display:block;color:#9d9083;font-size:13px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .2s}
+.linha.troca .nome b,.linha.troca .nome small{opacity:0;transform:translateY(4px)}
+.linha .preco{font-size:clamp(15px,1.4vw,19px)}
+.linha .preco .flap{color:var(--amarelo)}
+.linha.vazia .nome{visibility:hidden}
+.prato{position:relative;aspect-ratio:1;display:grid;place-items:center}
+.prato img{position:absolute;width:100%;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .35s}
+.prato img.fora{opacity:0;transform:translateX(30%) rotate(14deg) scale(.85)}
+.prato .burst{position:absolute;width:62%;aspect-ratio:1;background:var(--amarelo);color:var(--preto);display:grid;place-content:center;text-align:center;line-height:1;
+  transition:transform .5s cubic-bezier(.2,1.5,.4,1),opacity .3s}
+.prato .burst.fora{opacity:0;transform:scale(.4) rotate(-40deg)}
+.prato .burst small{font-weight:700;font-size:clamp(13px,1.3vw,17px)}
+.prato .burst b{font-family:var(--display);font-weight:700;font-size:clamp(40px,5vw,72px);letter-spacing:-.03em}
+.prato figcaption{position:absolute;bottom:2%;left:0;right:0;text-align:center;font-family:var(--caneta);font-size:18px;color:var(--amarelo)}
+.painel-rodape{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:16px;font-size:14px;color:#b5a898}
+@media(max-width:820px){
+  .painel-cena{padding-top:70px;align-items:flex-start}
+  .painel-grade{grid-template-columns:minmax(0,1fr);gap:0}
+  .painel h2{font-size:26px;margin-bottom:10px;max-width:60%}
+  .abas{flex-wrap:nowrap;overflow-x:auto;margin-inline:calc(var(--gut)*-1);padding-inline:var(--gut);scrollbar-width:none}
+  .abas button{flex:none}
+  .prato{position:absolute;right:calc(var(--gut) - 6px);top:58px;width:33vw;z-index:2}
+  .prato figcaption{display:none}
+  .linha{min-height:46px;padding:5px 0}
+  .linha .nome small{font-size:12px}
+  .painel-rodape{margin-top:10px}
+}
+@media(max-width:820px) and (max-height:700px){.linha .nome small{display:none}.linha{min-height:38px}}
+
+/* ---------- combos ---------- */
+.combos{position:relative;background:var(--amarelo);padding:clamp(64px,9vw,120px) 0;--c:var(--amarelo)}
+.combos h2,.caixa-sec h2,.voz h2,.visite h2{font-family:var(--display);font-weight:700;font-variation-settings:"opsz" 144;line-height:.92;letter-spacing:-.02em;font-size:clamp(40px,6.4vw,92px);text-transform:uppercase}
+.combos .intro{max-width:46ch;margin:16px 0 36px;font-size:18px}
+.combos ol{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--preto)}
+.combos li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 0;border-bottom:2px solid var(--preto)}
+.combos li:nth-child(3n+2),.combos li:nth-child(3n+3){padding-left:20px;border-left:2px solid var(--preto)}
+.combos li span{font-weight:650;font-size:18px;line-height:1.25}
+.combos li em{font-style:normal;display:block;font-size:13px;font-weight:700;color:var(--vermelho-esc)}
+.combos li b{font-family:var(--display);font-weight:700;font-size:30px;color:var(--vermelho);white-space:nowrap}
+.bebidas{margin-top:28px;font-size:15px;max-width:80ch}
+@media(max-width:820px){.combos ol{grid-template-columns:minmax(0,1fr)}.combos li:nth-child(n){padding-left:0;border-left:0}}
+
+/* ---------- WOW 3: marque na caixa ---------- */
+.caixa-sec{position:relative;background:var(--vermelho);color:var(--pao);padding:clamp(64px,9vw,120px) 0;--c:var(--vermelho)}
+.caixa-sec .wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,5vw,72px);align-items:start}
+.caixa-sec h2{color:var(--amarelo)}
+.caixa-sec .intro{margin-top:18px;max-width:36ch;font-size:18px}
+.caixa-sec .real{margin-top:28px;width:min(260px,70%);background:var(--pao);padding:8px 8px 34px;transform:rotate(-4deg);position:relative}
+.caixa-sec .real figcaption{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-family:var(--caneta);color:var(--preto);font-size:15px}
+.caixa{position:relative;background:var(--kraft-cl);color:#5b1712;border-radius:6px;padding:0 0 22px;transform-origin:50% 0;
+  background-image:repeating-linear-gradient(90deg,rgba(120,80,40,.06) 0 2px,transparent 2px 7px),radial-gradient(120% 90% at 30% 20%,#ecd4ae,#d9b98b);
+  box-shadow:0 2px 0 #b38d5e,0 26px 50px rgba(70,0,0,.35)}
+.caixa .banda{height:30px;background:var(--vermelho-esc);position:relative}
+.caixa .banda:after{content:"";position:absolute;left:0;right:0;height:10px;bottom:-9px;
+  background:linear-gradient(135deg,var(--amarelo) 33%,transparent 33%) 0 0/16px 10px,linear-gradient(225deg,var(--amarelo) 33%,transparent 33%) 0 0/16px 10px}
+.caixa .banda.baixo{margin-top:22px}
+.caixa .banda.baixo:after{bottom:auto;top:-9px;transform:scaleY(-1)}
+.caixa .marca{font-family:var(--display);font-weight:700;font-size:clamp(44px,6vw,76px);color:var(--vermelho-esc);text-align:center;line-height:1;margin:26px 0 6px;letter-spacing:-.01em}
+.caixa .sub{text-align:center;font-weight:700;font-size:13px;letter-spacing:.04em;margin-bottom:16px;color:#7a3a25}
+.caixa fieldset{border:0;padding:0 clamp(16px,3vw,32px);margin-top:14px}
+.caixa legend{font-weight:800;font-size:14px;margin-bottom:6px;color:#7a3a25}
+.opcoes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 22px}
+.op{position:relative;display:flex;align-items:center;gap:12px;padding:9px 0;cursor:pointer;font-family:"Montagu Slab",serif;font-weight:700;font-size:clamp(17px,1.6vw,21px);color:#8c1d14;line-height:1.1}
+.op input{position:absolute;opacity:0;width:1px;height:1px}
+.op .q{position:relative;flex:none;width:30px;height:30px;border:2.5px solid #8c1d14;border-radius:5px}
+.op .q svg{position:absolute;left:-4px;top:-10px;width:42px;height:42px;overflow:visible}
+.op .q path{fill:none;stroke:#1d2a6b;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;transition:stroke-dashoffset .35s ease-out}
+.op input:checked + .q path{stroke-dashoffset:0}
+.op input:focus-visible + .q{outline:3px solid var(--preto);outline-offset:3px}
+.op small{display:block;font-family:var(--texto);font-weight:700;font-size:13px;color:#7a3a25}
+.op .qtd{margin-left:auto;display:none;align-items:center;gap:6px;font-family:var(--texto)}
+.op.on .qtd{display:inline-flex}
+.op .qtd button{width:28px;height:28px;border-radius:50%;border:2px solid #8c1d14;color:#8c1d14;font-weight:800;line-height:1}
+.op .qtd output{font-family:var(--caneta);font-weight:700;font-size:20px;color:#1d2a6b;min-width:1.2em;text-align:center}
+.caneta{font-family:var(--caneta);color:#1d2a6b}
+.caixa .campo{display:flex;gap:10px;align-items:baseline;padding:4px clamp(16px,3vw,32px);margin-top:8px}
+.caixa .campo label{font-weight:800;font-size:14px;color:#7a3a25;flex:none}
+.caixa .campo input{flex:1;min-width:0;background:transparent;border:0;border-bottom:2px dashed #9b6b3d;font-family:var(--caneta);font-size:22px;color:#1d2a6b;padding:2px 4px}
+.caixa .campo input:focus{outline:none;border-bottom-style:solid}
+.total{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:16px clamp(16px,3vw,32px) 0}
+.total .valor{font-family:var(--caneta);font-weight:700;font-size:34px;color:#1d2a6b;line-height:1}
+.total .valor small{display:block;font-family:var(--texto);font-size:13px;color:#7a3a25;font-weight:700}
+.fita{position:absolute;left:-4%;right:-4%;top:46%;height:58px;background:var(--amarelo);color:var(--vermelho-esc);display:grid;place-items:center;
+  font-family:var(--display);font-weight:700;font-size:26px;transform:scaleX(0) rotate(-3deg);transform-origin:0 50%;opacity:.96;pointer-events:none;
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.18) 0 3px,transparent 3px 9px)}
+.caixa.fechando{animation:fecha .7s ease}
+.caixa.fechando .fita{animation:fita .45s .25s cubic-bezier(.3,.9,.3,1) forwards}
+@keyframes fecha{0%{transform:none}30%{transform:perspective(900px) rotateX(10deg) scale(.98)}60%{transform:perspective(900px) rotateX(-3deg)}100%{transform:none}}
+@keyframes fita{to{transform:scaleX(1) rotate(-3deg)}}
+.aviso{font-size:13px;color:#7a3a25;font-weight:600;padding:8px clamp(16px,3vw,32px) 0}
+.aviso.erro{color:var(--vermelho);font-weight:800}
+@media(max-width:820px){.caixa-sec .wrap{grid-template-columns:minmax(0,1fr)}.caixa-sec .real{display:none}.opcoes{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- avaliações ---------- */
+.voz{position:relative;background:var(--preto);color:var(--pao);padding:clamp(64px,9vw,120px) 0;--c:var(--preto)}
+.voz .nota{display:flex;align-items:center;gap:14px;margin-bottom:28px;color:var(--amarelo);font-weight:750}
+.voz .nota .estrelas{font-size:22px;letter-spacing:2px}
+.voz blockquote.grande{font-family:var(--display);font-weight:600;font-size:clamp(34px,5.4vw,78px);line-height:1;letter-spacing:-.02em;color:var(--amarelo);max-width:16ch}
+.voz cite{display:block;margin-top:16px;font-style:normal;font-weight:650;color:#c9bcae}
+.voz .lista{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px);margin-top:clamp(40px,6vw,72px);border-top:1px solid #3a312c;padding-top:28px}
+.voz .lista blockquote{font-size:17px;line-height:1.45}
+.voz .lista cite{font-size:14px;margin-top:10px}
+.voz .fonte{margin-top:36px;font-size:14px;color:#a3968a}
+@media(max-width:820px){.voz .lista{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- visite + perguntas ---------- */
+.visite{position:relative;background:var(--kraft-cl);padding:clamp(64px,9vw,120px) 0;--c:var(--kraft-cl)}
+.visite .grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);margin-top:32px}
+.visite dl{display:grid;gap:18px}
+.visite dt{font-weight:800;font-size:14px;color:var(--vermelho-esc)}
+.visite dd{font-size:18px;line-height:1.4}
+.visite .acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.mapa{border:2px solid var(--preto);border-radius:8px;overflow:hidden;aspect-ratio:4/3;background:#d8bd93}
+.mapa iframe{width:100%;height:100%;border:0;display:block}
+.faq{margin-top:clamp(56px,8vw,96px)}
+.faq h3{font-family:var(--display);font-weight:700;font-size:clamp(28px,3.4vw,44px);margin-bottom:14px}
+.faq details{border-top:2px solid var(--preto)}
+.faq details:last-child{border-bottom:2px solid var(--preto)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;padding:18px 0;font-weight:750;font-size:18px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";font-family:var(--display);font-size:28px;line-height:.8;transition:transform .25s}
+.faq details[open] summary:after{transform:rotate(45deg)}
+.faq details p{padding:0 0 20px;max-width:62ch}
+@media(max-width:820px){.visite .grade{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- rodapé ---------- */
+.rodape{position:relative;background:var(--vermelho);color:var(--pao);padding:clamp(64px,9vw,110px) 0 28px;--c:var(--vermelho);overflow:hidden}
+.rodape .grande{font-family:var(--display);font-weight:700;font-variation-settings:"opsz" 144;font-size:clamp(36px,10.2vw,150px);line-height:.8;letter-spacing:-.03em;color:var(--amarelo);white-space:nowrap}
+.rodape .grande span{color:var(--preto)}
+.rodape .fiel{font-family:var(--caneta);font-size:clamp(24px,3vw,36px);margin:14px 0 30px;transform:rotate(-2deg);display:inline-block}
+.rodape .cols{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;border-top:1px solid rgba(255,247,232,.3);padding-top:22px;font-size:14px}
+.rodape .cols p{max-width:52ch}
+
+/* botão flutuante (celular) */
+.flutua{position:fixed;z-index:60;right:14px;bottom:14px;display:none;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;place-items:center;border:2px solid var(--preto);transition:transform .3s}
+.flutua svg{width:30px;height:30px}
+@media(max-width:820px){.flutua{display:grid}}
+.flutua.some{transform:scale(0)}
+
+/* modo captura e movimento reduzido */
+.embed .abre{height:auto}.embed .palco{position:relative}
+.embed .painel{height:auto!important}.embed .painel-cena{position:relative;height:auto;padding:110px 0 70px}
+.embed .flutua{display:none}
+@media (prefers-reduced-motion:reduce){
+  .faixa-corre .trilho{animation-duration:120s}
+  .selo.bateu{animation:aparece .3s forwards}
+  @keyframes aparece{from{opacity:0;transform:scale(1) rotate(-12deg)}to{opacity:1;transform:scale(1) rotate(-12deg)}}
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <a class="logo" href="#abre" aria-label="Eduburger's, voltar ao início">
+    <span class="l1"><b>EDU</b><span>BURGER'S</span></span>
+    <span class="faixa" aria-hidden="true">★★★★★</span>
+  </a>
+  <nav aria-label="Seções">
+    <a href="#cardapio">Cardápio</a>
+    <a href="#caixa">Monte seu beirute</a>
+    <a href="#visite">Como chegar</a>
+  </nav>
+  <a class="btn btn-preto js-zap" data-msg="Olá, Eduburger's! Vim pelo site e quero fazer um pedido." href="#" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+</header>
+
+<main>
+<!-- WOW 1 -->
+<section class="abre" id="abre" aria-label="Abertura">
+  <div class="palco">
+    <img class="adesivo a1" data-dx="-70" data-dy="-30" data-dr="-38" data-p="18" src="img/passaporte-adesivo.webp" alt="Passaporte de Carne com batata palha, milho e ervilha">
+    <img class="adesivo a2" data-dx="65" data-dy="-40" data-dr="34" data-p="26" src="img/xbacon-adesivo.webp" alt="X Bacon Egg Salada">
+    <img class="adesivo a3" data-dx="-60" data-dy="45" data-dr="30" data-p="22" src="img/americano-adesivo.webp" alt="Americano Especial">
+    <img class="adesivo a4" data-dx="70" data-dy="40" data-dr="-30" data-p="14" src="img/porcao-adesivo.webp" alt="Porção de alcatra com fritas">
+    <figure class="adesivo foto a5" data-dx="-20" data-dy="-70" data-dr="-50" data-p="10" style="--r:-8deg">
+      <img src="img/caixa-real.webp" width="400" height="390" alt="A caixa do beirute da Eduburger's, de papelão kraft com quadradinhos de marcar">
+      <figcaption>a caixa de verdade</figcaption>
+    </figure>
+
+    <div class="titulo">
+      <h1>Seu beirute<br>tá na chapa.</h1>
+      <p>Beirutes, passaportes e hambúrgueres na Cidade Universitária, desde 2015. De terça a domingo, das 19h à 00h30.</p>
+      <div class="acoes">
+        <a class="btn btn-amarelo js-zap" data-msg="Olá, Eduburger's! Vim pelo site e quero fazer um pedido." href="#" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+        <a class="btn btn-linha" href="#cardapio">Ver o cardápio</a>
+      </div>
+    </div>
+
+    <div class="sobe" aria-hidden="true">
+      <img src="img/beirute.webp" width="1100" height="910" alt="">
+      <div class="selo"><b>4,7</b><small>no Google<br>295 avaliações</small></div>
+    </div>
+    <p class="legenda-sobe"><b>O Beirute</b><span>"O beirute é uma delícia." Marilia Oliveira, no Google</span></p>
+  </div>
+</section>
+
+<div class="faixa-corre" aria-hidden="true"><div class="zz"></div>
+  <div class="trilho">
+    <span>Beirute do Edu <i class="estrela"></i> Passaporte de carne de sol <i class="estrela"></i> X Bacon Egg Salada <i class="estrela"></i> Turbo Mistão <i class="estrela"></i> Maionese da casa <i class="estrela"></i> Edulivery <i class="estrela"></i></span>
+    <span>Beirute do Edu <i class="estrela"></i> Passaporte de carne de sol <i class="estrela"></i> X Bacon Egg Salada <i class="estrela"></i> Turbo Mistão <i class="estrela"></i> Maionese da casa <i class="estrela"></i> Edulivery <i class="estrela"></i></span>
+  </div>
+</div>
+
+<!-- WOW 2 -->
+<section class="painel" id="cardapio" aria-label="Cardápio">
+  <div class="zz"></div>
+  <div class="painel-cena">
+    <div class="painel-grade">
+      <div>
+        <h2>O cardápio inteiro, com preço.</h2>
+        <div class="abas" role="tablist" aria-label="Categorias do cardápio"></div>
+        <div class="quadro" aria-live="polite">
+          <div class="flaps titulo-flap" aria-hidden="true"></div>
+          <p class="sr" id="cat-nome"></p>
+          <ol class="linhas"></ol>
+        </div>
+        <div class="painel-rodape">
+          <a class="btn btn-amarelo js-zap js-zap-cat" data-msg="Olá, Eduburger's! Vim pelo site e quero fazer um pedido." href="#" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+          <span>Adicionais a partir de R$ 3,00. Preços do cardápio da casa.</span>
+        </div>
+      </div>
+      <figure class="prato">
+        <div class="burst fora" aria-hidden="true"><small>a partir de</small><b></b></div>
+        <figcaption></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- combos -->
+<section class="combos" id="combos">
+  <div class="zz"></div>
+  <div class="wrap">
+    <h2>Combo é lanche, fritas e bebida.</h2>
+    <p class="intro">Todo combo vem com fritas e refrigerante de meio litro ou suco de laranja de meio litro.</p>
+    <ol>
+      <li><span><em>Combo 1</em>Passaporte de Carne ou Frango</span><b>R$ 40</b></li>
+      <li><span><em>Combo 2</em>Passe Burguer</span><b>R$ 46</b></li>
+      <li><span><em>Combo 3</em>X-Bacon Alcatra Egg Salada</span><b>R$ 50</b></li>
+      <li><span><em>Combo 4</em>X-Bacon Frango Egg Salada</span><b>R$ 47</b></li>
+      <li><span><em>Combo 5</em>Minuano</span><b>R$ 42</b></li>
+      <li><span><em>Combo 6</em>X-Bacon Burger Egg Salada</span><b>R$ 45</b></li>
+    </ol>
+    <p class="bebidas"><b>Pra beber:</b> sucos de polpa (abacaxi, acerola, ameixa, cajá, caju, goiaba, graviola, manga, maracujá, morango, limão, laranja e uva) a partir de R$ 11, jarra de 1 litro a partir de R$ 22, refrigerante lata R$ 8, refrigerante 1 litro R$ 12 e água a partir de R$ 3.</p>
+  </div>
+</section>
+
+<!-- WOW 3 -->
+<section class="caixa-sec" id="caixa">
+  <div class="zz"></div>
+  <div class="wrap">
+    <div>
+      <h2>Marque na caixa.</h2>
+      <p class="intro">É igual à caixa do beirute de verdade: marque o seu, escolha os adicionais e mande. O pedido chega pronto no WhatsApp da casa.</p>
+      <figure class="real">
+        <img src="img/caixa-real.webp" width="400" height="390" loading="lazy" alt="Foto real da caixa do beirute, com quadradinhos de Americano, Bauru, Misto, X-Alcatra, X-Frango e X-Vinagrete">
+        <figcaption>a caixa que inspirou</figcaption>
+      </figure>
+    </div>
+
+    <form class="caixa" id="form-caixa" novalidate>
+      <div class="banda"></div>
+      <p class="marca">beirute</p>
+      <p class="sub">Todo beirute vem com fritas</p>
+      <fieldset>
+        <legend>Qual beirute?</legend>
+        <div class="opcoes" id="op-beirutes"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Adicionais (pra cada beirute)</legend>
+        <div class="opcoes" id="op-adic"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Como você recebe?</legend>
+        <div class="opcoes" id="op-entrega"></div>
+      </fieldset>
+      <div class="campo"><label for="nome">Seu nome</label><input id="nome" name="nome" maxlength="40" autocomplete="given-name"></div>
+      <div class="campo"><label for="obs">Observação</label><input id="obs" name="obs" maxlength="90" placeholder="sem tomate, ponto da carne..."></div>
+      <div class="total">
+        <div class="valor"><small>Total</small><span id="total">R$ 0,00</span></div>
+        <button class="btn btn-preto" type="submit">Fechar a caixa e pedir</button>
+      </div>
+      <p class="aviso" id="aviso">Entrega pelo Edulivery: a taxa é combinada no WhatsApp.</p>
+      <div class="banda baixo"></div>
+      <div class="fita" aria-hidden="true">Deus é fiel!</div>
+    </form>
+  </div>
+</section>
+
+<!-- avaliações -->
+<section class="voz" id="avaliacoes">
+  <div class="zz"></div>
+  <div class="wrap">
+    <p class="nota"><span class="estrelas" aria-hidden="true"><i class="estrela"></i><i class="estrela"></i><i class="estrela"></i><i class="estrela"></i><i class="estrela"></i></span> 4,7 no Google, com 295 avaliações</p>
+    <blockquote class="grande">"Não posso deixar de mencionar as maioneses caseiras."</blockquote>
+    <cite>Micaelle Mércia, no Google</cite>
+    <div class="lista">
+      <div><blockquote>"Sanduíche não é gorduroso. O destaque fica para o Beirute de carne do sol, acompanha batata frita!"</blockquote><cite>Angélica Amaral</cite></div>
+      <div><blockquote>"Os proprietários são super atenciosos. Sanduíches deliciosos, caprichados. Ambiente climatizado."</blockquote><cite>Juliane Baebosa</cite></div>
+      <div><blockquote>"Aí é sem comparação: lanche bom, ambiente agradável e higiene sem igual."</blockquote><cite>Helton Andrade</cite></div>
+      <div><blockquote>"O passaporte de carne de sol é uma delícia."</blockquote><cite>Pr Roberto Rodrigues</cite></div>
+      <div><blockquote>"Lugar bom, lanche muito bom, preço justo, aprovado!!!"</blockquote><cite>Nicolas Ferreira</cite></div>
+      <div><blockquote>"Ótimo para lanchar com os amigos, casal, família."</blockquote><cite>João Paulo Albuquerque de Lima</cite></div>
+    </div>
+    <p class="fonte">Avaliações reais do Google Maps, com o nome de quem escreveu.</p>
+  </div>
+</section>
+
+<!-- visite -->
+<section class="visite" id="visite">
+  <div class="zz"></div>
+  <div class="wrap">
+    <h2>Na principal do Graciliano Ramos.</h2>
+    <div class="grade">
+      <div>
+        <dl>
+          <div><dt>Endereço</dt><dd>Av. Dr. André Papini Góis, Cidade Universitária, Maceió (AL). Em frente ao ginásio do colégio Edson Monteiro.</dd></div>
+          <div><dt>Horário</dt><dd>Terça a domingo, das 19h à 00h30.</dd></div>
+          <div><dt>Como pedir</dt><dd>Comer aí, retirar no balcão ou receber em casa pelo Edulivery.</dd></div>
+          <div><dt>Pagamento</dt><dd>Pix, Visa, Mastercard, Elo e Hipercard.</dd></div>
+          <div><dt>WhatsApp</dt><dd>(82) 98804-7362</dd></div>
+        </dl>
+        <div class="acoes">
+          <a class="btn btn-preto js-zap" data-msg="Olá, Eduburger's! Vim pelo site e quero fazer um pedido." href="#" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+          <a class="btn btn-linha" href="https://www.google.com/maps/dir/?api=1&destination=-9.5531332,-35.7525713" target="_blank" rel="noopener">Como chegar</a>
+        </div>
+      </div>
+      <div class="mapa"><iframe title="Mapa da Eduburger's" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=-9.5531332,-35.7525713&z=17&output=embed"></iframe></div>
+    </div>
+
+    <div class="faq">
+      <h3>Perguntas frequentes</h3>
+      <details><summary>Que horas abre?</summary><p>De terça a domingo, das 19h à 00h30. Segunda é folga.</p></details>
+      <details><summary>Vocês entregam?</summary><p>Sim, pelo Edulivery. Mande o endereço no WhatsApp que a casa confirma a taxa e o tempo de entrega.</p></details>
+      <details><summary>Dá pra comer no local?</summary><p>Dá. O salão é climatizado e tem espaço pra grupos pequenos e grandes. Também dá pra retirar no balcão.</p></details>
+      <details><summary>O que vem no beirute?</summary><p>Todos vêm no pão sírio com tomate, alface e fritas. O Beirute do Edu, o maior, leva 2 ovos, 2 presuntos, 2 queijos, salsicha, alcatra, frango e 2 hambúrgueres.</p></details>
+      <details><summary>Quais adicionais tem?</summary><p>Salsicha, ovo, queijo e presunto (R$ 3), hambúrguer, catupiry e cheddar (R$ 6), bacon (R$ 10), filé de frango, alcatra, carne do sol e picanha (R$ 15).</p></details>
+      <details><summary>Como pago?</summary><p>Pix, Visa, Mastercard, Elo e Hipercard.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="rodape">
+  <div class="zz"></div>
+  <div class="wrap">
+    <p class="grande" aria-label="Eduburger's">EDU<span>BURGER'S</span></p>
+    <p class="fiel">Deus é fiel!</p>
+    <div class="cols">
+      <p>Eduburger's, desde 2015 na Cidade Universitária, Maceió (AL). (82) 98804-7362. Instagram <a href="https://www.instagram.com/eduburgers/" target="_blank" rel="noopener">@eduburgers</a>.</p>
+      <p>Prévia feita pela GuDev para a Eduburger's: projeto conceito, ainda não é o site oficial. Fotos dos lanches aprimoradas a partir das fotos reais.</p>
+    </div>
+  </div>
+</footer>
+
+<a class="flutua js-zap" data-msg="Olá, Eduburger's! Vim pelo site e quero fazer um pedido." href="#" target="_blank" rel="noopener" aria-label="Pedir pelo WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>
+</a>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
+<script>
+(function(){
+  "use strict";
+  var embed = /[?&]embed\b/.test(location.search);
+  var dentro = window.parent !== window;
+  var toque = matchMedia("(hover:none)").matches;
+  var reduz = matchMedia("(prefers-reduced-motion:reduce)").matches;
+  if (embed) document.documentElement.classList.add("embed");
+  var $ = function(s, r){ return (r || document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var ZAP = "5582988047362";
+  var zap = function(msg){ return "https://wa.me/" + ZAP + "?text=" + encodeURIComponent(msg); };
+  var brl = function(v){ return "R$ " + v.toFixed(2).replace(".", ","); };
+  $$(".js-zap").forEach(function(a){ a.href = zap(a.dataset.msg); });
+  if (dentro) { var fl = $(".flutua"); if (fl) fl.remove(); }
+
+  var lenis = null;
+  if (!toque && !reduz && !dentro && !embed && window.Lenis) lenis = new Lenis({ lerp: .09, smoothWheel: true });
+  var irPara = function(y){ if (lenis) lenis.scrollTo(y, { duration: 1 }); else window.scrollTo({ top: y, behavior: reduz ? "auto" : "smooth" }); };
+  $$('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(e){ var alvo = $(a.getAttribute("href")); if (!alvo) return; e.preventDefault(); irPara(alvo.getBoundingClientRect().top + scrollY); });
+  });
+
+  // progresso de uma seção alta: 0 quando o topo encosta no topo da tela, 1 quando o fim encosta no fim
+  var progresso = function(el){ var r = el.getBoundingClientRect(), h = r.height - innerHeight; return h > 0 ? Math.min(1, Math.max(0, -r.top / h)) : 0; };
+  var faixa = function(p, a, b){ return Math.min(1, Math.max(0, (p - a) / (b - a))); };
+  var suave = function(t){ return t * t * (3 - 2 * t); };
+
+  /* ---------- WOW 1: os adesivos voam, o título afunda e o beirute sobe ---------- */
+  var abre = $(".abre"), titulo = $(".titulo"), adesivos = $$(".adesivo"), sobe = $(".sobe"), selo = $(".selo"), legenda = $(".legenda-sobe");
+  var mx = 0, my = 0, tx = 0, ty = 0;
+  if (!toque) addEventListener("pointermove", function(e){ tx = e.clientX / innerWidth - .5; ty = e.clientY / innerHeight - .5; }, { passive: true });
+  var rotBase = [-9, 8, 6, -7, -8];
+  var ultimoP = -1;
+  function cenaAbre(forca){
+    var r = abre.getBoundingClientRect();
+    if (!forca && r.bottom < 0) return;
+    var p = embed ? 0 : progresso(abre);
+    var dm = Math.abs(tx - mx) + Math.abs(ty - my);
+    // parado (sem rolar e com o mouse já assentado): não mexe em nada
+    if (!forca && Math.abs(p - ultimoP) < .0005 && dm < .002) return;
+    ultimoP = p;
+    mx += (tx - mx) * .08; my += (ty - my) * .08;
+    var sai = suave(faixa(p, 0, .5));
+    adesivos.forEach(function(a, i){
+      var dx = +a.dataset.dx * sai, dy = +a.dataset.dy * sai, dr = +a.dataset.dr * sai, par = +a.dataset.p;
+      a.style.transform = "translate(calc(" + dx + "vw + " + (mx * par) + "px), calc(" + dy + "vh + " + (my * par) + "px)) rotate(" + (rotBase[i] + dr) + "deg)";
+    });
+    var t = faixa(p, .05, .5);
+    titulo.style.transform = "scale(" + (1 - t * .18) + ")";
+    titulo.style.filter = t > .01 ? "blur(" + (t * 10).toFixed(1) + "px)" : "none";
+    titulo.style.opacity = 1 - t * .55;
+    var s = suave(faixa(p, .22, .72));
+    sobe.style.transform = "translate(-50%, calc(-50% + " + ((1 - s) * 95) + "vh)) rotate(" + ((1 - s) * -8) + "deg) scale(" + (.82 + s * .18) + ")";
+    if (p > .76 && !selo.classList.contains("bateu")) selo.classList.add("bateu");
+    if (p < .68 && selo.classList.contains("bateu")) selo.classList.remove("bateu");
+    legenda.classList.toggle("on", p > .8);
+  }
+
+  /* ---------- WOW 2: painel de palhetas ---------- */
+  var CARDAPIO = [
+    { cat: "TRADICIONAIS", aba: "Tradicionais", foto: "img/passaporte.webp", leg: "na foto: Passaporte de Carne", itens: [
+      ["01","Americano Especial","pão redondo, ovo, queijo, presunto, tomate, alface e salsicha","20,00"],
+      ["02","Minuano Especial","pão redondo, hambúrguer, queijo, presunto, ovo, tomate, alface e salsicha","24,00"],
+      ["03","Misto Quente","2 queijos e 2 presuntos","18,00"],
+      ["04","Passaporte de Carne","pão seda, carne moída, salsicha, milho, ervilha, batata palha, queijo ralado","22,00"],
+      ["05","Passaporte de Frango","pão seda, frango desfiado, salsicha, milho, ervilha, batata palha, queijo ralado","22,00"],
+      ["06","Passaporte de Carne de Sol","pão seda, carne de sol desfiada, salsicha, milho, ervilha, batata palha","25,00"],
+      ["07","Passa Misto Carne e Frango","pão seda, carne moída, frango desfiado, salsicha, milho, ervilha, batata palha","23,00"] ] },
+    { cat: "TURBINADOS", aba: "Turbinados", desde: "43", itens: [
+      ["08","Turbo Mistão","pão redondo, frango, alcatra, ovo, bacon, queijo, presunto, cheddar ou catupiry","43,00"],
+      ["09","Turbo Mistão Especial","frango, alcatra, ovo, bacon, calabresa, queijo, presunto, salsicha, catupiry ou cheddar","55,00"],
+      ["10","Edu I Especial","alcatra, calabresa, bacon, salsicha, queijo, presunto, catupiry ou cheddar","45,00"],
+      ["11","Edu II","hambúrguer, calabresa, bacon, frango, queijo, presunto, catupiry ou cheddar","44,00"] ] },
+    { cat: "COM BACON", aba: "Com bacon", foto: "img/xbacon.webp", leg: "na foto: X Bacon Burger Egg Salada", itens: [
+      ["12","X Bacon Burger Egg Salada","pão redondo, bacon, queijo, presunto, hambúrguer, ovo, tomate e alface","27,00"],
+      ["13","X Bacon Picanha Egg Salada","pão redondo, bacon, queijo, picanha, presunto, ovo, tomate e alface","35,00"],
+      ["14","X Bacon Frango Egg Salada","pão redondo, bacon, queijo, ovo, filé de frango, presunto, tomate e alface","29,00"],
+      ["15","X Bacon Alcatra Egg Salada","pão redondo, bacon, queijo, ovo, alcatra, presunto, tomate e alface","32,00"],
+      ["16","X Carne do Sol Bacon Egg Salada","pão redondo, queijo, ovo, carne do sol desfiada, presunto, bacon","32,00"] ] },
+    { cat: "PASSE BURGUER", aba: "Passe Burguer", desde: "29", itens: [
+      ["17","Passe Burguer","pão redondo, alcatra, hambúrguer, ovo, queijo, presunto, batata palha, milho","29,00"],
+      ["18","Passe Frango","pão redondo, filé de frango, hambúrguer, ovo, queijo, presunto, batata palha","29,00"],
+      ["19","Passe Misto","queijo, presunto, alcatra, frango, hambúrguer, ovo, batata palha, milho verde","35,00"],
+      ["20","Passe Carne do Sol","carne do sol, hambúrguer, ovo, queijo, presunto, batata palha, milho","32,00"] ] },
+    { cat: "BEIRUTES", aba: "Beirutes", foto: "img/beirute.webp", leg: "na foto: o Beirute", itens: [
+      ["22","X Frango","pão sírio, 3 queijos, filé de frango, 2 ovos, tomate, alface e fritas","46,00"],
+      ["23","X Alcatra","pão sírio, 3 queijos, alcatra, 2 ovos, tomate, alface e fritas","51,00"],
+      ["24","Minuano","pão sírio, 2 queijos, 2 presuntos, 3 hambúrgueres, 2 ovos e fritas","46,00"],
+      ["25","Carne do Sol","pão sírio, 3 queijos, carne do sol desfiada, 2 ovos e fritas","53,00"],
+      ["26","Misturado","pão sírio, 3 queijos, alcatra, frango, 2 ovos e fritas","51,00"],
+      ["27","Beirute do Edu","2 ovos, 2 presuntos, 2 queijos, salsicha, alcatra, frango, 2 hambúrgueres","62,00"] ] },
+    { cat: "PORÇÕES", aba: "Porções", foto: "img/porcao.webp", leg: "na foto: porção de alcatra com fritas", itens: [
+      ["28","Picanha com fritas","","51,00"],
+      ["31","Alcatra com fritas","","48,00"],
+      ["29","Fritas grande","","20,00"],
+      ["30","Fritas pequena","","10,00"] ] }
+  ];
+  var N = CARDAPIO.length, LINHAS = 7, LT = 13;
+  var painel = $(".painel"), abas = $(".abas"), tituloFlap = $(".titulo-flap"), linhasEl = $(".linhas"), prato = $(".prato"), burst = $(".burst", prato), leg = $("figcaption", prato), btnCat = $(".js-zap-cat");
+  painel.style.height = embed ? "auto" : (N * 75 + 100) + "vh";
+
+  var celulas = function(pai, n){ var a = []; for (var i = 0; i < n; i++){ var c = document.createElement("span"); c.className = "flap"; c.textContent = " "; pai.appendChild(c); a.push(c); } return a; };
+  var flapsTitulo = celulas(tituloFlap, LT);
+  var linhas = [];
+  for (var i = 0; i < LINHAS; i++){
+    var li = document.createElement("li"); li.className = "linha vazia";
+    var num = document.createElement("span"); num.className = "flaps num"; num.setAttribute("aria-hidden", "true");
+    var nome = document.createElement("span"); nome.className = "nome"; nome.innerHTML = "<b></b><small></small>";
+    var pr = document.createElement("span"); pr.className = "flaps preco";
+    li.appendChild(num); li.appendChild(nome); li.appendChild(pr); linhasEl.appendChild(li);
+    linhas.push({ li: li, num: celulas(num, 2), b: $("b", nome), s: $("small", nome), preco: celulas(pr, 5), prSr: pr });
+  }
+  var fotos = {};
+  CARDAPIO.forEach(function(c, k){
+    var b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "tab"); b.textContent = c.aba; b.setAttribute("aria-selected", "false");
+    b.addEventListener("click", function(){ irParaCat(k); }); abas.appendChild(b);
+    if (c.foto && !fotos[c.foto]){ var im = new Image(); im.src = c.foto; im.alt = c.leg.replace("na foto: ", ""); im.className = "fora"; im.width = 1100; im.height = 900; prato.insertBefore(im, burst); fotos[c.foto] = im; }
+  });
+
+  var SORTE = "ABCDEFGHIJLMNOPRSTUVXZ0123456789";
+  function vira(cel, alvo, atraso){
+    alvo = alvo || " ";
+    if (cel.textContent === alvo) return;
+    if (reduz || embed){ cel.textContent = alvo; return; }
+    var passos = 3 + Math.floor(Math.random() * 4);
+    setTimeout(function passo(){
+      cel.classList.remove("vira"); void cel.offsetWidth; cel.classList.add("vira");
+      if (passos-- > 0){ cel.textContent = SORTE[Math.floor(Math.random() * SORTE.length)]; setTimeout(passo, 55); }
+      else cel.textContent = alvo;
+    }, atraso);
+  }
+  var escreve = function(cels, txt, atraso){ var t = txt.toUpperCase(); var pad = Math.max(0, Math.floor((cels.length - t.length) / 2));
+    cels.forEach(function(c, i){ vira(c, t[i - pad] || " ", (atraso || 0) + i * 18); }); };
+  var precoCels = function(cels, txt){ var t = (txt || "").padStart(cels.length, " "); cels.forEach(function(c, i){ vira(c, t[i], 80 + i * 40); }); };
+
+  var atual = -1, ocupado = false, pendente = null, guarda = null;
+  function mostra(k){
+    if (k === atual) return;
+    if (ocupado){ pendente = k; return; }
+    ocupado = true; atual = k;
+    var c = CARDAPIO[k];
+    $$("button", abas).forEach(function(b, i){ b.setAttribute("aria-selected", i === k ? "true" : "false"); });
+    var ab = abas.children[k]; if (ab && abas.scrollWidth > abas.clientWidth) abas.scrollTo({ left: ab.offsetLeft - 20, behavior: "smooth" });
+    escreve(flapsTitulo, c.cat);
+    $("#cat-nome").textContent = c.aba;
+    linhas.forEach(function(l, i){
+      var it = c.itens[i];
+      l.li.classList.add("troca");
+      setTimeout(function(){
+        l.b.textContent = it ? it[1] : ""; l.s.textContent = it ? it[2] : "";
+        l.li.classList.toggle("vazia", !it); l.li.classList.remove("troca");
+        l.prSr.setAttribute("aria-label", it ? "R$ " + it[3] : "");
+      }, 160 + i * 30);
+      var n = it ? it[0] : "  ";
+      vira(l.num[0], n[0], 40 + i * 40); vira(l.num[1], n[1], 60 + i * 40);
+      precoCels(l.preco, it ? it[3] : "");
+    });
+    Object.keys(fotos).forEach(function(f){ fotos[f].classList.toggle("fora", f !== c.foto); });
+    if (c.foto){ burst.classList.add("fora"); leg.textContent = c.leg; }
+    else { $("b", burst).textContent = "R$ " + c.desde; burst.classList.remove("fora"); leg.textContent = ""; }
+    btnCat.href = zap("Olá, Eduburger's! Vim pelo site e quero pedir da parte de " + c.aba + " do cardápio.");
+    clearTimeout(guarda);
+    guarda = setTimeout(function(){ ocupado = false; if (pendente !== null){ var p = pendente; pendente = null; mostra(p); } }, reduz ? 50 : 650);
+  }
+  function irParaCat(k){
+    if (embed){ mostra(k); return; }
+    var topo = painel.getBoundingClientRect().top + scrollY, h = painel.offsetHeight - innerHeight;
+    irPara(topo + h * ((k + .5) / N));
+  }
+  var idxPainel = 0;
+  function cenaPainel(){
+    if (embed) return;
+    var r = painel.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    var x = progresso(painel) * N;
+    // folga de 8% perto da troca: só muda quando passa da borda com sobra
+    if (x > idxPainel + 1 + .08 || x < idxPainel - .08) idxPainel = Math.min(N - 1, Math.max(0, Math.floor(x)));
+    mostra(idxPainel);
+  }
+  mostra(0);
+
+  // a estrelona de "a partir de"
+  (function(){ var pts = [], n = 16; for (var i = 0; i < n * 2; i++){ var a = Math.PI * i / n - Math.PI / 2, r = i % 2 ? 41 : 50; pts.push((50 + r * Math.cos(a)).toFixed(1) + "% " + (50 + r * Math.sin(a)).toFixed(1) + "%"); }
+    var cp = "polygon(" + pts.join(",") + ")"; $$(".burst,.selo").forEach(function(e){ e.style.clipPath = cp; }); })();
+
+  /* ---------- WOW 3: marque na caixa ---------- */
+  var BEIRUTES = [["X Frango",46],["X Alcatra",51],["Minuano",46],["Carne do Sol",53],["Misturado",51],["Beirute do Edu",62]];
+  var ADIC = [["Ovo",3],["Queijo",3],["Bacon",10],["Catupiry",6],["Cheddar",6],["Carne do sol",15]];
+  var ENTREGA = [["Retiro no balcão"],["Edulivery (entrega)"]];
+  var visto = '<svg viewBox="0 0 42 42" aria-hidden="true"><path d="M6 22 C 10 26, 13 30, 16 34 C 21 22, 28 12, 40 3"/></svg>';
+  var qtd = {};
+  function opcao(lista, pai, tipo, nomeGrupo){
+    lista.forEach(function(o, i){
+      var lab = document.createElement("label"); lab.className = "op";
+      var inp = document.createElement("input"); inp.type = tipo; inp.name = nomeGrupo; inp.value = i;
+      var q = document.createElement("span"); q.className = "q"; q.innerHTML = visto;
+      var txt = document.createElement("span"); txt.textContent = o[0];
+      if (o[1]){ var sm = document.createElement("small"); sm.textContent = (nomeGrupo === "adic" ? "+ " : "") + brl(o[1]); txt.appendChild(sm); }
+      lab.appendChild(inp); lab.appendChild(q); lab.appendChild(txt);
+      if (nomeGrupo === "beirute"){
+        var box = document.createElement("span"); box.className = "qtd";
+        box.innerHTML = '<button type="button" aria-label="Menos um">−</button><output>1</output><button type="button" aria-label="Mais um">+</button>';
+        lab.appendChild(box);
+        var bts = $$("button", box), out = $("output", box);
+        bts[0].addEventListener("click", function(e){ e.preventDefault(); qtd[i] = Math.max(0, (qtd[i] || 1) - 1); if (!qtd[i]){ inp.checked = false; lab.classList.remove("on"); } out.textContent = qtd[i] || 1; soma(); });
+        bts[1].addEventListener("click", function(e){ e.preventDefault(); qtd[i] = Math.min(20, (qtd[i] || 1) + 1); out.textContent = qtd[i]; soma(); });
+        inp.addEventListener("change", function(){ lab.classList.toggle("on", inp.checked); qtd[i] = inp.checked ? 1 : 0; out.textContent = 1; });
+      }
+      inp.addEventListener("change", soma);
+      pai.appendChild(lab);
+    });
+  }
+  var form = $("#form-caixa"), totalEl = $("#total"), aviso = $("#aviso");
+  opcao(BEIRUTES, $("#op-beirutes"), "checkbox", "beirute");
+  opcao(ADIC, $("#op-adic"), "checkbox", "adic");
+  opcao(ENTREGA, $("#op-entrega"), "radio", "entrega");
+  function pedido(){
+    var itens = [], n = 0, total = 0;
+    $$('input[name=beirute]', form).forEach(function(inp){ if (inp.checked){ var b = BEIRUTES[+inp.value], q = qtd[+inp.value] || 1; itens.push(q + "x " + (/^Beirute/.test(b[0]) ? "" : "Beirute ") + b[0] + " (" + brl(b[1] * q) + ")"); n += q; total += b[1] * q; } });
+    var ad = [], adV = 0;
+    $$('input[name=adic]', form).forEach(function(inp){ if (inp.checked){ var a = ADIC[+inp.value]; ad.push(a[0]); adV += a[1]; } });
+    total += adV * n;
+    var ent = $('input[name=entrega]:checked', form);
+    return { itens: itens, n: n, ad: ad, adV: adV, total: total, entrega: ent ? ENTREGA[+ent.value][0] : "" };
+  }
+  function soma(){ totalEl.textContent = brl(pedido().total); aviso.classList.remove("erro"); aviso.textContent = "Entrega pelo Edulivery: a taxa é combinada no WhatsApp."; }
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var p = pedido();
+    if (!p.n){ aviso.textContent = "Marque pelo menos um beirute na caixa."; aviso.classList.add("erro"); return; }
+    if (!p.entrega){ aviso.textContent = "Marque se vai retirar ou receber pelo Edulivery."; aviso.classList.add("erro"); return; }
+    var nome = $("#nome").value.trim(), obs = $("#obs").value.trim();
+    var msg = "Olá, Eduburger's! Montei meu pedido pelo site:\n\n" + p.itens.join("\n");
+    if (p.ad.length) msg += "\nAdicionais em cada beirute: " + p.ad.join(", ") + " (+" + brl(p.adV * p.n) + ")";
+    msg += "\n\nTotal: " + brl(p.total) + (p.entrega.indexOf("Edulivery") === 0 ? " + taxa de entrega" : "");
+    msg += "\n" + p.entrega;
+    if (nome) msg += "\nNome: " + nome;
+    if (obs) msg += "\nObservação: " + obs;
+    var url = zap(msg);
+    var janela = window.open("", "_blank");
+    form.classList.remove("fechando"); void form.offsetWidth; form.classList.add("fechando");
+    aviso.textContent = "Caixa fechada! Abrindo o WhatsApp com o pedido pronto.";
+    setTimeout(function(){ if (janela){ janela.opener = null; janela.location.href = url; } else location.href = url; }, reduz ? 100 : 900);
+    setTimeout(function(){ form.classList.remove("fechando"); }, 4000);
+  });
+
+  /* ---------- laço único ---------- */
+  var flutua = $(".flutua");
+  function frame(t){
+    if (lenis) lenis.raf(t);
+    cenaAbre(); cenaPainel();
+    if (flutua){ var c = $("#caixa").getBoundingClientRect(); flutua.classList.toggle("some", c.top < innerHeight * .6 && c.bottom > innerHeight * .3); }
+    requestAnimationFrame(frame);
+  }
+  cenaAbre(true);
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
