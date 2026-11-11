@@ -26,7 +26,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
   - WhatsApp: (11) 96465-0080 (confirmado pelo Davi em 10/11).
   - Logo: círculo roxo, palmeira verde-clara com contorno branco, "Pé" roxo-escuro com bagas brancas e "ÇAÍ" magenta (`sites/pecai/img/logo-pecai.png`).
 - **Site:** `sites/pecai/` (veja o README). Antes era tratada como "marca fictícia" de demo: é loja real.
-- **10/11/2026: o site virou só ATACADO (B2B):** açaí de 10 L e 2 L pra empresas, pouco texto, pedido com frequência e palete. Falta: embalagem real, preço, pedido mínimo, região de entrega.
+- **10/11/2026: o site virou só ATACADO (B2B):** açaí e cupuaçu de 10 L, 2 L e 1 L pra empresas (1 L e cupuaçu desde 11/11), pouco texto, pedido com frequência e palete. Falta: embalagem real, preço, pedido mínimo, região de entrega.
 - **Andamento:** site pronto pra mostrar. Fotos e vídeos estão em 2 pastas do Drive do Davi, que o ambiente não conseguiu abrir.
 
 ## Açaí Happy (Açaí Heaven), Parque Prado, Campinas-SP · lead do Davi

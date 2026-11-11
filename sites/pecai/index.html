@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Péçaí Atacado | Açaí de 10 L e 2 L pra empresas em Guarulhos</title>
-<meta name="description" content="Açaí no atacado pra açaiterias, lanchonetes e sorveterias: 10 litros e 2 litros. Péçaí, Guarulhos. Pedido e tabela pelo WhatsApp.">
+<title>Péçaí Atacado | Açaí e cupuaçu de 10, 2 e 1 L pra empresas em Guarulhos</title>
+<meta name="description" content="Açaí e cupuaçu no atacado pra açaiterias, lanchonetes e sorveterias: 10, 2 e 1 litro. Péçaí, Guarulhos. Pedido e tabela pelo WhatsApp.">
 <meta name="theme-color" content="#3b0f4a">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Péçaí Atacado | Açaí de 10 L e 2 L">
+<meta property="og:title" content="Péçaí Atacado | Açaí e cupuaçu de 10, 2 e 1 L">
 <meta property="og:description" content="Açaí no atacado pra sua empresa. Pedido e tabela pelo WhatsApp.">
 <meta property="og:image" content="https://proposta-pecai.netlify.app/og.jpg">
 <meta property="og:locale" content="pt_BR">
@@ -30,7 +30,7 @@
   "@context": "https://schema.org",
   "@type": "Store",
   "name": "Péçaí Atacado",
-  "description": "Açaí no atacado pra empresas: embalagens de 10 litros e 2 litros.",
+  "description": "Açaí e cupuaçu no atacado pra empresas: embalagens de 10, 2 e 1 litro.",
   "telephone": "+55 11 96465-0080",
   "image": "https://proposta-pecai.netlify.app/og.jpg",
   "logo": "https://proposta-pecai.netlify.app/img/logo-pecai.png",
@@ -136,6 +136,18 @@ h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.02;t
 .balde svg{display:block;height:auto;overflow:visible}
 .balde.dez svg{width:clamp(170px,30vw,300px)}
 .balde.dois svg{width:clamp(100px,17.5vw,175px)}   /* 2 L tem 1/5 do volume: lado ≈ 1/∛5 ≈ 0,58 do de 10 L */
+.balde.um svg{width:clamp(79px,13.9vw,139px)}      /* 1 L tem 1/10 do volume: lado ≈ 1/∛10 ≈ 0,46 do de 10 L */
+@media (max-width:520px){.baldes{gap:14px}.balde.dez svg{width:140px}.balde.dois svg{width:81px}.balde.um svg{width:65px}}
+.liq,.liq-topo{transition:fill .6s cubic-bezier(.22,1,.36,1)}
+[data-sabor="cupuacu"] .dez .liq{fill:#d9b86a}[data-sabor="cupuacu"] .dez .liq-topo{fill:#ecd28e}
+[data-sabor="cupuacu"] .dois .liq{fill:#e6c983}[data-sabor="cupuacu"] .dois .liq-topo{fill:#f3dfa6}
+[data-sabor="cupuacu"] .um .liq{fill:#efd9a0}[data-sabor="cupuacu"] .um .liq-topo{fill:#f8eac4}
+.medidas .chips button{background:#efe6f2;color:var(--pe)}
+.medidas .chips button[aria-pressed="true"]{background:var(--pe);color:#fff}
+.sub-sabor{font-weight:700;color:#cdb6d6;font-size:14px;margin:14px 0 6px}
+.sub-sabor:first-child{margin-top:0}
+.cx.s{width:22px;height:20px;font-size:8px;background:linear-gradient(180deg,#eaa6e1,#c27ad8);color:var(--tinta)}
+.pilha .cx.cup{background:linear-gradient(180deg,#f6e3b4,#d9b86a);color:#4a3412}
 .balde .litros{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(36px,6vw,64px);line-height:1;color:var(--pe)}
 .balde .litros small{font-size:.45em;margin-left:4px}
 .balde p{font-weight:600;color:#5d4866}
@@ -260,7 +272,7 @@ footer a{text-underline-offset:3px}
         <div class="texto-abre">
           <span class="selo"><b>Atacado</b> pra empresas</span>
           <h1 id="titulo">Pé<span class="sufixo">çaí</span></h1>
-          <p class="frase">Açaí de 10 L e 2 L.</p>
+          <p class="frase">Açaí e cupuaçu de 10, 2 e 1 L.</p>
           <p class="sub">Pra sua açaiteria, lanchonete ou sorveteria. Pedido e tabela pelo WhatsApp.</p>
           <div class="acoes">
             <a class="btn btn-pedir js-tabela" href="https://wa.me/5511964650080" target="_blank" rel="noopener">Pedir tabela no WhatsApp</a>
@@ -277,15 +289,16 @@ footer a{text-underline-offset:3px}
     <!-- WOW 2: as duas medidas enchem de açaí com a rolagem -->
     <section class="medidas" id="medidas" aria-labelledby="t-medidas">
       <div class="fixo wrap">
-        <h2 id="t-medidas">Duas medidas.</h2>
-        <div class="baldes">
+        <h2 id="t-medidas">Três medidas.</h2>
+        <div class="chips sabor" role="group" aria-label="Sabor" id="sabor"><button type="button" aria-pressed="true" data-v="acai">Açaí</button><button type="button" aria-pressed="false" data-v="cupuacu">Cupuaçu</button></div>
+        <div class="baldes" id="baldes" data-sabor="acai">
           <div class="balde dez">
-            <svg viewBox="0 0 200 220" role="img" aria-label="Embalagem de 10 litros enchendo de açaí">
+            <svg viewBox="0 0 200 220" role="img" aria-label="Embalagem de 10 litros enchendo">
               <defs><clipPath id="cDez"><path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z"/></clipPath></defs>
               <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="#efe6f2"/>
               <g clip-path="url(#cDez)"><g id="nivelDez" style="transform:translateY(190px)">
-                <path d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V240 H0Z" fill="#5e1f73"/>
-                <path d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V40 H0Z" fill="#8d36a8"/>
+                <path class="liq" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V240 H0Z" fill="#5e1f73"/>
+                <path class="liq-topo" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V40 H0Z" fill="#8d36a8"/>
               </g></g>
               <rect x="14" y="20" width="172" height="18" rx="6" fill="#3b0f4a"/>
               <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="none" stroke="#3b0f4a" stroke-width="4"/>
@@ -293,20 +306,33 @@ footer a{text-underline-offset:3px}
             <span class="litros"><span id="lDez">10</span><small>L</small></span>
           </div>
           <div class="balde dois">
-            <svg viewBox="0 0 200 220" role="img" aria-label="Embalagem de 2 litros enchendo de açaí">
+            <svg viewBox="0 0 200 220" role="img" aria-label="Embalagem de 2 litros enchendo">
               <defs><clipPath id="cDois"><path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z"/></clipPath></defs>
               <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="#efe6f2"/>
               <g clip-path="url(#cDois)"><g id="nivelDois" style="transform:translateY(190px)">
-                <path d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V240 H0Z" fill="#a84bc4"/>
-                <path d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V40 H0Z" fill="#e070d3"/>
+                <path class="liq" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V240 H0Z" fill="#a84bc4"/>
+                <path class="liq-topo" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V40 H0Z" fill="#e070d3"/>
               </g></g>
               <rect x="14" y="20" width="172" height="18" rx="6" fill="#3b0f4a"/>
               <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="none" stroke="#3b0f4a" stroke-width="5"/>
             </svg>
             <span class="litros"><span id="lDois">2</span><small>L</small></span>
           </div>
+          <div class="balde um">
+            <svg viewBox="0 0 200 220" role="img" aria-label="Embalagem de 1 litro enchendo">
+              <defs><clipPath id="cUm"><path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z"/></clipPath></defs>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="#efe6f2"/>
+              <g clip-path="url(#cUm)"><g id="nivelUm" style="transform:translateY(190px)">
+                <path class="liq" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V240 H0Z" fill="#c27ad8"/>
+                <path class="liq-topo" d="M0 30 Q25 18 50 30 T100 30 T150 30 T200 30 V40 H0Z" fill="#eaa6e1"/>
+              </g></g>
+              <rect x="14" y="20" width="172" height="18" rx="6" fill="#3b0f4a"/>
+              <path d="M22 34h156l-14 176a8 8 0 0 1-8 7H44a8 8 0 0 1-8-7Z" fill="none" stroke="#3b0f4a" stroke-width="6"/>
+            </svg>
+            <span class="litros"><span id="lUm">1</span><small>L</small></span>
+          </div>
         </div>
-        <p class="conta"><span>5 de 2 L = 1 de 10 L</span></p>
+        <p class="conta"><span>1 de 10 L = 5 de 2 L = 10 de 1 L</span></p>
         <p class="nota-ilus">Desenho em escala de volume. Embalagem ilustrativa.</p>
       </div>
     </section>
@@ -318,10 +344,20 @@ footer a{text-underline-offset:3px}
       <h2 id="t-pedido">Monte o pedido.</h2>
       <div class="grade">
         <div>
+          <p class="sub-sabor">Açaí</p>
           <div class="produto"><div><b>10 L</b><span>Açaí</span></div>
-            <div class="qtd"><button type="button" class="menos" data-p="10" data-d="-1" aria-label="Tirar um de 10 litros" disabled>−</button><output id="q10" aria-live="polite">0</output><button type="button" class="mais" data-p="10" data-d="1" aria-label="Pôr um de 10 litros">+</button></div></div>
+            <div class="qtd"><button type="button" class="menos" data-k="acai-10" data-d="-1" aria-label="Tirar um Açaí de 10 litros" disabled>−</button><output id="q-acai-10" aria-live="polite">0</output><button type="button" class="mais" data-k="acai-10" data-d="1" aria-label="Pôr um Açaí de 10 litros">+</button></div></div>
           <div class="produto"><div><b>2 L</b><span>Açaí</span></div>
-            <div class="qtd"><button type="button" class="menos" data-p="2" data-d="-1" aria-label="Tirar um de 2 litros" disabled>−</button><output id="q2" aria-live="polite">0</output><button type="button" class="mais" data-p="2" data-d="1" aria-label="Pôr um de 2 litros">+</button></div></div>
+            <div class="qtd"><button type="button" class="menos" data-k="acai-2" data-d="-1" aria-label="Tirar um Açaí de 2 litros" disabled>−</button><output id="q-acai-2" aria-live="polite">0</output><button type="button" class="mais" data-k="acai-2" data-d="1" aria-label="Pôr um Açaí de 2 litros">+</button></div></div>
+          <div class="produto"><div><b>1 L</b><span>Açaí</span></div>
+            <div class="qtd"><button type="button" class="menos" data-k="acai-1" data-d="-1" aria-label="Tirar um Açaí de 1 litro" disabled>−</button><output id="q-acai-1" aria-live="polite">0</output><button type="button" class="mais" data-k="acai-1" data-d="1" aria-label="Pôr um Açaí de 1 litro">+</button></div></div>
+          <p class="sub-sabor">Cupuaçu</p>
+          <div class="produto"><div><b>10 L</b><span>Cupuaçu</span></div>
+            <div class="qtd"><button type="button" class="menos" data-k="cupuacu-10" data-d="-1" aria-label="Tirar um Cupuaçu de 10 litros" disabled>−</button><output id="q-cupuacu-10" aria-live="polite">0</output><button type="button" class="mais" data-k="cupuacu-10" data-d="1" aria-label="Pôr um Cupuaçu de 10 litros">+</button></div></div>
+          <div class="produto"><div><b>2 L</b><span>Cupuaçu</span></div>
+            <div class="qtd"><button type="button" class="menos" data-k="cupuacu-2" data-d="-1" aria-label="Tirar um Cupuaçu de 2 litros" disabled>−</button><output id="q-cupuacu-2" aria-live="polite">0</output><button type="button" class="mais" data-k="cupuacu-2" data-d="1" aria-label="Pôr um Cupuaçu de 2 litros">+</button></div></div>
+          <div class="produto"><div><b>1 L</b><span>Cupuaçu</span></div>
+            <div class="qtd"><button type="button" class="menos" data-k="cupuacu-1" data-d="-1" aria-label="Tirar um Cupuaçu de 1 litro" disabled>−</button><output id="q-cupuacu-1" aria-live="polite">0</output><button type="button" class="mais" data-k="cupuacu-1" data-d="1" aria-label="Pôr um Cupuaçu de 1 litro">+</button></div></div>
           <div class="palete" aria-hidden="true">
             <p class="vazio" id="vazio">O palete está vazio.</p>
             <div class="pilha" id="pilha"></div>
@@ -519,7 +555,7 @@ footer a{text-underline-offset:3px}
 
   /* botão "Pedir tabela": já abre o WhatsApp com a mensagem */
   document.querySelectorAll('.js-tabela').forEach(function(a){
-    a.href = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent('Oi, Péçaí! Vim pelo site. Tenho um comércio e quero a tabela do açaí no atacado (10 L e 2 L).');
+    a.href = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent('Oi, Péçaí! Vim pelo site. Tenho um comércio e quero a tabela do açaí e do cupuaçu no atacado (10 L, 2 L e 1 L).');
   });
 
   /* topo sólido, botão flutuante */
@@ -533,7 +569,10 @@ footer a{text-underline-offset:3px}
   addEventListener('scroll', rolou, { passive: true }); rolou();
 
   /* WOW 3: pedido */
-  var qtd = { 10: 0, 2: 0 }, freq = 'Só desta vez', receb = 'entrega';
+  var ITENS = [['acai-10','Açaí',10],['acai-2','Açaí',2],['acai-1','Açaí',1],['cupuacu-10','Cupuaçu',10],['cupuacu-2','Cupuaçu',2],['cupuacu-1','Cupuaçu',1]];
+  function zera(){ var q = {}; ITENS.forEach(function(it){ q[it[0]] = 0; }); return q; }
+  function litros(){ return ITENS.reduce(function(t, it){ return t + qtd[it[0]] * it[2]; }, 0); }
+  var qtd = zera(), freq = 'Só desta vez', receb = 'entrega';
   var pilha = document.getElementById('pilha'), vazio = document.getElementById('vazio');
   var previa = document.getElementById('previa'), endereco = document.getElementById('endereco');
   var empresa = document.getElementById('empresa'), nome = document.getElementById('nome');
@@ -542,12 +581,11 @@ footer a{text-underline-offset:3px}
   function mensagem(){
     var m = 'Oi, Péçaí! Vim pelo site.\n';
     if (limpa(empresa.value)) m += 'Empresa: ' + limpa(empresa.value) + '.\n';
-    if (qtd[10] || qtd[2]) {
-      m += 'Quero açaí no atacado:\n';
-      if (qtd[10]) m += '- ' + qtd[10] + 'x 10 L\n';
-      if (qtd[2]) m += '- ' + qtd[2] + 'x 2 L\n';
-      m += 'Total: ' + (qtd[10] * 10 + qtd[2] * 2) + ' litros.\n';
-    } else m += 'Quero a tabela do açaí no atacado (10 L e 2 L).\n';
+    if (litros()) {
+      m += 'Quero no atacado:\n';
+      ITENS.forEach(function(it){ if (qtd[it[0]]) m += '- ' + qtd[it[0]] + 'x ' + it[1] + ' ' + it[2] + ' L\n'; });
+      m += 'Total: ' + litros() + ' litros.\n';
+    } else m += 'Quero a tabela do açaí e do cupuaçu no atacado (10 L, 2 L e 1 L).\n';
     m += 'Frequência: ' + freq.toLowerCase() + '.\n';
     if (receb === 'entrega') m += 'Entrega' + (limpa(endereco.value) ? ' em: ' + limpa(endereco.value) : '') + '.\n';
     else m += 'Retiro na loja do ' + receb + '.\n';
@@ -558,25 +596,27 @@ footer a{text-underline-offset:3px}
   function desenha(novo){
     pilha.textContent = '';
     var n = 0;
-    [10, 2].forEach(function(p){
-      for (var i = 0; i < qtd[p]; i++){
-        var c = document.createElement('span'); c.className = 'cx ' + (p === 10 ? 'g' : 'p'); c.textContent = p + 'L';
-        if (!(novo === p && i === qtd[p] - 1)) c.style.animation = 'none';
+    ITENS.forEach(function(it){
+      var k = it[0], L = it[2];
+      for (var i = 0; i < qtd[k]; i++){
+        var c = document.createElement('span');
+        c.className = 'cx ' + (L === 10 ? 'g' : L === 2 ? 'p' : 's') + (it[1] === 'Cupuaçu' ? ' cup' : '');
+        c.textContent = L + 'L';
+        if (!(novo === k && i === qtd[k] - 1)) c.style.animation = 'none';
         pilha.appendChild(c); n++;
       }
     });
     vazio.style.display = n ? 'none' : '';
-    document.getElementById('q10').textContent = qtd[10];
-    document.getElementById('q2').textContent = qtd[2];
-    document.querySelectorAll('.qtd .menos').forEach(function(b){ b.disabled = !qtd[b.dataset.p]; });
-    document.getElementById('total').textContent = qtd[10] * 10 + qtd[2] * 2;
+    ITENS.forEach(function(it){ document.getElementById('q-' + it[0]).textContent = qtd[it[0]]; });
+    document.querySelectorAll('.qtd .menos').forEach(function(b){ b.disabled = !qtd[b.dataset.k]; });
+    document.getElementById('total').textContent = litros();
     previa.textContent = mensagem();
   }
   document.querySelectorAll('.qtd button').forEach(function(b){
     b.addEventListener('click', function(){
-      var p = +b.dataset.p, d = +b.dataset.d;
-      qtd[p] = Math.max(0, Math.min(40, qtd[p] + d));
-      desenha(d > 0 ? p : null);
+      var k = b.dataset.k, d = +b.dataset.d;
+      qtd[k] = Math.max(0, Math.min(40, qtd[k] + d));
+      desenha(d > 0 ? k : null);
       if (d > 0 && navigator.vibrate) { try { navigator.vibrate(8); } catch(e){} }
     });
   });
@@ -589,6 +629,7 @@ footer a{text-underline-offset:3px}
     });
   }
   grupo('freq', function(v){ freq = v; });
+  grupo('sabor', function(v){ document.getElementById('baldes').setAttribute('data-sabor', v); });
   grupo('receb', function(v){ receb = v; campoEnd.style.display = v === 'entrega' ? '' : 'none'; });
   [endereco, empresa, nome].forEach(function(i){ i.addEventListener('input', function(){ previa.textContent = mensagem(); }); });
   form.addEventListener('submit', function(e){
@@ -597,7 +638,7 @@ footer a{text-underline-offset:3px}
     form.style.display = 'none'; obrigado.classList.add('on'); obrigado.focus();
   });
   document.getElementById('denovo').addEventListener('click', function(){
-    qtd = { 10: 0, 2: 0 }; empresa.value = nome.value = endereco.value = '';
+    qtd = zera(); empresa.value = nome.value = endereco.value = '';
     obrigado.classList.remove('on'); form.style.display = ''; desenha();
   });
   desenha();
@@ -703,11 +744,12 @@ footer a{text-underline-offset:3px}
 
   /* WOW 2: as embalagens enchem com a rolagem e os litros contam (vale também sem animação: estado final cheio) */
   var nDez = document.getElementById('nivelDez'), nDois = document.getElementById('nivelDois');
+  var nUm = document.getElementById('nivelUm'), lUm = document.getElementById('lUm');
   var lDez = document.getElementById('lDez'), lDois = document.getElementById('lDois');
   function enche(p){
     var a = Math.min(1, p / 0.8);                 // termina de encher em 80% da seção e fica cheio
-    gsap.set(nDez, { y: 190 * (1 - a) }); gsap.set(nDois, { y: 190 * (1 - a) });
-    lDez.textContent = Math.round(10 * a); lDois.textContent = (2 * a).toFixed(a < 1 ? 1 : 0).replace('.', ',');
+    gsap.set([nDez, nDois, nUm], { y: 190 * (1 - a) });
+    lDez.textContent = Math.round(10 * a); lDois.textContent = (2 * a).toFixed(a < 1 ? 1 : 0).replace('.', ','); lUm.textContent = a.toFixed(a < 1 ? 1 : 0).replace('.', ',');
   }
   if (reduz || embed) { enche(1); ScrollTrigger.refresh(); return; }
   enche(0);

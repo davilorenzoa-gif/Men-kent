@@ -29,7 +29,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - WhatsApp comercial (Davi): (11) 96465-0141. Venda 100% pelo WhatsApp.
 - Hospedagem no Netlify da GuDev (`proposta-<nome>.netlify.app` → `<nome>.netlify.app`); domínio no nome do cliente no registro.br.
 - Prospecção: até 20 mensagens novas/dia por pessoa, blocos de 5 a cada ~30 min. Nunca disparo em massa. 1º contato manda vídeo de 15s, não link.
-- 1ª venda combinada: **Katraka**, R$ 600 em 2x (10/11/2026). Falta confirmar o pagamento; até lá, seção de cases vazia. Outro lead quente: ENTRElinhas (avó do Davi). Péçaí (açaí real em Guarulhos, `sites/pecai`): desde 10/11 o site é **só atacado B2B (10 L e 2 L)**; falta embalagem real, preço, pedido mínimo e região de entrega.
+- 1ª venda combinada: **Katraka**, R$ 600 em 2x (10/11/2026). Falta confirmar o pagamento; até lá, seção de cases vazia. Outro lead quente: ENTRElinhas (avó do Davi). Péçaí (açaí real em Guarulhos, `sites/pecai`): desde 10/11 o site é **só atacado B2B: açaí e cupuaçu de 10, 2 e 1 L**; falta embalagem real, preço, pedido mínimo e região de entrega.
 - Demos e conceitos, **nunca case**: Prumo, Fornalha, Faixa Vermelha, Lustro, Órbita, Vértice, 911, DOZE, Meridiano, Skyline, APEX, Espelho, Basalto, Moenda, Sulco. Lista em `04`.
 - `sites/glassy-dashboard` (painel em React/Tailwind): base se algum cliente pedir painel/sistema. É produto novo: preço e prazo a definir antes de oferecer.
 - Repertório de animação atualizado em 10/11 (logo em bolinhas, cortina que enche, máscara de texto, folha sobre o herói, gota no clique, borda que acende, obrigado em círculo): `03`, seção "Repertório".
