@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Colonial | Churrascaria, Hamburgueria e Pizzaria na Zona Leste de SP</title>
+<meta name="description" content="Colonial: churrascaria, hamburgueria e pizzaria em 4 unidades na Zona Leste de São Paulo (Cohab II, Jardim Aricanduva, Parque Paineiras e Itaquera). Peça pelo WhatsApp.">
+<meta name="theme-color" content="#0D0B0A">
+<link rel="canonical" href="https://colonial.netlify.app/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Colonial | Brasa, chapa e forno">
+<meta property="og:description" content="Churrascaria, hamburgueria e pizzaria em 4 unidades na Zona Leste de São Paulo.">
+<meta property="og:url" content="https://colonial.netlify.app/">
+<meta property="og:image" content="https://colonial.netlify.app/img/og-colonial.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Sorts+Mill+Goudy:ital@0;1&display=swap">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Colonial Churrascaria, Hamburgueria e Pizzaria",
+  "url": "https://colonial.netlify.app/",
+  "logo": "https://colonial.netlify.app/img/logo-colonial.webp",
+  "sameAs": ["https://www.instagram.com/colonialpizzaria/", "https://www.facebook.com/colonialpizzaria/"],
+  "subOrganization": [
+    {"@type": "Restaurant", "name": "Colonial - Cohab II", "servesCuisine": ["Churrasco", "Hambúrguer", "Pizza"], "telephone": "+55-11-2074-1100",
+     "address": {"@type": "PostalAddress", "streetAddress": "R. Virgínia Ferni, 1758", "addressLocality": "São Paulo", "addressRegion": "SP", "postalCode": "08253-001", "addressCountry": "BR"}},
+    {"@type": "Restaurant", "name": "Colonial - Jardim Aricanduva", "servesCuisine": ["Churrasco", "Hambúrguer", "Pizza"], "telephone": "+55-11-2721-8512",
+     "address": {"@type": "PostalAddress", "streetAddress": "Av. Luís Pires de Minas, 1387", "addressLocality": "São Paulo", "addressRegion": "SP", "postalCode": "03453-100", "addressCountry": "BR"}},
+    {"@type": "Restaurant", "name": "Colonial - Parque Paineiras", "servesCuisine": ["Churrasco", "Hambúrguer", "Pizza"], "telephone": "+55-11-2042-2323",
+     "address": {"@type": "PostalAddress", "streetAddress": "Av. Águia de Haia, 1210", "addressLocality": "São Paulo", "addressRegion": "SP", "postalCode": "03694-000", "addressCountry": "BR"}},
+    {"@type": "Restaurant", "name": "Colonial - Itaquera", "servesCuisine": ["Churrasco", "Hambúrguer", "Pizza"],
+     "address": {"@type": "PostalAddress", "streetAddress": "Av. José Pinheiro Borges, s/n", "addressLocality": "São Paulo", "addressRegion": "SP", "postalCode": "08220-900", "addressCountry": "BR"}}
+  ]
+}
+</script>
+<style>
+/* ================= CORES (método das 3 cores) =================
+   --base    Carvão Colonial  #0D0B0A  fundo do logo, clima de brasa apagada (~60%)
+   --segunda Cobre Colonial   #E49C5D  laranja do logo: títulos e objeto principal (~30%)
+   --acento  Brasa            #C93A1E  só no botão do WhatsApp, na brasa da abertura e no ponto ativo (~10%)
+   --creme é a segunda clareada (texto corrido), --pedra é o cinza do rendilhado do logo */
+:root{
+  --base:#0D0B0A; --segunda:#E49C5D; --acento:#C93A1E;
+  --creme:#F3E7DA; --pedra:#5E5E5F;
+  --base-2:#17130F; --linha:rgba(228,156,93,.18);
+  --serif:"Sorts Mill Goudy",Georgia,"Times New Roman",serif;
+  --sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --gut:clamp(16px,4vw,56px);
+  --mola:cubic-bezier(.22,1,.36,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:72px}
+body{background:var(--base);color:var(--creme);font-family:var(--sans);font-size:17px;line-height:1.55;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img,video,canvas{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--segunda);outline-offset:3px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.pular{position:fixed;left:12px;top:-60px;z-index:200;background:var(--segunda);color:var(--base);padding:10px 14px;border-radius:8px;font-weight:600;text-decoration:none}
+.pular:focus{top:12px}
+
+/* ----- tipografia ----- */
+.rotulo{font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--segunda)}
+.titulo{font-family:var(--serif);font-weight:400;color:var(--segunda);font-size:clamp(2.4rem,7vw,5.6rem);line-height:.98;letter-spacing:-.01em;text-wrap:balance}
+.titulo em{font-style:italic;color:var(--creme)}
+.texto{color:rgba(243,231,218,.78);max-width:46ch;text-wrap:pretty}
+.ilustra{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(243,231,218,.55)}
+
+/* ----- botões ----- */
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;transition:transform .35s var(--mola),background-color .3s,color .3s,border-color .3s;will-change:transform}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-zap{background:var(--acento);color:#fff}
+.btn-zap:hover{background:#B23217}
+.btn-linha{border:1px solid rgba(228,156,93,.45);color:var(--segunda)}
+.btn-linha:hover{background:rgba(228,156,93,.1);border-color:var(--segunda)}
+.btn:active{transform:scale(.97)}
+
+/* ----- topo ----- */
+.topo{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px var(--gut);transition:background-color .4s,backdrop-filter .4s,transform .5s var(--mola)}
+.topo.solido{background:rgba(13,11,10,.82);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--linha)}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none}
+.marca img{width:40px;height:40px;border-radius:50%}
+.marca span{font-family:var(--serif);font-size:24px;color:var(--segunda);line-height:1}
+.nav{display:flex;gap:28px;align-items:center}
+.nav a{text-decoration:none;font-size:14px;color:rgba(243,231,218,.8);position:relative;padding:6px 0}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--segunda);transform:scaleX(0);transform-origin:right;transition:transform .4s var(--mola)}
+.nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav .btn{min-height:42px;padding:0 18px;color:#fff}
+.nav .btn::after{display:none}
+.menu-btn{display:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--linha);place-items:center}
+.menu-btn i{display:block;width:18px;height:1.5px;background:var(--creme);position:relative;transition:transform .3s}
+.menu-btn i::before,.menu-btn i::after{content:"";position:absolute;left:0;width:18px;height:1.5px;background:var(--creme);transition:transform .3s}
+.menu-btn i::before{top:-6px}.menu-btn i::after{top:6px}
+.aberto .menu-btn i{background:transparent}
+.aberto .menu-btn i::before{transform:translateY(6px) rotate(45deg)}
+.aberto .menu-btn i::after{transform:translateY(-6px) rotate(-45deg)}
+@media (max-width:860px){
+  .menu-btn{display:grid}
+  .nav{position:fixed;inset:0;z-index:-1;flex-direction:column;justify-content:center;gap:22px;background:rgba(13,11,10,.97);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+  .nav a{font-family:var(--serif);font-size:34px;color:var(--segunda)}
+  .aberto .nav{opacity:1;visibility:visible}
+}
+
+/* =========== WOW 1: o medalhão acende ===========
+   O logo monta (anel de letras + rendilhado + C). Rolando, o disco do meio vira a janela
+   da picanha sendo cortada e a janela cresce até tomar a tela. */
+.abertura{position:relative;height:270svh}
+.palco{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
+.janela{position:absolute;inset:0;clip-path:circle(var(--r,0px) at 50% 50%);will-change:clip-path}
+.janela video,.janela img{width:100%;height:100%;object-fit:cover}
+.janela::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,11,10,.35) 0%,rgba(13,11,10,0) 35%,rgba(13,11,10,.2) 60%,rgba(13,11,10,.92) 100%);opacity:var(--sombra,0)}
+.medalha{--d:min(80vw,64svh,560px);position:relative;width:var(--d);height:var(--d);will-change:transform}
+.anel{position:absolute;inset:0;width:100%;height:100%;overflow:visible;will-change:transform}
+.anel text{font-family:var(--serif);fill:var(--segunda);font-size:8.6px;letter-spacing:.02em}
+.anel tspan{opacity:0;transition:opacity .5s}
+.montado .anel tspan{opacity:1}
+.disco{position:absolute;inset:19.5%;border-radius:50%;will-change:transform,opacity}
+.disco img{width:100%;height:100%;border-radius:50%}
+.brasa{position:absolute;inset:19.5%;border-radius:50%;box-shadow:0 0 0 0 rgba(201,58,30,0);transition:box-shadow 1.2s var(--mola)}
+.montado .brasa{box-shadow:0 0 80px 6px rgba(201,58,30,.35),0 0 0 1px rgba(228,156,93,.2)}
+.js .disco{opacity:0;transform:scale(.72) rotate(-24deg);transition:opacity 1s .2s,transform 1.4s .2s var(--mola)}
+.js .montado .disco{opacity:1;transform:none}
+.dica{position:absolute;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:rgba(243,231,218,.6);transition:opacity .4s}
+.dica i{width:1px;height:38px;background:linear-gradient(var(--segunda),transparent);animation:pinga 1.8s infinite var(--mola);transform-origin:top}
+@keyframes pinga{0%{transform:scaleY(0)}60%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+.hero-txt{position:absolute;left:var(--gut);right:var(--gut);bottom:calc(9svh + env(safe-area-inset-bottom));display:grid;gap:18px;max-width:1100px;pointer-events:none}
+.hero-txt.vivo{pointer-events:auto}
+.hero-txt h1{font-family:var(--serif);font-weight:400;font-size:clamp(3rem,10.5vw,8.6rem);line-height:.92;color:var(--creme);letter-spacing:-.015em}
+.hero-txt h1 .l{display:block;overflow:hidden;padding-bottom:.06em}
+.hero-txt h1 .l>span{display:block;transform:translateY(135%);visibility:hidden;will-change:transform}
+.hero-txt h1 em{color:var(--segunda)}
+.hero-txt p{max-width:44ch;color:rgba(243,231,218,.85);opacity:0;transform:translateY(16px);transition:opacity .6s,transform .8s var(--mola)}
+.hero-txt .acoes{display:flex;flex-wrap:wrap;gap:12px;opacity:0;transform:translateY(16px);transition:opacity .6s .1s,transform .8s .1s var(--mola)}
+.hero-txt.vivo p,.hero-txt.vivo .acoes{opacity:1;transform:none}
+.hero-txt .ilustra{position:absolute;right:0;bottom:-4svh}
+
+/* ----- seções gerais ----- */
+.secao{padding:clamp(88px,14vw,170px) var(--gut)}
+.cabeca{display:grid;gap:18px;margin-bottom:clamp(40px,6vw,72px);max-width:1200px}
+.sobe{opacity:0;transform:translateY(28px);transition:opacity .8s,transform 1s var(--mola)}
+.sobe.ok{opacity:1;transform:none}
+
+/* ----- As três casas ----- */
+.casas{display:flex;gap:12px;height:min(78svh,720px);max-width:1440px}
+.casa{position:relative;flex:1;min-width:0;border-radius:20px;overflow:hidden;text-decoration:none;background:var(--base-2);transition:flex-grow .8s var(--mola);isolation:isolate}
+.casa:hover,.casa:focus-visible{flex-grow:2.1}
+.casa .midia{position:absolute;inset:0;z-index:-1}
+.casa .midia img,.casa .midia video{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--mola),filter .8s}
+.casa:hover .midia img,.casa:hover .midia video{transform:scale(1.05)}
+.casa .midia::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,11,10,.1) 30%,rgba(13,11,10,.88) 100%)}
+.casa .pizza-gira{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,#2a1d14,var(--base-2) 70%)}
+.casa .pizza-gira img{border-radius:50%;width:78%;height:auto;max-width:420px;aspect-ratio:1;object-fit:contain;animation:gira 40s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.casa .info{position:absolute;left:0;right:0;bottom:0;padding:clamp(20px,2.4vw,32px);display:grid;gap:8px}
+.casa .num{font-size:12px;letter-spacing:.2em;color:var(--segunda)}
+.casa h3{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,3.4vw,3.3rem);line-height:1;color:var(--creme)}
+.casa p{font-size:15px;color:rgba(243,231,218,.8);max-width:32ch}
+.casa .ir{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--segunda)}
+.casa .ir svg{width:16px;height:16px;transition:transform .4s var(--mola)}
+.casa:hover .ir svg{transform:translateX(4px)}
+@media (max-width:860px){
+  .casas{flex-direction:column;height:auto}
+  .casa{height:62svh;min-height:380px;flex:none}
+  .casa:hover,.casa:focus-visible{flex-grow:0}
+}
+
+/* ----- Churrasco: a faca abre a foto ----- */
+.churras{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:center;max-width:1300px}
+.corte{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:588/390;background:var(--base-2)}
+.corte img{width:100%;height:100%;object-fit:cover;transform:scale(1.12);transition:transform 1.6s var(--mola)}
+.js .corte img{clip-path:polygon(0 0,0 0,0 100%,0 100%);transition:clip-path 1.3s var(--mola),transform 1.6s var(--mola)}
+.corte.ok img{clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:none}
+.corte .lamina{position:absolute;top:-10%;bottom:-10%;width:3px;left:0;background:linear-gradient(180deg,transparent,#fff 30%,#fff 70%,transparent);box-shadow:0 0 18px rgba(255,255,255,.7);opacity:0;transform:rotate(8deg)}
+.corte.ok .lamina{animation:lamina 1.3s var(--mola) forwards}
+@keyframes lamina{0%{left:0;opacity:1}85%{opacity:1}100%{left:100%;opacity:0}}
+.corte .ilustra{position:absolute;right:12px;bottom:10px;background:rgba(13,11,10,.55);padding:3px 8px;border-radius:6px}
+.lista-pontos{list-style:none;display:grid;gap:12px;margin:26px 0 30px}
+.lista-pontos li{display:flex;gap:12px;align-items:baseline;color:rgba(243,231,218,.86)}
+.lista-pontos li::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--segunda);transform:translateY(-2px)}
+@media (max-width:860px){.churras{grid-template-columns:minmax(0,1fr)}}
+
+/* =========== WOW 2: o hambúrguer abre com a rolagem =========== */
+.burger{position:relative;height:330svh;background:#121110}
+.burger .palco{display:block}
+.burger canvas{position:absolute;inset:0;width:100%;height:100%}
+.burger .veu{position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,17,16,.92) 0%,rgba(18,17,16,.55) 32%,rgba(18,17,16,0) 55%),linear-gradient(0deg,rgba(18,17,16,.9),rgba(18,17,16,0) 30%);pointer-events:none}
+.burger .lado{position:absolute;left:var(--gut);top:50%;transform:translateY(-50%);width:min(44ch,40vw);display:grid;gap:22px}
+.frases{position:relative;height:3.3em;font-family:var(--serif);font-size:clamp(2.2rem,4.6vw,4.4rem);line-height:1;color:var(--creme)}
+.frase{position:absolute;inset:0 auto auto 0;opacity:0;transform:translateY(.4em);transition:opacity .5s,transform .7s var(--mola)}
+.frase.at{opacity:1;transform:none}
+.frase em{color:var(--segunda)}
+.trilho{height:2px;background:rgba(243,231,218,.14);border-radius:2px;overflow:hidden;max-width:280px}
+.trilho i{display:block;height:100%;width:100%;background:var(--segunda);transform-origin:left;transform:scaleX(0)}
+.burger .ilustra{position:absolute;right:var(--gut);bottom:20px}
+@media (max-width:860px){
+  .burger .veu{background:linear-gradient(0deg,rgba(18,17,16,.96) 18%,rgba(18,17,16,.4) 42%,rgba(18,17,16,0) 60%),linear-gradient(180deg,rgba(18,17,16,.8),rgba(18,17,16,0) 22%)}
+  .burger .lado{top:auto;bottom:calc(7svh + env(safe-area-inset-bottom));transform:none;right:var(--gut);width:auto;gap:16px}
+  .frases{height:2.3em;font-size:clamp(2rem,9vw,2.8rem)}
+  .burger .ilustra{top:84px;bottom:auto}
+}
+
+/* =========== WOW 3: letreiro de pizzas (o disco vira uma letra do nome) =========== */
+.pizzas{background:var(--segunda);color:var(--base);overflow:hidden}
+.pizzas .rotulo{color:var(--base)}
+.pizzas .titulo{color:var(--base)}
+.pizzas .titulo em{color:var(--base);opacity:.6}
+.pizzas .texto{color:rgba(13,11,10,.78)}
+.letreiro{position:relative;display:grid;place-items:center;min-height:clamp(190px,34vw,460px);margin:0 calc(var(--gut) * -1);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.nome{position:relative;font-family:var(--serif);font-size:var(--fs,clamp(4rem,16vw,13rem));line-height:1;letter-spacing:-.02em;color:var(--base);white-space:nowrap;display:flex}
+.nome .c{display:inline-block;transition:transform .7s var(--mola),opacity .5s;will-change:transform}
+.nome .c.oculta{color:transparent;margin:0 .2em}
+.nome.sai .c{transform:translateY(-.5em);opacity:0}
+.nome.entra .c{transform:translateY(.5em);opacity:0;transition:none}
+.disco-pizza{position:absolute;width:var(--pz,1.2em);height:var(--pz,1.2em);left:0;top:0;pointer-events:none;will-change:transform;filter:drop-shadow(0 18px 24px rgba(13,11,10,.35));border-radius:50%}
+.disco-pizza img{width:100%;height:100%;border-radius:50%}
+.pz-info{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 40px;align-items:end;max-width:1300px;margin-top:clamp(20px,3vw,36px)}
+.pz-desc{display:grid;gap:8px}
+.pz-desc strong{font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.1}
+.pz-desc span{color:rgba(13,11,10,.75);max-width:52ch}
+.pz-ctrl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.seta{width:52px;height:52px;border-radius:50%;border:1px solid rgba(13,11,10,.35);display:grid;place-items:center;transition:background-color .3s,transform .3s var(--mola)}
+.seta:hover{background:rgba(13,11,10,.08)}
+.seta:active{transform:scale(.94)}
+.seta svg{width:20px;height:20px}
+.pontos{display:flex;gap:6px;flex-wrap:wrap;margin-top:22px}
+.pontos button{min-height:36px;padding:0 14px;border-radius:999px;border:1px solid rgba(13,11,10,.25);font-size:14px;color:var(--base);transition:background-color .3s,color .3s}
+.pontos button[aria-pressed="true"]{background:var(--base);color:var(--segunda)}
+.pizzas .btn-zap{color:#fff}
+.pizzas .ilustra{color:rgba(13,11,10,.6)}
+.pz-extra{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-size:14px;color:rgba(13,11,10,.78)}
+.pz-extra b{font-weight:600;color:var(--base)}
+@media (max-width:700px){.pz-info{grid-template-columns:minmax(0,1fr)}}
+
+/* ----- Unidades ----- */
+.unid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:clamp(20px,3vw,40px);max-width:1300px}
+.unid-lista{display:grid;gap:10px;align-content:start}
+.u{position:relative;text-align:left;border:1px solid var(--linha);border-radius:16px;padding:18px 20px;display:grid;gap:4px;transition:border-color .3s,background-color .3s}
+.u:hover{border-color:rgba(228,156,93,.45)}
+.u[aria-pressed="true"]{border-color:var(--segunda);background:rgba(228,156,93,.07)}
+.u .n{font-family:var(--serif);font-size:26px;color:var(--segunda);line-height:1.1}
+.u .e{font-size:15px;color:rgba(243,231,218,.78)}
+.u .marc{position:absolute;right:18px;top:20px;width:12px;height:12px;border-radius:50%;border:1px solid rgba(228,156,93,.5)}
+.u[aria-pressed="true"] .marc{background:var(--acento);border-color:var(--acento);box-shadow:0 0 0 5px rgba(201,58,30,.2)}
+.unid-mapa{display:grid;grid-template-rows:minmax(0,1fr) auto;border-radius:20px;overflow:hidden;border:1px solid var(--linha);background:var(--base-2);min-height:460px}
+.unid-mapa .mapa{position:relative;min-height:300px;background:radial-gradient(circle at 50% 50%,#211a14,var(--base-2))}
+.unid-mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.4) contrast(1.05)}
+.unid-acoes{display:flex;flex-wrap:wrap;gap:10px;padding:16px;border-top:1px solid var(--linha)}
+.unid-acoes .aviso{flex-basis:100%;font-size:13px;color:rgba(243,231,218,.6)}
+@media (max-width:860px){.unid{grid-template-columns:minmax(0,1fr)}.unid-mapa{min-height:420px}}
+
+/* ----- FAQ ----- */
+.faq{max-width:900px;display:grid}
+.faq details{border-bottom:1px solid var(--linha)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:22px 0;font-family:var(--serif);font-size:clamp(1.3rem,2.4vw,1.7rem);color:var(--creme)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{flex:none;width:28px;height:28px;border-radius:50%;border:1px solid var(--linha);position:relative;transition:transform .4s var(--mola)}
+.faq summary i::before,.faq summary i::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.5px;background:var(--segunda);transform:translate(-50%,-50%)}
+.faq summary i::after{transform:translate(-50%,-50%) rotate(90deg)}
+.faq details[open] summary i{transform:rotate(45deg)}
+.faq details p{padding:0 0 24px;color:rgba(243,231,218,.78);max-width:62ch}
+
+/* ----- Final + rodapé ----- */
+.final{text-align:center;display:grid;justify-items:center;gap:26px}
+.final img{width:min(56vw,280px);border-radius:50%;animation:gira 60s linear infinite}
+.rodape{border-top:1px solid var(--linha);padding:40px var(--gut) calc(40px + env(safe-area-inset-bottom));display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;font-size:14px;color:rgba(243,231,218,.65)}
+.rodape nav{display:flex;flex-wrap:wrap;gap:8px 22px}
+.rodape a{text-decoration:none}
+.rodape a:hover{color:var(--segunda)}
+
+/* ----- Zap flutuante + aviso de "pronto" ----- */
+.zap-flut{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;width:58px;height:58px;border-radius:50%;background:var(--acento);color:#fff;display:none;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.45);transform:scale(0);transition:transform .5s var(--mola)}
+.zap-flut svg{width:28px;height:28px}
+.zap-flut.ve{transform:scale(1)}
+@media (max-width:860px){.zap-flut{display:grid}}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));z-index:80;transform:translate(-50%,30px);opacity:0;pointer-events:none;background:var(--creme);color:var(--base);padding:14px 18px;border-radius:14px;font-size:15px;width:min(92vw,420px);display:flex;gap:12px;align-items:center;box-shadow:0 20px 50px rgba(0,0,0,.5);transition:opacity .4s,transform .6s var(--mola)}
+.toast.ve{opacity:1;transform:translate(-50%,0)}
+.toast .ok{flex:none;width:30px;height:30px;border-radius:50%;background:var(--acento);display:grid;place-items:center;color:#fff}
+.toast .ok svg{width:16px;height:16px}
+
+/* ----- modo prévia (?embed): tudo no estado final ----- */
+.embed .abertura{height:auto}
+.embed .abertura .palco{position:relative;height:100vh}
+.embed .janela{clip-path:none}
+.embed .janela::after{opacity:1}
+.embed .medalha,.embed .dica{display:none}
+.embed .hero-txt h1 .l>span{transform:none;visibility:visible}
+.embed .hero-txt p,.embed .hero-txt .acoes{opacity:1;transform:none}
+.embed .burger{height:auto}
+.embed .burger .palco{position:relative;height:100vh}
+.embed .sobe,.embed .corte img{opacity:1;transform:none;clip-path:none}
+.embed .zap-flut,.embed .toast{display:none!important}
+
+@media (prefers-reduced-motion:reduce){
+  .casa .pizza-gira img,.final img{animation:none}
+  .sobe{transform:none;transition:opacity .4s}
+  .js .corte img{clip-path:none;transform:none;opacity:0;transition:opacity .5s}
+  .corte.ok img{opacity:1}
+  .corte .lamina{display:none}
+  .nome .c{transition:opacity .3s}
+  .nome.sai .c,.nome.entra .c{transform:none}
+}
+</style>
+<script>document.documentElement.classList.add('js');if(/[?&]embed\b/.test(location.search))document.documentElement.classList.add('embed');</script>
+</head>
+<body>
+<a class="pular" href="#casas">Pular para o conteúdo</a>
+
+<header class="topo" id="topo">
+  <a class="marca" href="#inicio" aria-label="Colonial, voltar ao início">
+    <img src="img/logo-colonial-96.png" alt="" width="40" height="40">
+    <span>Colonial</span>
+  </a>
+  <nav class="nav" id="nav" aria-label="Seções">
+    <a href="#casas">As casas</a>
+    <a href="#burger">Hambúrguer</a>
+    <a href="#pizzas">Pizzas</a>
+    <a href="#unidades">Unidades</a>
+    <a class="btn btn-zap" href="#" data-zap="geral">Pedir</a>
+  </nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav"><i></i></button>
+</header>
+
+<main>
+<!-- ========== WOW 1 ========== -->
+<section class="abertura" id="inicio" aria-label="Abertura">
+  <div class="palco" id="palcoHero">
+    <div class="janela" id="janela">
+      <video id="vHero" muted playsinline loop preload="none" poster="media/picanha-poster.webp" aria-label="Picanha sendo fatiada no espeto (vídeo ilustrativo)">
+        <source data-src="media/picanha-corte.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="medalha" id="medalha" aria-hidden="true">
+      <div class="brasa"></div>
+      <div class="disco" id="disco"><img src="img/medalhao.webp" alt="" width="480" height="480"></div>
+      <svg class="anel" id="anel" viewBox="0 0 100 100">
+        <defs><path id="circ" d="M50,50 m-43.5,0 a43.5,43.5 0 1,1 87,0 a43.5,43.5 0 1,1 -87,0"/></defs>
+        <text><textPath href="#circ" id="anelTxt" textLength="272" lengthAdjust="spacing"></textPath></text>
+      </svg>
+    </div>
+    <div class="dica" id="dica"><span>Role</span><i></i></div>
+    <div class="hero-txt" id="heroTxt">
+      <h1><span class="l"><span>Brasa, chapa</span></span><span class="l"><span><em>e forno.</em></span></span></h1>
+      <p>Churrascaria, hamburgueria e pizzaria numa casa só. Quatro unidades na Zona Leste de São Paulo.</p>
+      <div class="acoes">
+        <a class="btn btn-zap" href="#" data-zap="geral"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg>Pedir pelo WhatsApp</a>
+        <a class="btn btn-linha" href="#unidades">Ver as 4 unidades</a>
+      </div>
+      <span class="ilustra">vídeo ilustrativo</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== As três casas ========== -->
+<section class="secao" id="casas" aria-labelledby="t-casas">
+  <div class="cabeca sobe">
+    <span class="rotulo">Uma casa, três cozinhas</span>
+    <h2 class="titulo" id="t-casas">Escolha pela <em>fome</em>.</h2>
+  </div>
+  <div class="casas sobe">
+    <a class="casa" href="#churrasco">
+      <div class="midia"><img src="img/picanha-espeto.webp" alt="Picanha no espeto sendo fatiada com faca (foto ilustrativa)" width="588" height="390" loading="lazy"></div>
+      <div class="info">
+        <span class="num">01</span>
+        <h3>churrascaria</h3>
+        <p>Picanha na brasa, no prato ou em marmita no delivery.</p>
+        <span class="ir">Ver o churrasco <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </a>
+    <a class="casa" href="#burger">
+      <div class="midia"><video muted playsinline loop preload="none" poster="media/burger-queijo-poster.webp" aria-label="Queijo cheddar derretendo sobre o hambúrguer (vídeo ilustrativo)"><source data-src="media/burger-queijo.mp4" type="video/mp4"></video></div>
+      <div class="info">
+        <span class="num">02</span>
+        <h3>hamburgueria</h3>
+        <p>Hambúrguer de chapa com queijo derretendo.</p>
+        <span class="ir">Ver o hambúrguer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </a>
+    <a class="casa" href="#pizzas">
+      <div class="midia"><div class="pizza-gira"><img src="img/pizza-calabresa.webp" alt="Pizza de calabresa vista de cima (foto ilustrativa)" width="560" height="560" loading="lazy"></div></div>
+      <div class="info">
+        <span class="num">03</span>
+        <h3>pizzaria</h3>
+        <p>Salgada ou doce, até 2 sabores. E esfiha também.</p>
+        <span class="ir">Ver as pizzas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ========== Churrasco ========== -->
+<section class="secao" id="churrasco" aria-labelledby="t-churras" style="padding-top:0">
+  <div class="churras">
+    <figure class="corte" id="corte">
+      <img src="img/picanha-espeto.webp" alt="Faca cortando a picanha direto do espeto (foto ilustrativa)" width="588" height="390" loading="lazy">
+      <span class="lamina" aria-hidden="true"></span>
+      <figcaption class="ilustra">foto ilustrativa</figcaption>
+    </figure>
+    <div class="sobe">
+      <span class="rotulo">01 · Churrascaria</span>
+      <h2 class="titulo" id="t-churras" style="margin-top:16px">Do espeto <em>pro prato</em>.</h2>
+      <ul class="lista-pontos">
+        <li>Picanha com a capa de gordura dourada na brasa.</li>
+        <li>No salão ou em marmita no delivery.</li>
+        <li>Pede pelo WhatsApp da unidade mais perto.</li>
+      </ul>
+      <a class="btn btn-zap" href="#" data-zap="churrasco"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg>Pedir churrasco</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WOW 2 ========== -->
+<section class="burger" id="burger" aria-labelledby="t-burger">
+  <div class="palco" id="palcoBurger">
+    <canvas id="tela" role="img" aria-label="Hambúrguer que se abre em camadas: pão, queijo, carne, bacon, tomate e alface (vídeo ilustrativo)"></canvas>
+    <div class="veu"></div>
+    <div class="lado">
+      <span class="rotulo" id="t-burger">02 · Hamburgueria</span>
+      <div class="frases" aria-live="off">
+        <p class="frase at">O pão <em>abre</em>.</p>
+        <p class="frase">O queijo <em>escorre</em>.</p>
+        <p class="frase">Cada camada <em>no lugar</em>.</p>
+        <p class="frase">E fecha, <em>pronto pra sair</em>.</p>
+      </div>
+      <div class="trilho" aria-hidden="true"><i id="trilho"></i></div>
+      <div><a class="btn btn-zap" href="#" data-zap="burger"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg>Pedir hambúrguer</a></div>
+    </div>
+    <span class="ilustra">vídeo ilustrativo</span>
+  </div>
+  <template id="quadros">
+    <img src="media/burger/f01.webp" alt=""><img src="media/burger/f02.webp" alt=""><img src="media/burger/f03.webp" alt=""><img src="media/burger/f04.webp" alt=""><img src="media/burger/f05.webp" alt=""><img src="media/burger/f06.webp" alt=""><img src="media/burger/f07.webp" alt=""><img src="media/burger/f08.webp" alt=""><img src="media/burger/f09.webp" alt=""><img src="media/burger/f10.webp" alt="">
+    <img src="media/burger/f11.webp" alt=""><img src="media/burger/f12.webp" alt=""><img src="media/burger/f13.webp" alt=""><img src="media/burger/f14.webp" alt=""><img src="media/burger/f15.webp" alt=""><img src="media/burger/f16.webp" alt=""><img src="media/burger/f17.webp" alt=""><img src="media/burger/f18.webp" alt=""><img src="media/burger/f19.webp" alt=""><img src="media/burger/f20.webp" alt="">
+    <img src="media/burger/f21.webp" alt=""><img src="media/burger/f22.webp" alt=""><img src="media/burger/f23.webp" alt=""><img src="media/burger/f24.webp" alt=""><img src="media/burger/f25.webp" alt=""><img src="media/burger/f26.webp" alt=""><img src="media/burger/f27.webp" alt=""><img src="media/burger/f28.webp" alt=""><img src="media/burger/f29.webp" alt=""><img src="media/burger/f30.webp" alt="">
+    <img src="media/burger/f31.webp" alt=""><img src="media/burger/f32.webp" alt="">
+  </template>
+</section>
+
+<!-- ========== WOW 3 ========== -->
+<section class="secao pizzas" id="pizzas" aria-labelledby="t-pizzas">
+  <div class="cabeca sobe" style="margin-bottom:10px">
+    <span class="rotulo">03 · Pizzaria</span>
+    <h2 class="titulo" id="t-pizzas">Arrasta e <em>escolhe</em>.</h2>
+  </div>
+  <div class="letreiro" id="letreiro" aria-roledescription="carrossel" aria-label="Sabores de pizza">
+    <div class="nome" id="nome" aria-live="polite"></div>
+    <div class="disco-pizza" id="discoPizza"><img id="imgPizza" alt="" width="560" height="560"></div>
+  </div>
+  <div class="pz-info">
+    <div class="pz-desc">
+      <strong id="pzTitulo">Calabresa</strong>
+      <span id="pzTxt"></span>
+      <span class="ilustra">foto ilustrativa · sabores a confirmar no cardápio de cada unidade</span>
+    </div>
+    <div class="pz-ctrl">
+      <button class="seta" id="pzAnt" aria-label="Sabor anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <button class="seta" id="pzProx" aria-label="Próximo sabor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <a class="btn btn-zap" href="#" data-zap="pizza" id="pzPedir"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg>Pedir essa</a>
+    </div>
+  </div>
+  <div class="pontos" id="pontos" role="group" aria-label="Escolher sabor"></div>
+  <div class="pz-extra"><span><b>Salgada ou doce</b>, até 2 sabores</span><span><b>Esfiha</b> também sai</span></div>
+  <template id="fotosPizza">
+    <img data-k="img/pizza-calabresa.webp" src="img/pizza-calabresa.webp" alt=""><img data-k="img/pizza-mussarela.webp" src="img/pizza-mussarela.webp" alt=""><img data-k="img/pizza-portuguesa.webp" src="img/pizza-portuguesa.webp" alt=""><img data-k="img/pizza-frango-catupiry.webp" src="img/pizza-frango-catupiry.webp" alt=""><img data-k="img/pizza-rucula.webp" src="img/pizza-rucula.webp" alt="">
+  </template>
+</section>
+
+<!-- ========== Unidades ========== -->
+<section class="secao" id="unidades" aria-labelledby="t-unid">
+  <div class="cabeca sobe">
+    <span class="rotulo">4 unidades · Zona Leste de SP</span>
+    <h2 class="titulo" id="t-unid">Tem uma Colonial <em>perto</em>.</h2>
+    <p class="texto">Toca na unidade pra ver no mapa. O pedido pelo site já vai com o nome dela.</p>
+  </div>
+  <div class="unid">
+    <div class="unid-lista" id="unidLista" role="group" aria-label="Escolher unidade"></div>
+    <div class="unid-mapa">
+      <div class="mapa" id="mapa"></div>
+      <div class="unid-acoes">
+        <a class="btn btn-zap" href="#" data-zap="unidade"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg>Pedir nessa unidade</a>
+        <a class="btn btn-linha" id="uLigar" href="#">Ligar</a>
+        <a class="btn btn-linha" id="uRota" href="#" target="_blank" rel="noopener">Como chegar</a>
+        <span class="aviso">O horário muda de unidade pra unidade: liga antes de sair.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="secao" id="duvidas" aria-labelledby="t-faq" style="padding-top:0">
+  <div class="cabeca sobe"><span class="rotulo">Dúvidas</span><h2 class="titulo" id="t-faq">Antes de <em>pedir</em>.</h2></div>
+  <div class="faq">
+    <details><summary>Quantas unidades a Colonial tem?<i></i></summary><p>Quatro, todas na Zona Leste de São Paulo: Cohab II (José Bonifácio), Jardim Aricanduva, Parque Paineiras e Itaquera. Endereço e telefone de cada uma estão em <a href="#unidades">Unidades</a>.</p></details>
+    <details><summary>Tem delivery?<i></i></summary><p>Tem. Dá pra pedir pelo WhatsApp aqui do site ou pelo app de entrega (a Colonial está no 99Food).</p></details>
+    <details><summary>A pizza pode ser de dois sabores?<i></i></summary><p>Pode. Salgada ou doce, até 2 sabores na mesma pizza.</p></details>
+    <details><summary>Tem esfiha?<i></i></summary><p>Tem. Pede o cardápio completo da sua unidade no WhatsApp.</p></details>
+    <details><summary>Qual o horário de funcionamento?<i></i></summary><p>Muda de unidade pra unidade. Toca em "Ligar" na unidade mais perto e confirma antes de sair.</p></details>
+    <details><summary>O pedido pelo site já sai feito?<i></i></summary><p>Não. O site só monta a mensagem e abre o seu WhatsApp. Você confere, ajusta se quiser e envia.</p></details>
+  </div>
+</section>
+
+<!-- ========== Final ========== -->
+<section class="secao final" aria-labelledby="t-final">
+  <img src="img/logo-colonial.webp" alt="Logo da Colonial: um C laranja sobre rendilhado, cercado por churrascaria, hamburgueria e pizzaria" width="800" height="800" loading="lazy">
+  <h2 class="titulo" id="t-final">Bateu a fome? <em>Chama.</em></h2>
+  <a class="btn btn-zap" href="#" data-zap="geral"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg>Pedir pelo WhatsApp</a>
+</section>
+</main>
+
+<footer class="rodape">
+  <span>© <span id="ano">2026</span> Colonial · churrascaria · hamburgueria · pizzaria</span>
+  <nav aria-label="Rodapé">
+    <a href="https://www.instagram.com/colonialpizzaria/" target="_blank" rel="noopener">Instagram @colonialpizzaria</a>
+    <a href="#unidades">Unidades</a>
+    <a href="privacidade.html">Privacidade</a>
+    <a href="https://gudev-sites.netlify.app" target="_blank" rel="noopener">Site por GuDev</a>
+  </nav>
+</footer>
+
+<a class="zap-flut" id="zapFlut" href="#" data-zap="geral" aria-label="Pedir pelo WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg></a>
+<div class="toast" id="toast" role="status"><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span><span>Abrimos seu WhatsApp com a mensagem pronta. É só conferir e enviar.</span></div>
+
+<script>
+/* ====== CONFIG: dados reais (fonte: busca em diretórios + Facebook @colonialpizzaria, 12/11/2026). CONFIRMAR com o dono. ====== */
+var CONFIG = {
+  // WhatsApp central: usei o fixo da Cohab II (aparece no Facebook). Confirmar qual número atende WhatsApp em cada unidade.
+  whatsapp: '551120741100',
+  unidades: [
+    { id:'cohab',     nome:'Cohab II',          bairro:'José Bonifácio',   end:'R. Virgínia Ferni, 1758 · Cohab II', cep:'08253-001', tel:'1120741100', telTxt:'(11) 2074-1100' },
+    { id:'aricanduva',nome:'Jardim Aricanduva', bairro:'Aricanduva',       end:'Av. Luís Pires de Minas, 1387 · Jd. Aricanduva', cep:'03453-100', tel:'1127218512', telTxt:'(11) 2721-8512' },
+    { id:'paineiras', nome:'Parque Paineiras',  bairro:'Parque Paineiras', end:'Av. Águia de Haia, 1210 · Pq. Paineiras', cep:'03694-000', tel:'1120422323', telTxt:'(11) 2042-2323' },
+    { id:'itaquera',  nome:'Itaquera',          bairro:'Itaquera',         end:'Av. José Pinheiro Borges, s/n · Itaquera', cep:'08220-900', tel:'', telTxt:'' }
+  ],
+  pizzas: [
+    { nome:'Calabresa',  titulo:'Calabresa',            img:'img/pizza-calabresa.webp',       txt:'Calabresa fatiada sobre mussarela.' },
+    { nome:'Mussarela',  titulo:'Mussarela',            img:'img/pizza-mussarela.webp',       txt:'A clássica: molho e mussarela gratinada.' },
+    { nome:'Portuguesa', titulo:'Portuguesa',           img:'img/pizza-portuguesa.webp',      txt:'Presunto, ovo, cebola, azeitona e mussarela.' },
+    { nome:'Frango',     titulo:'Frango com Catupiry',  img:'img/pizza-frango-catupiry.webp', txt:'Frango desfiado com Catupiry.' },
+    { nome:'Rúcula',     titulo:'Rúcula',               img:'img/pizza-rucula.webp',          txt:'Rúcula fresca por cima, depois do forno.' }
+  ]
+};
+</script>
+<script>
+/* ====== Colonial · motor do site (JS puro, sem biblioteca) ====== */
+(function(){
+  var $ = function(s,c){return (c||document).querySelector(s)};
+  var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+  var html = document.documentElement;
+  var embed = html.classList.contains('embed');
+  var dentro = window.parent !== window;
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var clamp = function(v,a,b){return v<a?a:v>b?b:v};
+  var faixa = function(p,a,b){return clamp((p-a)/(b-a),0,1)};
+  var suave = function(t){return t*t*(3-2*t)};
+  var unidade = CONFIG.unidades[0];
+  var pizzaAt = 0;
+  $('#ano').textContent = new Date().getFullYear();
+
+  /* ---------- vídeos: só carregam perto da tela (MIDIA = versão de arquivo único) ---------- */
+  function ligaVideo(v){
+    if (!v || v.dataset.ok) return; v.dataset.ok = 1;
+    $$('source[data-src]', v).forEach(function(s){ var k = s.getAttribute('data-src'); s.src = (window.MIDIA && window.MIDIA[k]) || k; });
+    v.load();
+  }
+  var vids = $$('video');
+  if ('IntersectionObserver' in window) {
+    var vio = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        var v = e.target;
+        if (e.isIntersecting) { ligaVideo(v); if (!reduz) { var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); } }
+        else if (!v.paused) v.pause();
+      });
+    }, {rootMargin:'200px 0px'});
+    vids.forEach(function(v){ vio.observe(v); });
+  } else vids.forEach(ligaVideo);
+
+  /* ---------- WhatsApp: mensagem pronta por contexto + estado de "obrigado" ---------- */
+  function msg(tipo){
+    var u = 'Unidade: ' + unidade.nome + '.';
+    var p = CONFIG.pizzas[pizzaAt];
+    var m = {
+      geral:     'Oi, Colonial! Vim pelo site e quero fazer um pedido. ' + u,
+      churrasco: 'Oi, Colonial! Vim pelo site e quero pedir churrasco. Pode me mandar as opções de hoje? ' + u,
+      burger:    'Oi, Colonial! Vim pelo site e quero pedir hambúrguer. Pode me mandar o cardápio? ' + u,
+      pizza:     'Oi, Colonial! Vim pelo site e quero uma pizza de ' + p.titulo + '. ' + u,
+      unidade:   'Oi, Colonial ' + unidade.nome + '! Vim pelo site e quero fazer um pedido.'
+    };
+    return m[tipo] || m.geral;
+  }
+  var toast = $('#toast'), tt;
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('[data-zap]');
+    if (!a) return;
+    e.preventDefault();
+    var url = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(msg(a.getAttribute('data-zap'))) + '&utm_source=site&utm_campaign=' + a.getAttribute('data-zap');
+    window.open(url, '_blank', 'noopener');
+    if (window.goatcounter && goatcounter.count) goatcounter.count({path:'zap-' + a.getAttribute('data-zap'), event:true});
+    toast.classList.add('ve'); clearTimeout(tt); tt = setTimeout(function(){ toast.classList.remove('ve'); }, 4200);
+    fechaMenu();
+  });
+
+  /* ---------- menu do celular ---------- */
+  var topo = $('#topo'), menuBtn = $('#menuBtn');
+  function fechaMenu(){ topo.classList.remove('aberto'); menuBtn.setAttribute('aria-expanded','false'); menuBtn.setAttribute('aria-label','Abrir menu'); }
+  menuBtn.addEventListener('click', function(){
+    var ab = !topo.classList.contains('aberto');
+    topo.classList.toggle('aberto', ab); menuBtn.setAttribute('aria-expanded', ab); menuBtn.setAttribute('aria-label', ab ? 'Fechar menu' : 'Abrir menu');
+  });
+  $$('#nav a').forEach(function(a){ a.addEventListener('click', fechaMenu); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') fechaMenu(); });
+
+  /* ---------- WOW 1: anel de letras do logo ---------- */
+  var frase = 'churrascaria · hamburgueria · pizzaria · ';
+  var tp = $('#anelTxt');
+  frase.split('').forEach(function(ch, i){
+    var s = document.createElementNS('http://www.w3.org/2000/svg','tspan');
+    s.textContent = ch; s.style.transitionDelay = (reduz ? 0 : i * 22) + 'ms'; tp.appendChild(s);
+  });
+  var medalha = $('#medalha'), anel = $('#anel'), disco = $('#disco'), janela = $('#janela'), heroTxt = $('#heroTxt'), dica = $('#dica');
+  var linhas = $$('.hero-txt h1 .l>span');
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ medalha.classList.add('montado'); }); });
+
+  /* ---------- WOW 2: quadros do hambúrguer ---------- */
+  var tela = $('#tela'), ctx = tela.getContext('2d');
+  var quadros = $$('img', $('#quadros').content).map(function(i){ return i.getAttribute('src'); });
+  var imgs = [], carregou = false, quadroAt = -1;
+  function carregaQuadros(){
+    if (carregou) return; carregou = true;
+    quadros.forEach(function(src, i){ var im = new Image(); im.decoding = 'async'; im.onload = function(){ if (i === 0 || quadroAt === -1) desenha(alvoQuadro, true); }; im.src = src; imgs[i] = im; });
+  }
+  var dpr = 1, cw = 0, ch = 0, alvoQuadro = 0;
+  function medeTela(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cw = tela.clientWidth; ch = tela.clientHeight;
+    tela.width = Math.round(cw * dpr); tela.height = Math.round(ch * dpr);
+    desenha(alvoQuadro, true);
+  }
+  function desenha(n, forca){
+    n = clamp(Math.round(n), 0, quadros.length - 1);
+    if (n === quadroAt && !forca) return;
+    // procura o quadro carregado mais perto
+    var im = null;
+    for (var d = 0; d < quadros.length && !im; d++) {
+      var a = imgs[n - d], b = imgs[n + d];
+      if (a && a.complete && a.naturalWidth) im = a; else if (b && b.complete && b.naturalWidth) im = b;
+    }
+    if (!im) return;
+    quadroAt = n;
+    var W = tela.width, H = tela.height, iw = im.naturalWidth, ih = im.naturalHeight;
+    var retrato = cw < ch * 1.05;
+    var esc = retrato ? Math.max(W / iw, (H * 0.58) / ih) : Math.max(W / iw, H / ih);
+    var dw = iw * esc, dh = ih * esc;
+    var dx = (W - dw) / 2 + (retrato ? 0 : W * 0.12), dy = retrato ? H * 0.36 - dh / 2 : (H - dh) / 2;
+    ctx.fillStyle = '#121110'; ctx.fillRect(0, 0, W, H);
+    ctx.drawImage(im, dx, dy, dw, dh);
+  }
+  var frasesEl = $$('.frase'), fraseAt = 0, trilho = $('#trilho');
+  function trocaFrase(p){
+    // 4 frases, folga de 8% perto da troca pra não ficar piscando
+    var alvo = fraseAt, n = frasesEl.length, tam = 1 / n, fol = 0.08 * tam;
+    while (alvo < n - 1 && p > (alvo + 1) * tam + fol) alvo++;
+    while (alvo > 0 && p < alvo * tam - fol) alvo--;
+    if (alvo !== fraseAt) { frasesEl[fraseAt].classList.remove('at'); frasesEl[alvo].classList.add('at'); fraseAt = alvo; }
+  }
+
+  /* ---------- progresso das seções presas (uma conta só, por getBoundingClientRect) ---------- */
+  var abertura = $('#inicio'), palcoHero = $('#palcoHero'), burger = $('#burger'), palcoBurger = $('#palcoBurger');
+  function prog(sec, palco){
+    var r = sec.getBoundingClientRect(), total = sec.offsetHeight - palco.offsetHeight;
+    return total > 0 ? clamp(-r.top / total, 0, 1) : 1;
+  }
+  var vw = innerWidth, vh = palcoHero.offsetHeight;
+  function quadroHero(){
+    if (embed) { heroTxt.classList.add('vivo'); return; }
+    var p = prog(abertura, palcoHero);
+    vh = palcoHero.offsetHeight;
+    var dMed = medalha.offsetWidth, r0 = dMed * 0.305, rMax = Math.hypot(vw, vh) / 2 + 2;
+    var a = suave(faixa(p, 0.02, 0.26));   // disco vira vídeo
+    var b = suave(faixa(p, 0.18, 0.66));   // janela cresce
+    var c = faixa(p, 0.5, 0.86);           // título sobe
+    janela.style.setProperty('--r', (a > 0 ? r0 + (rMax - r0) * b : 0) + 'px');
+    janela.style.setProperty('--sombra', faixa(p, 0.45, 0.8).toFixed(3));
+    disco.style.opacity = medalha.classList.contains('montado') && p > 0.005 ? (1 - a).toFixed(3) : '';
+    anel.style.transform = 'rotate(' + (p * 160).toFixed(2) + 'deg) scale(' + (1 + b * 0.9).toFixed(3) + ')';
+    medalha.style.opacity = (1 - faixa(p, 0.24, 0.5)).toFixed(3);
+    medalha.style.visibility = p > 0.6 ? 'hidden' : '';
+    dica.style.opacity = p > 0.03 ? 0 : 1;
+    linhas.forEach(function(l, i){ var t = suave(faixa(c, i * 0.18, 0.6 + i * 0.18)); l.style.transform = 'translateY(' + ((1 - t) * 135).toFixed(1) + '%)'; l.style.visibility = t > 0 ? '' : 'hidden'; });
+    heroTxt.classList.toggle('vivo', c > 0.55);
+    if (a > 0) { var v = $('#vHero'); ligaVideo(v); if (v.paused && !reduz) { var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); } }
+  }
+  function quadroBurger(){
+    var r = burger.getBoundingClientRect();
+    if (r.top < innerHeight * 2.5 && r.bottom > -innerHeight) carregaQuadros();
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    var p = embed ? 0.4 : prog(burger, palcoBurger);
+    alvoQuadro = p * (quadros.length - 1);
+    desenha(alvoQuadro);
+    trocaFrase(p);
+    trilho.style.transform = 'scaleX(' + p.toFixed(3) + ')';
+  }
+  var zapFlut = $('#zapFlut');
+  if (dentro) zapFlut.style.display = 'none';
+  function quadro(){
+    pedido = false;
+    quadroHero(); quadroBurger();
+    var y = scrollY;
+    topo.classList.toggle('solido', y > innerHeight * 1.6 || embed);
+    zapFlut.classList.toggle('ve', y > innerHeight * 1.2);
+  }
+  var pedido = false;
+  function pede(){ if (!pedido) { pedido = true; requestAnimationFrame(quadro); } }
+  addEventListener('scroll', pede, {passive:true});
+  setInterval(pede, 250); // garantia (iOS às vezes segura o evento de scroll)
+  addEventListener('resize', function(){
+    if (innerWidth === vw) return; // barra do navegador do celular: ignora
+    vw = innerWidth; medeTela(); ajustaNome(); posicionaPizza(); pede();
+  });
+  medeTela(); quadro();
+
+  /* ---------- entradas ao aparecer ---------- */
+  var sobe = $$('.sobe').concat([$('#corte')]);
+  if ('IntersectionObserver' in window && !embed) {
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('ok'); io.unobserve(e.target); } }); }, {rootMargin:'0px 0px -12% 0px'});
+    sobe.forEach(function(el){ io.observe(el); });
+  } else sobe.forEach(function(el){ el.classList.add('ok'); });
+
+  /* ---------- WOW 3: letreiro de pizzas ---------- */
+  var nome = $('#nome'), discoPizza = $('#discoPizza'), imgPizza = $('#imgPizza'), letreiro = $('#letreiro');
+  var pontos = $('#pontos'), ocupado = false, giro = 0;
+  var FOTOS = {}; $$('img', $('#fotosPizza').content).forEach(function(i){ FOTOS[i.getAttribute('data-k')] = i.getAttribute('src'); });
+  CONFIG.pizzas.forEach(function(p){ var im = new Image(); im.src = FOTOS[p.img] || p.img; });
+  CONFIG.pizzas.forEach(function(p, i){
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = p.titulo; b.setAttribute('aria-pressed', i === 0);
+    b.addEventListener('click', function(){ vaiPara(i, i > pizzaAt ? 1 : -1); }); pontos.appendChild(b);
+  });
+  function letraAlvo(t){ // primeira letra redonda depois da inicial (a pizza "vira" essa letra)
+    var low = t.toLowerCase();
+    for (var i = 1; i < low.length; i++) if ('aoeuú'.indexOf(low[i]) > -1) return i;
+    return 1;
+  }
+  function montaNome(p){
+    nome.innerHTML = ''; var k = letraAlvo(p.nome);
+    p.nome.split('').forEach(function(ch, i){
+      var s = document.createElement('span'); s.className = 'c' + (i === k ? ' oculta' : ''); s.textContent = ch;
+      s.style.transitionDelay = (reduz ? 0 : Math.abs(i - k) * 28) + 'ms'; nome.appendChild(s);
+    });
+    nome.setAttribute('aria-label', p.titulo);
+    return k;
+  }
+  function ajustaNome(){
+    nome.style.removeProperty('--fs');
+    var max = letreiro.clientWidth - 24, w = nome.scrollWidth;
+    if (w > max) { var fs = parseFloat(getComputedStyle(nome).fontSize) * max / w; nome.style.setProperty('--fs', fs + 'px'); }
+  }
+  function posicionaPizza(){
+    var alvo = nome.querySelector('.oculta'); if (!alvo) return;
+    // offsetLeft/Top: não sofrem com o transform das letras entrando
+    var fs = parseFloat(getComputedStyle(nome).fontSize), tam = fs * 1.08;
+    discoPizza.style.setProperty('--pz', tam + 'px');
+    discoPizza.dataset.x = nome.offsetLeft + alvo.offsetLeft + alvo.offsetWidth / 2 - tam / 2;
+    discoPizza.dataset.y = nome.offsetTop + alvo.offsetTop + alvo.offsetHeight * 0.55 - tam / 2;
+    discoPizza.style.transform = 'translate(' + discoPizza.dataset.x + 'px,' + discoPizza.dataset.y + 'px) rotate(' + giro + 'deg)';
+  }
+  function mostra(i){
+    var p = CONFIG.pizzas[i];
+    montaNome(p); ajustaNome();
+    imgPizza.src = FOTOS[p.img] || p.img; imgPizza.alt = 'Pizza de ' + p.titulo + ' vista de cima (foto ilustrativa)';
+    $('#pzTitulo').textContent = p.titulo; $('#pzTxt').textContent = p.txt;
+    $$('button', pontos).forEach(function(b, j){ b.setAttribute('aria-pressed', j === i); });
+    posicionaPizza();
+  }
+  function vaiPara(i, dir){
+    i = (i + CONFIG.pizzas.length) % CONFIG.pizzas.length;
+    if (i === pizzaAt || ocupado) return;
+    pizzaAt = i;
+    if (reduz || embed) { mostra(i); return; }
+    ocupado = true;
+    var x = +discoPizza.dataset.x, y = +discoPizza.dataset.y, sai = dir * (innerWidth * 0.75);
+    nome.classList.add('sai');
+    discoPizza.style.transition = 'transform .6s cubic-bezier(.55,0,.75,.2), opacity .5s';
+    giro += dir * 200;
+    discoPizza.style.transform = 'translate(' + (x + sai) + 'px,' + y + 'px) rotate(' + giro + 'deg)';
+    discoPizza.style.opacity = 0;
+    setTimeout(function(){
+      nome.classList.remove('sai'); nome.classList.add('entra');
+      discoPizza.style.transition = 'none';
+      mostra(i);
+      var nx = +discoPizza.dataset.x, ny = +discoPizza.dataset.y;
+      giro -= dir * 260;
+      discoPizza.style.transform = 'translate(' + (nx - sai) + 'px,' + ny + 'px) rotate(' + giro + 'deg)';
+      void discoPizza.offsetWidth; void nome.offsetWidth;
+      nome.classList.remove('entra');
+      giro += dir * 260;
+      discoPizza.style.transition = 'transform .9s cubic-bezier(.22,1,.36,1), opacity .4s';
+      discoPizza.style.transform = 'translate(' + nx + 'px,' + ny + 'px) rotate(' + giro + 'deg)';
+      discoPizza.style.opacity = 1;
+      setTimeout(function(){ ocupado = false; }, 650);
+    }, 560);
+    setTimeout(function(){ ocupado = false; }, 2000); // garantia
+  }
+  $('#pzProx').addEventListener('click', function(){ vaiPara(pizzaAt + 1, 1); });
+  $('#pzAnt').addEventListener('click', function(){ vaiPara(pizzaAt - 1, -1); });
+  letreiro.tabIndex = 0;
+  letreiro.addEventListener('keydown', function(e){ if (e.key === 'ArrowRight') vaiPara(pizzaAt + 1, 1); if (e.key === 'ArrowLeft') vaiPara(pizzaAt - 1, -1); });
+  var x0 = null, y0 = 0;
+  letreiro.addEventListener('pointerdown', function(e){ x0 = e.clientX; y0 = e.clientY; });
+  letreiro.addEventListener('pointerup', function(e){
+    if (x0 === null) return; var dx = e.clientX - x0, dy = e.clientY - y0; x0 = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) vaiPara(pizzaAt + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+  });
+  letreiro.addEventListener('pointercancel', function(){ x0 = null; });
+  mostra(0);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ ajustaNome(); posicionaPizza(); });
+  // gira devagar enquanto está parada (só transform)
+  if (!reduz && !embed) setInterval(function(){ if (ocupado) return; giro += 0.25; discoPizza.style.transition = 'transform .1s linear'; discoPizza.style.transform = 'translate(' + discoPizza.dataset.x + 'px,' + discoPizza.dataset.y + 'px) rotate(' + giro + 'deg)'; }, 100);
+
+  /* ---------- Unidades + mapa ---------- */
+  var lista = $('#unidLista'), mapa = $('#mapa'), mapaVivo = false;
+  CONFIG.unidades.forEach(function(u, i){
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'u'; b.setAttribute('aria-pressed', i === 0);
+    b.innerHTML = '<span class="marc" aria-hidden="true"></span><span class="n"></span><span class="e"></span><span class="e"></span>';
+    $$('span', b)[1].textContent = u.nome;
+    $$('span', b)[2].textContent = u.end + ' · CEP ' + u.cep;
+    $$('span', b)[3].textContent = u.telTxt ? 'Tel. ' + u.telTxt : 'Pedido pelo WhatsApp';
+    b.addEventListener('click', function(){ escolhe(i); });
+    lista.appendChild(b);
+  });
+  function q(u){ return encodeURIComponent('Colonial Churrascaria e Pizzaria, ' + u.end.replace(' · ', ', ') + ', São Paulo - SP, ' + u.cep); }
+  function poeMapa(){
+    var f = mapa.querySelector('iframe');
+    if (!f) { f = document.createElement('iframe'); f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade'; mapa.appendChild(f); }
+    f.title = 'Mapa da Colonial ' + unidade.nome; f.src = 'https://www.google.com/maps?q=' + q(unidade) + '&output=embed';
+  }
+  function escolhe(i){
+    unidade = CONFIG.unidades[i];
+    $$('.u', lista).forEach(function(b, j){ b.setAttribute('aria-pressed', j === i); });
+    var lig = $('#uLigar');
+    if (unidade.tel) { lig.href = 'tel:+55' + unidade.tel; lig.textContent = 'Ligar ' + unidade.telTxt; lig.hidden = false; } else lig.hidden = true;
+    $('#uRota').href = 'https://www.google.com/maps/dir/?api=1&destination=' + q(unidade);
+    if (mapaVivo) poeMapa();
+  }
+  escolhe(0);
+  if ('IntersectionObserver' in window) {
+    var mio = new IntersectionObserver(function(es){ if (es[0].isIntersecting) { mapaVivo = true; poeMapa(); mio.disconnect(); } }, {rootMargin:'400px 0px'});
+    mio.observe(mapa);
+  } else { mapaVivo = true; poeMapa(); }
+})();
+</script>
+<!-- Analytics: GoatCounter (criar a conta "colonial" em goatcounter.com antes de subir) -->
+<script data-goatcounter="https://colonial.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

@@ -142,6 +142,12 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - O primeiro lead que demonstrou interesse real e ia mostrar ao chefe.
 - O site dele virou **a régua mínima de qualidade**: fotos reais recortadas, slogan real, cardápio real e carrinho pro WhatsApp.
 
+## Colonial (churrascaria, hamburgueria e pizzaria), 4 unidades na Zona Leste de SP · lead do Davi (12/11/2026)
+- **Dados (busca, conferir):** Instagram/Facebook @colonialpizzaria, "4 unidades". Cohab II (R. Virgínia Ferni, 1758, (11) 2074-1100), Jardim Aricanduva (Av. Luís Pires de Minas, 1387, (11) 2721-8512), Parque Paineiras (Av. Águia de Haia, 1210/1218, (11) 2042-2323) e Itaquera (Av. José Pinheiro Borges, s/n, dado mais fraco). No 99Food como "Colonial Churrascaria e Pizzaria" I a IV.
+- **Site:** `sites/colonial/` (README tem tudo que falta). Prévia: `sites/colonial/colonial-arquivo-unico.html`.
+- **Falta:** WhatsApp certo (usei o fixo da Cohab II), horários, sabores reais, avaliações do Google, fotos reais.
+- **Andamento:** site pronto pra mostrar. Status do contato: confirmar com o Davi.
+
 ## Demos (NÃO são clientes, nunca usar como case)
 - **Prumo Materiais:** depósito de construção fictício, pra mostrar aos ~20 leads de depósito do Davi.
 - **Órbita Seminovos:** loja de seminovos fictícia (Honda City em 360, imagens do Google Flow), com Reel pronto. Pra mostrar a lojas de carro e estéticas.

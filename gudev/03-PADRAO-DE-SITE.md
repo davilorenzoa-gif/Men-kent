@@ -113,6 +113,12 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - voo pela parede através de duas linhas na névoa até o portfólio se formar na bruma; texto de SEO em cara de teletexto ("Pág. 200").
   - técnica da recriação: câmera = `transform` num mural com `transform-origin:0 0`; interpolar a escala em log e o ponto central do mundo (não o translate), senão a câmera "escorrega". Tela da TV com `inset` em %, nunca `padding` em % (padding usa a largura do pai, não da TV).
 
+- **Colonial** (churrascaria + hamburgueria + pizzaria, 4 unidades, `sites/colonial`, 12/11/2026):
+  - o anel de letras do logo se escreve letra por letra e o disco do meio vira janela de vídeo (picanha), que cresce em `clip-path: circle()` até tomar a tela;
+  - hambúrguer que abre e fecha com a rolagem: 32 quadros do vídeo num canvas preso (no celular a imagem fica no alto e o texto embaixo);
+  - letreiro de pizzas: a pizza ocupa uma letra do nome do sabor (posição por offsetLeft/Top, não getBoundingClientRect, senão erra durante a animação das letras); arrastar/setas trocam com a pizza saindo rolando.
+  - Lição: `arquivo_unico.py` tira a transparência (WebP sem alfa); objeto recortado precisa de `border-radius:50%` no CSS ou ficar em PNG pequeno.
+
 ## Repertório de efeitos prontos (testados, ainda não usados em cliente)
 Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS puro em canvas, sem biblioteca. Testado no celular (09/11/2026). O Davi gostou. Ponto de partida pra variar, nunca pra colar igual.
 - **Nome em partículas:** o texto se forma com ~2.000 pontinhos que voam de todo lado. O dedo empurra e o toque explode, e eles voltam pro lugar.
