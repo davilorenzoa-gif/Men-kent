@@ -50,6 +50,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 ## Site da própria GuDev
 - **Vai pro ar: a página de venda em `sites/gudev/`** (decidido em 10/11/2026): porta de aço laranja, conversa de WhatsApp que se escreve e simulador de mini site.
 - **Antes de subir:** ainda mostra o preço antigo (R$ 297 no adesivo, cartaz, cupom, FAQ, descrição e schema). Trocar pela regra nova (ver `01`).
+- **No ar hoje em `gudev-sites.netlify.app`: a "TV GuDev"** (parede de TVs, portfólio como canais, "Sites que ninguém passa reto"). Visto em vídeo em 11/11/2026; estudo, quadros e problemas em `gudev/aprendizados/tv-gudev/`. **O código não está no repo:** quando o Davi mandar o HTML, salvar em `sites/tv-gudev/`. Confirmar com ele qual das duas (TV ou porta de aço) é a oficial.
 - `gudev/site/` (multipágina de 29/10, com os conceitos Vértice) e a cópia `sites/gudev-site/` ficam só de arquivo. Não sobem. Pra editar o multipágina: `gudev/ferramentas/site/` + `python3 gudev/ferramentas/montar_site.py`.
 - O site não envia nada sozinho: o formulário monta a mensagem e abre o WhatsApp. Projetos ali são só conceitos; case só com cliente real e autorização.
 

@@ -107,6 +107,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - conversa de WhatsApp que se escreve com a rolagem;
   - simulador que monta um mini site com o nome, o tipo e a cor do comércio, e faz chegar uma notificação de pedido;
   - apoio: faixa que inclina com a velocidade, preço que conta de 500 até 297, cupom que sai da impressora, porta que desce no fim.
+- **TV GuDev** (site da GuDev que está no ar em `gudev-sites.netlify.app`, visto em vídeo em 11/11/2026, estudo em `aprendizados/tv-gudev/`):
+  - sala escura com uma parede de TVs com chiado; a lente segue o dedo e foca a TV tocada;
+  - o portfólio vira "canais": a câmera entra em cada TV (CH 01 Fervo, CH 02 Grau, CH 03 Marreta, todos conceito);
+  - voo pela parede através de duas linhas na névoa até o portfólio se formar na bruma; texto de SEO em cara de teletexto ("Pág. 200").
 
 ## Repertório de efeitos prontos (testados, ainda não usados em cliente)
 Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS puro em canvas, sem biblioteca. Testado no celular (09/11/2026). O Davi gostou. Ponto de partida pra variar, nunca pra colar igual.
