@@ -2,7 +2,7 @@
 
 Visto em 11/11/2026, numa gravação de tela do celular do Davi (Chrome no Android, 15 s). A gravação está em `gravacao-celular.mp4` e os quadros em `quadros/01.jpg` a `quadros/12.jpg`.
 
-**Ainda falta o código.** O HTML não está no repositório. O Claude da nuvem não consegue abrir `*.netlify.app` porque a rede bloqueia. Pra virar padrão de verdade, salvar o HTML em `sites/tv-gudev/`: é só o Davi mandar o arquivo, ou baixar pelo painel do Netlify (Deploys → o deploy → Download).
+**Recriado em 12/11/2026 em `sites/tv-gudev/`** (versão do Claude, não o código original). **O código original ainda falta.** O HTML não está no repositório. O Claude da nuvem não consegue abrir `*.netlify.app` porque a rede bloqueia. Pra virar padrão de verdade, salvar o HTML em `sites/tv-gudev/`: é só o Davi mandar o arquivo, ou baixar pelo painel do Netlify (Deploys → o deploy → Download).
 
 ## A ideia
 Uma sala escura onde alguém observa uma parede de televisores. A lente segue o cursor (o dedo, no celular) e ajusta o foco em qualquer aparelho que você toque. Depois a câmera passa voando pela parede, atravessa duas linhas na névoa e encontra o portfólio se formando a partir da bruma. Cada site da GuDev é um "canal".
