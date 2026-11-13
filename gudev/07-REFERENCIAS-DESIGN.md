@@ -8,6 +8,7 @@ Pra achar uma referência: buscar o nome entre aspas no Behance ou no Dribbble.
 ## Onde dá pra buscar (testado)
 - **Abrem bem:** Behance (busca), Dribbble (busca), godly.website (hoje redireciona pra recent.design, mais tech que comércio), onepagelove.com (muitos sites antigos ou fora do ar), motionsites.ai, Framer Marketplace, originkit.dev, 21st.dev, naocodei.com, gsap.com/showcase, Google Maps, Google Fonts, GitHub.
 - **Ferramentas que geram prompt de efeito (o Davi copia e cola aqui):** getlayers.ai (Refract: vidro com refração; 9 padrões). O prompt já vem com o shader GLSL exato, os valores e o layout: é só converter pro padrão GuDev (ver `05`, "Prompt pronto de ferramenta de efeito"). Exemplo convertido: `efeitos/vidro-fosco-refracao.html`.
+- **3D grátis (CC0, pode usar em cliente sem crédito):** polyhaven.com/models (modelos glTF prontos pro Three.js), mais HDRIs (luz e reflexo realista em metal e vidro) e texturas no mesmo site. Baixar em **1K** e comprimir (Draco/meshopt): em 2K/4K cada modelo tem 5 a 50 MB, estoura os ~2 MB da prévia e trava no celular. São objetos genéricos (móveis, ferramentas, louça, plantas, comida), sem marca: servem pra cenário e detalhe, não como produto real do cliente. Anotado em 13/11/2026.
 - **Abre e bloqueia depois de algumas buscas:** land-book.com.
 - **Mostra só ~20 pins e pede login:** Pinterest.
 - **Bloqueados:** Instagram, iFood, CodePen, lapa.ninja, Awwwards, Pexels.
