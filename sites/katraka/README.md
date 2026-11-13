@@ -76,3 +76,5 @@ Abas Fusca, Kombi, Variant, Brasília e SP2 no "Gire a katraka". Fotos que o Dav
 - 10/11: rodapé sem o KATRAKA vazado, só com o logo dele. O Fusca branco do vídeo (quem somos) é de cliente: o Alexandre vai mandar foto de um carro dele pra trocar.
 
 - 10/11: vídeo do "quem somos" trocado pelo Fusca preto rebaixado do próprio Alexandre (`img/fusca-oficina.mp4`).
+
+- 13/11: botão flutuante do WhatsApp subiu (bottom 88px) pra não ficar embaixo do selo "Powered by Netlify" (plano grátis não deixa tirar; Personal US$ 9/mês tira).
