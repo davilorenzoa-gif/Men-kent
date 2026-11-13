@@ -54,3 +54,19 @@ Leva uns 15 minutos por perfil. Antes de salvar, mostre ao Davi o que vai mudar.
 - A pergunta da 1ª mensagem sempre diz o que vai mandar: "Quer que eu te mande os 3 pontos por aqui?" (ou "os 2 pontos", ou "os detalhes" quando for 1). Nunca "te mando as duas".
 - Não mandar mensagem no Zap sozinho: o texto sai pronto e o Davi envia.
 - Textos completos da escada estão em `vendas/google-em-dia-mensagens.md`. Se não tiver acesso à pasta, peça ao Gu.
+
+## Dia 1 do teste (12/11/2026): o que aconteceu e a revisão do Claude
+**Fato (relato do Davi + print da conversa com a David & Colodel Odontologia):**
+- O lead diz "pode mandar", recebe o 1º ponto pra ele mesmo fazer (ex.: resposta de avaliação pronta pra colar) e depois some.
+- Clínica com recepção respondeu só com a saudação automática. Depois foram 4 mensagens nossas no mesmo dia sem resposta ("Aguardo resposta", "ou podem resolver por conta de vocês").
+- O WhatsApp do Davi estava com mensagens temporárias de 24h como padrão: a conversa some antes de o dono ver.
+- Na estratégia antiga (prévia grátis) respondia mais gente, mas a 1ª venda levou 1 mês.
+
+**Revisão (opinião do Claude, ainda não validada com números):**
+- A ideia é boa e 1 dia não prova nada. Decidir só depois de ~60 leads abordados, contando: respondeu / disse sim / fez o ponto / pagou os R$ 97.
+- Vazamento 1: o ponto entregue vira lição de casa e a mensagem termina sem pergunta. Toda entrega termina com uma pergunta fácil e a oferta de fazer o resto ("só paga depois de ver pronto").
+- Vazamento 2: nunca dizer "podem resolver por conta de vocês". Entregar 1 ponto, guardar os outros pro serviço.
+- Vazamento 3: no máximo 1 follow-up, 2 dias depois, com informação nova. Nunca "aguardo resposta".
+- 1ª mensagem: print do perfil do próprio lead com o defeito circulado + texto curto. Prova na tela vale mais que descrição.
+- Priorizar negócio em que o dono atende o Zap (barbearia, oficina, comida pequena). Clínica com recepção/robô: pedir pra encaminhar ao responsável.
+- Desligar as mensagens temporárias do WhatsApp comercial.
