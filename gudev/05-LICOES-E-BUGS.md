@@ -113,3 +113,6 @@
 - **Vídeo de IA (Gemini/Veo) erra número e texto** (Péçaí, 11/11: o pote de 2 L virou "2,5 L" no meio do vídeo, e a legenda dizia "em escala" sem estar). Solução: recortar só a imagem (sem textos), virar folha de quadros guiada pela rolagem e pôr os textos em HTML por cima. Marcar "Imagem ilustrativa".
 - **`img{display:block}` anula o atributo `hidden`.** Toda página precisa de `[hidden]{display:none!important}` (a folha de quadros apareceu inteira na tela).
 - **Elemento que "captura" a roda do mouse não vai no herói.** O cubo 3D sozinho gira com a roda, mas no site isso travaria a página pra quem rola com o mouse em cima dele. No site: arrastar gira, a rolagem da página dá impulso, e no celular `touch-action: pan-y` deixa o dedo rolar a página na vertical.
+
+## Prévia embutida não achou a biblioteca (13/11/2026, Retícula)
+- O `previa_embutida.py` só troca `<script src="https://..." ...>`: o `src` tem que ser o **primeiro** atributo. Com `<script defer src=...>` ele não embute nada e não avisa. Escrever sempre `<script src=... integrity=... crossorigin=... defer>` e conferir na saída a linha `embutido: ...`.
