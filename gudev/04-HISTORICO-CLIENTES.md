@@ -55,6 +55,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Andamento:** o Davi acha que fecha. Prévia feita em 06/11 em `sites/katraka/` (ver o README de lá com o que confirmar).
 - **Pedidos dele (09/11):** quer poder mostrar os trabalhos todo dia → seção ligada no Instagram dele (Behold), sem custo extra por ser prévia. Não gostou do verde → site trocado pra laranja queimado. Prints estáticos enviados pra ele ler.
 - **Preço (10/11):** fechado em **R$ 600, em 3 meses de R$ 200** (não é o preço de lançamento de R$ 297). Neste mês: R$ 100 quando o site sobe no Netlify e R$ 100 quando o domínio estiver ligado; depois R$ 200 em cada um dos 2 meses seguintes.
+- **No ar (13/11/2026):** https://katraka.com.br com cadeado (Let's Encrypt pelo Netlify, renova sozinho). Falta cobrar os 2º R$ 100 deste mês.
 - **Domínio:** `katraka.com.br` é dele (no CNPJ da oficina), DNS do registro.br, zona vazia (nunca apontou pra site), vence em 21/11/2027. Site no Netlify: `katraka-site.netlify.app`.
 - **Site:** Fusca desenhado em SVG que baixa dente por dente em cima do nome; interruptor do farol com foto; raio-x do Fusca; simulador "Gire a katraka"; ordem de serviço com carimbo. Fotos são conceito (do Davi), marcadas como ilustrativas.
 
