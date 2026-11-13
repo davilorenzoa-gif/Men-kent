@@ -2,6 +2,8 @@
 
 SaaS de precificação para restaurantes que vendem no iFood. Calcula o preço que cobre custos, taxas e a margem desejada, mostra quanto sobra de cada venda, simula promoções e aponta os produtos que precisam de revisão.
 
+> Pra pôr no ar sem mexer em código: [COMO-POR-NO-AR.md](COMO-POR-NO-AR.md). Relatório com prints: `RELATORIO.html`.
+
 > Produto da GuDev em desenvolvimento. Preço e plano comercial ainda não definidos. Nenhum dado de cliente real aqui.
 
 ## O que está pronto
