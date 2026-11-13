@@ -75,7 +75,8 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 ## Manter atualizado (importante: é assim que o Claude "aprende")
 O Claude não lembra de uma conversa pra outra. O que ele sabe é o que está neste repositório, na branch padrão.
 - Toda vez que aprender algo (preço, cliente, lição, WOW novo, ferramenta), registrar no arquivo certo de `gudev/` e, se for importante, no resumo acima.
-- Cada conversa trabalha numa branch nova. **Se o trabalho não entrar na branch padrão (merge do PR), a próxima conversa não vê.** No fim de cada conversa, lembrar o Davi de fazer o merge.
+- Cada conversa trabalha numa branch nova. **Se o trabalho não entrar na branch padrão (merge do PR), a próxima conversa não vê.** No fim de cada conversa o Claude faz o merge (ver abaixo).
+- **Merge automático (pedido do Davi em 13/11/2026):** no fim de toda conversa que mudou arquivos, o Claude faz commit, push, abre o PR pra branch padrão e faz o merge sozinho, sem perguntar. Se der conflito ou o merge falhar, avisa o Davi e diz o que travou.
 - Em 10/11/2026 juntamos aqui o trabalho de 32 branches de conversas antigas.
 
 ## Fora da GuDev: `Vídeos Davi/`
