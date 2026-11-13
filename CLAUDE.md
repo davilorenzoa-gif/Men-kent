@@ -7,6 +7,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - Recomendação = qual e por quê. Nada de lista enorme de opções.
 
 ## Fonte da verdade (ler antes de responder sobre preço, mensagens, clientes, design ou processo)
+- `gudev/00-MEMORIA-PALAVRAS-CHAVE.md`: **memória por palavra-chave** de todas as conversas antigas (o que foi feito, quando e onde está). Quando o Davi citar algo de outra conversa, procurar aqui primeiro. No fim de cada conversa, acrescentar a sessão e as palavras novas.
 - `gudev/01-GUDEV-NEGOCIO.md`: oferta, preços, plano mensal, pagamento, domínio, divisão
 - `gudev/02-VENDAS-E-MENSAGENS.md`: Radar, mensagens prontas, follow-up, objeções, limites anti-ban
 - `gudev/03-PADRAO-DE-SITE.md`: 3 WOWs, WOWs já usados, repertório de efeitos, filtro anti-"cara de IA", regras de celular, segurança, checklist de 19 itens
