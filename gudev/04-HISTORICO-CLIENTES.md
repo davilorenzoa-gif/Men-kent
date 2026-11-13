@@ -153,6 +153,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Faixa Vermelha:** garagem de seminovos fictícia (`sites/faixa-vermelha/`).
 - **Fornalha:** padaria fictícia (`sites/fornalha/`, salva do artifact em 10/11).
 - **Lume:** joalheria de alianças fictícia, conceito pro Instagram com aliança em 3D (`sites/lume/`, 11/11/2026).
+- **Retícula:** estúdio de risografia fictício, conceito feito pelo Claude com liberdade total (`sites/reticula/`, 13/11/2026). Shader de retícula, cartaz em camadas e prova de cor. Falta o Davi ver no celular de verdade.
 - **Grau (ótica) e Marreta (reforma):** conceitos que aparecem como CH 02 e CH 03 no site TV GuDev (`gudev-sites.netlify.app`). Código ainda não está no repositório (11/11/2026).
 - **DOZE V12, Espelho, Basalto, Meridiano, APEX, Moenda, Sulco, Fervo:** conceitos e demos de portfólio (`sites/` e `gudev/demos/`).
 - **Davi 26:** trabalho de escola do Davi (`sites/presidente-davi-26/`), nem é GuDev.

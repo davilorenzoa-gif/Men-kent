@@ -102,6 +102,11 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - painel de palhetas (split-flap) com o cardápio inteiro, uma categoria por trecho da rolagem;
   - "Marque na caixa": formulário que imita a caixa kraft real, visto de caneta, total ao vivo, a caixa fecha com fita e vai pro WhatsApp.
 - **Lume** (conceito de joalheria de alianças, `sites/lume`, 11/11/2026): aliança 3D (Three.js) nasce em brasa e esfria até virar ouro; a câmera atravessa a aliança por dentro; os nomes digitados aparecem gravados por dentro, arrastar pra girar, e o par encaixa com tranco e brilho.
+- **Retícula** (conceito de estúdio de risografia, `sites/reticula`, 13/11/2026, sem imagem nenhuma):
+  - abertura em três passadas de tinta (amarelo, rosa, azul) com o rolo varrendo a tela; fundo em shader de retícula (WebGL puro) com pontos que incham no dedo e título que sai do registro;
+  - cartaz que deita e se separa em camadas de tinta com a rolagem, uma acendendo por vez;
+  - "Rode uma prova": palavra, forma, duas tintas, papel e fora de registro; imprime uma passada por vez e vai pro WhatsApp.
+  - técnica: mistura de cor só com `mix-blend-mode:multiply`. Pra blend com 3D, **não usar `preserve-3d`**: cada camada leva o próprio `perspective() rotateX() rotateZ() translateZ()`. Texto com blend sobre um canvas não pode estar dentro de pai com `z-index` (vira contexto de empilhamento e o blend para de enxergar o canvas).
 - **Site da própria GuDev** (página de venda, `sites/gudev`, 05/11/2026):
   - porta de aço laranja que sobe com a rolagem e mostra a rua, com um celular subindo e pedidos chegando;
   - conversa de WhatsApp que se escreve com a rolagem;
