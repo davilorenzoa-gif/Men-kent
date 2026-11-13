@@ -99,3 +99,19 @@ Cada uma tem: gancho → meio → revelação → CTA.
 - **Site de comércio real** só aparece com permissão do dono.
 - **Conteúdo de terceiros** (clipe viral, música, pôster) só se puder usar. Como gancho emprestado, prefira os áudios/trends do próprio app.
 - O CTA leva pro **perfil/link na bio**, e o link leva pro WhatsApp. Sem prometer prazo nem preço no vídeo.
+
+## 9 ideias de post (12/11/2026, sugestão do Claude, ainda não postadas)
+Com Higgsfield (clipes de 5s sem texto na cena; texto entra no CapCut):
+1. "Sua loja está fechada e você nem sabe": porta de aço descendo de dia → perfil sem horário no Google.
+2. "Ele ia entrar na sua loja": pessoa olha o celular e entra no vizinho → sem botão de WhatsApp.
+3. "A estrela que todo cliente novo lê": estrela caindo e rachando → avaliação de 1 estrela sem resposta.
+4. "O site saiu do celular": hambúrguer salta da tela → gravação de tela da Fornalha, marcada como conceito.
+
+Sem Higgsfield:
+5. Carrossel "Olhamos 325 perfis de comércio no Google. 81% têm o mesmo erro" (262 de 325 sem botão de WhatsApp, dado real do Radar).
+6. "Dá pra arrumar isso em 2 minutos": gravação de tela cadastrando o horário no perfil.
+7. Desafio do launch control do 911 ("Meu recorde: X s").
+8. "Temos 17 e 18 anos e fazemos sites pra comércio": os dois na câmera, 15s.
+9. Tela dividida: site comum vs. demo da GuDev.
+
+Ordem sugerida: 5, 1, 8, depois intercalar Google (2, 3, 6) com site (4, 7, 9).
