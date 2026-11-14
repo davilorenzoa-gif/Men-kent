@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vivian-modolo.netlify.app/sitemap.xml

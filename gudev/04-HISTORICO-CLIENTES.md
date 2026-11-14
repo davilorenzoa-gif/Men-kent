@@ -133,6 +133,13 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Fotos da internet:** marcadas como ilustrativas; trocar por fotos da oficina antes de ir pro ar.
 - **Próximo passo:** pegar com o dono WhatsApp, endereço, horário, Instagram, link do Google, serviços que faz e fotos reais da oficina.
 
+## Espaço Vivian Modolo, São Mateus, São Paulo (Zona Leste) · lead do Davi (14/11/2026)
+- Pilates, fisioterapia e estética. WhatsApp (11) 98492-6269. Av. Cláudio Augusto Fernandes, 620 A. Sábado 7h às 10h (outros dias não aparecem). Perfil diz "Eleito o melhor Studio de Pilates da região de São Mateus" (confirmar fonte).
+- Fonte: print do perfil do WhatsApp Business que o Davi mandou. Foto e logo recortados do print (pequenos).
+- **Site (prévia):** `sites/vivian-modolo/` (coluna que se alinha vértebra por vértebra, reformer cujas molas esticam com a rolagem, mapa do corpo que monta a mensagem). Prévia: `sites/vivian-modolo/vivian-modolo-arquivo-unico.html`.
+- **Falta:** fotos reais, logo em arquivo, bairro/CEP, horário de semana, atendimentos de fisio e estética, avaliações do Google, Instagram. Lista no README do site.
+- Status: confirmar com o Davi se já houve contato. Lembrete: desde 11/11 a 1ª oferta é o Google em Dia (`11`); o site entra depois.
+
 ## Eduburger's, Cidade Universitária, Maceió-AL (11/11/2026)
 - Sanduicheria desde 2015 (beirutes, passaportes, hambúrgueres), WhatsApp (82) 98804-7362, Instagram @eduburgers, 4,7 no Google (295 avaliações).
 - O Davi mandou o HTML da prévia pronto pra eu aprender (`sites/eduburgers/`). O rodapé diz "prévia feita pela GuDev, projeto conceito, ainda não é o site oficial".

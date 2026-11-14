@@ -37,6 +37,7 @@
 | **Lume, aliança** | Aliança 3D em Three.js | `sites/lume` |
 | **Lustro, Porsche** | Demo de estética automotiva (26/10, lanterna de inspeção 27/10) | `sites/estetica-lustro`, `sites/lustro-estetica`, `sites/porsche-911` |
 | **Malibu Vieiralves** | Site de 28/10; endereço, WhatsApp e cardápio a confirmar | `sites/malibu-vieiralves` |
+| **Vivian Modolo, pilates, coluna, reformer** | Estúdio de pilates/fisio/estética em São Mateus (14/11): coluna que se alinha, molas do reformer, mapa do corpo | `sites/vivian-modolo`, `04` |
 | **Meridiano** | Site com vídeos do Flow emendados (marina → jato) | `sites/meridiano` |
 | **merge automático** | Desde 13/11 o Claude faz commit, PR e merge no fim da conversa | `CLAUDE.md` |
 | **Mestre das Motos** | Lead real, (11) 96950-1340; ignição, mapa da moto, painel de alertas | `sites/mestre-das-motos` |
@@ -91,6 +92,7 @@
 | 09/11 | Site para menina | Repertório de efeitos (partículas, poeira→forma, botão que foge) |
 | 07/11 | Mensagem para cliente | Pitch R$ 600 (2x R$ 300) + domínio + R$ 60 |
 | 06–07/11 | Skyline site | Vídeo no notebook |
+| 14/11 | Site estúdio de pilates | Espaço Vivian Modolo (`sites/vivian-modolo`) |
 | 06–10/11 | Katraka VW website | 1ª venda |
 | 05/11 | Advanced web design system | Site da GuDev (porta de aço) + Impeccable |
 | 04/11 | Site com efeito glass | Sulco |

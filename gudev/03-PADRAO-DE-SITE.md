@@ -107,6 +107,10 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - cartaz que deita e se separa em camadas de tinta com a rolagem, uma acendendo por vez;
   - "Rode uma prova": palavra, forma, duas tintas, papel e fora de registro; imprime uma passada por vez e vai pro WhatsApp.
   - técnica: mistura de cor só com `mix-blend-mode:multiply`. Pra blend com 3D, **não usar `preserve-3d`**: cada camada leva o próprio `perspective() rotateX() rotateZ() translateZ()`. Texto com blend sobre um canvas não pode estar dentro de pai com `z-index` (vira contexto de empilhamento e o blend para de enxergar o canvas).
+- **Espaço Vivian Modolo** (pilates, fisio e estética, São Mateus-SP, `sites/vivian-modolo`, 14/11/2026):
+  - roll up: 15 vértebras enroladas se alinham de baixo pra cima com física de mola (ângulo'' = k(alvo − ângulo) − c·vel), a cabeça é a bolinha do logo e a curva do logo se desenha; depois respira (8 s, "inspira / solta o ar"), inclina atrás do mouse e o toque manda uma onda pela coluna;
+  - reformer: a rolagem faz 3 repetições, o carrinho sai e volta e as 4 molas (canvas, espiral vista de lado: x = t·passo − cos(φ)·r) esticam de verdade; cada repetição é uma área;
+  - mapa do corpo: pontos tocáveis (botões reais por cima do SVG) + objetivo + período, progresso "Passo 1 de 3", "obrigado" com anel que respira.
 - **Site da própria GuDev** (página de venda, `sites/gudev`, 05/11/2026):
   - porta de aço laranja que sobe com a rolagem e mostra a rua, com um celular subindo e pedidos chegando;
   - conversa de WhatsApp que se escreve com a rolagem;
