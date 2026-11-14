@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3 efeitos React Bits em HTML puro</title>
+<!--
+  GuDev · 3 efeitos inspirados no React Bits (reactbits.dev), reescritos do zero em JS puro,
+  sem React e sem biblioteca. Cada bloco é independente: copiar o CSS + JS da seção que quiser.
+  1. Texto que desembaça (Blur Text)      -> título do herói
+  2. Faixa que acelera com a rolagem (Scroll Velocity) -> faixa de produtos/serviços
+  3. Faísca no toque (Click Spark)        -> botão de pedido / página toda
+  Tudo respeita prefers-reduced-motion. Cores em variáveis: trocar pelas da marca do cliente.
+-->
+<style>
+  :root{
+    --fundo:#14110f; --texto:#f4ece1; --apagado:#a89a8a; --marca:#ff7a1a;
+    --fonte:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  html,body{background:var(--fundo);color:var(--texto);font-family:var(--fonte);overflow-x:hidden}
+  section{min-height:100svh;display:grid;place-content:center;gap:1.2rem;padding:4rem 16px;text-align:center}
+  .rotulo{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--apagado)}
+  .dica{color:var(--apagado);max-width:34ch;margin:0 auto;line-height:1.5}
+
+  /* ===== 1. TEXTO QUE DESEMBAÇA ===== */
+  .desembaca{font-size:clamp(2.4rem,9vw,5.5rem);line-height:1;font-weight:800;letter-spacing:-.03em}
+  .desembaca .pd{display:inline-block;opacity:0;filter:blur(10px);transform:translateY(-.35em);
+    transition:opacity .7s ease,filter .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);
+    transition-delay:calc(var(--i) * 90ms)}
+  .desembaca.vis .pd{opacity:1;filter:blur(0);transform:none}
+
+  /* ===== 2. FAIXA QUE ACELERA COM A ROLAGEM ===== */
+  .faixas{display:grid;gap:.6rem;width:100vw;overflow:hidden}
+  .faixa{display:flex;white-space:nowrap;will-change:transform}
+  .faixa span{font-size:clamp(2rem,8vw,4.5rem);font-weight:800;padding-right:.6em;text-transform:uppercase}
+  .faixa.contorno span{color:transparent;-webkit-text-stroke:1.5px var(--marca)}
+
+  /* ===== 3. FAÍSCA NO TOQUE ===== */
+  .faisca-tela{position:fixed;inset:0;pointer-events:none;z-index:50}
+  .btn{font:700 1.1rem var(--fonte);background:var(--marca);color:#1a0d02;border:0;border-radius:999px;
+    padding:1rem 2rem;cursor:pointer;transition:transform .15s}
+  .btn:active{transform:scale(.96)}
+
+  @media (prefers-reduced-motion:reduce){
+    .desembaca .pd{opacity:1;filter:none;transform:none;transition:none}
+  }
+</style>
+</head>
+<body>
+
+<section>
+  <p class="rotulo">1 · Texto que desembaça</p>
+  <h1 class="desembaca" data-desembaca="palavra">Pão quente saindo agora</h1>
+  <p class="dica">Cada palavra entra borrada e foca. Use <code>data-desembaca="letra"</code> pra ir letra por letra (só em título curto).</p>
+</section>
+
+<section>
+  <p class="rotulo">2 · Faixa que acelera com a rolagem</p>
+  <div class="faixas">
+    <div class="faixa" data-faixa="1"><span>Pão francês</span><span>Café</span><span>Bolo de fubá</span><span>Pão de queijo</span></div>
+    <div class="faixa contorno" data-faixa="-1"><span>Pão francês</span><span>Café</span><span>Bolo de fubá</span><span>Pão de queijo</span></div>
+  </div>
+  <p class="dica">Anda devagar sozinha. Role a página: acelera e vira de sentido junto com o dedo.</p>
+</section>
+
+<section>
+  <p class="rotulo">3 · Faísca no toque</p>
+  <button class="btn" type="button">Pedir no WhatsApp</button>
+  <p class="dica">Toque em qualquer lugar. Faíscas na cor da marca saem do ponto do toque.</p>
+</section>
+
+<canvas class="faisca-tela" aria-hidden="true"></canvas>
+
+<script>
+const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ===== 1. TEXTO QUE DESEMBAÇA ===== */
+document.querySelectorAll('[data-desembaca]').forEach(el => {
+  const porLetra = el.dataset.desembaca === 'letra';
+  const txt = el.textContent.trim();
+  el.setAttribute('aria-label', txt);
+  el.textContent = '';
+  let i = 0;
+  txt.split(' ').forEach((pal, n) => {
+    const partes = porLetra ? [...pal] : [pal];
+    const grupo = document.createElement('span');
+    grupo.style.display = 'inline-block'; grupo.setAttribute('aria-hidden', 'true');
+    partes.forEach(p => {
+      const s = document.createElement('span');
+      s.className = 'pd'; s.textContent = p; s.style.setProperty('--i', i++);
+      grupo.appendChild(s);
+    });
+    el.appendChild(grupo);
+    if (n < txt.split(' ').length - 1) el.appendChild(document.createTextNode(' '));
+  });
+  new IntersectionObserver(([e], o) => {
+    if (e.isIntersecting) { el.classList.add('vis'); o.disconnect(); }
+  }, { threshold: .3 }).observe(el);
+});
+
+/* ===== 2. FAIXA QUE ACELERA COM A ROLAGEM ===== */
+(() => {
+  const faixas = [...document.querySelectorAll('[data-faixa]')].map(el => {
+    el.innerHTML += el.innerHTML + el.innerHTML;            // 3 cópias pra nunca abrir buraco
+    return { el, dir: +el.dataset.faixa, x: 0, w: 0 };
+  });
+  const medir = () => faixas.forEach(f => f.w = f.el.scrollWidth / 3);
+  medir(); addEventListener('resize', medir);
+  if (calmo) return;
+  let ultimoY = scrollY, vel = 0, sentido = 1, antes = performance.now();
+  const BASE = 40; // px por segundo parado
+  (function quadro(t) {
+    const dt = Math.min((t - antes) / 1000, .05); antes = t;
+    const dy = scrollY - ultimoY; ultimoY = scrollY;
+    vel += (dy / Math.max(dt, .001) - vel) * .1;            // suaviza a velocidade da rolagem
+    if (Math.abs(dy) > 0.5) sentido = Math.sign(dy);
+    faixas.forEach(f => {
+      f.x += f.dir * sentido * (BASE + Math.abs(vel) * .35) * dt;
+      f.x = ((f.x % f.w) - f.w) % f.w;                      // mantém entre -w e 0
+      f.el.style.transform = `translate3d(${f.x}px,0,0)`;
+    });
+    requestAnimationFrame(quadro);
+  })(antes);
+})();
+
+/* ===== 3. FAÍSCA NO TOQUE ===== */
+(() => {
+  if (calmo) return;
+  const cv = document.querySelector('.faisca-tela'), cx = cv.getContext('2d');
+  const cor = getComputedStyle(document.documentElement).getPropertyValue('--marca').trim();
+  const QTD = 8, RAIO = 26, TAM = 12, DUR = 420;
+  let faiscas = [], rodando = false;
+  const ajustar = () => { const d = Math.min(devicePixelRatio, 2);
+    cv.width = innerWidth * d; cv.height = innerHeight * d; cx.setTransform(d,0,0,d,0,0); };
+  ajustar(); addEventListener('resize', ajustar);
+  addEventListener('pointerdown', e => {
+    const t = performance.now();
+    for (let i = 0; i < QTD; i++) faiscas.push({ x: e.clientX, y: e.clientY, a: i / QTD * Math.PI * 2, t });
+    if (!rodando) { rodando = true; requestAnimationFrame(desenhar); }
+  }, { passive: true });
+  function desenhar(agora) {
+    cx.clearRect(0, 0, innerWidth, innerHeight);
+    faiscas = faiscas.filter(f => agora - f.t < DUR);
+    cx.strokeStyle = cor; cx.lineWidth = 2; cx.lineCap = 'round';
+    faiscas.forEach(f => {
+      const p = (agora - f.t) / DUR, e = 1 - (1 - p) ** 3;  // desacelera no fim
+      const d = e * RAIO, l = TAM * (1 - e);
+      const c = Math.cos(f.a), s = Math.sin(f.a);
+      cx.beginPath(); cx.moveTo(f.x + c*d, f.y + s*d); cx.lineTo(f.x + c*(d+l), f.y + s*(d+l)); cx.stroke();
+    });
+    if (faiscas.length) requestAnimationFrame(desenhar); else rodando = false;
+  }
+})();
+</script>
+</body>
+</html>

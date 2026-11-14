@@ -473,3 +473,10 @@ Os sites são estáticos: não têm servidor, banco de dados, login nem chave de
 - **Foto pequena (~700px), como as de cardápio de delivery:** o Gu melhora no PC com o Real-ESRGAN (4x, em lote, grátis). Do celular, mande pra ele.
 - **Nunca gastar créditos do Higgsfield sem perguntar.**
 - Comida nunca em 3D feito no código. Sempre foto real, de preferência com o fundo recortado.
+
+## Efeitos React Bits convertidos (14/11/2026)
+Arquivo: `gudev/efeitos/react-bits-convertidos.html`. São 3 efeitos inspirados no reactbits.dev e reescritos do zero em JS puro, sem React e sem biblioteca. Cada bloco é independente e as cores saem de `--marca`.
+1. **Texto que desembaça**: o título entra borrado e foca palavra por palavra (`data-desembaca="letra"` faz letra por letra). Anima `filter: blur`, então usar só no título do herói, nunca em bloco grande.
+2. **Faixa que acelera com a rolagem**: duas faixas de produtos que andam sozinhas, aceleram e mudam de sentido conforme a rolagem. Só `transform`.
+3. **Faísca no toque**: faíscas na cor da marca saem do ponto do toque, desenhadas num canvas por cima.
+Todos respeitam reduced-motion. Pra trazer outro efeito do React Bits: o Davi manda o link e o Claude converte. GSAP e Lenis já são a base dos sites. Origem: vídeo @quaseemprod, "3 tools".
