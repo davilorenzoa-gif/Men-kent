@@ -63,7 +63,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 4. No fim, listar o que precisa confirmar e lembrar: "manda o HTML pro Gu finalizar, gerar a proposta e subir no Netlify". O link pro cliente é sempre o do Netlify.
 
 ## Design e engenharia (todo site ou app, de cliente ou não)
-- Skills em `.claude/skills/`: `impeccable` (processo: init, document, shape, craft, extract, critique, audit, polish) e `design-taste-frontend` (anti-"cara de IA" + redesign). As clássicas (`minimalist-ui`, `industrial-brutalist-ui`, `high-end-visual-design`, `gpt-taste`, `stitch-design-taste`, `design-taste-frontend-v1`) só quando o Davi chamar pelo nome.
+- Skills em `.claude/skills/`: `impeccable` (processo: init, document, shape, craft, extract, critique, audit, polish) e `design-taste-frontend` (anti-"cara de IA" + redesign) e `motion-gudev` (GSAP + Lenis + efeitos do React Bits convertidos, criada pelo Davi em 14/11/2026). As clássicas (`minimalist-ui`, `industrial-brutalist-ui`, `high-end-visual-design`, `gpt-taste`, `stitch-design-taste`, `design-taste-frontend-v1`) só quando o Davi chamar pelo nome.
 - Em conflito, quem manda é `gudev/03-PADRAO-DE-SITE.md` (3 WOWs, HTML único, só dados reais). Os conflitos já mapeados estão no `06`.
 - Pensar como diretor de arte + UX + front + QA. Discordar quando uma ideia piora o resultado e dizer o porquê com uma alternativa.
 - Efeito só com motivo: glassmorphism só sobre imagem e por legibilidade, gradiente só se vier da marca, animar só transform/opacity.
