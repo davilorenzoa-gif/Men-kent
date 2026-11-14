@@ -1,6 +1,6 @@
 # 00 · Memória por palavra-chave
 
-Índice das conversas antigas (21/10 a 13/11/2026), montado a partir da lista de sessões do Claude e do histórico do git.
+Índice das conversas antigas (21/10 a 14/11/2026), montado a partir da lista de sessões do Claude e do histórico do git.
 **Como usar:** procurar a palavra-chave (Ctrl+F) → ver a data, o que aconteceu e onde está no repo. O detalhe completo fica nos arquivos `01` a `11`; aqui é só o mapa.
 **Manter:** no fim de toda conversa, acrescentar uma linha na tabela de sessões e as palavras-chave novas no índice.
 
@@ -47,6 +47,7 @@
 | **Péçaí, atacado** | Açaí real em Guarulhos, site só B2B (10, 2 e 1 L); WhatsApp do atacado (11) 92563-9960 | `sites/pecai`, `04` |
 | **Poly Haven** | Fonte de 3D grátis (CC0) | `07` |
 | **preço, R$ 800, R$ 60** | Referência R$ 800 por site; plano mensal R$ 60 | `01` |
+| **React Bits, GSAP, Lenis, skills** | 14/11: as "3 tools" do vídeo são bibliotecas, não skills. 3 efeitos React Bits convertidos pra HTML puro (texto que desembaça, faixa que acelera com a rolagem, faísca no toque) | `gudev/efeitos/react-bits-convertidos.html`, `03` |
 | **Retícula, risografia** | Conceito de 13/11 (shader de retícula, cartaz em camadas) | `sites/reticula` |
 | **Santo Mimo** | Site em `sites/santo-mimo` | `04` |
 | **Skyline Motors, R34** | Conceito com estúdio 360° e vídeo no notebook (06–07/11) | `sites/skyline-motors` |
