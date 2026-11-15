@@ -1,4 +1,4 @@
-# Campanha "The Digital Presence" (15/11/2026, versão 2)
+# Campanha "The Digital Presence" (15/11/2026, versão final)
 
 Filme de marca da GuDev pro Instagram (Reels/anúncio). 27 s, 1080×1920, 30 fps, com trilha e narração. Arquivo: `gudev-presenca-digital.mp4`.
 A versão 1 (32 s, lenta, com Mestre das Motos e Chersoni) foi trocada: o Davi achou parada e **só Katraka, Andrade e Péçaí podem aparecer como trabalho** (os outros não têm autorização).
@@ -36,6 +36,12 @@ ffmpeg -framerate 60 -i fr/%05d.jpg -i audio.wav -vf "tmix=frames=2:weights='1 1
 - "GuDev" tem que ser escrito **"Gu Dév"** no texto da fala, senão a voz lê errado. As falas e os tempos estão na lista `FALAS` do script.
 - Outras vozes pt-BR do modelo: `pf_dora` (feminina), `pm_santa`.
 
+## Versão final (15/11/2026)
+- O Davi achou a voz do Kokoro com "cara de IA". Ele mesmo gerou a narração no **ElevenLabs (voz "Adam - Dominant, Firm")** e montou a música no CapCut (tirou meus efeitos pra pôr a música dele).
+- O Claude pegou o vídeo do CapCut (mesma imagem, ~1,5 s de preto a mais no fim) e juntou: música do Davi (abaixa na fala) + **só os efeitos** (`projeto/efeitos.py`: pops, digitação, whoosh, alfinete, toques, batida grave do logo, sem a música antiga) + voz do Adam cortada em 8 blocos e encaixada nas cenas (`projeto/mix_final.py`, alguns blocos acelerados 5–10% sem mudar o tom).
+- Refazer: `python3 efeitos.py` (gera `sfx.wav`), `ffmpeg -i narracao.mp3 -ac 1 -ar 44100 el.wav`, `python3 mix_final.py video-do-capcut.mp4 el.wav` e trocar o áudio do vídeo por `final-audio.wav`. Se a narração mudar, ajustar os cortes e tempos na lista `B` do script (os cortes saem do `silencedetect` do ffmpeg).
+- **Lição:** voz sintética grátis soa IA; pro Davi, ElevenLabs (ou voz dele) + música escolhida por ele no CapCut. Claude cuida dos efeitos e do encaixe.
+
 ## Pendências
-- O Claude não ouve áudio: narração e trilha foram conferidas só por tempo e volume. **Ouvir antes de postar** (pronúncia de "GuDev" e "Péçaí/açaí" principalmente). Se a voz sintética não convencer, gravar com a voz do Davi ou do Gu usando a mesma tabela.
+- O Claude não ouve áudio: a mixagem final foi conferida só por tempo e volume (média −12,7 dB, pico −0,6 dB). Sem transcrição, os cortes da voz foram pelas pausas e contagem de sílabas. **Ouvir antes de postar** (pronúncia de "GuDev" e "Péçaí/açaí" principalmente). Se a voz sintética não convencer, gravar com a voz do Davi ou do Gu usando a mesma tabela.
 - Colocar @ e contato no CapCut.
