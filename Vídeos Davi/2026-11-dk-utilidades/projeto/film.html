@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<title>DK Utilidades · filme (atos 1 e 2)</title>
+<style>
+@font-face{font-family:Bodoni;src:url(fontes/bodoni-moda-latin.woff2) format("woff2");font-weight:400 900}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:absolute;inset:0;overflow:hidden;background:#0D0E11}
+.cena{position:absolute;inset:0;overflow:hidden;visibility:hidden}
+.cam{position:absolute;inset:0;transform-origin:540px 860px;will-change:transform}
+.abs{position:absolute;left:0;top:0;will-change:transform,opacity,filter}
+canvas{display:block}
+
+/* ---------- texto ---------- */
+.txt{position:absolute;left:0;width:1080px;text-align:center;font-family:Bodoni,serif;font-weight:600;
+  text-transform:uppercase;letter-spacing:.14em;line-height:1.02;white-space:nowrap}
+.txt .l{display:block}
+.txt .c{display:inline-block;will-change:transform,opacity,filter}
+.ouro .c{background:linear-gradient(180deg,#fff3c4 0%,#e9c65a 34%,#D4AF37 55%,#8a6a16 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 0 #5d470d) drop-shadow(0 4px 0 #3c2e08) drop-shadow(0 14px 22px rgba(0,0,0,.6))}
+.tinta .c{color:#15161a}
+.tinta .dk .c{background:linear-gradient(180deg,#e0bb48 0%,#b98f22 60%,#7c5e12 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{position:absolute;left:0;width:1080px;text-align:center;font:500 25px/1 Inter,sans-serif;letter-spacing:.52em;text-transform:uppercase}
+.fio{position:absolute;left:540px;height:2px;width:420px;margin-left:-210px;background:linear-gradient(90deg,transparent,#D4AF37,transparent)}
+.brilho{position:absolute;left:0;width:1080px;pointer-events:none;mix-blend-mode:screen;
+  background:linear-gradient(100deg,transparent 40%,rgba(255,244,205,.95) 50%,transparent 60%);background-size:300% 100%;background-repeat:no-repeat}
+
+/* ---------- cena 1 e 2 (museu escuro) ---------- */
+.fundo-escuro{position:absolute;inset:0;background:
+  radial-gradient(900px 1100px at 540px 780px,#262019 0%,#14130f 46%,#0D0E11 78%)}
+.raios{position:absolute;left:-1160px;top:-1700px;width:3400px;height:3400px;mix-blend-mode:screen;
+  background:repeating-conic-gradient(from 150deg at 50% 50%,rgba(212,175,55,0) 0deg,rgba(255,225,140,.55) 2.2deg,rgba(212,175,55,0) 5deg,rgba(212,175,55,0) 9deg,rgba(255,214,120,.32) 10.5deg,rgba(212,175,55,0) 13deg);
+  -webkit-mask-image:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.75) 35%,transparent 86%);mask-image:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.75) 35%,transparent 86%);
+  filter:blur(7px)}
+.base{position:absolute;left:0;right:0;top:1180px;height:740px;background:linear-gradient(transparent,rgba(9,10,12,.86) 42%,#0a0b0d 100%);pointer-events:none}
+.vinheta{position:absolute;inset:0;background:radial-gradient(760px 1180px at 540px 880px,transparent 52%,rgba(0,0,0,.78) 100%);pointer-events:none}
+.aro{position:absolute;border-radius:50%;border:5px solid #E2BE4F;box-shadow:0 0 34px rgba(226,190,79,.85),inset 0 0 26px rgba(226,190,79,.55)}
+.flare{position:absolute;height:10px;border-radius:50%;mix-blend-mode:screen;
+  background:radial-gradient(closest-side,#fff 0%,rgba(190,220,255,.9) 18%,rgba(90,150,255,.35) 46%,transparent 100%)}
+.flare2{position:absolute;border-radius:50%;mix-blend-mode:screen;background:radial-gradient(closest-side,#fff 0%,rgba(200,225,255,.8) 22%,rgba(110,160,255,.25) 55%,transparent 100%)}
+.atmos{position:absolute;border-radius:50%;box-shadow:0 0 90px 18px rgba(95,160,255,.38),inset 0 0 60px 10px rgba(120,180,255,.22)}
+.sombra-globo{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 26%,transparent 46%,rgba(4,6,14,.82) 82%)}
+
+/* ---------- cena 3 (filósofo) ---------- */
+.grade{position:absolute;left:-460px;top:-200px;width:2000px;height:2300px;
+  background:
+   linear-gradient(rgba(212,175,55,.16) 2px,transparent 2px) 0 0/200px 200px,
+   linear-gradient(90deg,rgba(212,175,55,.16) 2px,transparent 2px) 0 0/200px 200px,
+   linear-gradient(rgba(212,175,55,.06) 1px,transparent 1px) 0 0/50px 50px,
+   linear-gradient(90deg,rgba(212,175,55,.06) 1px,transparent 1px) 0 0/50px 50px;
+  -webkit-mask-image:radial-gradient(900px 1000px at 50% 46%,#000 0%,transparent 78%);mask-image:radial-gradient(900px 1000px at 50% 46%,#000 0%,transparent 78%)}
+.arco{position:absolute;left:190px;top:170px;width:700px;height:1250px;border:2px solid rgba(212,175,55,.35);border-bottom:0;border-radius:350px 350px 0 0}
+.coluna{position:absolute;top:-260px;width:330px;height:2500px;
+  background:
+   repeating-linear-gradient(90deg,rgba(0,0,0,.42) 0px,rgba(255,255,255,.2) 13px,rgba(0,0,0,.42) 30px),
+   linear-gradient(90deg,#3a352c 0%,#b5ab98 34%,#e9e2d2 52%,#8d8473 78%,#2a261f 100%)}
+.coluna:before{content:"";position:absolute;left:-46px;right:-46px;top:150px;height:120px;border-radius:60px;
+  background:linear-gradient(90deg,#3a352c,#d9d1bf 50%,#2a261f)}
+.coluna:after{content:"";position:absolute;left:-30px;right:-30px;top:270px;height:44px;background:linear-gradient(90deg,#2f2a22,#bdb39f 50%,#231f19)}
+.brilho-tela{position:absolute;-webkit-mask:url(assets/filosofo.png) 0 0/100% 100% no-repeat;mask:url(assets/filosofo.png) 0 0/100% 100% no-repeat;mix-blend-mode:screen;
+  background:radial-gradient(520px 520px at 76% 52%,rgba(190,225,255,.95) 0%,rgba(140,190,255,.42) 38%,transparent 72%)}
+.sombra-fil{position:absolute;-webkit-mask:url(assets/filosofo.png) 0 0/100% 100% no-repeat;mask:url(assets/filosofo.png) 0 0/100% 100% no-repeat;
+  background:linear-gradient(100deg,rgba(6,7,10,.9) 0%,rgba(6,7,10,.45) 34%,transparent 62%)}
+.halo-tela{position:absolute;border-radius:50%;mix-blend-mode:screen;background:radial-gradient(closest-side,rgba(200,230,255,.85),rgba(120,175,255,.28) 45%,transparent 100%)}
+.chao{position:absolute;left:-200px;width:1480px;height:520px;background:radial-gradient(closest-side,rgba(0,0,0,.72),transparent)}
+
+/* ---------- cena 4 (off-white) ---------- */
+#c4{background:#F7F7F7}
+.papel{position:absolute;inset:0;background:radial-gradient(900px 1200px at 540px 820px,#fdfdfc 0%,#F7F7F7 60%,#ecebe7 100%)}
+.estatua-box{position:absolute;left:-90px;top:170px;width:1260px;height:1260px;transform-origin:35% 55%}
+.estatua-box img{position:absolute;inset:0;width:100%;height:100%;
+  -webkit-mask-image:radial-gradient(closest-side,#000 82%,transparent 100%);mask-image:radial-gradient(closest-side,#000 82%,transparent 100%)}
+#tela{position:absolute;left:0;top:0;width:360px;height:780px;transform-origin:0 0;border-radius:46px;overflow:hidden;background:#F4F3EF;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+#tela .ilha{position:absolute;left:125px;top:22px;width:110px;height:32px;border-radius:16px;background:#0b0b0d}
+#tela .marca{position:absolute;left:0;right:0;top:118px;text-align:center;font:600 46px/1 Bodoni,serif;letter-spacing:.1em;color:#15161a}
+#tela .marca b{display:block;font:500 15px/1 Inter,sans-serif;letter-spacing:.5em;color:#a07c1c;margin-top:14px}
+#tela .linha{position:absolute;left:40px;right:40px;top:214px;height:2px;background:linear-gradient(90deg,transparent,#D4AF37,transparent)}
+#tela .card{position:absolute;width:132px;height:156px;border-radius:20px;background:#fff;box-shadow:0 8px 20px rgba(20,20,30,.08)}
+#tela .card:before{content:"";position:absolute;left:16px;top:16px;right:16px;height:84px;border-radius:12px;background:linear-gradient(135deg,#ecebe6,#dedcd4)}
+#tela .card:after{content:"";position:absolute;left:16px;bottom:24px;width:70px;height:10px;border-radius:5px;background:#d8d5cc}
+#tela .apaga{position:absolute;inset:0;background:#0b0b0d}
+#aura{position:absolute;inset:0;width:1260px;height:1260px;overflow:visible}
+.clarao{position:absolute;inset:0;background:#fffdf6;pointer-events:none}
+.grao{position:absolute;inset:-40px;opacity:.07;mix-blend-mode:overlay;pointer-events:none}
+</style></head>
+<body>
+<div id="stage">
+
+<!-- CENA 1 · O TEMPO PASSA -->
+<div class="cena" id="c1">
+  <div class="cam" id="cam1">
+    <div class="fundo-escuro"></div>
+    <div class="raios" id="raios1"></div>
+    <canvas class="abs" id="po1a" width="1080" height="1920"></canvas>
+    <canvas class="abs" id="rel" width="720" height="1280" style="width:1080px;height:1920px;transform-origin:375px 998px"></canvas>
+    <div class="aro" id="aro1"></div>
+    <canvas class="abs" id="po1b" width="1080" height="1920"></canvas>
+  </div>
+  <div class="base"></div><div class="vinheta"></div>
+  <div class="sub" id="s1" style="top:1420px;color:#b99b46">desde sempre</div>
+  <div class="txt ouro" id="t1" style="top:1480px;font-size:128px"><span class="l">O tempo</span><span class="l">passa.</span></div>
+  <div class="brilho" id="b1" style="top:1460px;height:320px"></div>
+</div>
+
+<!-- CENA 2 · O MUNDO GIRA -->
+<div class="cena" id="c2">
+  <div class="cam" id="cam2">
+    <div class="fundo-escuro" style="background:radial-gradient(900px 1100px at 540px 800px,#141a2a 0%,#0e1018 50%,#0D0E11 80%)"></div>
+    <canvas class="abs" id="estrelas" width="1080" height="1920"></canvas>
+    <svg class="abs" id="orbT" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+    <div class="abs" id="globoBox" style="left:160px;top:420px;width:760px;height:760px;transform-origin:50% 50%">
+      <div class="atmos" style="inset:6px"></div>
+      <canvas id="globo" width="560" height="560" style="width:760px;height:760px"></canvas>
+      <div class="sombra-globo" style="inset:4px"></div>
+    </div>
+    <svg class="abs" id="orbF" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+    <div class="flare" id="fl1"></div><div class="flare2" id="fl2"></div>
+    <div class="aro" id="aro2"></div>
+  </div>
+  <div class="base"></div><div class="vinheta"></div>
+  <div class="sub" id="s2" style="top:1420px;color:#b99b46">sem parar</div>
+  <div class="txt ouro" id="t2" style="top:1480px;font-size:128px"><span class="l">O mundo</span><span class="l">gira.</span></div>
+  <div class="brilho" id="b2" style="top:1460px;height:320px"></div>
+</div>
+
+<!-- CENA 3 · AS NECESSIDADES MUDAM -->
+<div class="cena" id="c3">
+  <div class="cam" id="cam3">
+    <div class="fundo-escuro" style="background:radial-gradient(820px 980px at 600px 820px,#2a2620 0%,#15140f 48%,#0D0E11 80%)"></div>
+    <div class="abs" id="fundo3" style="inset:0;width:1080px;height:1920px;transform-origin:540px 860px"><div class="grade"></div><div class="arco"></div></div>
+    <div class="raios" id="raios3" style="left:-560px"></div>
+    <div class="halo-tela" id="halo3" style="left:520px;top:560px;width:760px;height:760px"></div>
+    <div class="abs" id="fil" style="left:-10px;top:330px;width:1100px;height:1100px;transform-origin:50% 60%">
+      <div class="chao" style="top:870px"></div>
+      <div style="position:absolute;inset:0;-webkit-mask-image:linear-gradient(#000 74%,transparent 97%);mask-image:linear-gradient(#000 74%,transparent 97%)">
+      <img src="assets/filosofo.png" style="position:absolute;inset:0;width:100%;height:100%">
+      <div class="sombra-fil" id="somF" style="inset:0"></div>
+      <div class="brilho-tela" id="briF" style="inset:0"></div></div>
+    </div>
+    <canvas class="abs" id="po3" width="1080" height="1920"></canvas>
+    <div class="coluna" id="colE" style="left:-190px"></div>
+    <div class="coluna" id="colD" style="left:960px"></div>
+  </div>
+  <div class="base"></div><div class="vinheta"></div>
+  <div class="sub" id="s3" style="top:1452px;color:#b99b46">do mármore à tela</div>
+  <div class="txt ouro" id="t3" style="top:1510px;font-size:82px;letter-spacing:.1em"><span class="l">As necessidades</span><span class="l" style="font-size:150px;letter-spacing:.14em;margin-top:6px">mudam.</span></div>
+  <div class="brilho" id="b3" style="top:1490px;height:300px"></div>
+</div>
+
+<!-- CENA 4 · A DK UTILIDADES ACOMPANHA VOCÊ -->
+<div class="cena" id="c4">
+  <div class="cam" id="cam4">
+    <div class="papel"></div>
+    <div class="estatua-box" id="est">
+      <img src="orig/876_estatua.jpg">
+      <div id="tela">
+        <div class="ilha"></div>
+        <div class="marca">DK<b>UTILIDADES</b></div>
+        <div class="linha"></div>
+        <div class="card" style="left:36px;top:250px"></div><div class="card" style="left:192px;top:250px"></div>
+        <div class="card" style="left:36px;top:426px"></div><div class="card" style="left:192px;top:426px"></div>
+        <div class="card" style="left:36px;top:602px"></div><div class="card" style="left:192px;top:602px"></div>
+        <div class="apaga" id="apaga"></div>
+      </div>
+      <svg id="aura" viewBox="0 0 736 736">
+        <defs><filter id="glw" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
+        <circle id="auG" cx="448" cy="232" r="140" fill="none" stroke="#ffd96a" stroke-width="9" filter="url(#glw)" stroke-linecap="round" transform="rotate(-90 448 232)"/>
+        <circle id="auL" cx="448" cy="232" r="140" fill="none" stroke="#fff1bd" stroke-width="2.6" stroke-linecap="round" transform="rotate(-90 448 232)"/>
+        <circle id="auP" r="9" fill="#fff8dc" filter="url(#glw)"/><circle id="auP2" r="3.4" fill="#fff"/>
+      </svg>
+    </div>
+    <canvas class="abs" id="po4" width="1080" height="1920"></canvas>
+  </div>
+  <div class="fio" id="f4" style="top:1462px"></div>
+  <div class="txt tinta" id="t4" style="top:1500px;font-size:92px;letter-spacing:.1em"><span class="l dk">A DK Utilidades</span><span class="l" style="font-size:80px;margin-top:14px">acompanha você.</span></div>
+  <div class="brilho" id="b4" style="top:1480px;height:260px;mix-blend-mode:normal;opacity:.0"></div>
+</div>
+
+<div class="clarao" id="clarao" style="opacity:0"></div>
+<div class="clarao" id="breu" style="opacity:0;background:#0D0E11"></div>
+<svg class="grao" width="1160" height="2000"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+</div>
+
+<script>
+/* ========= tempos (seguem a música de referência, ~100,9 bpm) ========= */
+const T={c1:0, hit1:3.00, c2:4.18, hit2:7.76, c3:8.94, hit3:12.52, c4:13.70, cheio4:14.30, hit4:17.28, fim:18.44, DUR:19.0};
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const pr=(t,a,b)=>cl((t-a)/(b-a));
+const lerp=(a,b,k)=>a+(b-a)*k;
+const eOut=k=>1-Math.pow(1-k,3), eOut5=k=>1-Math.pow(1-k,5), eIn=k=>k*k*k, eIO=k=>k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;
+const eBack=k=>{const c=1.70158,c3=c+1;return 1+c3*Math.pow(k-1,3)+c*Math.pow(k-1,2)};
+const eExpo=k=>k>=1?1:1-Math.pow(2,-10*k);
+function rnd(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+/* pancada: tremida curta que morre rápido */
+function tremor(t,t0,forca=14,dur=.45){const k=t-t0;if(k<0||k>dur)return[0,0];const d=Math.pow(1-k/dur,2)*forca;return[Math.sin(k*71)*d,Math.cos(k*93)*d*.8]}
+
+/* ========= letras ========= */
+document.querySelectorAll('.txt .l').forEach(l=>{const s=l.textContent;l.textContent='';[...s].forEach(ch=>{const c=document.createElement('span');c.className='c';c.textContent=ch===' '?' ':ch;l.appendChild(c)})});
+function letras(id,t,inicios,passo=.045,dur=.55){
+  const ls=$(id).querySelectorAll('.l');
+  ls.forEach((l,i)=>{[...l.children].forEach((c,j)=>{
+    const k=pr(t,inicios[i]+j*passo,inicios[i]+j*passo+dur), e=eBack(k);
+    c.style.opacity=cl(k*2.4);
+    c.style.transform=`translate3d(0,${(1-e)*86}px,0) scale(${lerp(1.5,1,eOut(k))}) rotateX(${(1-eOut(k))*70}deg)`;
+    c.style.filter=k<1?`blur(${(1-eOut(k))*14}px)`:'';
+  })});
+}
+function varredura(id,t,t0,dur=.7){const k=pr(t,t0,t0+dur);$(id).style.opacity=(k>0&&k<1)?1:0;$(id).style.backgroundPosition=`${lerp(130,-30,eIO(k))}% 0`}
+
+/* ========= sequências de imagens ========= */
+const cache={};
+function quadro(pasta,n){const key=pasta+n;if(cache[key])return cache[key];
+  const im=new Image();const p=new Promise(r=>{im.onload=()=>r(im);im.onerror=()=>r(null)});im.src=`assets/${pasta}/${String(n).padStart(4,'0')}.webp`;
+  cache[key]=p;const ks=Object.keys(cache);if(ks.length>60)delete cache[ks[0]];return p}
+async function pinta(cv,pasta,n){const im=await quadro(pasta,n);if(!im)return;const c=cv.getContext('2d');c.clearRect(0,0,cv.width,cv.height);c.drawImage(im,0,0,cv.width,cv.height)}
+
+/* ========= poeira ========= */
+function poeira(cv,t,seed,n,cor,opts={}){
+  const c=cv.getContext('2d'),r=rnd(seed);c.clearRect(0,0,1080,1920);c.globalCompositeOperation='lighter';
+  for(let i=0;i<n;i++){
+    const z=r(),x0=r()*1080,y0=r()*1920,ph=r()*6.28,sp=.25+r()*.75,tw=r()*6.28;
+    const size=(opts.min||1.2)+z*z*(opts.max||9);
+    const x=(x0+Math.sin(t*.35*sp+ph)*46*z+t*14*z*(opts.vx||1)+1080)%1080;
+    const y=(y0-t*(10+26*z)*sp*(opts.vy||1)+19200)%1920;
+    const a=(.16+.5*z)*(.55+.45*Math.sin(t*1.6*sp+tw))*(opts.a||1);
+    const g=c.createRadialGradient(x,y,0,x,y,size);
+    g.addColorStop(0,`rgba(${cor},${a})`);g.addColorStop(z>.75?.55:.28,`rgba(${cor},${a*(z>.75?.6:.3)})`);g.addColorStop(1,`rgba(${cor},0)`);
+    c.fillStyle=g;c.beginPath();c.arc(x,y,size,0,6.283);c.fill();
+  }
+}
+/* estrelas (cena 2) */
+(function(){const c=$('estrelas').getContext('2d'),r=rnd(42);for(let i=0;i<240;i++){const x=r()*1080,y=r()*1920,s=r()*1.6+.3;c.fillStyle=`rgba(${205+r()*50|0},${215+r()*40|0},255,${.2+r()*.6})`;c.beginPath();c.arc(x,y,s,0,6.283);c.fill()}})();
+
+/* ========= órbitas (cena 2) ========= */
+const ORB=[{rx:520,ry:150,rot:-24,v:.55,f:0},{rx:470,ry:112,rot:18,v:-.42,f:2.1},{rx:600,ry:205,rot:-6,v:.3,f:4}];
+function orbitas(t,ap){
+  const cx=540,cy=800;let tr='',fr='';
+  ORB.forEach((o,i)=>{
+    const k=eOut(pr(ap,i*.14,i*.14+.75)),per=Math.PI*2*Math.sqrt((o.rx*o.rx+o.ry*o.ry)/2),dash=per/2;
+    const comum=`cx="${cx}" cy="${cy}" rx="${o.rx}" ry="${o.ry}" fill="none" stroke="rgba(226,190,79,${.85*k})" stroke-width="${i==2?1.6:2.6}" transform="rotate(${o.rot} ${cx} ${cy})"`;
+    // metade de trás (em cima) e metade da frente (embaixo)
+    tr+=`<ellipse ${comum} stroke-dasharray="${dash*k} ${per}" stroke-dashoffset="${dash}" opacity=".55"/>`;
+    fr+=`<ellipse ${comum} stroke-dasharray="${dash*k} ${per}" stroke-dashoffset="0"/>`;
+    const a=t*o.v*2.2+o.f,ca=Math.cos(o.rot*Math.PI/180),sa=Math.sin(o.rot*Math.PI/180);
+    const ex=o.rx*Math.cos(a),ey=o.ry*Math.sin(a),px=cx+ex*ca-ey*sa,py=cy+ex*sa+ey*ca;
+    const dot=`<circle cx="${px}" cy="${py}" r="${13*k}" fill="rgba(255,226,140,.35)"/><circle cx="${px}" cy="${py}" r="${5.5*k}" fill="#fff3c8"/>`;
+    if(Math.sin(a)>0)fr+=dot;else tr+=dot;
+  });
+  $('orbT').innerHTML=tr;$('orbF').innerHTML=fr;
+}
+
+/* ========= tela do celular da estátua (troca de tela) ========= */
+/* cantos da tela na foto (736 px): sup-esq, sup-dir, inf-dir, inf-esq */
+const QUAD=[[63,268],[238,196],[403,556],[247,630]];
+function matrizQuad(w,h,q,esc){
+  const [x0,y0]=q[0].map(v=>v*esc),[x1,y1]=q[1].map(v=>v*esc),[x2,y2]=q[2].map(v=>v*esc),[x3,y3]=q[3].map(v=>v*esc);
+  const dx1=x1-x2,dx2=x3-x2,dx3=x0-x1+x2-x3,dy1=y1-y2,dy2=y3-y2,dy3=y0-y1+y2-y3,den=dx1*dy2-dx2*dy1;
+  const g=(dx3*dy2-dx2*dy3)/den,hh=(dx1*dy3-dx3*dy1)/den;
+  const a=x1-x0+g*x1,b=x3-x0+hh*x3,c=x0,d=y1-y0+g*y1,e=y3-y0+hh*y3,f=y0;
+  return `matrix3d(${a/w},${d/w},0,${g/w},${b/h},${e/h},0,${hh/h},0,0,1,0,${c},${f},0,1)`;
+}
+$('tela').style.transform=matrizQuad(360,780,QUAD,1260/736);
+
+/* ========= cenas ========= */
+function cena1(t){
+  const sai=eIn(pr(t,3.15,T.c2));                      // mergulho no mostrador
+  const entra=eOut(pr(t,0,2.0));
+  const z=lerp(.86,1.0,eOut(pr(t,0,3.2)))*(1+sai*4.6);
+  const [sx,sy]=tremor(t,T.hit1,12);
+  $('cam1').style.transform=`translate3d(${sx}px,${sy}px,0) scale(${1+pr(t,0,T.c2)*.05})`;
+  $('rel').style.transform=`translate3d(${lerp(0,165,sai)}px,${lerp(40,-140,sai)}px,0) scale(${z}) rotate(${lerp(-3,0,entra)}deg)`;
+  $('rel').style.filter=`brightness(${lerp(.08,1.06,entra)}) contrast(1.08) saturate(${lerp(.6,1.1,entra)}) blur(${sai*10}px) drop-shadow(0 40px 60px rgba(0,0,0,.7))`;
+  $('rel').style.opacity=cl(t/.5);
+  $('raios1').style.opacity=lerp(0,.62,eIO(pr(t,.2,2.2)))*(1-sai*.6);
+  $('raios1').style.transform=`rotate(${-8+t*2.2}deg)`;
+  poeira($('po1a'),t,11,70,'255,222,150',{a:eOut(pr(t,.3,1.8)),max:5});
+  poeira($('po1b'),t+40,23,26,'255,232,175',{a:eOut(pr(t,.6,2.2))*.8,min:6,max:30,vy:.5});
+  // aro dourado que nasce no mostrador e vira o contorno do globo
+  const a=$('aro1'),ka=pr(t,3.0,T.c2),d=lerp(360,760,eIO(ka)),cx=lerp(375,540,eIO(ka)),cy=lerp(985,800,eIO(ka));
+  a.style.cssText+=`;left:${cx-d/2}px;top:${cy-d/2}px;width:${d}px;height:${d}px;opacity:${cl(ka*3)}`;
+  letras('t1',t,[1.50,2.38]);
+  const so=eIn(pr(t,3.55,4.0));
+  $('t1').style.opacity=1-so;$('t1').style.transform=`translate3d(0,${so*60}px,0) scale(${1+so*.2})`;
+  $('s1').style.opacity=eOut(pr(t,1.1,1.7))*(1-so);$('s1').style.letterSpacing=lerp(1.1,.52,eOut(pr(t,1.1,2.2)))+'em';
+  varredura('b1',t,T.hit1-.05,.75);
+  return pinta($('rel'),'relogio',Math.round(cl(60+t*29,0,240)));
+}
+function cena2(t){
+  const u=t-T.c2, ent=eExpo(pr(u,0,.9)), sai=eIn(pr(t,8.2,T.c3));
+  const [sx,sy]=tremor(t,T.c2,20,.5),[hx,hy]=tremor(t,T.hit2,12);
+  $('cam2').style.transform=`translate3d(${sx+hx}px,${sy+hy}px,0) scale(${(1+pr(u,0,4.8)*.07)*(1+sai*1.4)})`;
+  $('cam2').style.filter=sai>0?`blur(${sai*16}px)`:'';
+  $('globoBox').style.transform=`scale(${lerp(1.55,1,ent)})`;
+  $('globoBox').style.filter=`brightness(${lerp(1.9,1.02,ent)}) blur(${(1-ent)*8}px)`;
+  const a=$('aro2'),d=lerp(760,1500,eOut(pr(u,0,.8)));
+  a.style.cssText+=`;left:${540-d/2}px;top:${800-d/2}px;width:${d}px;height:${d}px;opacity:${1-eOut(pr(u,0,.8))}`;
+  orbitas(u,pr(u,.15,1.6));
+  // flare anamórfico na borda do planeta
+  const fk=eOut(pr(u,.5,1.5)),fp=1+.55*Math.exp(-Math.max(0,t-T.hit2)*3)*(t>=T.hit2?1:0),w=1500*fk*fp,fx=806,fy=560;
+  $('fl1').style.cssText+=`;left:${fx-w/2}px;top:${fy-6}px;width:${w}px;height:12px;opacity:${fk}`;
+  const w2=230*fk*fp;$('fl2').style.cssText+=`;left:${fx-w2/2}px;top:${fy-w2/2}px;width:${w2}px;height:${w2}px;opacity:${fk*.95}`;
+  letras('t2',t,[5.36,6.26]);
+  const so=eIn(pr(t,8.15,8.6));
+  $('t2').style.opacity=1-so;$('t2').style.transform=`translate3d(0,${so*60}px,0)`;
+  $('s2').style.opacity=eOut(pr(t,4.95,5.5))*(1-so);$('s2').style.letterSpacing=lerp(1.1,.52,eOut(pr(t,4.95,6)))+'em';
+  varredura('b2',t,T.hit2-.05,.75);
+  return pinta($('globo'),'globo',Math.round(20+u*15*1.25)%229);
+}
+function cena3(t){
+  const u=t-T.c3, ent=eExpo(pr(u,0,1.1)), dolly=eIO(pr(u,0,4.76)), acende=eIn(pr(t,12.6,T.c4));
+  const [sx,sy]=tremor(t,T.c3,22,.55),[hx,hy]=tremor(t,T.hit3,12);
+  $('cam3').style.transform=`translate3d(${sx+hx}px,${sy+hy}px,0)`;
+  // dolly zoom: fundo encolhe, estátua cresce, colunas abrem
+  $('fundo3').style.transform=`scale(${lerp(1.45,1,dolly)}) translate3d(${lerp(-30,20,dolly)}px,0,0)`;
+  $('fil').style.transform=`translate3d(${lerp(40,-6,ent)}px,${lerp(60,0,ent)}px,0) scale(${lerp(.8,.92,ent)+dolly*.12+acende*.06})`;
+  $('fil').style.filter=`brightness(${lerp(.25,.98,ent)+acende*.5}) contrast(1.06) drop-shadow(0 50px 70px rgba(0,0,0,.6))`;
+  const pulso=.82+.1*Math.sin(u*9)+.08*Math.sin(u*23+1);
+  $('briF').style.opacity=cl(eOut(pr(u,.5,1.6))*pulso+acende);
+  $('somF').style.opacity=1-acende;
+  const hs=1+acende*4.2;
+  $('halo3').style.opacity=cl(eOut(pr(u,.5,1.6))*.55*pulso+acende);$('halo3').style.transform=`scale(${(lerp(.6,1,eOut(pr(u,.5,1.8))))*hs})`;
+  $('raios3').style.opacity=.3*eOut(pr(u,.2,1.8));$('raios3').style.transform=`rotate(${14+u*1.6}deg)`;
+  const ab=eOut(pr(u,0,1.3));
+  $('colE').style.transform=`translate3d(${lerp(170,-40,ab)-dolly*120}px,0,0) scale(${1.15+dolly*.25})`;
+  $('colD').style.transform=`translate3d(${lerp(-170,40,ab)+dolly*120}px,0,0) scale(${1.15+dolly*.25})`;
+  $('colE').style.filter=$('colD').style.filter=`blur(${lerp(14,26,dolly)}px) brightness(${lerp(.5,.72,ab)})`;
+  poeira($('po3'),t,57,46,'235,232,220',{a:.7*eOut(pr(u,.2,1.5)),max:7});
+  letras('t3',t,[10.12,11.30],.036);
+  $('s3').style.opacity=eOut(pr(t,9.6,10.2))*(1-acende*2);$('s3').style.letterSpacing=lerp(1.1,.52,eOut(pr(t,9.6,10.8)))+'em';
+  $('t3').style.opacity=1-eIn(pr(t,13.2,13.6));
+  varredura('b3',t,T.hit3-.05,.75);
+}
+function cena4(t){
+  const u=t-T.c4, ent=eExpo(pr(u,0,1.3)), fim=eIO(pr(t,17.6,T.DUR));
+  const [hx,hy]=tremor(t,T.hit4,9);
+  $('cam4').style.transform=`translate3d(${hx}px,${hy}px,0)`;
+  $('est').style.transform=`translate3d(${lerp(0,70,fim)}px,${lerp(90,0,ent)+fim*40}px,0) scale(${lerp(1.22,1,ent)+pr(u,0,5.3)*.05+fim*.12})`;
+  $('est').style.filter=`contrast(1.04) saturate(1.05)`;
+  // tela acende junto com a volta da batida
+  $('apaga').style.opacity=1-eOut(pr(t,T.cheio4-.12,T.cheio4+.3));
+  document.querySelectorAll('#tela .card').forEach((c,i)=>{const k=eBack(pr(t,T.cheio4+.15+i*.07,T.cheio4+.6+i*.07));c.style.transform=`translate3d(0,${(1-k)*40}px,0) scale(${lerp(.8,1,k)})`;c.style.opacity=cl(k*1.5)});
+  // rastro de luz desenhando a auréola
+  const per=2*Math.PI*140,k=eIO(pr(u,.1,1.5)),ap=1-eOut(pr(u,1.5,2.6))*.65;
+  for(const id of['auG','auL']){$(id).setAttribute('stroke-dasharray',`${per*k} ${per}`);$(id).style.opacity=ap}
+  const ang=-Math.PI/2+k*2*Math.PI,px=448+140*Math.cos(ang),py=232+140*Math.sin(ang),pv=(k>0&&k<1)?1:0;
+  for(const id of['auP','auP2']){$(id).setAttribute('cx',px);$(id).setAttribute('cy',py);$(id).style.opacity=pv}
+  poeira($('po4'),t,91,34,'201,162,39',{a:.55*eOut(pr(u,.3,1.6)),max:6,vy:.6});
+  letras('t4',t,[15.16,16.06],.034,.5);
+  $('f4').style.transform=`scaleX(${eOut(pr(t,14.9,15.7))})`;
+  const b=$('b4'),kb=pr(t,T.hit4-.05,T.hit4+.7);b.style.opacity=(kb>0&&kb<1)?.9:0;b.style.backgroundPosition=`${lerp(130,-30,eIO(kb))}% 0`;
+}
+
+const CENAS=[['c1',T.c1,T.c2,cena1],['c2',T.c2,T.c3,cena2],['c3',T.c3,T.c4,cena3],['c4',T.c4,99,cena4]];
+async function seek(t){
+  let p=null;
+  for(const [id,a,b,fn] of CENAS){const on=t>=a&&t<b;$(id).style.visibility=on?'visible':'hidden';if(on)p=fn(t)}
+  // clarões nos cortes
+  const cl1=Math.max(Math.exp(-Math.max(0,t-T.c2)*7)*(t>=T.c2?.16:0), Math.exp(-Math.max(0,t-T.c3)*6)*(t>=T.c3?.16:0),
+                    eIn(pr(t,13.25,T.c4))*(t<T.c4?1:0), Math.exp(-Math.max(0,t-T.c4)*3.2)*(t>=T.c4?1:0));
+  $('clarao').style.opacity=cl1;
+  $('breu').style.opacity=Math.max(eIn(pr(t,8.55,T.c3))*(t<T.c3?1:0), 0);
+  await p;
+}
+window.seek=seek;
+window.ready=Promise.all([document.fonts.ready,document.fonts.load('600 100px Bodoni'),...[...document.images].map(i=>i.decode().catch(()=>{}))]).then(()=>seek(0));
+</script>
+</body></html>

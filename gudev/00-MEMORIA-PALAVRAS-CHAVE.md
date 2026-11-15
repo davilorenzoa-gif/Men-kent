@@ -128,3 +128,7 @@ Instaladas `.claude/skills/video2html` e `.claude/skills/img2html` (detalhes e r
 ## 15/11/2026: site da Academia Paulo de Souza
 Palavras: academia, Paulo de Souza, Boturussu, barra, anilhas, cronômetro, LED, round, quadro de horários, pinte sua semana, muay thai, cross training.
 Print do WhatsApp Business virou prévia em `sites/academia-paulo-de-souza` (+ arquivo único). Pendências no README de lá e no `04`.
+
+## 15/11/2026: filme da DK Utilidades (atos 1 e 2)
+Palavras: DK Utilidades, o tempo passa, relógio de bolso, globo, filósofo de mármore, estátua, auréola, chroma key, fundo verde, match cut, god rays, comercial 45 s.
+Comercial vertical feito por código em `Vídeos Davi/2026-11-dk-utilidades/` (19 s prontos, cortes na batida da música que o Davi mandou). Atos 3 a 5 esperam logo, produtos, diferenciais e contato reais. Falta o Davi dizer se a DK é cliente da GuDev ou trabalho por fora. Lição: pra fundo verde, recorte próprio em numpy (`recortar_video.py`/`recortar_verde.py`) em vez do `chromakey` do ffmpeg, que come branco e mármore.
