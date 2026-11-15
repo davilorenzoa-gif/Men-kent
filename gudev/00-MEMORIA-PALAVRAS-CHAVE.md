@@ -10,6 +10,7 @@
 
 | Palavra-chave | O que é | Onde |
 |---|---|---|
+| **filme de marca, campanha, Digital Presence, vídeo por código** | Reels de 32 s feito com HTML + Playwright + ffmpeg + trilha em numpy (15/11) | `gudev/videos/presenca-digital/`, `08` |
 | **açaí, Radar** | Radar de açaí e sorveterias da Zona Leste (até 100 km), 21/10 | artifact Va7xfagsqwHofaKFJ8WSiQ, `02` |
 | **Andrade, padrinho** | Pitch presencial com o padrinho (falou-se R$ 1.200 em 22/10; hoje nada fechado) | `sites/andrade-ferro-e-aco`, `01`, `04` |
 | **APEX** | Conceito automotivo de luxo (React + TS + Tailwind + Motion), fotos Wikimedia com crédito | `sites/apex` |
@@ -73,6 +74,7 @@
 
 | Data | Sessão | Resultado / pendência |
 |---|---|---|
+| 15/11 | Campanha The Digital Presence | Filme de marca 32 s em `gudev/videos/presenca-digital/`; falta ok dos donos dos sites |
 | 13/11 | Claude persistent memory | Este arquivo |
 | 13/11 | Planos para hoje | Retícula, PR #13; confirmar WhatsApp e publicar no Netlify se for usar |
 | 12–13/11 | Estratégia de leads e mensagens | Merge automático no fim de cada conversa |

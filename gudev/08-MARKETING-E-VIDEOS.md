@@ -115,3 +115,10 @@ Sem Higgsfield:
 9. Tela dividida: site comum vs. demo da GuDev.
 
 Ordem sugerida: 5, 1, 8, depois intercalar Google (2, 3, 6) com site (4, 7, 9).
+
+## Campanha "The Digital Presence" (15/11/2026)
+- Filme de marca de 32 s, vertical, pronto em `gudev/videos/presenca-digital/gudev-presenca-digital.mp4`. Roteiro, pendências e como refazer no README da pasta.
+- **Método novo (custo zero):** cena em HTML com `seek(t)` + Playwright a 60 fps + ffmpeg (`tmix` pra desfoque de movimento) + trilha sintetizada em numpy. Os sites entram como gravação real da rolagem no celular. Serve pra qualquer vídeo de motion design da GuDev (inclusive os de 15 s de prospecção).
+- Estética pedida pelo Davi: preto, branco, grafite, linha fina, laranja só do logo. Referências dele: motion minimalista (boneco de traço em fundo preto), luxo escuro (carro, jato, fachada), carrossel "estátua + tipografia gigante".
+- Logo sempre o original (recorte do perfil do Instagram em `projeto/logo/logo.png`): "Gu" branco grotesco, "Dev" serifado itálico laranja (~#F0612D), "_" laranja.
+- Antes de postar: ok dos donos dos sites que aparecem e ouvir a trilha (o Claude não ouve).
