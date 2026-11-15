@@ -42,6 +42,11 @@ ffmpeg -framerate 60 -i fr/%05d.jpg -i audio.wav -vf "tmix=frames=2:weights='1 1
 - Refazer: `python3 efeitos.py` (gera `sfx.wav`), `ffmpeg -i narracao.mp3 -ac 1 -ar 44100 el.wav`, `python3 mix_final.py video-do-capcut.mp4 el.wav` e trocar o áudio do vídeo por `final-audio.wav`. Se a narração mudar, ajustar os cortes e tempos na lista `B` do script (os cortes saem do `silencedetect` do ffmpeg).
 - **Lição:** voz sintética grátis soa IA; pro Davi, ElevenLabs (ou voz dele) + música escolhida por ele no CapCut. Claude cuida dos efeitos e do encaixe.
 
+## Ajustes finais (15/11/2026, pedido do Davi)
+- **CTA:** no fim o logo sobe e entram a pílula laranja **@gudev.ofc** (com ícone do Instagram), "CHAMA NO LINK DA BIO" e uma seta pulando (26–28,5 s). O vídeo agora é renderizado até 28,5 s (o preto do fim virou CTA).
+- **Selos mais tempo na tela:** "feito sob medida", "WhatsApp direto", "mapa e rota" e "rápido no celular" ficam ~1,5 s (antes ~1 s); "01 · ferro e aço" e "02 · açaí no atacado" um pouco mais também.
+- O áudio é o mesmo da versão final (`mix_final.py`): música do Davi + efeitos + voz do Adam.
+
 ## Pendências
 - O Claude não ouve áudio: a mixagem final foi conferida só por tempo e volume (média −12,7 dB, pico −0,6 dB). Sem transcrição, os cortes da voz foram pelas pausas e contagem de sílabas. **Ouvir antes de postar** (pronúncia de "GuDev" e "Péçaí/açaí" principalmente). Se a voz sintética não convencer, gravar com a voz do Davi ou do Gu usando a mesma tabela.
-- Colocar @ e contato no CapCut.
+- @ já está no vídeo. Se tiver domínio próprio um dia, dá pra trocar "link da bio" pelo endereço.
