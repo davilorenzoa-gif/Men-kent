@@ -1,10 +1,10 @@
 # Campanha "The Digital Presence" (15/11/2026, versão 2)
 
-Filme de marca da GuDev pro Instagram (Reels/anúncio). 27 s, 1080×1920, 30 fps, com trilha. Arquivo: `gudev-presenca-digital.mp4`.
+Filme de marca da GuDev pro Instagram (Reels/anúncio). 27 s, 1080×1920, 30 fps, com trilha e narração. Arquivo: `gudev-presenca-digital.mp4`.
 A versão 1 (32 s, lenta, com Mestre das Motos e Chersoni) foi trocada: o Davi achou parada e **só Katraka, Andrade e Péçaí podem aparecer como trabalho** (os outros não têm autorização).
 
-## Roteiro e narração (falta gravar a voz)
-| Tempo | O que acontece | Texto na tela | Narração sugerida |
+## Roteiro e narração
+| Tempo | O que acontece | Texto na tela | Narração |
 |---|---|---|---|
 | 0–3,5 s | Boneco procurando, barra de busca digita "oficina perto de mim", resultados pulam | NO MUNDO DIGITAL_ | "No mundo digital, seu cliente te procura antes de te visitar." |
 | 3,5–8,5 s | Loja se desenha, alfinete cai e quica, boneco chega, celular aparece, câmera entra no celular | SER ENCONTRADO É SÓ O COMEÇO. | "Ser encontrado é só o começo. O que decide é o que ele vê quando te acha." |
@@ -30,7 +30,12 @@ for k in 0 1 2 3; do node render.js seq $((k*405)) $((k*405+405)) 60 & done; wai
 ffmpeg -framerate 60 -i fr/%05d.jpg -i audio.wav -vf "tmix=frames=2:weights='1 1',fps=30,format=yuv420p" -c:v libx264 -preset slow -crf 21 -maxrate 5M -bufsize 10M -c:a aac -b:a 192k -movflags +faststart -shortest saida.mp4
 ```
 
+## Narração (voz sintética)
+- `projeto/voz.py`: gera cada frase com o Kokoro (modelo aberto, voz `pm_alex`, pt-BR), encaixa no tempo da cena, abaixa a música embaixo da fala e salva `audio-final.wav`. Depois é só trocar o áudio: `ffmpeg -i saida.mp4 -i audio-final.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k final.mp4`.
+- Preparar: `pip install kokoro-onnx soundfile` e baixar `kokoro-v1.0.onnx` + `voices-v1.0.bin` de github.com/thewh1teagle/kokoro-onnx/releases (tag `model-files-v1.0`) numa pasta `tts/`. Na sessão na nuvem o download só passou depois do ok do Davi e em comando separado do `pip`.
+- "GuDev" tem que ser escrito **"Gu Dév"** no texto da fala, senão a voz lê errado. As falas e os tempos estão na lista `FALAS` do script.
+- Outras vozes pt-BR do modelo: `pf_dora` (feminina), `pm_santa`.
+
 ## Pendências
-- **Narração:** o Claude não conseguiu gerar voz (baixar o modelo de voz foi bloqueado pela permissão da sessão). Ou o Davi libera, ou grava/usa "texto para fala" do CapCut com a tabela acima.
-- O Claude não ouve áudio: trilha conferida só por volume (média −16,7 dB, pico −1 dB). Ouvir antes de postar.
+- O Claude não ouve áudio: narração e trilha foram conferidas só por tempo e volume. **Ouvir antes de postar** (pronúncia de "GuDev" e "Péçaí/açaí" principalmente). Se a voz sintética não convencer, gravar com a voz do Davi ou do Gu usando a mesma tabela.
 - Colocar @ e contato no CapCut.

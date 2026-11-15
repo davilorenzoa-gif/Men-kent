@@ -124,4 +124,4 @@ Ordem sugerida: 5, 1, 8, depois intercalar Google (2, 3, 6) com site (4, 7, 9).
 - Antes de postar: ok dos donos dos sites que aparecem e ouvir a trilha (o Claude não ouve).
 - **Versão 2 (mesmo dia):** a 1ª ficou parada e sem voz. Refeita em 27 s no estilo do vídeo "R$ 10 mil" (boneco, pílulas, pop com mola, texto grande palavra por palavra, tremida, corte chicote, trilha a 120 bpm). **Lição: Reels da GuDev tem que ter algo novo na tela a cada ~0,5 s e narração; ninguém para pra ler.**
 - **Só Katraka, Andrade e Péçaí podem aparecer como trabalho feito** (Davi, 15/11). Mestre das Motos e Chersoni não têm autorização.
-- Falta a narração: roteiro com tempos no README da pasta.
+- **Narração feita (15/11):** voz sintética pt-BR com o Kokoro (`projeto/voz.py`), música abaixa na fala. Escrever "Gu Dév" pra voz pronunciar certo. Como preparar no README da pasta.
