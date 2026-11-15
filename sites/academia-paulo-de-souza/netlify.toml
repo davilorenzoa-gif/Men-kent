@@ -1,0 +1,4 @@
+# Site estático: sem build. No Netlify, "Base directory" = sites/academia-paulo-de-souza
+[build]
+  publish = "."
+  command = ""

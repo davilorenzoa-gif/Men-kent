@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Academia Paulo de Souza | Musculação e aulas no Parque Boturussu (SP)</title>
+<meta name="description" content="Centro de Treinamento e Academia Paulo de Souza: musculação, funcional, cross training, pilates, pump, fit dance, jump e muay thai no Parque Boturussu, São Paulo. Fale pelo WhatsApp (11) 94259-9436.">
+<meta name="theme-color" content="#E6E4DF">
+<link rel="canonical" href="https://academia-paulo-de-souza.netlify.app/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Academia Paulo de Souza | Parque Boturussu">
+<meta property="og:description" content="Musculação e aulas de funcional, cross training, pilates, pump, fit dance, jump e muay thai. Chame no WhatsApp.">
+<meta property="og:image" content="https://academia-paulo-de-souza.netlify.app/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>if(!/[?&]embed\b/.test(location.search))document.documentElement.classList.add("js")</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ExerciseGym",
+  "name": "Centro de Treinamento e Academia Paulo de Souza",
+  "alternateName": "Academia Paulo de Souza",
+  "description": "Musculação e aulas de funcional, cross training, pilates, pump, fit dance, jump e muay thai no Parque Boturussu, São Paulo.",
+  "telephone": "+55 11 94259-9436",
+  "url": "https://academia-paulo-de-souza.netlify.app/",
+  "image": "https://academia-paulo-de-souza.netlify.app/og.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Boturussu, 1499",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "postalCode": "03802-010",
+    "addressCountry": "BR"
+  }
+}
+</script>
+<style>
+/* =========================================================
+   Academia Paulo de Souza | GuDev
+   3 cores (da fachada):
+   --cimento  #E6E4DF  base: o piso e a parede clara
+   --grafite  #17181B  segunda: o painel preto da fachada
+   --vermelho #D3202A  acento: as faixas diagonais (só WhatsApp, LED e a barra do logo)
+   Cores do quadro de horários (só como dado, nas aulas):
+   musculação #8E9196, funcional #2F7A3E, cross #3F6FB5, pilates #E7D8BC,
+   pump #A27BD0, fit dance #D6467F, jump #F08A2C, muay thai #E8CF2A
+   Fontes: Big Shoulders Display (títulos, igual letreiro) + Archivo (texto)
+   Princípio: "academia se mede em carga e em round".
+   ========================================================= */
+:root{
+  --cimento:#E6E4DF; --cimento-2:#D8D6D0; --branco:#F6F5F2;
+  --grafite:#17181B; --grafite-2:#26272B; --aco:#9A9DA3;
+  --vermelho:#D3202A; --vermelho-esc:#A9161F;
+  --texto:#1D1E21; --suave:#55575C; --linha:#C9C7C1;
+  --titulo:"Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --sans:Archivo, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --lado:clamp(16px,5vw,48px); --max:1240px;
+  --mola:cubic-bezier(.34,1.56,.64,1); --sai:cubic-bezier(.22,1,.36,1);
+  padding:0;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cimento);color:var(--texto);font:400 17px/1.6 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--titulo);font-weight:800;line-height:.92;margin:0;letter-spacing:.005em;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:3px solid var(--vermelho);outline-offset:3px;border-radius:6px}
+.pular{position:absolute;left:-999px;top:8px;background:var(--grafite);color:#fff;padding:10px 16px;border-radius:8px;z-index:100}
+.pular:focus{left:12px}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.caixa{max-width:var(--max);margin:0 auto;padding:0 var(--lado)}
+
+/* ---------- botões ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:999px;font:600 16px/1 var(--sans);text-decoration:none;border:0;cursor:pointer;transition:transform .2s var(--sai),background .2s}
+.btn svg{width:20px;height:20px;flex:none}
+.btn:active{transform:scale(.97)}
+.btn-zap{background:var(--vermelho);color:#fff}
+.btn-zap:hover{background:var(--vermelho-esc)}
+.btn-linha{box-shadow:inset 0 0 0 1.5px var(--grafite);color:var(--grafite);background:transparent}
+.btn-linha:hover{background:var(--grafite);color:var(--cimento)}
+
+/* ---------- topo ---------- */
+.topo{position:fixed;inset:0 0 auto;z-index:50;background:rgba(230,228,223,.94);border-bottom:1px solid var(--linha);transition:transform .35s var(--sai)}
+.topo.some{transform:translateY(-100%)}
+.topo .caixa{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--grafite)}
+.marca i{width:10px;height:30px;background:var(--vermelho);transform:skewX(-18deg);flex:none}
+.marca span{font:900 22px/1 var(--titulo);text-transform:uppercase;letter-spacing:.02em;transform:skewX(-8deg)}
+.topo .btn{min-height:44px;padding:0 18px;font-size:15px}
+@media (max-width:520px){.topo .btn .longo{display:none}}
+
+/* ---------- herói (WOW 1: carregar a barra) ---------- */
+.heroi{padding:96px 0 56px;position:relative}
+.heroi .linha1{font-weight:500;color:var(--suave);max-width:40ch;font-size:16px}
+.barra-wrap{position:relative;margin:18px auto 0;max-width:1100px;padding:0 4px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:pan-y}
+.barra-wrap svg{width:100%;height:auto;display:block;overflow:visible}
+.barra-dica{position:absolute;right:var(--lado);bottom:-4px;font:500 13px/1 var(--sans);color:var(--suave);opacity:0;transition:opacity .6s}
+.barra-dica.on{opacity:1}
+.chao{height:2px;background:var(--grafite);opacity:.14;margin:0 auto;max-width:1100px}
+.heroi h1{font-size:clamp(68px,16.5vw,236px);text-transform:uppercase;font-weight:900;color:var(--grafite);margin-top:14px;line-height:.84}
+.heroi h1 .l{display:block;overflow:hidden;padding:.06em 0 .04em;margin:-.06em 0 -.04em}
+.heroi h1 .l > span{display:inline-block;white-space:nowrap;transform:skewX(-8deg);transform-origin:0 100%}
+.js .heroi h1 .l > span{transform:translateY(105%) skewX(-8deg);transition:transform .9s var(--sai)}
+.js .heroi.pronto h1 .l > span{transform:translateY(0) skewX(-8deg)}
+.js .heroi.pronto h1 .l:nth-child(2) > span{transition-delay:.09s}
+.heroi .base{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;margin-top:28px;align-items:center}
+.heroi .texto p{font-size:clamp(17px,1.6vw,20px);max-width:44ch}
+.acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.fachada{display:flex;align-items:center;gap:18px}
+.fachada img{width:132px;height:132px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 6px var(--branco),0 0 0 7px var(--linha)}
+.fachada figcaption{font-size:15px;color:var(--suave);max-width:24ch}
+.fachada strong{display:block;color:var(--grafite);font-weight:600}
+@media (min-width:900px){
+  .heroi{padding-top:110px}
+  .heroi h1{font-size:clamp(68px,11.5vw,176px)}
+  .heroi h1 .l{display:inline-block;vertical-align:top}
+  .heroi h1 .l:first-child{margin-right:.22em}
+  .barra-wrap{max-width:940px}
+  .heroi .base{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+  .fachada{justify-content:flex-end}
+  .fachada img{width:184px;height:184px}
+}
+
+/* ---------- espaço ---------- */
+.secao{padding:clamp(64px,10vw,120px) 0}
+.secao h2{font-size:clamp(48px,8vw,96px);text-transform:uppercase;color:var(--grafite)}
+.secao .intro{margin-top:14px;max-width:52ch;color:var(--suave)}
+.fotos{display:grid;grid-auto-flow:column;grid-auto-columns:min(76vw,300px);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:32px;padding:0 var(--lado) 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.fotos::-webkit-scrollbar{display:none}
+.fotos figure{margin:0;scroll-snap-align:start}
+.fotos img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;background:var(--cimento-2)}
+.fotos figcaption{font-size:15px;margin-top:10px;color:var(--grafite);font-weight:500}
+.nota{font-size:13px;color:var(--suave);margin-top:16px}
+@media (min-width:1000px){
+  .fotos{grid-auto-flow:row;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible;max-width:var(--max);margin-left:auto;margin-right:auto}
+}
+
+/* ---------- WOW 2: rounds (cronômetro de box) ---------- */
+.rounds{position:relative;background:var(--grafite);color:var(--cimento)}
+.js .rounds{height:calc(8 * 62svh + 100svh)}
+.palco{position:relative;padding:72px 0}
+.js .palco{position:sticky;top:0;height:100svh;padding:76px 0 24px;display:flex;align-items:center;overflow:hidden}
+.palco .caixa{width:100%;display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(18px,3.4vh,30px)}
+.palco h2{font-size:clamp(40px,7vw,84px);text-transform:uppercase;color:var(--cimento)}
+.palco h2 small{display:block;font:500 15px/1.5 var(--sans);text-transform:none;color:var(--aco);margin-top:8px;letter-spacing:0}
+.led{display:flex;align-items:center;gap:clamp(14px,3vw,30px);background:#0B0B0C;border-radius:16px;padding:clamp(12px,2.4vw,22px) clamp(14px,3vw,28px);box-shadow:inset 0 0 0 2px #2C2D31,0 20px 40px -20px #000;width:max-content;max-width:100%}
+.led .grupo{display:flex;align-items:center;gap:4px}
+#ledRound,#ledMin,#ledSeg,#obgDig{display:flex;gap:clamp(3px,.6vw,6px)}
+.led .rot{font:700 12px/1.1 var(--sans);color:#6B6E74;writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.04em;margin-right:6px}
+.dig{width:clamp(30px,6.4vw,62px);height:auto;display:block}
+.dig polygon{fill:#2A1214;transition:fill .08s}
+.dig polygon.on{fill:#FF3B3B}
+.led .dig{filter:drop-shadow(0 0 6px rgba(255,40,40,.45))}
+.dois-pontos{display:flex;flex-direction:column;gap:clamp(8px,1.6vw,16px);margin:0 2px}
+.dois-pontos i{width:clamp(5px,1vw,9px);height:clamp(5px,1vw,9px);border-radius:2px;background:#FF3B3B;box-shadow:0 0 8px rgba(255,40,40,.6)}
+.celula{perspective:900px}
+.celula .bloco{display:inline-flex;align-items:center;min-height:clamp(72px,13vw,150px);padding:.1em .35em .06em;border-radius:10px;font:900 clamp(52px,11.5vw,150px)/.9 var(--titulo);text-transform:uppercase;background:var(--cor,#8E9196);color:var(--tinta,#fff);transform-origin:50% 0;max-width:100%;overflow-wrap:anywhere}
+.celula .bloco.vira{animation:vira .42s var(--sai)}
+@keyframes vira{0%{transform:rotateX(-88deg);opacity:.3}100%{transform:rotateX(0);opacity:1}}
+.round-txt{max-width:46ch;color:#C9CBCF;min-height:3.2em;transition:opacity .25s}
+.round-txt.troca{opacity:0}
+.round-cta{display:inline-flex;align-items:center;gap:8px;color:var(--cimento);font-weight:600;text-decoration:underline;text-underline-offset:4px;min-height:44px}
+.segs{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;max-width:560px}
+.segs i{height:6px;border-radius:3px;background:#2E2F33;transition:background .3s}
+.rounds-lista{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:12px}
+.rounds-lista li{background:var(--grafite-2);border-radius:12px;padding:16px;border-left:8px solid var(--c)}
+.rounds-lista b{display:block;font:800 30px/1 var(--titulo);text-transform:uppercase;margin-bottom:6px}
+.js .rounds-lista{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+html:not(.js) .so-js{display:none!important}
+.info{display:grid;gap:16px;justify-items:start}
+@media (min-width:1000px){
+  .palco .caixa{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:center;column-gap:56px}
+  .palco .esq{grid-row:span 2}
+}
+
+/* ---------- WOW 3: pinte seu quadro ---------- */
+.monte{background:var(--cimento)}
+.monte .grade-topo{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:end}
+.quadro-real{display:flex;gap:14px;align-items:center;font-size:14px;color:var(--suave)}
+.quadro-real img{width:96px;height:96px;border-radius:10px;object-fit:cover;flex:none}
+@media (min-width:900px){.monte .grade-topo{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}.quadro-real{justify-content:flex-end}}
+.oficina{margin-top:36px;display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
+@media (min-width:1000px){.oficina{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);align-items:start}}
+.passo{font:600 14px/1 var(--sans);color:var(--suave);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.passo .trilho{flex:1;max-width:160px;height:4px;border-radius:2px;background:var(--cimento-2);overflow:hidden}
+.passo .trilho i{display:block;height:100%;width:33%;background:var(--grafite);transition:width .4s var(--sai)}
+.etapa h3{font:700 19px/1.3 var(--sans);margin-bottom:12px;color:var(--grafite)}
+.canetas{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.caneta{min-height:44px;padding:0 16px;border-radius:8px;border:0;font:600 15px/1 var(--sans);cursor:pointer;background:var(--branco);color:var(--grafite);box-shadow:inset 0 0 0 1.5px var(--linha);display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .15s}
+.caneta::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.caneta[aria-pressed="true"]{background:var(--c);color:var(--t);box-shadow:none}
+.caneta[aria-pressed="true"]::before{background:currentColor;opacity:.5}
+.caneta.ativa{box-shadow:0 0 0 3px var(--grafite);transform:translateY(-2px)}
+.lousa{background:#FBFBF9;border-radius:6px;box-shadow:0 1px 0 var(--linha),0 18px 40px -24px rgba(0,0,0,.35);padding:10px;position:relative}
+.lousa .faixa{background:#F2D43A;color:#1D1E21;font:800 clamp(17px,2.6vw,24px)/1 var(--titulo);text-transform:uppercase;text-align:center;padding:9px 6px;border-radius:3px;margin-bottom:8px}
+.tabela{display:grid;grid-template-columns:44px repeat(7,minmax(0,1fr));gap:3px}
+.tabela .cab{font:600 12px/1 var(--sans);text-align:center;color:var(--suave);padding:6px 0}
+.tabela .per{font:600 11px/1.1 var(--sans);color:var(--suave);display:flex;align-items:center;writing-mode:vertical-rl;transform:rotate(180deg);justify-content:center}
+.casa{min-height:56px;border:0;border-radius:3px;background:#EFEEEA;cursor:pointer;font:700 clamp(10px,1.6vw,13px)/1.05 var(--sans);color:var(--grafite);padding:3px;display:flex;align-items:center;justify-content:center;text-align:center;overflow-wrap:anywhere;transition:background .2s;position:relative}
+.casa .nc{display:none}
+@media (max-width:640px){.casa .nl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.casa .nc{display:block}}
+.casa:hover{background:#E4E3DE}
+.casa.pintada{background:var(--c);color:var(--t)}
+.casa.pintada span{animation:risca .35s var(--sai)}
+@keyframes risca{0%{clip-path:inset(0 100% 0 0)}100%{clip-path:inset(0 0 0 0)}}
+.casa.fechada{background:repeating-linear-gradient(-45deg,#EFEEEA 0 6px,#E2E1DC 6px 12px);cursor:not-allowed;color:#8A8C90;font-weight:500}
+.lousa-dica{font-size:14px;color:var(--suave);margin-top:10px}
+.lado-msg{background:var(--grafite);color:var(--cimento);border-radius:16px;padding:22px;position:sticky;top:84px}
+.lado-msg label{font:600 14px/1 var(--sans);display:block;margin-bottom:8px;color:#C9CBCF}
+.lado-msg input{width:100%;min-height:48px;border-radius:10px;border:1.5px solid #3A3B40;background:#0F1012;color:#fff;font:400 16px var(--sans);padding:0 14px}
+.lado-msg input:focus{outline:none;border-color:var(--cimento)}
+.bolha{background:#0F1012;border-radius:12px 12px 12px 4px;padding:14px;margin:16px 0;font-size:15px;line-height:1.5;white-space:pre-wrap;min-height:120px;color:#E8E8E6}
+.lado-msg .btn{width:100%}
+.lado-msg .btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.lado-msg small{display:block;margin-top:10px;color:#8E9196;font-size:13px}
+.limpar{background:none;border:0;color:var(--suave);font:500 14px var(--sans);text-decoration:underline;cursor:pointer;min-height:44px;padding:0}
+
+/* obrigado */
+.obrigado{position:fixed;inset:0;z-index:80;background:var(--grafite);color:var(--cimento);display:grid;place-items:center;text-align:center;padding:24px;clip-path:circle(0% at var(--x,50%) var(--y,50%));transition:clip-path .7s var(--sai);visibility:hidden}
+.obrigado.on{clip-path:circle(150% at var(--x,50%) var(--y,50%));visibility:visible}
+.obrigado .led{margin:0 auto 26px}
+.obrigado h2{font:900 clamp(56px,12vw,120px)/.9 var(--titulo);text-transform:uppercase;margin-bottom:14px}
+.obrigado p{color:#C9CBCF;max-width:36ch;margin:0 auto 26px}
+
+/* ---------- visita ---------- */
+.visita .grade{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-top:32px}
+@media (min-width:900px){.visita .grade{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.cartao{background:var(--branco);border-radius:16px;padding:24px;box-shadow:0 1px 0 var(--linha)}
+.cartao h3{font:800 32px/1 var(--titulo);text-transform:uppercase;margin-bottom:12px;color:var(--grafite)}
+.cartao p+p{margin-top:8px}
+.cartao .acoes{margin-top:18px}
+.mapa{border-radius:16px;overflow:hidden;background:var(--cimento-2);min-height:300px;display:grid;place-items:center;text-align:center;padding:20px}
+.mapa iframe{width:100%;height:100%;min-height:340px;border:0;display:block}
+.mapa.aberto{padding:0}
+.horas{list-style:none;margin:0;padding:0}
+.horas li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--cimento-2)}
+.horas li:last-child{border:0}
+
+/* ---------- faq ---------- */
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid var(--linha)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 40px 20px 0;font:600 18px/1.35 var(--sans);position:relative;color:var(--grafite)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:6px;top:50%;width:14px;height:14px;margin-top:-7px;background:linear-gradient(var(--grafite),var(--grafite)) center/14px 2px no-repeat,linear-gradient(var(--grafite),var(--grafite)) center/2px 14px no-repeat;transition:transform .3s var(--sai)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 20px;color:var(--suave);max-width:60ch}
+
+/* ---------- rodapé ---------- */
+.rodape{background:var(--grafite);color:#C9CBCF;padding:56px 0 110px;font-size:15px}
+.rodape .caixa{display:grid;gap:24px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:800px){.rodape .caixa{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr)}.rodape{padding-bottom:56px}}
+.rodape .marca{color:var(--cimento)}
+.rodape a{color:var(--cimento)}
+.rodape p+p{margin-top:6px}
+.gudev{grid-column:1/-1;border-top:1px solid #2E2F33;padding-top:18px;color:#8E9196;font-size:13px}
+
+/* ---------- botão flutuante ---------- */
+.flutua{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;width:60px;height:60px;border-radius:50%;background:var(--vermelho);color:#fff;display:grid;place-items:center;box-shadow:0 10px 24px -8px rgba(169,22,31,.7);transform:translateY(120px);transition:transform .4s var(--mola)}
+.flutua svg{width:28px;height:28px}
+.flutua.on{transform:none}
+@media (min-width:900px){.flutua{display:none}}
+
+/* ---------- prévia / embed ---------- */
+.embed .flutua,.embed .barra-dica{display:none}
+
+@media (prefers-reduced-motion:reduce){
+  .js .heroi h1 .l > span{transition:opacity .3s;transform:skewX(-8deg)}
+  .celula .bloco.vira{animation:fade .3s}
+  @keyframes fade{from{opacity:.2}to{opacity:1}}
+  .casa.pintada span{animation:none}
+  .obrigado{transition:opacity .3s;clip-path:none;opacity:0}
+  .obrigado.on{opacity:1}
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topo" id="topo">
+  <div class="caixa">
+    <a class="marca" href="#conteudo" aria-label="Academia Paulo de Souza, voltar ao topo"><i></i><span>Paulo de Souza</span></a>
+    <a class="btn btn-zap" data-zap="topo" href="https://wa.me/5511942599436" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span>Chamar<span class="longo"> no WhatsApp</span></span></a>
+  </div>
+</header>
+
+<main id="conteudo" tabindex="-1">
+
+  <!-- WOW 1: a barra carrega e sobe -->
+  <section class="heroi" id="heroi" aria-labelledby="titulo">
+    <div class="caixa">
+      <p class="linha1">Centro de treinamento e academia no Parque Boturussu, zona leste de São Paulo.</p>
+    </div>
+    <div class="barra-wrap" id="barraWrap" role="button" tabindex="0" aria-label="Barra carregada. Toque para fazer uma repetição.">
+      <svg id="barra" viewBox="0 0 1000 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="gAco" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#C9CCD1"/><stop offset=".5" stop-color="#8C9096"/><stop offset="1" stop-color="#5D6168"/>
+          </linearGradient>
+        </defs>
+        <path id="barraHaste" d="M20 150 Q500 150 980 150" fill="none" stroke="url(#gAco)" stroke-width="10" stroke-linecap="round"/>
+        <g id="ladoE">
+          <rect x="20" y="141" width="210" height="18" rx="4" fill="url(#gAco)"/>
+          <rect x="212" y="128" width="14" height="44" rx="3" fill="#5D6168"/>
+          <g class="anilha" data-lado="-1"><rect x="228" y="45" width="30" height="210" rx="7" fill="#1E1F23"/><rect x="238" y="58" width="10" height="184" rx="3" fill="#3F6FB5"/></g>
+          <g class="anilha" data-lado="-1"><rect x="260" y="45" width="30" height="210" rx="7" fill="#1E1F23"/><rect x="270" y="58" width="10" height="184" rx="3" fill="#3F6FB5"/></g>
+          <g class="anilha" data-lado="-1"><rect x="292" y="70" width="26" height="160" rx="6" fill="#1E1F23"/><rect x="301" y="82" width="8" height="136" rx="3" fill="#E8CF2A"/></g>
+          <g class="anilha" data-lado="-1"><rect x="320" y="92" width="20" height="116" rx="5" fill="#1E1F23"/><rect x="327" y="102" width="6" height="96" rx="2" fill="#2F7A3E"/></g>
+          <g class="trava" data-lado="-1"><rect x="342" y="130" width="16" height="40" rx="4" fill="#D3202A"/></g>
+        </g>
+        <g id="ladoD">
+          <rect x="770" y="141" width="210" height="18" rx="4" fill="url(#gAco)"/>
+          <rect x="774" y="128" width="14" height="44" rx="3" fill="#5D6168"/>
+          <g class="anilha" data-lado="1"><rect x="742" y="45" width="30" height="210" rx="7" fill="#1E1F23"/><rect x="752" y="58" width="10" height="184" rx="3" fill="#3F6FB5"/></g>
+          <g class="anilha" data-lado="1"><rect x="710" y="45" width="30" height="210" rx="7" fill="#1E1F23"/><rect x="720" y="58" width="10" height="184" rx="3" fill="#3F6FB5"/></g>
+          <g class="anilha" data-lado="1"><rect x="682" y="70" width="26" height="160" rx="6" fill="#1E1F23"/><rect x="691" y="82" width="8" height="136" rx="3" fill="#E8CF2A"/></g>
+          <g class="anilha" data-lado="1"><rect x="660" y="92" width="20" height="116" rx="5" fill="#1E1F23"/><rect x="667" y="102" width="6" height="96" rx="2" fill="#2F7A3E"/></g>
+          <g class="trava" data-lado="1"><rect x="642" y="130" width="16" height="40" rx="4" fill="#D3202A"/></g>
+        </g>
+      </svg>
+      <span class="barra-dica" id="barraDica">Toque na barra</span>
+    </div>
+    <div class="chao" aria-hidden="true"></div>
+    <div class="caixa">
+      <h1 id="titulo"><span class="l"><span>Paulo</span></span><span class="l"><span>de Souza</span></span><span class="sr"> Centro de Treinamento e Academia</span></h1>
+      <div class="base">
+        <div class="texto">
+          <p>Musculação e aulas de funcional, cross training, pilates, pump, fit dance, jump e muay thai, tudo na mesma casa.</p>
+          <div class="acoes">
+            <a class="btn btn-zap" data-zap="heroi" href="https://wa.me/5511942599436" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>Chamar no WhatsApp</a>
+            <a class="btn btn-linha" href="#aulas">Ver as aulas</a>
+          </div>
+        </div>
+        <figure class="fachada">
+          <img src="img/fachada.webp" width="324" height="324" alt="Fachada da academia: painel preto com faixas vermelhas, o letreiro Centro de Treinamento e Academia Paulo de Souza e a lista de aulas.">
+          <figcaption><strong>A fachada</strong>Painel preto com as faixas vermelhas e a lista de aulas na parede.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- espaço -->
+  <section class="secao" id="espaco" aria-labelledby="t-espaco">
+    <div class="caixa">
+      <h2 id="t-espaco">O espaço</h2>
+      <p class="intro">Aparelhos, peso livre, pista de grama pra treino funcional e uma área externa pra respirar entre uma série e outra.</p>
+    </div>
+    <div class="fotos">
+      <figure><img src="img/musculacao.webp" width="284" height="283" loading="lazy" alt="Área de musculação com banco ajustável, halteres, esteira e transport, de frente pra janela."><figcaption>Musculação e cardio</figcaption></figure>
+      <figure><img src="img/pista-grama.webp" width="284" height="283" loading="lazy" alt="Pista de grama sintética com faixas brancas, kettlebells e máquinas de remo ao fundo."><figcaption>Pista de grama e kettlebells</figcaption></figure>
+      <figure><img src="img/rack-argolas.webp" width="284" height="283" loading="lazy" alt="Estrutura de cross training com argolas penduradas e anilhas, em preto e branco."><figcaption>Rack com argolas</figcaption></figure>
+      <figure><img src="img/area-externa.webp" width="284" height="283" loading="lazy" alt="Área externa com parede verde, plantas, banco de madeira e um quadro escrito Sorria."><figcaption>Área externa</figcaption></figure>
+    </div>
+    <div class="caixa">
+      <p class="nota">Fotos do catálogo do WhatsApp da academia.</p>
+      <div class="acoes"><a class="btn btn-linha" data-zap="espaco" href="https://wa.me/5511942599436" target="_blank" rel="noopener">Combinar uma visita pelo WhatsApp</a></div>
+    </div>
+  </section>
+
+  <!-- WOW 2: rounds -->
+  <section class="rounds" id="aulas" aria-labelledby="t-aulas">
+    <div class="palco" id="palco">
+      <div class="caixa">
+        <div class="esq">
+          <h2 id="t-aulas">Uma aula por round<small>Role a página: o cronômetro passa pelas aulas da casa.</small></h2>
+        </div>
+        <div class="led so-js" id="led" aria-hidden="true">
+          <div class="grupo"><span class="rot">ROUND</span><span id="ledRound"></span></div>
+          <div class="grupo"><span id="ledMin"></span><span class="dois-pontos"><i></i><i></i></span><span id="ledSeg"></span></div>
+        </div>
+        <div class="so-js info" aria-live="polite">
+          <div class="celula"><span class="bloco" id="bloco">Musculação</span></div>
+          <p class="round-txt" id="roundTxt"></p>
+          <a class="round-cta" id="roundCta" href="https://wa.me/5511942599436" target="_blank" rel="noopener">Perguntar horários no WhatsApp</a>
+          <div class="segs" id="segs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <ol class="rounds-lista" id="roundsLista"></ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- WOW 3: pinte seu quadro -->
+  <section class="secao monte" id="quadro" aria-labelledby="t-quadro">
+    <div class="caixa">
+      <div class="grade-topo">
+        <div>
+          <h2 id="t-quadro">Pinte sua semana</h2>
+          <p class="intro">Igual ao quadro de horários da academia: escolha as aulas, pinte os dias e turnos em que você pode ir, e mande pro WhatsApp. Eles respondem com os horários certos.</p>
+        </div>
+        <figure class="quadro-real" style="margin:0">
+          <img src="img/quadro-horarios.webp" width="284" height="283" loading="lazy" alt="Foto do quadro de horários da unidade Boturussu, com as aulas em células coloridas.">
+          <figcaption>O quadro de horários de verdade, da unidade Boturussu.</figcaption>
+        </figure>
+      </div>
+
+      <div class="oficina">
+        <div>
+          <div class="passo" aria-live="polite"><span id="passoTxt">Passo 1 de 3</span><span class="trilho"><i id="passoBar"></i></span></div>
+          <div class="etapa">
+            <h3>1. Quais aulas te interessam?</h3>
+            <div class="canetas" id="canetas" role="group" aria-label="Aulas"></div>
+          </div>
+          <div class="etapa">
+            <h3>2. Pinte quando você pode ir</h3>
+            <div class="lousa">
+              <div class="faixa">Quadro da sua semana</div>
+              <div class="tabela" id="tabela"></div>
+            </div>
+            <p class="lousa-dica" id="lousaDica">Escolha uma aula acima e toque nos quadradinhos.</p>
+            <button type="button" class="limpar" id="limpar">Apagar o quadro</button>
+          </div>
+        </div>
+        <aside class="lado-msg" aria-labelledby="t-msg">
+          <h3 id="t-msg" class="etapa" style="font:700 19px/1.3 var(--sans);margin:0 0 14px;color:var(--cimento)">3. Sua mensagem</h3>
+          <label for="nome">Seu nome (opcional)</label>
+          <input id="nome" name="nome" type="text" autocomplete="given-name" maxlength="40">
+          <div class="bolha" id="bolha" aria-live="polite"></div>
+          <a class="btn btn-zap" id="enviar" href="https://wa.me/5511942599436" target="_blank" rel="noopener" aria-disabled="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>Mandar meu quadro no WhatsApp</a>
+          <small>Nada fica salvo no site: ele só monta a mensagem e abre o WhatsApp.</small>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- visita -->
+  <section class="secao visita" id="visita" aria-labelledby="t-visita">
+    <div class="caixa">
+      <h2 id="t-visita">Onde fica</h2>
+      <div class="grade">
+        <div class="cartao">
+          <h3>Unidade Boturussu</h3>
+          <p>Av. Boturussu, 1499<br>Parque Boturussu, São Paulo, SP<br>CEP 03802-010</p>
+          <p><a href="tel:+5511942599436">(11) 94259-9436</a></p>
+          <ul class="horas" style="margin-top:16px">
+            <li><span>Segunda a sábado</span><span>Confirme no WhatsApp</span></li>
+            <li><span>Domingo</span><strong>Fechada</strong></li>
+          </ul>
+          <div class="acoes">
+            <a class="btn btn-zap" data-zap="visita" href="https://wa.me/5511942599436" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+            <a class="btn btn-linha" href="https://www.google.com/maps/search/?api=1&amp;query=Academia%20Paulo%20de%20Souza%2C%20Av.%20Boturussu%2C%201499%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener">Como chegar</a>
+          </div>
+        </div>
+        <div class="mapa" id="mapa">
+          <div>
+            <p style="margin-bottom:14px;color:var(--suave)">O mapa só carrega se você pedir.</p>
+            <button type="button" class="btn btn-linha" id="abreMapa">Ver o mapa aqui</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- faq -->
+  <section class="secao" id="duvidas" aria-labelledby="t-faq" style="padding-top:0">
+    <div class="caixa">
+      <h2 id="t-faq">Dúvidas</h2>
+      <div class="faq" style="margin-top:24px">
+        <details><summary>Quais aulas a academia tem?</summary><p>Funcional, cross training, pilates, pump, fit dance, jump e muay thai, além da musculação. As aulas estão na fachada e no quadro de horários da unidade.</p></details>
+        <details><summary>Abre no domingo?</summary><p>Não. No domingo a academia fica fechada.</p></details>
+        <details><summary>Como eu vejo os horários das aulas?</summary><p>O quadro muda de tempos em tempos, então o jeito mais seguro é perguntar no WhatsApp. Se quiser adiantar, pinte sua semana no quadro aqui do site e mande.</p></details>
+        <details><summary>Quanto custa?</summary><p>Os valores e planos são passados pelo WhatsApp, (11) 94259-9436.</p></details>
+        <details><summary>Dá pra conhecer antes de começar?</summary><p>Chame no WhatsApp e combine um horário pra conhecer o espaço.</p></details>
+        <details><summary>Onde fica?</summary><p>Na Av. Boturussu, 1499, Parque Boturussu, zona leste de São Paulo. O botão Como chegar abre a rota no Google Maps.</p></details>
+      </div>
+      <div class="acoes"><a class="btn btn-zap" data-zap="faq" href="https://wa.me/5511942599436" target="_blank" rel="noopener">Chamar no WhatsApp</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="caixa">
+    <div>
+      <a class="marca" href="#conteudo"><i></i><span>Paulo de Souza</span></a>
+      <p style="margin-top:12px">Centro de Treinamento e Academia Paulo de Souza</p>
+    </div>
+    <div>
+      <p>Av. Boturussu, 1499, Parque Boturussu</p>
+      <p>São Paulo, SP, 03802-010</p>
+      <p>Domingo: fechada</p>
+    </div>
+    <div>
+      <p><a href="tel:+5511942599436">(11) 94259-9436</a></p>
+      <p><a data-zap="rodape" href="https://wa.me/5511942599436" target="_blank" rel="noopener">WhatsApp</a></p>
+      <p><a href="privacidade.html">Política de privacidade</a></p>
+    </div>
+    <p class="gudev">Site feito pela GuDev.</p>
+  </div>
+</footer>
+
+<a class="flutua" id="flutua" data-zap="flutuante" href="https://wa.me/5511942599436" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg></a>
+
+<div class="obrigado" id="obrigado" role="dialog" aria-modal="true" aria-labelledby="t-obg">
+  <div>
+    <div class="led" aria-hidden="true"><div class="grupo"><span id="obgDig"></span></div></div>
+    <h2 id="t-obg">Bora treinar</h2>
+    <p>O WhatsApp abriu com o seu quadro. É só tocar em enviar que a academia responde com os horários.</p>
+    <button type="button" class="btn btn-zap" id="fechaObg">Voltar pro site</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
+<script>
+(function(){
+  "use strict";
+  var embed = /[?&]embed\b/.test(location.search);
+  var dentro = window.parent !== window;
+  var calmo = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var temMouse = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+  if (embed) document.documentElement.classList.add("embed");
+  var FONE = "5511942599436";
+  var OI = "Olá, Academia Paulo de Souza! Vim pelo site";
+  function zap(txt){ return "https://wa.me/" + FONE + "?text=" + encodeURIComponent(txt); }
+  function $(id){ return document.getElementById(id); }
+
+  /* ---------- mensagens de cada botão ---------- */
+  var MSG = {
+    topo: OI + " e queria saber os horários e os valores.",
+    heroi: OI + " e queria saber os horários e os valores.",
+    espaco: OI + " e queria conhecer a academia. Posso passar aí pra ver o espaço?",
+    visita: OI + ". Qual o horário de funcionamento de segunda a sábado?",
+    faq: OI + " e tenho uma dúvida: ",
+    rodape: OI + ".",
+    flutuante: OI + " e queria saber os horários e os valores."
+  };
+  document.querySelectorAll("[data-zap]").forEach(function(a){
+    var m = MSG[a.getAttribute("data-zap")]; if (m) a.href = zap(m);
+  });
+
+  /* ---------- aulas (cores do quadro real) ---------- */
+  var AULAS = [
+    {n:"Musculação", s:"Musc.", c:"#8E9196", t:"#fff", d:"Aparelhos, halteres, banco ajustável, esteira e transport. Treino no seu ritmo."},
+    {n:"Funcional", s:"Func.", c:"#2F7A3E", t:"#fff", d:"Movimentos do dia a dia com peso do corpo, elástico e kettlebell. Força, equilíbrio e fôlego."},
+    {n:"Cross training", s:"Cross", c:"#3F6FB5", t:"#fff", d:"Circuito intenso e variado: levantamento, argola, corrida e remo, contra o relógio."},
+    {n:"Pilates", s:"Pilates", c:"#E7D8BC", t:"#1D1E21", d:"Controle, respiração e força no centro do corpo. Ajuda na postura."},
+    {n:"Pump", s:"Pump", c:"#A27BD0", t:"#17181B", d:"Barra e anilhas leves, muitas repetições, tudo no ritmo da música."},
+    {n:"Fit Dance", s:"Dance", c:"#D6467F", t:"#fff", d:"Coreografia que vira cardio. Dá pra suar sem perceber."},
+    {n:"Jump", s:"Jump", c:"#F08A2C", t:"#17181B", d:"Mini trampolim e música alta. Cardio pesado com pouco impacto nas articulações."},
+    {n:"Muay Thai", s:"Muay", c:"#E8CF2A", t:"#17181B", d:"Socos, chutes, joelhadas e cotoveladas. Condicionamento e defesa pessoal."}
+  ];
+
+  /* lista acessível (e versão sem JS / prévia) */
+  var lista = $("roundsLista");
+  AULAS.forEach(function(a){
+    var li = document.createElement("li"); li.style.setProperty("--c", a.c);
+    var b = document.createElement("b"); b.textContent = a.n;
+    var p = document.createElement("p"); p.textContent = a.d;
+    li.appendChild(b); li.appendChild(p); lista.appendChild(li);
+  });
+
+  /* ---------- dígitos de LED (7 segmentos) ---------- */
+  var SEG = { // a b c d e f g
+    "0":"1111110","1":"0110000","2":"1101101","3":"1111001","4":"0110011",
+    "5":"1011011","6":"1011111","7":"1110000","8":"1111111","9":"1111011"," ":"0000000"
+  };
+  var POL = [
+    "12,4 48,4 42,12 18,12","50,6 50,46 44,42 44,14","50,54 50,94 44,86 44,58",
+    "12,96 48,96 42,88 18,88","10,54 16,58 16,86 10,94","10,6 16,14 16,42 10,46","14,50 18,46 42,46 46,50 42,54 18,54"
+  ];
+  function criaDig(){
+    var ns = "http://www.w3.org/2000/svg";
+    var s = document.createElementNS(ns, "svg"); s.setAttribute("viewBox","0 0 60 100"); s.setAttribute("class","dig");
+    s.style.transform = "skewX(-6deg)";
+    POL.forEach(function(p){ var g = document.createElementNS(ns,"polygon"); g.setAttribute("points",p); s.appendChild(g); });
+    return s;
+  }
+  function display(el, n){
+    var d = []; for (var i=0;i<n;i++){ var x = criaDig(); el.appendChild(x); d.push(x); }
+    return function(str){
+      for (var i=0;i<n;i++){
+        var m = SEG[str.charAt(i)] || SEG[" "], ps = d[i].children;
+        for (var k=0;k<7;k++) ps[k].classList.toggle("on", m.charAt(k) === "1");
+      }
+    };
+  }
+  var ledRound = display($("ledRound"), 2), ledMin = display($("ledMin"), 2), ledSeg = display($("ledSeg"), 2);
+  var obgDig = display($("obgDig"), 1);
+  ledRound("01"); ledMin("01"); ledSeg("00");
+
+  /* =========================================================
+     WOW 1: a barra recebe as anilhas, trava e sobe
+     física de mola: a'' = k(alvo - a) - c·v
+     ========================================================= */
+  var heroi = $("heroi"), barraWrap = $("barraWrap"), haste = $("barraHaste");
+  var ladoE = $("ladoE"), ladoD = $("ladoD");
+  var anilhas = Array.prototype.slice.call(document.querySelectorAll("#barra .anilha, #barra .trava"));
+  var pecas = anilhas.map(function(el, i){
+    var lado = +el.getAttribute("data-lado");
+    var ordem = el.classList.contains("trava") ? 4 : (i % 5);
+    return {el:el, lado:lado, x:0, v:0, alvo:0, quando:0, ordem:ordem};
+  });
+  var sobe = {y:0, v:0, alvo:0}, curva = {s:0, v:0};
+  var animando = false, ultimo = 0;
+
+  function mola(o, alvo, k, c, dt){
+    var a = k * (alvo - o.y) - c * o.v; o.v += a * dt; o.y += o.v * dt; return a;
+  }
+  function desenhaBarra(){
+    var yc = 150 + sobe.y;            // centro da barra
+    var ye = yc + curva.s;            // pontas (o peso entorta)
+    var ctrl = 2 * yc - ye;
+    haste.setAttribute("d", "M20 " + ye.toFixed(2) + " Q500 " + ctrl.toFixed(2) + " 980 " + ye.toFixed(2));
+    // posição e inclinação da curva na altura das anilhas (x = 290 e 710)
+    var t = (290 - 20) / 960;
+    var yAt = (1-t)*(1-t)*ye + 2*t*(1-t)*ctrl + t*t*ye;
+    var dy = (2*(1-t)*(ctrl-ye) + 2*t*(ye-ctrl)) / 960;
+    var ang = Math.atan(dy) * 180 / Math.PI;
+    var off = (yAt - 150).toFixed(2);
+    ladoE.setAttribute("transform", "translate(0 " + off + ") rotate(" + ang.toFixed(2) + " 290 150)");
+    ladoD.setAttribute("transform", "translate(0 " + off + ") rotate(" + (-ang).toFixed(2) + " 710 150)");
+  }
+  function laco(t){
+    var dt = Math.min(0.033, (t - ultimo) / 1000 || 0.016); ultimo = t;
+    var parado = true, agora = performance.now();
+    pecas.forEach(function(p){
+      if (agora < p.quando) { parado = false; return; }
+      var a = 210 * (p.alvo - p.x) - 15 * p.v; p.v += a * dt; p.x += p.v * dt;
+      if (Math.abs(p.v) > .5 || Math.abs(p.x - p.alvo) > .3) parado = false;
+      p.el.setAttribute("transform", "translate(" + p.x.toFixed(2) + " 0)");
+    });
+    var ay = mola(sobe, sobe.alvo, 95, 13, dt);
+    var alvoCurva = (sobe.alvo < -1 ? 9 : 0) + Math.max(-6, Math.min(18, ay * 0.006));
+    var ac = 320 * (alvoCurva - curva.s) - 12 * curva.v; curva.v += ac * dt; curva.s += curva.v * dt;
+    if (Math.abs(sobe.v) > .3 || Math.abs(curva.v) > .3 || Math.abs(sobe.y - sobe.alvo) > .2) parado = false;
+    desenhaBarra();
+    if (!parado || agora < fimSeq) requestAnimationFrame(laco); else animando = false;
+  }
+  var fimSeq = 0;
+  function liga(){ if (!animando){ animando = true; ultimo = performance.now(); requestAnimationFrame(laco); } }
+
+  function carrega(){
+    var t0 = performance.now() + 250;
+    pecas.forEach(function(p){
+      p.x = p.lado * 760; p.v = 0; p.alvo = 0;
+      p.quando = t0 + p.ordem * 170 + (p.lado > 0 ? 60 : 0);
+      p.el.setAttribute("transform", "translate(" + p.x + " 0)");
+    });
+    fimSeq = t0 + 2600;
+    liga();
+    setTimeout(function(){ sobe.alvo = -46; liga(); }, 1500);
+    setTimeout(function(){ heroi.classList.add("pronto"); }, 1650);
+    setTimeout(function(){ $("barraDica").classList.add("on"); }, 3200);
+  }
+  function repeticao(){
+    if (calmo) return;
+    $("barraDica").classList.remove("on");
+    sobe.alvo = 0; fimSeq = performance.now() + 900; liga();
+    setTimeout(function(){ sobe.alvo = -46; liga(); }, 420);
+  }
+  barraWrap.addEventListener("click", repeticao);
+  barraWrap.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ e.preventDefault(); repeticao(); } });
+
+  if (embed || calmo){
+    sobe.y = sobe.alvo = -46; curva.s = 9; desenhaBarra(); heroi.classList.add("pronto");
+  } else {
+    var fontes = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    var foi = false; function vai(){ if (!foi){ foi = true; carrega(); } }
+    fontes.then(vai); setTimeout(vai, 1200);
+  }
+  // garantia: o título nunca fica escondido
+  setTimeout(function(){ heroi.classList.add("pronto"); }, 4000);
+
+  /* =========================================================
+     WOW 2: rounds pela rolagem (sticky, sem pin)
+     uma fonte de progresso, folga de 8%, troca em fila
+     ========================================================= */
+  var rounds = $("aulas"), bloco = $("bloco"), roundTxt = $("roundTxt"), roundCta = $("roundCta");
+  var segs = $("segs").children, atual = -1, trocando = false, pendente = null;
+  function mostra(i, sem){
+    atual = i; var a = AULAS[i];
+    bloco.style.setProperty("--cor", a.c); bloco.style.setProperty("--tinta", a.t);
+    bloco.textContent = a.n;
+    if (!sem){ bloco.classList.remove("vira"); void bloco.offsetWidth; bloco.classList.add("vira"); }
+    roundTxt.classList.add("troca");
+    setTimeout(function(){ roundTxt.textContent = a.d; roundTxt.classList.remove("troca"); }, sem ? 0 : 160);
+    roundCta.textContent = "Perguntar horários de " + a.n + " no WhatsApp";
+    roundCta.href = zap(OI + " e queria saber os horários de " + a.n + ".");
+    for (var k=0;k<segs.length;k++) segs[k].style.background = k <= i ? AULAS[k].c : "";
+    ledRound("0" + (i+1));
+  }
+  function pede(i){
+    if (i === atual) return;
+    if (trocando){ pendente = i; return; }
+    trocando = true; mostra(i);
+    setTimeout(function(){ trocando = false; if (pendente !== null && pendente !== atual){ var p = pendente; pendente = null; pede(p); } else pendente = null; }, 380);
+  }
+  mostra(0, true);
+  var N = AULAS.length;
+  function lerRounds(){
+    var r = rounds.getBoundingClientRect(), h = window.innerHeight;
+    var total = r.height - h; if (total <= 0) return;
+    var p = Math.min(1, Math.max(0, -r.top / total));
+    var bruto = Math.min(N - 0.0001, p * N);
+    var alvo = Math.floor(bruto);
+    if (alvo !== atual){
+      var centro = atual + 0.5;
+      if (Math.abs(bruto - centro) > 0.5 + 0.08 || atual < 0) pede(alvo);
+    }
+    var frac = bruto - Math.floor(bruto);
+    var seg = Math.round(60 * (1 - frac));
+    ledMin(seg === 60 ? "01" : "00"); ledSeg(seg === 60 ? "00" : (seg < 10 ? "0" + seg : "" + seg));
+  }
+
+  /* =========================================================
+     WOW 3: pinte sua semana
+     ========================================================= */
+  var DIAS = ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"];
+  var DIAS_LONGOS = ["segunda","terça","quarta","quinta","sexta","sábado","domingo"];
+  var TURNOS = ["Manhã","Tarde","Noite"];
+  var escolhidas = [], ativa = null, quadro = {}; // "d-t" -> índice da aula
+  var canetas = $("canetas"), tabela = $("tabela");
+  AULAS.forEach(function(a, i){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "caneta"; b.textContent = a.n;
+    b.style.setProperty("--c", a.c); b.style.setProperty("--t", a.t);
+    b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", function(){
+      var pos = escolhidas.indexOf(i);
+      if (pos < 0){ escolhidas.push(i); ativa = i; }
+      else if (ativa !== i){ ativa = i; }
+      else {
+        escolhidas.splice(pos, 1);
+        Object.keys(quadro).forEach(function(k){ if (quadro[k] === i) delete quadro[k]; });
+        ativa = escolhidas.length ? escolhidas[escolhidas.length - 1] : null;
+      }
+      atualiza();
+    });
+    canetas.appendChild(b);
+  });
+  tabela.appendChild(document.createElement("span"));
+  DIAS.forEach(function(d){ var s = document.createElement("span"); s.className = "cab"; s.textContent = d; tabela.appendChild(s); });
+  var casas = {};
+  TURNOS.forEach(function(t, ti){
+    var l = document.createElement("span"); l.className = "per"; l.textContent = t; tabela.appendChild(l);
+    DIAS.forEach(function(d, di){
+      var c = document.createElement("button"); c.type = "button"; c.className = "casa";
+      var k = di + "-" + ti;
+      if (di === 6){
+        c.classList.add("fechada"); c.disabled = true;
+        c.setAttribute("aria-label", "Domingo " + t.toLowerCase() + ": fechada");
+      } else {
+        c.setAttribute("aria-label", DIAS_LONGOS[di] + " de " + t.toLowerCase().replace("ã","ã"));
+        c.addEventListener("click", function(){
+          if (ativa === null){ $("lousaDica").textContent = "Primeiro escolha uma aula ali em cima."; canetas.firstChild.focus(); return; }
+          if (quadro[k] === ativa) delete quadro[k]; else quadro[k] = ativa;
+          atualiza();
+        });
+      }
+      casas[k] = c; tabela.appendChild(c);
+    });
+  });
+  $("limpar").addEventListener("click", function(){ quadro = {}; atualiza(); });
+  $("nome").addEventListener("input", atualiza);
+
+  function texto(){
+    var nome = $("nome").value.trim().replace(/\s+/g, " ").slice(0, 40);
+    var linhas = [];
+    for (var di=0; di<6; di++){
+      var partes = [];
+      TURNOS.forEach(function(t, ti){ var a = quadro[di + "-" + ti]; if (a !== undefined) partes.push(t.toLowerCase() + ": " + AULAS[a].n); });
+      if (partes.length) linhas.push("• " + DIAS_LONGOS[di].charAt(0).toUpperCase() + DIAS_LONGOS[di].slice(1) + ", " + partes.join("; "));
+    }
+    var s = "Olá, Academia Paulo de Souza!" + (nome ? " Aqui é " + nome + "." : "") + " Vim pelo site e montei minha semana:\n";
+    s += linhas.length ? linhas.join("\n") : "(ainda vazio)";
+    s += "\n\nQuais horários vocês têm nessas aulas e como funcionam os planos?";
+    return {s:s, ok:linhas.length > 0};
+  }
+  function atualiza(){
+    canetas.querySelectorAll(".caneta").forEach(function(b, i){
+      b.setAttribute("aria-pressed", escolhidas.indexOf(i) >= 0 ? "true" : "false");
+      b.classList.toggle("ativa", ativa === i);
+    });
+    Object.keys(casas).forEach(function(k){
+      var c = casas[k]; if (c.disabled) return;
+      var a = quadro[k];
+      if (a === undefined){ if (c.classList.contains("pintada")){ c.classList.remove("pintada"); c.textContent = ""; } }
+      else if (c.dataset.a !== String(a) || !c.classList.contains("pintada")){
+        c.classList.add("pintada"); c.style.setProperty("--c", AULAS[a].c); c.style.setProperty("--t", AULAS[a].t);
+        c.innerHTML = ""; var sp = document.createElement("span"); sp.className = "nl"; sp.textContent = AULAS[a].n; c.appendChild(sp);
+        var sc = document.createElement("span"); sc.className = "nc"; sc.setAttribute("aria-hidden","true"); sc.textContent = AULAS[a].s; c.appendChild(sc);
+      }
+      c.dataset.a = a === undefined ? "" : String(a);
+    });
+    var m = texto(), passo = !escolhidas.length ? 1 : (!m.ok ? 2 : 3);
+    $("passoTxt").textContent = "Passo " + passo + " de 3";
+    $("passoBar").style.width = (passo * 33.34) + "%";
+    if (ativa !== null) $("lousaDica").textContent = "Pintando com " + AULAS[ativa].n + ". Toque de novo num quadradinho pra apagar.";
+    else $("lousaDica").textContent = "Escolha uma aula acima e toque nos quadradinhos.";
+    $("bolha").textContent = m.s;
+    var env = $("enviar");
+    env.href = zap(m.s); env.setAttribute("aria-disabled", m.ok ? "false" : "true");
+  }
+  atualiza();
+
+  /* obrigado: a contagem do cronômetro, abrindo em círculo de onde tocou */
+  var obg = $("obrigado");
+  $("enviar").addEventListener("click", function(e){
+    if (this.getAttribute("aria-disabled") === "true"){ e.preventDefault(); return; }
+    var r = this.getBoundingClientRect();
+    obg.style.setProperty("--x", (r.left + r.width/2) + "px"); obg.style.setProperty("--y", (r.top + r.height/2) + "px");
+    setTimeout(function(){
+      obg.classList.add("on"); $("fechaObg").focus();
+      var n = 3; obgDig("3");
+      var iv = setInterval(function(){ n--; if (n <= 0){ clearInterval(iv); obgDig("0"); } else obgDig("" + n); }, 600);
+    }, 120);
+  });
+  function fechaObg(){ obg.classList.remove("on"); $("enviar").focus(); }
+  $("fechaObg").addEventListener("click", fechaObg);
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && obg.classList.contains("on")) fechaObg(); });
+
+  /* ---------- mapa só no toque ---------- */
+  $("abreMapa").addEventListener("click", function(){
+    var m = $("mapa"); m.classList.add("aberto"); m.innerHTML = "";
+    var f = document.createElement("iframe");
+    f.title = "Mapa da Academia Paulo de Souza"; f.loading = "lazy"; f.referrerPolicy = "no-referrer-when-downgrade";
+    f.src = "https://www.google.com/maps?q=" + encodeURIComponent("Av. Boturussu, 1499, São Paulo, SP") + "&output=embed";
+    m.appendChild(f);
+  });
+
+  /* ---------- topo, botão flutuante e laço de rolagem ---------- */
+  var topo = $("topo"), flutua = $("flutua"), yAntes = 0, quadroNaTela = false;
+  if ("IntersectionObserver" in window){
+    new IntersectionObserver(function(es){ quadroNaTela = es[0].isIntersecting; }, {rootMargin:"-30% 0px -30% 0px"}).observe($("quadro"));
+  }
+  var pedido = false;
+  function quadroRolagem(){
+    pedido = false;
+    var y = window.scrollY || 0;
+    topo.classList.toggle("some", y > 300 && y > yAntes + 2);
+    if (y < yAntes - 2 || y < 300) topo.classList.remove("some");
+    yAntes = y;
+    flutua.classList.toggle("on", y > window.innerHeight * .8 && !quadroNaTela);
+    if (!embed) lerRounds();
+  }
+  function pedeQuadro(){ if (!pedido){ pedido = true; requestAnimationFrame(quadroRolagem); } }
+  window.addEventListener("scroll", pedeQuadro, {passive:true});
+  var largura = window.innerWidth;
+  window.addEventListener("resize", function(){ if (window.innerWidth !== largura){ largura = window.innerWidth; pedeQuadro(); } });
+  setInterval(pedeQuadro, 500);
+  pedeQuadro();
+
+  /* ---------- Lenis só no computador ---------- */
+  if (!embed && !dentro && !calmo && temMouse && window.Lenis){
+    var lenis = new Lenis({lerp:.1, smoothWheel:true});
+    lenis.on("scroll", pedeQuadro);
+    (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(0);
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener("click", function(e){
+        var alvo = document.querySelector(a.getAttribute("href"));
+        if (!alvo) return; e.preventDefault();
+        lenis.scrollTo(alvo.id === "conteudo" ? 0 : alvo, {offset:-64});
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

@@ -140,6 +140,10 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Falta:** fotos reais, logo em arquivo, bairro/CEP, horário de semana, atendimentos de fisio e estética, avaliações do Google, Instagram. Lista no README do site.
 - Status: confirmar com o Davi se já houve contato. Lembrete: desde 11/11 a 1ª oferta é o Google em Dia (`11`); o site entra depois.
 
+## Academia Paulo de Souza, Parque Boturussu, São Paulo (Zona Leste) · lead do Davi (15/11/2026)
+- Centro de Treinamento e Academia Paulo de Souza. WhatsApp (11) 94259-9436. Domingo fechada. Aulas: funcional, cross training, pilates, pump, fit dance, jump, muay thai (e RIT no quadro).
+- Prévia em `sites/academia-paulo-de-souza` (barra que carrega e sobe, cronômetro de rounds com as aulas, "Pinte sua semana" no quadro de horários). Endereço (Av. Boturussu, 1499) veio de guia na internet: confirmar. Faltam horário de seg a sáb, fotos boas e o que é RIT.
+
 ## Eduburger's, Cidade Universitária, Maceió-AL (11/11/2026)
 - Sanduicheria desde 2015 (beirutes, passaportes, hambúrgueres), WhatsApp (82) 98804-7362, Instagram @eduburgers, 4,7 no Google (295 avaliações).
 - O Davi mandou o HTML da prévia pronto pra eu aprender (`sites/eduburgers/`). O rodapé diz "prévia feita pela GuDev, projeto conceito, ainda não é o site oficial".
