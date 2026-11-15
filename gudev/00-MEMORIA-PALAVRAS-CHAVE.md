@@ -74,7 +74,7 @@
 
 | Data | Sessão | Resultado / pendência |
 |---|---|---|
-| 15/11 | Campanha The Digital Presence | Filme de marca 32 s em `gudev/videos/presenca-digital/`; falta ok dos donos dos sites |
+| 15/11 | Campanha The Digital Presence | Filme de marca em `gudev/videos/presenca-digital/` (v2, 27 s, só Katraka/Andrade/Péçaí); falta narração |
 | 13/11 | Claude persistent memory | Este arquivo |
 | 13/11 | Planos para hoje | Retícula, PR #13; confirmar WhatsApp e publicar no Netlify se for usar |
 | 12–13/11 | Estratégia de leads e mensagens | Merge automático no fim de cada conversa |

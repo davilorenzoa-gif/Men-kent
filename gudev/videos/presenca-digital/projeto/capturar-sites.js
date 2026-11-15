@@ -1,6 +1,6 @@
 const {chromium}=require('playwright');
 const R='/home/user/Men-kent/';
-const sites=[['mestre','sites/mestre-das-motos/index.html',170,3.3,0],['andrade','sites/andrade-ferro-e-aco/index.html',85,4.6,0],['chersoni','gudev/exemplos/site-chersoni-pizzaria.html',85,4.2,0.9],['katraka','sites/katraka/index.html?embed',85,4.3,0]];
+const sites=[['katraka','sites/katraka/index.html?embed',85,4.3,0],['andrade','sites/andrade-ferro-e-aco/index.html',85,4.6,0],['pecai','sites/pecai/index.html',85,4.2,0]];
 const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
 (async()=>{const b=await chromium.launch();
 await Promise.all(sites.map(async([n,p,N,vh,start])=>{

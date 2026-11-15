@@ -1,36 +1,36 @@
-# Campanha "The Digital Presence" (15/11/2026)
+# Campanha "The Digital Presence" (15/11/2026, versão 2)
 
-Filme de marca da GuDev pro Instagram (Reels/anúncio). 32 s, 1080×1920, 30 fps, com trilha.
-Arquivo final: `gudev-presenca-digital.mp4`.
+Filme de marca da GuDev pro Instagram (Reels/anúncio). 27 s, 1080×1920, 30 fps, com trilha. Arquivo: `gudev-presenca-digital.mp4`.
+A versão 1 (32 s, lenta, com Mestre das Motos e Chersoni) foi trocada: o Davi achou parada e **só Katraka, Andrade e Péçaí podem aparecer como trabalho** (os outros não têm autorização).
 
-## Roteiro (o que aparece e quando)
-| Tempo | Cena | Texto |
-|---|---|---|
-| 0–4,6 s | Linha fina se desenha no preto, marcações geométricas, ponto laranja corre a linha | NO MUNDO DIGITAL... |
-| 4,6–10,4 s | A linha vira o chão, uma loja se desenha em traço, três fios de luz sobem até um celular em wireframe | SER ENCONTRADO É APENAS O COMEÇO. |
-| 10,4–17,6 s | O wireframe vira um celular de verdade com o site da Mestre das Motos rolando; câmera gira e aproxima; desktop desfocado ao fundo | DESIGN. TECNOLOGIA. EXPERIÊNCIA. |
-| 17,6–25,6 s | Carrossel lateral: Andrade (materiais de construção), Chersoni (restaurante), Katraka (oficina), cada um rolando | PROJETOS CRIADOS PARA NEGÓCIOS REAIS. |
-| 25,6–32 s | Tudo some, linha encolhe num ponto laranja, logo original aparece | Transformamos sua presença digital. / SEU PRÓXIMO PASSO COMEÇA AQUI. |
+## Roteiro e narração (falta gravar a voz)
+| Tempo | O que acontece | Texto na tela | Narração sugerida |
+|---|---|---|---|
+| 0–3,5 s | Boneco procurando, barra de busca digita "oficina perto de mim", resultados pulam | NO MUNDO DIGITAL_ | "No mundo digital, seu cliente te procura antes de te visitar." |
+| 3,5–8,5 s | Loja se desenha, alfinete cai e quica, boneco chega, celular aparece, câmera entra no celular | SER ENCONTRADO É SÓ O COMEÇO. | "Ser encontrado é só o começo. O que decide é o que ele vê quando te acha." |
+| 8,5–14,5 s | Site da Katraka: zoom com cantoneiras, celular gira com 3 etiquetas, dedo toca na tela | DESIGN. / TECNOLOGIA. / EXPERIÊNCIA. | "A GuDev cria sites com design, tecnologia e experiência." |
+| 14,5–21,5 s | Andrade entra chicoteando, depois Péçaí, depois os três em leque | PROJETOS CRIADOS PARA NEGÓCIOS REAIS. | "Projetos criados para negócios reais. Do ferro e aço ao açaí." |
+| 21,5–27 s | Os três somem num ponto, explosão de traços, logo original bate na tela | Transformamos sua presença digital. / SEU PRÓXIMO PASSO COMEÇA AQUI. | "GuDev. Transformamos sua presença digital. Seu próximo passo começa aqui." |
 
-Abaixo da frase final (de ~68% da altura pra baixo) ficou vazio de propósito: é onde entram o @ e o contato no CapCut.
+Abaixo da frase final ficou vazio de propósito: é onde entram o @ e o contato no CapCut.
 
-## Como foi feito (sem IA de vídeo, sem crédito)
-- As cenas são uma página (`projeto/film.html`) com uma função `seek(t)` que posiciona tudo pelo tempo. O Playwright tira 60 fotos por segundo e o ffmpeg mistura de 2 em 2 (dá o desfoque de movimento) e fecha em 30 fps.
-- Os sites são gravações reais: `projeto/capturar-sites.js` abre cada site no celular (390×844), rola com aceleração suave e salva os quadros em `seq/`. Esses quadros (52 MB) não estão no repo; rodar o script gera de novo.
-- Logo: recorte do print do perfil do Instagram (`projeto/logo/logo.png`), sem redesenhar. Só máscara redonda e brilho por cima.
-- Trilha: `projeto/audio.py` (numpy) sintetiza tudo: grave contínuo, pad em ré menor, pulso a 100 bpm a partir da cena 3, whoosh em cada transição, batida curta em cada texto, subida antes do logo e assinatura em ré maior (grave + 5 sinos). Nenhuma música de terceiros.
+## Como foi feito (sem crédito de IA)
+- Cenas em `projeto/film.html`: uma função `seek(t)` posiciona tudo pelo tempo. Playwright tira 60 fotos por segundo, ffmpeg mistura de 2 em 2 (desfoque de movimento) e fecha em 30 fps.
+- Vocabulário visual (do vídeo "R$ 10 mil" que o Davi mandou): boneco branco, pílulas, ícones que pulam com mola, chão tracejado, texto grande batendo palavra por palavra, tremida de câmera em cada batida, cortes chicote.
+- Sites: gravação real da rolagem no celular (`projeto/capturar-sites.js` gera `seq/`, que não fica no repo).
+- Logo: recorte do print do perfil do Instagram (`projeto/logo/logo.png`), sem redesenhar.
+- Trilha: `projeto/audio.py` (numpy), 120 bpm: bumbo, baixo, palma, chimbal, arpejo, um "pop" pra cada elemento que entra, whoosh nos cortes, subida e batida grave + sinos no logo.
 
 ## Refazer
 ```
 cd gudev/videos/presenca-digital/projeto
-node capturar-sites.js            # gera seq/ (ajustar o caminho R no topo se a pasta mudar)
-python3 audio.py                  # gera audio.wav
-for k in 0 1 2 3; do node render.js seq $((k*480)) $((k*480+480)) 60 & done; wait
-ffmpeg -framerate 60 -i fr/%05d.jpg -i audio.wav -vf "tmix=frames=2:weights='1 1',fps=30,format=yuv420p" -c:v libx264 -preset slow -crf 22 -maxrate 6M -bufsize 12M -c:a aac -b:a 192k -movflags +faststart saida.mp4
+node capturar-sites.js
+python3 audio.py
+for k in 0 1 2 3; do node render.js seq $((k*405)) $((k*405+405)) 60 & done; wait
+ffmpeg -framerate 60 -i fr/%05d.jpg -i audio.wav -vf "tmix=frames=2:weights='1 1',fps=30,format=yuv420p" -c:v libx264 -preset slow -crf 21 -maxrate 5M -bufsize 10M -c:a aac -b:a 192k -movflags +faststart -shortest saida.mp4
 ```
-Trocar texto, tempo ou projeto: tudo em `film.html` (textos no HTML, tempos dentro de `seek`).
 
-## Antes de postar (pendências)
-- **Autorização:** Andrade, Katraka, Mestre das Motos e Chersoni aparecem com nome e marca. Nenhum é case fechado (Katraka falta confirmar o pagamento, os outros são leads/exemplo). A frase "projetos criados para negócios reais" é verdadeira (os negócios existem), mas pedir um ok de cada dono antes de postar, ou trocar por conceitos e mudar a frase.
-- O Claude não ouve áudio: a trilha foi conferida só por forma de onda e volume (média −14 dB, pico −1 dB). Ouvir no celular antes de postar.
-- Colocar @ e contato no CapCut no espaço reservado do final.
+## Pendências
+- **Narração:** o Claude não conseguiu gerar voz (baixar o modelo de voz foi bloqueado pela permissão da sessão). Ou o Davi libera, ou grava/usa "texto para fala" do CapCut com a tabela acima.
+- O Claude não ouve áudio: trilha conferida só por volume (média −16,7 dB, pico −1 dB). Ouvir antes de postar.
+- Colocar @ e contato no CapCut.
