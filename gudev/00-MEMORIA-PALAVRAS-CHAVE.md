@@ -124,3 +124,7 @@
 ## 15/11/2026: skills novas do zip "skills-main"
 Palavras: video2html, img2html, skills, zip, vídeo pra HTML, print pra HTML, animate.
 Instaladas `.claude/skills/video2html` e `.claude/skills/img2html` (detalhes e ressalvas em `.claude/skills/README.md`). `animate` fica pra adaptar depois. Resto do zip descartado (pede API paga, é de outra pessoa ou já existe).
+
+## 15/11/2026: site da Academia Paulo de Souza
+Palavras: academia, Paulo de Souza, Boturussu, barra, anilhas, cronômetro, LED, round, quadro de horários, pinte sua semana, muay thai, cross training.
+Print do WhatsApp Business virou prévia em `sites/academia-paulo-de-souza` (+ arquivo único). Pendências no README de lá e no `04`.
