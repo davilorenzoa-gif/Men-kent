@@ -12,8 +12,8 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 canvas{display:block}
 
 /* ---------- texto ---------- */
-.txt{position:absolute;left:0;width:1080px;text-align:center;font-family:Bodoni,serif;font-weight:600;
-  text-transform:uppercase;letter-spacing:.14em;line-height:1.02;white-space:nowrap}
+.txt{position:absolute;left:0;width:1080px;text-align:center;font-family:'Inter Display',Inter,sans-serif;font-weight:800;
+  text-transform:uppercase;letter-spacing:.02em;line-height:1.0;white-space:nowrap}
 .txt .l{display:block}
 .txt .c{display:inline-block;will-change:transform,opacity,filter}
 .ouro .c{background:linear-gradient(180deg,#fff3c4 0%,#e9c65a 34%,#D4AF37 55%,#8a6a16 100%);
@@ -21,7 +21,7 @@ canvas{display:block}
   filter:drop-shadow(0 2px 0 #5d470d) drop-shadow(0 4px 0 #3c2e08) drop-shadow(0 14px 22px rgba(0,0,0,.6))}
 .tinta .c{color:#15161a}
 .tinta .dk .c{background:linear-gradient(180deg,#e0bb48 0%,#b98f22 60%,#7c5e12 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{position:absolute;left:0;width:1080px;text-align:center;font:500 25px/1 Inter,sans-serif;letter-spacing:.52em;text-transform:uppercase}
+.sub{position:absolute;left:0;width:1080px;text-align:center;font:700 38px/1 Inter,sans-serif;letter-spacing:.3em;text-transform:uppercase}
 .fio{position:absolute;left:540px;height:2px;width:420px;margin-left:-210px;background:linear-gradient(90deg,transparent,#D4AF37,transparent)}
 .brilho{position:absolute;left:0;width:1080px;pointer-events:none;mix-blend-mode:screen;
   background:linear-gradient(100deg,transparent 40%,rgba(255,244,205,.95) 50%,transparent 60%);background-size:300% 100%;background-repeat:no-repeat}
@@ -33,7 +33,7 @@ canvas{display:block}
   background:repeating-conic-gradient(from 150deg at 50% 50%,rgba(212,175,55,0) 0deg,rgba(255,225,140,.55) 2.2deg,rgba(212,175,55,0) 5deg,rgba(212,175,55,0) 9deg,rgba(255,214,120,.32) 10.5deg,rgba(212,175,55,0) 13deg);
   -webkit-mask-image:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.75) 35%,transparent 86%);mask-image:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.75) 35%,transparent 86%);
   filter:blur(7px)}
-.base{position:absolute;left:0;right:0;top:1180px;height:740px;background:linear-gradient(transparent,rgba(9,10,12,.86) 42%,#0a0b0d 100%);pointer-events:none}
+.base{position:absolute;left:0;right:0;top:1060px;height:860px;background:linear-gradient(transparent,rgba(9,10,12,.9) 38%,#0a0b0d 100%);pointer-events:none}
 .vinheta{position:absolute;inset:0;background:radial-gradient(760px 1180px at 540px 880px,transparent 52%,rgba(0,0,0,.78) 100%);pointer-events:none}
 .aro{position:absolute;border-radius:50%;border:5px solid #E2BE4F;box-shadow:0 0 34px rgba(226,190,79,.85),inset 0 0 26px rgba(226,190,79,.55)}
 .flare{position:absolute;height:10px;border-radius:50%;mix-blend-mode:screen;
@@ -99,9 +99,9 @@ canvas{display:block}
     <canvas class="abs" id="po1b" width="1080" height="1920"></canvas>
   </div>
   <div class="base"></div><div class="vinheta"></div>
-  <div class="sub" id="s1" style="top:1420px;color:#b99b46">desde sempre</div>
-  <div class="txt ouro" id="t1" style="top:1480px;font-size:128px"><span class="l">O tempo</span><span class="l">passa.</span></div>
-  <div class="brilho" id="b1" style="top:1460px;height:320px"></div>
+  <div class="sub" id="s1" style="top:1352px;color:#e6c865">desde sempre</div>
+  <div class="txt ouro" id="t1" style="top:1418px;font-size:172px"><span class="l">O tempo</span><span class="l">passa.</span></div>
+  <div class="brilho" id="b1" style="top:1400px;height:380px"></div>
 </div>
 
 <!-- CENA 2 · O MUNDO GIRA -->
@@ -120,9 +120,9 @@ canvas{display:block}
     <div class="aro" id="aro2"></div>
   </div>
   <div class="base"></div><div class="vinheta"></div>
-  <div class="sub" id="s2" style="top:1420px;color:#b99b46">sem parar</div>
-  <div class="txt ouro" id="t2" style="top:1480px;font-size:128px"><span class="l">O mundo</span><span class="l">gira.</span></div>
-  <div class="brilho" id="b2" style="top:1460px;height:320px"></div>
+  <div class="sub" id="s2" style="top:1352px;color:#e6c865">sem parar</div>
+  <div class="txt ouro" id="t2" style="top:1418px;font-size:172px"><span class="l">O mundo</span><span class="l">gira.</span></div>
+  <div class="brilho" id="b2" style="top:1400px;height:380px"></div>
 </div>
 
 <!-- CENA 3 · AS NECESSIDADES MUDAM -->
@@ -144,9 +144,9 @@ canvas{display:block}
     <div class="coluna" id="colD" style="left:960px"></div>
   </div>
   <div class="base"></div><div class="vinheta"></div>
-  <div class="sub" id="s3" style="top:1452px;color:#b99b46">do mármore à tela</div>
-  <div class="txt ouro" id="t3" style="top:1510px;font-size:82px;letter-spacing:.1em"><span class="l">As necessidades</span><span class="l" style="font-size:150px;letter-spacing:.14em;margin-top:6px">mudam.</span></div>
-  <div class="brilho" id="b3" style="top:1490px;height:300px"></div>
+  <div class="sub" id="s3" style="top:1352px;color:#e6c865">do mármore à tela</div>
+  <div class="txt ouro" id="t3" style="top:1424px;font-size:97px"><span class="l">As necessidades</span><span class="l" style="font-size:216px;margin-top:8px">mudam.</span></div>
+  <div class="brilho" id="b3" style="top:1400px;height:380px"></div>
 </div>
 
 <!-- CENA 4 · A DK UTILIDADES ACOMPANHA VOCÊ -->
@@ -173,9 +173,9 @@ canvas{display:block}
     </div>
     <canvas class="abs" id="po4" width="1080" height="1920"></canvas>
   </div>
-  <div class="fio" id="f4" style="top:1462px"></div>
-  <div class="txt tinta" id="t4" style="top:1500px;font-size:92px;letter-spacing:.1em"><span class="l dk">A DK Utilidades</span><span class="l" style="font-size:80px;margin-top:14px">acompanha você.</span></div>
-  <div class="brilho" id="b4" style="top:1480px;height:260px;mix-blend-mode:normal;opacity:.0"></div>
+  <div class="fio" id="f4" style="top:1436px;height:4px"></div>
+  <div class="txt tinta" id="t4" style="top:1470px;font-size:112px"><span class="l dk">A DK Utilidades</span><span class="l" style="font-size:95px;margin-top:16px">acompanha você.</span></div>
+  <div class="brilho" id="b4" style="top:1450px;height:290px;mix-blend-mode:normal;opacity:.0"></div>
 </div>
 
 <div class="clarao" id="clarao" style="opacity:0"></div>
@@ -284,7 +284,7 @@ function cena1(t){
   letras('t1',t,[1.50,2.38]);
   const so=eIn(pr(t,3.55,4.0));
   $('t1').style.opacity=1-so;$('t1').style.transform=`translate3d(0,${so*60}px,0) scale(${1+so*.2})`;
-  $('s1').style.opacity=eOut(pr(t,1.1,1.7))*(1-so);$('s1').style.letterSpacing=lerp(1.1,.52,eOut(pr(t,1.1,2.2)))+'em';
+  $('s1').style.opacity=eOut(pr(t,1.1,1.7))*(1-so);$('s1').style.letterSpacing=lerp(.7,.3,eOut(pr(t,1.1,2.2)))+'em';
   varredura('b1',t,T.hit1-.05,.75);
   return pinta($('rel'),'relogio',Math.round(cl(60+t*29,0,240)));
 }
@@ -305,7 +305,7 @@ function cena2(t){
   letras('t2',t,[5.36,6.26]);
   const so=eIn(pr(t,8.15,8.6));
   $('t2').style.opacity=1-so;$('t2').style.transform=`translate3d(0,${so*60}px,0)`;
-  $('s2').style.opacity=eOut(pr(t,4.95,5.5))*(1-so);$('s2').style.letterSpacing=lerp(1.1,.52,eOut(pr(t,4.95,6)))+'em';
+  $('s2').style.opacity=eOut(pr(t,4.95,5.5))*(1-so);$('s2').style.letterSpacing=lerp(.7,.3,eOut(pr(t,4.95,6)))+'em';
   varredura('b2',t,T.hit2-.05,.75);
   return pinta($('globo'),'globo',Math.round(20+u*15*1.25)%229);
 }
@@ -329,7 +329,7 @@ function cena3(t){
   $('colE').style.filter=$('colD').style.filter=`blur(${lerp(14,26,dolly)}px) brightness(${lerp(.5,.72,ab)})`;
   poeira($('po3'),t,57,46,'235,232,220',{a:.7*eOut(pr(u,.2,1.5)),max:7});
   letras('t3',t,[10.12,11.30],.036);
-  $('s3').style.opacity=eOut(pr(t,9.6,10.2))*(1-acende*2);$('s3').style.letterSpacing=lerp(1.1,.52,eOut(pr(t,9.6,10.8)))+'em';
+  $('s3').style.opacity=eOut(pr(t,9.6,10.2))*(1-acende*2);$('s3').style.letterSpacing=lerp(.7,.3,eOut(pr(t,9.6,10.8)))+'em';
   $('t3').style.opacity=1-eIn(pr(t,13.2,13.6));
   varredura('b3',t,T.hit3-.05,.75);
 }
