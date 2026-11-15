@@ -116,3 +116,7 @@
 
 ## Prévia embutida não achou a biblioteca (13/11/2026, Retícula)
 - O `previa_embutida.py` só troca `<script src="https://..." ...>`: o `src` tem que ser o **primeiro** atributo. Com `<script defer src=...>` ele não embute nada e não avisa. Escrever sempre `<script src=... integrity=... crossorigin=... defer>` e conferir na saída a linha `embutido: ...`.
+
+## Vídeo com fundo verde e texto (15/11/2026, filme DK Utilidades)
+- **Metal reflete o fundo verde.** Só recortar não basta: o dourado fica esverdeado nas bordas. Depois do recorte, limitar o verde em relação ao vermelho (`recortar_video.py`, 8º argumento `0.76`) e usar limites altos (`50 100`) pra não apagar peças finas que são quase da cor do fundo (a argola do relógio sumia).
+- **Letra fina não se lê no celular.** Bodoni com hastes finas foi reprovada pelo Davi ("alguém mais velho não ia conseguir ler"). Em vídeo vertical: fonte grossa (Inter Display 800), título de 170 px pra cima em 1080 de largura, legenda de no mínimo 38 px.
