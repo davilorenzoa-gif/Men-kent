@@ -26,6 +26,7 @@ A tela do celular mostra só o nome "DK Utilidades" e cartões vazios: **trocar 
 ## Correções de 15/11 (retorno do Davi)
 - **Letras:** a Bodoni fina não dava pra ler no celular. Trocada por Inter Display 800, bem maior (títulos de 172 a 216 px, legendas de 38 px). Regra: em vídeo vertical, texto grosso e grande; serifa fina não.
 - **Verde no relógio:** o metal reflete o fundo verde. O recorte agora limita o verde em relação ao vermelho (8º argumento, `0.76`) e usa limites altos (`50 100`) pra não comer a argola, que é quase da cor do fundo.
+- **Tela do celular:** a tela trocada ficava menor que a do aparelho e o app antigo aparecia na borda; o celular também saía pela esquerda do quadro. Cantos remedidos numa ampliação com grade (`QUAD`), moldura preta desenhada por cima da tela e estátua reposicionada.
 
 ## Refazer
 ```
