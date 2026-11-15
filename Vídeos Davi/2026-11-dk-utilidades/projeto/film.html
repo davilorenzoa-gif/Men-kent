@@ -68,11 +68,11 @@ canvas{display:block}
 /* ---------- cena 4 (off-white) ---------- */
 #c4{background:#F7F7F7}
 .papel{position:absolute;inset:0;background:radial-gradient(900px 1200px at 540px 820px,#fdfdfc 0%,#F7F7F7 60%,#ecebe7 100%)}
-.estatua-box{position:absolute;left:-90px;top:170px;width:1260px;height:1260px;transform-origin:35% 55%}
+.estatua-box{position:absolute;left:-22px;top:215px;width:1180px;height:1180px;transform-origin:10% 50%}
 .estatua-box img{position:absolute;inset:0;width:100%;height:100%;
   -webkit-mask-image:radial-gradient(closest-side,#000 82%,transparent 100%);mask-image:radial-gradient(closest-side,#000 82%,transparent 100%)}
-#tela{position:absolute;left:0;top:0;width:360px;height:780px;transform-origin:0 0;border-radius:46px;overflow:hidden;background:#F4F3EF;
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+#tela{position:absolute;left:0;top:0;width:360px;height:780px;transform-origin:0 0;border-radius:60px;overflow:hidden;background:#F4F3EF}
+#tela:after{content:"";position:absolute;inset:0;border-radius:60px;box-shadow:inset 0 0 0 3px #3a3b40,inset 0 0 0 14px #0b0b0d;pointer-events:none}
 #tela .ilha{position:absolute;left:125px;top:22px;width:110px;height:32px;border-radius:16px;background:#0b0b0d}
 #tela .marca{position:absolute;left:0;right:0;top:118px;text-align:center;font:600 46px/1 Bodoni,serif;letter-spacing:.1em;color:#15161a}
 #tela .marca b{display:block;font:500 15px/1 Inter,sans-serif;letter-spacing:.5em;color:#a07c1c;margin-top:14px}
@@ -81,7 +81,7 @@ canvas{display:block}
 #tela .card:before{content:"";position:absolute;left:16px;top:16px;right:16px;height:84px;border-radius:12px;background:linear-gradient(135deg,#ecebe6,#dedcd4)}
 #tela .card:after{content:"";position:absolute;left:16px;bottom:24px;width:70px;height:10px;border-radius:5px;background:#d8d5cc}
 #tela .apaga{position:absolute;inset:0;background:#0b0b0d}
-#aura{position:absolute;inset:0;width:1260px;height:1260px;overflow:visible}
+#aura{position:absolute;inset:0;width:1180px;height:1180px;overflow:visible}
 .clarao{position:absolute;inset:0;background:#fffdf6;pointer-events:none}
 .grao{position:absolute;inset:-40px;opacity:.07;mix-blend-mode:overlay;pointer-events:none}
 </style></head>
@@ -254,7 +254,7 @@ function orbitas(t,ap){
 
 /* ========= tela do celular da estátua (troca de tela) ========= */
 /* cantos da tela na foto (736 px): sup-esq, sup-dir, inf-dir, inf-esq */
-const QUAD=[[63,268],[238,196],[403,556],[247,630]];
+const QUAD=[[39,267],[250,175],[428,577],[247,642]];
 function matrizQuad(w,h,q,esc){
   const [x0,y0]=q[0].map(v=>v*esc),[x1,y1]=q[1].map(v=>v*esc),[x2,y2]=q[2].map(v=>v*esc),[x3,y3]=q[3].map(v=>v*esc);
   const dx1=x1-x2,dx2=x3-x2,dx3=x0-x1+x2-x3,dy1=y1-y2,dy2=y3-y2,dy3=y0-y1+y2-y3,den=dx1*dy2-dx2*dy1;
@@ -262,7 +262,7 @@ function matrizQuad(w,h,q,esc){
   const a=x1-x0+g*x1,b=x3-x0+hh*x3,c=x0,d=y1-y0+g*y1,e=y3-y0+hh*y3,f=y0;
   return `matrix3d(${a/w},${d/w},0,${g/w},${b/h},${e/h},0,${hh/h},0,0,1,0,${c},${f},0,1)`;
 }
-$('tela').style.transform=matrizQuad(360,780,QUAD,1260/736);
+$('tela').style.transform=matrizQuad(360,780,QUAD,1180/736);
 
 /* ========= cenas ========= */
 function cena1(t){
@@ -337,7 +337,7 @@ function cena4(t){
   const u=t-T.c4, ent=eExpo(pr(u,0,1.3)), fim=eIO(pr(t,17.6,T.DUR));
   const [hx,hy]=tremor(t,T.hit4,9);
   $('cam4').style.transform=`translate3d(${hx}px,${hy}px,0)`;
-  $('est').style.transform=`translate3d(${lerp(0,70,fim)}px,${lerp(90,0,ent)+fim*40}px,0) scale(${lerp(1.22,1,ent)+pr(u,0,5.3)*.05+fim*.12})`;
+  $('est').style.transform=`translate3d(${lerp(0,14,fim)}px,${lerp(90,0,ent)+fim*20}px,0) scale(${lerp(1.18,1,ent)+pr(u,0,5.3)*.03+fim*.05})`;
   $('est').style.filter=`contrast(1.04) saturate(1.05)`;
   // tela acende junto com a volta da batida
   $('apaga').style.opacity=1-eOut(pr(t,T.cheio4-.12,T.cheio4+.3));
