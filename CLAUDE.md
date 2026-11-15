@@ -19,6 +19,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `gudev/09-CANVA-TRUQUES.md`: Canva (transições Combinar/Fluxo, efeito vidro, o que o conector faz vs. clique manual)
 - `gudev/10-REFERENCIA-ORIGINKIT.md`: biblioteca de efeitos originkit.dev (o que é grátis, licença, como converter)
 - `gudev/11-GOOGLE-EM-DIA.md`: **oferta de entrada atual** (perfil do Google Maps por R$ 97), pontos por lead no Radar, o que o Claude faz no perfil e regras. Ler inteiro antes de qualquer tarefa de venda.
+- `gudev/videos/`: vídeos de marca da GuDev feitos por código (README em cada pasta)
 - `gudev/exemplos/*.html`: sites reais (Açaí Happy, Chersoni, Dellart), nível mínimo de qualidade
 - `gudev/efeitos/`, `gudev/demos/`, `gudev/aprendizados/`: efeitos testados, demos de técnica e páginas de estudo
 - `gudev/aprendizados/guia-motion-premium.md` + `fusca-lab/`: guia de motion (stack, 60fps, mola, magnético, cursor, scroll storytelling, Flip, 3D) com tudo funcionando no Fusca Lab. Ler antes de criar WOW.
@@ -41,6 +42,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - Lead novo (14/11/2026): **Espaço Vivian Modolo** (pilates, fisio e estética em São Mateus-SP, WhatsApp (11) 98492-6269). Prévia em `sites/vivian-modolo` (coluna que se alinha vértebra por vértebra, molas do reformer na rolagem, mapa do corpo pro WhatsApp). Faltam fotos reais, horário de semana e bairro/CEP.
 - `sites/glassy-dashboard` (painel em React/Tailwind): base se algum cliente pedir painel/sistema. É produto novo: preço e prazo a definir antes de oferecer.
 - Repertório de animação atualizado em 10/11 (logo em bolinhas, cortina que enche, máscara de texto, folha sobre o herói, gota no clique, borda que acende, obrigado em círculo): `03`, seção "Repertório".
+- **Filme de marca (15/11/2026):** `gudev/videos/presenca-digital/` (32 s, vertical, "The Digital Presence"). Feito com HTML + Playwright + ffmpeg + trilha sintetizada, sem crédito de IA. Falta ok dos donos dos sites mostrados e pôr @/contato no CapCut. Método no `08`.
 - Vídeo: os de 15s e os Reels saem de prompts pro Google Flow (Veo) + montagem no CapCut, ou edição feita aqui com ffmpeg. Claude não abre o CapCut. Lições em `05` e `08`.
 
 ## Regras que nunca quebram
