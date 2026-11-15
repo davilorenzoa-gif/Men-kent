@@ -7,6 +7,7 @@ Como usar no dia a dia: `gudev/06-SISTEMA-DE-DESIGN.md`.
 |---|---|---|---|
 | `design-taste-frontend/` | github.com/Leonxlnx/taste-skill → `skills/taste-skill` (2.5.0) | `822e0b9` (2026-11-05) | MIT |
 | `impeccable/` | github.com/pbakaus/impeccable → `plugin/skills/impeccable` (4.8.0) | `5af4319` (2026-11-04) | Apache 2.0 (`impeccable/LICENSE`, `NOTICE.md`) |
+| `video2html/`, `img2html/` | zip `skills-main` enviado pelo Davi (15/11/2026) | — | não informada |
 | `design-taste-frontend-v1/`, `gpt-taste/`, `high-end-visual-design/`, `minimalist-ui/`, `industrial-brutalist-ui/`, `stitch-design-taste/` | github.com/Leonxlnx/taste-skill-classics | `5e08c93` (2026-10-19) | MIT |
 
 Os arquivos são os originais, sem edição. As regras da GuDev ficam em `gudev/` e têm prioridade sobre as skills.
@@ -15,6 +16,8 @@ Os arquivos são os originais, sem edição. As regras da GuDev ficam em `gudev/
 - **impeccable:** o script `scripts/impeccable` baixa um binário do GitHub Releases (pbakaus/impeccable) na primeira execução. Na nuvem, a política de rede ou a checagem de permissões pode bloquear. Sem ele, a skill segue no modo "Launcher unavailable": lê `PRODUCT.md`/`DESIGN.md` direto e usa os arquivos de `reference/`. O processo continua valendo.
 - **design-taste-frontend:** os scripts (`scripts/*.mjs`, `assets/layout/*.mjs`) precisam de Node e Chrome. O ambiente na nuvem tem Node 22 e o Chromium do Playwright em `/opt/pw-browsers/chromium`. Eles **ainda não foram executados** aqui.
 - As clássicas têm `disable-model-invocation: true`: só rodam se chamadas pelo nome.
+
+- **video2html / img2html (15/11/2026):** vídeo ou print de site → HTML. Use quando o Davi mandar referência em vídeo/print (como TV GuDev e Kimi). Regras da GuDev por cima: no fim, HTML único via `gudev/ferramentas/arquivo_unico.py`, só dados reais, QA do `06`. Os scripts usam `uv run`; `describe_motion.py`, `isolate_subject.py` e `image_to_3d.py` pedem `OPENROUTER_API_KEY`/`FAL_KEY` (pagas, não temos) e são opcionais. O img2html cita `~/.agents/skills/video2html/scripts/snap.py`: aqui é `.claude/skills/video2html/scripts/snap.py`. Removido `agents/openai.yaml` (não usado). `animate` ficou de fora por enquanto (adaptar depois, sobrepõe `motion-gudev`).
 
 ## Atualizar
 ```bash
