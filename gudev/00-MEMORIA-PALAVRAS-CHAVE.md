@@ -120,3 +120,7 @@
 | 23/10 | Instagram, HorizonX, Site learning from video, Design reference sites | Moenda |
 | 22/10 | Tipo de site, Site com casos, Gramática | Pitch do padrinho, DOZE |
 | 21–22/10 | Oi / Untitled | Big G, Radar do açaí |
+
+## 15/11/2026: skills novas do zip "skills-main"
+Palavras: video2html, img2html, skills, zip, vídeo pra HTML, print pra HTML, animate.
+Instaladas `.claude/skills/video2html` e `.claude/skills/img2html` (detalhes e ressalvas em `.claude/skills/README.md`). `animate` fica pra adaptar depois. Resto do zip descartado (pede API paga, é de outra pessoa ou já existe).
