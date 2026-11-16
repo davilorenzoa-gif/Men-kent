@@ -141,7 +141,7 @@ html:not(.js) .loader{display:none}
 .pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 
 /* ================= HERO ================= */
-.hero{height:215vh;height:215svh}
+.hero{height:340vh;height:340svh}
 .hero .pin{background:radial-gradient(60% 34% at 50% 74%,rgba(142,16,24,.2),rgba(8,8,8,0) 70%),var(--ink)}
 .hero__title{position:absolute;left:0;right:0;top:clamp(76px,11vh,120px);text-align:center;font-family:var(--serif);font-weight:400;font-size:clamp(3rem,min(6.6vw,11.6vh),6.6rem);line-height:.96;letter-spacing:-.02em;z-index:4;padding:0 var(--gut)}
 .hero__title .ch{display:inline-block;will-change:opacity,transform}
@@ -168,6 +168,10 @@ html:not(.js) .loader{display:none}
 .hero__scroll i{position:relative;width:1px;height:64px;background:rgba(237,237,237,.2);overflow:hidden}
 .hero__scroll i::after{content:"";position:absolute;left:0;top:0;width:1px;height:40%;background:var(--bone);animation:drop 2.2s var(--e-io) infinite}
 @keyframes drop{0%{transform:translateY(-100%)}100%{transform:translateY(260%)}}
+.dive{position:absolute;left:50%;top:50%;z-index:3;opacity:0;pointer-events:none;will-change:transform,opacity}
+.dive canvas{display:block;width:100%;height:100%}
+.dive::after{content:"";position:absolute;inset:-1px;background:radial-gradient(ellipse 62% 46% at 50% 50%,rgba(8,8,8,0) 52%,#080808 100%);opacity:var(--vg,1)}
+.dive.col{-webkit-mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent);mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent)}
 .hero__black{position:absolute;inset:0;background:var(--ink);opacity:0;z-index:6;pointer-events:none}
 .wait .hero [data-hero],.intro .hero [data-hero]{opacity:0;transform:translateY(14px)}
 .hero [data-hero]{transition:opacity 1.1s var(--e) 1.5s,transform 1.3s var(--e) 1.5s}
@@ -187,7 +191,7 @@ html:not(.js) .loader{display:none}
 /* ================= ABORDAGEM (imagem que cresce) ================= */
 .appr{height:240vh;height:240svh}
 .appr__img{position:absolute;inset:0;will-change:clip-path}
-.appr__img img{width:100%;height:100%;object-fit:cover;object-position:50% 58%;will-change:transform}
+.appr__img img{position:absolute;left:50%;top:50%;max-width:none;will-change:transform}
 .appr__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,8,.74) 0%,rgba(8,8,8,.12) 38%,rgba(8,8,8,.2) 60%,rgba(8,8,8,.9) 100%);opacity:var(--shade,0)}
 .appr__cap{position:absolute;left:0;right:0;top:clamp(92px,15vh,150px);text-align:center;z-index:3}
 .appr__copy{position:absolute;left:var(--gut);right:var(--gut);top:clamp(96px,15vh,160px);z-index:3;display:grid;gap:22px;max-width:980px}
@@ -491,7 +495,6 @@ html:not(.js) .creed p{color:var(--bone)}
   .mani__text{font-size:clamp(2.7rem,12.6vw,4.4rem)}
   .trail img{width:34vw}
   .appr__copy h2{font-size:clamp(2.6rem,11.6vw,4rem)}
-  .appr__img img{object-position:50% 50%}
   .coh .pin::after{background:linear-gradient(180deg,rgba(8,8,8,.62),rgba(8,8,8,.2) 40%,rgba(8,8,8,.7))}
   .coh__head{max-width:24ch}
   .coh__frame{left:var(--gut);top:clamp(190px,27vh,250px);width:min(62vw,36vh);transform:none}
@@ -588,6 +591,7 @@ html:not(.js) .creed p{color:var(--bone)}
       <div class="car car--r" data-car="r"><div class="car__in"><img src="img/h-right.webp" width="637" height="529" alt="Red Ferrari SF90 seen from the front, in the dark" decoding="async"></div></div>
       <div class="car car--c" data-car="c"><div class="car__in"><img src="img/h-center.webp" width="646" height="578" alt="Red Porsche 911 GT3 seen from the front on a black floor" decoding="async" fetchpriority="high"></div></div>
     </div>
+    <div class="dive" id="dive" aria-hidden="true"><canvas id="diveC" width="540" height="960"></canvas></div>
     <div class="hero__foot">
       <p data-hero>A private garage and an automotive journal. Seven cars, kept for what they say about design, engineering and sound.</p>
       <a class="btn" href="#vehicles" data-hero>Explore the vehicles</a>
@@ -1021,25 +1025,66 @@ function measure(){
   stages.forEach(function(s){var r=s.el.getBoundingClientRect();s.top=r.top+y;s.h=r.height;s.ph=s.pin?s.pin.offsetHeight:vh;s.sp=-1});
   pars.forEach(function(p){var r=p.box.getBoundingClientRect();p.top=r.top+y;p.h=r.height;p.last=null});
   var c=creed.getBoundingClientRect();creedBox.top=c.top+y;creedBox.h=c.height;
-  apprMeasure(); marqW=marq.scrollWidth/2||1;
+  apprMeasure(); diveMeasure(); marqW=marq.scrollWidth/2||1;
 }
 
 /* ---------- HERO: mergulho no carro do centro ---------- */
 var carC=$('.car--c'), carL=$('.car--l'), carR=$('.car--r'), heroBlack=$('#heroBlack'), heroFades=$$('.hero [data-hero]');
 var mx=0,my=0,tmx=0,tmy=0, introDone=false;
 if(fine&&!reduce) addEventListener('pointermove',function(e){tmx=e.clientX/vw-.5;tmy=e.clientY/vh-.5},{passive:true});
+/* O mergulho usa 42 quadros de vídeo (carro, para-brisa, cabine) desenhados num canvas conforme a rolagem.
+   Começa encaixado em cima do carro do centro e cresce até cobrir a tela. */
+var dive=$('#dive'), diveC=$('#diveC'), dctx=diveC.getContext('2d'), NF=42, frames=[], frameOk=[], lastF=-1;
+var dv={cw:1,ch:1,s0:1,dx:0,dy:0,col:false};
+function loadFrames(){
+  if(reduce||still||frames.length) return;
+  var i=0;
+  (function next(){ if(i>=NF) return; var k=i++, im=new Image();
+    im.onload=function(){frameOk[k]=true; if(k===0){lastF=-1} next()}; im.onerror=next;
+    im.src=A('s'+('0'+k).slice(-2)); frames[k]=im; })();
+}
+function drawFrame(f){
+  f=clamp(f,0,NF-1); var r=Math.round(f*20)/20; if(r===lastF) return;
+  var i0=Math.floor(r), i1=Math.min(NF-1,i0+1), fr=r-i0;
+  while(i0>0&&!frameOk[i0]) i0--;
+  if(!frameOk[i0]) return;
+  lastF=r; dctx.globalAlpha=1; dctx.drawImage(frames[i0],0,0,540,960);
+  if(fr>0&&frameOk[i1]){dctx.globalAlpha=fr;dctx.drawImage(frames[i1],0,0,540,960);}
+}
+function diveMeasure(){
+  var pin=$('.hero .pin'), pr=pin.getBoundingClientRect(), ph=pr.height;
+  dv.col=vw/ph>.66;                       /* tela larga: o filme vira uma coluna com as bordas esfumadas */
+  dv.cw=dv.col?Math.max(ph*.75,vw*.62):Math.max(vw,ph*9/16); dv.ch=dv.cw*16/9;
+  dive.style.width=dv.cw+'px'; dive.style.height=dv.ch+'px'; dive.style.margin=(-dv.ch/2)+'px 0 0 '+(-dv.cw/2)+'px';
+  dive.classList.toggle('col',dv.col);
+  /* onde está o carro do centro (sem as transformações da rolagem) */
+  var keep=carC.style.transform; carC.style.transform='none';
+  var r=$('img',carC).getBoundingClientRect(); carC.style.transform=keep;
+  var hx=r.left+r.width/2-pr.left, hy=r.top+r.height*.714/2-pr.top;
+  dv.s0=r.width/(.868*dv.cw);             /* no 1º quadro o carro ocupa 86,8% da largura */
+  dv.dx=hx-(pr.width/2+(.503-.5)*dv.cw*dv.s0);
+  dv.dy=hy-(ph/2+(.4956-.5)*dv.ch*dv.s0);
+}
 function heroFn(p){
   if(still) return;
-  var z=reduce?0:eIO(map(p,0,.86)), n=heroChars.length;
-  var sc=1+z*z*8.5;
-  carC.style.transform='translate3d('+(mx*-14)+'px,'+(z*4)+'vh,0) scale('+sc+')';
+  var n=heroChars.length, on=!reduce&&frameOk[0];
+  var z=eIO(map(p,.02,.34));
+  carC.style.transform='translate3d('+(mx*-14)+'px,0,0)';
+  carC.style.opacity=on?1-map(p,.03,.08):1;
   carL.style.transform='translate3d('+(mx*-38-z*62*vw/100)+'px,'+(my*-8)+'px,0) scale('+(1+z*.9)+')';
   carR.style.transform='translate3d('+(mx*-38+z*62*vw/100)+'px,'+(my*-8)+'px,0) scale('+(1+z*.9)+')';
-  var so=1-map(p,.04,.34); carL.style.opacity=so; carR.style.opacity=so;
-  for(var i=0;i<n;i++){var t=map(p,.015+i/n*.2,.075+i/n*.2);heroChars[i].style.opacity=1-t;heroChars[i].style.transform='translate3d(0,'+(-t*.35)+'em,0)';}
-  var f=1-map(p,0,.1);
+  var so=1-map(p,.02,.16); carL.style.opacity=so; carR.style.opacity=so;
+  if(on){
+    var t=eIO(map(p,.03,.36)), sc=lerp(dv.s0,1,t);
+    dive.style.opacity=map(p,.005,.06);
+    dive.style.transform='translate3d('+(dv.dx*(1-t))+'px,'+(dv.dy*(1-t))+'px,0) scale('+sc+')';
+    dive.style.setProperty('--vg',1-t*(dv.col?.45:1));
+    drawFrame(map(p,.05,.88)*(NF-1));
+  }else dive.style.opacity=0;
+  for(var i=0;i<n;i++){var c=map(p,.01+i/n*.1,.05+i/n*.1);heroChars[i].style.opacity=1-c;heroChars[i].style.transform='translate3d(0,'+(-c*.35)+'em,0)';}
+  var f=1-map(p,0,.05);
   if(introDone) heroFades.forEach(function(el){el.style.opacity=f;el.style.pointerEvents=f<.3?'none':''});
-  heroBlack.style.opacity=reduce?map(p,.2,.8):map(p,.46,.8);
+  heroBlack.style.opacity=on?map(p,.9,1):map(p,.3,.8);
 }
 
 /* ---------- MANIFESTO: rastro de imagens ---------- */
@@ -1067,15 +1112,18 @@ function maniAuto(now){
 }
 
 /* ---------- ABORDAGEM: moldura pequena que abre até a tela cheia ---------- */
-var apprImg=$('#apprImg'), apprPic=$('img',apprImg), apprCopy=$('#apprCopy'), apprCap=$('#apprCap'), apprBox={x:0,y:0};
+var apprImg=$('#apprImg'), apprPic=$('img',apprImg), apprCopy=$('#apprCopy'), apprCap=$('#apprCap'), apprBox={x:0,y:0,s0:1,oy:0};
 function apprMeasure(){
-  var ph=$('.appr .pin').offsetHeight, w0=Math.min(vw*(vw<720?.5:.26),340), h0=w0*1.28;
-  apprBox.x=(vw-w0)/2; apprBox.y=(ph-h0)/2+ph*.03;
+  var ph=$('.appr .pin').offsetHeight, R=1440/956;
+  var w0=Math.min(vw*.64,560), h0=w0/R;                 /* moldura no formato da foto: o carro aparece inteiro */
+  var W=Math.max(vw,ph*R), Hh=W/R;                      /* tamanho da foto quando cobre a tela */
+  apprPic.style.width=W+'px'; apprPic.style.height=Hh+'px'; apprPic.style.margin=(-Hh/2)+'px 0 0 '+(-W/2)+'px';
+  apprBox.x=(vw-w0)/2; apprBox.y=(ph-h0)/2; apprBox.s0=w0/W; apprBox.oy=ph*.02;
 }
 function apprFn(p){
-  var e=(reduce||still)?1:eIO(map(p,.04,.6));
-  apprImg.style.clipPath='inset('+(apprBox.y*(1-e))+'px '+(apprBox.x*(1-e))+'px)';
-  apprPic.style.transform='scale('+(1.3-.3*e)+')';
+  var e=(reduce||still)?1:eIO(map(p,.04,.62)), oy=apprBox.oy*(1-e);
+  apprImg.style.clipPath='inset('+(apprBox.y*(1-e)+oy)+'px '+(apprBox.x*(1-e))+'px '+(apprBox.y*(1-e)-oy)+'px)';
+  apprPic.style.transform='translate3d(0,'+oy+'px,0) scale('+lerp(apprBox.s0,1,e)+')';
   apprImg.style.setProperty('--shade',map(e,.5,1));
   apprCap.style.opacity=1-map(p,.04,.2);
   apprCopy.classList.toggle('in',p>.5||reduce||still);
@@ -1312,6 +1360,7 @@ function startIntro(){
   H.classList.remove('wait'); H.classList.add('intro');
   requestAnimationFrame(function(){requestAnimationFrame(function(){H.classList.remove('intro')})});
   setTimeout(function(){introDone=true;H.classList.add('ready')},(still||reduce)?0:3000);
+  loadFrames();
 }
 function boot(){
   measure(); requestAnimationFrame(frame); route(true);

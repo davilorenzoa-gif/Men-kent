@@ -182,3 +182,14 @@ save(img(vignette(curve(arr(f), black=.02, contrast=1.08, gain=.86), .3)), 'f-ta
 for n in ['c-design', 'c-aero', 'c-eng']:
     b = Image.open(os.path.join(OUT, n + '.webp')).convert('RGB').resize((48, 48), Image.LANCZOS).filter(ImageFilter.GaussianBlur(2.2))
     save(img(arr(b) * .62), n + '-bg', 70)
+
+# ---------- mergulho do topo: quadros dos vídeos do Davi (carro -> para-brisa -> cabine) ----------
+# r2/en = "Camera entering red Porsche interior" (0 a 3,45 s, 26 quadros)
+# r2/se = "Correct vehicle seat orientation" (6 s, 16 quadros). A névoa do para-brisa esconde a emenda.
+import glob
+seq = sorted(glob.glob(f'{S}/r2/en/*.png')) + sorted(glob.glob(f'{S}/r2/se/*.png'))
+for i, f in enumerate(seq):
+    im = Image.open(f).convert('RGB').resize((540, 960), Image.LANCZOS)
+    a = selred(arr(im), keep=.2)
+    a = vignette(curve(a, black=.045, contrast=1.08), .5)
+    save(img(a), 's%02d' % i, 60)

@@ -134,3 +134,6 @@
 - **`loading="lazy"` dentro de `display:none` nunca carrega:** num teste, imagem "incompleta" pode ser só o painel escondido naquela largura.
 - **Wikimedia Commons limita muito daqui** (429 e pedidos que não voltam). Não contar com busca nova de foto no meio da tarefa: reaproveitar as já baixadas (`sites/apex/public/img`) ou pedir a foto ao Davi.
 - **Placa de carro em quadro de vídeo de terceiro:** cortar ou escolher outro quadro.
+- **Zoom por `scale` em foto pequena borra (Davi reprovou em 16/11, "tá meio estranha").** "Entrar" no carro ampliando um recorte de 640 px vira mancha. O certo é sequência de quadros de vídeo num canvas, guiada pela rolagem (42 quadros de 540 px pesam ~0,5 MB), com mistura entre quadros vizinhos (`globalAlpha`) pra ficar liso. Pra emendar dois vídeos, cortar num quadro de névoa/desfoque.
+- **Moldura que cresce não pode começar num pedaço ampliado da foto.** Começar com a foto inteira no formato dela (escala = largura da moldura ÷ largura da foto em tela cheia) e crescer junto com o recorte.
+

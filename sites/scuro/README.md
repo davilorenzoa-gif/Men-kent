@@ -10,9 +10,9 @@ Pedido do Davi: briefing "Premium Automotive Experience" + 12 fotos + 5 vídeos 
 | O quê | Onde |
 | --- | --- |
 | O site (HTML único, CSS e JS dentro, **sem biblioteca de fora**) | `index.html` |
-| Fotos tratadas (52, 2 MB) | `img/` |
+| Fotos tratadas (52) + 42 quadros do mergulho | `img/` |
 | Fontes (Instrument Serif + Instrument Sans, licença OFL) | `fonts/` |
-| Prévia num arquivo só pro celular (1,5 MB, abre sem internet) | `scuro-arquivo-unico.html` |
+| Prévia num arquivo só pro celular (1,9 MB, abre sem internet) | `scuro-arquivo-unico.html` |
 | Como as fotos foram tratadas e como a prévia é gerada | `_fonte/assets.py`, `_fonte/previa.py` |
 
 Depois de mexer no `index.html`: `python3 sites/scuro/_fonte/previa.py`.
@@ -26,9 +26,9 @@ Pro Netlify sobe a pasta inteira menos `_fonte/` e o `scuro-arquivo-unico.html`.
 
 ## Efeitos (o que veio dos vídeos de referência)
 1. **Abertura:** contador honesto (segue o carregamento das 3 fotos do topo, com garantia de 4,2 s), três frentes sobre o preto, o do meio acende por último, título sobe da máscara.
-2. **Mergulho no carro:** a rolagem aproxima o carro do centro até cobrir a tela, os dois do lado saem, o título some letra por letra.
+2. **Mergulho no carro (refeito em 16/11 a pedido do Davi):** 42 quadros de dois vídeos que ele gerou (carro de frente, para-brisa, cabine com os bancos certos) desenhados num canvas conforme a rolagem. O canvas começa encaixado em cima do carro do centro e cresce até cobrir a tela; a névoa do para-brisa esconde a emenda dos dois vídeos. A 1ª versão só ampliava a foto e borrava. Quadros em `img/s00`…`s41`.
 3. **Rastro de imagens:** o mouse deixa fotos pelo caminho; no celular elas surgem sozinhas e o toque solta uma.
-4. **Moldura que abre:** uma foto pequena cresce até a tela cheia (`clip-path: inset`), com faixa de marcas que acelera com a rolagem.
+4. **Moldura que abre:** começa pequena, no formato da foto, com a Ferrari inteira e nítida, e cresce até a tela cheia (`clip-path: inset` + a foto escalando junto). A 1ª versão abria num pedaço ampliado do "5" e o Davi reprovou. Faixa de marcas que acelera com a rolagem.
 5. **Capítulos com fundo desfocado** (Cohesion): foto nítida no quadro, a mesma foto borrada no fundo, troca com folga de 8%.
 6. **Frase que acende** palavra por palavra.
 7. **Lista de veículos** com palco preso (computador) ou cartões (celular). Clique abre a **página do carro** (`#/vehicle/<slug>`) com cortina, nome gigante atrás do carro recortado, ficha, fotos e "próximo carro".

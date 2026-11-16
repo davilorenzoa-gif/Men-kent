@@ -27,9 +27,10 @@ for arq in sorted(os.listdir(os.path.join(AQUI, 'img'))):
     im = Image.open(os.path.join(AQUI, 'img', arq))
     alfa = im.mode in ('RGBA', 'LA')
     im = im.convert('RGBA' if alfa else 'RGB')
-    w = LARG.get(nome, 380 if nome.startswith('t') and nome[1:].isdigit() else 680)
+    quadro = nome[0] == 's' and nome[1:].isdigit()        # quadros do mergulho do topo
+    w = 400 if quadro else LARG.get(nome, 380 if nome.startswith('t') and nome[1:].isdigit() else 680)
     if im.width > w: im = im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
-    buf = io.BytesIO(); im.save(buf, 'WEBP', quality=76 if alfa else 70, method=6)
+    buf = io.BytesIO(); im.save(buf, 'WEBP', quality=50 if quadro else (76 if alfa else 70), method=6)
     imgs[nome] = b64('image/webp', buf.getvalue())
 
 usadas = set()
