@@ -115,6 +115,11 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - carregar a barra: anilhas entram dos lados com mola, travas fecham e a barra sobe entortando com o peso (curva Q com ponto de controle = 2·centro − ponta; anilhas giram com a inclinação da curva); toque = 1 repetição;
   - cronômetro de box em LED de 7 segmentos (SVG): cada round da rolagem é uma aula, a célula vira na cor do quadro real;
   - "Pinte sua semana": réplica do quadro de horários, canetas = aulas, pinta dia + turno e manda pro WhatsApp; obrigado com contagem no LED.
+- **SCURO** (conceito automotivo de luxo, `sites/scuro`, 16/11/2026, JS puro sem biblioteca):
+  - três frentes sobre o preto; a rolagem mergulha no carro do meio até cobrir a tela e o título some letra por letra;
+  - carro visto de cima atravessa a tela entre "Ordinary" e "Ends Here"; capítulos com a mesma foto nítida no quadro e borrada no fundo;
+  - rastro de imagens no mouse (no celular surgem sozinhas) e página por carro com cortina e o nome gigante atrás do carro recortado.
+  - técnica: **tratamento único "só o vermelho com cor"** (numpy: matiz perto de 0° mantém a cor, o resto vira luminância) deixa fotos de origens diferentes com cara de um ensaio só. Recorte + reflexo de piso assado no próprio WebP com alfa. Rota por hash (`#/vehicle/<slug>`) num painel `position:fixed` com rolagem própria: a página de trás não perde o lugar. Prévia: cada imagem entra uma vez em `window.__IMG` e o HTML usa `data-a` (52 fotos em 1,5 MB).
 - **Site da própria GuDev** (página de venda, `sites/gudev`, 05/11/2026):
   - porta de aço laranja que sobe com a rolagem e mostra a rua, com um celular subindo e pedidos chegando;
   - conversa de WhatsApp que se escreve com a rolagem;

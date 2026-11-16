@@ -140,3 +140,7 @@ Palavras: DK Utilidades, encerramento, logo verde-limão, Mixkit, vídeo de banc
 ## 16/11/2026: narração no filme da DK
 Palavras: narração, voz, sincronizar, mixagem, ducking, música abaixa na fala, Whisper, transcrição, sherpa-onnx.
 A voz que o Davi mandou (13 s seguidos) foi transcrita, cortada nas pausas e encaixada cena por cena; música abaixa embaixo da fala e sobe nos produtos. Tabela e método no README de `Vídeos Davi/2026-11-dk-utilidades/`. Agora o Claude consegue "ouvir" fala: Whisper via `sherpa-onnx` (modelo nas releases do GitHub k2-fsa/sherpa-onnx).
+
+## 16/11/2026: SCURO, conceito automotivo de luxo
+Palavras: SCURO, Premium Automotive Experience, For Those Who Refuse Ordinary, Ferrari, Porsche 911 GT3, McLaren P1, vermelho e preto, rastro de imagens, cortina, página do carro, só o vermelho com cor, Mindsparkle, Pinterest.
+Briefing grande + 12 fotos + 5 vídeos viraram `sites/scuro/` (HTML único sem biblioteca, 7 carros com ficha de fabricante, página por carro, prévia em `scuro-arquivo-unico.html`). Parte das fotos é do Pinterest/reels, sem licença: só conceito, ver README de lá. Recorte de fundo: o BiRefNet do Hugging Face deu 403 neste ambiente; o ISNet das releases do rembg no GitHub baixa e recorta carro muito bem.
