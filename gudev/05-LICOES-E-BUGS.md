@@ -120,3 +120,6 @@
 ## Vídeo com fundo verde e texto (15/11/2026, filme DK Utilidades)
 - **Metal reflete o fundo verde.** Só recortar não basta: o dourado fica esverdeado nas bordas. Depois do recorte, limitar o verde em relação ao vermelho (`recortar_video.py`, 8º argumento `0.76`) e usar limites altos (`50 100`) pra não apagar peças finas que são quase da cor do fundo (a argola do relógio sumia).
 - **Letra fina não se lê no celular.** Bodoni com hastes finas foi reprovada pelo Davi ("alguém mais velho não ia conseguir ler"). Em vídeo vertical: fonte grossa (Inter Display 800), título de 170 px pra cima em 1080 de largura, legenda de no mínimo 38 px.
+- **Vídeo de banco com licença comercial (16/11/2026):** dá pra baixar direto do Mixkit (`https://assets.mixkit.co/videos/<id>/<id>-720.mp4`; a busca é `mixkit.co/free-stock-video/<tema>/`). Pexels e Pixabay respondem 403 pra download automático: nesses, só entregar o link. O acervo do Mixkit é mais "cena do dia a dia" que produto em estúdio; conferir os quadros antes de usar.
+- **Vídeo de fundo verde feito por IA pode ter peça que surge do nada** (a corrente do relógio aparecia no meio do giro). Olhar a sequência inteira e usar só o trecho coerente.
+- **Faixa de brilho passando no texto:** estreita (uns 7% da largura) e com máscara em cima e embaixo; larga vira um retângulo claro visível.

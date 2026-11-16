@@ -132,3 +132,7 @@ Print do WhatsApp Business virou prévia em `sites/academia-paulo-de-souza` (+ a
 ## 15/11/2026: filme da DK Utilidades (atos 1 e 2)
 Palavras: DK Utilidades, o tempo passa, relógio de bolso, globo, filósofo de mármore, estátua, auréola, chroma key, fundo verde, match cut, god rays, comercial 45 s.
 Comercial vertical feito por código em `Vídeos Davi/2026-11-dk-utilidades/` (19 s prontos, cortes na batida da música que o Davi mandou). Atos 3 a 5 esperam logo, produtos, diferenciais e contato reais. Falta o Davi dizer se a DK é cliente da GuDev ou trabalho por fora. Lição: pra fundo verde, recorte próprio em numpy (`recortar_video.py`/`recortar_verde.py`) em vez do `chromakey` do ffmpeg, que come branco e mármore.
+
+## 16/11/2026: filme da DK Utilidades completo (38 s)
+Palavras: DK Utilidades, encerramento, logo verde-limão, Mixkit, vídeo de banco, stock, portal pela tela, galeria, produtos, licença comercial.
+`Vídeos Davi/2026-11-dk-utilidades/dk-utilidades-filme.mp4`: atos 1 e 2 + encerramento (portal pela tela do celular, 4 vídeos de categoria do Mixkit, galeria no espaço, logo oficial). Cores da DK: verde-limão `#C9F23A` e cinza. Ambiente da nuvem liberado pra mixkit.co/assets.mixkit.co (Pexels e Pixabay dão 403 em download automático; Instagram não abre). Falta: @/contato da DK, fotos reais dos produtos e dizer se é cliente da GuDev.
