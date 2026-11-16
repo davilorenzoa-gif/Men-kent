@@ -136,3 +136,7 @@ Comercial vertical feito por código em `Vídeos Davi/2026-11-dk-utilidades/` (1
 ## 16/11/2026: filme da DK Utilidades completo (38 s)
 Palavras: DK Utilidades, encerramento, logo verde-limão, Mixkit, vídeo de banco, stock, portal pela tela, galeria, produtos, licença comercial.
 `Vídeos Davi/2026-11-dk-utilidades/dk-utilidades-filme.mp4`: atos 1 e 2 + encerramento (portal pela tela do celular, 4 vídeos de categoria do Mixkit, galeria no espaço, logo oficial). Cores da DK: verde-limão `#C9F23A` e cinza. Ambiente da nuvem liberado pra mixkit.co/assets.mixkit.co (Pexels e Pixabay dão 403 em download automático; Instagram não abre). Falta: @/contato da DK, fotos reais dos produtos e dizer se é cliente da GuDev.
+
+## 16/11/2026: narração no filme da DK
+Palavras: narração, voz, sincronizar, mixagem, ducking, música abaixa na fala, Whisper, transcrição, sherpa-onnx.
+A voz que o Davi mandou (13 s seguidos) foi transcrita, cortada nas pausas e encaixada cena por cena; música abaixa embaixo da fala e sobe nos produtos. Tabela e método no README de `Vídeos Davi/2026-11-dk-utilidades/`. Agora o Claude consegue "ouvir" fala: Whisper via `sherpa-onnx` (modelo nas releases do GitHub k2-fsa/sherpa-onnx).
