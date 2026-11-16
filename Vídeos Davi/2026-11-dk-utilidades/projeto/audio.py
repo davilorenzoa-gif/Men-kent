@@ -1,13 +1,13 @@
 """Trilha dos atos 1 e 2: música de referência do Davi + efeitos sintetizados (estilo da referência de efeitos:
 whoosh, pop, clique, subida e pancada grave). Gera audio.wav."""
 import subprocess, numpy as np, wave
-SR = 44100; DUR = 19.0; N = int(SR * DUR)
+SR = 44100; DUR = 38.4; N = int(SR * DUR)
 rng = np.random.default_rng(5)
 raw = subprocess.run(["ffmpeg", "-v", "error", "-i", "orig/ref_musica.mp4", "-vn", "-ac", "2", "-ar", str(SR), "-t", str(DUR), "-f", "f32le", "-"], capture_output=True, check=True).stdout
 mus = np.frombuffer(raw, np.float32).reshape(-1, 2)[:N].copy()
 if len(mus) < N: mus = np.vstack([mus, np.zeros((N - len(mus), 2), np.float32)])
 t = np.arange(N) / SR
-mus *= np.clip((DUR - t) / 0.55, 0, 1)[:, None]          # some no fim
+mus *= np.clip((DUR - t) / 0.3, 0, 1)[:, None]          # some no fim
 sfx = np.zeros((N, 2), np.float32)
 
 def poe(x, t0, g=1.0, pan=0.0):
@@ -74,9 +74,24 @@ poe(sino(2637, .9, .5), 15.2, .5)
 poe(pop(300), 14.2, .6)
 for i in range(6): poe(pop(520 + i * 70), 14.45 + i * .07, .42, -.3)
 poe(sino(1568, 1.8), 17.28, .8); poe(sino(2093, 1.6, .7), 17.31, .5); poe(brilho(1.0, 4000, 11000), 17.2, .55)
-poe(whoosh(1.0, 250, 3500, .9), 17.9, .5)
+poe(whoosh(.62, 250, 7000, .92), 18.44, 1.0)                       # mergulho na tela do celular
+# ENCERRAMENTO: produtos na batida, galeria, logo
+poe(pancada(130, 36, 1.2), 19.04, 1.0)
+for k, t0 in enumerate([19.04, 21.42, 23.22, 25.59]):
+    if k: poe(whoosh(.42, 500, 5200, .7), t0 - .26, .75, .5 if k % 2 else -.5)
+    poe(pop(420 + k * 60), t0 + .2, .5); poe(tique(2600), t0 + .32, .3); poe(sino(1760 + k * 220, .7, .5), t0 + .34, .32)
+poe(pancada(110, 40, 1.0), 23.22, .7)
+poe(whoosh(.5, 400, 6000, .85), 27.5, .8); poe(pancada(120, 36, 1.3), 27.96, .95)
+for k in range(4): poe(whoosh(.7, 700, 2600 + k * 500, .5), 28.3 + k * 1.05, .22, [-.5, .5, -.4, .4][k])
+poe(pop(360), 28.55, .5); poe(pop(480), 30.62, .6); poe(sino(1568, 1.2, .6), 30.7, .5)
+n = int(1.0 * SR); tt = np.arange(n) / SR
+poe((np.sin(2 * np.pi * np.cumsum(np.geomspace(260, 2100, n)) / SR) * (tt / 1.0) ** 2 * .24).astype(np.float32), 31.72, 1)
+poe(whoosh(1.0, 400, 9500, .96), 31.72, 1.1)
+poe(pancada(95, 34, 2.2), 32.72, 1.1); poe(sino(784, 3.0, 1.2), 32.72, .9); poe(sino(1175, 2.8, 1.0), 32.74, .6); poe(sino(1568, 2.4, .8), 32.76, .45); poe(brilho(1.8, 5000, 12500), 32.7, .75)
+poe(brilho(1.0, 4500, 11000), 34.15, .5); poe(pop(440), 34.2, .45); poe(pop(520), 34.75, .45)
+poe(pancada(85, 32, 2.0), 37.38, .9); poe(sino(1568, 2.0, .9), 37.38, .6); poe(brilho(1.0, 5000, 12000), 37.34, .5)
 # letras entrando: tiquinhos bem baixos
-for t0, nl in [(1.50, 7), (2.38, 6), (5.36, 7), (6.26, 5), (10.12, 15), (11.30, 6), (15.16, 15), (16.06, 15)]:
+for t0, nl in [(1.50, 7), (2.38, 6), (5.36, 7), (6.26, 5), (10.12, 15), (11.30, 6), (15.16, 15), (16.06, 15), (28.5, 7), (28.86, 6), (30.9, 10), (34.2, 7), (34.75, 15)]:
     for j in range(0, nl, 2): poe(tique(3200 + j * 90), t0 + j * .04 + .12, .12, (j % 3 - 1) * .4)
 
 mix = mus * 0.80 + sfx * 0.62
