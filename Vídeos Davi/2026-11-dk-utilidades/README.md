@@ -31,6 +31,24 @@ A tela do celular mostra só o nome "DK Utilidades" e cartões vazios: **trocar 
 - **Relógio:** a corrente "apagava" porque no vídeo original ela surge do nada e balança borrada nos quadros 95–125. Agora o filme usa só os quadros 128 em diante (`128+t*25`), em que ela já está presa.
 - **Brilho das letras:** a faixa de luz era larga e aparecia como retângulo; ficou estreita e com as bordas de cima e de baixo esfumadas.
 
+## Narração e mixagem (16/11/2026)
+O Davi mandou o vídeo de volta do CapCut com a narração (voz gerada por ele) toda nos primeiros 13 s. O Claude transcreveu com Whisper, cortou nas pausas e encaixou cada frase na cena (`FALAS` em `projeto/audio.py`):
+
+| No filme | Frase |
+|---|---|
+| 1,55 s | O tempo passa. |
+| 5,40 s | Em um mundo que gira, |
+| 9,60 s | do mármore à tela, |
+| 11,05 s | as necessidades mudam. |
+| 14,95 s | A DK Utilidades acompanha você. |
+| 33,05 s | O tempo passa. |
+| 34,25 s | A gente acompanha você. |
+
+- Voz: `projeto/orig/narracao.m4a`, com filtro de grave, compressão leve, todas as frases igualadas em volume e as duas falas de marca um pouco mais altas.
+- Música: cheia nos trechos sem fala (mais alta ainda nos produtos e na galeria) e abaixa ~70% embaixo da voz, descendo 0,2 s antes da fala e subindo macio depois. Efeitos também abaixam pela metade embaixo da voz.
+- Conferência (o Claude não ouve): transcrição do áudio final reconhece cada frase no lugar; volume médio da fala ≈ −9 dB, música sozinha entre −15 dB (abertura) e −11 dB (produtos e fim).
+- Transcrever: `pip install sherpa-onnx soundfile` + modelo `sherpa-onnx-whisper-small` das releases do GitHub `k2-fsa/sherpa-onnx` (tag `asr-models`), que baixa nesse ambiente.
+
 ## Como foi feito
 - `projeto/film.html`: cada cena é uma função do tempo, `seek(t)` posiciona tudo. `render.js` (Playwright) tira 60 fotos/s, ffmpeg mistura de 2 em 2 (desfoque de movimento) e fecha em 30 fps.
 - Fundo verde: `recortar_video.py` (vídeo → sequência webp transparente) e `recortar_verde.py` (foto). O alfa sai de "quanto o verde passa do vermelho e do azul"; o `chromakey` do ffmpeg comia o mostrador branco do relógio e o mármore.

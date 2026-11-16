@@ -94,7 +94,38 @@ poe(pancada(85, 32, 2.0), 37.38, .9); poe(sino(1568, 2.0, .9), 37.38, .6); poe(b
 for t0, nl in [(1.50, 7), (2.38, 6), (5.36, 7), (6.26, 5), (10.12, 15), (11.30, 6), (15.16, 15), (16.06, 15), (28.5, 7), (28.86, 6), (30.9, 10), (34.2, 7), (34.75, 15)]:
     for j in range(0, nl, 2): poe(tique(3200 + j * 90), t0 + j * .04 + .12, .12, (j % 3 - 1) * .4)
 
-mix = mus * 0.80 + sfx * 0.62
+# ---------- NARRAÇÃO (voz que o Davi mandou, toda no começo do arquivo) encaixada cena por cena ----------
+# (início no arquivo, fim no arquivo, início no filme, ganho)  ·  transcrição feita com Whisper
+FALAS = [
+    (0.00, 1.19, 1.55, 1.00),    # "O tempo passa."                    -> letreiro da cena 1
+    (1.55, 3.04, 5.40, 1.00),    # "Em um mundo que gira,"             -> O MUNDO GIRA
+    (3.42, 4.76, 9.60, 1.00),    # "do mármore à tela,"                -> legenda da cena do filósofo
+    (5.03, 6.56, 11.05, 1.06),   # "as necessidades mudam."            -> AS NECESSIDADES MUDAM
+    (6.97, 9.58, 14.95, 1.12),   # "A DK Utilidades acompanha você."   -> estátua com o celular
+    (9.85, 10.93, 33.05, 1.05),  # "O tempo passa."                    -> logo
+    (11.22, 12.91, 34.25, 1.18), # "A gente acompanha você."           -> frase final
+]
+raw = subprocess.run(["ffmpeg", "-v", "error", "-i", "orig/narracao.m4a", "-ac", "1", "-ar", str(SR),
+                      "-af", "highpass=f=85,acompressor=threshold=-21dB:ratio=3:attack=6:release=110:makeup=3,equalizer=f=3200:t=q:w=1.2:g=2.5",
+                      "-f", "f32le", "-"], capture_output=True, check=True).stdout
+vz = np.frombuffer(raw, np.float32)
+voz = np.zeros(N, np.float32); pres = np.zeros(N, np.float32)
+for a0, a1, t0, g in FALAS:
+    x = vz[int((a0 - .04) * SR) if a0 > .04 else 0:int((a1 + .08) * SR)].copy()
+    fi = int(.02 * SR); x[:fi] *= np.linspace(0, 1, fi); x[-fi:] *= np.linspace(1, 0, fi)
+    x *= 0.21 / np.sqrt((x ** 2).mean()) * g                      # todas as frases no mesmo volume de base
+    i = int(t0 * SR); voz[i:i + len(x)] += x[:N - i]
+    pres[max(0, i - int(.18 * SR)):i + len(x) + int(.10 * SR)] = 1   # música abaixa um pouco antes da fala
+k = int(.30 * SR); pres = np.convolve(pres, np.hanning(k) / np.hanning(k).sum(), "same")   # sobe e desce macio
+
+# música: cheia onde não tem fala (produtos, galeria, pancadas), baixa embaixo da voz
+base = np.full(N, 1.22, np.float32)
+base[(t >= 19.04) & (t < 32.72)] = 1.5                           # trecho dos produtos: música na frente
+base[t >= 32.72] = 1.3
+base = np.convolve(base, np.ones(int(.25 * SR)) / int(.25 * SR), "same")
+gm = base * (1 - 0.73 * pres)
+gs = 0.72 * (1 - 0.5 * pres)
+mix = mus * gm[:, None] + sfx * gs[:, None] + (voz * 1.75)[:, None]
 mix = np.tanh(mix * 1.15) / np.tanh(1.15)
 mix *= 0.93 / np.abs(mix).max()
 with wave.open("audio.wav", "wb") as w:
