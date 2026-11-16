@@ -49,6 +49,10 @@ O Davi mandou o vídeo de volta do CapCut com a narração (voz gerada por ele) 
 - Conferência (o Claude não ouve): transcrição do áudio final reconhece cada frase no lugar; volume médio da fala ≈ −9 dB, música sozinha entre −15 dB (abertura) e −11 dB (produtos e fim).
 - Transcrever: `pip install sherpa-onnx soundfile` + modelo `sherpa-onnx-whisper-small` das releases do GitHub `k2-fsa/sherpa-onnx` (tag `asr-models`), que baixa nesse ambiente.
 
+## Ajustes da revisão (16/11/2026)
+- **Música com vocal a partir dos 18 s:** não dá pra tirar o vocal por filtro (a faixa é quase mono, o truque de cancelar o centro apaga tudo). Solução: a música entra mais contida no trecho dos produtos (cerca de 2,5 dB a menos que antes), com os médios do vocal (700 Hz e 2,3 kHz) parcialmente cortados, e embaixo da locução final abaixa 86% (antes 73%) com esses médios cortados ~11 dB. Ideal continua sendo uma faixa instrumental.
+- **CTA:** pílula verde "ACESSE O LINK NA BIO" com seta, entra aos 35,75 s e pulsa na pancada final. Sem @, WhatsApp ou endereço porque ainda não temos. A cena final subiu ~190 px pra ficar fora da área dos botões do Reels.
+
 ## Como foi feito
 - `projeto/film.html`: cada cena é uma função do tempo, `seek(t)` posiciona tudo. `render.js` (Playwright) tira 60 fotos/s, ffmpeg mistura de 2 em 2 (desfoque de movimento) e fecha em 30 fps.
 - Fundo verde: `recortar_video.py` (vídeo → sequência webp transparente) e `recortar_verde.py` (foto). O alfa sai de "quanto o verde passa do vermelho e do azul"; o `chromakey` do ffmpeg comia o mostrador branco do relógio e o mármore.
@@ -73,7 +77,7 @@ ffmpeg -framerate 60 -i fr/%05d.jpg -i audio.wav -vf "tmix=frames=2:weights='1 1
 ```
 
 ## Falta
-1. @ do Instagram, WhatsApp, cidade ou site da DK pro CTA do fim (hoje o filme termina só na logo e na frase).
+1. @ do Instagram, WhatsApp, cidade ou site da DK, se quiserem algo mais específico que "Acesse o link na bio" (e confirmar que existe link na bio).
 2. Fotos ou vídeos reais dos produtos, pra trocar os 4 de banco, e confirmar se as 4 categorias estão certas.
 3. Logo em PNG sem fundo, se existir (a atual é JPG com fundo cinza).
 4. Se a DK é cliente/lead da GuDev ou trabalho por fora.
