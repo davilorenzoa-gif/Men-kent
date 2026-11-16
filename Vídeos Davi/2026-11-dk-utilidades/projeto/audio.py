@@ -7,7 +7,12 @@ raw = subprocess.run(["ffmpeg", "-v", "error", "-i", "orig/ref_musica.mp4", "-vn
 mus = np.frombuffer(raw, np.float32).reshape(-1, 2)[:N].copy()
 if len(mus) < N: mus = np.vstack([mus, np.zeros((N - len(mus), 2), np.float32)])
 t = np.arange(N) / SR
-mus *= np.clip((DUR - t) / 0.3, 0, 1)[:, None]          # some no fim
+mus *= np.clip((DUR - t) / 0.3, 0, 1)[:, None]
+raw = subprocess.run(["ffmpeg", "-v", "error", "-i", "orig/ref_musica.mp4", "-vn", "-ac", "2", "-ar", str(SR), "-t", str(DUR),
+                      "-af", "equalizer=f=700:t=o:w=1.6:g=-11,equalizer=f=2300:t=o:w=1.4:g=-12", "-f", "f32le", "-"], capture_output=True, check=True).stdout
+mus_sv = np.frombuffer(raw, np.float32).reshape(-1, 2)[:N].copy()   # "sem voz": médios (onde mora o vocal) cortados ~11 dB
+if len(mus_sv) < N: mus_sv = np.vstack([mus_sv, np.zeros((N - len(mus_sv), 2), np.float32)])
+mus_sv *= np.clip((DUR - t) / 0.3, 0, 1)[:, None]          # some no fim
 sfx = np.zeros((N, 2), np.float32)
 
 def poe(x, t0, g=1.0, pan=0.0):
@@ -89,6 +94,7 @@ poe((np.sin(2 * np.pi * np.cumsum(np.geomspace(260, 2100, n)) / SR) * (tt / 1.0)
 poe(whoosh(1.0, 400, 9500, .96), 31.72, 1.1)
 poe(pancada(95, 34, 2.2), 32.72, 1.1); poe(sino(784, 3.0, 1.2), 32.72, .9); poe(sino(1175, 2.8, 1.0), 32.74, .6); poe(sino(1568, 2.4, .8), 32.76, .45); poe(brilho(1.8, 5000, 12500), 32.7, .75)
 poe(brilho(1.0, 4500, 11000), 34.15, .5); poe(pop(440), 34.2, .45); poe(pop(520), 34.75, .45)
+poe(pop(470), 35.78, .6); poe(tique(2400), 36.0, .3)
 poe(pancada(85, 32, 2.0), 37.38, .9); poe(sino(1568, 2.0, .9), 37.38, .6); poe(brilho(1.0, 5000, 12000), 37.34, .5)
 # letras entrando: tiquinhos bem baixos
 for t0, nl in [(1.50, 7), (2.38, 6), (5.36, 7), (6.26, 5), (10.12, 15), (11.30, 6), (15.16, 15), (16.06, 15), (28.5, 7), (28.86, 6), (30.9, 10), (34.2, 7), (34.75, 15)]:
@@ -118,12 +124,19 @@ for a0, a1, t0, g in FALAS:
     pres[max(0, i - int(.18 * SR)):i + len(x) + int(.10 * SR)] = 1   # música abaixa um pouco antes da fala
 k = int(.30 * SR); pres = np.convolve(pres, np.hanning(k) / np.hanning(k).sum(), "same")   # sobe e desce macio
 
-# música: cheia onde não tem fala (produtos, galeria, pancadas), baixa embaixo da voz
+# música: cheia onde não tem fala, baixa embaixo da voz.
+# A partir dos 18,4 s a música tem vocal: entra mais contida, com parte dos médios cortada,
+# e na locução final (33 s) abaixa bem mais, pra não disputar com o locutor.
 base = np.full(N, 1.22, np.float32)
-base[(t >= 19.04) & (t < 32.72)] = 1.5                           # trecho dos produtos: música na frente
-base[t >= 32.72] = 1.3
+base[(t >= 18.44) & (t < 32.72)] = 1.12
+base[t >= 32.72] = 1.0
 base = np.convolve(base, np.ones(int(.25 * SR)) / int(.25 * SR), "same")
-gm = base * (1 - 0.73 * pres)
+fundo = np.where(t >= 32.6, 0.86, 0.73).astype(np.float32)          # quanto abaixa embaixo da fala
+fundo = np.convolve(fundo, np.ones(int(.2 * SR)) / int(.2 * SR), "same")
+gm = base * (1 - fundo * pres)
+sv = np.clip(pres + np.where(t >= 18.44, 0.45, 0.0), 0, 1)          # quanto usar da versão com médios cortados
+sv = np.convolve(sv, np.ones(int(.2 * SR)) / int(.2 * SR), "same")[:, None]
+mus = mus * (1 - sv) + mus_sv * sv
 gs = 0.72 * (1 - 0.5 * pres)
 mix = mus * gm[:, None] + sfx * gs[:, None] + (voz * 1.75)[:, None]
 mix = np.tanh(mix * 1.15) / np.tanh(1.15)
