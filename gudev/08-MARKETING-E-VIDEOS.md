@@ -135,6 +135,8 @@ Ordem sugerida: 5, 1, 8, depois intercalar Google (2, 3, 6) com site (4, 7, 9).
 - **Cartaz em camadas (parallax):** recorte com o modelo BiRefNet (baixar do GitHub do `rembg`; Hugging Face é bloqueado) e fundo preenchido atrás do recorte.
 - **Música de referência manda nos cortes:** medir o bpm e o 1º tempo (`Vídeos Davi/ferramentas/analisar_audio.py` ou numpy), achar a pausa e a virada, e pôr o momento mais forte do vídeo na virada. Cortar o áudio antes da vinheta do TikTok.
 - **Som (pedido do Davi):** vento em toda aproximação e todo afastamento, pancada grave nos cortes, metal e faísca. Entregar também o `sfx.wav` (só efeitos).
+- **Retorno do Davi (17/11):** "você se superou, ficou muito bom". O que mais pesou: cortes cravados na música, vento nos zooms, pausa da música com as mãos e virada com a estátua. Esse é o padrão pra comercial de cliente.
+- **Versão 2, o que melhorou:** (1) plano gerado por IA "limpo demais" ao lado de vídeo real: igualar com grão animado, menos contraste/saturação e um pouco de sépia; (2) refrão repetitivo: abafar a música (passa-baixa) embaixo de um som forte da cena (esmerilhadeira) e voltar seca no corte, ou passar a música por "rádio antigo" num trecho; (3) elemento de época (relógio de bolso) pro "desde 19xx"; (4) colunas desfocadas em primeiro plano dão profundidade a cartaz parado.
 - **Lições:** (1) clipe mandado pelo WhatsApp chega em 478×850; pedir o arquivo original do Flow. (2) IA embaralha texto de letreiro: conferir quadro a quadro e cortar o trecho. (3) Prévia do iStock tem marca d'água, não usar. (4) Telefone e dados da cartela saem do `04`, não do prompt.
 
 
