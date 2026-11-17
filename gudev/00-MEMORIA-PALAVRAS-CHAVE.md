@@ -153,3 +153,7 @@ Ajuste no mesmo dia (palavras: introdução da Porsche, entrada da Ferrari, câm
 Palavras: comercial sem recepção, gancho, Andrade como gancho, convite e recepção, avaliações, Claude do Gu, roteiro, 3 versões.
 O Davi achou que o comercial da Andrade não vende site sozinho e quis usar os primeiros segundos dele como gancho de um Reels da GuDev: "do que adianta um bom comercial se a recepção (Google, avaliações, site) é ruim?". Roteiro com 3 aberturas (pergunta seca, bastidor honesto, POV do cliente) e miolo/final iguais em `gudev/videos/comercial-sem-recepcao/ROTEIRO.md`, pra mandar pro Claude do Gu. Ainda não produzido. Falta o ok do padrinho pra usar o comercial no perfil da GuDev.
 Mesmo dia: o Davi aprovou a ideia dos ganchos A, B e C e pediu um prompt estruturado pro Claude do Gu montar o vídeo: `gudev/videos/comercial-sem-recepcao/PROMPT-CLAUDE-DO-GU.md` (palavras: prompt, Claude do Gu, montar Reels).
+
+## 17/11/2026: Fusca 3D liberado (glb)
+Palavras: Fusca 3D, Beetle, Sketchfab, glb, FBX, fbx2gltf, gltf-transform, CC BY, soujagah, AiZity, Ju Designer, modelo 3D, Three.js.
+Sketchfab é bloqueado neste ambiente. O Fusca da Ju Designer não serve (sem download, sem licença, 766 mil triângulos). O zip FBX da AiZity (CC BY 4.0, autor soujagah) virou `gudev/aprendizados/fusca-lab/modelos/fusca.glb` (1,8 MB, ~40 mil triângulos, portas/capô animados), com crédito e prévia ao lado. Regra: modelo 3D só com licença CC BY/CC0 e crédito; pipeline FBX → glb no README de lá.
