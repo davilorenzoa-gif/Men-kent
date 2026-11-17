@@ -157,3 +157,7 @@ Mesmo dia: o Davi aprovou a ideia dos ganchos A, B e C e pediu um prompt estrutu
 ## 17/11/2026: Fusca 3D liberado (glb)
 Palavras: Fusca 3D, Beetle, Sketchfab, glb, FBX, fbx2gltf, gltf-transform, CC BY, soujagah, AiZity, Ju Designer, modelo 3D, Three.js.
 Sketchfab é bloqueado neste ambiente. O Fusca da Ju Designer não serve (sem download, sem licença, 766 mil triângulos). O zip FBX da AiZity (CC BY 4.0, autor soujagah) virou `gudev/aprendizados/fusca-lab/modelos/fusca.glb` (1,8 MB, ~40 mil triângulos, portas/capô animados), com crédito e prévia ao lado. Regra: modelo 3D só com licença CC BY/CC0 e crédito; pipeline FBX → glb no README de lá.
+
+## 17/11/2026: OF Fusca Itamar (Rodrigo, amigo do Katraka)
+Palavras: Rodrigo, OF, Os Fafas, Fusca Itamar, selo Original, selo Custom, Série Ouro, Luxo 1, Luxo 2, STD, cores de fábrica, código VW, Verde Nice, Fusca 3D, pintar o carro, porta abrindo, R$ 800.
+Lead novo: o Rodrigo (amigo do Alexandre da Katraka) tem a marca OF Fusca Itamar e quer site pro Instagram. O Davi quer fechar por R$ 800. Prévia em `sites/fusca-itamar` com o Fusca 3D (CC BY, do Fusca Lab) pintado nas 16 cores reais da tabela dele; prévia num arquivo em `sites/fusca-itamar/fusca-itamar-arquivo-unico.html`. Faltam WhatsApp, @, o que ele vende e fotos próprias. Pendências no README de lá e no `04`.

@@ -120,6 +120,11 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - carro visto de cima atravessa a tela entre "Ordinary" e "Ends Here"; capítulos com a mesma foto nítida no quadro e borrada no fundo;
   - rastro de imagens no mouse (no celular surgem sozinhas) e página por carro com cortina e o nome gigante atrás do carro recortado.
   - técnica: **tratamento único "só o vermelho com cor"** (numpy: matiz perto de 0° mantém a cor, o resto vira luminância) deixa fotos de origens diferentes com cara de um ensaio só. Recorte + reflexo de piso assado no próprio WebP com alfa. Rota por hash (`#/vehicle/<slug>`) num painel `position:fixed` com rolagem própria: a página de trás não perde o lugar. Prévia: cada imagem entra uma vez em `window.__IMG` e o HTML usa `data-a` (52 fotos em 1,5 MB).
+- **OF Fusca Itamar** (lead, `sites/fusca-itamar`, 17/11/2026, Fusca 3D de verdade em Three.js, CC BY):
+  - o arco dourado do logo atravessa a tela e a luz dourada passa pelo Fusca, que sai do escuro;
+  - do STD ao Série Ouro na rolagem: a câmera vai pro lado de cada acessório, itens novos marcados e, no Série Ouro, contraluz dourada e a porta abrindo;
+  - as 16 cores de fábrica (código VW e linhas reais) pintam o carro na hora e viram o pedido do selo pelo WhatsApp.
+  - técnica: **pintar um modelo 3D baixado** sem refazer textura: no shader (`onBeforeCompile`, depois do `map_fragment`) acha a cor original pela matiz/saturação e troca pela tinta, multiplicando pelo brilho relativo (mantém sombra e detalhe). Modelo com `meshopt` (1,8 → 1,1 MB) precisa de `setMeshoptDecoder`. Câmera em órbita por pose de seção + `setViewOffset` pra tirar o carro do meio da tela.
 - **Site da própria GuDev** (página de venda, `sites/gudev`, 05/11/2026):
   - porta de aço laranja que sobe com a rolagem e mostra a rua, com um celular subindo e pedidos chegando;
   - conversa de WhatsApp que se escreve com a rolagem;

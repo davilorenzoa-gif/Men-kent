@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OF Fusca Itamar | Versões, cores de fábrica e selos</title>
+<meta name="description" content="O Fusca Itamar de 1993 a 1996 em 3D: as versões STD, Luxo 1, Luxo 2 e Série Ouro, as 16 cores de fábrica com código VW e os selos OF para o seu Fusca.">
+<meta name="theme-color" content="#1C1B1A">
+<link rel="canonical" href="https://proposta-fusca-itamar.netlify.app/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="OF Fusca Itamar">
+<meta property="og:description" content="Versões, cores de fábrica e os selos OF do Fusca Itamar (1993 a 1996).">
+<meta property="og:image" content="https://proposta-fusca-itamar.netlify.app/img/og.jpg">
+<meta property="og:locale" content="pt_BR">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Poppins:wght@400;500;600&display=swap">
+<link rel="preload" as="fetch" href="modelo/fusca.glb" crossorigin>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"OF Fusca Itamar","url":"https://proposta-fusca-itamar.netlify.app/","logo":"https://proposta-fusca-itamar.netlify.app/img/selo-fusca-itamar.webp"}
+</script>
+<style>
+:root{
+  --grafite:#1C1B1A;      /* fundo dos selos */
+  --grafite-2:#262524;    /* fundo da ficha de versões */
+  --grafite-3:#33312F;
+  --osso:#EDE9E1;         /* texto */
+  --osso-2:#B9B3A8;       /* texto de apoio */
+  --ouro:#D4A53C;
+  --ouro-claro:#F2D27E;
+  --ouro-escuro:#8F6A1E;
+  --prata:#CFCFCF;
+  --verde:#1E8B3A;        /* selo Original */
+  --vermelho:#C8202A;     /* selo Custom */
+  --zap:#25D366;
+  --larga:"Archivo","Arial Black",system-ui,sans-serif;
+  --texto:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--grafite);color:var(--osso);font-family:var(--texto);font-size:17px;line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--ouro-claro);outline-offset:3px;border-radius:6px}
+.pular{position:absolute;left:16px;top:-60px;z-index:50;background:var(--ouro);color:var(--grafite);padding:10px 16px;border-radius:8px;font-weight:600}
+.pular:focus{top:12px}
+h1,h2,h3{font-family:var(--larga);font-stretch:125%;font-weight:800;line-height:.95;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:clamp(34px,5.2vw,68px)}
+p{max-width:58ch}
+.apoio{color:var(--osso-2)}
+.dourado{background:linear-gradient(100deg,var(--ouro-escuro) 0%,var(--ouro) 28%,var(--ouro-claro) 48%,var(--ouro) 66%,#A9A9A9 84%,var(--prata) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- botões ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:999px;font-weight:600;text-decoration:none;font-size:16px;transition:transform .2s,background-color .2s,box-shadow .2s}
+.btn-zap{background:var(--ouro);color:#1a1408;box-shadow:0 10px 30px -12px rgba(212,165,60,.7)}
+.btn-zap:hover{background:var(--ouro-claro)}
+.btn-zap svg{width:20px;height:20px}
+.btn-linha{border:1.5px solid rgba(237,233,225,.35);color:var(--osso)}
+.btn-linha:hover{border-color:var(--osso)}
+.btn:active{transform:scale(.97)}
+
+/* ---------- topo fixo ---------- */
+.barra{position:fixed;inset:0 0 auto 0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:max(12px,env(safe-area-inset-top)) clamp(16px,3vw,32px) 12px;pointer-events:none}
+.barra>*{pointer-events:auto}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;min-height:44px}
+.logo img{width:46px;height:auto}
+.logo span{font-family:var(--larga);font-stretch:125%;font-weight:700;font-size:13px;letter-spacing:.08em}
+.menu{display:flex;gap:4px;padding:5px;border-radius:999px;background:rgba(28,27,26,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.08)}
+.menu a{text-decoration:none;font-size:14px;font-weight:500;padding:0 14px;min-height:40px;display:inline-flex;align-items:center;border-radius:999px;color:var(--osso-2)}
+.menu a:hover,.menu a[aria-current="true"]{color:var(--osso);background:rgba(255,255,255,.07)}
+.barra .btn{min-height:44px;padding:0 18px;font-size:14px}
+@media (max-width:860px){.menu{display:none}}
+@media (max-width:560px){.barra .btn{display:none}.logo span{display:none}}
+
+/* ---------- palco 3D fixo ---------- */
+#palco{position:fixed;inset:0;width:100%;height:100%;z-index:0;touch-action:pan-y;transition:opacity .7s ease;cursor:grab}
+#palco:active{cursor:grabbing}
+.palco-off #palco{opacity:0;pointer-events:none}
+.reserva{position:fixed;inset:0;z-index:0;display:none;align-items:center;justify-content:center;pointer-events:none;transition:opacity .7s}
+.reserva img{width:min(720px,92vw);opacity:.95}
+.sem3d #palco{display:none}
+.sem3d .reserva{display:flex}
+.palco-off .reserva{opacity:0}
+.vinheta{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%,transparent 45%,rgba(10,10,9,.75) 100%)}
+main{position:relative;z-index:2;pointer-events:none}
+main a,main button,main input,main label,main summary,main .txt,main details,main .sel,main .aplic,main .faq,main footer{pointer-events:auto}
+
+/* ---------- WOW 1: abertura ---------- */
+.topo{min-height:100vh;min-height:100svh;display:grid;align-items:center;padding:110px clamp(16px,5vw,72px) 60px;position:relative}
+.topo .txt{max-width:640px;position:relative;z-index:2}
+.ano{font-family:var(--larga);font-stretch:100%;font-weight:600;font-size:15px;letter-spacing:.04em;color:var(--ouro)}
+.topo h1{font-size:clamp(60px,10.5vw,168px);margin:14px 0 22px;font-stretch:125%}
+.topo h1 .l{display:block;overflow:hidden;padding-bottom:.04em}
+.topo h1 .l>span{display:block}
+.topo p{font-size:clamp(17px,1.5vw,20px);max-width:40ch}
+.acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.dica{position:absolute;right:clamp(16px,5vw,72px);bottom:34px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--osso-2);z-index:2}
+.dica svg{width:34px;height:20px}
+.risco{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.risco path{fill:none;stroke-linecap:round}
+.carregando{position:absolute;left:clamp(16px,5vw,72px);bottom:34px;font-size:13px;color:var(--osso-2);z-index:2;display:flex;gap:10px;align-items:center}
+.carregando i{display:block;width:90px;height:2px;background:rgba(255,255,255,.12);position:relative;overflow:hidden;border-radius:2px}
+.carregando b{position:absolute;inset:0;background:var(--ouro);transform-origin:0 50%;transform:scaleX(var(--p,0))}
+.pronto .carregando{opacity:0;transition:opacity .5s}
+/* estado inicial da abertura (só com JS e sem embed) */
+.js.intro .topo h1 .l>span{transform:translateY(105%)}
+.js.intro .topo .ano,.js.intro .topo p,.js.intro .topo .acoes,.js.intro .dica{opacity:0;transform:translateY(14px)}
+.topo h1 .l>span,.topo .ano,.topo p,.topo .acoes,.dica{transition:transform 1.1s cubic-bezier(.2,.8,.2,1),opacity .9s ease}
+.acende .topo h1 .l:nth-child(2)>span{transition-delay:.12s}
+.acende .topo p{transition-delay:.55s}.acende .topo .acoes{transition-delay:.7s}.acende .dica{transition-delay:1.4s}
+
+/* ---------- a volta ---------- */
+.volta{min-height:110vh;display:grid;align-items:center;justify-items:end;padding:80px clamp(16px,5vw,72px)}
+.volta .txt{max-width:520px;background:linear-gradient(90deg,transparent,rgba(28,27,26,.55) 18%);padding:24px 0 24px 40px}
+.volta h2{margin-bottom:22px}
+.volta p+p{margin-top:14px}
+.anos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:30px;max-width:440px}
+.anos div{border-top:2px solid var(--grafite-3);padding-top:10px;font-family:var(--larga);font-stretch:110%;font-weight:700;font-size:18px;color:var(--osso-2)}
+.anos div.on{border-color:var(--ouro);color:var(--osso)}
+
+/* ---------- WOW 2: versões ---------- */
+.versoes{height:440vh;position:relative}
+.versoes .fixa{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-rows:auto minmax(0,1fr);align-content:start;gap:22px;padding:92px clamp(16px,5vw,72px) 28px}
+.ficha{width:min(600px,100%);background:rgba(38,37,36,.9);border:1px solid rgba(255,255,255,.07);border-radius:22px;padding:26px 26px 22px;position:relative;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.ficha .topo-ficha{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.ficha .passo{font-size:13px;color:var(--osso-2)}
+.pontos{display:flex;gap:6px}
+.pontos i{width:22px;height:4px;border-radius:4px;background:var(--grafite-3);transition:background-color .4s}
+.pontos i.on{background:var(--ouro)}
+.ficha h3{font-size:clamp(36px,4vw,54px);margin:12px 0 4px}
+.ficha .cod{font-size:14px;color:var(--osso-2)}
+.ficha ul{list-style:none;margin-top:14px;display:grid;gap:0;max-height:calc(100svh - 440px);overflow:auto;overscroll-behavior:contain}
+.ficha li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:15px}
+.ficha li em{font-style:normal;font-size:11px;font-weight:600;letter-spacing:.04em;color:#1a1408;background:var(--ouro);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.ficha .vazio{color:var(--osso-2);padding:10px 0}
+.ficha .corpo{transition:opacity .35s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
+.ficha .corpo.sai{opacity:0;transform:translateY(10px)}
+.ficha.ouro{border-color:rgba(212,165,60,.55);box-shadow:0 0 0 1px rgba(212,165,60,.25),0 30px 80px -30px rgba(212,165,60,.45)}
+.versoes .intro-v{max-width:520px}
+.versoes .intro-v h2{font-size:clamp(34px,4vw,56px)}
+.versoes .fixa .ficha{align-self:start}
+@media (min-width:861px){.ficha ul{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px;max-height:calc(100svh - 330px)}.ficha li{font-size:14px}}
+.versoes .intro-v p{margin-top:10px}
+.versoes .lista-estatica{display:none}
+
+/* ---------- WOW 3: cores ---------- */
+.cores{min-height:100vh;padding:110px clamp(16px,5vw,72px) 80px;display:grid;justify-items:end;align-items:center}
+.painel{width:min(560px,100%);background:rgba(38,37,36,.92);border:1px solid rgba(255,255,255,.07);border-radius:22px;padding:24px 26px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.painel h2{font-size:clamp(30px,3.6vw,48px)}
+.painel>p{margin-top:10px;font-size:15px}
+.filtros{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.filtros button{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14);font-size:13px;font-weight:500;color:var(--osso-2)}
+.filtros button[aria-pressed="true"]{background:var(--osso);color:var(--grafite);border-color:var(--osso)}
+.amostras{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;margin-top:16px}
+.amostra{aspect-ratio:1;border-radius:50%;position:relative;min-width:0;min-height:44px;transition:transform .25s,opacity .3s}
+.amostra::before{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--c);box-shadow:inset 0 -6px 10px rgba(0,0,0,.28),inset 0 4px 8px rgba(255,255,255,.22)}
+.amostra.met::before{background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.55),transparent 42%),var(--c)}
+.amostra[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ouro)}
+.amostra.fora{opacity:.18}
+.amostra:hover{transform:scale(1.08)}
+.cor-info{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08)}
+.cor-info strong{font-family:var(--larga);font-stretch:112%;font-size:24px;font-weight:800;line-height:1.1}
+.cor-info .cod{font-family:var(--larga);font-stretch:100%;font-weight:700;color:var(--ouro);font-size:15px;align-self:center}
+.cor-info .tipo{font-size:13px;color:var(--osso-2)}
+.linhas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:14px}
+.linhas div{font-size:12px;line-height:1.3;color:var(--osso-2);border-radius:10px;padding:8px 8px;background:rgba(255,255,255,.03);border:1px solid transparent;transition:all .3s}
+.linhas div b{display:block;font-family:var(--larga);font-stretch:100%;font-size:13px;color:var(--osso-2)}
+.linhas div.on{border-color:rgba(212,165,60,.5);background:rgba(212,165,60,.1);color:var(--osso)}
+.linhas div.on b{color:var(--ouro-claro)}
+.nota{font-size:12px;color:var(--osso-2);margin-top:10px}
+
+/* ficha do seu Fusca (pedido do selo) */
+.meu{margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.meu h3{font-size:22px;font-stretch:112%}
+.meu .prog{font-size:13px;color:var(--osso-2);margin-top:4px}
+.grupo{margin-top:14px}
+.grupo>span{font-size:13px;color:var(--osso-2);display:block;margin-bottom:6px}
+.opcoes{display:flex;flex-wrap:wrap;gap:6px}
+.opcoes button{min-height:42px;padding:0 14px;border-radius:12px;border:1px solid rgba(255,255,255,.14);font-size:14px;font-weight:500}
+.opcoes button[aria-pressed="true"]{border-color:var(--ouro);background:rgba(212,165,60,.14);color:var(--ouro-claro)}
+.opcoes .so{display:flex;align-items:center;gap:8px}
+.opcoes .so img{width:26px}
+.msg{margin-top:16px;font-size:14px;line-height:1.5;background:#1F2C23;border-radius:14px 14px 14px 4px;padding:12px 14px;color:#DDEBDD;max-width:none}
+.meu .btn{width:100%;margin-top:14px}
+.obrigado{display:none;margin-top:14px;font-size:14px;color:var(--ouro-claro)}
+.obrigado.on{display:block}
+
+/* ---------- selos ---------- */
+.selos{padding:120px clamp(16px,5vw,72px) 60px;background:linear-gradient(180deg,transparent,var(--grafite) 140px)}
+.selos .cab{max-width:640px}
+.selos .cab p{margin-top:14px}
+.moedas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2.4vw,32px);margin-top:48px;perspective:1100px}
+.sel{position:relative;aspect-ratio:640/606;display:block;width:100%;border-radius:50%;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,1.4,.4,1)}
+.sel .face,.sel .verso{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:50%}
+.sel .face img{width:100%;height:100%;filter:drop-shadow(0 18px 24px rgba(0,0,0,.55))}
+.sel .verso{transform:rotateY(180deg);display:grid;place-content:center;text-align:center;padding:16%;background:radial-gradient(circle at 50% 30%,#2e2c2a,#161514);border:3px solid var(--borda,var(--ouro));font-size:clamp(12px,1.15vw,15px);line-height:1.4}
+.sel .verso b{display:block;font-family:var(--larga);font-stretch:118%;font-size:clamp(14px,1.5vw,20px);margin-bottom:6px;color:var(--osso)}
+.sel[aria-pressed="true"]{transform:rotateY(180deg)}
+.sel-nome{text-align:center;margin-top:14px;font-size:14px;color:var(--osso-2)}
+.brilho-moeda{position:absolute;inset:0;border-radius:50%;overflow:hidden;pointer-events:none}
+.brilho-moeda::after{content:"";position:absolute;top:-20%;bottom:-20%;width:18%;left:-30%;background:linear-gradient(90deg,transparent,rgba(255,240,200,.45),transparent);transform:skewX(-18deg);animation:passa 5.5s ease-in-out infinite}
+.moedas>div:nth-child(2) .brilho-moeda::after{animation-delay:.7s}.moedas>div:nth-child(3) .brilho-moeda::after{animation-delay:1.4s}.moedas>div:nth-child(4) .brilho-moeda::after{animation-delay:2.1s}
+@keyframes passa{0%,60%{left:-30%}85%,100%{left:120%}}
+
+/* ---------- aplicações ---------- */
+.aplics{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:80px}
+.aplics .cab{grid-column:1/-1;margin-bottom:8px}
+.aplic{background:var(--grafite-2);border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.aplic figure{background:#fff;position:relative}
+.aplic figure img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.aplic figcaption{position:absolute;left:10px;bottom:8px;font-size:11px;color:#333;background:rgba(255,255,255,.8);padding:2px 8px;border-radius:999px}
+.aplic .info{padding:18px 20px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.aplic h3{font-size:24px;font-stretch:115%}
+.aplic p{font-size:14px;color:var(--osso-2)}
+.aplic .btn{margin-top:auto;align-self:flex-start;min-height:46px;font-size:14px;margin-top:14px}
+.a1{grid-column:span 7}.a2{grid-column:span 5}.a3{grid-column:span 5}.a4{grid-column:span 7}
+
+/* ---------- faq + fim ---------- */
+.faq{padding:100px clamp(16px,5vw,72px) 40px;max-width:900px}
+.faq h2{margin-bottom:26px}
+.faq details{border-top:1px solid rgba(255,255,255,.1)}
+.faq details:last-of-type{border-bottom:1px solid rgba(255,255,255,.1)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 40px 18px 0;font-weight:600;font-size:17px;position:relative;min-height:44px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:6px;top:50%;width:12px;height:12px;border-right:2px solid var(--ouro);border-bottom:2px solid var(--ouro);transform:translateY(-70%) rotate(45deg);transition:transform .3s}
+.faq details[open] summary::after{transform:translateY(-30%) rotate(-135deg)}
+.faq details p{padding:0 0 18px;color:var(--osso-2)}
+.fim{padding:90px clamp(16px,5vw,72px) 70px;text-align:center;display:grid;justify-items:center;gap:18px}
+.fim img{width:150px}
+.fim h2{max-width:14ch}
+footer{padding:36px clamp(16px,5vw,72px) calc(110px + env(safe-area-inset-bottom));border-top:1px solid rgba(255,255,255,.08);font-size:13px;color:var(--osso-2);display:grid;gap:10px}
+footer p{max-width:90ch}
+footer a{text-underline-offset:3px}
+
+/* botão flutuante (celular) */
+.flutua{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:40;display:none;width:60px;height:60px;border-radius:50%;background:var(--zap);color:#fff;align-items:center;justify-content:center;box-shadow:0 12px 30px -10px rgba(0,0,0,.7);transition:transform .3s,opacity .3s}
+.flutua svg{width:30px;height:30px}
+@media (max-width:860px){.flutua{display:flex}}
+.dentro .flutua{display:none}
+
+/* ---------- celular ---------- */
+@media (max-width:860px){
+  body{font-size:16px}
+  .topo{align-items:end;padding:90px 16px 110px}
+  .topo h1{font-size:clamp(50px,16vw,96px);margin:10px 0 14px}
+  .topo .txt{background:linear-gradient(180deg,transparent,rgba(28,27,26,.85) 30%);padding-top:30px;margin:0 -16px;padding-left:16px;padding-right:16px}
+  .dica{right:16px;bottom:auto;top:76px}
+  .carregando{left:auto;right:16px;bottom:auto;top:84px}
+  .volta{justify-items:stretch;align-items:end;padding:60px 16px 70px;min-height:100svh}
+  .volta .txt{max-width:none;padding:24px 0 0;background:linear-gradient(180deg,transparent,rgba(28,27,26,.92) 22%)}
+  .versoes .fixa{grid-template-rows:auto minmax(0,1fr);padding:78px 16px 18px;gap:0}
+  .versoes .fixa .ficha{align-self:end}
+  .versoes .intro-v h2{font-size:30px}
+  .versoes .intro-v p{display:none}
+  .ficha{padding:20px 18px 16px;width:100%}
+  .ficha h3{font-size:36px;margin-top:10px}
+  .ficha ul{max-height:26svh}
+  .cores{justify-items:stretch;padding:0 0 60px;align-items:end}
+  .cores .vao{height:44svh}
+  .painel{border-radius:22px 22px 0 0;padding:18px 16px}
+  .painel h2{font-size:28px}
+  .painel>p{display:none}
+  .filtros{flex-wrap:nowrap;overflow-x:auto;margin:12px -16px 0;padding:0 16px;scrollbar-width:none}
+  .filtros button{flex:none}
+  .amostras{margin-top:12px}
+  .cor-info{margin-top:12px;padding-top:12px}
+  .cor-info strong{font-size:20px}
+  .linhas{margin-top:10px}
+  .amostras{grid-template-columns:repeat(8,minmax(0,1fr));gap:4px}
+  .linhas div{padding:6px 5px;font-size:11px}
+  .moedas{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 16px}
+  .aplics{grid-template-columns:minmax(0,1fr)}
+  .a1,.a2,.a3,.a4{grid-column:auto}
+  .fim{padding-bottom:40px}
+}
+@media (min-width:861px){.cores .vao{display:none}}
+
+/* ---------- modo prévia (?embed) e reduzir movimento ---------- */
+.embed .versoes{height:auto}
+.embed .versoes .fixa{position:relative;height:auto;display:block}
+.embed .versoes .ficha{display:none}
+.embed .versoes .intro-v{position:static;margin-bottom:24px}
+.embed .versoes .lista-estatica{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px}
+.embed .versoes .lista-estatica .ficha{display:block;width:auto}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.2s!important;animation:none!important}
+  .js.intro .topo h1 .l>span,.js.intro .topo .ano,.js.intro .topo p,.js.intro .topo .acoes,.js.intro .dica{transform:none}
+}
+</style>
+<script>document.documentElement.classList.add('js','intro');</script>
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="barra">
+  <a class="logo" href="#topo" aria-label="OF Fusca Itamar, voltar ao topo">
+    <img src="img/selo-fusca-itamar.webp" width="480" height="454" alt="Selo OF Fusca Itamar">
+    <span>FUSCA ITAMAR</span>
+  </a>
+  <nav class="menu" aria-label="Seções">
+    <a href="#versoes">Versões</a>
+    <a href="#cores">Cores</a>
+    <a href="#selos">Selos</a>
+    <a href="#perguntas">Perguntas</a>
+  </nav>
+  <a class="btn btn-zap js-zap" data-msg="Oi! Vim pelo site do OF Fusca Itamar." href="https://wa.me/?text=Oi!%20Vim%20pelo%20site%20do%20OF%20Fusca%20Itamar." target="_blank" rel="noopener">Chamar no WhatsApp</a>
+</header>
+
+<canvas id="palco" aria-label="Fusca Itamar em 3D. Arraste para girar." role="img"></canvas>
+<div class="reserva" aria-hidden="true"><img src="img/fusca-3d.webp" width="689" height="444" alt=""></div>
+<div class="vinheta" aria-hidden="true"></div>
+
+<main id="conteudo" tabindex="-1">
+
+  <!-- WOW 1: o risco dourado do logo atravessa a tela e acende o Fusca -->
+  <section class="topo" id="topo" data-cena="topo">
+    <svg class="risco" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="gOuro" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#8F6A1E" stop-opacity="0"/>
+          <stop offset=".25" stop-color="#D4A53C"/>
+          <stop offset=".55" stop-color="#F2D27E"/>
+          <stop offset=".85" stop-color="#D4A53C"/>
+          <stop offset="1" stop-color="#CFCFCF" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path id="risco1" d="M -60 640 C 300 300, 900 140, 1660 300" stroke="url(#gOuro)" stroke-width="5"/>
+      <path id="risco2" d="M 40 700 C 420 400, 980 250, 1660 380" stroke="url(#gOuro)" stroke-width="2" opacity=".55"/>
+    </svg>
+    <div class="txt">
+      <div class="ano">1993 a 1996</div>
+      <h1><span class="l"><span>Fusca</span></span><span class="l"><span class="dourado">Itamar</span></span></h1>
+      <p>O Fusca que voltou pra linha de montagem em 1993 e foi o último feito no Brasil. Aqui tem as versões, as cores de fábrica e os selos OF.</p>
+      <div class="acoes">
+        <a class="btn btn-zap js-zap" data-msg="Oi! Vim pelo site do OF Fusca Itamar." href="https://wa.me/?text=Oi!%20Vim%20pelo%20site%20do%20OF%20Fusca%20Itamar." target="_blank" rel="noopener">Chamar no WhatsApp</a>
+        <a class="btn btn-linha" href="#versoes">Ver as versões</a>
+      </div>
+    </div>
+    <div class="carregando" aria-live="polite"><span>Trazendo o Fusca</span><i><b></b></i></div>
+    <div class="dica" aria-hidden="true">
+      <svg viewBox="0 0 34 20"><path d="M3 10h28M8 5l-5 5 5 5M26 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Arraste o Fusca pra girar
+    </div>
+  </section>
+
+  <section class="volta" data-cena="volta" aria-labelledby="t-volta">
+    <div class="txt">
+      <h2 id="t-volta">Ele voltou em 1993.</h2>
+      <p>A Volkswagen tinha parado de fazer o Fusca no Brasil em 1986. Em 1993 ele voltou pra linha, a pedido do presidente Itamar Franco, e ficou até 1996.</p>
+      <p class="apoio">Foi assim que ganhou o apelido. São quatro linhas de ano, quatro versões e dezesseis cores.</p>
+      <div class="anos" aria-label="Anos de fabricação">
+        <div class="on">1993</div><div class="on">1994</div><div class="on">1995</div><div class="on">1996</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WOW 2: do STD ao Série Ouro, guiado pela rolagem -->
+  <section class="versoes" id="versoes" data-cena="versoes" aria-labelledby="t-versoes">
+    <div class="fixa">
+      <div class="intro-v txt">
+        <h2 id="t-versoes">Do STD ao Série Ouro</h2>
+        <p class="apoio">Quatro jeitos de sair da fábrica. Role a página e veja o que cada um trazia.</p>
+      </div>
+      <article class="ficha txt" id="ficha" aria-live="polite">
+        <div class="topo-ficha">
+          <span class="passo" id="v-passo">Versão 1 de 4</span>
+          <span class="pontos" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="corpo" id="v-corpo"></div>
+      </article>
+      <div class="lista-estatica" id="v-estatica"></div>
+    </div>
+  </section>
+
+  <!-- WOW 3: as 16 cores de fábrica pintam o Fusca e viram o pedido do selo -->
+  <section class="cores" id="cores" data-cena="cores" aria-labelledby="t-cores">
+    <div class="vao" aria-hidden="true"></div>
+    <div class="painel txt">
+      <h2 id="t-cores">As 16 cores de fábrica</h2>
+      <p class="apoio">Toque numa cor e o Fusca é pintado na hora. Embaixo, as linhas em que ela saiu.</p>
+      <div class="filtros" role="group" aria-label="Filtrar por linha">
+        <button type="button" data-linha="-1" aria-pressed="true">Todas</button>
+        <button type="button" data-linha="0" aria-pressed="false">93/94</button>
+        <button type="button" data-linha="1" aria-pressed="false">94/95</button>
+        <button type="button" data-linha="2" aria-pressed="false">95/96</button>
+        <button type="button" data-linha="3" aria-pressed="false">Série Ouro</button>
+      </div>
+      <div class="amostras" id="amostras" role="group" aria-label="Cores"></div>
+      <div class="cor-info">
+        <strong id="c-nome">Verde Nice</strong>
+        <span class="cod" id="c-cod">VW 184</span>
+        <span class="tipo" id="c-tipo">Metálica</span>
+      </div>
+      <div class="linhas" id="c-linhas">
+        <div><b>93/94</b>e 94/94</div><div><b>94/95</b>e 95/95</div><div><b>95/96</b>e 96/96</div><div><b>Série Ouro</b>edição</div>
+      </div>
+      <p class="nota" id="c-nota" hidden>O asterisco do código 001 está assim na tabela original.</p>
+
+      <div class="meu" id="meu">
+        <h3>O selo do seu Fusca</h3>
+        <p class="prog" id="m-prog">Cor escolhida. Falta 2 de 3.</p>
+        <div class="grupo">
+          <span>Versão</span>
+          <div class="opcoes" id="m-versao" role="group" aria-label="Versão">
+            <button type="button" aria-pressed="false" data-v="STD">STD</button>
+            <button type="button" aria-pressed="false" data-v="Luxo 1">Luxo 1</button>
+            <button type="button" aria-pressed="false" data-v="Luxo 2">Luxo 2</button>
+            <button type="button" aria-pressed="false" data-v="Série Ouro">Série Ouro</button>
+          </div>
+        </div>
+        <div class="grupo">
+          <span>Selo</span>
+          <div class="opcoes" id="m-selo" role="group" aria-label="Selo">
+            <button type="button" class="so" aria-pressed="false" data-s="Original"><img src="img/selo-original.webp" width="480" height="454" alt="">Original</button>
+            <button type="button" class="so" aria-pressed="false" data-s="Custom"><img src="img/selo-custom.webp" width="480" height="454" alt="">Custom</button>
+            <button type="button" class="so" aria-pressed="false" data-s="Série Ouro"><img src="img/selo-serie-ouro.webp" width="480" height="454" alt="">Série Ouro</button>
+          </div>
+        </div>
+        <p class="msg" id="m-msg"></p>
+        <a class="btn btn-zap" id="m-enviar" href="https://wa.me/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.4 3.9c1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+          Pedir o selo pelo WhatsApp
+        </a>
+        <p class="obrigado" id="m-obrigado" role="status">Mensagem pronta no WhatsApp. É só apertar enviar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="selos" id="selos" data-cena="selos" aria-labelledby="t-selos">
+    <div class="cab">
+      <h2 id="t-selos">Os selos OF</h2>
+      <p class="apoio">A marca e os três selos. Toque em cada um pra ver pra que serve.</p>
+    </div>
+    <div class="moedas">
+      <div>
+        <button type="button" class="sel" aria-pressed="false" style="--borda:var(--ouro)">
+          <span class="face"><img src="img/selo-fusca-itamar.webp" width="480" height="454" alt="Selo OF Fusca Itamar, a marca"></span>
+          <span class="verso"><b>Fusca Itamar</b>A marca. Vai na camiseta, no chaveiro e no cobre-placa.</span>
+          <span class="brilho-moeda"></span>
+        </button>
+        <p class="sel-nome">Marca oficial</p>
+      </div>
+      <div>
+        <button type="button" class="sel" aria-pressed="false" style="--borda:var(--verde)">
+          <span class="face"><img src="img/selo-original.webp" width="480" height="454" alt="Selo OF Original"></span>
+          <span class="verso"><b>Original</b>Pro Fusca Itamar do jeito que saiu da fábrica.</span>
+          <span class="brilho-moeda"></span>
+        </button>
+        <p class="sel-nome">Selo Original</p>
+      </div>
+      <div>
+        <button type="button" class="sel" aria-pressed="false" style="--borda:var(--vermelho)">
+          <span class="face"><img src="img/selo-custom.webp" width="480" height="454" alt="Selo OF Custom"></span>
+          <span class="verso"><b>Custom</b>Pro Fusca Itamar que ganhou o jeito do dono.</span>
+          <span class="brilho-moeda"></span>
+        </button>
+        <p class="sel-nome">Selo Custom</p>
+      </div>
+      <div>
+        <button type="button" class="sel" aria-pressed="false" style="--borda:var(--ouro)">
+          <span class="face"><img src="img/selo-serie-ouro.webp" width="480" height="454" alt="Selo OF Série Ouro"></span>
+          <span class="verso"><b>Série Ouro</b>Pro Fusca Itamar da edição Série Ouro.</span>
+          <span class="brilho-moeda"></span>
+        </button>
+        <p class="sel-nome">Selo Série Ouro</p>
+      </div>
+    </div>
+
+    <div class="aplics">
+      <div class="cab">
+        <h2>Onde o selo vai</h2>
+        <p class="apoio">Imagens de projeto da marca. Peça o seu pelo WhatsApp.</p>
+      </div>
+      <article class="aplic a1">
+        <figure><img src="img/adesivos.webp" width="900" height="552" alt="Adesivos resinados dos quatro selos OF" loading="lazy"><figcaption>Imagem de projeto</figcaption></figure>
+        <div class="info"><h3>Adesivo resinado</h3><p>Os quatro selos, com 6 cm de largura.</p>
+          <a class="btn btn-zap js-zap" data-msg="Oi! Quero o adesivo resinado do selo OF." href="https://wa.me/" target="_blank" rel="noopener">Pedir pelo WhatsApp</a></div>
+      </article>
+      <article class="aplic a2">
+        <figure><img src="img/camisetas.webp" width="1200" height="524" alt="Camisetas branca, preta e caramelo com o selo OF Fusca Itamar" loading="lazy"><figcaption>Imagem de projeto</figcaption></figure>
+        <div class="info"><h3>Camiseta</h3><p>Selo de 15 cm de largura, impresso em DTG.</p>
+          <a class="btn btn-zap js-zap" data-msg="Oi! Quero a camiseta do OF Fusca Itamar." href="https://wa.me/" target="_blank" rel="noopener">Pedir pelo WhatsApp</a></div>
+      </article>
+      <article class="aplic a3">
+        <figure><img src="img/chaveiro.webp" width="900" height="407" alt="Chaveiro de couro com placa de metal gravada com o selo OF" loading="lazy"><figcaption>Imagem de projeto</figcaption></figure>
+        <div class="info"><h3>Chaveiro</h3><p>Selo gravado a laser.</p>
+          <a class="btn btn-zap js-zap" data-msg="Oi! Quero o chaveiro do OF Fusca Itamar." href="https://wa.me/" target="_blank" rel="noopener">Pedir pelo WhatsApp</a></div>
+      </article>
+      <article class="aplic a4">
+        <figure><img src="img/cobre-placa.webp" width="1000" height="667" alt="Traseira de Fusca preto com o cobre-placa OF" loading="lazy"><figcaption>Imagem de projeto</figcaption></figure>
+        <div class="info"><h3>Cobre-placa</h3><p>Pra exposição e encontro, com o selo OF Fusca Itamar.</p>
+          <a class="btn btn-zap js-zap" data-msg="Oi! Quero o cobre-placa do OF Fusca Itamar." href="https://wa.me/" target="_blank" rel="noopener">Pedir pelo WhatsApp</a></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="faq" id="perguntas" data-cena="faq" aria-labelledby="t-faq">
+    <h2 id="t-faq">Perguntas</h2>
+    <details><summary>Quais anos são Fusca Itamar?</summary><p>As linhas 93/94 (e 94/94), 94/95 (e 95/95) e 95/96 (e 96/96), mais a edição Série Ouro. Ou seja, de 1993 a 1996.</p></details>
+    <details><summary>Quantas cores de fábrica ele teve?</summary><p>Dezesseis, todas com o código da VW. Na seção de cores dá pra filtrar por linha e ver o Fusca pintado em cada uma.</p></details>
+    <details><summary>Qual a diferença entre STD, Luxo 1 e Luxo 2?</summary><p>O STD saía sem acessórios. O Luxo 1 trazia espelho direito, volante espumado, relógio analógico, borracha nos para-choques, buzina dupla, porta-trecos, carpete com proteção de borracha e forro de porta acarpetado. O Luxo 2 somava vidros verdes, vidros basculantes, desembaçador traseiro, lanternas fumê e som com rádio.</p></details>
+    <details><summary>O que o Série Ouro tinha a mais?</summary><p>Forro de porta em tecido Pointer GTI, bancos Pointer GTI, faróis de milha Lucas, forro de teto cinza, volante do Gol GL, painel de fundo branco com iluminação verde e som sem rádio, além dos itens do Luxo.</p></details>
+    <details><summary>Qual selo combina com o meu Fusca?</summary><p>Original pro Fusca do jeito que saiu da fábrica, Custom pro que foi modificado e Série Ouro pra edição Série Ouro. Na dúvida, manda foto pelo WhatsApp.</p></details>
+    <details><summary>Como eu peço o adesivo, a camiseta ou o chaveiro?</summary><p>Pelo WhatsApp. Cada botão do site já abre a conversa com a mensagem pronta, é só apertar enviar.</p></details>
+  </section>
+
+  <section class="fim" data-cena="fim">
+    <img src="img/selo-fusca-itamar.webp" width="480" height="454" alt="Selo OF Fusca Itamar" loading="lazy">
+    <h2>Seu Fusca merece o selo.</h2>
+    <a class="btn btn-zap js-zap" data-msg="Oi! Vim pelo site do OF Fusca Itamar." href="https://wa.me/" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+  </section>
+
+  <footer>
+    <p><strong>OF Fusca Itamar</strong></p>
+    <p>Modelo 3D: <a href="https://sketchfab.com/3d-models/beetlefusca-version-1-cb6e82e73386448fb3b4e2dd25255a5e" target="_blank" rel="noopener">"Beetle/Fusca (Version 1)"</a> de <a href="https://sketchfab.com/soujagah" target="_blank" rel="noopener">soujagah</a>, licença <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Alterado: posição e cor da pintura trocada no site. Distribuído por AiZity.</p>
+    <p>As cores na tela são aproximadas. Tabela de cores e versões: material do OF Fusca Itamar.</p>
+    <p><a href="privacidade.html">Política de privacidade</a>. Site feito pela GuDev.</p>
+  </footer>
+</main>
+
+<a class="flutua js-zap" data-msg="Oi! Vim pelo site do OF Fusca Itamar." href="https://wa.me/" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.4 3.9c1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+</a>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" defer></script>
+<script src="js/fusca3d.min.js" defer></script>
+<script>
+/* ======================================================================
+   OF Fusca Itamar · site
+   PREENCHER antes de subir: WhatsApp do Rodrigo (só números, com 55 e DDD)
+   e o @ do Instagram. Sem número, o botão abre o WhatsApp pra escolher o contato.
+   ====================================================================== */
+var CONFIG = { whatsapp: '', instagram: '' };
+
+document.addEventListener('DOMContentLoaded', function () {
+  var raiz = document.documentElement;
+  var embed = /[?&]embed\b/.test(location.search);
+  var dentro = window.parent !== window;
+  var calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var celular = function () { return innerWidth <= 860; };
+  if (embed) raiz.classList.add('embed');
+  if (dentro) raiz.classList.add('dentro');
+
+  /* ---------- WhatsApp ---------- */
+  function zap(msg) {
+    var n = (CONFIG.whatsapp || '').replace(/\D/g, '');
+    return 'https://wa.me/' + n + '?text=' + encodeURIComponent(msg);
+  }
+  document.querySelectorAll('.js-zap').forEach(function (a) { a.href = zap(a.getAttribute('data-msg')); });
+
+  /* ---------- dados (material do Rodrigo) ---------- */
+  var VERSOES = [
+    { nome: 'STD', cod: 'STD, grupo 1, código 1', itens: [] },
+    { nome: 'Luxo 1', cod: 'Opção 1, grupo 2, código 2', itens: ['Espelho LD', 'Volante espumado', 'Relógio analógico', 'Borracha nos para-choques', 'Buzina dupla', 'Porta-trecos', 'Carpete com proteção de borracha', 'Forro de porta acarpetado'] },
+    { nome: 'Luxo 2', cod: 'Opção 2, grupo 3, código 3', itens: ['Espelho LD', 'Volante espumado', 'Relógio analógico', 'Borracha nos para-choques', 'Buzina dupla', 'Porta-trecos', 'Carpete com proteção de borracha', 'Forro de porta acarpetado', 'Vidros verdes', 'Vidros basculantes', 'Desembaçador traseiro', 'Lanternas fumê', 'Som com rádio'] },
+    { nome: 'Série Ouro', cod: 'Fusca Ouro', itens: ['Espelho LD', 'Volante espumado', 'Relógio analógico', 'Borracha nos para-choques', 'Buzina dupla', 'Porta-trecos', 'Carpete com proteção de borracha', 'Forro de porta em tecido Pointer GTI', 'Vidros verdes', 'Vidros basculantes', 'Desembaçador traseiro', 'Lanternas fumê', 'Som sem rádio', 'Milhas Lucas', 'Bancos Pointer GTI', 'Forro de teto cinza', 'Volante Gol GL', 'Painel de fundo branco', 'Iluminação do painel em verde'] }
+  ];
+  // linhas: [93/94, 94/95, 95/96, Série Ouro] (lido da tabela "Cores Fusca Itamar 1993/1996")
+  var CORES = [
+    ['Branco Star', '001*', '#F4F4F2', 0, [1, 0, 0, 0]],
+    ['Branco Geada', '021', '#EFEBE1', 0, [0, 1, 1, 1]],
+    ['Bege Arena', '012', '#E6D5BF', 0, [1, 1, 1, 0]],
+    ['Preto Universal', '201', '#141111', 0, [1, 1, 1, 0]],
+    ['Vermelho Sport', '013', '#B8141D', 0, [1, 1, 1, 0]],
+    ['Azul Saturno', '045', '#AEB9C8', 0, [1, 0, 0, 0]],
+    ['Cinza Névoa', '035', '#959595', 0, [0, 1, 0, 0]],
+    ['Prata Lunar', '112', '#CFCBCC', 1, [1, 1, 1, 1]],
+    ['Bege Athenas', '127', '#C5B7AE', 1, [1, 0, 0, 0]],
+    ['Verde Pinus', '082', '#3F4B43', 1, [1, 0, 0, 0]],
+    ['Verde Tahiti', '124', '#36434F', 1, [0, 1, 0, 0]],
+    ['Bege Urano', '093', '#9C8C8B', 1, [0, 1, 1, 0]],
+    ['Cinza Memphis', '135', '#4F4C5D', 1, [0, 1, 1, 0]],
+    ['Verde Nice', '184', '#2A6C6E', 1, [0, 0, 1, 1]],
+    ['Cinza Stone', '136', '#302C29', 1, [0, 0, 1, 0]],
+    ['Vermelho Dakar', '142', '#7E2826', 1, [0, 0, 0, 1]]
+  ];
+  var NOMES_LINHA = ['93/94', '94/95', '95/96', 'Série Ouro'];
+
+  /* ---------- poses da câmera por cena ---------- */
+  // az: volta em graus (0 = de frente); el: altura; dist: distância; sx/sy: desloca o carro na tela
+  var POSES = {
+    pc: {
+      topo: { az: 28, el: 6, dist: 9.2, sx: .25, sy: .05 },
+      volta: { az: 90, el: 3, dist: 7.8, sx: -.2, sy: .03 },
+      v0: { az: 22, el: 10, dist: 8.2, sx: .19, sy: -.02 },
+      v1: { az: -58, el: 8, dist: 7.8, sx: .19, sy: -.02 },
+      v2: { az: 152, el: 12, dist: 8.2, sx: .19, sy: -.02 },
+      v3: { az: 36, el: 15, dist: 8.4, sx: .21, sy: -.02 },
+      cores: { az: 38, el: 9, dist: 8.2, sx: -.21, sy: .02 }
+    },
+    cel: {
+      topo: { az: 28, el: 8, dist: 13.2, sx: 0, sy: -.26 },
+      volta: { az: 90, el: 4, dist: 17, sx: 0, sy: -.24 },
+      v0: { az: 22, el: 10, dist: 15.5, sx: 0, sy: -.12 },
+      v1: { az: -58, el: 8, dist: 15.5, sx: 0, sy: -.12 },
+      v2: { az: 152, el: 12, dist: 15.5, sx: 0, sy: -.12 },
+      v3: { az: 36, el: 15, dist: 14.5, sx: 0, sy: -.12 },
+      cores: { az: 38, el: 9, dist: 15.5, sx: 0, sy: -.3 }
+    }
+  };
+  function pose(nome) { return POSES[celular() ? 'cel' : 'pc'][nome]; }
+
+  /* ---------- 3D ---------- */
+  var F = null;
+  var canvas = document.getElementById('palco');
+  var barra = document.querySelector('.carregando b');
+  function sem3d() { raiz.classList.add('sem3d', 'pronto'); abre(); }
+  function temWebGL() {
+    try { var c = document.createElement('canvas'); return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl'))); } catch (e) { return false; }
+  }
+  if (!window.Fusca3D || !temWebGL()) { sem3d(); }
+  else {
+    window.Fusca3D.init({
+      canvas: canvas, url: window.FUSCA_GLB || 'modelo/fusca.glb', mobile: celular(),
+      progresso: function (p) { barra.style.setProperty('--p', p.toFixed(3)); }
+    }).then(function (f) {
+      F = f;
+      F.pintar(corAtual[2], corAtual[3]);
+      F._tinta.set(corAtual[2]);
+      F.pose(pose('topo')); Object.assign(F._pose, F._alvo);
+      raiz.classList.add('pronto');
+      if (aberto) { F.revelar(1); if (embed || calmo) F._revela = 1; } else abre();
+      atualiza();
+    }).catch(function (e) { console.warn('3D indisponível', e); sem3d(); });
+  }
+  // vigia: se em 15 s o carro não chegou, mostra a imagem reserva
+  setTimeout(function () { if (!F && !raiz.classList.contains('sem3d')) sem3d(); }, 15000);
+
+  /* ---------- WOW 1: abertura ---------- */
+  var r1 = document.getElementById('risco1'), r2 = document.getElementById('risco2');
+  [r1, r2].forEach(function (p) {
+    var L = p.getTotalLength();
+    p.style.strokeDasharray = L; p.style.strokeDashoffset = (embed || calmo) ? 0 : L;
+  });
+  var aberto = false;
+  function abre() {
+    if (aberto) return; aberto = true;
+    raiz.classList.add('acende');
+    requestAnimationFrame(function () { raiz.classList.remove('intro'); });
+    if (embed || calmo) { if (F) { F.revelar(1); F._revela = 1; } return; }
+    [r1, r2].forEach(function (p, i) {
+      p.style.transition = 'stroke-dashoffset ' + (2.5 + i * .25) + 's cubic-bezier(.6,0,.2,1) ' + (i * .15) + 's';
+      p.style.strokeDashoffset = 0;
+    });
+    if (F) F.revelar(1);
+  }
+  if (embed) { abre(); }
+
+  /* ---------- WOW 2: versões ---------- */
+  var vCorpo = document.getElementById('v-corpo'), vPasso = document.getElementById('v-passo');
+  var ficha = document.getElementById('ficha'), pontos = ficha.querySelectorAll('.pontos i');
+  function htmlVersao(i) {
+    var v = VERSOES[i], antes = i > 0 ? VERSOES[i - 1].itens : [];
+    var h = '<h3>' + v.nome + '</h3><p class="cod">' + v.cod + '</p><ul>';
+    if (!v.itens.length) h += '<li class="vazio">Sem acessórios. O Fusca do jeito mais simples.</li>';
+    v.itens.forEach(function (t) { h += '<li><span>' + t + '</span>' + (antes.indexOf(t) < 0 && i > 0 ? '<em>novo</em>' : '') + '</li>'; });
+    return h + '</ul>';
+  }
+  var vAtual = -1, vFila = null, vOcupado = false;
+  function mostraVersao(i) {
+    if (i === vAtual) return;
+    if (vOcupado) { vFila = i; return; }
+    vOcupado = true; vAtual = i;
+    vCorpo.classList.add('sai');
+    setTimeout(function () {
+      vCorpo.innerHTML = htmlVersao(i);
+      vPasso.textContent = 'Versão ' + (i + 1) + ' de 4';
+      pontos.forEach(function (p, k) { p.classList.toggle('on', k <= i); });
+      ficha.classList.toggle('ouro', i === 3);
+      vCorpo.classList.remove('sai');
+      setTimeout(function () { vOcupado = false; if (vFila !== null && vFila !== vAtual) { var f = vFila; vFila = null; mostraVersao(f); } else vFila = null; }, 380);
+    }, vAtual === -1 ? 0 : 300);
+  }
+  vCorpo.innerHTML = htmlVersao(0); vAtual = 0;
+  document.getElementById('v-estatica').innerHTML = VERSOES.map(function (v, i) { return '<article class="ficha' + (i === 3 ? ' ouro' : '') + '"><div class="corpo">' + htmlVersao(i) + '</div></article>'; }).join('');
+
+  /* ---------- WOW 3: cores + selo ---------- */
+  var amostras = document.getElementById('amostras');
+  var corAtual = CORES[13]; // Verde Nice, a cor do Fusca das fotos
+  CORES.forEach(function (c, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'amostra' + (c[3] ? ' met' : '');
+    b.style.setProperty('--c', c[2]);
+    b.setAttribute('aria-pressed', c === corAtual ? 'true' : 'false');
+    b.setAttribute('aria-label', c[0] + ', código ' + c[1]);
+    b.title = c[0];
+    b.addEventListener('click', function () { escolheCor(i); });
+    amostras.appendChild(b);
+  });
+  var linhas = document.querySelectorAll('#c-linhas div');
+  function escolheCor(i) {
+    corAtual = CORES[i];
+    amostras.querySelectorAll('.amostra').forEach(function (b, k) { b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+    document.getElementById('c-nome').textContent = corAtual[0];
+    document.getElementById('c-cod').textContent = 'VW ' + corAtual[1];
+    document.getElementById('c-tipo').textContent = corAtual[3] ? 'Metálica' : 'Sólida';
+    document.getElementById('c-nota').hidden = corAtual[1].indexOf('*') < 0;
+    linhas.forEach(function (d, k) { d.classList.toggle('on', !!corAtual[4][k]); });
+    if (F) F.pintar(corAtual[2], corAtual[3]);
+    montaMsg();
+  }
+  document.querySelectorAll('.filtros button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var l = +b.getAttribute('data-linha');
+      document.querySelectorAll('.filtros button').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      amostras.querySelectorAll('.amostra').forEach(function (a, k) {
+        var ok = l < 0 || CORES[k][4][l];
+        a.classList.toggle('fora', !ok);
+        a.tabIndex = ok ? 0 : -1;
+      });
+      if (l >= 0 && !corAtual[4][l]) { var k = CORES.findIndex(function (c) { return c[4][l]; }); if (k >= 0) escolheCor(k); }
+      ouroCores = l === 3;
+    });
+  });
+  var ouroCores = false;
+
+  var escolha = { versao: '', selo: '' };
+  function grupo(id, campo, attr) {
+    var bs = document.querySelectorAll('#' + id + ' button');
+    bs.forEach(function (b) {
+      b.addEventListener('click', function () {
+        escolha[campo] = b.getAttribute(attr);
+        bs.forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+        montaMsg();
+      });
+    });
+  }
+  grupo('m-versao', 'versao', 'data-v'); grupo('m-selo', 'selo', 'data-s');
+  var mMsg = document.getElementById('m-msg'), mEnviar = document.getElementById('m-enviar'), mProg = document.getElementById('m-prog');
+  function montaMsg() {
+    var feitos = 1 + (escolha.versao ? 1 : 0) + (escolha.selo ? 1 : 0);
+    mProg.textContent = feitos === 3 ? 'Tudo escolhido. É só mandar.' : 'Passo ' + feitos + ' de 3: escolha ' + (!escolha.versao ? 'a versão' : 'o selo') + '.';
+    var t = 'Oi! Meu Fusca Itamar é ' + corAtual[0] + ' (código VW ' + corAtual[1].replace('*', '') + ')' +
+      (escolha.versao ? ', versão ' + escolha.versao : '') + '. ' +
+      (escolha.selo ? 'Quero o selo OF ' + escolha.selo + '.' : 'Qual selo OF combina com ele?');
+    mMsg.textContent = t;
+    mEnviar.href = zap(t);
+  }
+  mEnviar.addEventListener('click', function () { document.getElementById('m-obrigado').classList.add('on'); });
+  escolheCor(13);
+
+  /* ---------- selos que viram ---------- */
+  document.querySelectorAll('.sel').forEach(function (s) {
+    s.addEventListener('click', function () { s.setAttribute('aria-pressed', s.getAttribute('aria-pressed') === 'true' ? 'false' : 'true'); });
+  });
+
+  /* ---------- rolagem: uma fonte de progresso só ---------- */
+  var cenas = Array.prototype.slice.call(document.querySelectorAll('[data-cena]'));
+  var secV = document.getElementById('versoes');
+  var cenaAtual = '', palcoLigado = true, portaAberta = false;
+  function atualiza() {
+    var meio = innerHeight * .5, nome = 'topo';
+    for (var i = 0; i < cenas.length; i++) { if (cenas[i].getBoundingClientRect().top <= meio) nome = cenas[i].getAttribute('data-cena'); }
+
+    // progresso dentro das versões (com folga de 8% perto da troca)
+    if (!embed) {
+      var r = secV.getBoundingClientRect();
+      var p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight)));
+      var alvo = Math.min(3, Math.floor(p * 4));
+      var frac = p * 4 - Math.floor(p * 4);
+      if (alvo !== vAtual && (frac > .08 || alvo < vAtual) && (frac < .92 || alvo > vAtual)) mostraVersao(alvo);
+    }
+
+    var noPalco = ['topo', 'volta', 'versoes', 'cores'].indexOf(nome) >= 0;
+    if (noPalco !== palcoLigado) {
+      palcoLigado = noPalco;
+      raiz.classList.toggle('palco-off', !noPalco);
+      if (F) { if (noPalco) F.continuar(); else setTimeout(function () { if (!palcoLigado) F.parar(); }, 800); }
+    }
+    if (!F) return;
+    var chave = nome === 'versoes' ? 'v' + Math.max(0, vAtual) : nome;
+    if (POSES.pc[chave]) F.pose(pose(chave));
+    F.ouro((nome === 'versoes' && vAtual === 3) || (nome === 'cores' && ouroCores) ? 1 : 0);
+    var abrir = nome === 'versoes' && vAtual === 3;
+    if (abrir !== portaAberta) { portaAberta = abrir; F.porta('L', abrir); }
+    if (nome === 'cores' && cenaAtual !== 'cores') F._idle = true;
+    cenaAtual = nome;
+  }
+  var pedido = false;
+  function pede() { if (!pedido) { pedido = true; requestAnimationFrame(function () { pedido = false; atualiza(); }); } }
+  addEventListener('scroll', pede, { passive: true });
+  var largura = innerWidth;
+  addEventListener('resize', function () { if (innerWidth !== largura) { largura = innerWidth; pede(); } });
+  setInterval(atualiza, 600);
+  document.addEventListener('visibilitychange', function () { if (!F) return; if (document.hidden) F.parar(); else if (palcoLigado) F.continuar(); });
+  atualiza();
+
+  /* ---------- Lenis só no computador ---------- */
+  if (!embed && !dentro && !calmo && window.Lenis && matchMedia('(pointer: fine)').matches && innerWidth > 900) {
+    var lenis = new Lenis({ lerp: .1 });
+    (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(0);
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) { var alvo = document.querySelector(a.getAttribute('href')); if (alvo) { e.preventDefault(); lenis.scrollTo(alvo); } });
+    });
+  }
+});
+</script>
+</body>
+</html>

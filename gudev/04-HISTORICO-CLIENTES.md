@@ -145,6 +145,11 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - Centro de Treinamento e Academia Paulo de Souza. WhatsApp (11) 94259-9436. Domingo fechada. Aulas: funcional, cross training, pilates, pump, fit dance, jump, muay thai (e RIT no quadro).
 - Prévia em `sites/academia-paulo-de-souza` (barra que carrega e sobe, cronômetro de rounds com as aulas, "Pinte sua semana" no quadro de horários). Endereço (Av. Boturussu, 1499) veio de guia na internet: confirmar. Faltam horário de seg a sáb, fotos boas e o que é RIT.
 
+## OF Fusca Itamar (Rodrigo, amigo do Katraka) · lead do Davi (17/11/2026)
+- Marca de Fusca Itamar (1993 a 1996) com selos OF: marca oficial, Original, Custom e Série Ouro. Mandou PDF "Os Fafas" (selos + camiseta, chaveiro, adesivo resinado 6 cm, cobre-placa), tabela de versões (STD, Luxo 1, Luxo 2, Série Ouro) e tabela das 16 cores com código VW.
+- Quer site pro Instagram dele. O Davi quer fechar por **R$ 800**.
+- Prévia em `sites/fusca-itamar` (Fusca 3D que acende com o risco dourado do logo, versões na rolagem com a porta abrindo no Série Ouro, as 16 cores pintando o carro + pedido do selo). Faltam WhatsApp, @ do Instagram, o que exatamente ele vende e fotos próprias (as que mandou são de lojas). Ver README de lá.
+
 ## Eduburger's, Cidade Universitária, Maceió-AL (11/11/2026)
 - Sanduicheria desde 2015 (beirutes, passaportes, hambúrgueres), WhatsApp (82) 98804-7362, Instagram @eduburgers, 4,7 no Google (295 avaliações).
 - O Davi mandou o HTML da prévia pronto pra eu aprender (`sites/eduburgers/`). O rodapé diz "prévia feita pela GuDev, projeto conceito, ainda não é o site oficial".
