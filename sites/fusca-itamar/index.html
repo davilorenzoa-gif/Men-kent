@@ -78,7 +78,7 @@ p{max-width:58ch}
 @media (max-width:560px){.barra .btn{display:none}.logo span{display:none}}
 
 /* ---------- palco 3D fixo ---------- */
-#palco{position:fixed;inset:0;width:100%;height:100%;z-index:0;touch-action:pan-y;transition:opacity .7s ease;cursor:grab}
+#palco{position:fixed;inset:0 0 auto 0;width:100%;height:100vh;height:100lvh;z-index:0;touch-action:pan-y;transition:opacity .7s ease;cursor:grab}
 #palco:active{cursor:grabbing}
 .palco-off #palco{opacity:0;pointer-events:none}
 .reserva{position:fixed;inset:0;z-index:0;display:none;align-items:center;justify-content:center;pointer-events:none;transition:opacity .7s}
@@ -138,6 +138,7 @@ main a,main button,main input,main label,main summary,main .txt,main details,mai
 .ficha li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:15px}
 .ficha li em{font-style:normal;font-size:11px;font-weight:600;letter-spacing:.04em;color:#1a1408;background:var(--ouro);border-radius:999px;padding:2px 9px;white-space:nowrap}
 .ficha .vazio{color:var(--osso-2);padding:10px 0}
+.ficha .herda{font-size:13px;color:var(--ouro-claro);margin-top:12px}
 .ficha .corpo{transition:opacity .35s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
 .ficha .corpo.sai{opacity:0;transform:translateY(10px)}
 .ficha.ouro{border-color:rgba(212,165,60,.55);box-shadow:0 0 0 1px rgba(212,165,60,.25),0 30px 80px -30px rgba(212,165,60,.45)}
@@ -287,6 +288,14 @@ footer a{text-underline-offset:3px}
   .fim{padding-bottom:40px}
 }
 @media (min-width:861px){.cores .vao{display:none}}
+/* telas médias (tablet deitado, notebook pequeno): ficha, painel e texto mais estreitos pra sobrar palco pro carro */
+@media (min-width:861px) and (max-width:1279px){
+  .ficha{width:min(480px,47vw)}
+  .ficha li{font-size:13px}
+  .painel{width:min(450px,46vw);padding:22px 20px}
+  .amostras{gap:6px}
+  .volta .txt{max-width:430px}
+}
 
 /* ---------- modo prévia (?embed) e reduzir movimento ---------- */
 .embed .versoes{height:auto}
@@ -590,29 +599,17 @@ document.addEventListener('DOMContentLoaded', function () {
   var NOMES_LINHA = ['93/94', '94/95', '95/96', 'Série Ouro'];
 
   /* ---------- poses da câmera por cena ---------- */
-  // az: volta em graus (0 = de frente); el: altura; dist: distância; sx/sy: desloca o carro na tela
-  var POSES = {
-    pc: {
-      topo: { az: 28, el: 6, dist: 9.2, sx: .25, sy: .05 },
-      volta: { az: 90, el: 3, dist: 7.8, sx: -.2, sy: .03 },
-      v0: { az: 22, el: 10, dist: 8.2, sx: .19, sy: -.02 },
-      v1: { az: -58, el: 8, dist: 7.8, sx: .19, sy: -.02 },
-      v2: { az: 152, el: 12, dist: 8.2, sx: .19, sy: -.02 },
-      v3: { az: 36, el: 15, dist: 8.4, sx: .21, sy: -.02 },
-      cores: { az: 38, el: 9, dist: 8.2, sx: -.21, sy: .02 }
-    },
-    cel: {
-      // fit: fração da largura da tela que o carro ocupa (o motor calcula a distância)
-      topo: { az: 30, el: 9, dist: 6, fit: .9, sx: 0, sy: -.24 },
-      volta: { az: 90, el: 5, dist: 6, fit: .92, sx: 0, sy: -.2 },
-      v0: { az: 24, el: 10, dist: 6, fit: .86, sx: 0, sy: -.15 },
-      v1: { az: -58, el: 9, dist: 6, fit: .88, sx: 0, sy: -.15 },
-      v2: { az: 150, el: 12, dist: 6, fit: .88, sx: 0, sy: -.15 },
-      v3: { az: 36, el: 14, dist: 6, fit: .86, sx: 0, sy: -.15 },
-      cores: { az: 34, el: 9, dist: 6, fit: .84, sx: 0, sy: -.29 }
-    }
+  // Só o ângulo (az) e a altura (el) ficam aqui. Distância e posição na tela saem do
+  // enquadramento: o motor encaixa o carro inteiro (em qualquer giro) na área livre da seção.
+  var ANGULOS = {
+    topo: { az: 30, el: 7 },
+    volta: { az: 90, el: 4 },
+    v0: { az: 24, el: 9 },
+    v1: { az: -58, el: 8 },
+    v2: { az: 150, el: 11 },
+    v3: { az: 36, el: 12 },
+    cores: { az: 36, el: 8 }
   };
-  function pose(nome) { return Object.assign({ fit: 0 }, POSES[celular() ? 'cel' : 'pc'][nome]); }
 
   /* ---------- 3D ---------- */
   var F = null;
@@ -631,7 +628,7 @@ document.addEventListener('DOMContentLoaded', function () {
       F = f;
       F.pintar(corAtual[2], corAtual[3]);
       F._tinta.set(corAtual[2]);
-      F.pose(pose('topo')); Object.assign(F._pose, F._alvo);
+      monta(); F.pose(poseContinua()); Object.assign(F._pose, F._alvo);
       raiz.classList.add('pronto');
       if (aberto) { F.revelar(1); if (embed || calmo) F._revela = 1; } else abre();
       atualiza();
@@ -663,11 +660,19 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ---------- WOW 2: versões ---------- */
   var vCorpo = document.getElementById('v-corpo'), vPasso = document.getElementById('v-passo');
   var ficha = document.getElementById('ficha'), pontos = ficha.querySelectorAll('.pontos i');
-  function htmlVersao(i) {
+  // compacto (celular): mostra só o que muda em relação à versão anterior, pra sobrar palco pro carro
+  function htmlVersao(i, compacto) {
+    if (compacto === undefined) compacto = celular();
     var v = VERSOES[i], antes = i > 0 ? VERSOES[i - 1].itens : [];
-    var h = '<h3>' + v.nome + '</h3><p class="cod">' + v.cod + '</p><ul>';
+    var h = '<h3>' + v.nome + '</h3><p class="cod">' + v.cod + '</p>';
+    if (compacto && i > 0) h += '<p class="herda">Base do ' + VERSOES[i - 1].nome + ', com estas diferenças:</p>';
+    h += '<ul>';
     if (!v.itens.length) h += '<li class="vazio">Sem acessórios. O Fusca do jeito mais simples.</li>';
-    v.itens.forEach(function (t) { h += '<li><span>' + t + '</span>' + (antes.indexOf(t) < 0 && i > 0 ? '<em>novo</em>' : '') + '</li>'; });
+    v.itens.forEach(function (t) {
+      var novo = antes.indexOf(t) < 0 && i > 0;
+      if (compacto && i > 0 && !novo) return;
+      h += '<li><span>' + t + '</span>' + (novo && !compacto ? '<em>novo</em>' : '') + '</li>';
+    });
     return h + '</ul>';
   }
   var vAtual = -1, vFila = null, vOcupado = false;
@@ -686,7 +691,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }, vAtual === -1 ? 0 : 300);
   }
   vCorpo.innerHTML = htmlVersao(0); vAtual = 0;
-  document.getElementById('v-estatica').innerHTML = VERSOES.map(function (v, i) { return '<article class="ficha' + (i === 3 ? ' ouro' : '') + '"><div class="corpo">' + htmlVersao(i) + '</div></article>'; }).join('');
+  document.getElementById('v-estatica').innerHTML = VERSOES.map(function (v, i) { return '<article class="ficha' + (i === 3 ? ' ouro' : '') + '"><div class="corpo">' + htmlVersao(i, false) + '</div></article>'; }).join('');
 
   /* ---------- WOW 3: cores + selo ---------- */
   var amostras = document.getElementById('amostras');
@@ -790,23 +795,76 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   var rolou = false;
   addEventListener('scroll', function () { var r = scrollY > 40; if (r !== rolou) { rolou = r; raiz.classList.toggle('rolou', r); } }, { passive: true });
-  // câmera presa na rolagem: cada pose é um ponto da página e, entre dois pontos,
-  // a câmera anda junto com o dedo (sem pulo na troca de seção)
+  /* ---------- enquadramento do carro ----------
+     Cada pose é um ponto da página (Y da rolagem). Pra cada uma, mede no layout a área
+     livre (onde não tem texto) e pede ao motor a distância e o deslocamento que deixam
+     o carro inteiro e centralizado ali. Entre dois pontos, a câmera anda junto com o dedo. */
   var secVolta = document.querySelector('.volta'), secCores = document.getElementById('cores');
+  var fixa = secV.querySelector('.fixa'), introV = secV.querySelector('.intro-v');
   function topoAbs(el) { return el.getBoundingClientRect().top + scrollY; }
-  function poseContinua() {
-    var k = [['topo', 0], ['volta', topoAbs(secVolta) + secVolta.offsetHeight / 2 - innerHeight / 2]];
+  function direitaTexto(el) { var r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().right; }
+  function alturaFicha(i) {
+    // mede a ficha de cada versão num clone invisível (a do Série Ouro é a mais alta)
+    var c = document.createElement('article');
+    c.className = 'ficha' + (i === 3 ? ' ouro' : '');
+    c.style.cssText = 'position:absolute;left:0;top:0;visibility:hidden;width:' + ficha.offsetWidth + 'px';
+    c.innerHTML = ficha.querySelector('.topo-ficha').outerHTML + '<div class="corpo">' + htmlVersao(i) + '</div>';
+    fixa.appendChild(c); var a = c.offsetHeight; fixa.removeChild(c); return a;
+  }
+  var CHAVES = [], assinatura = '';
+  function monta() {
+    var t = F.tamanho(), w = t.w, h = t.h, cel = celular();
+    var topoBarra = cel ? 66 : 86, lado = cel ? 10 : 40;
+    var k = [];
+    // 1. topo: o carro em destaque na área ao lado (pc) ou acima (celular) do título
+    var rTopo;
+    if (cel) {
+      rTopo = [lado, topoBarra, w - lado, document.querySelector('.topo .ano').getBoundingClientRect().top + scrollY - 12];
+    } else {
+      var dir = Math.max.apply(null, Array.prototype.map.call(document.querySelectorAll('.topo h1 .l>span'), direitaTexto)
+        .concat([direitaTexto(document.querySelector('.topo p'))])
+        .concat(Array.prototype.map.call(document.querySelectorAll('.topo .acoes .btn'), function (b) { return b.getBoundingClientRect().right; })));
+      rTopo = [dir + 48, topoBarra, w - lado, h - 78];
+    }
+    k.push({ nome: 'topo', y: 0, rect: rTopo, margem: .025 });
+    // 2. a volta: texto embaixo (celular) ou à direita (pc)
+    var yVolta = topoAbs(secVolta) + secVolta.offsetHeight / 2 - h / 2;
+    var h2 = secVolta.querySelector('h2');
+    k.push({ nome: 'volta', y: yVolta, rect: cel ? [lado, topoBarra, w - lado, topoAbs(h2) - yVolta - 24]
+      : [lado, topoBarra, h2.getBoundingClientRect().left - 56, h - 40] });
+    // 3. versões (seção presa): entre o título e a ficha (celular) ou à direita da ficha (pc)
     var base = topoAbs(secV), vao = secV.offsetHeight - innerHeight;
-    for (var i = 0; i < 4; i++) k.push(['v' + i, base + vao * (i + .5) / 4]);
-    k.push(['cores', topoAbs(secCores)]);
-    var y = scrollY, a = k[0], b = k[0];
-    for (var j = 0; j < k.length; j++) { if (k[j][1] <= y) { a = k[j]; b = k[j + 1] || k[j]; } }
-    var t = b[1] > a[1] ? Math.min(1, Math.max(0, (y - a[1]) / (b[1] - a[1]))) : 0;
+    var fimTitulo = introV.offsetTop + introV.offsetHeight;
+    for (var i = 0; i < 4; i++) {
+      var rv = cel ? [lado, fimTitulo + 8, w - lado, fixa.clientHeight - 16 - alturaFicha(i) - 10]
+        : [ficha.getBoundingClientRect().right + 40, topoBarra, w - lado, h - 32];
+      k.push({ nome: 'v' + i, y: base + vao * (i + .5) / 4, rect: rv, porta: i === 3 });
+    }
+    // 4. cores: acima do painel (celular) ou à esquerda (pc)
+    k.push({ nome: 'cores', y: topoAbs(secCores), rect: cel ? [lado, topoBarra, w - lado, secCores.querySelector('.vao').offsetHeight - 8]
+      : [lado, topoBarra, document.querySelector('.painel').getBoundingClientRect().left - 40, h - 40] });
+
+    // cada pose preenche a área livre dela com a mesma margem (o topo com menos margem: destaque)
+    k.forEach(function (c) {
+      var a = ANGULOS[c.nome], m = c.margem == null ? .06 : c.margem;
+      c.pose = F.enquadrar({ az: a.az, el: a.el, rect: c.rect, porta: c.porta, margem: m });
+      c.final = { az: a.az, el: a.el, dist: c.pose.dist, x0: c.rect[0], y0: c.rect[1], x1: c.rect[2], y1: c.rect[3], m: m, porta: c.porta ? 1 : 0 };
+    });
+    CHAVES = k;
+    window.__enquadra = k; // pra conferir no teste
+  }
+  function poseContinua() {
+    var sig = innerWidth + 'x' + F.tamanho().h + 'x' + document.documentElement.scrollHeight;
+    if (sig !== assinatura) { assinatura = sig; monta(); }
+    var y = scrollY, a = CHAVES[0], b = CHAVES[0];
+    for (var j = 0; j < CHAVES.length; j++) { if (CHAVES[j].y <= y) { a = CHAVES[j]; b = CHAVES[j + 1] || CHAVES[j]; } }
+    var t = b.y > a.y ? Math.min(1, Math.max(0, (y - a.y) / (b.y - a.y))) : 0;
     t = t * t * (3 - 2 * t);
-    var pa = pose(a[0]), pb = pose(b[0]), out = {};
-    for (var n in pa) out[n] = pa[n] + (pb[n] - pa[n]) * t;
+    var out = {};
+    for (var n in a.final) out[n] = a.final[n] + (b.final[n] - a.final[n]) * t;
     return out;
   }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { assinatura = ''; pede(); });
   var pedido = false;
   function pede() { if (!pedido) { pedido = true; requestAnimationFrame(function () { pedido = false; atualiza(); }); } }
   addEventListener('scroll', pede, { passive: true });

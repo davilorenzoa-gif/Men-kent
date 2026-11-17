@@ -9,7 +9,7 @@ import {
   WebGLRenderer, Scene, PerspectiveCamera, Group, Color, Vector3, Box3,
   PMREMGenerator, MeshPhysicalMaterial, PointLight, DirectionalLight,
   PlaneGeometry, Mesh, MeshBasicMaterial, CanvasTexture, AnimationMixer,
-  LoopOnce, ACESFilmicToneMapping, SRGBColorSpace, MathUtils, Matrix4, Vector4
+  LoopOnce, ACESFilmicToneMapping, SRGBColorSpace, MathUtils, Matrix4, Vector4, AnimationUtils
 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
@@ -41,8 +41,10 @@ function brilhoChao() {
 
 const F = {
   pronto: false,
-  _alvo: { az: 32, el: 8, dist: 7.4, sx: 0, sy: 0 },
-  _pose: { az: 32, el: 8, dist: 7.4, sx: 0, sy: 0 },
+  // pose = ângulo (az), altura (el), distância de descanso (dist) e a área livre da tela
+  // onde o carro tem que caber [x0, y0, x1, y1] (px do canvas), com margem m. porta: 0/1.
+  _alvo: { az: 32, el: 8, dist: 9, x0: 0, y0: 0, x1: 1, y1: 1, m: .05, porta: 0 },
+  _pose: { az: 32, el: 8, dist: 9, x0: 0, y0: 0, x1: 1, y1: 1, m: .05, porta: 0 },
   _gira: 0, _giraVel: 0, _arrasto: null,
   _revela: 0, _revelaAlvo: 0, _ouro: 0, _ouroAlvo: 0,
   _tinta: new Color('#317576'), _tintaAlvo: new Color('#317576'),
@@ -68,7 +70,8 @@ const F = {
     scene.environmentIntensity = 0;
     this.scene = scene;
 
-    const cam = new PerspectiveCamera(mobile ? 34 : 28, 1, 0.1, 100);
+    // lente longa (FOV vertical 24°/30°): pouca distorção de perspectiva, cara de foto de estúdio
+    const cam = new PerspectiveCamera(mobile ? 30 : 24, 1, 0.1, 200);
     this.cam = cam;
 
     // luz principal (fria, de cima) e a luz dourada que passa na abertura
@@ -201,6 +204,7 @@ roughnessFactor = mix(roughnessFactor, mix(.28, .88, pPneu), pRoda);`);
     this.brilho.scale.set(9, 9, 1);
 
     this._achaRodas();
+    this._medeCaixas(carro, g.animations);
     this.mixer = new AnimationMixer(carro);
     this.clipes = {};
     g.animations.forEach(a => { this.clipes[a.name] = a; });
@@ -231,6 +235,84 @@ roughnessFactor = mix(roughnessFactor, mix(.28, .88, pPneu), pRoda);`);
     });
     this.rodas = grupos;
   },
+
+  _medeCaixas(carro, clipes) {
+    // caixa do carro no espaço do giro (frente pra +z, chão em y = 0)
+    this.raiz.updateMatrixWorld(true);
+    const inv = this.giro.matrixWorld.clone().invert();
+    const caixa = new Box3().setFromObject(carro).applyMatrix4(inv);
+    this.caixa = caixa;
+    this.centroY = (caixa.min.y + caixa.max.y) / 2;
+    const cantos = b => {
+      const out = [];
+      for (let i = 0; i < 8; i++) out.push(new Vector3(i & 1 ? b.max.x : b.min.x, i & 2 ? b.max.y : b.min.y, i & 4 ? b.max.z : b.min.z));
+      return out;
+    };
+    this._pts = cantos(caixa);
+    // porta aberta (Série Ouro): mede a porta na posição final da animação
+    this._ptsPorta = this._pts.slice();
+    const inteiro = clipes.find(c => /Door_L$/.test(c.name));
+    if (!inteiro) return;
+    // a animação do modelo abre (0 a 0,63 s, com um quique até 79°) e FECHA de novo (1,63 a 2 s).
+    // Separa em dois pedaços: um que abre e fica aberta (67°) e outro que fecha.
+    this._abre = AnimationUtils.subclip(inteiro, 'abre', 0, 15, 24);
+    this._fecha = AnimationUtils.subclip(inteiro, 'fecha', 39, 48, 24);
+    const clipe = AnimationUtils.subclip(inteiro, 'pico', 0, 10, 24); // mede no ângulo máximo (79°)
+    const nos = [...new Set(clipe.tracks.map(t => t.name.split('.')[0]))].map(n => carro.getObjectByName(n)).filter(Boolean);
+    const guarda = nos.map(n => [n.position.clone(), n.quaternion.clone(), n.scale.clone()]);
+    const m = new AnimationMixer(carro), a = m.clipAction(clipe);
+    a.setLoop(LoopOnce, 1); a.clampWhenFinished = true; a.play(); m.setTime(clipe.duration);
+    this.raiz.updateMatrixWorld(true);
+    nos.forEach(n => { this._ptsPorta.push(...cantos(new Box3().setFromObject(n).applyMatrix4(inv))); });
+    a.stop(); m.uncacheRoot(carro);
+    nos.forEach((n, i) => { n.position.copy(guarda[i][0]); n.quaternion.copy(guarda[i][1]); n.scale.copy(guarda[i][2]); });
+    this.raiz.updateMatrixWorld(true);
+  },
+
+  /* Enquadramento. Mede a caixa do carro (8 cantos; +8 da porta aberta) projetada pela câmera
+     de verdade (FOV, altura el, distância) e acha a menor distância em que o carro cabe INTEIRO
+     no retângulo [x0, y0, x1, y1] (px do canvas, com margem m), e o deslocamento que põe o
+     centro do carro visto no centro do retângulo.
+     angs: giros do carro em radianos a testar (giro do arrasto − ângulo da câmera). */
+  _resolve(el, rect, m, porta, angs, distFixa) {
+    const w = this._w, h = this._h;
+    const [x0, y0, x1, y1] = rect;
+    const se = Math.sin(el), ce = Math.cos(el);
+    const f = (h / 2) / Math.tan(MathUtils.degToRad(this.cam.fov) / 2); // px por unidade de tangente
+    const pts = porta ? this._ptsPorta : this._pts, cy = this.centroY;
+    const P = this._tmpPts || (this._tmpPts = []);
+    P.length = 0;
+    for (const a of angs) { const c = Math.cos(a), s = Math.sin(a); for (const p of pts) P.push(p.x * c + p.z * s, p.y - cy, -p.x * s + p.z * c); }
+    const mede = d => {
+      // câmera em (0, d·sen el, d·cos el) olhando o centro; direita (1,0,0), cima (0,cos,−sen), frente (0,−sen,−cos)
+      let xa = 1e9, xb = -1e9, ya = 1e9, yb = -1e9;
+      for (let i = 0; i < P.length; i += 3) {
+        const vy = P[i + 1] - d * se, vz = P[i + 2] - d * ce;
+        const prof = -vy * se - vz * ce;
+        const tx = P[i] / prof, ty = (vy * ce - vz * se) / prof;
+        if (tx < xa) xa = tx; if (tx > xb) xb = tx; if (ty < ya) ya = ty; if (ty > yb) yb = ty;
+      }
+      return [xa, xb, ya, yb];
+    };
+    const largMax = Math.max(10, (x1 - x0) * (1 - 2 * m)), altMax = Math.max(10, (y1 - y0) * (1 - 2 * m));
+    let d = distFixa;
+    if (!d) {
+      let lo = 2, hi = 200;
+      for (let i = 0; i < 32; i++) {
+        const mid = (lo + hi) / 2, r = mede(mid);
+        if ((r[1] - r[0]) * f <= largMax && (r[3] - r[2]) * f <= altMax) hi = mid; else lo = mid;
+      }
+      d = hi;
+    }
+    const r = mede(d);
+    return { dist: d, ox: (x0 + x1) / 2 - (w / 2 + (r[0] + r[1]) / 2 * f), oy: (y0 + y1) / 2 - (h / 2 - (r[2] + r[3]) / 2 * f) };
+  },
+  // pra página: distância de descanso de uma pose (testa o ângulo e ±6°, pra transição segura)
+  enquadrar(opt) {
+    const a = -MathUtils.degToRad(opt.az), j = MathUtils.degToRad(6);
+    return this._resolve(MathUtils.degToRad(opt.el), opt.rect, opt.margem == null ? .05 : opt.margem, !!opt.porta, [a - j, a, a + j]);
+  },
+  tamanho() { this._medeTela(); return { w: this._w, h: this._h }; },
 
   _medeTela() {
     const c = this.renderer.domElement;
@@ -275,13 +357,12 @@ roughnessFactor = mix(roughnessFactor, mix(.28, .88, pPneu), pRoda);`);
     this._metalAlvo = metal ? 0.62 : 0.18;
   },
   porta(lado, abrir) {
-    // lado: 'L' ou 'R'. Toca a animação da porta pra frente ou pra trás.
-    const nome = Object.keys(this.clipes).find(n => new RegExp('Door_' + lado + '$').test(n));
-    if (!nome) return;
-    const a = this.mixer.clipAction(this.clipes[nome]);
-    a.setLoop(LoopOnce, 1); a.clampWhenFinished = true;
-    a.timeScale = abrir ? 1 : -1;
-    if (!a.isRunning()) { a.paused = false; if (abrir && a.time >= a.getClip().duration) return; a.play(); }
+    // abre e fica aberta; ou fecha. (só a porta esquerda tem os pedaços separados)
+    if (!this._abre) return;
+    const ab = this.mixer.clipAction(this._abre), fe = this.mixer.clipAction(this._fecha);
+    [ab, fe].forEach(x => { x.setLoop(LoopOnce, 1); x.clampWhenFinished = true; });
+    if (abrir) { fe.stop(); ab.reset().play(); }
+    else if (ab.isRunning() || ab.time > 0) { ab.stop(); fe.reset().play(); }
   },
   parar() { this._parado = true; },
   continuar() { if (this._parado) { this._parado = false; this._t = 0; this._loop(); } },
@@ -311,23 +392,25 @@ roughnessFactor = mix(roughnessFactor, mix(.28, .88, pPneu), pRoda);`);
     mexeu += Math.abs(this._gira - this.giro.rotation.y) * 10;
     this.giro.rotation.y = this._gira;
 
-    // distância: com "fit", o carro ocupa essa fração da largura da tela (celular estreito não corta o carro)
-    let dist = P.dist;
-    if (A.fit && this._w) {
-      const azv = MathUtils.degToRad(P.az) - this._gira;
-      const vao = Math.abs(Math.sin(azv)) * 4.25 + Math.abs(Math.cos(azv)) * 1.75;
-      const hfov = 2 * Math.atan(Math.tan(MathUtils.degToRad(this.cam.fov) / 2) * this.cam.aspect);
-      dist = Math.max(P.dist, (vao / A.fit) / 2 / Math.tan(hfov / 2) + 1.2);
+    // enquadramento a cada quadro, no ângulo que está na tela agora (arrasto ou passagem entre
+    // seções): nunca chega mais perto que a distância de descanso e afasta só o necessário pra não cortar
+    let dist = P.dist, ox = 0, oy = 0;
+    if (this._pts && this._w) {
+      const el = MathUtils.degToRad(P.el), rect = [P.x0, P.y0, P.x1, P.y1], ang = [this._gira - MathUtils.degToRad(P.az)];
+      let r = this._resolve(el, rect, P.m, P.porta > .5, ang);
+      if (r.dist < P.dist) r = this._resolve(el, rect, P.m, P.porta > .5, ang, P.dist);
+      dist = r.dist; ox = r.ox; oy = r.oy;
+      mexeu += Math.abs(dist - (this._distAnt || 0)); this._distAnt = dist;
     }
 
     // câmera em órbita
     const az = MathUtils.degToRad(P.az), el = MathUtils.degToRad(P.el);
-    const alvoY = this.altura ? this.altura * 0.42 : 0.6;
+    const alvoY = this.centroY || 0.7;
     this.cam.position.set(Math.sin(az) * Math.cos(el) * dist, alvoY + Math.sin(el) * dist, Math.cos(az) * Math.cos(el) * dist);
     this.cam.lookAt(0, alvoY, 0);
     // desloca o carro na tela (texto de um lado, carro do outro)
     const w = this._w, h = this._h;
-    this.cam.setViewOffset(w, h, -P.sx * w, -P.sy * h, w, h);
+    this.cam.setViewOffset(w, h, -ox, -oy, w, h);
 
     // revelação: ambiente acende e a luz dourada atravessa
     // revelação por tempo (2,6 s), junto com o risco dourado da página
@@ -360,7 +443,11 @@ roughnessFactor = mix(roughnessFactor, mix(.28, .88, pPneu), pRoda);`);
     const tintaMexe = Math.abs(this._tinta.r - this._tintaAlvo.r) + Math.abs(this._tinta.g - this._tintaAlvo.g) + Math.abs(this._tinta.b - this._tintaAlvo.b);
     const sujo = this._forca || this._arrasto || anima || mexeu > 1e-4 || tintaMexe > 1e-3 ||
       (this._revela > 0 && this._revela < 1) || Math.abs(this._ouro - this._ouroAlvo) > 1e-3 || Math.abs(this._metal - this._metalAlvo) > 1e-3 || this._w !== this._wDes || this._h !== this._hDes;
-    if (!sujo) return;
+    // depois que tudo para, ainda desenha uns quadros (alguns navegadores mostram o quadro anterior
+    // se o último desenho cair no fim da animação)
+    if (sujo) this._restam = 20;
+    else if (this._restam > 0) this._restam--;
+    else return;
     this._forca = false; this._wDes = this._w; this._hDes = this._h;
     this.giro.updateMatrixWorld(); this._uni.uGiroInv.value.copy(this.giro.matrixWorld).invert();
     this.renderer.render(this.scene, this.cam);

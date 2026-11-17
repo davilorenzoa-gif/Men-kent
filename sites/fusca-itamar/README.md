@@ -18,6 +18,12 @@ Rodrigo, amigo do Alexandre (Katraka). Marca **OF Fusca Itamar** (PDF "Os Fafas"
 3. **As 16 cores de fábrica:** tabela real dele (código VW + linhas 93/94, 94/95, 95/96, Série Ouro). Tocar pinta o Fusca na hora (shader troca só o azul-petróleo original da textura pela tinta, mantendo sombra e reflexo; metálica fica mais metal). Filtro por linha. Embaixo, "O selo do seu Fusca": cor + versão + selo viram a mensagem do WhatsApp (passo 1 de 3, obrigado).
 - Apoio: os 4 selos viram como moeda (verso diz pra que serve), aplicações do PDF (adesivo resinado 6 cm, camiseta DTG 15 cm, chaveiro a laser, cobre-placa), FAQ com dados do material dele.
 
+## Enquadramento do carro (17/11/2026)
+- `index.html`, função `monta()`: pra cada pose (topo, a volta, 4 versões, cores) mede no layout a área livre (retângulo onde não tem texto) e o ponto da rolagem. Ângulo e altura da câmera ficam em `ANGULOS`.
+- `src/fusca3d.js`, `_resolve()`: projeta a caixa do carro (e a da porta aberta no Série Ouro) pela câmera e acha a distância em que ele cabe inteiro, centralizado no retângulo. Roda a cada quadro no ângulo atual: arrastar 360° ou passar de uma seção pra outra nunca corta.
+- FOV vertical 24° (PC) e 30° (celular), lente longa de foto de carro. Canvas com `100lvh` (a barra do navegador do celular não mexe no enquadramento).
+- Medido (Playwright, fonte real): celular 76 a 84% da largura, PC 32 a 48%, tudo inteiro em 360×640, 360×740, 390×844, 412×915, 768×1024, 1024×768, 1280×800, 1440×900 e 1920×1080.
+
 ## Antes de mandar pro Rodrigo / subir
 - [ ] **WhatsApp e Instagram dele**: preencher `CONFIG` no começo do script do `index.html`. Sem número, os botões abrem o WhatsApp pra escolher o contato (funciona, mas não é o certo).
 - [ ] **O que ele vende/faz**: os selos são adesivo pra Fusca? Ele certifica carro (Original/Custom)? Vende camiseta/chaveiro/cobre-placa? Tem preço? O texto do verso dos selos ("pro Fusca do jeito que saiu da fábrica", "que ganhou o jeito do dono") foi deduzido do nome: confirmar.
