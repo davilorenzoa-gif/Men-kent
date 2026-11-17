@@ -147,3 +147,13 @@
 - **Rolar no celular girava o carro** (Davi, 2º print): o dedo sempre anda um pouco pro lado ao rolar. Só vira "girar" se o gesto passar de 12 px e for 1,6x mais horizontal que vertical; senão é rolagem e o carro não mexe. E a conta da distância tem que usar o ângulo certo (girar o carro +g = câmera em az − g).
 - **Câmera que pula de pose na troca de seção parece "scroll estranho".** Cada pose é um ponto da página e a câmera interpola entre dois pontos pela rolagem (smoothstep), andando junto com o dedo.
 - **Modelo baixado com roda e calota brancas parece "sem roda".** Achar as rodas pelos pontos que tocam o chão (4 grupos por lado e eixo) e, no shader, pintar dentro do cilindro de cada roda: pneu preto por fora (r > 0,66 R), aço prata e calota no meio.
+
+## Enquadramento de modelo 3D (17/11/2026, OF Fusca Itamar, 3º pedido do Davi)
+- **Distância fixa por seção + deslocamento em % da tela = carro cortado** em algum tamanho de tela. O certo: medir a caixa do modelo (8 cantos), projetar pela câmera de verdade (FOV, altura, distância) e achar por busca binária a menor distância em que ele cabe no **retângulo livre da seção** (medido no DOM: ao lado do texto no PC, entre título e ficha no celular). O deslocamento (`setViewOffset`) põe o centro do carro visto no centro desse retângulo.
+- **Girar 360° sem cortar:** o motor refaz o enquadramento a cada quadro no ângulo que está na tela e nunca chega mais perto que a distância de descanso (só afasta o necessário). Vale pro arrasto e pra passagem entre seções.
+- **Encaixar pelo pior ângulo dos 360° deixa o carro pequeno no celular** (a diagonal do carro é a mais larga). Melhor: descanso pelo ângulo da seção (±6°) + correção ao vivo.
+- **Animação de porta do modelo abria e fechava sozinha** (os quadros 0 e 2 s são iguais). Separar com `AnimationUtils.subclip`: abre (0 a 15 a 24 fps) e fecha (39 a 48); medir a caixa com a porta no pico (79°).
+- **Medir texto pela caixa do bloco engana:** `.acoes` é flex com a largura do pai (640 px). Usar `Range.getBoundingClientRect()` no texto e a borda do último botão.
+- **Teste de layout sem a fonte real mente:** o Google Fonts é bloqueado no container e a reserva (Arial Black) é bem mais larga. Servir Archivo/Poppins do npm (`@fontsource-variable/archivo`, `@fontsource/poppins`) com `page.route`.
+- **No Chromium do container (WebGL por software) a tela mostra o quadro com atraso:** esperar ~3 s antes do print do 3D, senão o print parece errado sem estar.
+- Ficha com lista longa no celular (Série Ouro, 19 itens) come o espaço do carro em tela pequena: no celular mostrar só o que muda em relação à versão anterior.
