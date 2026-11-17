@@ -137,3 +137,9 @@ Ordem sugerida: 5, 1, 8, depois intercalar Google (2, 3, 6) com site (4, 7, 9).
 - **Som (pedido do Davi):** vento em toda aproximação e todo afastamento, pancada grave nos cortes, metal e faísca. Entregar também o `sfx.wav` (só efeitos).
 - **Lições:** (1) clipe mandado pelo WhatsApp chega em 478×850; pedir o arquivo original do Flow. (2) IA embaralha texto de letreiro: conferir quadro a quadro e cortar o trecho. (3) Prévia do iStock tem marca d'água, não usar. (4) Telefone e dados da cartela saem do `04`, não do prompt.
 
+
+## Reels "Comercial sem recepção" (17/11/2026, roteiro pronto, não produzido)
+- Ideia do Davi: comercial de cliente (Andrade, 0 a 5,7 s) vira **gancho** de vídeo da GuDev. Depois do corte: "do que adianta um bom comercial se a recepção é ruim?". Metáfora: **comercial é o convite; Google, avaliações e site são a recepção.**
+- 3 aberturas pra testar (pergunta seca com música cortando, "a gente fez e a gente avisa", POV do cliente com o comercial dentro do celular); miolo e final iguais. Roteiro em `gudev/videos/comercial-sem-recepcao/ROTEIRO.md`.
+- Cuidados: o perfil ruim é sempre de empresa fictícia (nunca a Andrade), dizer "avaliações respondidas" e nunca prometer mais avaliações, e pedir o ok do padrinho antes de postar.
+- Comerciais em vídeo pra clientes ficam como possível serviço futuro; hoje servem de gancho pro que a GuDev vende (Google em Dia e site).
