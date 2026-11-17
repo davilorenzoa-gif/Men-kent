@@ -56,7 +56,7 @@ const F = {
     try {
       renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
     } catch (e) { return Promise.reject(e); }
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.6 : 1.75));
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
     renderer.toneMapping = ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.05;
     renderer.outputColorSpace = SRGBColorSpace;
@@ -185,7 +185,7 @@ roughnessFactor = mix(roughnessFactor, .32, pMask);`);
     const c = this.renderer.domElement;
     const w = c.clientWidth || innerWidth, h = c.clientHeight || innerHeight;
     if (w === this._w && h === this._h) return;
-    this._w = w; this._h = h;
+    this._w = w; this._h = h; this._forca = true;
     this.renderer.setSize(w, h, false);
     this.cam.aspect = w / h;
     this.cam.updateProjectionMatrix();
@@ -204,7 +204,7 @@ roughnessFactor = mix(roughnessFactor, .32, pMask);`);
       self._gira += dx * 0.0085;
       self._giraVel = dx * 0.0085;
     });
-    const solta = () => { self._arrasto = null; };
+    const solta = () => { if (self._arrasto) self._soltou = performance.now(); self._arrasto = null; };
     addEventListener('pointerup', solta); addEventListener('pointercancel', solta);
   },
 
@@ -226,7 +226,7 @@ roughnessFactor = mix(roughnessFactor, .32, pMask);`);
     if (!a.isRunning()) { a.paused = false; if (abrir && a.time >= a.getClip().duration) return; a.play(); }
   },
   parar() { this._parado = true; },
-  continuar() { if (this._parado) { this._parado = false; this._loop(); } },
+  continuar() { if (this._parado) { this._parado = false; this._t = 0; this._loop(); } },
 
   _loop() {
     if (this._parado) return;
@@ -237,20 +237,35 @@ roughnessFactor = mix(roughnessFactor, .32, pMask);`);
 
     // pose suave
     const P = this._pose, A = this._alvo, k = 1 - Math.pow(0.0009, dt);
-    for (const n in A) P[n] = lerp(P[n], A[n], k);
+    let mexeu = 0;
+    for (const n in A) { const v = lerp(P[n], A[n], k); mexeu += Math.abs(v - P[n]); P[n] = v; }
 
-    // giro do arrasto com inércia; parado, gira devagar sozinho
+    // giro do arrasto com inércia. Não gira sozinho: 1,2 s depois de soltar,
+    // volta devagar pra pose da seção (senão o carro fica de lado e estoura a tela)
     if (!this._arrasto) {
-      this._giraVel *= Math.pow(0.04, dt);
+      this._giraVel *= Math.pow(0.02, dt);
       this._gira += this._giraVel;
-      if (this._idle) this._gira += dt * 0.06;
+      if (agora - (this._soltou || 0) > 1200) {
+        const volta = Math.round(this._gira / (Math.PI * 2)) * Math.PI * 2;
+        this._gira = lerp(this._gira, volta, 1 - Math.pow(0.12, dt));
+      }
     }
+    mexeu += Math.abs(this._gira - this.giro.rotation.y) * 10;
     this.giro.rotation.y = this._gira;
+
+    // distância: com "fit", o carro ocupa essa fração da largura da tela (celular estreito não corta o carro)
+    let dist = P.dist;
+    if (A.fit && this._w) {
+      const azv = MathUtils.degToRad(P.az) + this._gira;
+      const vao = Math.abs(Math.sin(azv)) * 4.25 + Math.abs(Math.cos(azv)) * 1.75;
+      const hfov = 2 * Math.atan(Math.tan(MathUtils.degToRad(this.cam.fov) / 2) * this.cam.aspect);
+      dist = Math.max(P.dist, (vao / A.fit) / 2 / Math.tan(hfov / 2) + 1.2);
+    }
 
     // câmera em órbita
     const az = MathUtils.degToRad(P.az), el = MathUtils.degToRad(P.el);
     const alvoY = this.altura ? this.altura * 0.42 : 0.6;
-    this.cam.position.set(Math.sin(az) * Math.cos(el) * P.dist, alvoY + Math.sin(el) * P.dist, Math.cos(az) * Math.cos(el) * P.dist);
+    this.cam.position.set(Math.sin(az) * Math.cos(el) * dist, alvoY + Math.sin(el) * dist, Math.cos(az) * Math.cos(el) * dist);
     this.cam.lookAt(0, alvoY, 0);
     // desloca o carro na tela (texto de um lado, carro do outro)
     const w = this._w, h = this._h;
@@ -280,7 +295,15 @@ roughnessFactor = mix(roughnessFactor, .32, pMask);`);
     this._metal = lerp(this._metal, this._metalAlvo, 1 - Math.pow(0.01, dt));
     this._uni.uMetal.value = this._metal;
 
-    if (this.mixer) this.mixer.update(dt);
+    let anima = false;
+    if (this.mixer) { this.mixer.update(dt); anima = this.mixer._actions.some(a => a.isRunning()); }
+
+    // só desenha quando algo mudou: parado, a placa de vídeo descansa e a rolagem fica lisa
+    const tintaMexe = Math.abs(this._tinta.r - this._tintaAlvo.r) + Math.abs(this._tinta.g - this._tintaAlvo.g) + Math.abs(this._tinta.b - this._tintaAlvo.b);
+    const sujo = this._forca || this._arrasto || anima || mexeu > 1e-4 || tintaMexe > 1e-3 ||
+      (this._revela > 0 && this._revela < 1) || Math.abs(this._ouro - this._ouroAlvo) > 1e-3 || Math.abs(this._metal - this._metalAlvo) > 1e-3 || this._w !== this._wDes || this._h !== this._hDes;
+    if (!sujo) return;
+    this._forca = false; this._wDes = this._w; this._hDes = this._h;
     this.renderer.render(this.scene, this.cam);
   }
 };
