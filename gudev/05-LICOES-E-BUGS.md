@@ -144,3 +144,6 @@
 - **Rolagem pesada com WebGL atrás:** `backdrop-filter` em card por cima de canvas que redesenha repinta o desfoque a cada quadro. Card sólido. E desenhar o 3D só quando algo muda (pose, arrasto, tinta, animação): parado, a página rola como se não tivesse 3D.
 - **Lista com rolagem própria dentro de seção `sticky` prende o dedo** no celular. Lista inteira em 2 colunas, sem `overflow:auto`.
 - Logo fixo no topo no celular fica por cima dos botões ao rolar: fundo em degradê no topo depois de 40 px de rolagem.
+- **Rolar no celular girava o carro** (Davi, 2º print): o dedo sempre anda um pouco pro lado ao rolar. Só vira "girar" se o gesto passar de 12 px e for 1,6x mais horizontal que vertical; senão é rolagem e o carro não mexe. E a conta da distância tem que usar o ângulo certo (girar o carro +g = câmera em az − g).
+- **Câmera que pula de pose na troca de seção parece "scroll estranho".** Cada pose é um ponto da página e a câmera interpola entre dois pontos pela rolagem (smoothstep), andando junto com o dedo.
+- **Modelo baixado com roda e calota brancas parece "sem roda".** Achar as rodas pelos pontos que tocam o chão (4 grupos por lado e eixo) e, no shader, pintar dentro do cilindro de cada roda: pneu preto por fora (r > 0,66 R), aço prata e calota no meio.

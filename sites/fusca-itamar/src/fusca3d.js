@@ -9,7 +9,7 @@ import {
   WebGLRenderer, Scene, PerspectiveCamera, Group, Color, Vector3, Box3,
   PMREMGenerator, MeshPhysicalMaterial, PointLight, DirectionalLight,
   PlaneGeometry, Mesh, MeshBasicMaterial, CanvasTexture, AnimationMixer,
-  LoopOnce, ACESFilmicToneMapping, SRGBColorSpace, MathUtils
+  LoopOnce, ACESFilmicToneMapping, SRGBColorSpace, MathUtils, Matrix4, Vector4
 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
@@ -84,7 +84,8 @@ const F = {
     const brilho = new Mesh(new PlaneGeometry(1, 1), new MeshBasicMaterial({ map: brilhoChao(), transparent: true, depthWrite: false, opacity: 0 }));
     brilho.rotation.x = -Math.PI / 2; brilho.position.y = 0.004; this.raiz.add(brilho); this.brilho = brilho;
 
-    this._uni = { uPaint: { value: this._tinta }, uMetal: { value: this._metal } };
+    this._uni = { uPaint: { value: this._tinta }, uMetal: { value: this._metal }, uGiroInv: { value: new Matrix4() },
+      uRoda: { value: [new Vector4(), new Vector4(), new Vector4(), new Vector4()] } };
 
     const self = this;
     return new Promise((ok, falha) => {
@@ -123,9 +124,14 @@ const F = {
         // troca a cor original (azul-petróleo) pela tinta escolhida, mantendo o sombreado da textura
         m.onBeforeCompile = sh => {
           sh.uniforms.uPaint = uni.uPaint; sh.uniforms.uMetal = uni.uMetal;
+          sh.uniforms.uGiroInv = uni.uGiroInv; sh.uniforms.uRoda = uni.uRoda;
+          // posição no espaço do carro (frente pra +z, chão em y = 0), pra achar as rodas
+          sh.vertexShader = sh.vertexShader
+            .replace('#include <common>', '#include <common>\nuniform mat4 uGiroInv; varying vec3 vCarro;')
+            .replace('#include <begin_vertex>', '#include <begin_vertex>\nvCarro = (uGiroInv * modelMatrix * vec4(transformed, 1.)).xyz;');
           sh.fragmentShader = sh.fragmentShader
             .replace('#include <common>', `#include <common>
-uniform vec3 uPaint; uniform float uMetal;
+uniform vec3 uPaint; uniform float uMetal; uniform vec4 uRoda[4]; varying vec3 vCarro;
 vec3 _hsv(vec3 c){vec4 K=vec4(0.,-1./3.,2./3.,-1.);vec4 p=mix(vec4(c.bg,K.wz),vec4(c.gb,K.xy),step(c.b,c.g));vec4 q=mix(vec4(p.xyw,c.r),vec4(c.r,p.yzx),step(p.x,c.r));float d=q.x-min(q.w,q.y);float e=1.0e-10;return vec3(abs(q.z+(q.w-q.y)/(6.*d+e)),d/(q.x+e),q.x);}`)
             .replace('#include <map_fragment>', `#include <map_fragment>
 float pMask = 0.;
@@ -141,11 +147,29 @@ float pMask = 0.;
   pMask = teal;
   float k = clamp(lum / ref, .55, 1.35);
   diffuseColor.rgb = mix(lin, uPaint * k, pMask);
-}`)
+}
+// rodas: o modelo vem com roda e calota brancas (parecia "sem roda").
+// Dentro do cilindro de cada roda: pneu preto por fora, roda de aço prata e calota no meio.
+float pRoda = 0., pPneu = 0.;
+for (int i = 0; i < 4; i++) {
+  vec4 R = uRoda[i];
+  float d = length(vec2(vCarro.z - R.z, vCarro.y - R.y));
+  if (abs(vCarro.x - R.x) < R.w && d < R.y * 1.05) {
+    pRoda = 1.;
+    float r = d / R.y;
+    pPneu = smoothstep(.64, .68, r);
+    float calota = 1. - smoothstep(.3, .33, r);
+    vec3 aco = mix(vec3(.42), vec3(.78), calota);
+    diffuseColor.rgb = mix(aco, vec3(.018), pPneu);
+  }
+}
+pMask *= 1. - pRoda;`)
             .replace('#include <metalnessmap_fragment>', `#include <metalnessmap_fragment>
-metalnessFactor = mix(metalnessFactor, uMetal, pMask);`)
+metalnessFactor = mix(metalnessFactor, uMetal, pMask);
+metalnessFactor = mix(metalnessFactor, mix(.85, 0., pPneu), pRoda);`)
             .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
-roughnessFactor = mix(roughnessFactor, .32, pMask);`);
+roughnessFactor = mix(roughnessFactor, .32, pMask);
+roughnessFactor = mix(roughnessFactor, mix(.28, .88, pPneu), pRoda);`);
         };
         cache.set(m0, m);
       }
@@ -176,9 +200,36 @@ roughnessFactor = mix(roughnessFactor, .32, pMask);`);
     this.chao.scale.set(2.6, 5.2, 1);
     this.brilho.scale.set(9, 9, 1);
 
+    this._achaRodas();
     this.mixer = new AnimationMixer(carro);
     this.clipes = {};
     g.animations.forEach(a => { this.clipes[a.name] = a; });
+  },
+
+  _achaRodas() {
+    // pontos que tocam o chão = pneus. Agrupa por lado (x) e eixo (z): 4 rodas.
+    this.raiz.updateMatrixWorld(true);
+    const inv = this.giro.matrixWorld.clone().invert();
+    const v = new Vector3(), grupos = {};
+    this.giro.traverse(o => {
+      if (!o.isMesh || !o.geometry.attributes.position || o === this.chao) return;
+      const pos = o.geometry.attributes.position, M = new Matrix4().multiplyMatrices(inv, o.matrixWorld);
+      for (let i = 0; i < pos.count; i++) {
+        v.fromBufferAttribute(pos, i).applyMatrix4(M);
+        if (v.y > 0.03) continue;
+        const k = (v.x > 0 ? 'D' : 'E') + (v.z > 0 ? 'F' : 'T');
+        const g = grupos[k] || (grupos[k] = { n: 0, z: 0, xmin: 1e9, xmax: -1e9 });
+        g.n++; g.z += v.z; g.xmin = Math.min(g.xmin, v.x); g.xmax = Math.max(g.xmax, v.x);
+      }
+    });
+    const R = 0.315; // raio do pneu do Fusca (5.60-15) na escala de 4,1 m
+    ['DF', 'EF', 'DT', 'ET'].forEach((k, i) => {
+      const g = grupos[k];
+      if (!g) { this._uni.uRoda.value[i].set(0, -9, 0, 0); return; }
+      const cx = (g.xmin + g.xmax) / 2, meia = Math.max(0.09, (g.xmax - g.xmin) / 2 + 0.03);
+      this._uni.uRoda.value[i].set(cx, R, g.z / g.n, meia);
+    });
+    this.rodas = grupos;
   },
 
   _medeTela() {
@@ -194,17 +245,24 @@ roughnessFactor = mix(roughnessFactor, .32, pMask);`);
   _ligaArrasto(el) {
     const self = this;
     el.addEventListener('pointerdown', e => {
-      self._arrasto = { x: e.clientX, t: performance.now() };
-      self._idle = false;
+      self._toque = { x0: e.clientX, y0: e.clientY, x: e.clientX, decidido: e.pointerType === 'mouse' };
     });
     addEventListener('pointermove', e => {
-      if (!self._arrasto) return;
+      const t = self._toque;
+      if (!t) return;
+      if (!t.decidido) {
+        // no dedo, só vira "girar" se o gesto for claramente pro lado; senão é rolagem
+        const ax = Math.abs(e.clientX - t.x0), ay = Math.abs(e.clientY - t.y0);
+        if (ax < 12 && ay < 12) return;
+        if (ax > ay * 1.6) t.decidido = true; else { self._toque = null; return; }
+      }
+      if (!self._arrasto) self._arrasto = { x: t.x };
       const dx = e.clientX - self._arrasto.x;
       self._arrasto.x = e.clientX;
       self._gira += dx * 0.0085;
       self._giraVel = dx * 0.0085;
     });
-    const solta = () => { if (self._arrasto) self._soltou = performance.now(); self._arrasto = null; };
+    const solta = () => { if (self._arrasto) self._soltou = performance.now(); self._arrasto = null; self._toque = null; };
     addEventListener('pointerup', solta); addEventListener('pointercancel', solta);
   },
 
@@ -256,7 +314,7 @@ roughnessFactor = mix(roughnessFactor, .32, pMask);`);
     // distância: com "fit", o carro ocupa essa fração da largura da tela (celular estreito não corta o carro)
     let dist = P.dist;
     if (A.fit && this._w) {
-      const azv = MathUtils.degToRad(P.az) + this._gira;
+      const azv = MathUtils.degToRad(P.az) - this._gira;
       const vao = Math.abs(Math.sin(azv)) * 4.25 + Math.abs(Math.cos(azv)) * 1.75;
       const hfov = 2 * Math.atan(Math.tan(MathUtils.degToRad(this.cam.fov) / 2) * this.cam.aspect);
       dist = Math.max(P.dist, (vao / A.fit) / 2 / Math.tan(hfov / 2) + 1.2);
@@ -304,6 +362,7 @@ roughnessFactor = mix(roughnessFactor, .32, pMask);`);
       (this._revela > 0 && this._revela < 1) || Math.abs(this._ouro - this._ouroAlvo) > 1e-3 || Math.abs(this._metal - this._metalAlvo) > 1e-3 || this._w !== this._wDes || this._h !== this._hDes;
     if (!sujo) return;
     this._forca = false; this._wDes = this._w; this._hDes = this._h;
+    this.giro.updateMatrixWorld(); this._uni.uGiroInv.value.copy(this.giro.matrixWorld).invert();
     this.renderer.render(this.scene, this.cam);
   }
 };

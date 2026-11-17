@@ -782,8 +782,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (F) { if (noPalco) F.continuar(); else setTimeout(function () { if (!palcoLigado) F.parar(); }, 800); }
     }
     if (!F) return;
-    var chave = nome === 'versoes' ? 'v' + Math.max(0, vAtual) : nome;
-    if (POSES.pc[chave]) F.pose(pose(chave));
+    if (noPalco) F.pose(poseContinua());
     F.ouro((nome === 'versoes' && vAtual === 3) || (nome === 'cores' && ouroCores) ? 1 : 0);
     var abrir = nome === 'versoes' && vAtual === 3;
     if (abrir !== portaAberta) { portaAberta = abrir; F.porta('L', abrir); }
@@ -791,6 +790,23 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   var rolou = false;
   addEventListener('scroll', function () { var r = scrollY > 40; if (r !== rolou) { rolou = r; raiz.classList.toggle('rolou', r); } }, { passive: true });
+  // câmera presa na rolagem: cada pose é um ponto da página e, entre dois pontos,
+  // a câmera anda junto com o dedo (sem pulo na troca de seção)
+  var secVolta = document.querySelector('.volta'), secCores = document.getElementById('cores');
+  function topoAbs(el) { return el.getBoundingClientRect().top + scrollY; }
+  function poseContinua() {
+    var k = [['topo', 0], ['volta', topoAbs(secVolta) + secVolta.offsetHeight / 2 - innerHeight / 2]];
+    var base = topoAbs(secV), vao = secV.offsetHeight - innerHeight;
+    for (var i = 0; i < 4; i++) k.push(['v' + i, base + vao * (i + .5) / 4]);
+    k.push(['cores', topoAbs(secCores)]);
+    var y = scrollY, a = k[0], b = k[0];
+    for (var j = 0; j < k.length; j++) { if (k[j][1] <= y) { a = k[j]; b = k[j + 1] || k[j]; } }
+    var t = b[1] > a[1] ? Math.min(1, Math.max(0, (y - a[1]) / (b[1] - a[1]))) : 0;
+    t = t * t * (3 - 2 * t);
+    var pa = pose(a[0]), pb = pose(b[0]), out = {};
+    for (var n in pa) out[n] = pa[n] + (pb[n] - pa[n]) * t;
+    return out;
+  }
   var pedido = false;
   function pede() { if (!pedido) { pedido = true; requestAnimationFrame(function () { pedido = false; atualiza(); }); } }
   addEventListener('scroll', pede, { passive: true });
