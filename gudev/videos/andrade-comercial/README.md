@@ -1,7 +1,7 @@
 # Comercial da Andrade Ferro e Aço (16–17/11/2026)
 
 Reels vertical de 24,6 s (1080×1920, 30 fps) pro padrinho do Davi: do espaço até a fachada, tour pelo galpão com rampa de velocidade, estátua de aço e cartela com o contato.
-Arquivo: `andrade-comercial.mp4`. Versão só com os efeitos sonoros (sem a música), pra remixar no CapCut: `projeto/sfx.wav` (gerado pelo `audio.py`).
+Arquivo: `andrade-comercial.mp4`. Faixa só com os efeitos sonoros (sem a música), pra remixar no CapCut: `andrade-efeitos.m4a`.
 
 Pedido do Davi: prompt "comercial cinematográfico" (zoom da Terra, drone FPV, speed ramp na batida, estátua, assinatura), **a música de referência dele** e **som de vento em toda aproximação e afastamento**.
 
@@ -59,7 +59,7 @@ python3 audio.py
 # 3. quadros (2952 = 24,6 s × 120) em 4 processos, ~20 min
 for k in 0 1 2 3; do node render.js seq $((k*738)) $((k*738+738)) 120 & done; wait
 # 4. fechar
-ffmpeg -framerate 120 -i fr/%05d.jpg -i audio.wav -vf "tmix=frames=4:weights='1 1 1 1',fps=30,noise=alls=7:allf=t,format=yuv420p" -c:v libx264 -preset slow -crf 20 -maxrate 9M -bufsize 18M -c:a aac -b:a 192k -movflags +faststart -shortest ../andrade-comercial.mp4
+ffmpeg -framerate 120 -i fr/%05d.jpg -i audio.wav -vf "tmix=frames=4:weights='1 1 1 1',fps=30,noise=alls=6:allf=t,format=yuv420p" -c:v libx264 -preset slow -crf 21 -maxrate 6M -bufsize 12M -c:a aac -b:a 192k -movflags +faststart -shortest ../andrade-comercial.mp4
 ```
 Conferir quadros soltos antes: `node render.js stills 4.3,9.2,13.85,22.9` (salva em `stills/`).
 Camadas da estátua: `python3 prep_estatua.py` (precisa de `cut/mask_0.png`, que sai do `Vídeos Davi/ferramentas/recortar.py`; a máscara já está em `orig/estatua_mascara.png`). O modelo de recorte baixa do GitHub do `rembg` (o Hugging Face é bloqueado aqui).
@@ -70,5 +70,5 @@ Trocar telefone, @ ou endereço: objeto `DADOS` no começo do `film.html`.
 2. **Ouvir o som.** O Claude não ouve: a mixagem foi conferida só por tempo e volume.
 3. **Aprovação do padrinho.** Os clipes do galpão são de IA: o letreiro da fachada ("ANDRADE comércio de ferro e aço") não é igual ao real, e os funcionários não são pessoas de verdade. Ele precisa topar isso.
 4. **Qualidade.** Se o Davi baixar os clipes direto do Google Flow (em vez do WhatsApp) e mandar como arquivo, o filme fica bem mais nítido: é só trocar em `orig/` e refazer.
-5. **Música.** É uma faixa comercial com vocal. No Instagram, perfil de empresa às vezes não pode usar música comercial: se bloquear, postar com `sfx.wav` e escolher a faixa dentro do app (os cortes continuam na batida se for a mesma música).
+5. **Música.** É uma faixa comercial com vocal. No Instagram, perfil de empresa às vezes não pode usar música comercial: se bloquear, pôr no vídeo o `andrade-efeitos.m4a` no lugar do som e escolher a faixa dentro do app (os cortes continuam na batida se for a mesma música).
 6. **Logo oficial.** A cartela usa o nome em dourado, no estilo do pedestal. Se a Andrade tiver o logo em arquivo, trocar.

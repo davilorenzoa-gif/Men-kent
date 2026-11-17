@@ -124,7 +124,7 @@ poe(faisca(2.9, 45), bar(11) + .1, .3, .5); poe(zumbido(2.6, 49), 22.0, .6)
 
 mix = mus * 0.92 + sfx * 0.78
 mix = np.tanh(mix * 1.15) / np.tanh(1.15)
-mix *= 0.93 / np.abs(mix).max()
+mix *= 0.70 / np.abs(mix).max()
 mix *= np.clip((DUR - t) / 0.35, 0, 1)[:, None]
 with wave.open("audio.wav", "wb") as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((mix * 32767).astype(np.int16).tobytes())
