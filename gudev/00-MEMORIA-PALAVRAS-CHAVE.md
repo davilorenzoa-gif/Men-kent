@@ -12,6 +12,7 @@
 |---|---|---|
 | **filme de marca, campanha, Digital Presence, vídeo por código** | Reels de 32 s feito com HTML + Playwright + ffmpeg + trilha em numpy (15/11) | `gudev/videos/presenca-digital/`, `08` |
 | **açaí, Radar** | Radar de açaí e sorveterias da Zona Leste (até 100 km), 21/10 | artifact Va7xfagsqwHofaKFJ8WSiQ, `02` |
+| **comercial Andrade, Terra, hiperzoom, speed ramp, estátua de aço** | Reels de 24,6 s da Andrade (17/11): zoom do espaço até a fachada, tour com rampa de velocidade na batida, estátua em camadas, vento nos zooms | `gudev/videos/andrade-comercial/`, `08` |
 | **Andrade, padrinho** | Pitch presencial com o padrinho (falou-se R$ 1.200 em 22/10; hoje nada fechado) | `sites/andrade-ferro-e-aco`, `01`, `04` |
 | **APEX** | Conceito automotivo de luxo (React + TS + Tailwind + Motion), fotos Wikimedia com crédito | `sites/apex` |
 | **arquivo único, prévia, 2 MB** | HTML com tudo embutido pra abrir no celular; prévia do app não abre 7 MB nem arquivo externo | `gudev/ferramentas/arquivo_unico.py`, `previa_embutida.py`, `05` |
@@ -74,6 +75,7 @@
 
 | Data | Sessão | Resultado / pendência |
 |---|---|---|
+| 16–17/11 | Comercial da Andrade Ferro e Aço | `gudev/videos/andrade-comercial/andrade-comercial.mp4` (música de referência do Davi + efeitos). Falta: confirmar telefone (prompt dizia 3261-4402, site diz 2581-4404), ouvir o som, ok do padrinho |
 | 15/11 | Campanha The Digital Presence | Filme de marca em `gudev/videos/presenca-digital/` (final: música do Davi + efeitos + voz ElevenLabs Adam; só Katraka/Andrade/Péçaí) |
 | 13/11 | Claude persistent memory | Este arquivo |
 | 13/11 | Planos para hoje | Retícula, PR #13; confirmar WhatsApp e publicar no Netlify se for usar |
