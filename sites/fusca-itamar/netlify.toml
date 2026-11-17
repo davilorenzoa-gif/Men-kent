@@ -1,0 +1,10 @@
+# Site estático. No Netlify, "Base directory" = sites/fusca-itamar
+# (a pasta src/ é só o código-fonte do 3D; o site usa js/fusca3d.min.js)
+[build]
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/modelo/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

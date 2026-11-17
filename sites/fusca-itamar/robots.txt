@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://proposta-fusca-itamar.netlify.app/sitemap.xml

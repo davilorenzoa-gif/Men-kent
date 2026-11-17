@@ -1,0 +1,15 @@
+Beetle/Fusca (Version 1)
+========================
+
+Original author : soujagah - https://sketchfab.com/soujagah
+License         : CC BY 4.0 - https://creativecommons.org/licenses/by/4.0/
+Original source : https://sketchfab.com/3d-models/beetlefusca-version-1-cb6e82e73386448fb3b4e2dd25255a5e
+Changes         : Cleaned up (centered, grounded, renamed), converted to GLB/FBX/OBJ/BLEND
+Distributed by  : AiZity - https://aizity.com
+
+Attribution (copy this when you use the model):
+"Beetle/Fusca (Version 1)" by soujagah (https://sketchfab.com/soujagah) is licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Source: https://sketchfab.com/3d-models/beetlefusca-version-1-cb6e82e73386448fb3b4e2dd25255a5e. Changes: Cleaned up (centered, grounded, renamed), converted to GLB/FBX/OBJ/BLEND. Distributed by AiZity (https://aizity.com).
+
+This license lets you share and adapt the model, including commercially,
+as long as you give appropriate credit, link to the license, and indicate
+if changes were made.
