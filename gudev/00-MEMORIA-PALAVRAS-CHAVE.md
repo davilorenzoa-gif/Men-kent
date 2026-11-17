@@ -151,3 +151,4 @@ Ajuste no mesmo dia (palavras: introdução da Porsche, entrada da Ferrari, câm
 ## 17/11/2026: roteiro "Comercial sem recepção" (3 ganchos)
 Palavras: comercial sem recepção, gancho, Andrade como gancho, convite e recepção, avaliações, Claude do Gu, roteiro, 3 versões.
 O Davi achou que o comercial da Andrade não vende site sozinho e quis usar os primeiros segundos dele como gancho de um Reels da GuDev: "do que adianta um bom comercial se a recepção (Google, avaliações, site) é ruim?". Roteiro com 3 aberturas (pergunta seca, bastidor honesto, POV do cliente) e miolo/final iguais em `gudev/videos/comercial-sem-recepcao/ROTEIRO.md`, pra mandar pro Claude do Gu. Ainda não produzido. Falta o ok do padrinho pra usar o comercial no perfil da GuDev.
+Mesmo dia: o Davi aprovou a ideia dos ganchos A, B e C e pediu um prompt estruturado pro Claude do Gu montar o vídeo: `gudev/videos/comercial-sem-recepcao/PROMPT-CLAUDE-DO-GU.md` (palavras: prompt, Claude do Gu, montar Reels).
