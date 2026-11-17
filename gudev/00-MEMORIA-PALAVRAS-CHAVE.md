@@ -75,6 +75,7 @@
 
 | Data | Sessão | Resultado / pendência |
 |---|---|---|
+| 17/11 | Comercial da Andrade, versão 2 | Fachada real (caminhonete + letreiro), relógio "desde 1989", colunas na estátua, grão na estátua, esmerilhadeira alta. Mesmas pendências da v1 |
 | 16–17/11 | Comercial da Andrade Ferro e Aço | `gudev/videos/andrade-comercial/andrade-comercial.mp4` (música de referência do Davi + efeitos). Falta: confirmar telefone (prompt dizia 3261-4402, site diz 2581-4404), ouvir o som, ok do padrinho |
 | 15/11 | Campanha The Digital Presence | Filme de marca em `gudev/videos/presenca-digital/` (final: música do Davi + efeitos + voz ElevenLabs Adam; só Katraka/Andrade/Péçaí) |
 | 13/11 | Claude persistent memory | Este arquivo |

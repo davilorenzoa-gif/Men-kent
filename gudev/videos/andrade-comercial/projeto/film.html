@@ -29,6 +29,8 @@ const A={},cache=new Map();
 const load=src=>{const im=new Image();im.src=src;return im.decode().then(()=>im)};
 function frame(seq,i){const k=seq+'/'+String(i).padStart(4,'0')+'.jpg';let p=cache.get(k);
   if(p){cache.delete(k);cache.set(k,p)}else{p=load('seq/'+k);cache.set(k,p);if(cache.size>70)cache.delete(cache.keys().next().value)}return p}
+function frameW(seq,i){const k=seq+'/'+String(i).padStart(4,'0')+'.webp';let p=cache.get(k);
+  if(p){cache.delete(k);cache.set(k,p)}else{p=load('seq/'+k);cache.set(k,p);if(cache.size>70)cache.delete(cache.keys().next().value)}return p}
 function font(px,wt=900,st='extra-condensed',it=false){x.font=`${it?'italic ':''}${wt} ${st} ${px}px Archivo`}
 // clipe com mistura entre quadros, zoom com âncora, giro, borrão de direção (bx) e borrão de zoom (zb)
 async function clip(seq,st,o={}){
@@ -151,23 +153,53 @@ function terra(t){
 // =====================================================================================
 // TOUR · rampas de velocidade (tempo do filme -> tempo do clipe)
 // =====================================================================================
-const R_FACHADA=pchip([[bar(2),5.92],[bar(2)+.72,5.62],[bar(2)+1.14,4.74],[bar(3)+.3,4.38]]);            // letreiro -> caminhonete (clipe 61 ao contrário)
+const WW=bt(5,2);   // fim do relógio
+const R_FACHADA=pchip([[bar(2),.25],[bar(2)+.5,1.35],[bar(2)+.95,2.35],[bar(3)+.3,3.6]]);                // caminhonete -> letreiro (clipe 58)
 const R_ENTRADA=pchip([[bar(3)-.5,1.0],[bar(3),1.22],[bar(3)+.78,3.72],[bar(4),4.9],[bar(5)+.3,6.0]]);      // portão -> bancadas -> faísca em câmera lenta (clipe 59)
-const R_LINHA=pchip([[bar(5)-.5,0],[bar(5),.12],[bar(5)+1.1,.88],[bar(6),3.2],[bar(6)+.42,5.2],[bt(6,2)+.2,5.92]]); // faixa vermelha -> pilhas de tela (clipe 60)
-const R_SAIDA=pchip([[bar(9),.1],[bar(9)+.5,1.3],[bar(9)+1.5,2.2],[bar(10),3.0],[bar(10)+.55,3.7],[bar(10)+1.0,5.3],[bar(11)-.34,5.76],[bar(11),5.92]]); // corredor -> saída -> letreiro (clipe 61)
-const W1=bar(3)-.24,W2=bar(5)-.24,WD=.44;   // chicotes
+const R_LINHA=pchip([[WW-.4,.15],[WW,.4],[WW+.55,1.0],[bar(6),3.2],[bar(6)+.42,5.2],[bt(6,2)+.2,5.92]]);    // faixa vermelha -> pilhas de tela (clipe 60)
+const R_SAIDA=pchip([[bar(9),.1],[bar(9)+.5,1.3],[bar(9)+1.5,2.2],[bar(10),2.8],[bar(10)+.45,3.3]]);          // corredor -> porta de saída (clipe 61)
+const R_LETREIRO=pchip([[bar(10)+.2,3.3],[bar(10)+.75,4.3],[bar(11)-.34,5.45],[bar(11),5.95]]);              // fachada -> letreiro (clipe 58)
+const W1=bar(3)-.24,WD=.44,T_SOL=bar(10)+.3;   // chicote, corte pelo sol
 async function sFachada(t,o={}){const a=t-bar(2),e=eoe(clamp(a/.55));
-  await clip('c61',R_FACHADA(t),{z:1+.62*(1-e)+.05*seg(t,bar(2),bar(2)+.8),zb:.3*(1-seg(a,0,.4)),cx:.52,cy:.36,rot:-.05*(1-e),...o})}
+  await clip('c58',R_FACHADA(t),{z:1.02+.55*(1-e)+.06*seg(t,bar(2)+.9,W1),zb:.3*(1-seg(a,0,.4)),cx:.5,cy:.42,rot:-.05*(1-e),...o})}
 async function sEntrada(t,o={}){const a=t-bar(3),k=seg(t,bar(4),bar(5));
   const pz=1+.09*(1-eoe(clamp((t-bar(4))/.5)))*(t>=bar(4)?1:0)+.16*k;     // pancada + empurrão lento na faísca
   const mer=seg(t,bar(3)-.1,bar(3)+.75);                                 // mergulho pelo portão
   await clip('c59',R_ENTRADA(t),{z:pz*(1+.1*Math.sin(mer*Math.PI)),zb:.2*Math.sin(mer*Math.PI),rot:.035*Math.sin(mer*Math.PI*2)*(1-k),cx:lerp(.5,.6,k),cy:lerp(.5,.62,k),...o})}
-async function sLinha(t,o={}){const m=seg(t,bar(5)+1.0,bar(6)+.45),k=seg(t,bt(6,1)+.2,bt(6,2));
-  const z=1.04+.07*seg(t,bar(5),bar(5)+1.1)+.08*Math.sin(m*Math.PI)+ (t>bt(6,2)-.24?1.6*eie(seg(t,bt(6,2)-.24,bt(6,2))):0);
+async function sLinha(t,o={}){const m=seg(t,WW+.45,bar(6)+.45),k=seg(t,bt(6,1)+.2,bt(6,2));
+  const z=1.04+.07*seg(t,WW,bar(6))+.08*Math.sin(m*Math.PI)+ (t>bt(6,2)-.24?1.6*eie(seg(t,bt(6,2)-.24,bt(6,2))):0);
   await clip('c60',R_LINHA(t),{z,zb:.16*Math.sin(m*Math.PI)+(t>bt(6,2)-.24?.5*seg(t,bt(6,2)-.24,bt(6,2)):0),rot:-.04*Math.sin(m*Math.PI*2),cy:.55,...o})}
-async function sSaida(t,o={}){const a=t-bar(9),e=eoe(clamp(a/.5)),fim=seg(t,bar(11)-.3,bar(11));
-  const z=1+.6*(1-e)+2.4*eie(fim);
-  await clip('c61',R_SAIDA(t),{z,zb:.3*(1-seg(a,0,.4))+.5*fim,cx:lerp(.5,.52,fim),cy:lerp(.5,.3,fim),rot:.03*Math.sin(seg(t,bar(10)+.5,bar(10)+1.05)*Math.PI),...o})}
+async function sSaida(t,o={}){const a=t-bar(9),e=eoe(clamp(a/.5));
+  if(t<T_SOL){const sol=seg(t,bar(10)-.1,T_SOL);await clip('c61',R_SAIDA(t),{z:1+.6*(1-e)+.25*eie(sol),zb:.3*(1-seg(a,0,.4))+.25*sol,...o});brilho(W/2+40,820,200+900*sol,.25+.75*sol*sol,'255,225,170');return}
+  const fim=seg(t,bar(11)-.3,bar(11)),b=eoe(seg(t,T_SOL,T_SOL+.5));
+  await clip('c58',R_LETREIRO(t),{z:1.25-.23*b+2.6*eie(fim),zb:.25*(1-b)+.5*fim,cx:.5,cy:lerp(.5,.35,b),rot:.02*Math.sin(seg(t,bar(10)+.6,bar(10)+1.1)*Math.PI),...o});
+  flash((1-eo(seg(t,T_SOL,T_SOL+.4)))*.95,'#fff6e4')}
+
+// =====================================================================================
+// RELÓGIO · DESDE 1989 (tampa abrindo, do compasso 5 até a 3ª batida)
+// =====================================================================================
+const R_RELOGIO=pchip([[bar(5),2.75],[bar(5)+.45,4.1],[WW,5.3]]);
+async function sRelogio(t,o={}){const a=t-bar(5),p=seg(t,bar(5),WW),dx=o.dx||0;
+  x.save();x.translate(dx,0);
+  const f=await frame('verg',clamp(Math.floor(60+a*24),0,119));x.save();x.translate(W/2,H/2);x.scale(1.2+.06*p,1.2+.06*p);x.filter='blur(7px)';x.drawImage(f,-W/2,-H/2,W,H);x.restore();
+  flash(.72,'#0a0703');
+  const g=x.createRadialGradient(W/2,760,60,W/2,760,900);g.addColorStop(0,'rgba(255,190,90,.22)');g.addColorStop(1,'rgba(255,190,90,0)');x.fillStyle=g;x.fillRect(0,0,W,H);
+  const ft=(R_RELOGIO(t)-1.9)*24,i=clamp(Math.floor(ft),0,106),fr=ft-i,A0=await frameW('relogio',i),A1=await frameW('relogio',i+1);
+  const z=1.62+.12*eo(p),cx=W/2+70,cy=640;
+  const taps=o.bx?7:1;
+  for(let k=0;k<taps;k++){const u=taps>1?k/(taps-1)-.5:0;x.save();x.translate(cx+u*(o.bx||0),cy);x.scale(z,z);x.rotate(-.06+.05*p);
+    x.globalAlpha=1/(k+1);x.drawImage(A0,-360,-330,720,1280);if(fr>.03){x.globalAlpha=fr/(k+1);x.drawImage(A1,-360,-330,720,1280)}x.restore()}
+  // corrente some no escuro embaixo
+  const gb=x.createLinearGradient(0,1080,0,1500);gb.addColorStop(0,'rgba(10,7,3,0)');gb.addColorStop(1,'rgba(10,7,3,.96)');x.fillStyle=gb;x.fillRect(0,1080,W,H);
+  brilho(cx-150+260*p,560,140,.35*Math.sin(p*Math.PI),'255,215,140');
+  // texto: DESDE / 1989 / MAIS DE 35 ANOS
+  x.textAlign='center';x.shadowColor='rgba(0,0,0,.7)';x.shadowBlur=30;
+  const p1=eoe(seg(t,bar(5)+.04,bar(5)+.3));if(p1>0){x.save();x.globalAlpha=p1;font(52,800,'semi-condensed');x.letterSpacing=lerp(60,26,p1)+'px';x.fillStyle='#F1E6CF';x.fillText('DESDE',W/2+13,1330);x.restore()}
+  const p2=seg(t,bt(5,1),bt(5,1)+.24);if(p2>0){const e=eoe(p2),k=1+.5*(1-e);x.save();x.globalAlpha=clamp(p2*5);x.translate(W/2,1600);x.scale(k,k);font(330,900,'extra-condensed');x.fillStyle=ouro(-250,0);x.fillText('1989',0,0);x.restore()}
+  const p3=eo(seg(t,bt(5,1)+.15,bt(5,1)+.4));if(p3>0){x.save();x.globalAlpha=p3;font(36,700,'normal');x.letterSpacing='12px';x.fillStyle=Y;x.fillText('MAIS DE 35 ANOS',W/2+6,1700);x.restore()}
+  x.restore();x.textAlign='left';x.shadowColor='transparent';x.letterSpacing='0px';
+  flash(1-seg(a,0,.18),'#fff3d6');
+}
 
 // =====================================================================================
 // MÃOS (pausa da música) -> faísca -> ESTÁTUA em duas camadas
@@ -184,7 +216,6 @@ async function sMaos(t){const a=t-T_MAO,p=seg(t,T_MAO,bar(7)),e=eo(p);
   const gl_=Math.pow(p,2.4)*(.75+.25*Math.sin(t*90));brilho(W/2-4,900,60+380*gl_,gl_*.95);
   if(p>.45)chuva(t,T_MAO+.45,bar(7),W/2-4,900,300,{n:2,v:420,life:.45,g:500,w:2.2});
   flash(1-seg(a,0,.16),'#000');
-  const tx=eo(seg(t,T_MAO+.1,T_MAO+.4));x.save();x.globalAlpha=tx*(1-seg(p,.88,1));font(70,800,'semi-condensed');x.fillStyle=Y;x.letterSpacing='24px';x.textAlign='center';x.fillText('DESDE 1989',W/2+12,1440);x.letterSpacing='0px';x.restore();
 }
 const IW=1686,IH=2528,S0=H/IH;
 function camEstatua(t){
@@ -195,9 +226,15 @@ function camEstatua(t){
   let z=C.z*(1+C.d*(1-k))*(1+.035*u);
   if(b==3&&u>.55)z*=1+2.2*eie((u-.55)/.45);
   return {z,fx:C.fx,fy:C.fy-(b==2?70*u:0),sw:(b%2?1:-1)*14*u,b,u}}
+// colunas desfocadas em primeiro plano: entram pelas bordas quando a câmera abre
+function colunas(t,C){const d=545*Math.pow(C.z,1.6),h=2350,w=h*A.coluna.width/A.coluna.height,sh=C.sw*2.6,yy=-260+(C.fy-1264)*.25*C.z;
+  if(d>W/2+w)return;x.save();x.filter='blur(8px) brightness(.42) contrast(1.05) sepia(.2)';
+  x.drawImage(A.coluna,W/2-d-w/2+sh,yy,w,h);x.save();x.translate(W/2+d+sh,yy);x.scale(-1,1);x.drawImage(A.coluna,-w/2,0,w,h);x.restore();x.restore()}
+// grão de filme (igual ao das cenas filmadas)
+function grao(t,al){x.save();x.globalCompositeOperation='overlay';x.globalAlpha=al;x.drawImage(A.grao[Math.floor(t*24)%A.grao.length],0,0,W,H);x.restore()}
 async function sEstatua(t){const C=camEstatua(t),a=t-bar(7);
   const lay=(im,par)=>{const z=Math.pow(C.z,par),s=S0*z;let px=W/2-C.fx*s+C.sw*(par-.86)*7+(1-par)*(C.fx-843)*s*.4,py=H/2-C.fy*s+(1-par)*(C.fy-1264)*s*.3;
-    px=clamp(px,W+40-IW*s,-40);py=clamp(py,H+40-IH*s,-40);x.drawImage(im,px,py,IW*s,IH*s)};
+    px=clamp(px,W+40-IW*s,-40);py=clamp(py,H+40-IH*s,-40);x.save();x.filter='contrast(.88) saturate(.8) sepia(.14) brightness(1.04) blur(.7px)';x.drawImage(im,px,py,IW*s,IH*s);x.restore()};
   const scr=(ix,iy)=>{const s=S0*C.z;return [W/2+(ix-C.fx)*s+C.sw*.98,H/2+(iy-C.fy)*s]};
   lay(A.ebg,.8);
   // raios de luz entre as camadas
@@ -205,9 +242,11 @@ async function sEstatua(t){const C=camEstatua(t),a=t-bar(7);
   lay(A.efg,1);
   // poeira e faíscas na frente
   x.save();x.globalCompositeOperation='lighter';for(let i=0;i<46;i++){const px=(rnd(i)*W+t*(12+rnd(i+50)*30)+C.sw*3)%W,py=(rnd(i+90)*H-t*(18+rnd(i+70)*36)+H*8)%H;x.fillStyle=`rgba(255,220,170,${.12+.3*rnd(i+33)*(.6+.4*Math.sin(t*3+i))})`;x.beginPath();x.arc(px,py,1.5+rnd(i+11)*3,0,7);x.fill()}x.restore();
+  colunas(t,C);
   const [ex,ey]=scr(1150,1575);chuva(t,bar(7),bar(9),ex,ey,900,{n:3,v:520*C.z,life:.8,a0:Math.PI*1.05,spread:Math.PI*.9,g:900,w:2.4*C.z});brilho(ex,ey,90*C.z,.5+.2*Math.sin(t*37));
   const [gx,gy]=scr(150,2010);chuva(t,bar(7),bar(9),gx,gy,1900,{n:2,v:380*C.z,life:.7,a0:-Math.PI*.95,spread:Math.PI*.9,g:900,w:2*C.z});
   if(C.b==3){const [lx,ly]=scr(818,2010),sw=seg(C.u,.05,.6);x.save();x.globalCompositeOperation='lighter';x.translate(lx-520+1040*sw,ly);x.rotate(.35);const g=x.createLinearGradient(-70,0,70,0);g.addColorStop(0,'rgba(255,240,200,0)');g.addColorStop(.5,`rgba(255,240,200,${.5*Math.sin(sw*Math.PI)})`);g.addColorStop(1,'rgba(255,240,200,0)');x.fillStyle=g;x.fillRect(-70,-330,140,660);x.restore()}
+  grao(t,.24);x.save();x.globalCompositeOperation='screen';x.fillStyle='rgba(38,30,22,.13)';x.fillRect(0,0,W,H);x.restore();
   // explosão de faíscas da revelação
   sparks(t,bar(7),W/2,900,190,4000,{v:1900,life:1.5,g:1300,w:4});sparks(t,bar(7)+.03,W/2,900,90,5000,{v:900,life:1.0,g:1700,w:3});
   brilho(W/2,900,900*(1-seg(a,0,.5))+1,1-seg(a,0,.5));flash(1-eo(seg(a,0,.42)),'#fff3d6');
@@ -264,7 +303,7 @@ function sFim(t){const a=t-bar(11);
 // =====================================================================================
 // LINHA DO TEMPO
 // =====================================================================================
-const HITS=[[bar(2),20],[bar(3),9],[bar(4),8],[bar(5),10],[bar(6),7],[bar(7),30],[bt(8,0),9],[bt(8,1),9],[bt(8,2),9],[bt(8,3),9],[bar(9),14],[bar(10),8],[bar(11),30],[bar(11)+BEAT,6]];
+const HITS=[[bar(2),20],[bar(3),9],[bar(4),8],[bar(5),12],[bt(5,1),8],[bar(6),7],[bar(7),30],[bt(8,0),9],[bt(8,1),9],[bt(8,2),9],[bt(8,3),9],[bar(9),14],[bar(10),8],[bar(11),30],[bar(11)+BEAT,6]];
 async function seek(t){
   x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;x.globalCompositeOperation='source-over';x.filter='none';x.textAlign='left';x.shadowColor='transparent';x.letterSpacing='0px';
   x.fillStyle='#000';x.fillRect(0,0,W,H);
@@ -276,24 +315,25 @@ async function seek(t){
     const wh=(Tc,dir)=>{const p=eio(seg(t,Tc-WD/2,Tc+WD/2)),v=Math.sin(seg(t,Tc-WD/2,Tc+WD/2)*Math.PI);return {p,dir,bx:v*420}};
     if(t<W1-WD/2){await sFachada(t)}
     else if(t<W1+WD/2){const w=wh(W1,-1);await sFachada(t,{dx:-W*w.p,bx:w.bx});await sEntrada(t,{dx:W*(1-w.p),bx:w.bx})}
-    else if(t<W2-WD/2){await sEntrada(t)}
-    else if(t<W2+WD/2){const w=wh(W2,1);await sEntrada(t,{dx:W*w.p,bx:w.bx});await sLinha(t,{dx:-W*(1-w.p),bx:w.bx})}
+    else if(t<bar(5)){await sEntrada(t)}
+    else if(t<WW-WD/2){await sRelogio(t)}
+    else if(t<WW+WD/2){const w=wh(WW,1);await sRelogio(t,{dx:W*w.p,bx:w.bx});await sLinha(t,{dx:-W*(1-w.p),bx:w.bx})}
     else await sLinha(t);
     flash((1-eo(seg(t,bar(2),bar(2)+.45))));
     flash(seg(t,T_MAO-.2,T_MAO)*.9,'#000');
     // faíscas da esmerilhadeira por cima do clipe (câmera lenta)
-    if(t>8.72&&t<W2){const k=seg(t,8.75,9.3),fx=lerp(545,600,k),fy=lerp(1090,1140,k),on=seg(t,8.72,8.9);chuva(t,8.72,W2,fx,fy,600,{n:3,v:640,life:.6,a0:Math.PI*.5,spread:Math.PI*.8,g:1100,w:2.4});brilho(fx,fy,170,on*(.4+.25*Math.sin(t*41)))}
+    if(t>8.72&&t<bar(5)){const k=seg(t,8.75,9.3),fx=lerp(545,600,k),fy=lerp(1090,1140,k),on=seg(t,8.72,8.9);chuva(t,8.72,bar(5),fx,fy,600,{n:3,v:640,life:.6,a0:Math.PI*.5,spread:Math.PI*.8,g:1100,w:2.4});brilho(fx,fy,170,on*(.4+.25*Math.sin(t*41)))}
     titulo(t,bar(2)+.3,W1-.12,'ANDRADE · FERRO E AÇO',['FERRAGEM','ARMADA'],{px:190});
     titulo(t,bar(3)+.1,bar(4)-.04,'SÃO PAULO · ZONA LESTE',['PARA A SUA','CONSTRUÇÃO'],{px:178});
-    titulo(t,bar(4),W2-.14,'NORMAS ABNT',[{s:'CORTE.',at:bt(4,0),ate:bt(4,1)},{s:'DOBRA.',at:bt(4,1),ate:bt(4,2)},{s:'ARMAÇÃO.',at:bt(4,2),ate:99,c:Y}],{px:230,yb:1470});
-    titulo(t,bar(5)+.06,bar(6)-.04,'MAIS DE 35 ANOS',[{s:'+95 MIL',c:Y,px:250},'PROJETOS ENTREGUES'],{px:180,yb:1452});
+    titulo(t,bar(4),bar(5)-.06,'NORMAS ABNT',[{s:'CORTE.',at:bt(4,0),ate:bt(4,1)},{s:'DOBRA.',at:bt(4,1),ate:bt(4,2)},{s:'ARMAÇÃO.',at:bt(4,2),ate:99,c:Y}],{px:230,yb:1470});
+    titulo(t,WW+.08,bar(6)-.04,'ANDRADE · FERRO E AÇO',[{s:'+95 MIL',c:Y,px:250},'PROJETOS ENTREGUES'],{px:180,yb:1452});
     titulo(t,bar(6)+.04,T_MAO-.16,'TAMBÉM NO GALPÃO',['TELAS, TRELIÇAS','E LAJES'],{px:176});
   }
   else if(t<bar(7))await sMaos(t);
   else if(t<bar(9))await sEstatua(t);
   else if(t<bar(11)){await sSaida(t);flash(.5*(1-eo(seg(t,bar(9),bar(9)+.35))),'#fff3d6');
     titulo(t,bar(9)+.08,bar(10)-.05,'ARMAÇÃO PRONTA',[{s:'VIGAS · SAPATAS',at:bt(9,0)+.08},{s:'BROCAS · PILARES',at:bt(9,2)}],{px:170});
-    titulo(t,bar(10)+.06,bar(11)-.36,'ENTREGA',[{s:'CAPITAL E',at:bt(10,0)+.08},{s:'GRANDE SP',at:bt(10,1),c:Y}],{px:200});
+    titulo(t,T_SOL+.12,bar(11)-.36,'ENTREGA',[{s:'CAPITAL E',at:T_SOL+.12},{s:'GRANDE SP',at:bt(10,2),c:Y}],{px:200});
   }
   else sFim(t);
   // batida: clarão curto em cada compasso
@@ -304,10 +344,12 @@ async function seek(t){
 }
 window.ready=(async()=>{
   await Promise.all(['italic 900 extra-condensed 100px Archivo','900 extra-condensed 100px Archivo','900 condensed 100px Archivo','800 semi-condensed 100px Archivo','700 100px Archivo','600 100px Archivo','500 100px Archivo'].map(f=>document.fonts.load(f)));
-  const L={day:'assets/earth-blue-marble.jpg',night:'assets/earth-night.jpg',cloud:'assets/clouds.jpg',stars:'assets/stars.jpg',ebg:'assets/estatua_bg.jpg',efg:'assets/estatua_fg.webp',maos:'assets/maos.png',verg:'seq/verg/0070.jpg'};
+  const L={day:'assets/earth-blue-marble.jpg',night:'assets/earth-night.jpg',cloud:'assets/clouds.jpg',stars:'assets/stars.jpg',ebg:'assets/estatua_bg.jpg',efg:'assets/estatua_fg.webp',maos:'assets/maos.png',coluna:'assets/coluna.webp',verg:'seq/verg/0070.jpg'};
   await Promise.all(Object.entries(L).map(async([k,s])=>A[k]=await load(s)));
   A.nuvens=[nuvemSprite(1),nuvemSprite(77),nuvemSprite(190)];A.sombras=A.nuvens.map(n=>{const c2=document.createElement('canvas');c2.width=c2.height=1024;const g=c2.getContext('2d');g.drawImage(n,0,0);g.globalCompositeOperation='source-in';g.fillStyle='#5f7fa8';g.fillRect(0,0,1024,1024);return c2});
   const f=document.createElement('canvas');f.width=270;f.height=480;const g=f.getContext('2d');g.filter='blur(4px) brightness(.85) saturate(.75)';g.drawImage(A.verg,-10,-10,290,500);A.fundo=f;
+  A.grao=[0,1,2,3].map(k=>{const c2=document.createElement('canvas');c2.width=540;c2.height=960;const g2=c2.getContext('2d'),id=g2.createImageData(540,960);
+    for(let i=0;i<id.data.length;i+=4){const v=128+(Math.random()+Math.random()+Math.random()-1.5)*55;id.data[i]=id.data[i+1]=id.data[i+2]=v;id.data[i+3]=255}g2.putImageData(id,0,0);return c2});
   glInit();await seek(0);
 })();
 </script>
