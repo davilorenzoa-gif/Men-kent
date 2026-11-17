@@ -127,3 +127,13 @@ Ordem sugerida: 5, 1, 8, depois intercalar Google (2, 3, 6) com site (4, 7, 9).
 - **Narração feita (15/11):** voz sintética pt-BR com o Kokoro (`projeto/voz.py`), música abaixa na fala. Escrever "Gu Dév" pra voz pronunciar certo. Como preparar no README da pasta.
 - **Versão final (15/11):** narração no ElevenLabs (voz "Adam - Dominant, Firm", feita pelo Davi) + música dele no CapCut; o Claude só recolocou os efeitos sonoros e encaixou a voz por cena. **Voz sintética grátis (Kokoro) foi reprovada: "tá muito IA".** Fluxo que funciona: Claude faz imagem + efeitos; Davi escolhe música e voz; Claude mixa no fim.
 - **Ajustes pedidos depois (15/11):** CTA explícito no fim (@gudev.ofc + "chama no link da bio" + seta) e selos de apoio segurados ~1,5 s pra dar tempo de ler no celular. Regra pros próximos: todo Reels termina com @ e ação clara; rótulo pequeno fica no mínimo 1,5 s.
+
+## Comercial de cliente com clipes de IA: Andrade Ferro e Aço (17/11/2026)
+- Reels de 24,6 s em `gudev/videos/andrade-comercial/` (README com roteiro, material e como refazer). Mesmo motor do filme de marca (HTML `seek(t)` + Playwright + ffmpeg), agora com vídeo de verdade dentro.
+- **Receita do "tour imobiliário" (speed ramp):** clipe do Google Flow vira sequência de fotos a 60 fps (`minterpolate` do ffmpeg cria os quadros do meio) → uma curva diz que segundo do clipe aparece em cada segundo do filme (rápido na passagem, lento no detalhe) → render a 120 fotos/s misturadas de 4 em 4 dá o desfoque de movimento. Chicote entre planos = os dois correndo juntos como tira de filme.
+- **Zoom da Terra sem banco de vídeo:** shader próprio com as texturas da NASA que vêm no pacote npm `three-globe` (o site da NASA é bloqueado aqui). Do espaço até as nuvens; o clarão das nuvens esconde a falta de imagem de satélite de perto.
+- **Cartaz em camadas (parallax):** recorte com o modelo BiRefNet (baixar do GitHub do `rembg`; Hugging Face é bloqueado) e fundo preenchido atrás do recorte.
+- **Música de referência manda nos cortes:** medir o bpm e o 1º tempo (`Vídeos Davi/ferramentas/analisar_audio.py` ou numpy), achar a pausa e a virada, e pôr o momento mais forte do vídeo na virada. Cortar o áudio antes da vinheta do TikTok.
+- **Som (pedido do Davi):** vento em toda aproximação e todo afastamento, pancada grave nos cortes, metal e faísca. Entregar também o `sfx.wav` (só efeitos).
+- **Lições:** (1) clipe mandado pelo WhatsApp chega em 478×850; pedir o arquivo original do Flow. (2) IA embaralha texto de letreiro: conferir quadro a quadro e cortar o trecho. (3) Prévia do iStock tem marca d'água, não usar. (4) Telefone e dados da cartela saem do `04`, não do prompt.
+

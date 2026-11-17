@@ -19,7 +19,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `gudev/09-CANVA-TRUQUES.md`: Canva (transições Combinar/Fluxo, efeito vidro, o que o conector faz vs. clique manual)
 - `gudev/10-REFERENCIA-ORIGINKIT.md`: biblioteca de efeitos originkit.dev (o que é grátis, licença, como converter)
 - `gudev/11-GOOGLE-EM-DIA.md`: **oferta de entrada atual** (perfil do Google Maps por R$ 97), pontos por lead no Radar, o que o Claude faz no perfil e regras. Ler inteiro antes de qualquer tarefa de venda.
-- `gudev/videos/`: vídeos de marca da GuDev feitos por código (README em cada pasta)
+- `gudev/videos/`: vídeos feitos por código, da GuDev (`presenca-digital`) e de cliente (`andrade-comercial`), com README em cada pasta
 - `gudev/exemplos/*.html`: sites reais (Açaí Happy, Chersoni, Dellart), nível mínimo de qualidade
 - `gudev/efeitos/`, `gudev/demos/`, `gudev/aprendizados/`: efeitos testados, demos de técnica e páginas de estudo
 - `gudev/aprendizados/guia-motion-premium.md` + `fusca-lab/`: guia de motion (stack, 60fps, mola, magnético, cursor, scroll storytelling, Flip, 3D) com tudo funcionando no Fusca Lab. Ler antes de criar WOW.
@@ -44,6 +44,7 @@ Este repositório é a base de conhecimento da GuDev, a empresa de sites para co
 - `sites/glassy-dashboard` (painel em React/Tailwind): base se algum cliente pedir painel/sistema. É produto novo: preço e prazo a definir antes de oferecer.
 - Repertório de animação atualizado em 10/11 (logo em bolinhas, cortina que enche, máscara de texto, folha sobre o herói, gota no clique, borda que acende, obrigado em círculo): `03`, seção "Repertório".
 - **Filme de marca (15/11/2026):** `gudev/videos/presenca-digital/` (27 s, vertical, estilo "R$ 10 mil": boneco, pílulas, texto grande, cortes rápidos). Feito com HTML + Playwright + ffmpeg + trilha sintetizada, sem crédito de IA. Versão final com música do Davi (CapCut), efeitos do Claude e narração ElevenLabs (voz Adam) e CTA "@gudev.ofc / chama no link da bio" no fim; a voz Kokoro foi reprovada ("muito IA"). Pronto pra postar. Instagram da GuDev: **@gudev.ofc**. **Em vídeo/post, só Katraka, Andrade e Péçaí aparecem como trabalho feito** (os outros não têm autorização). Vídeo da GuDev: algo novo na tela a cada ~0,5 s e com voz. Método no `08`.
+- **Comercial da Andrade (17/11/2026):** `gudev/videos/andrade-comercial/` (24,6 s, vertical: zoom da Terra até a fachada, tour no galpão com rampa de velocidade na batida da música do Davi, estátua de aço, contato). Clipes do galpão são de IA (Google Flow). **Falta o ok do padrinho, ouvir o som e confirmar o telefone** (vídeo usa os do site: WhatsApp 99804-1251, fixo 2581-4404). Em vídeo, o Davi quer **som de vento em toda aproximação/afastamento**. Receita no `08`.
 - Vídeo: os de 15s e os Reels saem de prompts pro Google Flow (Veo) + montagem no CapCut, ou edição feita aqui com ffmpeg. Claude não abre o CapCut. Lições em `05` e `08`.
 
 ## Regras que nunca quebram
