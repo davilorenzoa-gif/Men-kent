@@ -126,7 +126,7 @@ main a,main button,main input,main label,main summary,main .txt,main details,mai
 /* ---------- WOW 2: versões ---------- */
 .versoes{height:440vh;position:relative}
 .versoes .fixa{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-rows:auto minmax(0,1fr);align-content:start;gap:22px;padding:92px clamp(16px,5vw,72px) 28px}
-.ficha{width:min(600px,100%);background:rgba(38,37,36,.9);border:1px solid rgba(255,255,255,.07);border-radius:22px;padding:26px 26px 22px;position:relative;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.ficha{width:min(600px,100%);background:#262524;border:1px solid rgba(255,255,255,.07);border-radius:22px;padding:26px 26px 22px;position:relative}
 .ficha .topo-ficha{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 .ficha .passo{font-size:13px;color:var(--osso-2)}
 .pontos{display:flex;gap:6px}
@@ -150,7 +150,7 @@ main a,main button,main input,main label,main summary,main .txt,main details,mai
 
 /* ---------- WOW 3: cores ---------- */
 .cores{min-height:100vh;padding:110px clamp(16px,5vw,72px) 80px;display:grid;justify-items:end;align-items:center}
-.painel{width:min(560px,100%);background:rgba(38,37,36,.92);border:1px solid rgba(255,255,255,.07);border-radius:22px;padding:24px 26px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.painel{width:min(560px,100%);background:#262524;border:1px solid rgba(255,255,255,.07);border-radius:22px;padding:24px 26px}
 .painel h2{font-size:clamp(30px,3.6vw,48px)}
 .painel>p{margin-top:10px;font-size:15px}
 .filtros{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
@@ -248,18 +248,26 @@ footer a{text-underline-offset:3px}
   body{font-size:16px}
   .topo{align-items:end;padding:90px 16px 110px}
   .topo h1{font-size:clamp(50px,16vw,96px);margin:10px 0 14px}
-  .topo .txt{background:linear-gradient(180deg,transparent,rgba(28,27,26,.85) 30%);padding-top:30px;margin:0 -16px;padding-left:16px;padding-right:16px}
+  .topo .txt{background:linear-gradient(180deg,transparent,rgba(28,27,26,.9) 18%);padding-top:26px;margin:0 -16px;padding-left:16px;padding-right:16px}
+  .topo{padding-bottom:40px}
   .dica{right:16px;bottom:auto;top:76px}
   .carregando{left:auto;right:16px;bottom:auto;top:84px}
-  .volta{justify-items:stretch;align-items:end;padding:60px 16px 70px;min-height:100svh}
+  .volta{justify-items:stretch;align-items:end;padding:60px 16px 60px;min-height:92svh}
+  .risco{height:52svh}
+  .barra{transition:background-color .3s}
+  .rolou .barra{background:linear-gradient(180deg,rgba(28,27,26,.96) 60%,rgba(28,27,26,0))}
   .volta .txt{max-width:none;padding:24px 0 0;background:linear-gradient(180deg,transparent,rgba(28,27,26,.92) 22%)}
-  .versoes .fixa{grid-template-rows:auto minmax(0,1fr);padding:78px 16px 18px;gap:0}
+  .versoes{height:330vh}
+  .versoes .fixa{grid-template-rows:auto minmax(0,1fr);padding:78px 16px 16px;gap:0}
   .versoes .fixa .ficha{align-self:end}
   .versoes .intro-v h2{font-size:30px}
   .versoes .intro-v p{display:none}
   .ficha{padding:20px 18px 16px;width:100%}
   .ficha h3{font-size:36px;margin-top:10px}
-  .ficha ul{max-height:26svh}
+  .ficha ul{max-height:none;overflow:visible;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px;margin-top:10px}
+  .ficha li{font-size:12.5px;line-height:1.3;padding:5px 0}
+  .ficha li em{font-size:10px;padding:1px 6px}
+  .ficha .cod{font-size:12px}
   .cores{justify-items:stretch;padding:0 0 60px;align-items:end}
   .cores .vao{height:44svh}
   .painel{border-radius:22px 22px 0 0;padding:18px 16px}
@@ -594,16 +602,17 @@ document.addEventListener('DOMContentLoaded', function () {
       cores: { az: 38, el: 9, dist: 8.2, sx: -.21, sy: .02 }
     },
     cel: {
-      topo: { az: 28, el: 8, dist: 13.2, sx: 0, sy: -.26 },
-      volta: { az: 90, el: 4, dist: 17, sx: 0, sy: -.24 },
-      v0: { az: 22, el: 10, dist: 15.5, sx: 0, sy: -.12 },
-      v1: { az: -58, el: 8, dist: 15.5, sx: 0, sy: -.12 },
-      v2: { az: 152, el: 12, dist: 15.5, sx: 0, sy: -.12 },
-      v3: { az: 36, el: 15, dist: 14.5, sx: 0, sy: -.12 },
-      cores: { az: 38, el: 9, dist: 15.5, sx: 0, sy: -.3 }
+      // fit: fração da largura da tela que o carro ocupa (o motor calcula a distância)
+      topo: { az: 30, el: 9, dist: 6, fit: .9, sx: 0, sy: -.24 },
+      volta: { az: 90, el: 5, dist: 6, fit: .92, sx: 0, sy: -.2 },
+      v0: { az: 24, el: 10, dist: 6, fit: .86, sx: 0, sy: -.15 },
+      v1: { az: -58, el: 9, dist: 6, fit: .88, sx: 0, sy: -.15 },
+      v2: { az: 150, el: 12, dist: 6, fit: .88, sx: 0, sy: -.15 },
+      v3: { az: 36, el: 14, dist: 6, fit: .86, sx: 0, sy: -.15 },
+      cores: { az: 34, el: 9, dist: 6, fit: .84, sx: 0, sy: -.29 }
     }
   };
-  function pose(nome) { return POSES[celular() ? 'cel' : 'pc'][nome]; }
+  function pose(nome) { return Object.assign({ fit: 0 }, POSES[celular() ? 'cel' : 'pc'][nome]); }
 
   /* ---------- 3D ---------- */
   var F = null;
@@ -778,9 +787,10 @@ document.addEventListener('DOMContentLoaded', function () {
     F.ouro((nome === 'versoes' && vAtual === 3) || (nome === 'cores' && ouroCores) ? 1 : 0);
     var abrir = nome === 'versoes' && vAtual === 3;
     if (abrir !== portaAberta) { portaAberta = abrir; F.porta('L', abrir); }
-    if (nome === 'cores' && cenaAtual !== 'cores') F._idle = true;
     cenaAtual = nome;
   }
+  var rolou = false;
+  addEventListener('scroll', function () { var r = scrollY > 40; if (r !== rolou) { rolou = r; raiz.classList.toggle('rolou', r); } }, { passive: true });
   var pedido = false;
   function pede() { if (!pedido) { pedido = true; requestAnimationFrame(function () { pedido = false; atualiza(); }); } }
   addEventListener('scroll', pede, { passive: true });

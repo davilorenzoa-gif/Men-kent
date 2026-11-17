@@ -137,3 +137,10 @@
 - **Zoom por `scale` em foto pequena borra (Davi reprovou em 16/11, "tá meio estranha").** "Entrar" no carro ampliando um recorte de 640 px vira mancha. O certo é sequência de quadros de vídeo num canvas, guiada pela rolagem (42 quadros de 540 px pesam ~0,5 MB), com mistura entre quadros vizinhos (`globalAlpha`) pra ficar liso. Pra emendar dois vídeos, cortar num quadro de névoa/desfoque.
 - **Moldura que cresce não pode começar num pedaço ampliado da foto.** Começar com a foto inteira no formato dela (escala = largura da moldura ÷ largura da foto em tela cheia) e crescer junto com o recorte.
 
+
+## 3D no celular de verdade (17/11/2026, OF Fusca Itamar)
+- **Carro 3D que gira sozinho estraga a composição** ("tá horrível", Davi): depois de uns segundos ele fica de lado, que é ~2,5x mais largo, estoura a tela do celular e cai em cima do título. Carro parado na pose da seção; arrastar gira e, 1,2 s depois de soltar, volta pra pose.
+- **Distância da câmera no celular em pé:** não usar número fixo. Calcular pra o carro ocupar uma fração da largura (`fit`), usando o campo de visão horizontal e o quanto o carro ocupa naquele ângulo (lado ≈ 4,25 m, frente ≈ 1,75 m).
+- **Rolagem pesada com WebGL atrás:** `backdrop-filter` em card por cima de canvas que redesenha repinta o desfoque a cada quadro. Card sólido. E desenhar o 3D só quando algo muda (pose, arrasto, tinta, animação): parado, a página rola como se não tivesse 3D.
+- **Lista com rolagem própria dentro de seção `sticky` prende o dedo** no celular. Lista inteira em 2 colunas, sem `overflow:auto`.
+- Logo fixo no topo no celular fica por cima dos botões ao rolar: fundo em degradê no topo depois de 40 px de rolagem.
