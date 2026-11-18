@@ -160,6 +160,8 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - O site dele virou **a régua mínima de qualidade**: fotos reais recortadas, slogan real, cardápio real e carrinho pro WhatsApp.
 
 ## Demos (NÃO são clientes, nunca usar como case)
+
+- **Jimmy Neutron** (`sites/jimmy-neutron`, 18/11/2026): site pessoal de atleta de futebol, pedido do Davi. Não é cliente. Faltam quase todos os dados (ver README).
 - **Prumo Materiais:** depósito de construção fictício, pra mostrar aos ~20 leads de depósito do Davi.
 - **Órbita Seminovos:** loja de seminovos fictícia (Honda City em 360, imagens do Google Flow), com Reel pronto. Pra mostrar a lojas de carro e estéticas.
 - **Peçaí (o nome antigo de demo):** a Péçaí é uma loja **real** de Guarulhos (ver a seção dela acima). Não tratar mais como marca fictícia.

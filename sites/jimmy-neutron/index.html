@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jimmy Neutron · Football</title>
+<meta name="description" content="Jimmy Neutron. Perfil, números, momentos e trajetória no futebol.">
+<meta name="theme-color" content="#07080b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   JIMMY NEUTRON — tokens
+   ========================================================= */
+:root{
+  --ink:#07080b; --ink-2:#0d0f14; --grafite:#171a21; --grafite-2:#232733;
+  --gelo:#eceff4; --gelo-2:#dde2ea; --cinza:#8a92a2; --cinza-2:#5b6271;
+  --azul:#2f56ff; --azul-claro:#8197ff; --azul-fundo:#0b1440;
+  --linha:rgba(236,239,244,.12); --linha-escura:rgba(7,8,11,.14);
+  --f-display:"Anybody", "Arial Narrow", system-ui, sans-serif;
+  --f-texto:"Hanken Grotesk", system-ui, -apple-system, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --gutter:clamp(16px, 4vw, 56px);
+  --max:1440px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --header-h:72px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--ink)}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{margin:0;background:var(--ink);color:var(--gelo);font-family:var(--f-texto);font-size:17px;line-height:1.55;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--azul-claro);outline-offset:3px;border-radius:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mono{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+::selection{background:var(--azul);color:#fff}
+
+/* grão de filme por cima de tudo (fixo, sem animar) */
+.grao{position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* campo pendente (sem dado real ainda) */
+.pend{display:inline-flex;align-items:center;gap:.5em;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--cinza);border:1px dashed currentColor;border-radius:3px;padding:.28em .6em;line-height:1.3;white-space:nowrap}
+.pend::before{content:"";width:6px;height:6px;border-radius:50%;background:#f5a524;flex:none}
+.claro .pend{color:var(--cinza-2)}
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+.logo{display:inline-flex;align-items:baseline;gap:.32em;text-decoration:none;line-height:1;white-space:nowrap}
+.logo b{font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 58;font-size:1.55em;letter-spacing:-.01em}
+.logo span{font-family:var(--f-display);font-weight:400;font-variation-settings:"wdth" 140;font-size:.78em;letter-spacing:.2em;display:inline-flex;align-items:center}
+.logo .orb{width:1.3em;height:1.3em;margin:0 .05em;overflow:visible;transform:translateY(.08em)}
+.logo .orb ellipse{fill:none;stroke:var(--azul-claro);stroke-width:1.4}
+.logo .orb circle{fill:currentColor}
+.logo .orb .anel{transform-origin:50% 50%;transition:transform 1.2s var(--ease)}
+.logo:hover .orb .anel{transform:rotate(180deg)}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.topo{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--header-h);display:flex;align-items:center;
+  transition:height .5s var(--ease), color .4s, background-color .4s, border-color .4s;border-bottom:1px solid transparent}
+.topo::before{content:"";position:absolute;inset:0;background:rgba(7,8,11,.62);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);opacity:0;transition:opacity .4s, background-color .4s}
+.topo.rolou{--header-h:60px;border-bottom-color:var(--linha)}
+.topo.rolou::before{opacity:1}
+.topo.sobre-claro{color:var(--ink);border-bottom-color:var(--linha-escura)}
+.topo.sobre-claro::before{background:rgba(236,239,244,.72)}
+.topo .wrap{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.topo .logo{font-size:15px}
+.nav{display:flex;align-items:center;gap:4px;position:relative}
+.nav a{position:relative;text-decoration:none;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;padding:10px 14px;opacity:.62;transition:opacity .3s}
+.nav a:hover,.nav a.ativo{opacity:1}
+.nav a .n{color:var(--azul-claro);margin-right:.5em}
+.sobre-claro .nav a .n{color:var(--azul)}
+.nav-ind{position:absolute;left:0;bottom:2px;height:2px;width:1px;background:var(--azul);transform-origin:0 50%;transform:scaleX(0);pointer-events:none}
+.progresso{position:absolute;left:0;bottom:-1px;height:1px;width:100%;background:var(--azul);transform-origin:0 50%;transform:scaleX(0)}
+.btn-menu{display:none;position:relative;z-index:2;width:46px;height:46px;border-radius:50%;border:1px solid currentColor;opacity:.9}
+.btn-menu i{position:absolute;left:14px;right:14px;height:1.5px;background:currentColor;transition:transform .5s var(--ease)}
+.btn-menu i:nth-child(1){top:19px}.btn-menu i:nth-child(2){top:25px}
+.menu-aberto .btn-menu i:nth-child(1){transform:translateY(3px) rotate(45deg)}
+.menu-aberto .btn-menu i:nth-child(2){transform:translateY(-3px) rotate(-45deg)}
+.topo .ao-vivo{display:flex;align-items:center;gap:8px}
+.ponto{width:7px;height:7px;border-radius:50%;background:#ff3b3b;box-shadow:0 0 0 0 rgba(255,59,59,.6);animation:pulso 1.8s infinite}
+@keyframes pulso{0%{box-shadow:0 0 0 0 rgba(255,59,59,.55)}70%{box-shadow:0 0 0 9px rgba(255,59,59,0)}100%{box-shadow:0 0 0 0 rgba(255,59,59,0)}}
+
+/* menu mobile */
+.menu-m{position:fixed;inset:0;z-index:55;background:var(--ink);display:flex;flex-direction:column;justify-content:flex-end;padding:calc(var(--header-h) + 24px) var(--gutter) calc(28px + env(safe-area-inset-bottom));
+  clip-path:circle(0% at calc(100% - var(--gutter) - 23px) 36px);visibility:hidden;transition:clip-path .8s var(--ease), visibility 0s .8s}
+.menu-aberto .menu-m{clip-path:circle(150% at calc(100% - var(--gutter) - 23px) 36px);visibility:visible;transition:clip-path .8s var(--ease), visibility 0s}
+.menu-aberto .topo{color:var(--gelo)}
+.menu-aberto .topo::before{opacity:0}
+.menu-m ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--linha)}
+.menu-m li{border-bottom:1px solid var(--linha);overflow:hidden}
+.menu-m a{display:flex;align-items:baseline;justify-content:space-between;padding:14px 0 10px;text-decoration:none;font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 70;font-size:clamp(2.6rem,12vw,4.5rem);line-height:.95;text-transform:uppercase;transform:translateY(105%);transition:transform .7s var(--ease), color .3s}
+.menu-m a small{font-family:var(--f-mono);font-size:.72rem;font-weight:400;letter-spacing:.14em;color:var(--azul-claro)}
+.menu-m a.ativo{color:var(--azul-claro)}
+.menu-aberto .menu-m a{transform:none}
+.menu-aberto .menu-m li:nth-child(2) a{transition-delay:.05s}.menu-aberto .menu-m li:nth-child(3) a{transition-delay:.1s}
+.menu-aberto .menu-m li:nth-child(4) a{transition-delay:.15s}.menu-aberto .menu-m li:nth-child(5) a{transition-delay:.2s}.menu-aberto .menu-m li:nth-child(6) a{transition-delay:.25s}
+.menu-m .rodape-m{display:flex;justify-content:space-between;margin-top:22px;color:var(--cinza)}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:#05060a;isolation:isolate}
+.hero-bg{position:absolute;inset:-6%;z-index:0;will-change:transform}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:saturate(.75) contrast(1.08)}
+.hero-bg::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(120% 70% at 50% 18%, rgba(47,86,255,.10), transparent 60%),
+  linear-gradient(180deg, rgba(5,6,10,.55) 0%, rgba(5,6,10,.25) 35%, rgba(5,6,10,.6) 70%, #05060a 100%)}
+.apagao{position:absolute;inset:0;z-index:1;background:#020306;pointer-events:none}
+.feixe{position:absolute;z-index:1;top:-20%;left:50%;width:70vmax;height:140%;transform:translateX(-50%);pointer-events:none;opacity:0;
+  background:conic-gradient(from 180deg at 50% 0%, transparent 168deg, rgba(220,230,255,.18) 180deg, transparent 192deg);mix-blend-mode:screen}
+.nome{position:absolute;z-index:2;left:0;right:0;top:calc(var(--header-h) + 3vh);padding:0 var(--gutter);pointer-events:none;user-select:none}
+.nome .l{display:block;font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 60;line-height:.8;text-transform:uppercase;letter-spacing:-.015em;white-space:nowrap;will-change:transform}
+.nome .l1{color:var(--gelo)}
+.nome .l2{text-align:right;color:transparent;-webkit-text-stroke:2px rgba(236,239,244,.85)}
+.nome .clip + .clip{margin-top:.6vh}
+.nome .letra{display:inline-block;will-change:transform}
+.nome .clip{display:block;overflow:hidden;padding-bottom:.02em}
+.bola-o{display:inline-block;width:.7em;height:.7em;margin:0 .03em;vertical-align:-.02em;background:url(img/bola.webp) center/contain no-repeat;border-radius:50%;filter:drop-shadow(0 .05em .08em rgba(0,0,0,.6))}
+.bola-o.vazio{background:none;filter:none}
+/* camada que acende em azul por baixo do refletor (segue o cursor) */
+.nome .l2-fill{position:absolute;left:0;right:0;color:var(--azul);-webkit-text-stroke:0;
+  -webkit-mask-image:radial-gradient(circle var(--raio,18vmin) at var(--mx,70%) var(--my,50%), #000 35%, transparent 100%);
+  mask-image:radial-gradient(circle var(--raio,18vmin) at var(--mx,70%) var(--my,50%), #000 35%, transparent 100%)}
+.jimmy{position:absolute;z-index:3;bottom:0;left:50%;height:min(94svh, 1040px);width:auto;max-width:none;transform:translateX(-46%);transform-origin:50% 100%;will-change:transform;
+  filter:drop-shadow(0 30px 40px rgba(0,0,0,.55)) brightness(.94) saturate(1.05) contrast(1.06)}
+.hero-sombra{position:absolute;z-index:4;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,transparent,rgba(5,6,10,.85) 70%,#05060a);pointer-events:none}
+/* gráficos de transmissão */
+.gc{position:absolute;z-index:5;left:var(--gutter);bottom:clamp(24px,5vh,56px);max-width:min(520px, 46vw)}
+.gc-tag{display:inline-flex;align-items:center;gap:10px;background:var(--azul);color:#fff;padding:7px 12px 6px;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+.gc-nome{display:flex;align-items:stretch;margin-top:6px;background:var(--gelo);color:var(--ink)}
+.gc-nome .num{display:grid;place-items:center;min-width:64px;background:var(--ink);color:var(--gelo);font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 70;font-size:2rem;padding:0 12px;border:1px solid var(--gelo)}
+.gc-nome .num.vz{font-size:1rem;color:var(--cinza)}
+.gc-nome .tx{padding:10px 18px 9px}
+.gc-nome strong{display:block;font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 92;font-size:1.5rem;line-height:1;text-transform:uppercase;letter-spacing:.01em}
+.gc-nome span{display:block;margin-top:4px;font-size:.88rem;color:var(--cinza-2)}
+.gc-frase{margin:16px 0 0;font-size:clamp(1.05rem,1.4vw,1.3rem);font-weight:500;color:var(--gelo);max-width:30ch;line-height:1.35}
+.gc-frase em{font-style:normal;color:var(--azul-claro)}
+.placar{position:absolute;z-index:5;right:var(--gutter);top:calc(var(--header-h) + 18px);display:flex;align-items:stretch;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--linha);background:rgba(7,8,11,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.placar > *{padding:8px 12px;display:flex;align-items:center;gap:8px}
+.placar .jn{background:var(--gelo);color:var(--ink);font-weight:600}
+.placar .rel{font-variant-numeric:tabular-nums;color:var(--gelo);min-width:9ch}
+.fichas{position:absolute;z-index:5;right:var(--gutter);bottom:clamp(24px,5vh,56px);display:grid;gap:0;min-width:260px;border-top:1px solid var(--linha)}
+.fichas div{display:flex;justify-content:space-between;gap:24px;padding:10px 0;border-bottom:1px solid var(--linha);align-items:center}
+.fichas dt{color:var(--cinza)}
+.fichas dd{margin:0;font-weight:600;font-size:.95rem}
+.rolar{position:absolute;z-index:5;left:50%;bottom:18px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;color:var(--cinza)}
+.rolar .trilho{position:relative;width:1px;height:46px;background:var(--linha);overflow:hidden}
+.rolar .trilho::after{content:"";position:absolute;left:-3px;top:-8px;width:7px;height:7px;border-radius:50%;background:var(--gelo);animation:desce 1.9s var(--ease) infinite}
+@keyframes desce{0%{transform:translateY(0);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(58px);opacity:0}}
+
+/* faixa de rodapé (crawl de TV) */
+.crawl{position:relative;z-index:6;background:var(--azul);color:#fff;overflow:hidden;border-block:1px solid rgba(255,255,255,.2)}
+.crawl-trilho{display:flex;width:max-content;will-change:transform}
+.crawl span{display:flex;align-items:center;gap:28px;padding:14px 14px;font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 90;font-size:1.05rem;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.crawl svg{width:14px;height:14px;flex:none}
+
+/* =========================================================
+   SEÇÕES — base
+   ========================================================= */
+section{position:relative}
+.sec{padding:clamp(88px,13vw,180px) 0}
+.claro{background:var(--gelo);color:var(--ink)}
+
+.rotulo{display:flex;align-items:center;gap:14px;margin-bottom:clamp(28px,4vw,48px)}
+.rotulo .idx{color:var(--azul-claro)}
+.claro .rotulo .idx{color:var(--azul)}
+.rotulo .traco{flex:1;height:1px;background:currentColor;opacity:.2;transform-origin:0 50%}
+.titulo{font-family:var(--f-display);font-weight:850;font-variation-settings:"wdth" 64;text-transform:uppercase;line-height:.86;letter-spacing:-.01em;margin:0;font-size:clamp(3.2rem,9.4vw,9.5rem)}
+.titulo .lin{display:block;overflow:hidden;padding-bottom:.04em}
+.titulo .lin > span{display:block}
+.titulo .vaz{color:transparent;-webkit-text-stroke:1.5px var(--traco-cor,var(--gelo))}
+.claro{--traco-cor:var(--ink)}
+.titulo .az{color:var(--azul)}
+
+/* =========================================================
+   PERFIL (editorial claro)
+   ========================================================= */
+#perfil{border-radius:28px 28px 0 0;margin-top:-28px;z-index:7}
+.perfil-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,6vw,96px);align-items:start;margin-top:clamp(40px,6vw,80px)}
+.foto-ed{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--gelo-2)}
+.foto-ed img{width:100%;height:118%;object-fit:cover;object-position:40% 30%;will-change:transform}
+.foto-ed figcaption{position:absolute;left:0;bottom:0;right:0;display:flex;justify-content:space-between;padding:14px 16px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.55))}
+.foto-ed .cantos{position:absolute;inset:14px;pointer-events:none}
+.cantos i{position:absolute;width:22px;height:22px;border:solid #fff;opacity:.9}
+.cantos i:nth-child(1){left:0;top:0;border-width:2px 0 0 2px}.cantos i:nth-child(2){right:0;top:0;border-width:2px 2px 0 0}
+.cantos i:nth-child(3){left:0;bottom:0;border-width:0 0 2px 2px}.cantos i:nth-child(4){right:0;bottom:0;border-width:0 2px 2px 0}
+.bio{font-size:clamp(1.25rem,2vw,1.75rem);line-height:1.32;font-weight:500;letter-spacing:-.01em;margin:0 0 28px;max-width:34ch}
+.bio .w{opacity:.16;transition:none}
+.nota-ed{font-size:.95rem;color:var(--cinza-2);max-width:52ch;margin:0 0 36px}
+.ficha{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--linha-escura);margin:0}
+.ficha div{padding:16px 0 14px;border-bottom:1px solid var(--linha-escura)}
+.ficha div:nth-child(odd){padding-right:16px;border-right:1px solid var(--linha-escura)}
+.ficha div:nth-child(even){padding-left:16px}
+.ficha dt{color:var(--cinza-2);margin-bottom:6px}
+.ficha dd{margin:0;font-family:var(--f-display);font-weight:750;font-variation-settings:"wdth" 80;font-size:1.45rem;line-height:1.05;text-transform:uppercase}
+.ficha dd small{display:block;margin-top:6px;font-family:var(--f-mono);font-weight:400;font-size:.62rem;letter-spacing:.12em;color:var(--cinza-2)}
+.bloco-ed{margin-top:clamp(56px,8vw,110px);display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--ink)}
+.bloco-ed > div{padding:22px 24px 4px 0}
+.bloco-ed > div + div{padding-left:24px;border-left:1px solid var(--linha-escura)}
+.bloco-ed h3{font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 75;font-size:1.6rem;text-transform:uppercase;margin:10px 0 14px;line-height:1}
+.bloco-ed p{margin:0 0 12px;color:var(--cinza-2);font-size:.98rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags li{list-style:none}
+.tags ul,.lista-l{padding:0;margin:0}
+.tag{display:inline-block;border:1px solid var(--ink);border-radius:99px;padding:6px 14px;font-weight:600;font-size:.9rem}
+.citacao{margin:0;font-family:var(--f-display);font-weight:600;font-variation-settings:"wdth" 90;font-size:1.5rem;line-height:1.15}
+
+/* =========================================================
+   NÚMEROS (painel de transmissão)
+   ========================================================= */
+#numeros{background:var(--ink)}
+.painel{margin-top:clamp(40px,6vw,72px);border:1px solid var(--linha);background:linear-gradient(180deg,var(--ink-2),var(--ink))}
+.painel-topo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--linha)}
+.painel-topo .esq{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.chip-az{background:var(--azul);color:#fff;padding:5px 10px}
+.btn-ex{border:1px solid var(--linha);padding:8px 12px;border-radius:99px;transition:border-color .3s, background-color .3s}
+.btn-ex:hover{border-color:var(--gelo)}
+.btn-ex[aria-pressed="true"]{background:#f5a524;color:var(--ink);border-color:#f5a524}
+.aviso-ex{display:none;padding:10px 18px;background:#f5a524;color:var(--ink);font-weight:700;font-size:.9rem}
+.exemplo .aviso-ex{display:block}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr)}
+.tile{position:relative;padding:clamp(20px,2.6vw,34px) clamp(16px,2vw,28px);border-right:1px solid var(--linha);overflow:hidden}
+.tile:last-child{border-right:0}
+.tile .mono{color:var(--cinza)}
+.tile .val{display:block;margin:14px 0 10px;font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 60;font-size:clamp(4rem,8.5vw,8.5rem);line-height:.8;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.tile .val.vz{color:var(--grafite-2);-webkit-text-stroke:1.5px var(--cinza-2)}
+.tile .sub{font-size:.88rem;color:var(--cinza);min-height:1.4em}
+.tile .barra{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--azul);transform-origin:0 50%;transform:scaleX(0)}
+.tile:hover .barra{transform:scaleX(1);transition:transform .6s var(--ease)}
+.tile.dest{background:var(--azul-fundo)}
+.tile.dest .val{color:var(--gelo)}
+.graficos{display:grid;grid-template-columns:1.6fr 1fr;border-top:1px solid var(--linha)}
+.graficos > div{padding:clamp(20px,2.6vw,34px)}
+.graficos > div + div{border-left:1px solid var(--linha)}
+.graf-tit{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;color:var(--cinza)}
+.leg{display:flex;gap:14px}
+.leg i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+.barras-svg,.rosca-svg{width:100%;height:auto;overflow:visible}
+.barras-svg text,.rosca-svg text{font-family:var(--f-mono);fill:var(--cinza);font-size:11px;letter-spacing:.08em}
+.vazio-graf{fill:none;stroke:var(--cinza-2);stroke-dasharray:4 5}
+.sem-sinal{font-family:var(--f-mono);fill:var(--cinza)!important;font-size:12px!important;letter-spacing:.2em!important}
+@media (max-width:640px){.sem-sinal{font-size:20px!important;letter-spacing:.1em!important}}
+.rosca-wrap{display:flex;align-items:center;gap:24px}
+.rosca-svg{max-width:200px;flex:none}
+.rosca-leg{display:grid;gap:10px;font-size:.92rem}
+.rosca-leg b{display:block;font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 70;font-size:2rem;line-height:1}
+.fonte{padding:12px 18px;border-top:1px solid var(--linha);color:var(--cinza-2)}
+
+/* =========================================================
+   MOMENTOS (galeria + replay)
+   ========================================================= */
+#momentos{background:var(--ink-2)}
+.gal{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:clamp(150px,17vw,250px);gap:clamp(10px,1.2vw,18px);margin-top:clamp(40px,6vw,72px)}
+.card{position:relative;overflow:hidden;background:var(--grafite);text-align:left;display:block;width:100%;height:100%;isolation:isolate}
+.card img{width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 1.1s var(--ease), filter .8s;filter:saturate(.85)}
+.card:hover img,.card:focus-visible img{transform:scale(1.1);filter:saturate(1.05)}
+.card .cantos{position:absolute;inset:18px;transition:inset .6s var(--ease);opacity:0;z-index:2}
+.card:hover .cantos,.card:focus-visible .cantos{inset:12px;opacity:1}
+.card .cantos i{transition:opacity .3s}
+.card .leg-c{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff}
+.card .leg-c strong{display:block;font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 78;font-size:clamp(1.15rem,1.6vw,1.6rem);text-transform:uppercase;line-height:1;transform:translateY(6px);transition:transform .6s var(--ease)}
+.card:hover .leg-c strong{transform:none}
+.card .play{flex:none;width:40px;height:40px;border-radius:50%;background:var(--gelo);color:var(--ink);display:grid;place-items:center;transform:scale(.7);opacity:0;transition:transform .5s var(--ease), opacity .4s}
+.card:hover .play,.card:focus-visible .play{transform:none;opacity:1}
+.c1{grid-column:1 / span 7;grid-row:span 2}
+.c2{grid-column:8 / span 5;grid-row:span 1}
+.c3{grid-column:8 / span 5;grid-row:span 1}
+.c4{grid-column:1 / span 4;grid-row:span 2}
+.c5{grid-column:5 / span 8;grid-row:span 2}
+.card-slot{display:flex;flex-direction:column;justify-content:space-between;padding:20px;border:1px dashed var(--cinza-2);background:transparent;color:var(--cinza)}
+.card-slot strong{font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 78;font-size:1.6rem;line-height:1;text-transform:uppercase;color:var(--gelo)}
+
+/* lightbox com vinheta de replay */
+.lb{position:fixed;inset:0;z-index:80;display:none;background:rgba(5,6,10,.96)}
+.lb.on{display:block}
+.lb figure{position:absolute;inset:0;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px var(--gutter) 90px}
+.lb img{max-width:100%;max-height:100%;object-fit:contain}
+.lb figcaption{position:absolute;left:var(--gutter);bottom:28px;right:var(--gutter);display:flex;justify-content:space-between;gap:16px;align-items:center}
+.lb figcaption strong{font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 80;font-size:1.5rem;text-transform:uppercase}
+.lb-ctrl{position:absolute;top:18px;right:var(--gutter);display:flex;gap:8px;z-index:3}
+.lb-ctrl button{width:46px;height:46px;border-radius:50%;border:1px solid var(--linha);display:grid;place-items:center;transition:background-color .3s,color .3s}
+.lb-ctrl button:hover{background:var(--gelo);color:var(--ink)}
+.replay{position:fixed;inset:0;z-index:85;pointer-events:none;overflow:hidden;visibility:hidden}
+.replay .fx{position:absolute;top:-30%;bottom:-30%;width:150%;left:-25%;will-change:transform}
+.replay .f1{background:var(--gelo)}
+.replay .f2{background:var(--azul)}
+.replay .f3{background:var(--ink);display:flex;align-items:center;justify-content:center}
+.replay .marca{transform:skewX(18deg);display:flex;align-items:center;gap:18px;color:var(--gelo)}
+.replay .marca b{font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 120;font-size:clamp(2.4rem,8vw,6rem);letter-spacing:.06em;font-style:italic}
+.replay .marca .bola-r{width:clamp(36px,6vw,72px);height:clamp(36px,6vw,72px);background:url(img/bola.webp) center/contain no-repeat}
+
+/* =========================================================
+   TRAJETÓRIA (prancheta tática)
+   ========================================================= */
+#trajetoria{overflow:hidden}
+.prancheta{position:relative;margin-top:clamp(48px,7vw,96px)}
+.prancheta::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(var(--linha-escura) 1px,transparent 1px),linear-gradient(90deg,var(--linha-escura) 1px,transparent 1px);background-size:64px 64px;
+  -webkit-mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent)}
+.rota{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.rota .base{fill:none;stroke:var(--ink);stroke-opacity:.18;stroke-width:2;stroke-dasharray:2 9;stroke-linecap:round}
+.rota .viva{fill:none;stroke:var(--azul);stroke-width:3;stroke-linecap:round}
+.bola-t{position:absolute;left:0;top:0;width:46px;height:46px;margin:-23px 0 0 -23px;background:url(img/bola.webp) center/contain no-repeat;will-change:transform;z-index:3;filter:drop-shadow(0 6px 8px rgba(0,0,0,.25))}
+.marcos{position:relative;list-style:none;margin:0;padding:0;display:grid;gap:clamp(64px,10vw,140px)}
+.marco{position:relative;width:min(44%,520px)}
+.marco:nth-child(odd){justify-self:start}
+.marco:nth-child(even){justify-self:end}
+.marco .pino{position:absolute;top:10px;width:18px;height:18px;border-radius:50%;background:var(--gelo);border:2px solid var(--ink);z-index:2;transition:background-color .4s,border-color .4s,transform .4s var(--ease)}
+.marco:nth-child(odd) .pino{right:calc(-1 * clamp(28px,6vw,90px))}
+.marco:nth-child(even) .pino{left:calc(-1 * clamp(28px,6vw,90px))}
+.marco.passou .pino{background:var(--azul);border-color:var(--azul);transform:scale(1.25)}
+.marco .ano{font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 60;font-size:clamp(3.6rem,7vw,6.5rem);line-height:.85;color:transparent;-webkit-text-stroke:1.5px var(--ink);transition:color .5s}
+.marco.passou .ano{color:var(--ink)}
+.marco h3{font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 80;font-size:clamp(1.4rem,2.2vw,2rem);text-transform:uppercase;line-height:1;margin:14px 0 10px}
+.marco p{margin:0 0 12px;color:var(--cinza-2);max-width:44ch}
+.marco.pendente .ano{-webkit-text-stroke-color:var(--cinza)}
+
+/* =========================================================
+   CONTATO
+   ========================================================= */
+#contato{min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;isolation:isolate;padding:clamp(120px,16vw,200px) 0 0}
+.contato-bg{position:absolute;inset:-8% 0;z-index:-1;will-change:transform}
+.contato-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 55%}
+.contato-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#07080b 0%,rgba(7,8,11,.35) 30%,rgba(7,8,11,.55) 60%,#07080b 96%)}
+.contato-in{width:100%}
+.contato-tit{font-size:clamp(3.6rem,12vw,12rem)}
+.redes{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(40px,6vw,72px);border-top:1px solid var(--linha)}
+.rede{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:28px;min-height:150px;padding:22px 20px;border-right:1px solid var(--linha);border-bottom:1px solid var(--linha);text-decoration:none;overflow:hidden;background:rgba(7,8,11,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.rede:last-child{border-right:0}
+.rede::before{content:"";position:absolute;inset:0;background:var(--azul);transform:translateY(101%);transition:transform .6s var(--ease);z-index:-1}
+a.rede:hover::before,a.rede:focus-visible::before{transform:none}
+.rede strong{font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 80;font-size:1.6rem;text-transform:uppercase;line-height:1}
+.rede .seta{position:absolute;top:20px;right:20px;transition:transform .5s var(--ease)}
+a.rede:hover .seta{transform:translate(4px,-4px)}
+.rodape{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;padding:28px 0 calc(28px + env(safe-area-inset-bottom));color:var(--cinza)}
+.subir{display:inline-flex;align-items:center;gap:10px;text-decoration:none}
+.subir span{width:38px;height:38px;border-radius:50%;border:1px solid var(--linha);display:grid;place-items:center;transition:transform .5s var(--ease), background-color .3s, color .3s}
+.subir:hover span{transform:translateY(-4px);background:var(--gelo);color:var(--ink)}
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+@media (max-width: 1080px){
+  .fichas{display:none}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .tile:nth-child(2){border-right:0}
+  .tile:nth-child(-n+2){border-bottom:1px solid var(--linha)}
+  .graficos{grid-template-columns:1fr}
+  .graficos > div + div{border-left:0;border-top:1px solid var(--linha)}
+  .redes{grid-template-columns:repeat(2,1fr)}
+  .rede:nth-child(2){border-right:0}
+}
+@media (max-width: 860px){
+  :root{--header-h:64px}
+  .nav,.topo .ao-vivo{display:none}
+  .btn-menu{display:block}
+  .perfil-grid{grid-template-columns:1fr}
+  .foto-ed{aspect-ratio:4/4.4}
+  .bloco-ed{grid-template-columns:1fr}
+  .bloco-ed > div + div{padding-left:0;border-left:0;border-top:1px solid var(--linha-escura)}
+  .gal{grid-template-columns:repeat(6,1fr);grid-auto-rows:42vw}
+  .c1{grid-column:1 / -1;grid-row:span 2}
+  .c2,.c3{grid-column:span 3;grid-row:span 1}
+  .c4{grid-column:span 3;grid-row:span 2}
+  .c5{grid-column:span 3;grid-row:span 2}
+  .card .leg-c{padding:12px}
+  .card .play{opacity:1;transform:none;width:32px;height:32px}
+  .card .cantos{display:none}
+  /* trajetória vira coluna, rota na esquerda */
+  .marcos{padding-left:44px;gap:72px}
+  .marco,.marco:nth-child(even){width:100%;justify-self:stretch}
+  .marco:nth-child(odd) .pino,.marco:nth-child(even) .pino{left:-44px;right:auto;margin-left:5px}
+}
+@media (max-width: 640px){
+  body{font-size:16px}
+  .hero{min-height:600px}
+  .jimmy{height:min(70svh,620px);transform:translateX(-50%)}
+  .placar{display:none}
+  .gc{left:var(--gutter);right:var(--gutter);max-width:none;bottom:22px}
+  .gc-nome .num{min-width:52px;font-size:1.6rem}
+  .gc-nome strong{font-size:1.25rem}
+  .gc-frase{display:none}
+  .rolar{display:none}
+  .nome .l2{-webkit-text-stroke-width:1.5px}
+  .tiles{grid-template-columns:1fr 1fr}
+  .tile .val{font-size:clamp(3.4rem,17vw,5rem)}
+  .rosca-wrap{flex-direction:column;align-items:flex-start}
+  .ficha{grid-template-columns:1fr}
+  .ficha div:nth-child(odd){padding-right:0;border-right:0}
+  .ficha div:nth-child(even){padding-left:0}
+  .redes{grid-template-columns:1fr}
+  .rede{border-right:0;min-height:112px}
+  .lb figure{padding:72px 12px 96px}
+  .lb figcaption{flex-direction:column;align-items:flex-start;gap:4px}
+}
+.frase-m{display:none}
+@media (max-width:640px){
+  .frase-m{display:block;padding:28px var(--gutter) 6px;background:#05060a;font-size:1.25rem;font-weight:500;line-height:1.3}
+  .frase-m em{font-style:normal;color:var(--azul-claro)}
+  .fichas-m{display:grid;grid-template-columns:1fr 1fr;padding:12px var(--gutter) 34px;background:#05060a;gap:0;margin:0}
+  .fichas-m div{padding:12px 0;border-bottom:1px solid var(--linha)}
+  .fichas-m dt{color:var(--cinza);margin-bottom:4px}
+  .fichas-m dd{margin:0;font-weight:600}
+}
+@media (min-width:641px){.fichas-m{display:none}}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .bio .w{opacity:1}
+}
+/* sem JS ou sem GSAP: tudo visível */
+.sem-motion .apagao{display:none}
+.sem-motion .bio .w{opacity:1}
+</style>
+</head>
+<body>
+<div class="grao" aria-hidden="true"></div>
+
+<!-- ===================== HEADER ===================== -->
+<header class="topo" id="topo">
+  <div class="wrap">
+    <a class="logo" href="#home" aria-label="Jimmy Neutron, voltar ao início">
+      <b>JIMMY</b><span>NEUTR<svg class="orb" viewBox="0 0 24 24" aria-hidden="true"><g class="anel"><ellipse cx="12" cy="12" rx="11" ry="4.2" transform="rotate(-28 12 12)"/></g><circle cx="12" cy="12" r="5.6"/></svg>N</span>
+    </a>
+    <nav class="nav" aria-label="Seções">
+      <a href="#perfil" data-sec="perfil"><span class="n">01</span>Perfil</a>
+      <a href="#numeros" data-sec="numeros"><span class="n">02</span>Números</a>
+      <a href="#momentos" data-sec="momentos"><span class="n">03</span>Momentos</a>
+      <a href="#trajetoria" data-sec="trajetoria"><span class="n">04</span>Trajetória</a>
+      <a href="#contato" data-sec="contato"><span class="n">05</span>Contato</a>
+      <i class="nav-ind" aria-hidden="true"></i>
+    </nav>
+    <div class="ao-vivo mono"><span class="ponto" aria-hidden="true"></span>Em campo</div>
+    <button class="btn-menu" id="btnMenu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menuM"><i></i><i></i></button>
+    <span class="progresso" id="progresso" aria-hidden="true"></span>
+  </div>
+</header>
+
+<div class="menu-m" id="menuM" aria-hidden="true">
+  <ol>
+    <li><a href="#home" data-sec="home">Início <small>00</small></a></li>
+    <li><a href="#perfil" data-sec="perfil">Perfil <small>01</small></a></li>
+    <li><a href="#numeros" data-sec="numeros">Números <small>02</small></a></li>
+    <li><a href="#momentos" data-sec="momentos">Momentos <small>03</small></a></li>
+    <li><a href="#trajetoria" data-sec="trajetoria">Trajetória <small>04</small></a></li>
+    <li><a href="#contato" data-sec="contato">Contato <small>05</small></a></li>
+  </ol>
+  <div class="rodape-m mono"><span>Jimmy Neutron</span><span>Football</span></div>
+</div>
+
+<main>
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="home" aria-label="Jimmy Neutron">
+  <div class="hero-bg" id="heroBg"><img src="img/estadio-noite.webp" alt="" width="736" height="1308" fetchpriority="high"></div>
+  <div class="feixe" id="feixe" aria-hidden="true"></div>
+  <div class="apagao" id="apagao" aria-hidden="true"></div>
+
+  <h1 class="nome" id="nome">
+    <span class="sr">Jimmy Neutron</span>
+    <span class="clip" aria-hidden="true"><span class="l l1" id="l1" data-fit="0.6" data-fit-m="0.86">JIMMY</span></span>
+    <span class="clip" aria-hidden="true" style="position:relative">
+      <span class="l l2" id="l2" data-fit="0.97" data-fit-m="0.98">NEUTR<span class="bola-o" id="bolaO"></span>N</span>
+      <span class="l l2 l2-fill" id="l2fill" style="top:0">NEUTR<span class="bola-o vazio"></span>N</span>
+    </span>
+  </h1>
+
+  <img class="jimmy" id="jimmy" src="img/jimmy-recorte.webp" alt="Jimmy Neutron em treino, de camisa azul, dominando a bola" width="854" height="1037">
+  <div class="hero-sombra" aria-hidden="true"></div>
+
+  <div class="placar" aria-hidden="true">
+    <span class="jn">JN</span>
+    <span><span class="ponto"></span><span class="lbl">Tempo de visita</span></span>
+    <span class="rel" id="relogio">00:00</span>
+  </div>
+
+  <div class="gc" id="gc">
+    <div class="gc-tag mono"><span class="ponto" aria-hidden="true"></span>Perfil oficial</div>
+    <div class="gc-nome">
+      <div class="num" id="gcNum">#</div>
+      <div class="tx"><strong>Jimmy Neutron</strong><span id="gcSub">Treino · camisa Ibrachina F.C.</span></div>
+    </div>
+    <p class="gc-frase">Pensa antes da <em>bola chegar.</em></p>
+  </div>
+
+  <dl class="fichas mono" id="fichasHero"></dl>
+
+  <a class="rolar mono" href="#perfil" aria-label="Rolar para o perfil"><span class="trilho"></span>Role</a>
+</section>
+
+<p class="frase-m">Pensa antes da <em>bola chegar.</em></p>
+<dl class="fichas-m mono" id="fichasM"></dl>
+
+<div class="crawl" aria-hidden="true"><div class="crawl-trilho" id="crawl"></div></div>
+
+<!-- ===================== PERFIL ===================== -->
+<section class="sec claro" id="perfil" aria-labelledby="t-perfil">
+  <div class="wrap">
+    <div class="rotulo mono"><span class="idx">01</span><span>Perfil</span><span class="traco"></span><span>Jimmy Neutron</span></div>
+    <h2 class="titulo" id="t-perfil"><span class="lin"><span>Cabeça</span></span><span class="lin"><span class="vaz">levantada,</span></span><span class="lin"><span>bola <span class="az">no pé.</span></span></span></h2>
+
+    <div class="perfil-grid">
+      <figure class="foto-ed" id="fotoEd" style="margin:0">
+        <img src="img/jimmy-treino.webp" alt="Jimmy no treino, camisa azul do Ibrachina F.C., olhando para a bola" width="1080" height="1067" loading="lazy">
+        <span class="cantos" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <figcaption class="mono"><span>Treino</span><span>Ibrachina F.C.</span></figcaption>
+      </figure>
+
+      <div>
+        <p class="bio" id="bio"></p>
+        <p class="nota-ed" id="bioNota"></p>
+        <dl class="ficha mono" id="ficha"></dl>
+      </div>
+    </div>
+
+    <div class="bloco-ed">
+      <div>
+        <span class="mono" style="color:var(--azul)">Características</span>
+        <h3>Como joga</h3>
+        <ul class="tags" id="caracteristicas"></ul>
+      </div>
+      <div>
+        <span class="mono" style="color:var(--azul)">Personalidade</span>
+        <h3>Nas palavras dele</h3>
+        <div id="frase"></div>
+      </div>
+      <div>
+        <span class="mono" style="color:var(--azul)">Momentos</span>
+        <h3>O que marcou</h3>
+        <ul class="lista-l" id="destaques" style="list-style:none"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NÚMEROS ===================== -->
+<section class="sec" id="numeros" aria-labelledby="t-num">
+  <div class="wrap">
+    <div class="rotulo mono"><span class="idx">02</span><span>Números</span><span class="traco"></span><span id="numTemporada">Temporada —</span></div>
+    <h2 class="titulo" id="t-num"><span class="lin"><span>Os números</span></span><span class="lin"><span class="vaz">não mentem.</span></span></h2>
+
+    <div class="painel" id="painel">
+      <div class="painel-topo">
+        <div class="esq mono"><span class="chip-az">Estatísticas</span><span id="painelStatus">Aguardando dados</span></div>
+        <button class="btn-ex mono" id="btnEx" aria-pressed="false">Ver com dados de exemplo</button>
+      </div>
+      <div class="aviso-ex" role="status">Números de EXEMPLO, inventados só pra mostrar o painel funcionando. Não são do Jimmy.</div>
+      <div class="tiles" id="tiles"></div>
+      <div class="graficos">
+        <div>
+          <div class="graf-tit mono"><span>Por temporada</span><span class="leg"><span><i style="background:var(--azul)"></i>Gols</span><span><i style="background:var(--gelo)"></i>Assist.</span></span></div>
+          <svg class="barras-svg" id="barras" viewBox="0 0 560 240" role="img" aria-label="Gols e assistências por temporada"></svg>
+        </div>
+        <div>
+          <div class="graf-tit mono"><span>Participação em gols</span></div>
+          <div class="rosca-wrap">
+            <svg class="rosca-svg" id="rosca" viewBox="0 0 200 200" role="img" aria-label="Divisão entre gols e assistências"></svg>
+            <div class="rosca-leg" id="roscaLeg"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fonte mono" id="fonte">Fonte: a preencher</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MOMENTOS ===================== -->
+<section class="sec" id="momentos" aria-labelledby="t-mom">
+  <div class="wrap">
+    <div class="rotulo mono"><span class="idx">03</span><span>Momentos</span><span class="traco"></span><span>Toque pra ver o replay</span></div>
+    <h2 class="titulo" id="t-mom"><span class="lin"><span>Replay</span></span><span class="lin"><span class="vaz">em câmera</span> <span class="az">lenta.</span></span></h2>
+
+    <div class="gal" id="gal">
+      <button class="card c1" data-i="0"><img src="img/jimmy-treino.webp" alt="" loading="lazy"><span class="cantos" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="leg-c"><span><span class="mono">Treino</span><strong>Primeiro toque</strong></span><span class="play" aria-hidden="true">▶</span></span></button>
+      <button class="card c2" data-i="1"><img src="img/chuteira.webp" alt="" loading="lazy"><span class="cantos" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="leg-c"><span><span class="mono">Equipamento</span><strong>Tiempo na bandeira</strong></span><span class="play" aria-hidden="true">▶</span></span></button>
+      <button class="card c3" data-i="2"><img src="img/dirigindo.webp" alt="" loading="lazy" style="object-position:50% 40%"><span class="cantos" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="leg-c"><span><span class="mono">Fora de campo</span><strong>Estrada de terra</strong></span><span class="play" aria-hidden="true">▶</span></span></button>
+      <button class="card c4" data-i="3"><img src="img/estadio-noite.webp" alt="" loading="lazy" style="object-position:50% 70%"><span class="cantos" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="leg-c"><span><span class="mono">Clima</span><strong>Refletor aceso</strong></span><span class="play" aria-hidden="true">▶</span></span></button>
+      <button class="card c5" data-i="4"><img src="img/por-do-sol.webp" alt="" loading="lazy" style="object-position:50% 60%"><span class="cantos" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="leg-c"><span><span class="mono">Clima</span><strong>Fim de tarde na trave</strong></span><span class="play" aria-hidden="true">▶</span></span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TRAJETÓRIA ===================== -->
+<section class="sec claro" id="trajetoria" aria-labelledby="t-traj">
+  <div class="wrap">
+    <div class="rotulo mono"><span class="idx">04</span><span>Trajetória</span><span class="traco"></span><span>A bola conta a história</span></div>
+    <h2 class="titulo" id="t-traj"><span class="lin"><span>Cada passo,</span></span><span class="lin"><span class="vaz">uma jogada.</span></span></h2>
+
+    <div class="prancheta" id="prancheta">
+      <svg class="rota" id="rota" aria-hidden="true"><path class="base" id="rotaBase"/><path class="viva" id="rotaViva"/></svg>
+      <span class="bola-t" id="bolaT" aria-hidden="true"></span>
+      <ol class="marcos" id="marcos"></ol>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTATO ===================== -->
+<section id="contato" aria-labelledby="t-cont">
+  <div class="contato-bg" id="contatoBg"><img src="img/por-do-sol.webp" alt="" loading="lazy"></div>
+  <div class="contato-in">
+    <div class="wrap">
+      <div class="rotulo mono"><span class="idx">05</span><span>Contato</span><span class="traco"></span><span>Redes</span></div>
+      <h2 class="titulo contato-tit" id="t-cont"><span class="lin"><span>Segue</span></span><span class="lin"><span class="vaz">o jogo.</span></span></h2>
+      <div class="redes" id="redes"></div>
+      <footer class="rodape mono">
+        <a class="logo" href="#home" style="font-size:14px;color:var(--gelo)"><b>JIMMY</b><span>NEUTR<svg class="orb" viewBox="0 0 24 24" aria-hidden="true"><g class="anel"><ellipse cx="12" cy="12" rx="11" ry="4.2" transform="rotate(-28 12 12)"/></g><circle cx="12" cy="12" r="5.6"/></svg>N</span></a>
+        <span>© 2026 Jimmy Neutron</span>
+        <a class="subir" href="#home">Voltar ao topo <span aria-hidden="true">↑</span></a>
+      </footer>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- lightbox -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Momento em tela cheia">
+  <div class="lb-ctrl">
+    <button id="lbPrev" aria-label="Anterior">←</button>
+    <button id="lbNext" aria-label="Próximo">→</button>
+    <button id="lbFechar" aria-label="Fechar">✕</button>
+  </div>
+  <figure><img id="lbImg" src="" alt=""><figcaption><span><span class="mono" id="lbCat" style="color:var(--azul-claro)"></span><br><strong id="lbTit"></strong></span><span class="mono" id="lbCont"></span></figcaption></figure>
+</div>
+<div class="replay" id="replay" aria-hidden="true">
+  <div class="fx f1"></div><div class="fx f2"></div>
+  <div class="fx f3"><div class="marca"><span class="bola-r"></span><b>REPLAY</b></div></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
+<script>
+/* =========================================================
+   DADOS DO JIMMY — edite só aqui.
+   null = ainda não temos o dado (aparece "a preencher" no site).
+   Nada aqui foi inventado: o que está preenchido saiu das fotos.
+   ========================================================= */
+const JIMMY = {
+  numero: null,                         // número da camisa, ex.: 10
+  posicao: null,                        // ex.: "Meia"
+  pe: null,                             // "Direito" | "Esquerdo" | "Ambidestro"
+  altura: null,                         // ex.: "1,75 m"
+  cidade: null,                         // ex.: "São Paulo, SP"
+  clube: { nome: "Ibrachina F.C.", nota: "visto na camisa · confirmar" },
+  chuteira: { nome: "Nike Tiempo", nota: "visto na foto" },
+  bio: null,                            // 2 ou 3 frases sobre ele
+  caracteristicas: [],                  // ex.: ["Visão de jogo", "Passe curto"]
+  frase: null,                          // uma frase dele, entre aspas
+  destaques: [],                        // ex.: ["Primeiro gol pelo clube"]
+  stats: {
+    temporada: null,                    // ex.: "2026"
+    fonte: null,                        // de onde vieram os números
+    jogos: null, gols: null, assist: null, minutos: null,
+    porTemporada: []                    // ex.: [{ano:"2025", gols:4, assist:6}]
+  },
+  trajetoria: [
+    { ano: null, titulo: "Primeiro clube", texto: null },
+    { ano: null, titulo: "Ibrachina F.C.", texto: "Camisa azul que aparece nas fotos de treino. Falta confirmar desde quando e em qual categoria." },
+    { ano: null, titulo: "Próximo capítulo", texto: null }
+  ],
+  redes: {
+    instagram: null,                    // ex.: "https://instagram.com/usuario"
+    tiktok: null,
+    youtube: null,
+    email: null                         // ex.: "nome@email.com"
+  }
+};
+
+/* exemplo SÓ pra visualizar o painel (aparece com aviso) */
+const EXEMPLO = { temporada:"EXEMPLO", fonte:"dados fictícios", jogos:24, gols:9, assist:7, minutos:1680,
+  porTemporada:[{ano:"T1",gols:3,assist:2},{ano:"T2",gols:5,assist:4},{ano:"T3",gols:9,assist:7}] };
+
+/* ========================================================= */
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const PEND = (t='a preencher') => `<span class="pend">${t}</span>`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const temMotion = !!(window.gsap && window.ScrollTrigger) && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+const toque = matchMedia('(hover: none)').matches;
+if (!temMotion) document.documentElement.classList.add('sem-motion');
+
+/* ---------- conteúdo a partir dos dados ---------- */
+function val(v, nota){ return v ? esc(v) + (nota ? `<small>${esc(nota)}</small>` : '') : PEND(); }
+const fichaItens = [
+  ['Posição', JIMMY.posicao], ['Pé', JIMMY.pe], ['Clube', JIMMY.clube.nome, JIMMY.clube.nota],
+  ['Número', JIMMY.numero], ['Altura', JIMMY.altura], ['Chuteira', JIMMY.chuteira.nome, JIMMY.chuteira.nota]
+];
+$('#ficha').innerHTML = fichaItens.map(([k,v,n]) => `<div><dt>${k}</dt><dd>${val(v,n)}</dd></div>`).join('');
+const fichaHero = [['Posição', JIMMY.posicao], ['Pé', JIMMY.pe], ['Clube', JIMMY.clube.nome], ['Chuteira', JIMMY.chuteira.nome]];
+const fichaHTML = fichaHero.map(([k,v]) => `<div><dt>${k}</dt><dd>${v ? esc(v) : PEND()}</dd></div>`).join('');
+$('#fichasHero').innerHTML = fichaHTML; $('#fichasM').innerHTML = fichaHTML;
+if (JIMMY.numero) $('#gcNum').textContent = JIMMY.numero; else { $('#gcNum').textContent = '#?'; $('#gcNum').classList.add('vz'); }
+if (JIMMY.posicao) $('#gcSub').textContent = JIMMY.posicao + ' · ' + JIMMY.clube.nome;
+
+const bioTexto = JIMMY.bio || 'Jimmy Neutron joga com a camisa azul do Ibrachina F.C. e pisa no campo de Nike Tiempo preta. O resto da história, ele mesmo conta.';
+$('#bio').innerHTML = bioTexto.split(' ').map(w => `<span class="w">${esc(w)}</span>`).join(' ');
+$('#bioNota').innerHTML = JIMMY.bio ? '' : PEND('Biografia completa a preencher') + '<br><br>Onde nasceu, quando começou, quem o levou pro campo e o que o move. Entra aqui assim que ele mandar.';
+$('#caracteristicas').innerHTML = JIMMY.caracteristicas.length ? JIMMY.caracteristicas.map(c => `<li class="tag">${esc(c)}</li>`).join('') : `<li>${PEND()}</li>`;
+$('#frase').innerHTML = JIMMY.frase ? `<blockquote class="citacao">“${esc(JIMMY.frase)}”</blockquote>` : `<p>Uma frase dele sobre como encara o jogo.</p>${PEND()}`;
+$('#destaques').innerHTML = JIMMY.destaques.length ? JIMMY.destaques.map(d => `<li style="padding:8px 0;border-bottom:1px solid var(--linha-escura);font-weight:600">${esc(d)}</li>`).join('') : `<li><p>Gols, títulos, convocações, peneiras.</p>${PEND()}</li>`;
+
+/* trajetória */
+$('#marcos').innerHTML = JIMMY.trajetoria.map(m => `
+  <li class="marco ${m.ano && m.texto ? '' : 'pendente'}">
+    <span class="pino" aria-hidden="true"></span>
+    <div class="ano">${m.ano ? esc(m.ano) : '20??'}</div>
+    <h3>${esc(m.titulo)}</h3>
+    ${m.texto ? `<p>${esc(m.texto)}</p>` : ''}
+    ${m.ano && m.texto ? '' : PEND(m.ano ? 'texto a preencher' : 'ano e detalhes a preencher')}
+  </li>`).join('');
+
+/* redes */
+const REDES = [['instagram','Instagram'],['tiktok','TikTok'],['youtube','YouTube'],['email','E-mail']];
+$('#redes').innerHTML = REDES.map(([k,nome]) => {
+  const v = JIMMY.redes[k];
+  if (!v) return `<div class="rede"><span class="mono" style="color:var(--cinza)">${nome}</span><strong>${nome}</strong>${PEND('link a preencher')}</div>`;
+  const href = k === 'email' ? 'mailto:' + v : v;
+  const txt = k === 'email' ? v : v.replace(/^https?:\/\/(www\.)?/, '');
+  return `<a class="rede" href="${esc(href)}" ${k==='email'?'':'target="_blank" rel="noopener"'}><span class="mono">${nome}</span><strong>${esc(txt)}</strong><span class="seta" aria-hidden="true">↗</span></a>`;
+}).join('');
+
+/* crawl */
+const frases = ['Pensa antes da bola chegar', 'Jimmy Neutron', 'Cabeça levantada', 'Primeiro toque', 'Camisa azul', 'Joga simples'];
+const estrela = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor"/><ellipse cx="12" cy="12" rx="11" ry="4.2" transform="rotate(-28 12 12)" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+const bloco = '<span>' + frases.map(f => f + estrela).join('') + '</span>';
+$('#crawl').innerHTML = bloco + bloco + bloco;
+
+/* ---------- relógio de transmissão (tempo de visita, real) ---------- */
+const t0 = performance.now();
+setInterval(() => {
+  const s = Math.floor((performance.now() - t0) / 1000);
+  $('#relogio').textContent = String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+}, 1000);
+
+/* ---------- nome monumental: ajusta à largura ---------- */
+function ajustaNome(){
+  const m = innerWidth <= 640;
+  const larg = $('#nome').clientWidth - parseFloat(getComputedStyle($('#nome')).paddingLeft) * 2;
+  ['#l1','#l2'].forEach(id => {
+    const el = $(id); el.style.fontSize = '100px';
+    const f = parseFloat(m ? el.dataset.fitM : el.dataset.fit);
+    el.style.display = 'inline-block'; const w = el.getBoundingClientRect().width; el.style.display = '';
+    const fs = Math.min(100 * larg * f / w, innerHeight * (m ? .2 : .44));
+    el.style.fontSize = fs + 'px';
+    if (id === '#l2') $('#l2fill').style.fontSize = fs + 'px';
+  });
+}
+ajustaNome();
+document.fonts && document.fonts.ready.then(() => { ajustaNome(); window.ScrollTrigger && ScrollTrigger.refresh(); });
+
+/* ---------- painel de números ---------- */
+const nf = n => n.toLocaleString('pt-BR');
+function desenhaPainel(s, exemplo){
+  $('#painel').classList.toggle('exemplo', !!exemplo);
+  const part = (s.gols != null && s.assist != null) ? s.gols + s.assist : null;
+  const tiles = [
+    ['Jogos', s.jogos, s.minutos != null ? nf(s.minutos) + ' minutos' : ''],
+    ['Gols', s.gols, s.gols != null && s.jogos ? (s.gols/s.jogos).toFixed(2).replace('.',',') + ' por jogo' : ''],
+    ['Assistências', s.assist, s.assist != null && s.jogos ? (s.assist/s.jogos).toFixed(2).replace('.',',') + ' por jogo' : ''],
+    ['Participações', part, part != null ? 'gols + assistências' : '', true]
+  ];
+  $('#tiles').innerHTML = tiles.map(([k,v,sub,dest]) => `
+    <div class="tile ${dest?'dest':''}"><span class="mono">${k}</span>
+      <span class="val ${v==null?'vz':''}" data-v="${v ?? ''}">${v==null?'--':'0'}</span>
+      <div class="sub">${v==null ? PEND() : esc(sub)}</div><span class="barra"></span></div>`).join('');
+  $('#painelStatus').textContent = s.jogos != null ? (exemplo ? 'Modo exemplo' : 'Atualizado') : 'Aguardando dados';
+  $('#numTemporada').textContent = 'Temporada ' + (s.temporada || '—');
+  $('#fonte').innerHTML = 'Fonte: ' + (s.fonte ? esc(s.fonte) : 'a preencher');
+
+  /* barras */
+  const W=560,H=240,P=28, svg=$('#barras'), d=s.porTemporada||[];
+  if (!d.length){
+    svg.innerHTML = `<line x1="${P}" y1="${H-P}" x2="${W}" y2="${H-P}" class="vazio-graf"/>`
+      + [0,1,2].map(i=>`<rect x="${P+40+i*170}" y="${60+i*0}" width="44" height="${H-P-60}" class="vazio-graf"/><rect x="${P+90+i*170}" y="110" width="44" height="${H-P-110}" class="vazio-graf"/>`).join('')
+      + `<text x="${W/2}" y="40" text-anchor="middle" class="sem-sinal">SEM SINAL · SEM TEMPORADAS</text>`;
+  } else {
+    const max = Math.max(1, ...d.map(x=>Math.max(x.gols,x.assist)));
+    const slot = (W-P)/d.length, bw = Math.min(46, slot/3.2);
+    svg.innerHTML = `<line x1="${P}" y1="${H-P}" x2="${W}" y2="${H-P}" stroke="rgba(236,239,244,.2)"/>` + d.map((x,i)=>{
+      const cx = P + slot*i + slot/2, hg=(H-P-30)*x.gols/max, ha=(H-P-30)*x.assist/max;
+      return `<g><rect class="b" x="${cx-bw-3}" y="${H-P-hg}" width="${bw}" height="${hg}" fill="#2f56ff" style="transform-origin:${cx}px ${H-P}px"/>
+        <rect class="b" x="${cx+3}" y="${H-P-ha}" width="${bw}" height="${ha}" fill="#eceff4" style="transform-origin:${cx}px ${H-P}px"/>
+        <text x="${cx-bw/2-3}" y="${H-P-hg-8}" text-anchor="middle">${x.gols}</text><text x="${cx+bw/2+3}" y="${H-P-ha-8}" text-anchor="middle">${x.assist}</text>
+        <text x="${cx}" y="${H-8}" text-anchor="middle">${esc(x.ano)}</text></g>`;
+    }).join('');
+  }
+  /* rosca */
+  const r=78, C=2*Math.PI*r, rs=$('#rosca');
+  if (part){
+    const fg = s.gols/part;
+    rs.innerHTML = `<circle cx="100" cy="100" r="${r}" fill="none" stroke="#eceff4" stroke-width="18"/>
+      <circle class="arco" cx="100" cy="100" r="${r}" fill="none" stroke="#2f56ff" stroke-width="18" stroke-dasharray="${C*fg} ${C}" transform="rotate(-90 100 100)"/>
+      <text x="100" y="96" text-anchor="middle" style="font-family:Anybody,sans-serif;font-size:42px;font-weight:900;fill:#eceff4;letter-spacing:0">${part}</text>
+      <text x="100" y="120" text-anchor="middle">G + A</text>`;
+    $('#roscaLeg').innerHTML = `<div><span class="mono">Gols</span><b style="color:var(--azul-claro)">${Math.round(fg*100)}%</b></div><div><span class="mono">Assistências</span><b>${100-Math.round(fg*100)}%</b></div>`;
+  } else {
+    rs.innerHTML = `<circle cx="100" cy="100" r="${r}" class="vazio-graf" stroke-width="18" style="stroke-dasharray:3 6"/><text x="100" y="105" text-anchor="middle" class="sem-sinal">SEM DADOS</text>`;
+    $('#roscaLeg').innerHTML = `<div><span class="mono" style="color:var(--cinza)">Gols e assistências</span><br>${PEND()}</div>`;
+  }
+  animaPainel();
+}
+function animaPainel(){
+  const vals = $$('#tiles .val[data-v]').filter(e => e.dataset.v !== '');
+  const barras = $$('#barras .b'), arco = $('#rosca .arco');
+  if (!temMotion){ vals.forEach(e => e.textContent = nf(+e.dataset.v)); return; }
+  const tl = gsap.timeline({ paused:true });
+  vals.forEach((e,i) => { const o={v:0}; tl.to(o,{v:+e.dataset.v,duration:1.6,ease:'power3.out',onUpdate:()=>e.textContent=nf(Math.round(o.v))}, i*.12); });
+  tl.from($$('#tiles .barra'), { scaleX:0 }, 0);
+  if (barras.length) tl.from(barras, { scaleY:0, duration:1, stagger:.06, ease:'power3.out' }, .2);
+  if (arco){ const len = arco.getAttribute('stroke-dasharray'); tl.fromTo(arco, { strokeDasharray:'0 999' }, { strokeDasharray:len, duration:1.4, ease:'power3.inOut' }, .3); }
+  if (window._stPainel) window._stPainel.kill();
+  window._stPainel = ScrollTrigger.create({ trigger:'#painel', start:'top 75%', once:true, onEnter:()=>tl.play() });
+}
+desenhaPainel(JIMMY.stats, false);
+$('#btnEx').addEventListener('click', e => {
+  const on = e.currentTarget.getAttribute('aria-pressed') !== 'true';
+  e.currentTarget.setAttribute('aria-pressed', on);
+  e.currentTarget.textContent = on ? 'Voltar aos dados reais' : 'Ver com dados de exemplo';
+  desenhaPainel(on ? EXEMPLO : JIMMY.stats, on);
+});
+
+/* ---------- menu mobile ---------- */
+const btnMenu = $('#btnMenu');
+function menu(abrir){
+  document.body.classList.toggle('menu-aberto', abrir);
+  btnMenu.setAttribute('aria-expanded', abrir); btnMenu.setAttribute('aria-label', abrir ? 'Fechar menu' : 'Abrir menu');
+  $('#menuM').setAttribute('aria-hidden', !abrir);
+  if (window._lenis) abrir ? _lenis.stop() : _lenis.start();
+}
+btnMenu.addEventListener('click', () => menu(!document.body.classList.contains('menu-aberto')));
+addEventListener('keydown', e => { if (e.key === 'Escape') { menu(false); fechaLb(); } });
+
+/* ---------- âncoras ---------- */
+$$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+  const alvo = document.querySelector(a.getAttribute('href')); if (!alvo) return;
+  e.preventDefault(); menu(false);
+  if (window._lenis) _lenis.scrollTo(alvo, { offset: alvo.id === 'home' ? 0 : -10, duration: 1.4 });
+  else alvo.scrollIntoView({ behavior: 'smooth' });
+}));
+
+/* ---------- lightbox + replay ---------- */
+const momentos = $$('#gal .card').map(c => ({ src: $('img', c).src, cat: $('.leg-c .mono', c).textContent, tit: $('strong', c).textContent }));
+let atual = 0, lbAberto = false, ultimoFoco = null;
+function preencheLb(i){
+  atual = (i + momentos.length) % momentos.length; const m = momentos[atual];
+  $('#lbImg').src = m.src; $('#lbImg').alt = m.tit; $('#lbCat').textContent = m.cat; $('#lbTit').textContent = m.tit;
+  $('#lbCont').textContent = String(atual+1).padStart(2,'0') + ' / ' + String(momentos.length).padStart(2,'0');
+}
+function vinheta(meio){
+  if (!temMotion){ meio(); return; }
+  const fx = $$('#replay .fx'); gsap.set(fx, { skewX:-18, x:0 }); gsap.set('#replay', { visibility:'visible' });
+  const tl = gsap.timeline({ onComplete:()=>gsap.set('#replay',{visibility:'hidden'}) });
+  tl.fromTo(fx, { xPercent:-120 }, { xPercent:0, duration:.55, stagger:.07, ease:'power3.in' })
+    .from('#replay .marca', { scale:.8, opacity:0, duration:.3 }, '-=.15')
+    .add(meio).to({}, { duration:.25 })
+    .to(fx.slice().reverse(), { xPercent:120, duration:.55, stagger:.07, ease:'power3.out' });
+}
+function abreLb(i){
+  ultimoFoco = document.activeElement;
+  vinheta(() => { preencheLb(i); $('#lb').classList.add('on'); lbAberto = true; window._lenis && _lenis.stop(); $('#lbFechar').focus(); });
+}
+function fechaLb(){
+  if (!lbAberto) return; lbAberto = false; $('#lb').classList.remove('on'); window._lenis && _lenis.start(); ultimoFoco && ultimoFoco.focus();
+}
+$$('#gal .card').forEach((c,i) => c.addEventListener('click', () => abreLb(i)));
+$('#lbFechar').addEventListener('click', fechaLb);
+$('#lbNext').addEventListener('click', () => vinheta(() => preencheLb(atual+1)));
+$('#lbPrev').addEventListener('click', () => vinheta(() => preencheLb(atual-1)));
+$('#lb').addEventListener('click', e => { if (e.target.tagName === 'FIGURE') fechaLb(); });
+addEventListener('keydown', e => { if (!lbAberto) return; if (e.key==='ArrowRight') $('#lbNext').click(); if (e.key==='ArrowLeft') $('#lbPrev').click(); if (e.key==='Tab'){ const f=$$('#lb button'); if (e.shiftKey && document.activeElement===f[0]){e.preventDefault();f[f.length-1].focus();} else if(!e.shiftKey && document.activeElement===f[f.length-1]){e.preventDefault();f[0].focus();} } });
+
+/* ---------- header: rolou, tema, seção ativa ---------- */
+const topo = $('#topo');
+const navLinks = $$('.nav a'), ind = $('.nav-ind');
+function marcaAtiva(id){
+  $$('[data-sec]').forEach(a => a.classList.toggle('ativo', a.dataset.sec === id));
+  const a = navLinks.find(x => x.dataset.sec === id);
+  if (!a){ ind.style.transform = 'scaleX(0)'; return; }
+  ind.style.transition = 'transform .6s var(--ease)';
+  ind.style.transform = `translateX(${a.offsetLeft + 14}px) scaleX(${a.offsetWidth - 28})`;
+}
+
+/* =========================================================
+   MOTION
+   ========================================================= */
+if (temMotion){
+  gsap.registerPlugin(ScrollTrigger);
+  let lenis = null;
+  if (window.Lenis){
+    lenis = window._lenis = new Lenis({ duration: 1.15, easing: t => 1 - Math.pow(1 - t, 4) });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
+  }
+
+  /* header */
+  ScrollTrigger.create({ start: 40, end: 'max', onToggle: s => topo.classList.toggle('rolou', s.isActive) });
+  gsap.to('#progresso', { scaleX:1, ease:'none', scrollTrigger:{ start:0, end:'max', scrub:.3 } });
+  $$('.claro').forEach(sec => ScrollTrigger.create({ trigger:sec, start:'top top+=36', end:'bottom top+=36', onToggle:s => topo.classList.toggle('sobre-claro', s.isActive) }));
+  ['home','perfil','numeros','momentos','trajetoria','contato'].forEach(id => ScrollTrigger.create({ trigger:'#'+id, start:'top 50%', end:'bottom 50%', onToggle:s => s.isActive && marcaAtiva(id) }));
+
+  /* ---- WOW 1: refletores acendem, nome sobe, bola rola até virar o "O" ---- */
+  const letras = (el) => { const nodes=[...el.childNodes]; el.innerHTML=''; nodes.forEach(n => { if (n.nodeType===3) [...n.textContent].forEach(ch => { const s=document.createElement('span'); s.className='letra'; s.textContent=ch; el.appendChild(s); }); else el.appendChild(n); }); return $$('.letra', el); };
+  const l1 = letras($('#l1')), l2 = letras($('#l2')).concat(letras($('#l2fill')));
+  const intro = gsap.timeline({ defaults:{ ease:'expo.out' } });
+  intro
+    .set('#apagao', { opacity:1 })
+    .to('#apagao', { opacity:.7, duration:.08, ease:'none' }, .25).to('#apagao', { opacity:.95, duration:.06, ease:'none' })
+    .to('#apagao', { opacity:.45, duration:.08, ease:'none' }, .55).to('#apagao', { opacity:.8, duration:.05, ease:'none' })
+    .to('#apagao', { opacity:0, duration:1.2, ease:'power2.out' }, .78)
+    .fromTo('#feixe', { opacity:0, rotate:-25 }, { opacity:1, rotate:25, duration:2.2, ease:'power2.inOut', transformOrigin:'50% 0%' }, .7)
+    .to('#feixe', { opacity:0, duration:.8 }, 2.4)
+    .from('#heroBg', { scale:1.18, duration:2.6 }, .6)
+    .from(l1, { yPercent:110, duration:1.3, stagger:.05 }, .95)
+    .from(l2, { yPercent:110, duration:1.3, stagger:.05 }, 1.05)
+    .fromTo('#bolaO', { x:() => innerWidth*.6, rotate:900 }, { x:0, rotate:0, duration:1.8, ease:'power4.out' }, 1.1)
+    .from('#jimmy', { yPercent:12, opacity:0, duration:1.6 }, 1.0)
+    .from('#gc > *', { x:-30, opacity:0, duration:.9, stagger:.1 }, 1.7)
+    .from('.placar, .fichas, .rolar', { opacity:0, y:12, duration:.9, stagger:.08 }, 1.9);
+
+  /* refletor no NEUTRON (mouse no desktop, passeio sozinho no celular) */
+  const fill = $('#l2fill'); const sp = { x:20, y:50 };
+  const aplica = () => { fill.style.setProperty('--mx', sp.x + '%'); fill.style.setProperty('--my', sp.y + '%'); };
+  const passeio = gsap.to(sp, { x:85, duration:4, ease:'sine.inOut', yoyo:true, repeat:-1, onUpdate:aplica, delay:2 });
+  if (!toque){
+    const xTo = gsap.quickTo(sp, 'x', { duration:.5, ease:'power3', onUpdate:aplica }), yTo = gsap.quickTo(sp, 'y', { duration:.5, ease:'power3' });
+    const jx = gsap.quickTo('#jimmy', 'x', { duration:1.2, ease:'power3' }), bx = gsap.quickTo('#heroBg', 'x', { duration:1.6, ease:'power3' });
+    const by = gsap.quickTo('#heroBg', 'y', { duration:1.6, ease:'power3' }), nx = gsap.quickTo('#nome', 'x', { duration:1.4, ease:'power3' });
+    $('#home').addEventListener('pointermove', e => {
+      passeio.pause();
+      const r = fill.getBoundingClientRect();
+      xTo((e.clientX - r.left) / r.width * 100); yTo((e.clientY - r.top) / r.height * 100);
+      const dx = e.clientX / innerWidth - .5, dy = e.clientY / innerHeight - .5;
+      jx(dx * -18); bx(dx * 26); by(dy * 16); nx(dx * 30);
+    });
+  }
+
+  /* saída do herói: nome abre, Jimmy avança, fundo escurece */
+  gsap.timeline({ scrollTrigger:{ trigger:'#home', start:'top top', end:'bottom top', scrub:true } })
+    .to('#l1', { xPercent:-18, ease:'none' }, 0)
+    .to('#l2', { xPercent:14, ease:'none' }, 0).to('#l2fill', { xPercent:14, ease:'none' }, 0)
+    .to('#bolaO', { rotate:540, ease:'none' }, 0)
+    .to('#jimmy', { scale:1.12, yPercent:-6, ease:'none' }, 0)
+    .to('#heroBg img', { yPercent:12, ease:'none' }, 0)
+    .to('#gc, .fichas, .placar', { opacity:0, y:-40, ease:'none' }, 0);
+
+  /* crawl: roda sempre, acelera com a rolagem */
+  const crawl = $('#crawl'); const larguraBloco = () => crawl.scrollWidth / 3;
+  let cx = 0, vel = 1;
+  gsap.ticker.add(() => { cx -= .6 * vel; const w = larguraBloco(); if (-cx >= w) cx += w; crawl.style.transform = `translate3d(${cx}px,0,0)`; vel += (1 - vel) * .05; });
+  if (lenis) lenis.on('scroll', e => { vel = 1 + Math.min(Math.abs(e.velocity) * .25, 8); });
+
+  /* títulos e rótulos */
+  $$('.titulo').forEach(t => gsap.from($$('.lin > span', t), { yPercent:110, duration:1.2, ease:'expo.out', stagger:.08, scrollTrigger:{ trigger:t, start:'top 82%' } }));
+  $$('.rotulo').forEach(r => { gsap.from($('.traco', r), { scaleX:0, duration:1.4, ease:'expo.out', scrollTrigger:{ trigger:r, start:'top 88%' } }); gsap.from(r.children, { opacity:0, y:10, stagger:.06, duration:.7, scrollTrigger:{ trigger:r, start:'top 88%' } }); });
+
+  /* perfil: folha sobe, foto revela, texto acende palavra a palavra */
+  gsap.from('#fotoEd', { clipPath:'inset(18% 12% 18% 12%)', duration:1.6, ease:'expo.out', scrollTrigger:{ trigger:'#fotoEd', start:'top 80%' } });
+  gsap.to('#fotoEd img', { yPercent:-14, ease:'none', scrollTrigger:{ trigger:'#fotoEd', start:'top bottom', end:'bottom top', scrub:true } });
+  gsap.to('#bio .w', { opacity:1, stagger:.08, ease:'none', scrollTrigger:{ trigger:'#bio', start:'top 80%', end:'bottom 45%', scrub:true } });
+  gsap.from('#ficha > div, .bloco-ed > div', { y:30, opacity:0, duration:.9, stagger:.06, ease:'power3.out', scrollTrigger:{ trigger:'#ficha', start:'top 85%' } });
+
+  /* números */
+  gsap.from('#painel', { y:60, opacity:0, duration:1.2, ease:'expo.out', scrollTrigger:{ trigger:'#painel', start:'top 85%' } });
+
+  /* momentos: cards sobem em cascata, imagem com parallax */
+  gsap.from('#gal .card', { y:80, opacity:0, duration:1.2, stagger:.1, ease:'expo.out', scrollTrigger:{ trigger:'#gal', start:'top 80%' } });
+  $$('#gal .card img').forEach(img => gsap.fromTo(img, { yPercent:-6 }, { yPercent:6, ease:'none', scrollTrigger:{ trigger:img.parentNode, start:'top bottom', end:'bottom top', scrub:true } }));
+
+  /* contato */
+  gsap.fromTo('#contatoBg', { yPercent:-8 }, { yPercent:8, ease:'none', scrollTrigger:{ trigger:'#contato', start:'top bottom', end:'bottom bottom', scrub:true } });
+  gsap.from('.rede', { y:40, opacity:0, duration:1, stagger:.08, ease:'expo.out', scrollTrigger:{ trigger:'#redes', start:'top 90%' } });
+
+  /* botões magnéticos (desktop) */
+  if (!toque) $$('.btn-ex, .subir span, .lb-ctrl button').forEach(b => {
+    const x = gsap.quickTo(b,'x',{duration:.5,ease:'power3'}), y = gsap.quickTo(b,'y',{duration:.5,ease:'power3'});
+    b.addEventListener('pointermove', e => { const r=b.getBoundingClientRect(); x((e.clientX-r.left-r.width/2)*.3); y((e.clientY-r.top-r.height/2)*.3); });
+    b.addEventListener('pointerleave', () => { x(0); y(0); });
+  });
+}
+
+/* ---------- WOW 2: a bola percorre a trajetória ---------- */
+const rotaBase = $('#rotaBase'), rotaViva = $('#rotaViva'), bolaT = $('#bolaT');
+let rotaLen = 0, pinos = [];
+function montaRota(){
+  const pr = $('#prancheta'), R = pr.getBoundingClientRect();
+  $('#rota').setAttribute('viewBox', `0 0 ${R.width} ${R.height}`);
+  pinos = $$('.marco .pino').map(p => { const b = p.getBoundingClientRect(); return { x:b.left - R.left + b.width/2, y:b.top - R.top + b.height/2, el:p.closest('.marco') }; });
+  if (!pinos.length) return;
+  const m = innerWidth <= 860;
+  const ini = { x: m ? pinos[0].x : R.width/2, y: 0 };
+  const fim = { x: m ? pinos[0].x : R.width/2, y: R.height };
+  const pts = [ini, ...pinos, fim];
+  let d = `M${ini.x},${ini.y}`;
+  for (let i = 1; i < pts.length; i++){
+    const a = pts[i-1], b = pts[i], my = (a.y + b.y) / 2;
+    const ond = m ? (i % 2 ? 22 : -22) : 0;   /* no celular, a rota faz ziguezague de drible */
+    d += ` C${a.x + ond},${my} ${b.x - ond},${my} ${b.x},${b.y}`;
+  }
+  rotaBase.setAttribute('d', d); rotaViva.setAttribute('d', d);
+  rotaLen = rotaViva.getTotalLength();
+  pinos.forEach(p => { p.len = lenAteY(p.y); });
+  rotaViva.style.strokeDasharray = rotaLen; atualizaRota(window._progRota || 0);
+}
+function lenAteY(y){ let lo=0, hi=rotaLen; for (let k=0;k<22;k++){ const mid=(lo+hi)/2; rotaViva.getPointAtLength(mid).y < y ? lo=mid : hi=mid; } return lo; }
+function atualizaRota(p){
+  window._progRota = p; if (!rotaLen) return;
+  const L = rotaLen * p, pt = rotaViva.getPointAtLength(L);
+  rotaViva.style.strokeDashoffset = rotaLen - L;
+  bolaT.style.transform = `translate3d(${pt.x}px,${pt.y}px,0) rotate(${L / 23 * 57.3}deg)`;
+  pinos.forEach(q => q.el.classList.toggle('passou', L >= q.len - 2));
+}
+if (temMotion){
+  ScrollTrigger.create({ trigger:'#prancheta', start:'top 60%', end:'bottom 60%', scrub:true, onUpdate:s => atualizaRota(s.progress), onRefresh:montaRota });
+  gsap.from('.marco > *:not(.pino)', { y:40, opacity:0, duration:1, stagger:.05, ease:'expo.out', scrollTrigger:{ trigger:'#marcos', start:'top 75%' } });
+} else { montaRota(); atualizaRota(1); }
+
+let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { ajustaNome(); montaRota(); if (window.ScrollTrigger) ScrollTrigger.refresh(); }, 150); });
+addEventListener('load', () => { montaRota(); if (window.ScrollTrigger) ScrollTrigger.refresh(); });
+</script>
+</body>
+</html>

@@ -91,6 +91,8 @@ def main():
         return f'{m.group(1)}data:{tipo};base64,{dado}{m.group(3)}'
 
     html = re.sub(r'((?:src|href)=")((?:img/)[^"]+|favicon\.png|apple-touch-icon\.png)(")', troca_img, html)
+    # imagens chamadas pelo CSS: url(img/...)
+    html = re.sub(r'(url\(["\']?)(img/[^"\')]+)(["\']?\))', troca_img, html)
 
     # 2. bibliotecas de CDN
     cache = {}
