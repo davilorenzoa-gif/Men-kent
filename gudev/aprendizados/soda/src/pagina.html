@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diet Soda | Pure Zero Refreshment</title>
+<meta name="description" content="Experience the crisp, clean taste of Diet Soda. Zero sugar, zero compromise.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-color: #0a0a0a;
+  --text-color: #ffffff;
+  --accent-color: #ffffff;
+  --muted-color: rgba(255, 255, 255, 0.7);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --font-main: 'Inter', sans-serif;
+  --font-heading: 'Galada', cursive;
+  --bg-inner: #0b8a78;
+  --bg-mid: #044e3b;
+  --bg-outer: #011411;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { background: var(--bg-outer); }
+body {
+  background: radial-gradient(circle at center, var(--bg-inner) 0%, var(--bg-mid) 50%, var(--bg-outer) 100%);
+  background-attachment: fixed;
+  color: var(--text-color);
+  font-family: var(--font-main);
+  overflow: hidden;
+  height: 100vh;
+  transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.blue-theme { --bg-inner: #0b4f8a; --bg-mid: #04294e; --bg-outer: #010c14; }
+
+/* Camadas 3D (no original: um <model-viewer> por objeto) */
+.camada3d { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; display: block; }
+#c-fundo { z-index: 0; }
+#c-lata { z-index: 1; opacity: 0; animation: fadeIn 1.5s ease-out 0.3s forwards; touch-action: pan-y; }
+#c-frente { z-index: 110; }
+@keyframes fadeIn { to { opacity: 1; } }
+
+#bubbles-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+.bubble-img {
+  position: absolute; pointer-events: none; aspect-ratio: 1; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: radial-gradient(circle at 32% 30%, rgba(255,255,255,.95) 0 9%, rgba(255,255,255,.18) 24%, rgba(255,255,255,.04) 62%, rgba(255,255,255,.22) 100%);
+}
+@keyframes floatUpImg {
+  0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.4; }
+  90% { opacity: 0.4; }
+  100% { transform: translateY(-110vh) translateX(30px) rotate(360deg); opacity: 0; }
+}
+
+/* Header */
+.header { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4%; position: fixed; top: 0; width: 100%; z-index: 100; }
+.logo { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 1.2rem; font-family: var(--font-heading); }
+.nav { display: flex; gap: 0.5rem; background: var(--glass-bg); padding: 0.4rem; border-radius: 100px; border: 1px solid var(--glass-border); }
+.nav.glass {
+  position: relative; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+}
+.nav-item { font-family: 'Manrope', sans-serif; color: var(--muted-color); text-decoration: none; font-size: 0.85rem; font-weight: 500; padding: 0.5rem 1.2rem; border-radius: 100px; transition: all 0.3s ease; }
+.nav-item:hover, .nav-item.active { background: #fbcfe8; color: #011d17; }
+.contact-btn { background: rgba(0, 0, 0, 0.5); color: white; border: none; padding: 0.9rem 2rem; border-radius: 100px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; box-shadow: none; font-family: inherit; }
+.contact-btn:hover { background: rgba(0, 0, 0, 0.7); transform: translateY(-2px); }
+
+/* Hero */
+.hero { height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 4%; padding-top: 5rem; }
+.hero-content { display: flex; justify-content: space-between; align-items: stretch; width: 100%; max-width: 100%; padding: 0; height: 100%; position: relative; }
+.main-title, .side-title { font-family: var(--font-heading); font-size: clamp(5rem, 10vw, 12rem); line-height: 0.8; font-weight: 400; text-transform: none; white-space: nowrap; color: white; letter-spacing: normal; }
+.outline { color: var(--text-color); }
+
+.hero-left { display: flex; flex-direction: column; height: 100%; padding: 6rem 0; gap: 2rem; z-index: 100; position: relative; }
+.description { color: var(--muted-color); font-size: 1.1rem; line-height: 1.6; max-width: 400px; }
+.primary-btn { display: flex; align-items: center; gap: 1.5rem; background: rgba(0, 0, 0, 0.5); color: white; border: none; padding: 0.4rem 0.4rem 0.4rem 1.5rem; border-radius: 100px; font-weight: 700; cursor: pointer; width: fit-content; transition: all 0.3s ease; box-shadow: none; font-family: inherit; font-size: 0.95rem; }
+.primary-btn:hover { background: rgba(0, 0, 0, 0.7); transform: translateY(-3px); }
+.plus-icon { background: #fbcfe8; color: #011d17; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.4rem; font-weight: 900; line-height: 1; padding-bottom: 2px; border: none; }
+.award-badge { display: flex; align-items: center; gap: 1rem; margin-top: auto; }
+.award-icon { width: 48px; height: 48px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.award-text { display: flex; flex-direction: column; }
+.award-title { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted-color); }
+.award-subtitle { font-size: 0.85rem; font-weight: 600; }
+
+/* Onde a lata mora no celular (no computador ela fica no centro da tela) */
+.lata-vaga { display: none; }
+
+.hero-right { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; text-align: right; height: 100%; padding: 6rem 0; z-index: 100; width: 450px; pointer-events: none; position: relative; }
+.product-carousel { display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-end; pointer-events: auto; }
+.carousel-cards { display: flex; gap: 1rem; }
+.card { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 1rem; padding-top: 5rem; border-radius: 28px; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 135px; position: relative; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); text-align: center; color: inherit; font: inherit; }
+.card:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.4); }
+.card.active { border-color: #fbcfe8; border-width: 1px; background: var(--glass-bg); box-shadow: none; }
+.card img { width: 140px; height: auto; aspect-ratio: 2 / 3; margin-top: -8rem; filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.5)); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important; display: block; will-change: transform; pointer-events: none; }
+.card:hover img { transform: translateY(-30px) rotate(-12deg) scale(1.15) !important; }
+.card-info { display: flex; flex-direction: column; font-size: 0.7rem; width: 100%; word-wrap: break-word; }
+.card-info span:first-child { font-weight: 600; }
+.card-info span:last-child { color: var(--muted-color); }
+.carousel-nav { display: flex; gap: 1rem; }
+.nav-arrow { background: var(--glass-bg); border: 1px solid var(--glass-border); color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; font: inherit; }
+.nav-arrow:hover { background: rgba(255, 255, 255, 0.1); }
+.side-title { align-self: flex-end; text-align: right; }
+:focus-visible { outline: 2px solid #fbcfe8; outline-offset: 3px; }
+
+@keyframes shine { from { transform: translateX(-100%) rotate(45deg); } to { transform: translateX(200%) rotate(45deg); } }
+
+/* Celular e tablet: a página empilha e rola, como no vídeo de referência */
+@media (max-width: 1200px) {
+  body { overflow-x: hidden; overflow-y: auto; height: auto; }
+  .header { padding: 1.1rem 16px; background: color-mix(in srgb, var(--bg-outer) 45%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  .nav, .contact-btn { display: none; }
+  .hero { height: auto; padding: 5.5rem 16px 3rem; }
+  .hero-content { flex-direction: column; align-items: stretch; height: auto; }
+  .hero-left, .hero-right { height: auto; padding: 0; width: 100%; }
+  .hero-left { gap: 1.4rem; }
+  .main-title, .side-title { font-size: clamp(4.2rem, 19vw, 7rem); }
+  .description { font-size: 1rem; }
+  .award-badge { display: none; }
+  .lata-vaga { display: block; height: min(118vw, 640px); margin: 0 -16px; }
+  .hero-right { align-items: center; text-align: center; gap: 3.5rem; }
+  .product-carousel { align-items: center; margin-top: 4.5rem; }
+  .side-title { align-self: center; text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #c-lata { animation: none; opacity: 1; }
+}
+</style>
+</head>
+<body>
+<canvas class="camada3d" id="c-fundo" aria-hidden="true"></canvas>
+<div id="bubbles-container"></div>
+<canvas class="camada3d" id="c-lata" role="img" aria-label="Diet Soda can, 3D"></canvas>
+
+<header class="header">
+  <div class="logo">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+      <path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </svg>
+    <span>Soda</span>
+  </div>
+  <nav class="nav glass">
+    <a href="#" class="nav-item active">Home</a>
+    <a href="#" class="nav-item">Ingredients</a>
+    <a href="#" class="nav-item">Taste</a>
+    <a href="#" class="nav-item">Eco</a>
+    <a href="#" class="nav-item">Reviews</a>
+  </nav>
+  <button class="contact-btn">Contact Us</button>
+</header>
+
+<main class="hero">
+  <div class="hero-content">
+    <div class="hero-left">
+      <h1 class="main-title large-animation-1"><span class="outline">Pure</span><br>Zero</h1>
+      <p class="description">Unleash the crisp taste of zero sugar. <br>Refreshment redefined in every bubble — <br>all in one sleek design.</p>
+      <div class="cta-group">
+        <button class="primary-btn">Shop Now <span class="plus-icon" aria-hidden="true">+</span></button>
+      </div>
+      <div class="award-badge">
+        <div class="award-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 15L15 18L19 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="award-text">
+          <span class="award-title">DESIGN AWARDS</span>
+          <span class="award-subtitle">PREMIUM BEVERAGE 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lata-vaga" aria-hidden="true"></div>
+
+    <div class="hero-right">
+      <div class="product-carousel">
+        <div class="carousel-cards">
+          <button class="card active" data-flavor="classic" aria-pressed="true">
+            <img id="img-classic" alt="Diet Classic">
+            <span class="card-info"><span>Diet Classic</span><span>$2.99</span></span>
+          </button>
+          <button class="card" data-flavor="blue" aria-pressed="false">
+            <img id="img-blue" alt="Zero Lime" style="filter: brightness(0.7);">
+            <span class="card-info"><span>Zero Lime</span><span>$2.99</span></span>
+          </button>
+        </div>
+        <div class="carousel-nav">
+          <button class="nav-arrow" data-dir="-1" aria-label="Previous flavor">←</button>
+          <button class="nav-arrow" data-dir="1" aria-label="Next flavor">→</button>
+        </div>
+      </div>
+      <h2 class="side-title large-animation-1"><span class="outline">Refreshingly</span><br>Clean</h2>
+    </div>
+  </div>
+</main>
+
+<canvas class="camada3d" id="c-frente" aria-hidden="true"></canvas>
+
+<svg style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;" aria-hidden="true">
+  <filter id="frosted">
+    <feTurbulence type="fractalNoise" baseFrequency="0.0125" numOctaves="3" result="noise" />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="80" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+</svg>
+<!--SCRIPT-->
+</body>
+</html>
