@@ -28,6 +28,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Site:** `sites/pecai/` (veja o README). Antes era tratada como "marca fictícia" de demo: é loja real.
 - **10/11/2026: o site virou só ATACADO (B2B):** açaí e cupuaçu de 10 L, 2 L e 1 L pra empresas (1 L e cupuaçu desde 11/11), pouco texto, pedido com frequência e palete. Falta: embalagem real, preço, pedido mínimo, região de entrega.
 - **Andamento:** site pronto pra mostrar. Fotos e vídeos estão em 2 pastas do Drive do Davi, que o ambiente não conseguiu abrir.
+- **18/11/2026: cartão fidelidade digital do atacado** (pedido da mãe do Davi): `sites/pecai/fidelidade.html` + planilha do Google + Apps Script (`sites/pecai/fidelidade/README.md`). Falta confirmar a regra e ligar com a conta da Péçaí.
 
 ## Açaí Happy (Açaí Heaven), Parque Prado, Campinas-SP · lead do Davi
 - **Dados:** 4,8 no Google, 701 avaliações.

@@ -189,3 +189,7 @@ O Davi pediu pra pôr o CR7 (o Jimmy é fã) e mandou um prompt maior (partidas,
 ## 18/11/2026: dados do Jimmy
 Palavras: LE, LD, ZAG, lateral, zagueiro, pé direito, camisa 5, 1,64, capitão, time B.
 Davi passou: posição LE/LD/ZAG, pé direito, número 5, altura 1,64 m, capitão do time B. Preenchido no site (`sites/jimmy-neutron`, objeto `JIMMY`).
+
+## 18/11/2026: cartão fidelidade da Péçaí (atacado)
+Palavras: cartão fidelidade, fidelidade, carimbo, selo, pontos, programa de pontos, recompensa, balde grátis, Google Sheets, planilha, Apps Script, App da Web, mãe do Davi.
+A mãe do Davi pediu cartão fidelidade pra Péçaí, **digital e só pro atacado**. Feito: página `sites/pecai/fidelidade.html?c=CODIGO` (carimbos de palmeira batendo um por um, balde enchendo, cartão "CHEIO!" com botão de resgate no Zap) + planilha privada do Google + Apps Script que responde só o cliente do código (`sites/pecai/fidelidade/`, README com o passo a passo). Regra sugerida, a confirmar: 10 L = 1 carimbo, 10 carimbos = 1 balde de 10 L, zera após 180 dias sem pedir. Falta ligar com a conta da Péçaí e colar a URL `/exec` no site. Pode virar produto da GuDev pra outros clientes (preço a definir).
