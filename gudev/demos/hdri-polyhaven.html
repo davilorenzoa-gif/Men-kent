@@ -46,9 +46,13 @@ const pm=new THREE.PMREMGenerator(r);
 const sala=pm.fromScene(new RoomEnvironment(),.04).texture;
 
 // Aliança (perfil conforto, mesma ideia da Lume)
-const pts=[];for(let i=0;i<=40;i++){const a=Math.PI*i/40;pts.push(new THREE.Vector2(1.1+Math.sin(a)*.16,Math.cos(a)*.32))}
-for(let i=40;i>=0;i--){const a=Math.PI*i/40;pts.push(new THREE.Vector2(1.1-Math.sin(a)*.05,Math.cos(a)*.32))}
-const anel=new THREE.Mesh(new THREE.LatheGeometry(pts,200),new THREE.MeshPhysicalMaterial({color:0xe2b866,metalness:1,roughness:.14,clearcoat:.4}));
+// Perfil fechado e liso (superelipse): topo reto com quinas arredondadas,
+// fora abaulado, dentro quase reto (conforto). Sem ponta onde fora encontra dentro.
+const pts=[],N=320,R=1.1,AF=.17,AD=.09,B=.31;
+for(let i=0;i<=N;i++){const t=Math.PI/2+2*Math.PI*i/N,c=Math.cos(t),s=Math.sin(t);
+  const fora=c>=0,e=fora?.8:.7;
+  pts.push(new THREE.Vector2(R+(fora?AF:AD)*Math.sign(c)*Math.abs(c)**e,B*Math.sign(s)*Math.abs(s)**.8))}
+const anel=new THREE.Mesh(new THREE.LatheGeometry(pts,256),new THREE.MeshPhysicalMaterial({color:0xe2b866,metalness:1,roughness:.14,clearcoat:.4}));
 anel.rotation.x=1.15;cena.add(anel);
 const esfera=new THREE.Mesh(new THREE.SphereGeometry(.42,64,32),new THREE.MeshPhysicalMaterial({color:0xffffff,metalness:0,roughness:0,transmission:1,thickness:.6,ior:1.5}));
 esfera.position.set(1.75,-.2,-.6);cena.add(esfera);
