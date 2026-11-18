@@ -157,3 +157,6 @@
 - **Teste de layout sem a fonte real mente:** o Google Fonts é bloqueado no container e a reserva (Arial Black) é bem mais larga. Servir Archivo/Poppins do npm (`@fontsource-variable/archivo`, `@fontsource/poppins`) com `page.route`.
 - **No Chromium do container (WebGL por software) a tela mostra o quadro com atraso:** esperar ~3 s antes do print do 3D, senão o print parece errado sem estar.
 - Ficha com lista longa no celular (Série Ouro, 19 itens) come o espaço do carro em tela pequena: no celular mostrar só o que muda em relação à versão anterior.
+
+## 18/11/2026: aliança do avesso (LatheGeometry)
+O Davi achou a aliança da demo de HDRI "meio ruim": tinha um bico fino na borda em certos ângulos. Não era o formato: o perfil do `LatheGeometry` estava no sentido horário, então as faces ficaram viradas pra dentro e o Three.js escondia parte do aro. **Regra:** perfil fechado de `LatheGeometry` sempre no sentido anti-horário (de baixo, pelo lado de fora, até em cima; a Lume faz certo). Se aparecer lâmina ou buraco, teste rápido: `side: THREE.DoubleSide`; se sumir, inverta a ordem dos pontos (não deixe o DoubleSide, que erra a luz). E aro de joia nunca com topo reto: visto de raspão vira lâmina. Testar sempre girando (arrastar) em 3 ângulos, não só a pose parada.
