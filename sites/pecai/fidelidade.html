@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cartão fidelidade | Péçaí Atacado</title>
+<meta name="description" content="Seu cartão fidelidade do atacado Péçaí: a cada 10 L, um carimbo.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#2a0b33">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pe-fundo:#2a0b33; --pe:#3b0f4a; --polpa:#7a2e8e; --polpa-clara:#a84bc4;
+  --magenta:#e070d3; --palmeira:#3daa48; --copo:#fbf8f3; --tinta:#2a0b33;
+  --tinta-suave:#6b5373; --linha:#e6dcea;
+  --out:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  min-height:100svh;background:var(--pe-fundo);color:var(--copo);
+  font:16px/1.5 Figtree,system-ui,sans-serif;
+  background-image:radial-gradient(120% 60% at 50% -10%,#4a1660 0%,transparent 60%);
+  padding:max(20px,env(safe-area-inset-top)) 16px max(28px,env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;align-items:center;
+}
+main{width:100%;max-width:440px}
+h1,h2,.num{font-family:"Bricolage Grotesque",Figtree,sans-serif}
+a{color:inherit}
+.topo{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.topo img{width:44px;height:44px;border-radius:50%}
+.topo p{font-size:13px;line-height:1.25;color:#d9c7df}
+.topo b{display:block;color:var(--copo);font-size:15px}
+
+/* ===== Cartão ===== */
+.palco{perspective:900px;margin-bottom:22px}
+.cartao{
+  position:relative;background:var(--copo);color:var(--tinta);border-radius:22px;
+  padding:22px 20px 18px;box-shadow:0 30px 60px -20px rgba(0,0,0,.55),0 2px 0 rgba(255,255,255,.4) inset;
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s var(--out);
+  overflow:hidden;isolation:isolate;
+}
+.cartao::after{ /* brilho que segue o dedo */
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+  background:radial-gradient(220px 220px at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.55),transparent 70%);
+  mix-blend-mode:soft-light;opacity:var(--go,0);transition:opacity .4s;
+}
+.cartao .faixa{position:absolute;inset:auto -10% -38px -10%;height:70px;background:var(--pe);border-radius:50% 50% 0 0;z-index:-1;opacity:.06}
+.cab{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.cab h1{font-size:22px;line-height:1.1;font-weight:800;letter-spacing:-.01em;overflow-wrap:anywhere}
+.cab .cod{font-size:12px;color:var(--tinta-suave);margin-top:4px;letter-spacing:.04em}
+.cab .marca{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--polpa);white-space:nowrap;padding-top:4px}
+
+.bagas{display:grid;grid-template-columns:repeat(5,1fr);gap:24px 10px;margin:20px 0 26px}
+.baga .d{position:absolute;top:calc(100% + 4px);left:50%;translate:-50% 0;font-size:10px;color:var(--tinta-suave);white-space:nowrap}
+.baga{position:relative;aspect-ratio:1;border-radius:50%;border:2px dashed var(--linha);display:grid;place-items:center}
+.baga .n{font:600 13px/1 Figtree;color:#c9b8cf}
+.baga.premio{border-style:solid;border-color:var(--magenta)}
+.baga.premio .n{color:var(--magenta);font-size:11px;text-align:center;line-height:1.05}
+.carimbo{position:absolute;inset:-6%;display:grid;place-items:center;opacity:0;transform:scale(1.6) rotate(var(--r,0deg))}
+.carimbo svg{width:100%;height:100%}
+.baga.on{border-color:transparent}
+.baga.on .n{opacity:0}
+.baga.on .carimbo{opacity:1;transform:scale(1) rotate(var(--r,0deg))}
+.baga.bate .carimbo{animation:bate .42s var(--out) both}
+@keyframes bate{0%{opacity:0;transform:scale(1.7) rotate(var(--r))}55%{opacity:1;transform:scale(.92) rotate(var(--r))}100%{opacity:1;transform:scale(1) rotate(var(--r))}}
+.cartao.treme{animation:treme .3s ease-out}
+@keyframes treme{30%{translate:0 2px}60%{translate:0 -1px}}
+
+.rodape{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-top:1px solid var(--linha);padding-top:12px}
+.rodape .grande{font-size:30px;font-weight:800;line-height:1}
+.rodape small{display:block;font-size:12px;color:var(--tinta-suave)}
+.balde{width:46px;height:52px;flex:none}
+
+.cheio{
+  position:absolute;left:50%;top:50%;z-index:2;pointer-events:none;
+  font:800 30px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.06em;color:var(--magenta);
+  border:4px solid var(--magenta);border-radius:12px;padding:8px 14px;background:rgba(251,248,243,.86);
+  transform:translate(-50%,-50%) rotate(-12deg) scale(2);opacity:0;white-space:nowrap;
+}
+.cartao.encheu .cheio{animation:cheio .55s .2s var(--out) forwards}
+@keyframes cheio{to{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
+
+/* ===== Abaixo do cartão ===== */
+.falta{margin-bottom:18px}
+.falta p{font-size:15px}
+.falta b{color:#fff}
+.barra{height:8px;border-radius:99px;background:rgba(255,255,255,.12);margin-top:8px;overflow:hidden}
+.barra i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--polpa-clara),var(--magenta));transition:width 1.1s .3s var(--out)}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;border-radius:14px;border:0;
+  font:700 16px/1.2 Figtree,sans-serif;text-decoration:none;cursor:pointer;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn-zap{background:var(--palmeira);color:#fff}
+.btn-premio{background:var(--magenta);color:var(--pe-fundo);margin-bottom:10px}
+.btn svg{width:20px;height:20px;flex:none}
+.bloco{margin-top:26px}
+.bloco h2{font-size:15px;font-weight:700;margin-bottom:8px;color:#e9dcee}
+.hist{list-style:none;padding:0;font-size:14px}
+.hist li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.1);color:#d9c7df}
+.hist li b{color:var(--copo);font-weight:600}
+.regras{font-size:14px;color:#d9c7df;padding-left:18px}
+.regras li{margin-bottom:4px}
+.aviso{font-size:13px;background:rgba(224,112,211,.14);border:1px solid rgba(224,112,211,.4);border-radius:12px;padding:10px 12px;margin-bottom:16px;color:#f3d9ef}
+.volta{display:block;text-align:center;margin-top:28px;font-size:14px;color:#cdb6d4}
+
+/* Sem código / erro */
+.entrar{background:var(--copo);color:var(--tinta);border-radius:22px;padding:22px 20px}
+.entrar h1{font-size:24px;line-height:1.1;margin-bottom:6px}
+.entrar p{color:var(--tinta-suave);font-size:15px;margin-bottom:16px}
+.entrar label{font-weight:600;font-size:14px;display:block;margin-bottom:6px}
+.entrar input{width:100%;min-height:52px;border:2px solid var(--linha);border-radius:12px;padding:0 14px;
+  font:700 20px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--tinta);background:#fff;margin-bottom:12px}
+.entrar input:focus{outline:none;border-color:var(--polpa-clara)}
+.entrar .btn{background:var(--pe);color:#fff}
+.entrar .erro{color:#b3261e;font-size:14px;margin:-4px 0 12px;min-height:1em}
+.carregando .cartao{opacity:.6}
+.carregando .bagas .baga{animation:pisca 1.2s infinite alternate}
+@keyframes pisca{to{border-color:#cdb8d6}}
+[hidden]{display:none!important}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<main>
+  <header class="topo">
+    <img src="img/logo-pecai.webp" alt="" width="44" height="44">
+    <p><b>Péçaí Atacado</b>Cartão fidelidade</p>
+  </header>
+
+  <!-- Cartão -->
+  <section id="tela-cartao" hidden>
+    <p class="aviso" id="aviso-exemplo" hidden>Este é um cartão de <b>exemplo</b>, só pra mostrar como fica.</p>
+    <div class="palco">
+      <article class="cartao" id="cartao" aria-live="polite">
+        <div class="faixa"></div>
+        <div class="cab">
+          <div><h1 id="empresa">…</h1><p class="cod">Cartão <span id="codigo"></span></p></div>
+          <span class="marca">Péçaí</span>
+        </div>
+        <div class="bagas" id="bagas" role="list"></div>
+        <div class="rodape">
+          <div><span class="grande num" id="contagem">0/10</span><small id="sub">carimbos</small></div>
+          <svg class="balde" viewBox="0 0 46 52" aria-hidden="true">
+            <defs><clipPath id="corpo"><path d="M6 12h34l-4 36a4 4 0 0 1-4 3.6H14A4 4 0 0 1 10 48z"/></clipPath></defs>
+            <path d="M6 12h34l-4 36a4 4 0 0 1-4 3.6H14A4 4 0 0 1 10 48z" fill="#efe6f2"/>
+            <rect id="nivel" clip-path="url(#corpo)" x="0" y="52" width="46" height="52" fill="#7a2e8e"/>
+            <path d="M6 12h34l-4 36a4 4 0 0 1-4 3.6H14A4 4 0 0 1 10 48z" fill="none" stroke="#3b0f4a" stroke-width="2"/>
+            <path d="M4 12h38" stroke="#3b0f4a" stroke-width="3" stroke-linecap="round"/>
+            <path d="M9 12C9 2 37 2 37 12" fill="none" stroke="#3b0f4a" stroke-width="1.6"/>
+          </svg>
+        </div>
+        <div class="cheio" aria-hidden="true">CHEIO!</div>
+      </article>
+    </div>
+
+    <div class="falta" id="falta"><p id="falta-txt"></p><div class="barra"><i id="barra"></i></div></div>
+
+    <a class="btn btn-premio" id="btn-premio" target="_blank" rel="noopener" hidden>Resgatar meu prêmio</a>
+    <a class="btn btn-zap" id="btn-zap" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3z"/></svg>
+      Fazer pedido no WhatsApp
+    </a>
+
+    <section class="bloco" id="bloco-hist" hidden>
+      <h2>Últimos pedidos</h2>
+      <ul class="hist" id="hist"></ul>
+    </section>
+    <section class="bloco">
+      <h2>Como funciona</h2>
+      <ul class="regras" id="regras"></ul>
+    </section>
+  </section>
+
+  <!-- Sem código ou código errado -->
+  <section id="tela-entrar" hidden>
+    <form class="entrar" id="form">
+      <h1>Seu cartão fidelidade</h1>
+      <p>Digite o código que a Péçaí mandou no seu WhatsApp.</p>
+      <label for="cod">Código do cartão</label>
+      <input id="cod" name="c" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="8" inputmode="text">
+      <p class="erro" id="erro" role="alert"></p>
+      <button class="btn" type="submit">Ver meu cartão</button>
+    </form>
+  </section>
+
+  <a class="volta" href="./">Conhecer o atacado da Péçaí</a>
+</main>
+
+<script>
+(function(){
+  /* ==== CONFIGURAÇÃO ====
+     API: endereço do "App da Web" do Apps Script (passo a passo em fidelidade/README.md).
+     Enquanto estiver vazio, só o cartão de exemplo funciona (?c=EXEMPLO). */
+  var API = '';
+  var WHATS = '5511925639960';
+
+  var $ = function(id){ return document.getElementById(id); };
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var params = new URLSearchParams(location.search);
+  var codigo = (params.get('c') || '').trim().toUpperCase();
+
+  // Cartão de exemplo: só pra demonstrar, com aviso na tela. Não é cliente real.
+  var EXEMPLO = {
+    ok:true, codigo:'EXEMPLO', empresa:'Sua Açaiteria', exemplo:true,
+    carimbos:['2026-09-02','2026-09-02','2026-09-16','2026-10-01','2026-10-01','2026-10-15','2026-11-04'],
+    premiosProntos:0, faltamLitros:4, litrosNoPeriodo:76, venceEm:'2027-05-03',
+    historico:[{data:'2026-11-04',tipo:'pedido',litros:12,carimbos:1},{data:'2026-10-15',tipo:'pedido',litros:10,carimbos:1},{data:'2026-10-01',tipo:'pedido',litros:22,carimbos:2}],
+    regras:{litrosPorCarimbo:10,carimbosPorPremio:10,premio:'1 balde de açaí de 10 L',contaCupuacu:true,validadeDias:180}
+  };
+
+  function data(iso, curta){
+    var p = iso.split('-');
+    return curta ? p[2] + '/' + p[1] : p[2] + '/' + p[1] + '/' + p[0];
+  }
+  function zap(texto){ return 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent(texto); }
+
+  // Carimbo: palmeira da logo dentro de um círculo, cor de tinta de carimbo.
+  function carimboSVG(){
+    return '<svg viewBox="0 0 60 60" aria-hidden="true"><g fill="none" stroke="#7a2e8e" stroke-linecap="round">' +
+      '<circle cx="30" cy="30" r="26" stroke-width="3" opacity=".9"/><circle cx="30" cy="30" r="21.5" stroke-width="1.2" opacity=".7"/>' +
+      '<path d="M30 46c1-8 1.5-14 0-21" stroke-width="3"/>' +
+      '<path d="M30 25c-4-5-10-6-15-3M30 25c-3-6-2-11 2-14M30 25c3-5 9-7 14-4M30 25c-6-2-11 1-13 6M30 25c6-2 11 1 13 6" stroke-width="2.6"/>' +
+      '<circle cx="27" cy="28" r="1.8" fill="#7a2e8e" stroke="none"/><circle cx="32" cy="28.5" r="1.8" fill="#7a2e8e" stroke="none"/>' +
+      '</g></svg>';
+  }
+
+  function mostrarEntrar(msg){
+    $('tela-cartao').hidden = true; $('tela-entrar').hidden = false;
+    $('erro').textContent = msg || '';
+    if (codigo) $('cod').value = codigo;
+  }
+
+  function desenhar(d){
+    var R = d.regras, meta = R.carimbosPorPremio, n = d.carimbos.length, cheio = d.premiosProntos > 0;
+    $('tela-entrar').hidden = true; $('tela-cartao').hidden = false;
+    $('aviso-exemplo').hidden = !d.exemplo;
+    $('empresa').textContent = d.empresa;
+    $('codigo').textContent = d.codigo;
+    document.title = 'Cartão ' + d.empresa + ' | Péçaí Atacado';
+
+    var bagas = '';
+    for (var i = 0; i < meta; i++){
+      var ultima = i === meta - 1;
+      var rot = ((i * 37) % 24) - 12;
+      bagas += '<div class="baga' + (ultima ? ' premio' : '') + '" role="listitem" style="--r:' + rot + 'deg" aria-label="' +
+        (i < n ? 'Carimbo ' + (i+1) + ', ' + data(d.carimbos[i]) : (ultima ? 'Prêmio' : 'Carimbo ' + (i+1) + ', vazio')) + '">' +
+        '<span class="n">' + (ultima ? 'balde<br>grátis' : (i+1)) + '</span><span class="carimbo">' + carimboSVG() + '</span>' +
+        (i < n ? '<span class="d" aria-hidden="true">' + data(d.carimbos[i], true) + '</span>' : '') + '</div>';
+    }
+    $('bagas').innerHTML = bagas;
+
+    // Contagem, balde e barra
+    $('contagem').textContent = n + '/' + meta;
+    $('sub').textContent = cheio ? 'cartão cheio' : (n === 1 ? 'carimbo' : 'carimbos');
+    var faltaCarimbo = (R.litrosPorCarimbo - d.faltamLitros) / R.litrosPorCarimbo;
+    var faltam = meta - n;
+    $('barra').parentNode.hidden = cheio; $('btn-premio').hidden = !cheio;
+    if (cheio){
+      $('falta-txt').innerHTML = '<b>Prêmio liberado:</b> ' + R.premio + '. É só pedir pra resgatar.' +
+        (d.premiosProntos > 1 ? ' Você tem <b>' + d.premiosProntos + '</b> prêmios.' : '');
+      var bp = $('btn-premio');
+      bp.href = zap('Oi, Péçaí! Sou da ' + d.empresa + ' (cartão ' + d.codigo + '). Meu cartão fidelidade encheu e quero resgatar o prêmio: ' + R.premio + '.');
+    } else {
+      $('falta-txt').innerHTML = 'Faltam <b>' + d.faltamLitros + ' L</b> pro próximo carimbo' +
+        ' e <b>' + faltam + ' carimbo' + (faltam === 1 ? '' : 's') + '</b> pro ' + R.premio.replace(/^1 /, '') + '.';
+    }
+    $('btn-zap').href = zap('Oi, Péçaí! Sou da ' + d.empresa + ' (cartão ' + d.codigo + '). Quero fazer um pedido do atacado.');
+
+    // Histórico
+    var h = (d.historico || []).map(function(x){
+      return x.tipo === 'resgate'
+        ? '<li><span>' + data(x.data) + '</span><b>Prêmio resgatado</b></li>'
+        : '<li><span>' + data(x.data) + '</span><b>' + String(x.litros).replace('.', ',') + ' L' +
+          (x.carimbos ? ' · +' + x.carimbos + ' carimbo' + (x.carimbos > 1 ? 's' : '') : '') + '</b></li>';
+    }).join('');
+    $('bloco-hist').hidden = !h; $('hist').innerHTML = h;
+
+    // Regras
+    $('regras').innerHTML =
+      '<li>A cada <b>' + R.litrosPorCarimbo + ' L</b> comprados, 1 carimbo' + (R.contaCupuacu ? ' (açaí e cupuaçu somam juntos)' : ' (só açaí)') + '.</li>' +
+      '<li>Litro que sobra fica guardado pro próximo pedido.</li>' +
+      '<li>Com <b>' + meta + ' carimbos</b>, você ganha ' + R.premio + '.</li>' +
+      (R.validadeDias ? '<li>Os carimbos zeram se a empresa ficar ' + R.validadeDias + ' dias sem pedir' +
+        (d.venceEm ? ' (o seu vale até <b>' + data(d.venceEm) + '</b>)' : '') + '.</li>' : '') +
+      '<li>O cartão atualiza quando a Péçaí registra a entrega.</li>';
+
+    animar(n, meta, cheio, faltaCarimbo);
+  }
+
+  // Carimbos batem um por um; o último bate mais forte e o cartão treme.
+  function animar(n, meta, cheio, fracao){
+    var bagas = document.querySelectorAll('.baga');
+    var nivel = $('nivel');
+    var alvo = 52 - 40 * Math.min(1, (n + (cheio ? 0 : fracao)) / meta);
+    $('barra').style.width = Math.round(fracao * 100) + '%';
+    if (reduz){
+      for (var i = 0; i < n; i++) bagas[i].classList.add('on');
+      nivel.setAttribute('y', alvo);
+      if (cheio) $('cartao').classList.add('encheu');
+      return;
+    }
+    var passo = n > 6 ? 110 : 160;
+    for (var j = 0; j < n; j++) (function(k){
+      setTimeout(function(){
+        bagas[k].classList.add('on', 'bate');
+        if (k === n - 1){
+          var c = $('cartao'); c.classList.remove('treme'); void c.offsetWidth; c.classList.add('treme');
+          if (cheio) c.classList.add('encheu');
+        }
+      }, 350 + k * passo);
+    })(j);
+    // Balde enche junto
+    var y0 = 52, t0 = performance.now(), dur = 350 + n * passo;
+    (function enche(t){
+      var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      nivel.setAttribute('y', (y0 + (alvo - y0) * e).toFixed(2));
+      if (p < 1) requestAnimationFrame(enche);
+    })(t0);
+  }
+
+  // Cartão inclina com o dedo/mouse, com brilho.
+  (function inclinar(){
+    if (reduz) return;
+    var c = $('cartao');
+    function mexe(ev){
+      var r = c.getBoundingClientRect();
+      var x = (ev.clientX - r.left) / r.width, y = (ev.clientY - r.top) / r.height;
+      if (x < -0.2 || x > 1.2 || y < -0.2 || y > 1.2) return solta();
+      c.style.setProperty('--ry', ((x - .5) * 10).toFixed(2) + 'deg');
+      c.style.setProperty('--rx', ((.5 - y) * 8).toFixed(2) + 'deg');
+      c.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
+      c.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+      c.style.setProperty('--go', '1');
+    }
+    function solta(){ c.style.setProperty('--rx','0deg'); c.style.setProperty('--ry','0deg'); c.style.setProperty('--go','0'); }
+    c.addEventListener('pointermove', mexe);
+    c.addEventListener('pointerleave', solta);
+    c.addEventListener('pointerup', solta);
+  })();
+
+  $('form').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var v = $('cod').value.trim().toUpperCase();
+    if (!/^[A-Z0-9]{4,8}$/.test(v)){ $('erro').textContent = 'O código tem de 4 a 8 letras e números.'; return; }
+    location.search = '?c=' + v;
+  });
+
+  // Início
+  if (!codigo) return mostrarEntrar();
+  if (codigo === 'EXEMPLO') return desenhar(EXEMPLO);
+  if (!/^[A-Z0-9]{4,8}$/.test(codigo)) return mostrarEntrar('Esse código não parece certo. Confira a mensagem da Péçaí.');
+  if (!API) return mostrarEntrar('Os cartões ainda estão sendo ligados. Tente de novo mais tarde.');
+
+  document.body.classList.add('carregando');
+  desenhar(Object.assign({}, EXEMPLO, {exemplo:false, empresa:'Carregando…', codigo:codigo, carimbos:[], historico:[], faltamLitros:10, venceEm:null}));
+  $('bloco-hist').hidden = true;
+  var ctrl = 'AbortController' in window ? new AbortController() : null;
+  var limite = setTimeout(function(){ ctrl && ctrl.abort(); }, 15000);
+  fetch(API + '?c=' + encodeURIComponent(codigo), ctrl ? {signal: ctrl.signal} : {})
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      clearTimeout(limite); document.body.classList.remove('carregando');
+      if (!d.ok) return mostrarEntrar(d.erro === 'nao-encontrado' ? 'Não achamos esse cartão. Confira o código na mensagem da Péçaí.' : 'Esse código não parece certo.');
+      desenhar(d);
+    })
+    .catch(function(){
+      clearTimeout(limite); document.body.classList.remove('carregando');
+      mostrarEntrar('Não deu pra carregar agora. Confira a internet e tente de novo.');
+    });
+})();
+</script>
+</body>
+</html>
