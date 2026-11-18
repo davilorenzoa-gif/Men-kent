@@ -163,3 +163,6 @@ O Davi achou a aliança da demo de HDRI "meio ruim": tinha um bico fino na borda
 
 ## 18/11/2026: prompt do getlayers com assets (Soda)
 O prompt do getlayers aponta pra .glb/.png em `api.getlayers.ai`, que dá 403 aqui. E o vídeo do template mostrava lata de **marca real** (Guaraná Antarctica). Saída: refazer os objetos em código (Lathe + CanvasTexture com rótulo original) e usar HDRI do Poly Haven. Regra: em template com `<model-viewer>` por objeto, trocar por poucos canvas Three.js (mais de ~16 contextos WebGL trava o celular). Exemplo em `gudev/aprendizados/soda/`.
+
+## 18/11/2026: GSAP + transform no CSS (vinheta do Jimmy Neutron)
+Elemento com `transform:translateX(-120%) skewX(...)` no CSS e animado com `xPercent` no GSAP: o GSAP leu o -120% como `x` em px e somou, as faixas nunca entraram na tela. Regra: posição inicial de algo animado pelo GSAP vai no `gsap.set`, nunca no CSS.

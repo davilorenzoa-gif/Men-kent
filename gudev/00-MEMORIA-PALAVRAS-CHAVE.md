@@ -173,3 +173,7 @@ O Davi mandou o prompt + vídeo do template e pediu pra usar o Poly Haven. Recri
 ## 18/11/2026: HDRI no Fusca do Itamar
 Palavras: Fusca Itamar, HDRI, studio, warehouse, pintura, preto lavado.
 `sites/fusca-itamar` agora usa o HDRI `studio` do Poly Haven no motor 3D (no lugar do RoomEnvironment). Testado contra `warehouse`; studio ganhou. Antes/depois das cores: vermelho mais vivo, preto deixou de parecer cinza. Sem erro em 1440 e 390.
+
+## 18/11/2026: Jimmy Neutron (site de atleta)
+Palavras: Jimmy Neutron, futebol, atleta, jogador, Ibrachina, IBRA WORK, Nike Tiempo, Redonda do Timão, refletores, replay, prancheta tática, bola rolando, rembg, recorte, chroma key, Cristiano Ronaldo (não usado).
+O Davi pediu um site de futebol "nível Awwwards" pro Jimmy Neutron com 7 fotos. Feito em `sites/jimmy-neutron` (não é cliente). Recorte do jogador com rembg (o modelo baixa do GitHub; HuggingFace dá 403). Dados num objeto `JIMMY` no script; tudo que não veio das fotos aparece "a preencher". `previa_embutida.py` agora também embute imagens do CSS (`url(img/...)`). Lição: animar `xPercent` no GSAP com `transform` já no CSS dá posição errada (lição no `05`).

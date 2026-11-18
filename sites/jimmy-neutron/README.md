@@ -1,0 +1,28 @@
+# Jimmy Neutron · site de atleta (18/11/2026)
+
+Site pessoal de futebol do "Jimmy Neutron" (apelido; pedido do Davi com 7 fotos). **Não é cliente da GuDev e não vira case** sem autorização.
+
+- `index.html` + `img/`: versão pra subir no Netlify.
+- `preview-jimmy-neutron.html`: mesmo site num arquivo só (imagens + GSAP/Lenis embutidos), pra abrir no celular.
+- **Todos os dados ficam no objeto `JIMMY` no topo do `<script>`**. `null` = aparece "a preencher" no site.
+
+## 3 WOWs
+1. **Refletores acendem**: o estádio pisca e acende, JIMMY/NEUTRON sobem letra por letra, a bola rola e vira o "O" de NEUTRON; o Jimmy (recortado da foto) fica na frente do nome. Refletor azul segue o mouse no NEUTRON (no celular passeia sozinho). Placar "tempo de visita" (relógio real) e gráfico de TV.
+2. **A bola conta a trajetória**: prancheta tática; a rolagem desenha a rota e a bola rola por ela, acendendo cada marco.
+3. **Replay**: tocar num momento abre com a vinheta de replay (faixas gelo/azul/preto + "REPLAY").
+Extras: crawl azul que acelera com a rolagem, texto que acende palavra por palavra, painel de números com contadores, barras e rosca, menu mobile em círculo, header que muda no fundo claro, botões magnéticos.
+
+## Dados reais usados (só o que dá pra ver nas fotos)
+- Camisa e escudo do **Ibrachina F.C.** (patrocínio "IBRA WORK"): confirmar se é o clube atual e a categoria.
+- Chuteira **Nike Tiempo** preta (foto sobre a bandeira do Brasil).
+
+## Falta (a preencher no `JIMMY`)
+Posição, pé, altura, número, cidade, biografia, características, frase dele, destaques, estatísticas (jogos, gols, assistências, minutos, por temporada e fonte), anos da trajetória e links das redes.
+O botão "Ver com dados de exemplo" no painel mostra números **fictícios com aviso amarelo**, só pra ver o visual. Tirar antes de publicar, se quiser.
+
+## Fotos
+- Recorte do Jimmy feito com rembg (`u2net_human_seg`), cabeça do colega do fundo apagada.
+- Bola do fundo verde: chroma key em Python.
+- Estádio à noite e pôr do sol na trave: fotos de clima que o Davi mandou (confirmar se pode usar).
+- **Foto do Cristiano Ronaldo não foi usada**: é outra pessoa real e imagem com marca (Man United/Nike/AIG); o pedido era não trocar o Jimmy por foto de outro jogador.
+- O print da chuteira tinha a interface do celular: recortado.
