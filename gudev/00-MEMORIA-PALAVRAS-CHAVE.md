@@ -177,3 +177,7 @@ Palavras: Fusca Itamar, HDRI, studio, warehouse, pintura, preto lavado.
 ## 18/11/2026: Jimmy Neutron (site de atleta)
 Palavras: Jimmy Neutron, futebol, atleta, jogador, Ibrachina, IBRA WORK, Nike Tiempo, Redonda do Timão, refletores, replay, prancheta tática, bola rolando, rembg, recorte, chroma key, Cristiano Ronaldo (não usado).
 O Davi pediu um site de futebol "nível Awwwards" pro Jimmy Neutron com 7 fotos. Feito em `sites/jimmy-neutron` (não é cliente). Recorte do jogador com rembg (o modelo baixa do GitHub; HuggingFace dá 403). Dados num objeto `JIMMY` no script; tudo que não veio das fotos aparece "a preencher". `previa_embutida.py` agora também embute imagens do CSS (`url(img/...)`). Lição: animar `xPercent` no GSAP com `transform` já no CSS dá posição errada (lição no `05`).
+
+## 18/11/2026: bola 3D no Jimmy Neutron
+Palavras: bola 3D, bola de futebol 3D, icosaedro truncado, gomos, pentágono, hexágono, Three.js, HDRI studio, esbuild, window.BOLA.
+"Faz uma bola 3d": a bola do site do Jimmy virou 3D em Three.js, com o padrão de bola gerado em código (sem modelo baixado). Reaproveitável em qualquer site de esporte: `sites/jimmy-neutron/src/bola3d.js`. `previa_embutida.py` agora também embute scripts locais (`<script type="module" src="js/...">`).
