@@ -38,3 +38,6 @@ O botão "Ver com dados de exemplo" no painel mostra números **fictícios com a
 - Seções: Jogador (scanner do **Neutron Lab**: linha que varre o Jimmy na rolagem, revela a cor e acende etiquetas: escudo do Ibrachina, IBRA WORK, e o que falta como "a preencher"), **Ídolo** (Cristiano Ronaldo, fatos fixos: 5 Bolas de Ouro, 5 Champions, Euro 2016, camisa 7; "por que é fã" a preencher em `JIMMY.porqueFa`), Partidas (filtro Todos/Resultados/Próximos), Números, Notícias (só fatos, abrem num leitor), Tabela, Galeria, Trajetória, Contato. Cards com inclinação 3D e reflexo no mouse, botões magnéticos.
 - **Copa Neutron = simulação.** Times fictícios de nome científico (Neutron FC, Fóton United, Atlético Órbita, Gravidade SC, Próton EC, Quasar FC), 15 jogos no objeto `COPA`. Tabela e números do Jimmy são **calculados dos jogos**, então nunca se contradizem. Aviso amarelo de simulação em Partidas, Números e Tabela. Quando o Jimmy mandar jogos reais: trocar `COPA` (ou preencher `JIMMY.stats`, que tem prioridade) e tirar os avisos.
 - **Foto do CR7**: é de internet (marcas Man United/Nike/AIG). Ok pra site pessoal de fã; nunca usar em material da GuDev.
+
+## Dados confirmados pelo Davi (18/11/2026)
+Posição LE, LD e zagueiro · pé direito · camisa 5 · 1,64 m · capitão do time B. Já no objeto `JIMMY` (ficha, gráfico de TV, scanner e bio).
