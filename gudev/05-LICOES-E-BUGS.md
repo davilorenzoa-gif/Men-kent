@@ -160,3 +160,6 @@
 
 ## 18/11/2026: aliança do avesso (LatheGeometry)
 O Davi achou a aliança da demo de HDRI "meio ruim": tinha um bico fino na borda em certos ângulos. Não era o formato: o perfil do `LatheGeometry` estava no sentido horário, então as faces ficaram viradas pra dentro e o Three.js escondia parte do aro. **Regra:** perfil fechado de `LatheGeometry` sempre no sentido anti-horário (de baixo, pelo lado de fora, até em cima; a Lume faz certo). Se aparecer lâmina ou buraco, teste rápido: `side: THREE.DoubleSide`; se sumir, inverta a ordem dos pontos (não deixe o DoubleSide, que erra a luz). E aro de joia nunca com topo reto: visto de raspão vira lâmina. Testar sempre girando (arrastar) em 3 ângulos, não só a pose parada.
+
+## 18/11/2026: prompt do getlayers com assets (Soda)
+O prompt do getlayers aponta pra .glb/.png em `api.getlayers.ai`, que dá 403 aqui. E o vídeo do template mostrava lata de **marca real** (Guaraná Antarctica). Saída: refazer os objetos em código (Lathe + CanvasTexture com rótulo original) e usar HDRI do Poly Haven. Regra: em template com `<model-viewer>` por objeto, trocar por poucos canvas Three.js (mais de ~16 contextos WebGL trava o celular). Exemplo em `gudev/aprendizados/soda/`.

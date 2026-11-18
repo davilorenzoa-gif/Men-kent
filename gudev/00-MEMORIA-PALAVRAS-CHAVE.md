@@ -165,3 +165,7 @@ Lead novo: o Rodrigo (amigo do Alexandre da Katraka) tem a marca OF Fusca Itamar
 ## 18/11/2026: Poly Haven vira fonte padrão de 3D
 Palavras: Poly Haven, polyhaven, HDRI, glTF, texturas, CC0, objetos 3D, Lume, Kimi.
 O Davi perguntou do "site de objetos 3D" que tinha mandado (era o Poly Haven, anotado em 13/11) e pediu pra usar ele nos projetos futuros que combinarem. Regra no `03` ("Poly Haven como fonte padrão de 3D"): HDRI sempre que tiver metal/vidro/carro/joia, modelos só pra cenário, 1K + comprimido, nunca no lugar de comida ou produto real. Os hosts do Poly Haven dão 403 no proxy e o app do celular não tem onde editar a rede (o Davi tentou). Saída: o pacote npm `@pmndrs/assets` (CC0) traz 18 HDRIs do Poly Haven em 512 px; extraídos pra `gudev/efeitos/hdri/` + demo `gudev/demos/hdri-polyhaven.html` (testada em 390 e 1440, sem erro). Palavras: @pmndrs/assets, EXR, EXRLoader, studio.exr.
+
+## 18/11/2026: Soda (template getlayers "Refrigerante")
+Palavras: Soda, Diet Soda, refrigerante, lata 3D, cereja, mirtilo, Pure Zero, Refreshingly Clean, getlayers, model-viewer, troca de sabor, Guaraná (marca real, não usar).
+O Davi mandou o prompt + vídeo do template e pediu pra usar o Poly Haven. Recriado em `gudev/aprendizados/soda/` (arquivo único, 3 canvas Three.js, HDRI studio, lata/frutas em código com rótulo original). Estudo, nunca case. Também neste dia: aliança da demo de HDRI estava do avesso (lição no `05`).
