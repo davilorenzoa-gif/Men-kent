@@ -26,3 +26,9 @@ O botão "Ver com dados de exemplo" no painel mostra números **fictícios com a
 - Estádio à noite e pôr do sol na trave: fotos de clima que o Davi mandou (confirmar se pode usar).
 - **Foto do Cristiano Ronaldo não foi usada**: é outra pessoa real e imagem com marca (Man United/Nike/AIG); o pedido era não trocar o Jimmy por foto de outro jogador.
 - O print da chuteira tinha a interface do celular: recortado.
+
+## Bola 3D (18/11/2026)
+- O "O" do NEUTRON e a bola da trajetória agora são **3D de verdade** (Three.js 0.160): padrão real de bola (icosaedro truncado, 12 pentágonos pretos e 20 hexágonos brancos) gerado em código, com relevo nas costuras, verniz e luz do HDRI `studio` (Poly Haven, CC0).
+- No herói: rola até o lugar, gira com a rolagem, acompanha o mouse e respira devagar. Na prancheta: rola de verdade na direção do caminho (eixo perpendicular ao movimento).
+- Código em `src/bola3d.js` → `js/bola3d.js` (`cd src && npm i && python3 build.py`). O script do site mexe em `window.BOLA`; o módulo só desenha. Sem WebGL, volta pra imagem `img/bola.webp`.
+- Abrindo o `index.html` direto do disco o módulo não carrega (o navegador bloqueia módulo em file://): usar a prévia ou o Netlify.

@@ -110,6 +110,17 @@ def main():
         return f"<script>/* {url} embutido pela previa_embutida.py */\n{codigo}\n</script>"
 
     html = re.sub(r'<script src="https://[^"]+"[^>]*></script>', troca_script, html)
+
+    # scripts locais do site (ex.: <script type="module" src="js/bola3d.js">)
+    def troca_local(m):
+        local = os.path.join(pasta, m.group(2))
+        if not os.path.isfile(local):
+            return m.group(0)
+        codigo = open(local, encoding="utf-8").read().replace("</script", "<\\/script")
+        print(f"  embutido: {m.group(2)} ({len(codigo)//1024} KB)")
+        return f"<script{m.group(1)}>{codigo}</script>"
+
+    html = re.sub(r'<script((?: type="module")?) src="((?!https?:)[^"]+\.js)"></script>', troca_local, html)
     open(saida, "w", encoding="utf-8").write(html)
     print(f"ok: {saida} ({len(html)//1024} KB)")
 
