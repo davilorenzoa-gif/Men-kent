@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HDRI Poly Haven: teste</title>
+<style>
+  :root{--bg:#0d0d0f;--fg:#ece8df;--mut:#8d887d;--ouro:#d9b26a}
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%;background:var(--bg);color:var(--fg);font:15px/1.4 system-ui,sans-serif}
+  canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:pan-y}
+  .ui{position:fixed;left:16px;right:16px;bottom:16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .ui h1{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg);background:#1b1a1ecc;border-radius:999px;padding:6px 12px}
+  .ui .quebra{width:100%;height:0}
+  button{font:inherit;color:var(--fg);background:#1b1a1e;border:1px solid #2c2a30;border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}
+  button[aria-pressed=true]{border-color:var(--ouro);color:var(--ouro)}
+  .cmp{margin-left:auto}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="ui">
+  <h1 id="rot">HDRI: studio</h1><span class="quebra"></span>
+  <div id="lista" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+  <button class="cmp" id="cmp" aria-pressed="false">Comparar com RoomEnvironment</button>
+</div>
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import {EXRLoader} from 'three/addons/loaders/EXRLoader.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+
+// HDRIs do Poly Haven (CC0) via @pmndrs/assets, 512 px. Arquivos em gudev/efeitos/hdri/.
+const HDRIS=['studio','warehouse','workshop','city','lobby','sunset','night','forest'];
+const BASE='../efeitos/hdri/';
+
+const c=document.getElementById('c');
+const r=new THREE.WebGLRenderer({canvas:c,antialias:true});
+r.setPixelRatio(Math.min(devicePixelRatio,2));
+r.toneMapping=THREE.ACESFilmicToneMapping;
+const cena=new THREE.Scene(), cam=new THREE.PerspectiveCamera(35,1,.1,50);
+cam.position.set(0,.35,5.2);
+const pm=new THREE.PMREMGenerator(r);
+const sala=pm.fromScene(new RoomEnvironment(),.04).texture;
+
+// Aliança (perfil conforto, mesma ideia da Lume)
+const pts=[];for(let i=0;i<=40;i++){const a=Math.PI*i/40;pts.push(new THREE.Vector2(1.1+Math.sin(a)*.16,Math.cos(a)*.32))}
+for(let i=40;i>=0;i--){const a=Math.PI*i/40;pts.push(new THREE.Vector2(1.1-Math.sin(a)*.05,Math.cos(a)*.32))}
+const anel=new THREE.Mesh(new THREE.LatheGeometry(pts,200),new THREE.MeshPhysicalMaterial({color:0xe2b866,metalness:1,roughness:.14,clearcoat:.4}));
+anel.rotation.x=1.15;cena.add(anel);
+const esfera=new THREE.Mesh(new THREE.SphereGeometry(.42,64,32),new THREE.MeshPhysicalMaterial({color:0xffffff,metalness:0,roughness:0,transmission:1,thickness:.6,ior:1.5}));
+esfera.position.set(1.75,-.2,-.6);cena.add(esfera);
+
+const cache={};let atual='studio',comparando=false;
+const carregar=n=>cache[n]||(cache[n]=new EXRLoader().loadAsync(BASE+n+'.exr').then(t=>{t.mapping=THREE.EquirectangularReflectionMapping;return{amb:pm.fromEquirectangular(t).texture,fundo:t}}));
+async function aplicar(){
+  const rot=document.getElementById('rot');
+  if(comparando){cena.environment=sala;cena.background=null;rot.textContent='Luz padrão: RoomEnvironment';return}
+  const h=await carregar(atual);cena.environment=h.amb;cena.background=h.fundo;cena.backgroundBlurriness=.5;cena.backgroundIntensity=.35;
+  rot.textContent='HDRI: '+atual+' (Poly Haven, CC0)';
+}
+const lista=document.getElementById('lista');
+for(const n of HDRIS){const b=document.createElement('button');b.textContent=n;b.setAttribute('aria-pressed',n===atual);
+  b.onclick=()=>{atual=n;comparando=false;cmp.setAttribute('aria-pressed',false);lista.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));aplicar()};lista.append(b)}
+const cmp=document.getElementById('cmp');
+cmp.onclick=()=>{comparando=!comparando;cmp.setAttribute('aria-pressed',comparando);aplicar()};
+
+let arr=null,vel=0;
+c.addEventListener('pointerdown',e=>{arr=e.clientX});
+addEventListener('pointerup',()=>arr=null);
+addEventListener('pointermove',e=>{if(arr!==null){vel=(e.clientX-arr)*.004;arr=e.clientX}});
+function tam(){const w=innerWidth,h=innerHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.position.z=w<600?10:5.2;anel.position.y=w<600?.9:0;esfera.position.set(w<600?.9:1.75,w<600?-1.1:-.2,-.6);cam.updateProjectionMatrix()}
+addEventListener('resize',tam);tam();
+let rodando=true;document.addEventListener('visibilitychange',()=>{rodando=!document.hidden;if(rodando)loop()});
+function loop(){if(!rodando)return;vel*=.95;anel.rotation.z+=.004+vel;r.render(cena,cam);requestAnimationFrame(loop)}
+aplicar().then(loop);
+</script>
+</body>
+</html>
