@@ -430,7 +430,8 @@ Em todo projeto que usar 3D (Three.js), **olhar primeiro no polyhaven.com** ante
 - **Modelos (glTF):** pra cenário e detalhe (mesa, vaso, ferramenta, louça, planta, luminária) em volta do produto do cliente. Baixar em **1K**, comprimir com `gltf-transform` (meshopt + texturas webp/ktx2), meta de **até ~1,5 MB por modelo**.
 - **Texturas:** madeira, concreto, couro, metal escovado etc. pra chão, balcão e fundo de cena 3D. 1K, webp.
 - **Quando condiz:** oficina, estética automotiva, joalheria, barbearia, café/bar (ambiente), loja de móveis/decoração, ferragem, academia (equipamento). **Não condiz:** comida do cliente (sempre foto real), produto real do cliente (foto dele) e site que não pede 3D (não forçar).
-- **Rede:** este ambiente bloqueia polyhaven.com, api.polyhaven.com e dl.polyhaven.org (403 no proxy em 18/11/2026). Pra baixar daqui precisa liberar esses 3 hosts na rede do ambiente; senão o Davi baixa e manda o arquivo.
+- **Já no repo:** 18 HDRIs do Poly Haven em `gudev/efeitos/hdri/` (512 px, 100 a 300 KB, CC0, vindos do npm `@pmndrs/assets`). Usar `studio` como padrão; tabela de qual serve pra quê no README de lá. Demo: `gudev/demos/hdri-polyhaven.html` (aliança com HDRI × `RoomEnvironment`: o HDRI ganha de longe).
+- **Rede:** os sites do Poly Haven dão 403 neste ambiente e o app do celular não deixa editar a rede. Modelo, textura ou HDRI que não estiver no repo: o Davi baixa no polyhaven.com (1K) e manda.
 - Anotar no README do site qual asset do Poly Haven entrou (nome + link), mesmo sem precisar de crédito.
 
 ## Segurança (revisada em 21/10/2026)
