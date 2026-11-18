@@ -12,7 +12,10 @@ import {
   LoopOnce, ACESFilmicToneMapping, SRGBColorSpace, MathUtils, Matrix4, Vector4, AnimationUtils
 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
+import { DataTexture, RGBAFormat, EquirectangularReflectionMapping, LinearSRGBColorSpace, LinearFilter } from 'three';
+// Luz e reflexo: HDRI do Poly Haven (CC0, 512 px), de gudev/efeitos/hdri/. Embutido no build.
+import HDRI from '../../../gudev/efeitos/hdri/studio.exr';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
 const lerp = MathUtils.lerp;
@@ -66,7 +69,12 @@ const F = {
 
     const scene = new Scene();
     const pm = new PMREMGenerator(renderer);
-    scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture;
+    const exr = new EXRLoader().parse(Uint8Array.from(atob(HDRI.split(',')[1]), c => c.charCodeAt(0)).buffer);
+    const hdri = new DataTexture(exr.data, exr.width, exr.height, RGBAFormat, exr.type);
+    hdri.mapping = EquirectangularReflectionMapping; hdri.colorSpace = LinearSRGBColorSpace;
+    hdri.minFilter = hdri.magFilter = LinearFilter; hdri.needsUpdate = true;
+    scene.environment = pm.fromEquirectangular(hdri).texture;
+    hdri.dispose(); pm.dispose();
     scene.environmentIntensity = 0;
     this.scene = scene;
 

@@ -4,7 +4,8 @@ Rodrigo, amigo do Alexandre (Katraka). Marca **OF Fusca Itamar** (PDF "Os Fafas"
 
 - `index.html`: site (HTML único + `js/fusca3d.min.js`, o motor 3D compilado). Abrir por servidor (`python3 -m http.server` na pasta): o 3D não carrega em `file://`.
 - `fusca-itamar-arquivo-unico.html`: prévia num arquivo só (2,3 MB, com o 3D e o modelo leve dentro). Gerar de novo: `python3 sites/fusca-itamar/montar_previa.py`. Passou de 2 MB: se a prévia do app não abrir, **baixar e abrir no Chrome**.
-- `src/fusca3d.js`: código-fonte do 3D (Three.js 0.170). Compilar: `npm i three@0.170.0 esbuild@0.24.0` numa pasta de ferramentas e `NODE_PATH=<ferramentas>/node_modules esbuild src/fusca3d.js --bundle --minify --format=iife --target=es2019 --legal-comments=none --outfile=js/fusca3d.min.js`.
+- `src/fusca3d.js`: código-fonte do 3D (Three.js 0.170). Compilar: `npm i three@0.170.0 esbuild@0.24.0` numa pasta de ferramentas e `NODE_PATH=<ferramentas>/node_modules esbuild src/fusca3d.js --bundle --minify --format=iife --target=es2019 --legal-comments=none --loader:.exr=dataurl --outfile=js/fusca3d.min.js`.
+- **Luz (18/11/2026):** HDRI `studio` do Poly Haven (CC0, `gudev/efeitos/hdri/studio.exr`, embutido no motor) no lugar do `RoomEnvironment`. Comparado com `warehouse` e escolhido o studio: pintura mais funda, reflexo de softbox no teto, preto que é preto (antes ficava cinza). A entrada no escuro (`environmentIntensity` 0,06 → 1) continua igual. Prévia passou pra 2,48 MB.
 - `modelo/fusca.glb` (1,1 MB, meshopt + WebP 1024) e `modelo/fusca-previa.glb` (725 KB, texturas 512). Crédito obrigatório (CC BY 4.0, soujagah) já está no rodapé; texto em `modelo/CREDITS.txt`.
 
 ## Direção
