@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Jimmy Neutron · Football</title>
 <meta name="description" content="Jimmy Neutron. Perfil, números, momentos e trajetória no futebol.">
-<meta name="theme-color" content="#07080b">
+<meta name="theme-color" content="#050a18">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -14,10 +14,10 @@
    JIMMY NEUTRON — tokens
    ========================================================= */
 :root{
-  --ink:#07080b; --ink-2:#0d0f14; --grafite:#171a21; --grafite-2:#232733;
+  --ink:#050a18; --ink-2:#081127; --grafite:#0f1a38; --grafite-2:#1c2a52;
   --gelo:#eceff4; --gelo-2:#dde2ea; --cinza:#8a92a2; --cinza-2:#5b6271;
   --azul:#2f56ff; --azul-claro:#8197ff; --azul-fundo:#0b1440;
-  --linha:rgba(236,239,244,.12); --linha-escura:rgba(7,8,11,.14);
+  --linha:rgba(170,190,255,.14); --ciano:#6fd6ff; --linha-escura:rgba(7,8,11,.14);
   --f-display:"Anybody", "Arial Narrow", system-ui, sans-serif;
   --f-texto:"Hanken Grotesk", system-ui, -apple-system, sans-serif;
   --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
@@ -91,19 +91,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 @keyframes pulso{0%{box-shadow:0 0 0 0 rgba(255,59,59,.55)}70%{box-shadow:0 0 0 9px rgba(255,59,59,0)}100%{box-shadow:0 0 0 0 rgba(255,59,59,0)}}
 
 /* menu mobile */
-.menu-m{position:fixed;inset:0;z-index:55;background:var(--ink);display:flex;flex-direction:column;justify-content:flex-end;padding:calc(var(--header-h) + 24px) var(--gutter) calc(28px + env(safe-area-inset-bottom));
+.menu-m{position:fixed;inset:0;z-index:55;overflow-y:auto;background:var(--ink);display:flex;flex-direction:column;justify-content:flex-end;padding:calc(var(--header-h) + 24px) var(--gutter) calc(28px + env(safe-area-inset-bottom));
   clip-path:circle(0% at calc(100% - var(--gutter) - 23px) 36px);visibility:hidden;transition:clip-path .8s var(--ease), visibility 0s .8s}
 .menu-aberto .menu-m{clip-path:circle(150% at calc(100% - var(--gutter) - 23px) 36px);visibility:visible;transition:clip-path .8s var(--ease), visibility 0s}
 .menu-aberto .topo{color:var(--gelo)}
 .menu-aberto .topo::before{opacity:0}
 .menu-m ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--linha)}
 .menu-m li{border-bottom:1px solid var(--linha);overflow:hidden}
-.menu-m a{display:flex;align-items:baseline;justify-content:space-between;padding:14px 0 10px;text-decoration:none;font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 70;font-size:clamp(2.6rem,12vw,4.5rem);line-height:.95;text-transform:uppercase;transform:translateY(105%);transition:transform .7s var(--ease), color .3s}
+.menu-m a{display:flex;align-items:baseline;justify-content:space-between;padding:9px 0 6px;text-decoration:none;font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 70;font-size:clamp(1.9rem,8.6vw,3.4rem);line-height:.95;text-transform:uppercase;transform:translateY(105%);transition:transform .7s var(--ease), color .3s}
 .menu-m a small{font-family:var(--f-mono);font-size:.72rem;font-weight:400;letter-spacing:.14em;color:var(--azul-claro)}
 .menu-m a.ativo{color:var(--azul-claro)}
 .menu-aberto .menu-m a{transform:none}
 .menu-aberto .menu-m li:nth-child(2) a{transition-delay:.05s}.menu-aberto .menu-m li:nth-child(3) a{transition-delay:.1s}
-.menu-aberto .menu-m li:nth-child(4) a{transition-delay:.15s}.menu-aberto .menu-m li:nth-child(5) a{transition-delay:.2s}.menu-aberto .menu-m li:nth-child(6) a{transition-delay:.25s}
+.menu-aberto .menu-m li:nth-child(4) a{transition-delay:.15s}.menu-aberto .menu-m li:nth-child(5) a{transition-delay:.2s}.menu-aberto .menu-m li:nth-child(6) a{transition-delay:.25s}.menu-aberto .menu-m li:nth-child(7) a{transition-delay:.3s}.menu-aberto .menu-m li:nth-child(8) a{transition-delay:.35s}.menu-aberto .menu-m li:nth-child(9) a{transition-delay:.4s}.menu-aberto .menu-m li:nth-child(10) a{transition-delay:.45s}
 .menu-m .rodape-m{display:flex;justify-content:space-between;margin-top:22px;color:var(--cinza)}
 
 /* =========================================================
@@ -363,10 +363,12 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
   .redes{grid-template-columns:repeat(2,1fr)}
   .rede:nth-child(2){border-right:0}
 }
-@media (max-width: 860px){
-  :root{--header-h:64px}
+@media (max-width: 1180px){
   .nav,.topo .ao-vivo{display:none}
   .btn-menu{display:block}
+}
+@media (max-width: 860px){
+  :root{--header-h:64px}
   .perfil-grid{grid-template-columns:1fr}
   .foto-ed{aspect-ratio:4/4.4}
   .bloco-ed{grid-template-columns:1fr}
@@ -393,6 +395,7 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
   .gc-nome .num{min-width:52px;font-size:1.6rem}
   .gc-nome strong{font-size:1.25rem}
   .gc-frase{display:none}
+  .gc .gc-sub,.gc .ctas{display:none}
   .rolar{display:none}
   .nome .l2{-webkit-text-stroke-width:1.5px}
   .tiles{grid-template-columns:1fr 1fr}
@@ -421,6 +424,234 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .bio .w{opacity:1}
 }
+/* =========================================================
+   V2 — azul profundo, vidro e laboratório
+   ========================================================= */
+body{background:var(--ink)}
+/* brilhos fixos atrás de tudo: dão o que o vidro refratar */
+body::before{content:"";position:fixed;inset:-10%;z-index:-1;pointer-events:none;
+  background:radial-gradient(40% 35% at 85% 20%, rgba(47,86,255,.22), transparent 70%),
+             radial-gradient(35% 30% at 10% 75%, rgba(111,214,255,.10), transparent 70%),
+             linear-gradient(180deg,#050a18,#060d22 50%,#050a18)}
+main > section:not(.hero){background:transparent}
+.vidro{background:linear-gradient(160deg, rgba(130,160,255,.10), rgba(130,160,255,.03) 60%);border:1px solid rgba(160,185,255,.16);
+  backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 30px 60px -30px rgba(0,0,0,.7)}
+/* seções "claras" viram azul de prancheta (mesmas regras, cores trocadas) */
+.claro{--ink:#eceff4;--gelo:#081433;--gelo-2:#0f1d45;--cinza-2:#9aa7c7;--linha-escura:rgba(170,190,255,.16);--traco-cor:#eceff4;--azul:#4c6dff;
+  background:#081433;color:#eceff4;
+  background-image:linear-gradient(rgba(120,150,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(120,150,255,.06) 1px,transparent 1px);background-size:48px 48px}
+#perfil.claro{background-color:#081433}
+.claro .pend{color:#9aa7c7}
+.azul{position:relative}
+.azul::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 50% at 50% 0%, rgba(47,86,255,.16), transparent 70%)}
+.ponto.az{background:var(--ciano);animation:none;box-shadow:0 0 10px var(--ciano)}
+.ponto.am{background:#f5a524;animation:none}
+
+/* CTAs */
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.btn-p,.btn-s{position:relative;display:inline-flex;align-items:center;gap:12px;height:50px;padding:0 22px;border-radius:99px;text-decoration:none;font-weight:600;font-size:.95rem;overflow:hidden;isolation:isolate;transition:transform .5s var(--ease)}
+.btn-p{background:var(--azul);color:#fff;box-shadow:0 10px 30px -10px rgba(47,86,255,.8)}
+.btn-p::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--gelo);transform:translateY(101%);transition:transform .5s var(--ease)}
+.btn-p:hover{color:var(--ink)}
+.btn-p:hover::before{transform:none}
+.btn-p i{font-style:normal;transition:transform .5s var(--ease)}
+.btn-p:hover i{transform:translateX(4px)}
+.btn-s{border:1px solid rgba(236,239,244,.3);color:var(--gelo);background:rgba(5,10,24,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.btn-s:hover{border-color:var(--gelo)}
+.btn-p:active,.btn-s:active{transform:scale(.96)}
+.gc-sub{margin:8px 0 0;color:var(--cinza);font-size:.95rem;max-width:40ch}
+.gc .gc-frase{margin-top:14px}
+
+/* SCANNER */
+.scanner{position:relative;display:flex;flex-direction:column;border-radius:18px;overflow:hidden;min-height:620px}
+.sc-hud,.sc-rodape{display:flex;justify-content:space-between;gap:12px;padding:14px 18px;color:var(--cinza-2)}
+.sc-hud{border-bottom:1px solid var(--linha-escura)}
+.sc-hud > span{display:flex;align-items:center;gap:10px}
+.sc-hud #scPct{color:var(--ciano);font-variant-numeric:tabular-nums}
+.sc-rodape{border-top:1px solid var(--linha-escura);flex-wrap:wrap}
+.sc-rodape b{color:var(--gelo-fixo,#eceff4);margin-left:6px;font-weight:600}
+.sc-palco{position:relative;flex:1;display:flex;justify-content:center;align-items:flex-end;padding:40px 16px 0;overflow:hidden;
+  background:radial-gradient(50% 40% at 50% 85%, rgba(47,86,255,.35), transparent 70%)}
+.sc-palco::after{content:"";position:absolute;left:10%;right:10%;bottom:0;height:40px;background:radial-gradient(50% 100% at 50% 100%, rgba(111,214,255,.35), transparent 70%)}
+.sc-fig{position:relative;height:min(560px,62vh);aspect-ratio:854/1037}
+.sc-fig img{position:absolute;inset:0;width:100%;height:100%}
+.sc-holo{filter:grayscale(1) brightness(.75) sepia(1) hue-rotate(185deg) saturate(5) contrast(1.1);opacity:.55;mix-blend-mode:screen}
+.sc-cor{clip-path:inset(0 0 100% 0)}
+.sc-linha{position:absolute;left:-14%;right:-14%;top:0;height:2px;background:var(--ciano);box-shadow:0 0 18px 4px rgba(111,214,255,.55);will-change:transform}
+.sc-linha::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:60px;background:linear-gradient(0deg, rgba(111,214,255,.18), transparent)}
+.sc-pt{position:absolute;left:var(--x);top:var(--y);width:0;height:0;opacity:0;transition:opacity .4s}
+.sc-pt.on{opacity:1}
+.sc-pt i{position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;border:2px solid var(--ciano);background:rgba(111,214,255,.25)}
+.sc-pt i::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(111,214,255,.5);animation:sonar 2s infinite}
+@keyframes sonar{from{transform:scale(.6);opacity:1}to{transform:scale(1.6);opacity:0}}
+.sc-pt span{position:absolute;top:-14px;white-space:nowrap;display:flex;flex-direction:column;gap:3px;padding:7px 10px;border-radius:8px;font-size:.78rem;color:var(--cinza-2);
+  background:rgba(5,10,24,.72);border:1px solid rgba(111,214,255,.3);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.sc-pt span b{font-family:var(--f-display);font-variation-settings:"wdth" 85;font-weight:800;font-size:.95rem;color:#eceff4;text-transform:uppercase;letter-spacing:.02em}
+.sc-pt span em{font-style:normal}
+.sc-pt.d span{left:46px}.sc-pt.e span{right:46px}
+.sc-pt.baixo span{top:auto;bottom:-8px}
+.sc-pt::before{content:"";position:absolute;top:0;height:1px;width:40px;background:rgba(111,214,255,.6)}
+.sc-pt.d::before{left:6px}.sc-pt.e::before{right:6px}
+
+/* ÍDOLO */
+#idolo{overflow:hidden}
+.idolo-sete{position:absolute;right:-4vw;top:4%;font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 50;font-size:min(80vw,62rem);line-height:.8;color:transparent;-webkit-text-stroke:2px rgba(160,185,255,.12);pointer-events:none;user-select:none}
+.idolo-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(32px,6vw,96px);align-items:center}
+.idolo-foto{position:relative;margin:0;border-radius:18px;overflow:hidden;aspect-ratio:736/1000;transform-style:preserve-3d}
+.idolo-foto img{width:100%;height:112%;object-fit:cover;object-position:50% 20%;will-change:transform}
+.idolo-foto::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(5,10,24,.85));pointer-events:none}
+.idolo-foto .cantos{position:absolute;inset:14px;z-index:2;pointer-events:none}
+.idolo-foto figcaption{position:absolute;z-index:2;left:18px;right:18px;bottom:16px;display:flex;justify-content:space-between;gap:12px;color:#fff}
+.idolo-foto figcaption span:last-child{color:var(--cinza)}
+.idolo-lead{font-size:clamp(1.1rem,1.6vw,1.4rem);line-height:1.45;color:var(--gelo);max-width:44ch;margin:28px 0 32px}
+.idolo-num{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.idolo-num li{position:relative;padding:20px 20px 18px;border-radius:14px;transform-style:preserve-3d}
+.idolo-num b{display:block;font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 60;font-size:clamp(3rem,5vw,4.4rem);line-height:.85;font-variant-numeric:tabular-nums}
+.idolo-num li:last-child b{color:var(--azul-claro)}
+.idolo-num span{display:block;margin-top:10px;color:var(--cinza);font-size:.9rem}
+.idolo-porque{margin-top:28px;padding-top:18px;border-top:1px solid var(--linha)}
+.idolo-porque .mono{color:var(--azul-claro)}
+.idolo-porque p{margin:10px 0 0}
+
+/* tilt 3D com reflexo */
+[data-tilt]{transition:transform .6s var(--ease);will-change:transform}
+[data-tilt]::before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:inherit;opacity:0;transition:opacity .4s;
+  background:radial-gradient(circle at var(--gx,50%) var(--gy,50%), rgba(255,255,255,.16), transparent 45%)}
+[data-tilt]:hover::before{opacity:1}
+
+/* aviso de simulação */
+.aviso-sim{display:inline-flex;align-items:center;gap:10px;margin:28px 0 0;padding:8px 14px;border-radius:99px;border:1px solid rgba(245,165,36,.4);color:#f7c46a;background:rgba(245,165,36,.07);line-height:1.4}
+
+/* PARTIDAS */
+.filtros{position:relative;display:inline-flex;gap:4px;margin:28px 0 22px;padding:4px;border-radius:99px;border:1px solid var(--linha);background:rgba(8,17,39,.6)}
+.filtros button{position:relative;z-index:1;padding:10px 18px;border-radius:99px;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cinza);transition:color .3s}
+.filtros button[aria-selected="true"]{color:#fff}
+.filtro-ind{position:absolute;top:4px;bottom:4px;left:0;width:10px;border-radius:99px;background:var(--azul);transition:transform .5s var(--ease), width .5s var(--ease)}
+.jogos{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.jogo{display:grid;grid-template-columns:150px 1fr 170px;align-items:center;gap:20px;padding:18px 22px;border-radius:16px;position:relative;transition:transform .5s var(--ease), border-color .3s}
+.jogo:hover{border-color:rgba(160,185,255,.35)}
+.jogo.oculto{display:none}
+.j-data{display:flex;flex-direction:column;gap:4px}
+.j-data b{font-family:var(--f-display);font-variation-settings:"wdth" 75;font-weight:800;font-size:1.5rem;line-height:1;text-transform:uppercase}
+.j-data .mono{color:var(--cinza)}
+.j-confronto{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
+.j-time{display:flex;align-items:center;gap:12px;font-weight:600}
+.j-time.casa{justify-content:flex-end;text-align:right}
+.j-time.meu{color:#fff}
+.j-time:not(.meu){color:var(--cinza)}
+.escudo{width:38px;height:42px;flex:none}
+.j-placar{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 60;font-size:2.4rem;line-height:1;font-variant-numeric:tabular-nums;min-width:96px;justify-content:center}
+.j-placar i{font-style:normal;color:var(--cinza-2);font-size:1.4rem}
+.j-placar.vs{font-size:1rem;font-family:var(--f-mono);letter-spacing:.2em;color:var(--cinza)}
+.j-info{display:flex;flex-direction:column;align-items:flex-end;gap:8px;text-align:right}
+.status{display:inline-flex;align-items:center;gap:8px;padding:5px 10px;border-radius:99px;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase}
+.status.v{background:rgba(52,211,153,.12);color:#6ee7b7}
+.status.e{background:rgba(160,185,255,.12);color:#c3cffc}
+.status.d{background:rgba(248,113,113,.12);color:#fca5a5}
+.status.a{background:rgba(47,86,255,.2);color:#b4c3ff}
+.j-jimmy{font-size:.82rem;color:var(--cinza)}
+.j-jimmy b{color:var(--ciano);font-weight:600}
+
+/* NOTÍCIAS */
+.noticias{display:grid;grid-template-columns:1.35fr 1fr;grid-template-rows:auto auto;gap:16px;margin-top:clamp(36px,5vw,64px)}
+.not{position:relative;display:flex;flex-direction:column;text-align:left;border-radius:18px;overflow:hidden;width:100%;transform-style:preserve-3d}
+.not .n-img{position:relative;overflow:hidden;aspect-ratio:16/10}
+.not .n-img img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.not:hover .n-img img{transform:scale(1.07)}
+.not .n-cat{position:absolute;left:14px;top:14px;padding:6px 10px;border-radius:99px;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(5,10,24,.55);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.not .n-tx{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.not h3{margin:0;font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 80;font-size:clamp(1.25rem,1.8vw,1.6rem);line-height:1.02;text-transform:uppercase}
+.not p{margin:0;color:var(--cinza);font-size:.95rem}
+.not .n-ler{margin-top:auto;display:flex;justify-content:space-between;align-items:center;color:var(--azul-claro)}
+.not .n-ler i{font-style:normal;transition:transform .5s var(--ease)}
+.not:hover .n-ler i{transform:translateX(5px)}
+.not.dest{grid-row:span 2}
+.not.dest .n-img{aspect-ratio:auto;flex:1;min-height:340px}
+.not.dest .n-img img{position:absolute;inset:0}
+.not.dest .n-tx{flex:none}
+.not.dest h3{font-size:clamp(1.7rem,3vw,2.6rem)}
+.noticias .lado{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.noticias .lado .not .n-img{aspect-ratio:4/3}
+.noticias .lado .not p{display:none}
+.leitor{position:fixed;inset:0;z-index:82;display:grid;place-items:center;padding:16px}
+.leitor[hidden]{display:none}
+.leitor-fundo{position:absolute;inset:0;background:rgba(3,6,15,.8);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.leitor-caixa{position:relative;width:min(720px,100%);max-height:calc(100svh - 32px);overflow:auto;border-radius:20px;background-color:rgba(8,17,39,.9)}
+.leitor-caixa img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.leitor-tx{padding:22px 24px 26px}
+.leitor-tx .mono{color:var(--azul-claro)}
+.leitor-tx h3{font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 80;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1;text-transform:uppercase;margin:10px 0 14px}
+.leitor-tx p{margin:0 0 16px;color:var(--gelo);line-height:1.6}
+.le-data{color:var(--cinza)!important}
+.leitor-x{position:absolute;top:12px;right:12px;z-index:2;width:42px;height:42px;border-radius:50%;background:rgba(5,10,24,.6);border:1px solid rgba(255,255,255,.25);color:#fff}
+
+/* TABELA */
+.tab-wrap{margin-top:24px;border-radius:18px;overflow:auto}
+.tab{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:520px}
+.tab th{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cinza);font-weight:400;padding:16px 12px;text-align:center;border-bottom:1px solid var(--linha)}
+.tab td{padding:14px 12px;text-align:center;border-bottom:1px solid rgba(170,190,255,.08)}
+.tab .t-time{text-align:left;width:40%}
+.tab td.t-time{font-weight:600}
+.tab .tt{display:flex;align-items:center;gap:12px}
+.tab td.t-time .escudo{width:26px;height:29px}
+.tab td:first-child{font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 70;font-size:1.3rem;position:relative}
+.tab tr.zona td:first-child::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:var(--azul)}
+.tab td.pts{font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 70;font-size:1.4rem;color:#fff}
+.tab tbody tr{transition:background-color .3s}
+.tab tbody tr:hover{background:rgba(47,86,255,.08)}
+.tab tr.meu{background:linear-gradient(90deg, rgba(47,86,255,.25), rgba(47,86,255,.05))}
+.tab tr.meu td{color:#fff}
+.forma{display:inline-flex;gap:5px}
+.forma i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:.55rem;color:#05101f;font-weight:600}
+.forma .v{background:#34d399}.forma .e{background:#9aa7c7}.forma .d{background:#f87171}
+.tab-leg{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;padding:14px 16px;color:var(--cinza)}
+.tab-leg .zona{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--azul);margin-right:8px;vertical-align:-1px}
+
+@media (max-width: 1080px){
+  .jogo{grid-template-columns:1fr;gap:14px}
+  .j-data{flex-direction:row;justify-content:space-between;align-items:baseline}
+  .j-info{flex-direction:row;justify-content:space-between;align-items:center;text-align:left}
+  .noticias{grid-template-columns:1fr}
+  .not.dest{grid-row:auto}
+  .not.dest .n-img{min-height:0;aspect-ratio:16/10;flex:none}
+}
+@media (max-width: 860px){
+  .idolo-grid{grid-template-columns:1fr}
+  .idolo-foto{aspect-ratio:4/4.6}
+  .scanner{min-height:0}
+  .sc-fig{height:min(460px,58vh)}
+}
+@media (max-width: 640px){
+  .frase-m .ctas{margin-top:14px}
+  .frase-m p{margin:0}
+  .frase-m .gc-sub{margin-top:8px;font-size:.95rem}
+  .j-placar{font-size:2rem;min-width:76px}
+  .escudo{width:30px;height:34px}
+  .j-time{gap:8px;font-size:.9rem}
+  .j-confronto{gap:8px}
+  .jogo{padding:16px}
+  .noticias .lado{grid-template-columns:1fr}
+  .noticias .lado .not{flex-direction:row}
+  .noticias .lado .not .n-img{width:38%;aspect-ratio:auto;flex:none;min-height:118px}
+  .noticias .lado .not .n-img img{position:absolute;inset:0}
+  .noticias .lado .not .n-cat{display:none}
+  .noticias .lado .not .n-tx{padding:14px}
+  .noticias .lado .not h3{font-size:1.05rem}
+  .tab{min-width:0}
+  .tab .t-sg,.tab .t-forma{display:none}
+  .tab th,.tab td{padding:12px 6px}
+  .tab .t-time{width:auto}
+  .sc-pt span{font-size:.7rem;padding:5px 8px}
+  .sc-pt span b{font-size:.8rem}
+  .sc-pt.d span,.sc-pt.e span{left:30px;right:auto}
+  .sc-pt::before,.sc-pt.e::before{width:24px;left:6px;right:auto}
+  .sc-hud,.sc-rodape{font-size:.6rem}
+  .idolo-num b{font-size:2.8rem}
+  .filtros{display:flex;width:100%}
+  .filtros button{flex:1;padding:10px 6px}
+}
+
 /* sem JS ou sem GSAP: tudo visível */
 .sem-motion .apagao{display:none}
 .sem-motion .bio .w{opacity:1}
@@ -436,11 +667,13 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
       <b>JIMMY</b><span>NEUTR<svg class="orb" viewBox="0 0 24 24" aria-hidden="true"><g class="anel"><ellipse cx="12" cy="12" rx="11" ry="4.2" transform="rotate(-28 12 12)"/></g><circle cx="12" cy="12" r="5.6"/></svg>N</span>
     </a>
     <nav class="nav" aria-label="Seções">
-      <a href="#perfil" data-sec="perfil"><span class="n">01</span>Perfil</a>
-      <a href="#numeros" data-sec="numeros"><span class="n">02</span>Números</a>
-      <a href="#momentos" data-sec="momentos"><span class="n">03</span>Momentos</a>
-      <a href="#trajetoria" data-sec="trajetoria"><span class="n">04</span>Trajetória</a>
-      <a href="#contato" data-sec="contato"><span class="n">05</span>Contato</a>
+      <a href="#perfil" data-sec="perfil"><span class="n">01</span>Jogador</a>
+      <a href="#idolo" data-sec="idolo"><span class="n">02</span>Ídolo</a>
+      <a href="#partidas" data-sec="partidas"><span class="n">03</span>Partidas</a>
+      <a href="#numeros" data-sec="numeros"><span class="n">04</span>Números</a>
+      <a href="#noticias" data-sec="noticias"><span class="n">05</span>Notícias</a>
+      <a href="#tabela" data-sec="tabela"><span class="n">06</span>Tabela</a>
+      <a href="#momentos" data-sec="momentos"><span class="n">07</span>Galeria</a>
       <i class="nav-ind" aria-hidden="true"></i>
     </nav>
     <div class="ao-vivo mono"><span class="ponto" aria-hidden="true"></span>Em campo</div>
@@ -452,11 +685,15 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
 <div class="menu-m" id="menuM" aria-hidden="true">
   <ol>
     <li><a href="#home" data-sec="home">Início <small>00</small></a></li>
-    <li><a href="#perfil" data-sec="perfil">Perfil <small>01</small></a></li>
-    <li><a href="#numeros" data-sec="numeros">Números <small>02</small></a></li>
-    <li><a href="#momentos" data-sec="momentos">Momentos <small>03</small></a></li>
-    <li><a href="#trajetoria" data-sec="trajetoria">Trajetória <small>04</small></a></li>
-    <li><a href="#contato" data-sec="contato">Contato <small>05</small></a></li>
+    <li><a href="#perfil" data-sec="perfil">Jogador <small>01</small></a></li>
+    <li><a href="#idolo" data-sec="idolo">Ídolo <small>02</small></a></li>
+    <li><a href="#partidas" data-sec="partidas">Partidas <small>03</small></a></li>
+    <li><a href="#numeros" data-sec="numeros">Números <small>04</small></a></li>
+    <li><a href="#noticias" data-sec="noticias">Notícias <small>05</small></a></li>
+    <li><a href="#tabela" data-sec="tabela">Tabela <small>06</small></a></li>
+    <li><a href="#momentos" data-sec="momentos">Galeria <small>07</small></a></li>
+    <li><a href="#trajetoria" data-sec="trajetoria">Trajetória <small>08</small></a></li>
+    <li><a href="#contato" data-sec="contato">Contato <small>09</small></a></li>
   </ol>
   <div class="rodape-m mono"><span>Jimmy Neutron</span><span>Football</span></div>
 </div>
@@ -493,6 +730,8 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
       <div class="tx"><strong>Jimmy Neutron</strong><span id="gcSub">Treino · camisa Ibrachina F.C.</span></div>
     </div>
     <p class="gc-frase">Pensa antes da <em>bola chegar.</em></p>
+    <p class="gc-sub">Camisa azul, Tiempo no pé e o 7 do Cristiano como inspiração.</p>
+    <div class="ctas"><a class="btn-p" href="#perfil"><span>Conhecer o jogador</span><i aria-hidden="true">→</i></a><a class="btn-s" href="#partidas">Partidas</a></div>
   </div>
 
   <dl class="fichas mono" id="fichasHero"></dl>
@@ -500,7 +739,7 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
   <a class="rolar mono" href="#perfil" aria-label="Rolar para o perfil"><span class="trilho"></span>Role</a>
 </section>
 
-<p class="frase-m">Pensa antes da <em>bola chegar.</em></p>
+<div class="frase-m"><p>Pensa antes da <em>bola chegar.</em></p><p class="gc-sub">Camisa azul, Tiempo no pé e o 7 do Cristiano como inspiração.</p><div class="ctas"><a class="btn-p" href="#perfil"><span>Conhecer o jogador</span><i aria-hidden="true">→</i></a><a class="btn-s" href="#partidas">Partidas</a></div></div>
 <dl class="fichas-m mono" id="fichasM"></dl>
 
 <div class="crawl" aria-hidden="true"><div class="crawl-trilho" id="crawl"></div></div>
@@ -508,15 +747,25 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
 <!-- ===================== PERFIL ===================== -->
 <section class="sec claro" id="perfil" aria-labelledby="t-perfil">
   <div class="wrap">
-    <div class="rotulo mono"><span class="idx">01</span><span>Perfil</span><span class="traco"></span><span>Jimmy Neutron</span></div>
+    <div class="rotulo mono"><span class="idx">01</span><span>Jogador</span><span class="traco"></span><span>Jimmy Neutron</span></div>
     <h2 class="titulo" id="t-perfil"><span class="lin"><span>Cabeça</span></span><span class="lin"><span class="vaz">levantada,</span></span><span class="lin"><span>bola <span class="az">no pé.</span></span></span></h2>
 
     <div class="perfil-grid">
-      <figure class="foto-ed" id="fotoEd" style="margin:0">
-        <img src="img/jimmy-treino.webp" alt="Jimmy no treino, camisa azul do Ibrachina F.C., olhando para a bola" width="1080" height="1067" loading="lazy">
-        <span class="cantos" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-        <figcaption class="mono"><span>Treino</span><span>Ibrachina F.C.</span></figcaption>
-      </figure>
+      <div class="scanner vidro" id="scanner">
+        <div class="sc-hud mono"><span><span class="ponto az" aria-hidden="true"></span>Neutron Lab · análise de atleta</span><span id="scPct">000%</span></div>
+        <div class="sc-palco">
+          <div class="sc-fig" id="scFig">
+            <img class="sc-holo" alt="" aria-hidden="true">
+            <img class="sc-cor" id="scCor" alt="Jimmy Neutron de corpo inteiro, camisa azul do Ibrachina F.C." loading="lazy">
+            <span class="sc-linha" id="scLinha" aria-hidden="true"></span>
+            <div class="sc-pt e" style="--x:33%;--y:9%"><i></i><span><b>Visão de jogo</b><em class="pend">a preencher</em></span></div>
+            <div class="sc-pt d" style="--x:44%;--y:28%"><i></i><span><b>Ibrachina F.C.</b>escudo na camisa</span></div>
+            <div class="sc-pt d" style="--x:51%;--y:63%"><i></i><span><b>IBRA WORK</b>patrocínio no calção</span></div>
+            <div class="sc-pt e baixo" style="--x:22%;--y:95%"><i></i><span><b>Pé dominante</b><em class="pend">a preencher</em></span></div>
+          </div>
+        </div>
+        <div class="sc-rodape mono"><span>Altura <b id="scAlt">--</b></span><span>Posição <b id="scPos">--</b></span><span>Camisa <b id="scNum">--</b></span></div>
+      </div>
 
       <div>
         <p class="bio" id="bio"></p>
@@ -545,22 +794,65 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
   </div>
 </section>
 
+
+<!-- ===================== ÍDOLO ===================== -->
+<section class="sec" id="idolo" aria-labelledby="t-idolo">
+  <div class="idolo-sete" aria-hidden="true">7</div>
+  <div class="wrap">
+    <div class="rotulo mono"><span class="idx">02</span><span>Ídolo</span><span class="traco"></span><span>Ele é fã</span></div>
+    <div class="idolo-grid">
+      <figure class="idolo-foto vidro" data-tilt>
+        <img id="cr7" src="img/cr7.webp" alt="Cristiano Ronaldo com a camisa 7 do Manchester United, apontando e piscando" loading="lazy" width="736" height="1307">
+        <span class="cantos" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <figcaption class="mono"><span>Manchester United · camisa 7</span><span>Foto: reprodução</span></figcaption>
+      </figure>
+      <div class="idolo-txt">
+        <h2 class="titulo" id="t-idolo"><span class="lin"><span>O 7 que</span></span><span class="lin"><span class="vaz">ele segue.</span></span></h2>
+        <p class="idolo-lead">Cristiano Ronaldo é o ídolo do Jimmy. Nascido no Funchal, na Ilha da Madeira, é o maior artilheiro da história das seleções masculinas e da Liga dos Campeões.</p>
+        <ul class="idolo-num">
+          <li class="vidro" data-tilt><b data-conta="5">0</b><span>Bolas de Ouro</span></li>
+          <li class="vidro" data-tilt><b data-conta="5">0</b><span>Champions League</span></li>
+          <li class="vidro" data-tilt><b data-conta="2016">0</b><span>Campeão da Euro com Portugal</span></li>
+          <li class="vidro" data-tilt><b data-conta="7">0</b><span>A camisa que virou marca</span></li>
+        </ul>
+        <div class="idolo-porque"><span class="mono">Por que o Jimmy é fã</span><p id="porqueFa"></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTIDAS ===================== -->
+<section class="sec azul" id="partidas" aria-labelledby="t-part">
+  <div class="wrap">
+    <div class="rotulo mono"><span class="idx">03</span><span>Partidas</span><span class="traco"></span><span>Copa Neutron</span></div>
+    <h2 class="titulo" id="t-part"><span class="lin"><span>Dia de</span></span><span class="lin"><span class="vaz">jogo.</span></span></h2>
+    <p class="aviso-sim mono" role="note"><span class="ponto am" aria-hidden="true"></span>Simulação · a Copa Neutron é fictícia e mostra como o site fica com jogos reais</p>
+    <div class="filtros" role="tablist" aria-label="Filtrar partidas">
+      <button role="tab" aria-selected="true" data-f="todos">Todos</button>
+      <button role="tab" aria-selected="false" data-f="fim">Resultados</button>
+      <button role="tab" aria-selected="false" data-f="agendado">Próximos</button>
+      <span class="filtro-ind" aria-hidden="true"></span>
+    </div>
+    <ol class="jogos" id="jogos"></ol>
+  </div>
+</section>
+
 <!-- ===================== NÚMEROS ===================== -->
 <section class="sec" id="numeros" aria-labelledby="t-num">
   <div class="wrap">
-    <div class="rotulo mono"><span class="idx">02</span><span>Números</span><span class="traco"></span><span id="numTemporada">Temporada —</span></div>
+    <div class="rotulo mono"><span class="idx">04</span><span>Números</span><span class="traco"></span><span id="numTemporada">Temporada —</span></div>
     <h2 class="titulo" id="t-num"><span class="lin"><span>Os números</span></span><span class="lin"><span class="vaz">não mentem.</span></span></h2>
 
     <div class="painel" id="painel">
       <div class="painel-topo">
         <div class="esq mono"><span class="chip-az">Estatísticas</span><span id="painelStatus">Aguardando dados</span></div>
-        <button class="btn-ex mono" id="btnEx" aria-pressed="false">Ver com dados de exemplo</button>
+        <span class="mono" id="painelFonte"></span>
       </div>
-      <div class="aviso-ex" role="status">Números de EXEMPLO, inventados só pra mostrar o painel funcionando. Não são do Jimmy.</div>
+      <div class="aviso-ex" role="note">Simulação · números do Jimmy na Copa Neutron (fictícia). Quando chegarem os dados reais, entram no lugar.</div>
       <div class="tiles" id="tiles"></div>
       <div class="graficos">
         <div>
-          <div class="graf-tit mono"><span>Por temporada</span><span class="leg"><span><i style="background:var(--azul)"></i>Gols</span><span><i style="background:var(--gelo)"></i>Assist.</span></span></div>
+          <div class="graf-tit mono"><span id="grafTit">Por rodada</span><span class="leg"><span><i style="background:var(--azul)"></i>Gols</span><span><i style="background:var(--gelo)"></i>Assist.</span></span></div>
           <svg class="barras-svg" id="barras" viewBox="0 0 560 240" role="img" aria-label="Gols e assistências por temporada"></svg>
         </div>
         <div>
@@ -576,10 +868,37 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
   </div>
 </section>
 
+
+<!-- ===================== NOTÍCIAS ===================== -->
+<section class="sec" id="noticias" aria-labelledby="t-not">
+  <div class="wrap">
+    <div class="rotulo mono"><span class="idx">05</span><span>Notícias</span><span class="traco"></span><span>Só o que é fato</span></div>
+    <h2 class="titulo" id="t-not"><span class="lin"><span>Bastidores</span></span><span class="lin"><span class="vaz">e manchetes.</span></span></h2>
+    <div class="noticias" id="listaNoticias"></div>
+  </div>
+</section>
+
+<!-- ===================== TABELA ===================== -->
+<section class="sec azul" id="tabela" aria-labelledby="t-tab">
+  <div class="wrap">
+    <div class="rotulo mono"><span class="idx">06</span><span>Classificação</span><span class="traco"></span><span id="tabRodada">Copa Neutron</span></div>
+    <h2 class="titulo" id="t-tab"><span class="lin"><span>A tabela</span></span><span class="lin"><span class="vaz">não perdoa.</span></span></h2>
+    <p class="aviso-sim mono" role="note"><span class="ponto am" aria-hidden="true"></span>Simulação · times e placares fictícios, calculados a partir dos jogos acima</p>
+    <div class="tab-wrap vidro">
+      <table class="tab" id="tab">
+        <caption class="sr">Classificação da Copa Neutron (simulação)</caption>
+        <thead><tr><th scope="col">#</th><th scope="col" class="t-time">Time</th><th scope="col" title="Pontos">P</th><th scope="col" title="Jogos">J</th><th scope="col" title="Vitórias">V</th><th scope="col" title="Empates">E</th><th scope="col" title="Derrotas">D</th><th scope="col" class="t-sg" title="Saldo de gols">SG</th><th scope="col" class="t-forma">Últimos</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="tab-leg mono"><span><i class="zona"></i>Final</span><span>P pontos · J jogos · V vitórias · E empates · D derrotas · SG saldo</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== MOMENTOS ===================== -->
 <section class="sec" id="momentos" aria-labelledby="t-mom">
   <div class="wrap">
-    <div class="rotulo mono"><span class="idx">03</span><span>Momentos</span><span class="traco"></span><span>Toque pra ver o replay</span></div>
+    <div class="rotulo mono"><span class="idx">07</span><span>Galeria</span><span class="traco"></span><span>Toque pra ver o replay</span></div>
     <h2 class="titulo" id="t-mom"><span class="lin"><span>Replay</span></span><span class="lin"><span class="vaz">em câmera</span> <span class="az">lenta.</span></span></h2>
 
     <div class="gal" id="gal">
@@ -595,7 +914,7 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
 <!-- ===================== TRAJETÓRIA ===================== -->
 <section class="sec claro" id="trajetoria" aria-labelledby="t-traj">
   <div class="wrap">
-    <div class="rotulo mono"><span class="idx">04</span><span>Trajetória</span><span class="traco"></span><span>A bola conta a história</span></div>
+    <div class="rotulo mono"><span class="idx">08</span><span>Trajetória</span><span class="traco"></span><span>A bola conta a história</span></div>
     <h2 class="titulo" id="t-traj"><span class="lin"><span>Cada passo,</span></span><span class="lin"><span class="vaz">uma jogada.</span></span></h2>
 
     <div class="prancheta" id="prancheta">
@@ -611,7 +930,7 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
   <div class="contato-bg" id="contatoBg"><img src="img/por-do-sol.webp" alt="" loading="lazy"></div>
   <div class="contato-in">
     <div class="wrap">
-      <div class="rotulo mono"><span class="idx">05</span><span>Contato</span><span class="traco"></span><span>Redes</span></div>
+      <div class="rotulo mono"><span class="idx">09</span><span>Contato</span><span class="traco"></span><span>Redes</span></div>
       <h2 class="titulo contato-tit" id="t-cont"><span class="lin"><span>Segue</span></span><span class="lin"><span class="vaz">o jogo.</span></span></h2>
       <div class="redes" id="redes"></div>
       <footer class="rodape mono">
@@ -623,6 +942,15 @@ a.rede:hover .seta{transform:translate(4px,-4px)}
   </div>
 </section>
 </main>
+
+<div class="leitor" id="leitor" role="dialog" aria-modal="true" aria-labelledby="leTit" hidden>
+  <div class="leitor-fundo" data-fecha></div>
+  <article class="leitor-caixa vidro">
+    <button class="leitor-x" data-fecha aria-label="Fechar notícia">✕</button>
+    <img id="leImg" src="" alt="">
+    <div class="leitor-tx"><span class="mono" id="leCat"></span><h3 id="leTit"></h3><p id="leTxt"></p><span class="mono le-data" id="leData"></span></div>
+  </article>
+</div>
 
 <!-- lightbox -->
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Momento em tela cheia">
@@ -658,6 +986,7 @@ const JIMMY = {
   bio: null,                            // 2 ou 3 frases sobre ele
   caracteristicas: [],                  // ex.: ["Visão de jogo", "Passe curto"]
   frase: null,                          // uma frase dele, entre aspas
+  porqueFa: null,                       // por que ele é fã do Cristiano Ronaldo
   destaques: [],                        // ex.: ["Primeiro gol pelo clube"]
   stats: {
     temporada: null,                    // ex.: "2026"
@@ -770,13 +1099,13 @@ function desenhaPainel(s, exemplo){
     ['Jogos', s.jogos, s.minutos != null ? nf(s.minutos) + ' minutos' : ''],
     ['Gols', s.gols, s.gols != null && s.jogos ? (s.gols/s.jogos).toFixed(2).replace('.',',') + ' por jogo' : ''],
     ['Assistências', s.assist, s.assist != null && s.jogos ? (s.assist/s.jogos).toFixed(2).replace('.',',') + ' por jogo' : ''],
-    ['Participações', part, part != null ? 'gols + assistências' : '', true]
+    ['Vitórias', s.vitorias, s.vitorias != null && s.jogos ? Math.round(100 * (s.vitorias * 3 + (s.empates || 0)) / (s.jogos * 3)) + '% de aproveitamento' : '', true]
   ];
   $('#tiles').innerHTML = tiles.map(([k,v,sub,dest]) => `
     <div class="tile ${dest?'dest':''}"><span class="mono">${k}</span>
       <span class="val ${v==null?'vz':''}" data-v="${v ?? ''}">${v==null?'--':'0'}</span>
       <div class="sub">${v==null ? PEND() : esc(sub)}</div><span class="barra"></span></div>`).join('');
-  $('#painelStatus').textContent = s.jogos != null ? (exemplo ? 'Modo exemplo' : 'Atualizado') : 'Aguardando dados';
+  $('#painelStatus').textContent = s.jogos != null ? (exemplo ? 'Simulação' : 'Atualizado') : 'Aguardando dados';
   $('#numTemporada').textContent = 'Temporada ' + (s.temporada || '—');
   $('#fonte').innerHTML = 'Fonte: ' + (s.fonte ? esc(s.fonte) : 'a preencher');
 
@@ -824,13 +1153,6 @@ function animaPainel(){
   if (window._stPainel) window._stPainel.kill();
   window._stPainel = ScrollTrigger.create({ trigger:'#painel', start:'top 75%', once:true, onEnter:()=>tl.play() });
 }
-desenhaPainel(JIMMY.stats, false);
-$('#btnEx').addEventListener('click', e => {
-  const on = e.currentTarget.getAttribute('aria-pressed') !== 'true';
-  e.currentTarget.setAttribute('aria-pressed', on);
-  e.currentTarget.textContent = on ? 'Voltar aos dados reais' : 'Ver com dados de exemplo';
-  desenhaPainel(on ? EXEMPLO : JIMMY.stats, on);
-});
 
 /* ---------- menu mobile ---------- */
 const btnMenu = $('#btnMenu');
@@ -908,8 +1230,7 @@ if (temMotion){
   /* header */
   ScrollTrigger.create({ start: 40, end: 'max', onToggle: s => topo.classList.toggle('rolou', s.isActive) });
   gsap.to('#progresso', { scaleX:1, ease:'none', scrollTrigger:{ start:0, end:'max', scrub:.3 } });
-  $$('.claro').forEach(sec => ScrollTrigger.create({ trigger:sec, start:'top top+=36', end:'bottom top+=36', onToggle:s => topo.classList.toggle('sobre-claro', s.isActive) }));
-  ['home','perfil','numeros','momentos','trajetoria','contato'].forEach(id => ScrollTrigger.create({ trigger:'#'+id, start:'top 50%', end:'bottom 50%', onToggle:s => s.isActive && marcaAtiva(id) }));
+  ['home','perfil','idolo','partidas','numeros','noticias','tabela','momentos','trajetoria','contato'].forEach(id => ScrollTrigger.create({ trigger:'#'+id, start:'top 50%', end:'bottom 50%', onToggle:s => s.isActive && marcaAtiva(id) }));
 
   /* ---- WOW 1: refletores acendem, nome sobe, bola rola até virar o "O" ---- */
   const letras = (el) => { const nodes=[...el.childNodes]; el.innerHTML=''; nodes.forEach(n => { if (n.nodeType===3) [...n.textContent].forEach(ch => { const s=document.createElement('span'); s.className='letra'; s.textContent=ch; el.appendChild(s); }); else el.appendChild(n); }); return $$('.letra', el); };
@@ -968,8 +1289,6 @@ if (temMotion){
   $$('.rotulo').forEach(r => { gsap.from($('.traco', r), { scaleX:0, duration:1.4, ease:'expo.out', scrollTrigger:{ trigger:r, start:'top 88%' } }); gsap.from(r.children, { opacity:0, y:10, stagger:.06, duration:.7, scrollTrigger:{ trigger:r, start:'top 88%' } }); });
 
   /* perfil: folha sobe, foto revela, texto acende palavra a palavra */
-  gsap.from('#fotoEd', { clipPath:'inset(18% 12% 18% 12%)', duration:1.6, ease:'expo.out', scrollTrigger:{ trigger:'#fotoEd', start:'top 80%' } });
-  gsap.to('#fotoEd img', { yPercent:-14, ease:'none', scrollTrigger:{ trigger:'#fotoEd', start:'top bottom', end:'bottom top', scrub:true } });
   gsap.to('#bio .w', { opacity:1, stagger:.08, ease:'none', scrollTrigger:{ trigger:'#bio', start:'top 80%', end:'bottom 45%', scrub:true } });
   gsap.from('#ficha > div, .bloco-ed > div', { y:30, opacity:0, duration:.9, stagger:.06, ease:'power3.out', scrollTrigger:{ trigger:'#ficha', start:'top 85%' } });
 
@@ -1031,6 +1350,211 @@ if (temMotion){
 
 let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { ajustaNome(); montaRota(); if (window.ScrollTrigger) ScrollTrigger.refresh(); }, 150); });
 addEventListener('load', () => { montaRota(); if (window.ScrollTrigger) ScrollTrigger.refresh(); });
+</script>
+<script>
+/* =========================================================
+   V2 — Copa Neutron (SIMULAÇÃO), notícias, tabela, scanner, ídolo
+   Edite aqui. Quando houver jogos reais, troque COPA pelos dados
+   de verdade e tire os avisos de simulação.
+   ========================================================= */
+const COPA = {
+  nome: 'Copa Neutron', simulacao: true, meu: 'NEU',
+  times: {
+    NEU: { nome: 'Neutron FC', cor: '#2f56ff' },
+    FOT: { nome: 'Fóton United', cor: '#22c55e' },
+    ORB: { nome: 'Atlético Órbita', cor: '#f5a524' },
+    GRA: { nome: 'Gravidade SC', cor: '#a3aec9' },
+    PRO: { nome: 'Próton EC', cor: '#ef4444' },
+    QUA: { nome: 'Quasar FC', cor: '#9b5cff' }
+  },
+  /* rodada, data, casa, fora, placar (null = não jogado), Jimmy: gols/assistências */
+  jogos: [
+    { r:1, d:'2026-10-31', c:'NEU', f:'QUA', pc:2, pf:1, jg:1, ja:0 },
+    { r:1, d:'2026-10-31', c:'PRO', f:'ORB', pc:0, pf:0 },
+    { r:1, d:'2026-10-31', c:'FOT', f:'GRA', pc:3, pf:2 },
+    { r:2, d:'2026-11-07', c:'ORB', f:'NEU', pc:1, pf:3, jg:1, ja:2 },
+    { r:2, d:'2026-11-07', c:'QUA', f:'FOT', pc:2, pf:2 },
+    { r:2, d:'2026-11-07', c:'GRA', f:'PRO', pc:1, pf:0 },
+    { r:3, d:'2026-11-14', c:'NEU', f:'GRA', pc:1, pf:1, jg:0, ja:1 },
+    { r:3, d:'2026-11-14', c:'ORB', f:'QUA', pc:2, pf:0 },
+    { r:3, d:'2026-11-14', c:'PRO', f:'FOT', pc:1, pf:2 },
+    { r:4, d:'2026-11-21', c:'FOT', f:'NEU' },
+    { r:4, d:'2026-11-21', c:'GRA', f:'ORB' },
+    { r:4, d:'2026-11-21', c:'QUA', f:'PRO' },
+    { r:5, d:'2026-11-28', c:'NEU', f:'PRO' },
+    { r:5, d:'2026-11-28', c:'ORB', f:'FOT' },
+    { r:5, d:'2026-11-28', c:'GRA', f:'QUA' }
+  ]
+};
+
+/* notícias: só fatos que dá pra ver nas fotos ou que o Davi contou */
+const NOTICIAS = [
+  { cat:'Clube', img:'#gal .c1 img', tit:'De azul: Jimmy treina com a camisa do Ibrachina F.C.',
+    res:'O escudo do Ibrachina e o patrocínio IBRA WORK aparecem nas fotos de treino.',
+    txt:'Nas fotos de treino, Jimmy veste o uniforme azul do Ibrachina F.C., com o patrocínio IBRA WORK na camisa e no calção. Categoria, posição e desde quando ele está no clube entram aqui assim que forem confirmados.' },
+  { cat:'Inspiração', img:'#cr7', tit:'O ídolo veste 7', pos:'50% 18%',
+    res:'Jimmy é fã do Cristiano Ronaldo.',
+    txt:'Jimmy é fã do Cristiano Ronaldo, o português de cinco Bolas de Ouro e cinco Champions League. O porquê, ele mesmo conta na seção Ídolo.' },
+  { cat:'Equipamento', img:'#gal .c2 img', tit:'Tiempo preta sobre a bandeira',
+    res:'A chuteira dele é uma Nike Tiempo preta.',
+    txt:'A escolha do Jimmy é a Nike Tiempo, toda preta com o símbolo branco. Ela aparece nas fotos em cima da bandeira do Brasil.' },
+  { cat:'Site', img:'#heroBg img', tit:'Copa Neutron: a liga que só existe aqui', pos:'50% 30%',
+    res:'Partidas, números e tabela são uma simulação.',
+    txt:'Os jogos, os números e a tabela deste site são da Copa Neutron, uma liga fictícia com times de nome científico. Ela mostra como tudo vai funcionar. Quando chegarem os jogos reais do Jimmy, eles entram no lugar e o aviso de simulação sai.' },
+  { cat:'Fora de campo', img:'#gal .c3 img', tit:'Estrada de terra, mãos no volante', pos:'50% 40%',
+    res:'Bastidores longe do gramado.',
+    txt:'Longe do gramado: Jimmy ao volante numa estrada de terra. Bastidores entram aqui sempre que ele mandar.' }
+];
+
+/* imagens: reaproveita as que já estão na página (a prévia num arquivo só não duplica foto) */
+NOTICIAS.forEach(n => n.img = $(n.img).getAttribute('src'));
+$$('.sc-holo, .sc-cor').forEach(i => i.src = $('#jimmy').getAttribute('src'));
+/* ---------- utilitários ---------- */
+const DIAS = ['dom','seg','ter','qua','qui','sex','sáb'];
+const fmtData = iso => { const [a,m,d] = iso.split('-').map(Number); const dt = new Date(a, m-1, d); return { dia: String(d).padStart(2,'0') + '/' + String(m).padStart(2,'0'), sem: DIAS[dt.getDay()] }; };
+function escudo(sigla){
+  const t = COPA.times[sigla];
+  return `<svg class="escudo" viewBox="0 0 38 42" aria-hidden="true"><path d="M19 1 36 6v13c0 11-7.5 18-17 22C9.5 37 2 30 2 19V6Z" fill="${t.cor}" fill-opacity=".18" stroke="${t.cor}" stroke-width="1.6"/><path d="M19 7 30 10v9c0 7-4.6 12-11 15-6.4-3-11-8-11-15v-9Z" fill="${t.cor}"/><text x="19" y="24" text-anchor="middle" font-family="Anybody, sans-serif" font-weight="900" font-size="9" fill="#050a18" letter-spacing=".3">${sigla}</text></svg>`;
+}
+
+/* ---------- tabela calculada dos jogos ---------- */
+function classificacao(){
+  const T = {}; Object.keys(COPA.times).forEach(k => T[k] = { k, p:0, j:0, v:0, e:0, d:0, gp:0, gc:0, forma:[] });
+  COPA.jogos.filter(g => g.pc != null).sort((a,b) => a.r - b.r).forEach(g => {
+    const c = T[g.c], f = T[g.f];
+    c.j++; f.j++; c.gp += g.pc; c.gc += g.pf; f.gp += g.pf; f.gc += g.pc;
+    if (g.pc > g.pf){ c.v++; c.p += 3; f.d++; c.forma.push('v'); f.forma.push('d'); }
+    else if (g.pc < g.pf){ f.v++; f.p += 3; c.d++; c.forma.push('d'); f.forma.push('v'); }
+    else { c.e++; f.e++; c.p++; f.p++; c.forma.push('e'); f.forma.push('e'); }
+  });
+  return Object.values(T).sort((a,b) => b.p - a.p || (b.gp-b.gc) - (a.gp-a.gc) || b.gp - a.gp || a.k.localeCompare(b.k));
+}
+const tab = classificacao();
+const ultRodada = Math.max(...COPA.jogos.filter(g => g.pc != null).map(g => g.r));
+$('#tabRodada').textContent = `${COPA.nome} · após a ${ultRodada}ª rodada`;
+$('#tab tbody').innerHTML = tab.map((t,i) => `
+  <tr class="${i < 2 ? 'zona' : ''} ${t.k === COPA.meu ? 'meu' : ''}">
+    <td>${i+1}</td><td class="t-time"><span class="tt">${escudo(t.k)}<span>${COPA.times[t.k].nome}</span></span></td>
+    <td class="pts">${t.p}</td><td>${t.j}</td><td>${t.v}</td><td>${t.e}</td><td>${t.d}</td>
+    <td class="t-sg">${t.gp - t.gc > 0 ? '+' : ''}${t.gp - t.gc}</td>
+    <td class="t-forma"><span class="forma" aria-label="Últimos jogos">${t.forma.slice(-5).map(r => `<i class="${r}">${r.toUpperCase()}</i>`).join('')}</span></td>
+  </tr>`).join('');
+
+/* ---------- partidas do time do Jimmy ---------- */
+const meus = COPA.jogos.filter(g => g.c === COPA.meu || g.f === COPA.meu);
+$('#jogos').innerHTML = meus.map(g => {
+  const dt = fmtData(g.d), fim = g.pc != null;
+  let st = '<span class="status a">Agendado</span>';
+  if (fim){
+    const meuG = g.c === COPA.meu ? g.pc : g.pf, deles = g.c === COPA.meu ? g.pf : g.pc;
+    st = meuG > deles ? '<span class="status v">Vitória</span>' : meuG < deles ? '<span class="status d">Derrota</span>' : '<span class="status e">Empate</span>';
+  }
+  const jim = fim && (g.jg != null) ? `<span class="j-jimmy">Jimmy: <b>${g.jg} gol${g.jg===1?'':'s'}</b> · <b>${g.ja} assist.</b></span>` : `<span class="j-jimmy">${fim ? '' : 'Rodada ' + g.r + ' · ' + COPA.nome}</span>`;
+  return `<li class="jogo vidro" data-st="${fim ? 'fim' : 'agendado'}" data-tilt>
+    <div class="j-data"><b>${dt.sem} ${dt.dia}</b><span class="mono">${g.r}ª rodada</span></div>
+    <div class="j-confronto">
+      <span class="j-time casa ${g.c === COPA.meu ? 'meu' : ''}"><span>${COPA.times[g.c].nome}</span>${escudo(g.c)}</span>
+      ${fim ? `<span class="j-placar" aria-label="${g.pc} a ${g.pf}">${g.pc}<i>–</i>${g.pf}</span>` : '<span class="j-placar vs">VS</span>'}
+      <span class="j-time ${g.f === COPA.meu ? 'meu' : ''}">${escudo(g.f)}<span>${COPA.times[g.f].nome}</span></span>
+    </div>
+    <div class="j-info">${st}${jim}</div>
+  </li>`;
+}).join('');
+const filtros = $$('.filtros button'), fInd = $('.filtro-ind');
+function poeFiltro(b, anima){
+  filtros.forEach(x => x.setAttribute('aria-selected', x === b));
+  fInd.style.width = b.offsetWidth + 'px'; fInd.style.transform = `translateX(${b.offsetLeft - 4}px)`;
+  const f = b.dataset.f, itens = $$('#jogos .jogo');
+  itens.forEach(li => li.classList.toggle('oculto', f !== 'todos' && li.dataset.st !== f));
+  if (anima && temMotion) gsap.fromTo(itens.filter(li => !li.classList.contains('oculto')), { y:20, opacity:0 }, { y:0, opacity:1, duration:.6, stagger:.05, ease:'expo.out' });
+  if (anima && window.ScrollTrigger) ScrollTrigger.refresh();
+}
+filtros.forEach(b => b.addEventListener('click', () => poeFiltro(b, true)));
+requestAnimationFrame(() => poeFiltro(filtros[0], false));
+addEventListener('resize', () => poeFiltro(filtros.find(b => b.getAttribute('aria-selected') === 'true'), false));
+
+/* ---------- números: dados reais quando houver; até lá, a simulação ---------- */
+(function(){
+  const real = JIMMY.stats.jogos != null;
+  if (real){ desenhaPainel(JIMMY.stats, false); $('#painelFonte').textContent = ''; return; }
+  const jg = meus.filter(g => g.pc != null);
+  const res = g => { const a = g.c === COPA.meu ? g.pc : g.pf, b = g.c === COPA.meu ? g.pf : g.pc; return a > b ? 'v' : a < b ? 'd' : 'e'; };
+  const sim = {
+    temporada: COPA.nome + ' (simulação)', fonte: 'simulação, dados fictícios',
+    jogos: jg.length, gols: jg.reduce((s,g) => s + g.jg, 0), assist: jg.reduce((s,g) => s + g.ja, 0),
+    vitorias: jg.filter(g => res(g) === 'v').length, empates: jg.filter(g => res(g) === 'e').length,
+    minutos: null, porTemporada: jg.map(g => ({ ano: g.r + 'ª rod.', gols: g.jg, assist: g.ja }))
+  };
+  desenhaPainel(sim, true);
+  $('#painelFonte').textContent = 'Copa Neutron · simulação';
+})();
+
+/* ---------- notícias + leitor ---------- */
+const nCard = (n, i, dest) => `<button class="not vidro ${dest ? 'dest' : ''}" data-n="${i}" data-tilt>
+  <span class="n-img"><img src="${n.img}" alt="" loading="lazy" style="object-position:${n.pos || '50% 50%'}"><span class="n-cat">${n.cat}</span></span>
+  <span class="n-tx"><h3>${n.tit}</h3><p>${n.res}</p><span class="n-ler mono">Ler <i aria-hidden="true">→</i></span></span></button>`;
+$('#listaNoticias').innerHTML = nCard(NOTICIAS[0], 0, true) + '<div class="lado">' + NOTICIAS.slice(1).map((n,i) => nCard(n, i+1)).join('') + '</div>';
+const leitor = $('#leitor'); let focoAntes = null;
+function abreNoticia(i){
+  const n = NOTICIAS[i]; focoAntes = document.activeElement;
+  $('#leImg').src = n.img; $('#leImg').style.objectPosition = n.pos || '50% 50%'; $('#leCat').textContent = n.cat;
+  $('#leTit').textContent = n.tit; $('#leTxt').textContent = n.txt; $('#leData').textContent = 'Jimmy Neutron · notícias';
+  leitor.hidden = false; window._lenis && _lenis.stop(); $('.leitor-x').focus();
+  if (temMotion) gsap.fromTo('.leitor-caixa', { y:40, opacity:0, scale:.97 }, { y:0, opacity:1, scale:1, duration:.6, ease:'expo.out' });
+}
+function fechaNoticia(){ if (leitor.hidden) return; leitor.hidden = true; window._lenis && _lenis.start(); focoAntes && focoAntes.focus(); }
+$$('#listaNoticias .not').forEach(b => b.addEventListener('click', () => abreNoticia(+b.dataset.n)));
+$$('[data-fecha]', leitor).forEach(b => b.addEventListener('click', fechaNoticia));
+addEventListener('keydown', e => { if (e.key === 'Escape') fechaNoticia(); });
+
+/* ---------- ídolo ---------- */
+$('#porqueFa').innerHTML = JIMMY.porqueFa ? esc(JIMMY.porqueFa) : PEND('nas palavras dele, a preencher');
+
+/* ---------- scanner: ficha ---------- */
+$('#scAlt').textContent = JIMMY.altura || '--'; $('#scPos').textContent = JIMMY.posicao || '--'; $('#scNum').textContent = JIMMY.numero || '--';
+
+/* ---------- motion v2 ---------- */
+function scan(p){
+  const fig = $('#scFig'), h = fig.offsetHeight;
+  $('#scLinha').style.transform = `translate3d(0,${p * h}px,0)`;
+  $('#scCor').style.clipPath = `inset(0 0 ${100 - p * 100}% 0)`;
+  $('#scPct').textContent = String(Math.round(p * 100)).padStart(3,'0') + '%';
+  $$('.sc-pt').forEach(pt => pt.classList.toggle('on', p * 100 >= parseFloat(pt.style.getPropertyValue('--y')) - 1));
+}
+if (temMotion){
+  ScrollTrigger.create({ trigger:'#scanner', start:'top 70%', end:'bottom 55%', scrub:.4, onUpdate:s => scan(s.progress) });
+  gsap.from('#scanner', { y:60, opacity:0, duration:1.2, ease:'expo.out', scrollTrigger:{ trigger:'#scanner', start:'top 85%' } });
+  /* ídolo */
+  gsap.fromTo('#cr7', { yPercent:-6 }, { yPercent:6, ease:'none', scrollTrigger:{ trigger:'.idolo-foto', start:'top bottom', end:'bottom top', scrub:true } });
+  gsap.fromTo('.idolo-sete', { yPercent:-10 }, { yPercent:20, ease:'none', scrollTrigger:{ trigger:'#idolo', start:'top bottom', end:'bottom top', scrub:true } });
+  gsap.from('.idolo-foto', { clipPath:'inset(14% 10% 14% 10% round 18px)', duration:1.6, ease:'expo.out', scrollTrigger:{ trigger:'.idolo-foto', start:'top 80%' } });
+  gsap.from('.idolo-lead, .idolo-num li, .idolo-porque', { y:30, opacity:0, duration:1, stagger:.08, ease:'expo.out', scrollTrigger:{ trigger:'.idolo-txt', start:'top 75%' } });
+  $$('[data-conta]').forEach(b => { const o = { v:0 }, alvo = +b.dataset.conta, ano = alvo > 1000;
+    gsap.to(o, { v:alvo, duration: ano ? 2 : 1.4, ease:'power3.out', onUpdate:() => b.textContent = Math.round(o.v), scrollTrigger:{ trigger:b, start:'top 88%' } }); });
+  /* partidas, notícias, tabela */
+  gsap.from('#jogos .jogo', { y:40, opacity:0, duration:1, stagger:.07, ease:'expo.out', scrollTrigger:{ trigger:'#jogos', start:'top 82%' } });
+  gsap.from('#listaNoticias .not', { y:60, opacity:0, duration:1.1, stagger:.08, ease:'expo.out', scrollTrigger:{ trigger:'#listaNoticias', start:'top 80%' } });
+  gsap.from('#tab tbody tr', { x:-30, opacity:0, duration:.8, stagger:.06, ease:'expo.out', scrollTrigger:{ trigger:'#tab', start:'top 80%' } });
+  gsap.from('.aviso-sim, .filtros', { y:16, opacity:0, duration:.8, ease:'expo.out', stagger:.05, scrollTrigger:{ trigger:'#partidas', start:'top 70%' } });
+  /* tilt 3D (só com mouse) */
+  if (!toque) $$('[data-tilt]').forEach(el => {
+    const rx = gsap.quickTo(el, 'rotationX', { duration:.6, ease:'power3' }), ry = gsap.quickTo(el, 'rotationY', { duration:.6, ease:'power3' });
+    gsap.set(el, { transformPerspective: 900 });
+    const forca = el.classList.contains('jogo') ? 2.5 : 7;
+    el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      rx((.5 - y) * forca); ry((x - .5) * forca); el.style.setProperty('--gx', x * 100 + '%'); el.style.setProperty('--gy', y * 100 + '%'); });
+    el.addEventListener('pointerleave', () => { rx(0); ry(0); });
+  });
+  if (!toque) $$('.btn-p, .btn-s').forEach(b => {
+    const x = gsap.quickTo(b,'x',{duration:.5,ease:'power3'}), y = gsap.quickTo(b,'y',{duration:.5,ease:'power3'});
+    b.addEventListener('pointermove', e => { const r=b.getBoundingClientRect(); x((e.clientX-r.left-r.width/2)*.25); y((e.clientY-r.top-r.height/2)*.35); });
+    b.addEventListener('pointerleave', () => { x(0); y(0); });
+  });
+  gsap.from('.gc .gc-sub, .gc .ctas', { y:16, opacity:0, duration:.9, stagger:.1, ease:'expo.out', delay:2.1 });
+  ScrollTrigger.refresh();
+} else {
+  scan(1); $$('[data-conta]').forEach(b => b.textContent = b.dataset.conta);
+}
 </script>
 <script type="module" src="js/bola3d.js"></script>
 </body>

@@ -181,3 +181,7 @@ O Davi pediu um site de futebol "nível Awwwards" pro Jimmy Neutron com 7 fotos.
 ## 18/11/2026: bola 3D no Jimmy Neutron
 Palavras: bola 3D, bola de futebol 3D, icosaedro truncado, gomos, pentágono, hexágono, Three.js, HDRI studio, esbuild, window.BOLA.
 "Faz uma bola 3d": a bola do site do Jimmy virou 3D em Three.js, com o padrão de bola gerado em código (sem modelo baixado). Reaproveitável em qualquer site de esporte: `sites/jimmy-neutron/src/bola3d.js`. `previa_embutida.py` agora também embute scripts locais (`<script type="module" src="js/...">`).
+
+## 18/11/2026: Jimmy Neutron v2 (CR7, Copa Neutron, Neutron Lab)
+Palavras: CR7, Cristiano Ronaldo, ídolo, fã, Copa Neutron, simulação, liga fictícia, partidas, classificação, tabela, notícias, glassmorphism, vidro, scanner, Neutron Lab, OneFootball, ESPN, Transfermarkt, Nike Football.
+O Davi pediu pra pôr o CR7 (o Jimmy é fã) e mandou um prompt maior (partidas, estatísticas, notícias, classificação, visual sci-fi azul). Regra usada: dado esportivo inventado só numa **liga claramente fictícia** (Copa Neutron, times de nome científico), com aviso, e tabela/números calculados dos jogos; notícias só com fatos. Tudo em `sites/jimmy-neutron` (README). Prévia 1,7 MB.

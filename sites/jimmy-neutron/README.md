@@ -32,3 +32,9 @@ O botão "Ver com dados de exemplo" no painel mostra números **fictícios com a
 - No herói: rola até o lugar, gira com a rolagem, acompanha o mouse e respira devagar. Na prancheta: rola de verdade na direção do caminho (eixo perpendicular ao movimento).
 - Código em `src/bola3d.js` → `js/bola3d.js` (`cd src && npm i && python3 build.py`). O script do site mexe em `window.BOLA`; o módulo só desenha. Sem WebGL, volta pra imagem `img/bola.webp`.
 - Abrindo o `index.html` direto do disco o módulo não carrega (o navegador bloqueia módulo em file://): usar a prévia ou o Netlify.
+
+## Versão 2 (18/11/2026): azul profundo, laboratório e CR7
+- Nova direção: fundo azul profundo, vidro (glassmorphism) só sobre os brilhos azuis, ciano nos detalhes de laboratório. Seções "claras" viraram prancheta azul.
+- Seções: Jogador (scanner do **Neutron Lab**: linha que varre o Jimmy na rolagem, revela a cor e acende etiquetas: escudo do Ibrachina, IBRA WORK, e o que falta como "a preencher"), **Ídolo** (Cristiano Ronaldo, fatos fixos: 5 Bolas de Ouro, 5 Champions, Euro 2016, camisa 7; "por que é fã" a preencher em `JIMMY.porqueFa`), Partidas (filtro Todos/Resultados/Próximos), Números, Notícias (só fatos, abrem num leitor), Tabela, Galeria, Trajetória, Contato. Cards com inclinação 3D e reflexo no mouse, botões magnéticos.
+- **Copa Neutron = simulação.** Times fictícios de nome científico (Neutron FC, Fóton United, Atlético Órbita, Gravidade SC, Próton EC, Quasar FC), 15 jogos no objeto `COPA`. Tabela e números do Jimmy são **calculados dos jogos**, então nunca se contradizem. Aviso amarelo de simulação em Partidas, Números e Tabela. Quando o Jimmy mandar jogos reais: trocar `COPA` (ou preencher `JIMMY.stats`, que tem prioridade) e tirar os avisos.
+- **Foto do CR7**: é de internet (marcas Man United/Nike/AIG). Ok pra site pessoal de fã; nunca usar em material da GuDev.
