@@ -424,6 +424,15 @@ O vídeo junta 4 coisas: Claude Code + skill UI UX Pro Max + componentes do 21st
 - **Continua valendo:** comida nunca em 3D feito no código; foto real.
 - Ideias que dá pra copiar da referência: texto gigante que reage à rolagem, anel/forma vetorial girando, cena que muda conforme o scroll (sem `pin` no celular).
 
+### Poly Haven como fonte padrão de 3D (pedido do Davi em 18/11/2026)
+Em todo projeto que usar 3D (Three.js), **olhar primeiro no polyhaven.com** antes de modelar no código ou caçar modelo em outro lugar. Tudo lá é CC0: pode usar em cliente sem crédito.
+- **HDRI (usar sempre que tiver metal, vidro, carro ou joia):** troca o `RoomEnvironment` por um HDRI de estúdio em 1K (`RGBELoader` + `PMREMGenerator`). É o ganho mais barato de realismo (~1 a 1,5 MB em 1K; em prévia de arquivo único, preferir HDRI pequeno ou converter pra `.jpg` equiretangular de 1024×512).
+- **Modelos (glTF):** pra cenário e detalhe (mesa, vaso, ferramenta, louça, planta, luminária) em volta do produto do cliente. Baixar em **1K**, comprimir com `gltf-transform` (meshopt + texturas webp/ktx2), meta de **até ~1,5 MB por modelo**.
+- **Texturas:** madeira, concreto, couro, metal escovado etc. pra chão, balcão e fundo de cena 3D. 1K, webp.
+- **Quando condiz:** oficina, estética automotiva, joalheria, barbearia, café/bar (ambiente), loja de móveis/decoração, ferragem, academia (equipamento). **Não condiz:** comida do cliente (sempre foto real), produto real do cliente (foto dele) e site que não pede 3D (não forçar).
+- **Rede:** este ambiente bloqueia polyhaven.com, api.polyhaven.com e dl.polyhaven.org (403 no proxy em 18/11/2026). Pra baixar daqui precisa liberar esses 3 hosts na rede do ambiente; senão o Davi baixa e manda o arquivo.
+- Anotar no README do site qual asset do Poly Haven entrou (nome + link), mesmo sem precisar de crédito.
+
 ## Segurança (revisada em 21/10/2026)
 Os sites são estáticos: não têm servidor, banco de dados, login nem chave de API. Então SQL injection, banco aberto e API exposta **não se aplicam**. Mesmo assim:
 - **Nunca colocar chave, senha ou token no HTML.** Tudo no site é público.
