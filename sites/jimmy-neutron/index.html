@@ -140,6 +140,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 /* gráficos de transmissão */
 .gc{position:absolute;z-index:5;left:var(--gutter);bottom:clamp(24px,5vh,56px);max-width:min(520px, 46vw)}
 .gc-tag{display:inline-flex;align-items:center;gap:10px;background:var(--azul);color:#fff;padding:7px 12px 6px;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+.braco{display:inline-grid;place-items:center;width:20px;height:20px;margin-left:6px;border-radius:4px;background:#fff;color:var(--azul);font-family:var(--f-display);font-weight:900;letter-spacing:0}
 .gc-nome{display:flex;align-items:stretch;margin-top:6px;background:var(--gelo);color:var(--ink)}
 .gc-nome .num{display:grid;place-items:center;min-width:64px;background:var(--ink);color:var(--gelo);font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 70;font-size:2rem;padding:0 12px;border:1px solid var(--gelo)}
 .gc-nome .num.vz{font-size:1rem;color:var(--cinza)}
@@ -204,6 +205,7 @@ section{position:relative}
 .ficha div{padding:16px 0 14px;border-bottom:1px solid var(--linha-escura)}
 .ficha div:nth-child(odd){padding-right:16px;border-right:1px solid var(--linha-escura)}
 .ficha div:nth-child(even){padding-left:16px}
+.ficha div:last-child:nth-child(odd){grid-column:1/-1;border-right:0}
 .ficha dt{color:var(--cinza-2);margin-bottom:6px}
 .ficha dd{margin:0;font-family:var(--f-display);font-weight:750;font-variation-settings:"wdth" 80;font-size:1.45rem;line-height:1.05;text-transform:uppercase}
 .ficha dd small{display:block;margin-top:6px;font-family:var(--f-mono);font-weight:400;font-size:.62rem;letter-spacing:.12em;color:var(--cinza-2)}
@@ -724,7 +726,7 @@ main > section:not(.hero){background:transparent}
   </div>
 
   <div class="gc" id="gc">
-    <div class="gc-tag mono"><span class="ponto" aria-hidden="true"></span>Perfil oficial</div>
+    <div class="gc-tag mono"><span class="ponto" aria-hidden="true"></span>Perfil oficial <span class="braco" title="Capitão">C</span> Capitão · Time B</div>
     <div class="gc-nome">
       <div class="num" id="gcNum">#</div>
       <div class="tx"><strong>Jimmy Neutron</strong><span id="gcSub">Treino · camisa Ibrachina F.C.</span></div>
@@ -758,10 +760,10 @@ main > section:not(.hero){background:transparent}
             <img class="sc-holo" alt="" aria-hidden="true">
             <img class="sc-cor" id="scCor" alt="Jimmy Neutron de corpo inteiro, camisa azul do Ibrachina F.C." loading="lazy">
             <span class="sc-linha" id="scLinha" aria-hidden="true"></span>
-            <div class="sc-pt e" style="--x:33%;--y:9%"><i></i><span><b>Visão de jogo</b><em class="pend">a preencher</em></span></div>
+            <div class="sc-pt e" style="--x:33%;--y:9%"><i></i><span><b>Capitão</b>time B · camisa 5</span></div>
             <div class="sc-pt d" style="--x:44%;--y:28%"><i></i><span><b>Ibrachina F.C.</b>escudo na camisa</span></div>
             <div class="sc-pt d" style="--x:51%;--y:63%"><i></i><span><b>IBRA WORK</b>patrocínio no calção</span></div>
-            <div class="sc-pt e baixo" style="--x:22%;--y:95%"><i></i><span><b>Pé dominante</b><em class="pend">a preencher</em></span></div>
+            <div class="sc-pt e baixo" style="--x:22%;--y:95%"><i></i><span><b>Pé direito</b>LE · LD · ZAG</span></div>
           </div>
         </div>
         <div class="sc-rodape mono"><span>Altura <b id="scAlt">--</b></span><span>Posição <b id="scPos">--</b></span><span>Camisa <b id="scNum">--</b></span></div>
@@ -976,18 +978,19 @@ main > section:not(.hero){background:transparent}
    Nada aqui foi inventado: o que está preenchido saiu das fotos.
    ========================================================= */
 const JIMMY = {
-  numero: null,                         // número da camisa, ex.: 10
-  posicao: null,                        // ex.: "Meia"
-  pe: null,                             // "Direito" | "Esquerdo" | "Ambidestro"
-  altura: null,                         // ex.: "1,75 m"
+  numero: 5,                            // número da camisa
+  posicao: "LE · LD · ZAG",             // lateral-esquerdo, lateral-direito e zagueiro
+  pe: "Direito",
+  altura: "1,64 m",
+  capitao: "Time B",                    // capitão de qual time
   cidade: null,                         // ex.: "São Paulo, SP"
   clube: { nome: "Ibrachina F.C.", nota: "visto na camisa · confirmar" },
   chuteira: { nome: "Nike Tiempo", nota: "visto na foto" },
-  bio: null,                            // 2 ou 3 frases sobre ele
+  bio: "Jimmy Neutron é capitão do time B e veste a 5. Joga nas duas laterais e na zaga, com o pé direito, de camisa azul do Ibrachina F.C. e Nike Tiempo preta.",
   caracteristicas: [],                  // ex.: ["Visão de jogo", "Passe curto"]
   frase: null,                          // uma frase dele, entre aspas
   porqueFa: null,                       // por que ele é fã do Cristiano Ronaldo
-  destaques: [],                        // ex.: ["Primeiro gol pelo clube"]
+  destaques: ["Capitão do time B"],    // ex.: ["Primeiro gol pelo clube"]
   stats: {
     temporada: null,                    // ex.: "2026"
     fonte: null,                        // de onde vieram os números
@@ -1025,14 +1028,14 @@ if (!temMotion) document.documentElement.classList.add('sem-motion');
 function val(v, nota){ return v ? esc(v) + (nota ? `<small>${esc(nota)}</small>` : '') : PEND(); }
 const fichaItens = [
   ['Posição', JIMMY.posicao], ['Pé', JIMMY.pe], ['Clube', JIMMY.clube.nome, JIMMY.clube.nota],
-  ['Número', JIMMY.numero], ['Altura', JIMMY.altura], ['Chuteira', JIMMY.chuteira.nome, JIMMY.chuteira.nota]
+  ['Número', JIMMY.numero], ['Altura', JIMMY.altura], ['Capitão', JIMMY.capitao], ['Chuteira', JIMMY.chuteira.nome, JIMMY.chuteira.nota]
 ];
 $('#ficha').innerHTML = fichaItens.map(([k,v,n]) => `<div><dt>${k}</dt><dd>${val(v,n)}</dd></div>`).join('');
 const fichaHero = [['Posição', JIMMY.posicao], ['Pé', JIMMY.pe], ['Clube', JIMMY.clube.nome], ['Chuteira', JIMMY.chuteira.nome]];
 const fichaHTML = fichaHero.map(([k,v]) => `<div><dt>${k}</dt><dd>${v ? esc(v) : PEND()}</dd></div>`).join('');
 $('#fichasHero').innerHTML = fichaHTML; $('#fichasM').innerHTML = fichaHTML;
 if (JIMMY.numero) $('#gcNum').textContent = JIMMY.numero; else { $('#gcNum').textContent = '#?'; $('#gcNum').classList.add('vz'); }
-if (JIMMY.posicao) $('#gcSub').textContent = JIMMY.posicao + ' · ' + JIMMY.clube.nome;
+if (JIMMY.posicao) $('#gcSub').textContent = 'Lateral e zagueiro · ' + JIMMY.clube.nome;
 
 const bioTexto = JIMMY.bio || 'Jimmy Neutron joga com a camisa azul do Ibrachina F.C. e pisa no campo de Nike Tiempo preta. O resto da história, ele mesmo conta.';
 $('#bio').innerHTML = bioTexto.split(' ').map(w => `<span class="w">${esc(w)}</span>`).join(' ');

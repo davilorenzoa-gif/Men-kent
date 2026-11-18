@@ -185,3 +185,7 @@ Palavras: bola 3D, bola de futebol 3D, icosaedro truncado, gomos, pentágono, he
 ## 18/11/2026: Jimmy Neutron v2 (CR7, Copa Neutron, Neutron Lab)
 Palavras: CR7, Cristiano Ronaldo, ídolo, fã, Copa Neutron, simulação, liga fictícia, partidas, classificação, tabela, notícias, glassmorphism, vidro, scanner, Neutron Lab, OneFootball, ESPN, Transfermarkt, Nike Football.
 O Davi pediu pra pôr o CR7 (o Jimmy é fã) e mandou um prompt maior (partidas, estatísticas, notícias, classificação, visual sci-fi azul). Regra usada: dado esportivo inventado só numa **liga claramente fictícia** (Copa Neutron, times de nome científico), com aviso, e tabela/números calculados dos jogos; notícias só com fatos. Tudo em `sites/jimmy-neutron` (README). Prévia 1,7 MB.
+
+## 18/11/2026: dados do Jimmy
+Palavras: LE, LD, ZAG, lateral, zagueiro, pé direito, camisa 5, 1,64, capitão, time B.
+Davi passou: posição LE/LD/ZAG, pé direito, número 5, altura 1,64 m, capitão do time B. Preenchido no site (`sites/jimmy-neutron`, objeto `JIMMY`).
