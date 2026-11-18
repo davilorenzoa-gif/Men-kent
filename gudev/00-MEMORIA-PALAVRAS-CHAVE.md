@@ -169,3 +169,7 @@ O Davi perguntou do "site de objetos 3D" que tinha mandado (era o Poly Haven, an
 ## 18/11/2026: Soda (template getlayers "Refrigerante")
 Palavras: Soda, Diet Soda, refrigerante, lata 3D, cereja, mirtilo, Pure Zero, Refreshingly Clean, getlayers, model-viewer, troca de sabor, Guaraná (marca real, não usar).
 O Davi mandou o prompt + vídeo do template e pediu pra usar o Poly Haven. Recriado em `gudev/aprendizados/soda/` (arquivo único, 3 canvas Three.js, HDRI studio, lata/frutas em código com rótulo original). Estudo, nunca case. Também neste dia: aliança da demo de HDRI estava do avesso (lição no `05`).
+
+## 18/11/2026: HDRI no Fusca do Itamar
+Palavras: Fusca Itamar, HDRI, studio, warehouse, pintura, preto lavado.
+`sites/fusca-itamar` agora usa o HDRI `studio` do Poly Haven no motor 3D (no lugar do RoomEnvironment). Testado contra `warehouse`; studio ganhou. Antes/depois das cores: vermelho mais vivo, preto deixou de parecer cinza. Sem erro em 1440 e 390.
