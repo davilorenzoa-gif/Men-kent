@@ -9,7 +9,7 @@ Site-presente que o Davi pediu pra amiga Ana (com um N) (20/11/2026). Pedido: "d
 1. **Selo de cera**: segura o selo ~1 s, o anel enche, o selo treme, racha em duas metades, a aba abre, a cartinha sobe e explode pétala.
 2. **Jardim**: toque em qualquer lugar do topo e nasce uma flor (caule que cresce, folha, pétalas que abrem com mola, balançam no vento). Contador de flores plantadas.
 3. **Dente-de-leão de desejos**: deslizar o dedo/mouse arranca as sementes, que voam; tocar na cabeça solta 3; **"soprar no microfone"** solta de verdade com o sopro. A cada 4 sementes aparece um desejo (8 no total).
-- Fecho: carta manuscrita que aparece linha por linha e **abraço apertado** (segura o botão: a página "aperta", saem corações, conta os segundos, chove pétala no fim).
+- Fecho: carta manuscrita que aparece linha por linha e **"Toca aqui!"** (toca na mão, vem a outra mão, "pá!", pétalas, tremida; contador e combo).
 
 ## Pra editar
 Tudo no objeto `CONFIG` no começo do `<script>`: nome, quem assina, linhas da carta e os 8 desejos. **Os textos são genéricos de propósito** (não sei nada da Ana): o ideal é o Davi trocar por coisas reais (piada interna, lembrança, data). Depois de editar o `index.html`, gerar de novo o arquivo único (script no `00-MEMORIA`, sessão de 20/11).
