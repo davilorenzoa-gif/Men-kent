@@ -139,3 +139,13 @@ Gravações de tela, analisadas quadro a quadro com ffmpeg.
 - **"Shape Blend" do Spline (fluido):** bolhas de líquido azul neon (metaballs) que se juntam, se separam e seguem o cursor.
   - **Na web dá**, sem o Spline (o runtime dele pesa ~1 MB+): shader WebGL 2D de metaballs, leve, com plano B em canvas. Segue o dedo no celular.
   - Serve pra: açaí/sorvete/milkshake (líquido na cor do produto), bebidas, estética. Fundo de hero ou "toque e mexa" numa seção.
+
+## PSP Production (Awwwards, gravado pelo Davi em 20/11/2026)
+Produtora de filmes (productionportugal.com). Fundo rosa-pink saturado, texto menta, grotesca pesada em caixa alta + serifada itálica. Demo das técnicas: `demos/psp-tecnicas/` (README) e `demos/psp-tecnicas-arquivo-unico.html`.
+- **Manifesto que vira janela:** o parágrafo cresce na rolagem até as letras virarem buracos e mostrarem o vídeo atrás. Na demo: palavra recortada (SVG mask) e zoom pela haste do T. Serve pra: oficina, estética automotiva, academia, qualquer um com vídeo bom do lugar.
+- **Tarjas pretas** sobre as palavras da manchete que somem uma a uma ("documento censurado"). Leve, só CSS. Serve pra: barbearia, tatuagem, oficina, abertura de marca.
+- **Transição em blocos em escada** (quadrados que enchem a tela e esvaziam). Serve pra trocar de seção ou de página.
+- **Parede curva de logos** ("Marcas com as quais trabalhamos") num cilindro 3D. Pra comércio: marcas atendidas (oficina de moto: Honda, Yamaha…; Fusca Itamar; Andrade: marcas de aço), produtos ou serviços. Logo de marca só se for verdade que o cliente trabalha com ela.
+- **404 "sem sinal":** número em serifa com separação RGB, grade de pontos que incha no dedo e blocos de pixel. A grade que incha a gente já tem na Retícula; a 404 com glitch vale pra qualquer site.
+- **Lista de trabalhos sobre vídeo** com barras horizontais que crescem por item, e "Voltar / Próximo".
+- **"Toque para ativar a câmera"** no topo (usa a câmera do visitante). Não usar em comércio: pede permissão e assusta.
