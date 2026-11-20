@@ -176,5 +176,5 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Retícula:** estúdio de risografia fictício, conceito feito pelo Claude com liberdade total (`sites/reticula/`, 13/11/2026). Shader de retícula, cartaz em camadas e prova de cor. Falta o Davi ver no celular de verdade.
 - **Grau (ótica) e Marreta (reforma):** conceitos que aparecem como CH 02 e CH 03 no site TV GuDev (`gudev-sites.netlify.app`). Código ainda não está no repositório (11/11/2026).
 - **SCURO:** garagem particular que publica como revista, conceito automotivo de luxo (`sites/scuro/`, 16/11/2026). Feito do briefing "Premium Automotive Experience" do Davi. 7 carros com ficha de fabricante. Parte das fotos veio do Pinterest e de reels: trocar antes de postar. Falta o Davi dizer se vai pro Instagram e se fica em inglês.
-- **DOZE V12, Espelho, Basalto, Meridiano, APEX, Moenda, Sulco, Fervo:** conceitos e demos de portfólio (`sites/` e `gudev/demos/`).
+- **DOZE V12, Espelho, Basalto, Meridiano, APEX, APEX GT (`sites/apex-gt`, 20/11), Moenda, Sulco, Fervo:** conceitos e demos de portfólio (`sites/` e `gudev/demos/`).
 - **Davi 26:** trabalho de escola do Davi (`sites/presidente-davi-26/`), nem é GuDev.
