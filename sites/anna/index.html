@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Pra Anna</title>
+<title>Pra Ana</title>
 <meta name="description" content="Uma coisinha feita só pra você.">
 <meta name="theme-color" content="#f7efe6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -154,7 +154,7 @@ body.abracando .btn-abraco svg{animation:bate .5s ease-in-out infinite}
     <div class="titulo">
       <small>faz um pedido</small>
       <h2>Sopra o dente-de-leão</h2>
-      <p>Cada sementinha que sai leva um desejo meu pra você. Deslize o dedo por ele, toque nele ou sopre de verdade.</p>
+      <p>Cada sementinha que sai leva um desejo pra você. Deslize o dedo por ele, toque nele ou sopre de verdade.</p>
     </div>
     <div class="leao-wrap"><canvas id="cLeao" aria-label="Dente-de-leão interativo"></canvas></div>
     <div class="controles">
@@ -166,13 +166,13 @@ body.abracando .btn-abraco svg{animation:bate .5s ease-in-out infinite}
   </section>
 
   <section class="secao" id="carta">
-    <div class="titulo"><small>agora a parte séria</small><h2>Uma carta</h2></div>
+    <div class="titulo"><small>e agora</small><h2>Um bilhete</h2></div>
     <div class="folha" id="folha"></div>
   </section>
 
   <section class="secao abraco" id="abraco">
-    <div class="titulo"><small>pra terminar</small><h2>Abraço apertado</h2><p>Segura o botão. Quanto mais tempo, mais apertado.</p></div>
-    <button class="btn-abraco" id="btnAbraco" aria-label="Segure para dar um abraço">
+    <div class="titulo"><small>pra terminar</small><h2>Um abraço</h2><p>Segura o botão pra mandar.</p></div>
+    <button class="btn-abraco" id="btnAbraco" aria-label="Segure para mandar um abraço">
       <svg viewBox="0 0 24 24" fill="#fffaf4" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 2.9 5 6.4 5c2.1 0 3.6 1.2 4.4 2.6h.4C12 6.2 13.5 5 15.6 5 19.1 5 21 8.6 19.6 11.8 17.5 16.4 12 21 12 21z"/></svg>
     </button>
     <p class="abraco-msg" id="abracoMsg" aria-live="polite"></p>
@@ -184,26 +184,26 @@ body.abracando .btn-abraco svg{animation:bate .5s ease-in-out infinite}
 <script>
 /* ================== EDITE AQUI ================== */
 const CONFIG = {
-  nome: 'Anna',
+  nome: 'Ana',
   de: 'Davi',
   carta: [
-    'Anna,',
-    'fiz esse site só pra você. Não precisa de data especial pra dizer coisa boa, né?',
-    'Queria um jeito diferente de falar que é muito bom ter você por perto.',
-    'Obrigado pela amizade, pelas conversas e por ser exatamente quem você é.',
-    'Sempre que o dia pesar, volta aqui e planta umas flores lá em cima.',
-    'Elas não murcham, prometo.'
+    'Oi, Ana!',
+    'A gente se conhece faz pouco tempo, mas achei que valia um oi diferente de mensagem no Zap.',
+    'Então fiz esse site. É meio que o que eu sei fazer, então fica de presente.',
+    'Tem flor pra plantar, dente-de-leão pra soprar e um botão de abraço lá embaixo.',
+    'Pode apertar tudo, não quebra (eu acho).',
+    'Que venham mais conversas por aí!'
   ],
-  assinatura: 'Com carinho,<br>Davi',
+  assinatura: 'Abraço,<br>Davi',
   desejos: [
-    'Dias com mais risada do que pressa.',
-    'Café quente nas manhãs difíceis.',
-    'Gente que cuide de você do jeito que você merece.',
-    'Coragem pros planos que você ainda não contou pra ninguém.',
+    'Uma semana leve.',
+    'Café bom e quentinho.',
+    'Muita risada com quem você gosta.',
     'A música certa tocando na hora certa.',
-    'Domingos sem despertador.',
-    'Que você se veja do jeito que os seus amigos te veem.',
-    'E que essa amizade dure muito, muito tempo.'
+    'Um domingo sem despertador.',
+    'Sorte nos planos que você tiver aí.',
+    'Fila andando rápido sempre que você estiver nela.',
+    'E mais conversa boa por aí.'
   ]
 };
 /* ================================================ */
@@ -514,7 +514,7 @@ const jardim = (() => {
     raiz.style.setProperty('--hug', k.toFixed(3));
     const r = btn.getBoundingClientRect();
     if(Math.random() < .25 + k*.5) chuva.coracao(r.left+r.width/2, r.top+r.height*.4);
-    msg.textContent = seg < 1 ? 'apertando...' : seg < 3 ? `abraço de ${Math.floor(seg)} ${Math.floor(seg)===1?'segundo':'segundos'}` : `abraço de ${Math.floor(seg)} segundos. Tá ficando sério isso`;
+    msg.textContent = seg < 1 ? 'mandando...' : seg < 3 ? `abraço de ${Math.floor(seg)} ${Math.floor(seg)===1?'segundo':'segundos'}` : `abraço de ${Math.floor(seg)} segundos. Caprichou!`;
     if(navigator.vibrate && Math.random()<.05) navigator.vibrate(10);
     raf = requestAnimationFrame(frame);
   }
@@ -523,8 +523,8 @@ const jardim = (() => {
     if(!segurando) return; segurando = false; cancelAnimationFrame(raf); document.body.classList.remove('abracando');
     raiz.style.setProperty('--hug', 0);
     const seg = (performance.now()-ini)/1000;
-    if(seg < .6){ msg.textContent = 'Rápido demais! Abraço bom é segurando.'; return; }
-    msg.innerHTML = `Abraço de ${seg.toFixed(1).replace('.',',')} s guardado.<br>Volta aqui quando quiser outro.`;
+    if(seg < .6){ msg.textContent = 'Rapidinho demais! Segura um pouco.'; return; }
+    msg.innerHTML = `Abraço de ${seg.toFixed(1).replace('.',',')} s enviado.<br>Esse aqui vale até o próximo.`;
     chuva.cai(seg > 3 ? 90 : 50);
   }
   btn.addEventListener('pointerdown', aperta);
