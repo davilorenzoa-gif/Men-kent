@@ -91,6 +91,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
 - **Sulco** (demo, `gudev/demos/sulco-vidro-liquido.html`): vidro líquido estilo Apple em botões e busca flutuantes.
 - **Skyline Motors** (conceito JDM com R34, `sites/skyline-motors`): o farol acende e o site acende junto; a rolagem gira o R34 em 360° (192 quadros recortados) e o céu vira estúdio; estúdio 360° com arraste, zoom, troca de cor e painel de largada com som real.
 - **APEX Automotive** (conceito, `sites/apex`): **exceção ao HTML único**, feito em React + Vite + Tailwind. Filmes montados com fotos (sem MP4), fotos do Wikimedia com crédito, ficha técnica com link pra fonte oficial.
+- **APEX GT** (conceito, `sites/apex-gt`, 20/11/2026, React + GSAP + Three.js): fumaça de túnel de vento contornando o carro e desviando do dedo, com o título atrás do carro (`mix-blend-mode: lighten` na foto de fundo escuro); dinamômetro preso na rolagem (1.000 a 9.000 rpm, curvas se desenhando, luzes de troca, picos oficiais travando); coleção com foto em fenda que segue o mouse e duelo de 0–100 em tempo real.
 - **Davi 26** (trabalho de escola, não é GuDev, `sites/presidente-davi-26`): poeira verde e amarela que pinta o nome; globo da bandeira com uma estrela por proposta; urna eletrônica de simulação.
 - **Oficina Mestre das Motos** (oficina de motos, `sites/mestre-das-motos`, 10/11/2026):
   - ignição: o conta-giros faz a varredura de quando a moto liga e a tela abre em duas metades;

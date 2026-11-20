@@ -15,6 +15,7 @@
 | **comercial Andrade, Terra, hiperzoom, speed ramp, estátua de aço** | Reels de 24,6 s da Andrade (17/11): zoom do espaço até a fachada, tour com rampa de velocidade na batida, estátua em camadas, vento nos zooms | `gudev/videos/andrade-comercial/`, `08` |
 | **Andrade, padrinho** | Pitch presencial com o padrinho (falou-se R$ 1.200 em 22/10; hoje nada fechado) | `sites/andrade-ferro-e-aco`, `01`, `04` |
 | **APEX** | Conceito automotivo de luxo (React + TS + Tailwind + Motion), fotos Wikimedia com crédito | `sites/apex` |
+| **APEX GT, Beyond the Limits, túnel de vento, dinamômetro, duelo 0–100** | APEX v2 (20/11): React + GSAP + Lenis + Three.js; fumaça contornando o GT3 RS, dyno de 1.000 a 9.000 rpm, coleção com duelo de 0–100 | `sites/apex-gt` |
 | **arquivo único, prévia, 2 MB** | HTML com tudo embutido pra abrir no celular; prévia do app não abre 7 MB nem arquivo externo | `gudev/ferramentas/arquivo_unico.py`, `previa_embutida.py`, `05` |
 | **avó, ENTRElinhas** | Lead quente (avó do Davi) | `sites/entrelinhas`, `04` |
 | **Basalto, Espelho, Moenda, Sulco, Prumo** | Demos antigas (Espelho 28/10, Moenda 23/10, Sulco 04/11 vidro líquido) | `sites/`, `gudev/demos/sulco-vidro-liquido.html` |
@@ -205,3 +206,7 @@ O Davi pediu um site criativo pra amiga Anna (presente, estilo delicado e fofo).
 
 Ajuste no mesmo dia: o nome é **Ana, com um N** (a pasta continua `sites/anna`). O Davi pediu a carta **sem tom romântico**: amizade recente, pessoas se conhecendo, pouca intimidade. Carta virou "Um bilhete" leve, desejos simples, "Abraço apertado" virou "Um abraço" (segura pra mandar). Regra pra presente: perguntar o grau de intimidade antes de escrever.
 Ajuste 2: o abraço virou **"Toca aqui!"** (palavras: toca aqui, high five, mão, pá, combo). A cada toque vem a outra mão, sai um "pá!" com onda, a tela treme, as pétalas explodem e o celular vibra; tem contador com frases (1, 3, 5, 10, 20) e combo pra toque rápido. Eles conversam **pelo Instagram**, então a carta fala em "DM no Insta" e a assinatura é "Valeu, Davi".
+
+## 20/11/2026: APEX GT (Beyond the Limits)
+Palavras: APEX, APEX GT, Beyond the Limits, GT3 RS, túnel de vento, fumaça, streamlines, fluxo potencial, dinamômetro, dyno, conta-giros, shift lights, duelo 0–100, coleção, 296 GTB, 750S, AMG GT 63, Revuelto, GSAP, ScrollTrigger, Lenis, Three.js, React, Vite.
+O Davi mandou um prompt grande ("equipe de agência internacional") + 12 prints de carros e sites. Feito do zero em `sites/apex-gt` (o APEX antigo fica em `sites/apex`): túnel de vento em Three.js com "BEYOND" atrás do carro, dinamômetro preso na rolagem com picos oficiais, coleção com foto que segue o mouse e ficha com duelo de 0–100 em tempo real, cena do filme abrindo pela lanterna. Prévia: `sites/apex-gt/apex-arquivo-unico.html` (1,3 MB). **Fotos de estúdio vieram dos prints: trocar antes de postar.** Wikimedia deu 429 (excesso de pedidos) e bloqueia `thumb.wikimedia.org`; o que funciona é `upload.wikimedia.org/.../thumb/x/xy/Nome/500px-Nome` (larguras padrão: 500, 960, 1280, 1920).
