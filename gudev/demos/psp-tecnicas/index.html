@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Demo: técnicas da PSP Production</title>
+<meta name="description" content="Demo da GuDev: 4 técnicas estudadas no site da PSP Production (tarjas que somem, zoom pela letra até o vídeo, transição em blocos, parede curva). Conceito, não é cliente.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#0f0e0e; --papel:#f4f1ec; --cor:#e4134f; --cor-escura:#8d0a30; --menta:#7ff2c9;
+  --sans:"Archivo",system-ui,sans-serif; --serif:"Instrument Serif",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--tinta);color:var(--papel);font-family:var(--sans);overflow-x:hidden}
+a{color:inherit}
+.it{font-family:var(--serif);font-style:italic;font-weight:400;text-transform:none;letter-spacing:0}
+
+/* topo */
+.topo{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;justify-content:space-between;align-items:flex-start;padding:14px 16px;font:800 12px/1 var(--sans);letter-spacing:.02em;text-transform:uppercase;mix-blend-mode:difference;color:#fff;pointer-events:none}
+.topo b{display:block;line-height:1.05}
+.topo span{pointer-events:auto}
+
+/* 1. tarjas */
+.s1{min-height:100svh;background:var(--cor);display:flex;flex-direction:column;justify-content:center;padding:90px 16px 40px;position:relative}
+.manchete{font:900 clamp(40px,11vw,128px)/.92 var(--sans);text-transform:uppercase;letter-spacing:-.035em;color:var(--tinta);max-width:13ch}
+.manchete .l{display:block}
+.manchete .it{font-size:1.08em;letter-spacing:-.01em;line-height:.8}
+.p{position:relative;display:inline-block}
+.p::after{content:"";position:absolute;left:-.04em;right:-.04em;top:.06em;bottom:.04em;background:var(--tinta);transform-origin:100% 50%;transition:transform .55s cubic-bezier(.7,0,.2,1);transition-delay:var(--d,0s)}
+.s1.aberta .p::after{transform:scaleX(0)}
+.s1 .rodape{position:absolute;left:16px;right:16px;bottom:18px;display:flex;justify-content:space-between;gap:12px;font:800 11px/1.3 var(--sans);text-transform:uppercase;color:var(--tinta)}
+.s1 button{all:unset;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.s1 button:focus-visible{outline:2px solid var(--tinta);outline-offset:3px}
+
+/* 2. zoom pela letra */
+.s2{height:420vh;position:relative;background:var(--tinta)}
+.s2 .fixo{position:sticky;top:0;height:100svh;overflow:hidden}
+.s2 video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.s2 .veu{position:absolute;inset:0;width:100%;height:100%;will-change:transform;transform-origin:50% 50%}
+.s2 .dica{position:absolute;left:16px;right:16px;top:22svh;text-align:center;font:800 12px/1.35 var(--sans);text-transform:uppercase;color:var(--tinta);will-change:opacity}
+.s2 .legenda{position:absolute;left:16px;right:16px;bottom:9svh;font:900 clamp(26px,6.5vw,64px)/.95 var(--sans);text-transform:uppercase;letter-spacing:-.03em;color:#fff;opacity:0;will-change:opacity,transform;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+
+/* 3. blocos */
+.blocos{position:fixed;inset:0;z-index:40;display:grid;pointer-events:none}
+.blocos i{display:block;background:var(--papel);transform:scale(0);transition:transform .32s cubic-bezier(.6,0,.3,1);transition-delay:var(--d)}
+.blocos.cheio i{transform:scale(1.02)}
+
+/* 4. parede curva */
+.s4{height:380vh;position:relative;background:var(--cor-escura)}
+.s4 .fixo{position:sticky;top:0;height:100svh;overflow:hidden;perspective:520px;perspective-origin:50% 50%}
+.cilindro{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;will-change:transform}
+.linha{position:absolute;left:0;top:0;transform-style:preserve-3d}
+.tile{position:absolute;width:var(--tw);height:var(--th);left:calc(var(--tw) * -.5);top:calc(var(--th) * -.5);display:grid;place-items:center;text-align:center;padding:6px;background:#30071a;border:1px solid #5a1029;color:#ff4d7d;font:900 clamp(15px,3.4vw,30px)/1 var(--sans);text-transform:uppercase;letter-spacing:-.02em;backface-visibility:hidden}
+.tile.i{font:italic 400 clamp(20px,4.4vw,40px)/1 var(--serif);text-transform:none;letter-spacing:0}
+.s4 .titulo{position:absolute;left:16px;bottom:16px;font:800 12px/1.2 var(--sans);text-transform:uppercase;color:#fff;z-index:2}
+.s4 .sombra{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,transparent 40%,rgba(10,0,4,.85));pointer-events:none;z-index:1}
+
+/* 5. contato */
+.s5{background:var(--papel);color:var(--tinta);min-height:100svh;padding:90px 16px 28px;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.s5 h2{font:900 clamp(44px,12vw,140px)/.9 var(--sans);text-transform:uppercase;letter-spacing:-.04em;max-width:12ch}
+.s5 h2 .it{font-size:1.06em;line-height:.8}
+.s5 .info{display:grid;gap:22px;font:800 13px/1.4 var(--sans);text-transform:uppercase}
+.botao{display:inline-flex;align-items:center;gap:10px;justify-self:start;background:var(--tinta);color:var(--papel);padding:16px 22px;text-decoration:none;font:800 14px/1 var(--sans);text-transform:uppercase;transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
+.botao:active{transform:scale(.96)}
+.botao:focus-visible{outline:3px solid var(--cor);outline-offset:3px}
+.nota{font:500 12px/1.5 var(--sans);text-transform:none;opacity:.7;max-width:46ch}
+
+@media (prefers-reduced-motion:reduce){
+  .p::after{display:none}
+  .blocos{display:none}
+}
+</style>
+</head>
+<body>
+<header class="topo"><span><b>Lustro</b><b>demo GuDev</b></span><span>[ conceito ]</span></header>
+
+<!-- 1. Manchete com tarjas que somem -->
+<section class="s1" id="s1">
+  <h1 class="manchete" aria-label="A gente devolve o brilho que o seu carro tinha no primeiro dia">
+    <span class="l"><span class="p" style="--d:.15s">A gente</span> <span class="p it" style="--d:.45s">devolve</span></span>
+    <span class="l"><span class="p" style="--d:.3s">o brilho</span></span>
+    <span class="l"><span class="p it" style="--d:.6s">do primeiro</span></span>
+    <span class="l"><span class="p" style="--d:.75s">dia.</span></span>
+  </h1>
+  <div class="rodape"><span>Role pra entrar na garagem ↓</span><button type="button" id="denovo">Ver de novo</button></div>
+</section>
+
+<!-- 2. Zoom pela letra até o vídeo -->
+<section class="s2" id="s2">
+  <div class="fixo">
+    <video src="media/garagem.mp4" muted playsinline loop autoplay preload="auto" aria-hidden="true"></video>
+    <svg class="veu" id="veu" aria-hidden="true">
+      <defs>
+        <mask id="furo" maskUnits="userSpaceOnUse">
+          <rect id="furoFundo" width="100%" height="100%" fill="#fff"/>
+          <text id="palavra" x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#000" font-family="Archivo, sans-serif" font-weight="900" letter-spacing="-2">LUSTRO</text>
+        </mask>
+      </defs>
+      <rect width="100%" height="100%" fill="#e4134f" mask="url(#furo)"/>
+    </svg>
+    <p class="dica" id="dica">A palavra é a janela.<br>Continua rolando.</p>
+    <p class="legenda" id="legenda">Lavagem, polimento<br>e vitrificação.</p>
+  </div>
+</section>
+
+<!-- 4. Parede curva -->
+<section class="s4" id="s4">
+  <div class="fixo">
+    <div class="cilindro" id="cilindro"></div>
+    <div class="sombra"></div>
+    <p class="titulo">Tudo o que a gente faz no seu carro</p>
+  </div>
+</section>
+
+<!-- 5. Contato -->
+<section class="s5" id="s5">
+  <h2>Sem enrolação. Vem dar um <span class="it">oi.</span></h2>
+  <div class="info">
+    <a class="botao" href="https://wa.me/5511964650141?text=Oi!%20Vi%20a%20demo%20das%20t%C3%A9cnicas%20da%20PSP" target="_blank" rel="noopener">Chamar no WhatsApp →</a>
+    <p class="nota">Demo de técnica da GuDev, feita a partir do estudo do site da PSP Production (20/11/2026). Lustro é um conceito, não um cliente. Os serviços da parede são exemplo: num site real, entram só os serviços (ou as marcas atendidas) que o cliente confirmar.</p>
+  </div>
+</section>
+
+<div class="blocos" id="blocos" aria-hidden="true"></div>
+
+<script>
+(function(){
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var vw = innerWidth, vh = innerHeight;
+
+  /* ---------- 1. tarjas ---------- */
+  var s1 = document.getElementById('s1');
+  requestAnimationFrame(function(){ setTimeout(function(){ s1.classList.add('aberta'); }, 250); });
+  document.getElementById('denovo').addEventListener('click', function(){
+    s1.classList.remove('aberta'); void s1.offsetWidth;
+    setTimeout(function(){ s1.classList.add('aberta'); }, 450);
+  });
+
+  /* ---------- 2. zoom pela letra ---------- */
+  var s2 = document.getElementById('s2'), veu = document.getElementById('veu'),
+      palavra = document.getElementById('palavra'), dica = document.getElementById('dica'),
+      legenda = document.getElementById('legenda'), video = s2.querySelector('video');
+  var alvo = {x: vw/2, y: vh/2};
+  function medePalavra(){
+    // tamanho da fonte pra palavra ocupar ~86% da largura
+    palavra.setAttribute('font-size', 100);
+    var w = palavra.getComputedTextLength() || 1;
+    palavra.setAttribute('font-size', Math.min(100 * vw * .86 / w, vh * .5));
+    // centro da haste do T (letra 3): é por ela que a câmera entra
+    try {
+      var r = palavra.getExtentOfChar(3);
+      alvo.x = r.x + r.width / 2; alvo.y = r.y + r.height * .5;
+    } catch(e){ alvo.x = vw/2; alvo.y = vh/2; }
+    veu.style.transformOrigin = alvo.x + 'px ' + alvo.y + 'px';
+  }
+
+  /* ---------- 3. blocos ---------- */
+  var blocos = document.getElementById('blocos');
+  function montaBlocos(){
+    var cols = vw < 700 ? 5 : 9, lado = vw / cols, rows = Math.ceil(vh / lado);
+    blocos.style.gridTemplateColumns = 'repeat(' + cols + ',1fr)';
+    blocos.style.gridTemplateRows = 'repeat(' + rows + ',' + lado + 'px)';
+    var h = '';
+    for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) {
+      // escada diagonal de baixo-esquerda pra cima-direita, com um pouco de ruído
+      var ordem = (rows - 1 - r) + c + (Math.random() * 1.2);
+      h += '<i style="--d:' + (ordem * 28).toFixed(0) + 'ms"></i>';
+    }
+    blocos.innerHTML = h;
+  }
+  var trocando = false;
+  function transicao(destino){
+    if (reduz || trocando) { if (reduz) scrollTo(0, destino); return; }
+    trocando = true;
+    blocos.classList.add('cheio');
+    setTimeout(function(){
+      scrollTo(0, destino);
+      setTimeout(function(){ blocos.classList.remove('cheio'); trocando = false; }, 120);
+    }, 620);
+  }
+
+  /* ---------- 4. parede curva ---------- */
+  var servicos = ['Lavagem','polimento','Vitrificação','faróis','Higienização','couro','Cristalização','motor','Enceramento','rodas','Descontaminação','vidros','Película','plásticos','Ozônio','chuva ácida'];
+  var cilindro = document.getElementById('cilindro');
+  var LINHAS = 14, COLS = 3, raio = 0;
+  function montaParede(){
+    COLS = vw < 700 ? 3 : 4;
+    var tw = Math.min(vw * .44, vw < 700 ? 300 : 340), th = Math.round(tw * .62), gap = 10;
+    var passo = 360 / LINHAS;
+    raio = Math.round((th + gap) / 2 / Math.tan(Math.PI / LINHAS));
+    cilindro.style.setProperty('--tw', tw + 'px'); cilindro.style.setProperty('--th', th + 'px');
+    var h = '', k = 0;
+    for (var r = 0; r < LINHAS; r++) {
+      h += '<div class="linha" style="transform:rotateX(' + (r * passo) + 'deg) translateZ(' + raio + 'px)">';
+      for (var c = 0; c < COLS; c++) {
+        var t = servicos[k++ % servicos.length], x = (c - (COLS - 1) / 2) * (tw + gap);
+        h += '<div class="tile' + (t[0] === t[0].toLowerCase() ? ' i' : '') + '" style="transform:translateX(' + x + 'px)">' + t + '</div>';
+      }
+      h += '</div>';
+    }
+    cilindro.innerHTML = h;
+  }
+  var s4 = document.getElementById('s4');
+
+  /* ---------- rolagem ---------- */
+  function clamp(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function prog(el){ var r = el.getBoundingClientRect(); return clamp(-r.top / (r.height - vh)); }
+  var giroLivre = 0, ultimo = performance.now();
+  function quadro(t){
+    var dt = Math.min(64, t - ultimo); ultimo = t;
+    // zoom: 0..0.15 parado, 0.15..0.8 entra na letra, depois mostra a legenda
+    var p = prog(s2), z = clamp((p - .12) / .66);
+    var e = z * z * z;                         // começa devagar e acelera, como câmera entrando
+    var escala = reduz ? 1 : 1 + e * 70;
+    veu.style.transform = 'scale(' + escala + ')';
+    veu.style.opacity = reduz ? (p > .5 ? 0 : 1) : (z > .97 ? 0 : 1);
+    dica.style.opacity = 1 - clamp(p / .14);
+    var l = clamp((p - .8) / .12);
+    legenda.style.opacity = l; legenda.style.transform = 'translateY(' + ((1 - l) * 30) + 'px)';
+    // parede: gira com a rolagem + um giro lento sozinha
+    var q = prog(s4); giroLivre += reduz ? 0 : dt * .004;
+    cilindro.style.transform = 'translateZ(' + (-raio) + 'px) rotateX(' + (q * 300 + giroLivre) + 'deg) rotateY(' + (Math.sin(t / 2600) * 6) + 'deg)';
+    requestAnimationFrame(quadro);
+  }
+
+  // transição em blocos: ao sair do vídeo pra parede (e na volta)
+  var marcaS4 = 0, marcaS2fim = 0, estado = 'antes';
+  function marcas(){ marcaS4 = s4.offsetTop; marcaS2fim = s2.offsetTop + s2.offsetHeight - vh; }
+  addEventListener('scroll', function(){
+    var y = scrollY;
+    if (estado === 'antes' && y > marcaS2fim + 40 && y < marcaS4 + vh * .5) { estado = 'depois'; transicao(marcaS4); }
+    else if (estado === 'depois' && y < marcaS2fim - 40) { estado = 'antes'; }
+  }, {passive:true});
+
+  // vídeo só toca quando aparece
+  new IntersectionObserver(function(es){ es.forEach(function(x){ x.isIntersecting ? video.play().catch(function(){}) : video.pause(); }); }).observe(s2);
+
+  function tudo(){ vw = innerWidth; vh = innerHeight; medePalavra(); montaBlocos(); montaParede(); marcas(); }
+  var rt; addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ if (Math.abs(innerWidth - vw) > 2) tudo(); else { vh = innerHeight; marcas(); } }, 150); });
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(tudo);
+  tudo();
+  requestAnimationFrame(quadro);
+})();
+</script>
+</body>
+</html>
