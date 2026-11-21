@@ -89,6 +89,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .heroi-palco{position:absolute;inset:0;will-change:transform}
 .heroi-fundo{position:absolute;inset:0;pointer-events:none}
 .heroi-teia{position:absolute;left:50%;top:52%;width:max(118vw,118svh);max-width:none;translate:-50% -50%;opacity:.055;animation:gira 160s linear infinite}
+.sem-giro .heroi-teia{animation:none}
 .pausa .heroi-teia{animation-play-state:paused}
 @keyframes gira{to{rotate:360deg}}
 .heroi-mira{position:absolute;inset:0;width:100%;height:100%}
@@ -276,7 +277,86 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .rodape p{margin:0;max-width:620px}
 .rodape a{font-family:var(--f-titulo);font-size:17px;letter-spacing:.06em;color:#fff;text-decoration:none;border:1.5px solid #fff;border-radius:99px;padding:8px 16px 6px}
 
-#teia-tela{position:fixed;inset:0;z-index:45;pointer-events:none}
+#teia-tela{position:fixed;left:0;top:0;width:100%;height:100%;z-index:45;pointer-events:none}
+#bicho-tela{position:fixed;left:0;top:0;width:100%;height:100%;z-index:46;pointer-events:none;display:none}
+#bicho-tela.on{display:block}
+::selection{background:var(--vermelho);color:#fff}
+
+/* ============ aranha pendurada vira botão ============ */
+.pendulo{cursor:pointer;transition:opacity .3s}
+.pendulo:hover svg{filter:drop-shadow(0 0 10px rgba(120,255,200,.7)) drop-shadow(0 6px 10px rgba(0,0,0,.45))}
+.pendulo.solto{opacity:0;pointer-events:none}
+.pendulo::after{content:"";position:absolute;inset:-14px -18px;border-radius:50%}
+.pendulo-dica{position:absolute;left:calc(50% + min(5.6svh,3.6vw));top:calc(53% - min(18.5vw,33svh) - min(5svh,3vw));margin:0;font-size:10px;font-stretch:115%;letter-spacing:.12em;text-transform:uppercase;color:#9fe9c8;z-index:2;white-space:nowrap;opacity:.85;pointer-events:none;transition:opacity .4s}
+.pendulo-dica::before{content:"";display:inline-block;width:18px;height:1px;background:currentColor;vertical-align:middle;margin-right:8px}
+.solta-aranha .pendulo-dica{opacity:0}
+.aranha-link{font:inherit;color:#9fe9c8;text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer;padding:0;display:inline}
+.aranha-link:hover{color:#fff;text-shadow:0 0 12px rgba(120,255,200,.8)}
+
+/* ============ picada ============ */
+.picada{position:fixed;inset:0;z-index:49;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--px,50%) var(--py,50%),#fff 0,rgba(255,255,255,.9) 6%,rgba(218,31,43,.75) 26%,rgba(35,80,216,.55) 52%,rgba(7,11,28,.2) 80%)}
+.picada.on{animation:picada 1s ease-out forwards}
+@keyframes picada{0%{opacity:0}6%{opacity:1}40%{opacity:.75}100%{opacity:0}}
+.treme main,.treme .cabecalho{animation:treme .5s cubic-bezier(.36,.07,.19,.97)}
+@keyframes treme{10%,90%{translate:-2px 1px}20%,80%{translate:4px -2px}30%,50%,70%{translate:-7px 3px}40%,60%{translate:7px -3px}}
+.aviso{position:fixed;left:50%;bottom:22px;z-index:55;margin:0;translate:-50% 30px;opacity:0;pointer-events:none;background:#fff;color:var(--tinta);border-radius:16px;padding:12px 18px 11px;font-size:13px;line-height:1.4;max-width:min(92vw,440px);box-shadow:0 16px 40px rgba(0,0,0,.35);transition:opacity .35s,translate .45s cubic-bezier(.2,1.4,.4,1);text-align:center}
+.aviso.on{opacity:1;translate:-50% 0}
+.aviso b{font-family:var(--f-titulo);font-weight:400;font-size:20px;letter-spacing:.03em;display:block;color:var(--vermelho)}
+
+/* ============ cidade (WebGL) ============ */
+.cidade{position:relative;height:540vh;background:var(--noite);z-index:2}
+.cidade-palco{position:sticky;top:0;height:100svh;overflow:hidden;background:#090d22 url(img/cidade.webp) center/cover no-repeat}
+.cidade-gl,.cidade-2d{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cidade-palco::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 50%,transparent 55%,rgba(3,5,14,.75) 100%)}
+.cidade-legendas{position:absolute;left:var(--m);right:var(--m);top:50%;translate:0 -50%;z-index:2;pointer-events:none}
+.legenda{position:absolute;left:0;top:0;translate:0 -50%;margin:0;max-width:12ch;font-family:var(--f-titulo);font-weight:400;font-size:clamp(46px,8.4vw,130px);line-height:.88;letter-spacing:.005em;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.55);opacity:0;will-change:opacity,transform}
+.legenda small{display:block;margin-top:14px;font-family:var(--f-texto);font-size:12px;font-stretch:115%;letter-spacing:.16em;text-transform:uppercase;color:#cfd3e6;line-height:1.5}
+.legenda:first-child{opacity:1}
+.cidade-hud{position:absolute;left:var(--m);right:var(--m);bottom:26px;z-index:2;display:flex;gap:28px;font-size:11px;color:#cfd3e6;pointer-events:none}
+.cidade-hud div{display:grid;gap:2px}
+.cidade-hud small{font-size:9px;font-stretch:120%;letter-spacing:.2em;text-transform:uppercase;color:var(--cinza)}
+.cidade-hud b{font-family:var(--f-titulo);font-weight:400;font-size:30px;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+.cidade-hud div:last-child{margin-left:auto;text-align:right}
+.cidade-role{position:absolute;right:var(--m);top:50%;z-index:2;margin:0;display:grid;justify-items:center;gap:8px;font-size:9px;font-stretch:120%;letter-spacing:.2em;text-transform:uppercase;color:#cfd3e6;transition:opacity .4s}
+.cidade-role i{width:22px;height:34px;border:1.5px solid currentColor;border-radius:12px;position:relative}
+.cidade-role i::after{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:currentColor;animation:role 1.6s infinite}
+@keyframes role{0%{opacity:0;translate:0 -3px}40%{opacity:1}100%{opacity:0;translate:0 9px}}
+.cidade.andou .cidade-role{opacity:0}
+.embed .cidade{height:auto}
+.embed .cidade-palco{position:relative;height:100vh}
+
+/* ============ olhos da fita piscam ============ */
+.fita-vermelha .olhos{animation:pisca 5.2s infinite;transform-origin:50% 70%}
+.fita-vermelha .olhos:nth-child(3n){animation-delay:-1.7s}
+.fita-vermelha .olhos:nth-child(3n+1){animation-delay:-3.4s}
+.fita-vermelha .olhos:nth-child(5n){animation-delay:-.6s}
+@keyframes pisca{0%,88%,100%{scale:1 1}91%{scale:1 .08}94%{scale:1 1}}
+
+/* ============ modo Aranhaverso ============ */
+.btn-verso svg circle{fill:none;stroke-width:2}
+.btn-verso[aria-pressed="true"]{background:#fff;border-color:#fff}
+.verso-pontos{position:fixed;inset:0;z-index:43;pointer-events:none;opacity:0;transition:opacity .5s;background-image:radial-gradient(circle,rgba(255,255,255,.2) 1px,transparent 1.6px);background-size:6px 6px;mix-blend-mode:difference}
+.verso .verso-pontos{opacity:1}
+.verso .titulo .l,.verso .criado .l,.verso .final-titulo .l,.verso .atores-titulo,.verso .editora-nome,.verso .ficha-nome,.verso .legenda,.verso .elenco,.verso .circ strong,.verso .frase p{text-shadow:-.045em 0 rgba(255,40,100,.9),.045em 0 rgba(0,210,255,.9)}
+.verso .heroi-img:not(.glitch),.verso .final-img{filter:drop-shadow(-7px 0 rgba(255,40,100,.75)) drop-shadow(7px 0 rgba(0,210,255,.75)) drop-shadow(0 20px 40px rgba(0,0,0,.5))}
+.verso .carta,.verso .ficha,.verso .circ{box-shadow:-7px 0 0 rgba(255,40,100,.85),7px 0 0 rgba(0,210,255,.85),0 22px 50px rgba(0,0,0,.4)}
+.verso .circulo{background:radial-gradient(circle,rgba(70,0,10,.5) 1.4px,transparent 2px) 0 0/8px 8px,radial-gradient(circle at 38% 34%,var(--vermelho-vivo),var(--vermelho) 48%,#a31420 100%)}
+.verso .fita-vermelha{background:radial-gradient(circle,rgba(70,0,10,.45) 1.3px,transparent 1.8px) 0 0/7px 7px,var(--vermelho)}
+.heroi-figura .glitch{position:absolute;inset:0;opacity:0;pointer-events:none;filter:none}
+.verso .glitch-a{mix-blend-mode:screen;filter:sepia(1) saturate(8) hue-rotate(-50deg) brightness(.9);animation:glitchA 3.1s steps(1) infinite}
+.verso .glitch-b{mix-blend-mode:screen;filter:sepia(1) saturate(8) hue-rotate(150deg) brightness(.9);animation:glitchB 3.1s steps(1) infinite}
+@keyframes glitchA{0%,86%,100%{opacity:0}87%{opacity:1;clip-path:inset(12% 0 70% 0);translate:-16px 0}89%{clip-path:inset(46% 0 30% 0);translate:12px 0}91%{clip-path:inset(70% 0 8% 0);translate:-8px 0}93%{clip-path:inset(28% 0 52% 0);translate:20px 0}95%{opacity:0}}
+@keyframes glitchB{0%,86%,100%{opacity:0}88%{opacity:1;clip-path:inset(30% 0 48% 0);translate:14px 0}90%{clip-path:inset(60% 0 18% 0);translate:-18px 0}92%{clip-path:inset(8% 0 78% 0);translate:10px 0}94%{opacity:0}}
+.onoma{position:fixed;z-index:47;pointer-events:none;isolation:isolate;font-family:var(--f-titulo);font-size:clamp(30px,4vw,54px);line-height:1;color:#FFE14D;-webkit-text-stroke:1.6px var(--tinta);text-shadow:3px 3px 0 var(--tinta);letter-spacing:.02em;translate:-50% -50%;rotate:var(--r,0deg);animation:onoma .95s cubic-bezier(.2,1.6,.4,1) forwards;white-space:nowrap}
+.onoma::before{content:"";position:absolute;inset:-38% -26%;z-index:-1;background:var(--cor-onoma,var(--vermelho));clip-path:polygon(50% 0,61% 26%,92% 10%,77% 40%,100% 54%,72% 63%,85% 96%,56% 76%,40% 100%,34% 72%,4% 86%,21% 57%,0 38%,29% 33%,17% 5%,43% 22%)}
+@keyframes onoma{0%{scale:0;opacity:1}16%{scale:1.2}30%{scale:1}78%{opacity:1}100%{scale:1.06;opacity:0}}
+.portal{position:fixed;inset:0;z-index:51;pointer-events:none;display:grid;grid-template-rows:repeat(6,1fr);opacity:0}
+.portal i{display:block;background:linear-gradient(90deg,rgba(255,40,100,.95),rgba(0,210,255,.95));translate:-110% 0}
+.portal.on{opacity:1}
+.portal.on i{animation:portal .62s cubic-bezier(.7,0,.3,1) forwards}
+.portal.on i:nth-child(2n){background:linear-gradient(90deg,rgba(0,210,255,.95),rgba(255,224,77,.9));animation-delay:.04s}
+.portal.on i:nth-child(3n){animation-delay:.09s;background:#0B0B12}
+@keyframes portal{0%{translate:-110% 0}45%,55%{translate:0 0}100%{translate:110% 0}}
 
 /* ============ tablet ============ */
 @media (max-width:1023px){
@@ -295,6 +375,11 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   .heroi{--d:min(84vw,56svh)}
   .circulo{width:var(--d);top:64%}
   .pendulo{top:calc(64% - var(--d) / 2 - 150px);width:min(6vw,34px);margin-left:calc(min(6vw,34px) / -2)}
+  .pendulo-dica{top:calc(64% - var(--d) / 2 - 128px);left:calc(50% + 26px);font-size:9px}
+  .cidade{height:460vh}
+  .cidade-hud{gap:18px;bottom:20px}
+  .cidade-hud b{font-size:24px}
+  .cidade-role{top:auto;bottom:90px}
   .heroi-centro{top:calc(64% - var(--d) / 2 - 78px)}
   .elenco{grid-template-columns:1fr 1fr;row-gap:4px;font-size:clamp(15px,3.4vw,24px);padding:0;margin-bottom:8px}
   .elenco li:nth-child(3){display:none}
@@ -375,6 +460,11 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 </svg>
 
 <canvas id="teia-tela" aria-hidden="true"></canvas>
+<canvas id="bicho-tela" aria-hidden="true"></canvas>
+<div class="picada" aria-hidden="true"></div>
+<div class="verso-pontos" aria-hidden="true"></div>
+<div class="portal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<p class="aviso" role="status" aria-live="polite"></p>
 <div class="sentido-tela" aria-hidden="true">
   <svg class="st-lado" viewBox="0 0 90 240"><g transform="translate(8 62) rotate(-28)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g><g transform="translate(8 120)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g><g transform="translate(8 178) rotate(28)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g></svg>
   <svg class="st-lado st-dir" viewBox="0 0 90 240"><g transform="translate(8 62) rotate(-28)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g><g transform="translate(8 120)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g><g transform="translate(8 178) rotate(28)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g></svg>
@@ -390,6 +480,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     <span class="nav-ponto" aria-hidden="true"></span>
   </nav>
   <div class="acoes">
+    <button class="btn-icone btn-verso" type="button" aria-pressed="false" aria-label="Ligar o modo Aranhaverso" title="Modo Aranhaverso">
+      <svg viewBox="0 0 24 24"><circle cx="9.5" cy="12" r="5.5" style="stroke:#F0323D"/><circle cx="14.5" cy="12" r="5.5" style="stroke:#3BA7FF"/></svg>
+    </button>
     <button class="btn-icone btn-som" type="button" aria-pressed="false" aria-label="Ligar o som da teia" title="Som da teia">
       <svg viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path class="onda" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="mudo" d="M17 9.5l5 5M22 9.5l-5 5"/></svg>
     </button>
@@ -401,6 +494,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   <img class="menu-teia" src="img/teia.webp" alt="" aria-hidden="true">
   <ol>
     <li><a href="#topo" tabindex="-1">Elenco</a></li>
+    <li><a href="#cidade" tabindex="-1">Balançar pela cidade</a></li>
     <li><a href="#numeros" tabindex="-1">A revista</a></li>
     <li><a href="#criadores" tabindex="-1">Criadores</a></li>
     <li><a href="#atores" tabindex="-1">Atores</a></li>
@@ -421,7 +515,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
       <p class="aparicao">1ª aparição <b>[ago. 1962]</b></p>
     </div>
     <div class="circulo" aria-hidden="true"></div>
-    <div class="pendulo" aria-hidden="true"><span class="pendulo-fio"></span><svg><use href="#aranha"/></svg></div>
+    <button class="pendulo" type="button" aria-label="Soltar a aranha radioativa"><span class="pendulo-fio"></span><svg aria-hidden="true"><use href="#aranha"/></svg></button>
+    <p class="pendulo-dica" aria-hidden="true">psiu: não clica na aranha</p>
     <div class="heroi-centro">
       <ul class="elenco" aria-label="Atores que viveram o Homem-Aranha no cinema">
         <li>Tobey Maguire</li><li>Andrew Garfield</li><li aria-hidden="true"></li><li>Tom Holland</li><li>Shameik Moore</li>
@@ -433,13 +528,15 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     <img class="fios" src="img/fios.webp" alt="" aria-hidden="true" width="360" height="640">
     <div class="heroi-figura">
       <img class="heroi-img" src="img/aranha-agachado.webp" width="654" height="1011" alt="Homem-Aranha agachado no alto de um poste, de uniforme vermelho e azul" fetchpriority="high">
+      <img class="heroi-img glitch glitch-a" width="654" height="1011" alt="" aria-hidden="true">
+      <img class="heroi-img glitch glitch-b" width="654" height="1011" alt="" aria-hidden="true">
       <svg class="sentido" viewBox="-100 -100 200 200" aria-hidden="true">
         <g transform="rotate(-170) translate(52 0)"><use href="#rabisco" width="34" height="12" y="-6"/></g>
       </svg>
     </div>
     <div class="historia">
       <p class="rotulo"><i class="bolinha"></i>A história</p>
-      <p><b>PARTE A.</b> Peter Parker, um estudante do Queens, é picado por uma aranha radioativa e ganha a força e a agilidade dela.</p>
+      <p><b>PARTE A.</b> Peter Parker, um estudante do Queens, é picado por uma <button type="button" class="aranha-link">aranha radioativa</button> e ganha a força e a agilidade dela.</p>
     </div>
     <div class="heroi-acoes">
       <p class="dica"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 2v12M2 8h12M3.8 3.8l8.4 8.4M12.2 3.8l-8.4 8.4"/></svg><span class="dica-txt">Clique em qualquer lugar: sai teia</span></p>
@@ -452,6 +549,26 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ================= BALANCE PELA CIDADE ================= -->
+<section class="cidade" id="cidade" data-tema="escuro" aria-labelledby="cidade-titulo">
+  <div class="cidade-palco">
+    <canvas class="cidade-gl" aria-hidden="true"></canvas>
+    <canvas class="cidade-2d" aria-hidden="true"></canvas>
+    <div class="cidade-legendas">
+      <h2 class="legenda" id="cidade-titulo" data-de="-1" data-ate=".15">Segura firme.<small>Role a página pra balançar pela cidade</small></h2>
+      <p class="legenda" data-de=".24" data-ate=".42" aria-hidden="true">Uma teia de cada vez.</p>
+      <p class="legenda" data-de=".52" data-ate=".72" aria-hidden="true">Lá embaixo, o trânsito.<small>Aqui em cima, só o vento.</small></p>
+      <p class="legenda" data-de=".86" data-ate="2" aria-hidden="true">Nova York inteira lá embaixo.</p>
+    </div>
+    <div class="cidade-hud" aria-hidden="true">
+      <div><small>Altura</small><b class="hud-alt">0</b> m</div>
+      <div><small>Velocidade</small><b class="hud-vel">0</b> km/h</div>
+      <div><small>Teia</small><b class="hud-teia">01</b>/08</div>
+    </div>
+    <p class="cidade-role" aria-hidden="true"><i></i>Role</p>
   </div>
 </section>
 
@@ -680,6 +797,14 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
       g.gain.exponentialRampToValueAtTime(0.7, t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
       src.connect(f); f.connect(g); g.connect(c.destination); src.start(t); src.stop(t + 0.24);
     },
+    nhac: function () {
+      if (!this.on || !this.ctx) return;
+      var c = this.ctx, t = c.currentTime;
+      var o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.setValueAtTime(190, t); o.frequency.exponentialRampToValueAtTime(42, t + .22);
+      var f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 900;
+      var g = c.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.5, t + .01); g.gain.exponentialRampToValueAtTime(0.0001, t + .28);
+      o.connect(f); f.connect(g); g.connect(c.destination); o.start(t); o.stop(t + .3);
+    },
     tic: function () {
       if (!this.on || !this.ctx) return;
       var c = this.ctx, t = c.currentTime + 0.01;
@@ -701,21 +826,23 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   var TW = 0, TH = 0;
   function dimensiona() {
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    TW = innerWidth; TH = innerHeight;
+    TW = document.documentElement.clientWidth || innerWidth; TH = innerHeight;
     tela.width = Math.round(TW * dpr); tela.height = Math.round(TH * dpr);
+    // sem o tamanho em CSS, numa tela 2x/3x o canvas aparece com o dobro do tamanho e a teia sai no lugar errado
+    tela.style.width = TW + 'px'; tela.style.height = TH + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   dimensiona();
   var fios = [], marcas = [];
-  var GRAV = 0.32;
+  var verso = false; // modo Aranhaverso
 
-  function criaMarca(x, y, cor, forma) {
+  function criaMarca(x, y, cor, forma, fixo) {
     var n = 8 + Math.floor(Math.random() * 3), R = (toque ? 30 : 34) + Math.random() * 14, raios = [];
     var giro = Math.random() * Math.PI * 2;
     for (var i = 0; i < n; i++) raios.push({ a: giro + i * Math.PI * 2 / n + (Math.random() - .5) * .35, r: R * (.78 + Math.random() * .34) });
     var gotas = [];
     for (var k = 0; k < 4; k++) { var a = Math.random() * 6.28, d = R * (1.05 + Math.random() * .35); gotas.push({ x: Math.cos(a) * d, y: Math.sin(a) * d, r: 1 + Math.random() * 1.6 }); }
-    marcas.push({ x: x, y: y, cor: cor, forma: forma, raios: raios, R: R, gotas: gotas, t0: performance.now(), vida: 4600 });
+    marcas.push({ x: x, y: y, cor: cor, forma: forma, fixo: !!fixo, raios: raios, R: forma === 'coracao' ? R * 1.25 : R, gotas: gotas, t0: performance.now(), vida: 4600 });
     if (marcas.length > 16) marcas.shift();
   }
   // origem do disparo: a mão do herói (se aparece) ou um canto de baixo da tela
@@ -725,9 +852,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     if (r.bottom > 90 && r.top < TH - 40) return { x: r.left + r.width * 0.5, y: r.top + r.height * 0.6 };
     return { x: vx < TW / 2 ? -12 : TW + 12, y: TH + 12 };
   }
-  function disparar(ox, oy, tx, ty, cor, forma) { // coordenadas da página
+  function disparar(ox, oy, tx, ty, cor, forma, fixo) { // coordenadas da página (ou da tela, se fixo)
     var d = Math.hypot(tx - ox, ty - oy);
-    fios.push({ ox: ox, oy: oy, tx: tx, ty: ty, cor: cor, forma: forma, t0: performance.now(), dur: Math.min(240, 70 + d * 0.16), pts: null, colou: 0 });
+    fios.push({ ox: ox, oy: oy, tx: tx, ty: ty, cor: cor, forma: forma, fixo: !!fixo, t0: performance.now(), dur: Math.min(240, 70 + d * 0.16), pts: null, colou: 0 });
     if (fios.length > 7) fios.shift();
     som.thwip();
     agenda(desenhaTeia);
@@ -735,64 +862,95 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   window.disparaTeia = disparar;
   function corDe(el) { var s = el && el.closest ? el.closest('[data-tema]') : null; return s && s.dataset.tema === 'claro' ? '#0B0B12' : '#ffffff'; }
 
-  function cordaDeFio(f) { // vira corda (verlet) presa no ponto de impacto
-    var N = 16, pts = [];
+  // corda (verlet) presa no ponto de impacto: mais pedaços quanto maior o fio, passo fixo de 1/60 s
+  function cordaDeFio(f) {
+    var d = Math.hypot(f.ox - f.tx, f.oy - f.ty), N = Math.max(10, Math.min(34, Math.round(d / 18))), pts = [];
     for (var i = 0; i <= N; i++) {
       var p = i / N, x = f.tx + (f.ox - f.tx) * p, y = f.ty + (f.oy - f.ty) * p;
-      pts.push({ x: x, y: y, px: x - (f.tx - f.ox) * 0.012 * p, py: y - (f.ty - f.oy) * 0.012 * p });
+      pts.push({ x: x, y: y, px: x, py: y });
     }
-    f.pts = pts; f.L0 = Math.hypot(f.ox - f.tx, f.oy - f.ty) / N; f.colou = performance.now();
+    f.pts = pts; f.L0 = Math.max(4, d / N); f.colou = performance.now(); f.ult = f.colou; f.acum = 0;
+  }
+  function passoCorda(f, agora) {
+    var vida = agora - f.colou, pts = f.pts, n = pts.length, k;
+    var L = f.L0 * (0.34 + 0.66 * Math.exp(-vida / 420)); // a seda encolhe como elástico
+    for (k = 1; k < n; k++) {
+      var q = pts[k], vx = (q.x - q.px) * 0.975, vy = (q.y - q.py) * 0.975;
+      q.px = q.x; q.py = q.y; q.x += vx; q.y += vy + 0.26;
+    }
+    for (var it = 0; it < 8; it++) {
+      pts[0].x = pts[0].px = f.tx; pts[0].y = pts[0].py = f.ty;
+      for (k = 1; k < n; k++) {
+        var a = pts[k - 1], b = pts[k], dx = b.x - a.x, dy = b.y - a.y, dist = Math.hypot(dx, dy) || 0.001, dif = (dist - L) / dist;
+        if (k === 1) { b.x -= dx * dif; b.y -= dy * dif; }
+        else { a.x += dx * dif * .5; a.y += dy * dif * .5; b.x -= dx * dif * .5; b.y -= dy * dif * .5; }
+      }
+    }
+  }
+  // traço de seda: brilho largo + fio + um 2º fio fininho que se enrola no primeiro
+  function tracaSeda(pts, sy, cor, alfa, tempo) {
+    var n = pts.length, k;
+    function caminho(off) {
+      ctx.beginPath();
+      for (k = 0; k < n; k++) {
+        var p = pts[k], q = pts[Math.min(n - 1, k + 1)], r = pts[Math.max(0, k - 1)];
+        var nx = -(q.y - r.y), ny = q.x - r.x, nl = Math.hypot(nx, ny) || 1, o = off ? Math.sin(k * 1.3 + tempo * 0.012) * off : 0;
+        var x = p.x + nx / nl * o, y = p.y + ny / nl * o - sy;
+        if (!k) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+    }
+    if (verso) { // Aranhaverso: impressão desalinhada
+      ctx.globalAlpha = alfa * .7; ctx.lineWidth = 2;
+      ctx.save(); ctx.translate(-2.5, 0); ctx.strokeStyle = 'rgb(255,40,100)'; caminho(0); ctx.stroke(); ctx.restore();
+      ctx.save(); ctx.translate(2.5, 0); ctx.strokeStyle = 'rgb(0,210,255)'; caminho(0); ctx.stroke(); ctx.restore();
+    }
+    ctx.strokeStyle = cor;
+    if (cor === '#ffffff') { ctx.globalAlpha = alfa * .13; ctx.lineWidth = 6; caminho(0); ctx.stroke(); }
+    ctx.globalAlpha = alfa; ctx.lineWidth = 1.7; caminho(0); ctx.stroke();
+    ctx.globalAlpha = alfa * .55; ctx.lineWidth = .8; caminho(1.6); ctx.stroke();
   }
   function desenhaTeia(agora) {
     var sy = window.scrollY;
     ctx.clearRect(0, 0, TW, TH);
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    // fios
     for (var i = fios.length - 1; i >= 0; i--) {
       var f = fios[i], idade = agora - f.t0;
-      ctx.strokeStyle = f.cor;
-      if (!f.pts) {
+      if (!f.pts) { // voando até o alvo
         var p = Math.min(1, idade / f.dur), e = 1 - Math.pow(1 - p, 3);
         var x = f.ox + (f.tx - f.ox) * e, y = f.oy + (f.ty - f.oy) * e;
-        var nx = -(f.ty - f.oy), ny = f.tx - f.ox, nl = Math.hypot(nx, ny) || 1, onda = Math.sin(p * 9) * 7 * (1 - p);
-        ctx.globalAlpha = .95; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(f.ox, f.oy - sy);
-        ctx.quadraticCurveTo((f.ox + x) / 2 + nx / nl * onda, (f.oy + y) / 2 + ny / nl * onda - sy, x, y - sy); ctx.stroke();
-        if (p >= 1) { cordaDeFio(f); criaMarca(f.tx, f.ty, f.cor, f.forma); som.tic(); }
+        var nx = -(f.ty - f.oy), ny = f.tx - f.ox, nl = Math.hypot(nx, ny) || 1, onda = Math.sin(p * 9) * 9 * (1 - p);
+        var voo = [];
+        for (var s = 0; s <= 12; s++) {
+          var t = s / 12, curva = Math.sin(t * Math.PI) * onda;
+          voo.push({ x: f.ox + (x - f.ox) * t + nx / nl * curva, y: f.oy + (y - f.oy) * t + ny / nl * curva });
+        }
+        var syf = f.fixo ? 0 : sy;
+        tracaSeda(voo, syf, f.cor, .96, agora);
+        ctx.globalAlpha = 1; ctx.fillStyle = f.cor; ctx.beginPath(); ctx.arc(x, y - syf, 2.6, 0, 6.29); ctx.fill();
+        if (p >= 1) { cordaDeFio(f); criaMarca(f.tx, f.ty, f.cor, f.forma, f.fixo); som.tic(); }
         continue;
       }
       var vida = agora - f.colou;
-      if (vida > 2200) { fios.splice(i, 1); continue; }
-      var L = f.L0 * (0.22 + 0.78 * Math.exp(-vida / 260)), pts = f.pts, k;
-      for (k = 1; k < pts.length; k++) {
-        var q = pts[k], vx = (q.x - q.px) * 0.985, vy = (q.y - q.py) * 0.985;
-        q.px = q.x; q.py = q.y; q.x += vx; q.y += vy + GRAV;
-      }
-      for (var it = 0; it < 5; it++) {
-        pts[0].x = f.tx; pts[0].y = f.ty;
-        for (k = 1; k < pts.length; k++) {
-          var a = pts[k - 1], b = pts[k], dx = b.x - a.x, dy = b.y - a.y, dist = Math.hypot(dx, dy) || 0.001, dif = (dist - L) / dist;
-          if (k === 1) { b.x -= dx * dif; b.y -= dy * dif; }
-          else { a.x += dx * dif * .5; a.y += dy * dif * .5; b.x -= dx * dif * .5; b.y -= dy * dif * .5; }
-        }
-      }
-      ctx.globalAlpha = Math.max(0, 1 - vida / 2200) * .9; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y - sy);
-      for (k = 1; k < pts.length - 1; k++) ctx.quadraticCurveTo(pts[k].x, pts[k].y - sy, (pts[k].x + pts[k + 1].x) / 2, (pts[k].y + pts[k + 1].y) / 2 - sy);
-      ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y - sy); ctx.stroke();
+      if (vida > 2600) { fios.splice(i, 1); continue; }
+      f.acum += Math.min(64, agora - f.ult); f.ult = agora;
+      while (f.acum >= 16.67) { f.acum -= 16.67; passoCorda(f, agora); }
+      tracaSeda(f.pts, f.fixo ? 0 : sy, f.cor, Math.min(1, (2600 - vida) / 900) * .92, agora);
     }
     // marcas (teia grudada)
     for (var m = marcas.length - 1; m >= 0; m--) {
       var mk = marcas[m], id = agora - mk.t0;
       if (id > mk.vida) { marcas.splice(m, 1); continue; }
-      var yv = mk.y - sy;
-      if (yv < -120 || yv > TH + 120) continue;
-      var s = id < 240 ? voltaAtras(id / 240) : 1;
+      var yv = mk.y - (mk.fixo ? 0 : sy);
+      if (yv < -140 || yv > TH + 140) continue;
+      var sc = id < 260 ? voltaAtras(id / 260) : 1;
       var alfa = id > mk.vida - 900 ? (mk.vida - id) / 900 : 1;
-      ctx.save(); ctx.translate(mk.x, yv); ctx.scale(s, s);
-      ctx.globalAlpha = alfa * .92; ctx.strokeStyle = mk.cor; ctx.fillStyle = mk.cor;
-      if (mk.forma === 'coracao') desenhaCoracao(mk); else desenhaRadial(mk);
-      ctx.restore();
+      var desl = verso ? [[-2.5, 'rgb(255,40,100)'], [2.5, 'rgb(0,210,255)'], [0, mk.cor]] : [[0, mk.cor]];
+      for (var dd = 0; dd < desl.length; dd++) {
+        ctx.save(); ctx.translate(mk.x + desl[dd][0], yv); ctx.rotate(mk.giro || 0); ctx.scale(sc, sc);
+        ctx.globalAlpha = alfa * (dd < desl.length - 1 ? .6 : .94); ctx.strokeStyle = desl[dd][1]; ctx.fillStyle = desl[dd][1];
+        if (mk.forma === 'coracao') desenhaCoracao(mk); else desenhaRadial(mk);
+        ctx.restore();
+      }
     }
     ctx.globalAlpha = 1;
     return fios.length || marcas.length;
@@ -803,8 +961,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     ctx.lineWidth = 1.5; ctx.beginPath();
     for (i = 0; i < n; i++) { ctx.moveTo(0, 0); ctx.lineTo(Math.cos(rs[i].a) * rs[i].r, Math.sin(rs[i].a) * rs[i].r); }
     ctx.stroke();
+    ctx.beginPath(); ctx.arc(0, 0, 2.6, 0, 6.29); ctx.fill();
     ctx.lineWidth = 1.1;
-    [.3, .58, .88].forEach(function (fr) {
+    [.22, .44, .67, .9].forEach(function (fr) {
       ctx.beginPath();
       for (var j = 0; j < n; j++) {
         var A = rs[j], B = rs[(j + 1) % n], am = (A.a + B.a + (j === n - 1 ? Math.PI * 2 : 0)) / 2;
@@ -834,11 +993,52 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     if (e.button !== 0 && e.pointerType !== 'touch') return;
     var alvo = e.target;
     if (alvo.closest('a, button, input, textarea, select, label, .carta, .menu, [contenteditable]')) return;
-    var sy = window.scrollY, o = origem(e.clientX);
+    var o = origem(e.clientX);
     var forma = alvo.closest('.final') ? 'coracao' : 'radial';
-    disparar(o.x, o.y + sy, e.clientX, e.clientY + sy, corDe(alvo), forma);
+    // dentro da cidade o palco fica parado na tela: a teia gruda na tela, não na página
+    var fixo = !!alvo.closest('.cidade'), sy = fixo ? 0 : window.scrollY;
+    disparar(o.x, o.y + sy, e.clientX, e.clientY + sy, corDe(alvo), forma, fixo);
+    onomatopeia(e.clientX, e.clientY - 46, forma === 'coracao' ? 'S2!' : null, forma === 'coracao' ? '#F0323D' : null);
     if (navigator.vibrate && toque) try { navigator.vibrate(12); } catch (er) {}
   });
+  window.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') toqueAlvo = { x: e.clientX, y: e.clientY }; }, { passive: true });
+
+  /* ================= AVISO ================= */
+  var avisoEl = $('.aviso'), avisoT = 0;
+  function aviso(html, ms) {
+    avisoEl.innerHTML = html; avisoEl.classList.add('on');
+    clearTimeout(avisoT); avisoT = setTimeout(function () { avisoEl.classList.remove('on'); }, ms || 3800);
+  }
+
+  /* ================= ONOMATOPEIA (só no Aranhaverso) ================= */
+  var PALAVRAS = ['THWIP!', 'THWIP!', 'SPLAT!', 'TCHAC!', 'FLUP!'];
+  function onomatopeia(x, y, txt, cor) {
+    if (!verso) return;
+    var s = document.createElement('span');
+    s.className = 'onoma'; s.setAttribute('aria-hidden', 'true');
+    s.textContent = txt || PALAVRAS[Math.floor(Math.random() * PALAVRAS.length)];
+    s.style.left = Math.max(70, Math.min(TW - 70, x)) + 'px';
+    s.style.top = Math.max(60, Math.min(TH - 50, y)) + 'px';
+    s.style.setProperty('--r', ((Math.random() - .5) * 26).toFixed(1) + 'deg');
+    if (cor) s.style.setProperty('--cor-onoma', cor);
+    document.body.appendChild(s);
+    setTimeout(function () { s.remove(); }, 1000);
+  }
+
+  /* ================= MODO ARANHAVERSO ================= */
+  var btnVerso = $('.btn-verso'), portal = $('.portal');
+  function ligaVerso(on, calado) {
+    verso = on;
+    // as cópias do glitch usam a mesma foto do herói (só carrega quando precisa)
+    if (on) $$('.glitch').forEach(function (g) { if (!g.getAttribute('src')) g.src = heroiImg.currentSrc || heroiImg.src; });
+    raiz.classList.toggle('verso', on);
+    btnVerso.setAttribute('aria-pressed', String(on));
+    btnVerso.setAttribute('aria-label', on ? 'Desligar o modo Aranhaverso' : 'Ligar o modo Aranhaverso');
+    if (on && !reduz) { portal.classList.remove('on'); void portal.offsetWidth; portal.classList.add('on'); setTimeout(function () { portal.classList.remove('on'); }, 800); }
+    if (!calado) aviso(on ? '<b>Aranhaverso ligado</b>Tudo vira gibi: impressão desalinhada, retícula e cada teia com barulho. O botão dos dois círculos desliga.' : '<b>De volta pra Terra-616</b>Aranhaverso desligado.', 3600);
+    agenda(desenhaTeia);
+  }
+  btnVerso.addEventListener('click', function () { ligaVerso(!verso); });
 
   /* ================= SENTIDO ARANHA ================= */
   // rabiscos em volta da cabeça (gerados aqui pra não repetir no HTML)
@@ -975,6 +1175,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   function jogaPraTras(c, dx, dy) {
     c.voa = true; c.alvo = { x: dx, y: dy, r: dx * 0.06 };
     fioCarta = c; pilhaFio.classList.add('on'); som.thwip();
+    if (verso) { var rp = pilha.getBoundingClientRect(); onomatopeia(rp.left + rp.width / 2 + dx * .6, rp.top + 40, 'FWOOSH!', '#2350D8'); }
     agenda(moveCartas);
     setTimeout(function () {
       ordem.splice(ordem.indexOf(c.i), 1); ordem.unshift(c.i);
@@ -1050,6 +1251,453 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   $('.ator-ant').addEventListener('click', function (e) { mostraAtor(atual - 1, e.currentTarget); });
   $('.ator-prox').addEventListener('click', function (e) { mostraAtor(atual + 1, e.currentTarget); });
   $('.ficha-botao').addEventListener('click', function () { mostraAtor(atual + 1, $$('.numeracao button')[(atual + 1) % 4]); });
+
+  /* ================= ARANHA RADIOATIVA: anda atrás do cursor e pica ================= */
+  var bichoCv = $('#bicho-tela'), bc = bichoCv.getContext('2d'), BW = 0, BH = 0;
+  function tamBicho() {
+    var d = Math.min(window.devicePixelRatio || 1, 2);
+    BW = document.documentElement.clientWidth || innerWidth; BH = innerHeight;
+    bichoCv.width = Math.round(BW * d); bichoCv.height = Math.round(BH * d);
+    bichoCv.style.width = BW + 'px'; bichoCv.style.height = BH + 'px';
+    bc.setTransform(d, 0, 0, d, 0, 0);
+  }
+  tamBicho(); window.addEventListener('resize', tamBicho);
+  var ESC = toque ? 1.55 : 1.5, aranha = null, picado = false, toqueAlvo = null;
+  // 4 patas de cada lado: [ângulo de descanso (0 = pra frente), alcance, onde sai do corpo]
+  var PATAS = [[0.62, 27, 4.5], [1.3, 25, 2], [1.95, 24, -0.6], [2.6, 28, -3]];
+  function noMundo(lx, ly) { var cs = Math.cos(aranha.ang), sn = Math.sin(aranha.ang); return { x: aranha.x + (lx * cs - ly * sn) * ESC, y: aranha.y + (lx * sn + ly * cs) * ESC }; }
+  function descanso(p) { return noMundo(p.hx + Math.cos(p.ang) * p.alc, p.hy + Math.sin(p.ang) * p.alc); }
+  function soltaAranha(x, y) {
+    if (aranha) return;
+    raiz.classList.add('solta-aranha'); pendulo.classList.add('solto');
+    aranha = { x: x, y: y, y0: y, ang: Math.PI / 2, v: 0, estado: 'cai', t0: performance.now(), perto: 0, patas: [], ult: 0 };
+    PATAS.forEach(function (d, k) {
+      [-1, 1].forEach(function (lado) {
+        var p = { ang: d[0] * lado, alc: d[1], hx: d[2], hy: 2.4 * lado, grupo: (k + (lado > 0 ? 1 : 0)) % 2, passo: 0, fx: 0, fy: 0, sx: 0, sy: 0, tx: 0, ty: 0 };
+        var r = descanso(p); p.fx = r.x; p.fy = r.y; aranha.patas.push(p);
+      });
+    });
+    bichoCv.classList.add('on'); som.thwip();
+    aviso(picado ? '<b>Ela voltou.</b>Ainda com fome.' : '<b>Ih, soltou.</b>' + (fino ? 'Ela tá indo atrás do seu cursor. Para o mouse pra ver o que acontece.' : 'Toca num lugar da tela que ela vai até lá.'), 3600);
+    agenda(viveAranha);
+  }
+  function alvoAranha() {
+    var a = aranha, t = performance.now();
+    if (a.estado === 'foge') return a.fuga;
+    if (a.estado !== 'anda') return { x: a.x, y: a.y };
+    if (fino && ptr.ultimo) return { x: ptr.x, y: ptr.y };
+    if (toqueAlvo) return toqueAlvo;
+    return { x: BW / 2 + Math.sin(t / 1300) * BW * .3, y: BH * .62 + Math.cos(t / 1700) * BH * .15 };
+  }
+  function viveAranha(t) {
+    var a = aranha; if (!a) return false;
+    var dt = a.ult ? Math.min(0.1, (t - a.ult) / 1000) : 0.016; a.ult = t;
+    if (a.estado === 'cai') { // desce no fio e quica
+      var p = Math.min(1, (t - a.t0) / 800), e = 1 - Math.pow(1 - p, 3), quica = Math.sin(p * Math.PI * 3) * (1 - p) * 12;
+      a.y = a.y0 + Math.min(170, BH * .2) * e + quica;
+      if (p >= 1) { a.estado = 'anda'; a.t0 = t; }
+    } else {
+      var al = alvoAranha(), dx = al.x - a.x, dy = al.y - a.y, d = Math.hypot(dx, dy);
+      var dif = Math.atan2(dy, dx) - a.ang; dif = Math.atan2(Math.sin(dif), Math.cos(dif));
+      // corre aos trancos, como aranha de verdade
+      var tranco = .35 + .65 * Math.abs(Math.sin(t * .0085) * .7 + Math.sin(t * .0037 + 1.3) * .5);
+      var vmax = (a.estado === 'foge' ? 560 : 230) * ESC, querV = 0;
+      if (a.estado === 'anda' || a.estado === 'foge') querV = d > 16 * ESC ? Math.min(vmax, d * 3.4) * Math.min(1, tranco) : 0;
+      if (Math.abs(dif) > 1.1) querV *= .25;
+      if (d > 8) a.ang += dif * Math.min(1, dt * 10);
+      a.v += (querV - a.v) * Math.min(1, dt * 12);
+      a.x += Math.cos(a.ang) * a.v * dt; a.y += Math.sin(a.ang) * a.v * dt;
+      if (a.estado === 'anda') {
+        if (d < 24 * ESC) { a.perto += dt; if (a.perto > (fino ? .45 : .7)) pica(); }
+        else a.perto = Math.max(0, a.perto - dt);
+      } else if (a.estado === 'foge' && (a.x < -90 || a.x > BW + 90 || a.y < -90 || a.y > BH + 90)) { somemAranha(); return false; }
+    }
+    // patas em dois grupos alternados (4 no chão sempre)
+    var anda = [false, false];
+    a.patas.forEach(function (p) { if (p.passo > 0) anda[p.grupo] = true; });
+    a.patas.forEach(function (p) {
+      var r = descanso(p), lead = a.v * .085;
+      r.x += Math.cos(a.ang) * lead; r.y += Math.sin(a.ang) * lead;
+      if (a.estado === 'cai') { p.fx = r.x; p.fy = r.y; return; }
+      if (p.passo > 0) {
+        p.passo = Math.min(1, p.passo + dt / (a.v > 300 ? .045 : .075));
+        var e2 = (1 - Math.cos(p.passo * Math.PI)) / 2;
+        p.fx = p.sx + (p.tx - p.sx) * e2; p.fy = p.sy + (p.ty - p.sy) * e2;
+        if (p.passo >= 1) p.passo = 0;
+      } else if (Math.hypot(r.x - p.fx, r.y - p.fy) > 11 * ESC && (!anda[1 - p.grupo] || Math.hypot(r.x - p.fx, r.y - p.fy) > 30 * ESC)) {
+        p.passo = .001; p.sx = p.fx; p.sy = p.fy;
+        p.tx = r.x + Math.cos(a.ang) * lead * .5; p.ty = r.y + Math.sin(a.ang) * lead * .5;
+        anda[p.grupo] = true;
+      }
+    });
+    desenhaAranha(t);
+    return true;
+  }
+  function desenhaAranha(t) {
+    var a = aranha;
+    bc.clearRect(0, 0, BW, BH);
+    if (a.estado === 'cai') { bc.strokeStyle = 'rgba(255,255,255,.85)'; bc.lineWidth = 1.2; bc.beginPath(); bc.moveTo(a.x, a.y0 - 30); bc.lineTo(a.x, a.y - 5 * ESC); bc.stroke(); }
+    var R = 54 * ESC, g = bc.createRadialGradient(a.x, a.y, 0, a.x, a.y, R);
+    var pulso = .8 + .2 * Math.sin(t * .006);
+    g.addColorStop(0, 'rgba(120,255,200,' + (.5 * pulso).toFixed(3) + ')'); g.addColorStop(.4, 'rgba(120,255,200,' + (.16 * pulso).toFixed(3) + ')'); g.addColorStop(1, 'rgba(120,255,200,0)');
+    bc.fillStyle = g; bc.beginPath(); bc.arc(a.x, a.y, R, 0, 6.29); bc.fill();
+    bc.fillStyle = 'rgba(0,0,0,.3)'; bc.beginPath(); bc.ellipse(a.x + 5, a.y + 8, 15 * ESC, 10 * ESC, a.ang, 0, 6.29); bc.fill();
+    bc.lineCap = 'round';
+    a.patas.forEach(function (p, k) {
+      var q = noMundo(p.hx, p.hy), fx = p.fx, fy = p.fy;
+      if (a.estado === 'cai') { fx += Math.sin(t * .03 + k) * 3; fy += Math.cos(t * .027 + k) * 3; }
+      var l1 = 15 * ESC, l2 = 18 * ESC, dx = fx - q.x, dy = fy - q.y, d = Math.max(1, Math.min(Math.hypot(dx, dy), l1 + l2 - .5)), base = Math.atan2(dy, dx);
+      fx = q.x + Math.cos(base) * d; fy = q.y + Math.sin(base) * d; // pata nunca estica além do alcance
+      var aa = Math.acos(Math.max(-1, Math.min(1, (l1 * l1 + d * d - l2 * l2) / (2 * l1 * d))));
+      var j1x = q.x + Math.cos(base + aa) * l1, j1y = q.y + Math.sin(base + aa) * l1, j2x = q.x + Math.cos(base - aa) * l1, j2y = q.y + Math.sin(base - aa) * l1;
+      var fora = Math.hypot(j1x - a.x, j1y - a.y) > Math.hypot(j2x - a.x, j2y - a.y); // joelho sempre pra fora do corpo
+      var jx = fora ? j1x : j2x, jy = fora ? j1y : j2y, lev = p.passo > 0 ? Math.sin(p.passo * Math.PI) * 3.5 * ESC : 0;
+      jx += (jx - q.x) / l1 * lev; jy += (jy - q.y) / l1 * lev;
+      // contorno claro primeiro (pra aparecer no fundo escuro), depois a perna escura
+      bc.strokeStyle = 'rgba(170,255,220,.55)'; bc.lineWidth = 4.4 * ESC;
+      bc.beginPath(); bc.moveTo(q.x, q.y); bc.lineTo(jx, jy); bc.lineTo(fx, fy); bc.stroke();
+      bc.strokeStyle = '#120a16'; bc.lineWidth = 2.8 * ESC; bc.beginPath(); bc.moveTo(q.x, q.y); bc.lineTo(jx, jy); bc.stroke();
+      bc.lineWidth = 1.7 * ESC; bc.beginPath(); bc.moveTo(jx, jy); bc.lineTo(fx, fy); bc.stroke();
+      bc.fillStyle = k % 2 ? '#2350D8' : '#DA1F2B'; bc.beginPath(); bc.arc(jx, jy, 1.7 * ESC, 0, 6.29); bc.fill();
+    });
+    bc.save(); bc.translate(a.x, a.y); bc.rotate(a.ang); bc.scale(ESC, ESC);
+    var resp = 1 + Math.sin(t * .012) * .04;
+    bc.fillStyle = 'rgba(170,255,220,.55)'; bc.beginPath(); bc.ellipse(-10, 0, 10.6 * resp, 8.2 * resp, 0, 0, 6.29); bc.ellipse(2, 0, 7.4, 6.4, 0, 0, 6.29); bc.fill();
+    bc.fillStyle = '#C8131F'; bc.beginPath(); bc.ellipse(-10, 0, 9 * resp, 6.8 * resp, 0, 0, 6.29); bc.fill();
+    bc.fillStyle = '#2350D8'; bc.beginPath(); bc.ellipse(-10.5, 0, 6, 2.2, 0, 0, 6.29); bc.fill();
+    bc.strokeStyle = 'rgba(0,0,0,.5)'; bc.lineWidth = .8; bc.beginPath(); bc.ellipse(-10, 0, 9 * resp, 6.8 * resp, 0, 0, 6.29); bc.stroke();
+    bc.fillStyle = '#1c1024'; bc.beginPath(); bc.ellipse(2, 0, 6, 5, 0, 0, 6.29); bc.fill();
+    var pr = a.estado === 'pica' ? 2.6 : .8;
+    bc.strokeStyle = '#1c1024'; bc.lineWidth = 1.6; bc.beginPath(); bc.moveTo(7, -1.5); bc.lineTo(10.5, -1.5 - pr); bc.moveTo(7, 1.5); bc.lineTo(10.5, 1.5 + pr); bc.stroke();
+    bc.fillStyle = '#e9fff6'; bc.beginPath(); bc.arc(6, -1.8, 1.1, 0, 6.29); bc.arc(6, 1.8, 1.1, 0, 6.29); bc.fill();
+    bc.restore();
+  }
+  function pica() {
+    var a = aranha; a.estado = 'pica'; a.v = 0;
+    a.x += Math.cos(a.ang) * 7 * ESC; a.y += Math.sin(a.ang) * 7 * ESC;
+    var fl = $('.picada'); fl.style.setProperty('--px', a.x + 'px'); fl.style.setProperty('--py', a.y + 'px');
+    fl.classList.remove('on'); void fl.offsetWidth; fl.classList.add('on');
+    if (!reduz) { raiz.classList.remove('treme'); void raiz.offsetWidth; raiz.classList.add('treme'); setTimeout(function () { raiz.classList.remove('treme'); }, 600); }
+    if (navigator.vibrate) try { navigator.vibrate([25, 50, 90]); } catch (er) {}
+    som.nhac(); ultimoSentido = 0; ultimoTela = 0; sentirTela(); sentirCabeca();
+    var px = a.x, py = a.y, primeira = !picado; picado = true;
+    setTimeout(function () {
+      if (!verso) ligaVerso(true, true);
+      onomatopeia(px, py - 36, 'NHAC!', '#2350D8');
+      aviso(primeira ? '<b>Você foi picado.</b>Poder liberado: modo Aranhaverso. Agora a página é gibi e cada teia faz barulho. O botão dos dois círculos liga e desliga.' : '<b>Picou de novo.</b>Você já tem todos os poderes.', 5600);
+    }, 380);
+    setTimeout(function () {
+      if (!aranha) return;
+      aranha.estado = 'foge';
+      aranha.fuga = { x: aranha.x < BW / 2 ? -160 : BW + 160, y: aranha.y + (Math.random() - .5) * 260 };
+    }, 750);
+  }
+  function somemAranha() {
+    aranha = null; bc.clearRect(0, 0, BW, BH); bichoCv.classList.remove('on');
+    setTimeout(function () {
+      pendulo.classList.remove('solto'); raiz.classList.remove('solta-aranha');
+      if (temGsap && !reduz) G.fromTo(pendulo, { yPercent: -300 }, { yPercent: 0, duration: 1.1, ease: 'back.out(1.2)' });
+    }, 900);
+  }
+  function soltaDoPendulo() { var r = pendulo.getBoundingClientRect(); soltaAranha(r.left + r.width / 2, r.top + r.height * .3); }
+  pendulo.addEventListener('click', soltaDoPendulo);
+  $('.aranha-link').addEventListener('click', function (e) { var r = e.currentTarget.getBoundingClientRect(); soltaAranha(r.left + r.width / 2, r.top - 20); });
+  if (toque) $('.pendulo-dica').textContent = 'não toca nela';
+
+  /* ================= BALANCE PELA CIDADE (WebGL puro, sem biblioteca) ================= */
+  (function () {
+    var sec = $('.cidade'), palco = $('.cidade-palco'), cv = $('.cidade-gl'), cv2 = $('.cidade-2d'), o2 = cv2.getContext('2d');
+    var legendas = $$('.cidade .legenda').map(function (el) { return { el: el, de: +el.dataset.de, ate: +el.dataset.ate, o: -1 }; });
+    var hudAlt = $('.hud-alt'), hudVel = $('.hud-vel'), hudTeia = $('.hud-teia');
+
+    // ---- a cidade é sempre a mesma (semente fixa) ----
+    function semente(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+    var rnd = semente(1962);
+    var AV = 16, NS = 8, LR = 62, TM = .92, AY = 112, DZ = 2 * LR * Math.sin(TM);
+    var ancoras = [], i, k;
+    for (i = 0; i < NS; i++) ancoras.push({ x: (i % 2 ? 1 : -1) * (AV + .3), y: AY, z: -60 - i * DZ, lado: i % 2 ? 1 : -1 });
+    var Z0 = 160, Z1 = -60 - NS * DZ - 900;
+    var predios = [];
+    [-1, 1].forEach(function (lado) {
+      for (var fil = 0; fil < 4; fil++) {
+        var z = Z0, x0 = AV + fil * 36;
+        while (z > Z1) {
+          var prof = 16 + rnd() * 26, larg = 18 + rnd() * 14, h = 24 + rnd() * 70;
+          if (rnd() < .16) h += 50 + rnd() * 100;
+          h *= 1 + fil * .22;
+          predios.push({ x: lado * (x0 + larg / 2), z: z - prof / 2, w: larg, d: prof, h: h, s: rnd(), fil: fil });
+          z -= prof + (rnd() < .22 ? 13 : 1.4);
+        }
+      }
+    });
+    // onde a teia gruda: um prédio alto de frente pra avenida
+    ancoras.forEach(function (a) {
+      predios = predios.filter(function (p) { return !(p.fil === 0 && Math.sign(p.x) === a.lado && Math.abs(p.z - a.z) < p.d / 2 + 13); });
+      predios.push({ x: a.lado * (AV + 12), z: a.z, w: 24, d: 26, h: AY + 18 + rnd() * 40, s: rnd(), fil: 0 });
+    });
+    for (k = 0; k < 230; k++) {
+      var ld = rnd() < .5 ? -1 : 1, w = 26 + rnd() * 40;
+      predios.push({ x: ld * (175 + rnd() * 430), z: Z0 - rnd() * (Z0 - Z1 + 300), w: w, d: 26 + rnd() * 40, h: (60 + rnd() * 230) * (rnd() < .18 ? 1.6 : 1), s: rnd(), fil: 9 });
+    }
+    for (k = 0; k < 16; k++) predios.push({ x: -230 + k * 30 + rnd() * 10, z: Z1 - 70 - rnd() * 90, w: 28, d: 30, h: 90 + rnd() * 210, s: rnd(), fil: 9 });
+
+    // ---- caminho da câmera: uma sequência de balanços (pêndulo) + o salto final ----
+    function pose(u) {
+      if (u < NS) {
+        var n = Math.min(NS - 1, Math.floor(u)), f = u - n, A = ancoras[n];
+        var th = TM * (.8 * Math.sin(Math.PI * (f - .5)) + .2 * (2 * f - 1));
+        var lean = Math.cos(th / TM * Math.PI / 2);
+        return { x: A.lado * 7 * lean, y: AY - LR * Math.cos(th), z: A.z - LR * Math.sin(th), i: n, f: f, lean: lean, lado: A.lado };
+      }
+      var e = Math.min(1, u - NS), q = 1 - e, P0 = pose(NS - 1e-4);
+      var c1 = { x: 0, y: P0.y + 95, z: P0.z - 110 }, p2 = { x: 0, y: AY + 175, z: P0.z - 270 };
+      return { x: q * q * P0.x + 2 * q * e * c1.x + e * e * p2.x, y: q * q * P0.y + 2 * q * e * c1.y + e * e * p2.y, z: q * q * P0.z + 2 * q * e * c1.z + e * e * p2.z, i: NS, f: e, lean: 0, lado: 0 };
+    }
+
+    // ---- WebGL ----
+    var gl = null, pCeu, pPred, pPts, bQuad, bPred, bIdx, nIdx, bPts, nPts, U = {};
+    try {
+      gl = cv.getContext('webgl', { antialias: !toque, alpha: false, powerPreference: 'high-performance' });
+      if (gl) iniciaGL();
+    } catch (er) { gl = null; }
+    if (!gl) sec.classList.add('sem-gl');
+
+    function prog(vs, fs) {
+      var p = gl.createProgram();
+      [[gl.VERTEX_SHADER, vs], [gl.FRAGMENT_SHADER, fs]].forEach(function (s) {
+        var sh = gl.createShader(s[0]); gl.shaderSource(sh, s[1]); gl.compileShader(sh);
+        if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh));
+        gl.attachShader(p, sh);
+      });
+      gl.linkProgram(p);
+      if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+      return p;
+    }
+    function locs(p, nomes) { var o = {}; nomes.forEach(function (n) { o[n] = n.charAt(0) === 'a' ? gl.getAttribLocation(p, n) : gl.getUniformLocation(p, n); }); return o; }
+    function iniciaGL() {
+      var PREC = '#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n';
+      pCeu = prog('attribute vec2 aQ; varying vec2 vU; void main(){ vU = aQ; gl_Position = vec4(aQ, 0.0, 1.0); }',
+        PREC + 'varying vec2 vU; uniform vec3 uR, uU, uF, uLua; uniform float uTx, uTy;' +
+        'float h(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }' +
+        'void main(){ vec3 d = normalize(uF + vU.x * uTx * uR + vU.y * uTy * uU); float y = d.y;' +
+        ' vec3 c = mix(vec3(.10,.075,.17), vec3(.016,.022,.065), smoothstep(-.02, .42, y));' +
+        ' c += vec3(.42,.14,.15) * exp(-max(y + .02, 0.0) * 13.0) * .3;' +
+        ' float m = dot(d, uLua); c += vec3(.97,.96,1.0) * smoothstep(.99935, .99965, m) + vec3(.35,.4,.7) * pow(max(m, 0.0), 80.0) * .45;' +
+        ' vec3 g = d * 230.0; vec3 id = floor(g); float s = h(id);' +
+        ' c += step(.9965, s) * smoothstep(.45, .0, length(fract(g) - .5)) * smoothstep(.05, .3, y) * (.5 + .5 * h(id + 1.0));' +
+        ' gl_FragColor = vec4(c, 1.0); }');
+      pPred = prog('attribute vec3 aP; attribute vec3 aN; attribute vec2 aE; uniform mat4 uPV; varying vec3 vP; varying vec3 vN; varying vec2 vE;' +
+        'void main(){ vP = aP; vN = aN; vE = aE; gl_Position = uPV * vec4(aP, 1.0); }',
+        PREC + 'varying vec3 vP; varying vec3 vN; varying vec2 vE; uniform vec3 uCam; uniform vec3 uNevoa; uniform float uDens; uniform float uAV;' +
+        'float h1(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }' +
+        'void main(){ vec3 col; float dist = length(vP - uCam);' +
+        ' if (vE.x < 0.0) {' +
+        '  float ax = abs(vP.x); col = vec3(.022,.025,.04);' +
+        '  if (ax < uAV) { col = vec3(.035,.038,.055);' +
+        '   col += vec3(.55,.5,.38) * step(abs(ax - 5.2), .13) * step(.5, fract(vP.z / 7.0)) * .4;' +
+        '   col += vec3(.7,.5,.12) * step(ax, .3) * .45; }' +
+        '  else if (ax < uAV + 3.5) col = vec3(.06,.058,.072);' +
+        '  float zz = mod(vP.z, 18.0) - 9.0, dx = ax - (uAV - 1.2);' +
+        '  col += vec3(1.0,.55,.22) * .3 * exp(-(dx * dx + zz * zz) / 34.0);' +
+        ' } else {' +
+        '  float s = floor(vE.x * 997.0 + .5) / 997.0; vec3 base = mix(vec3(.028,.036,.08), vec3(.055,.045,.085), s); col = base;' +
+        '  if (vN.y < .5) {' +
+        '   vec2 uv = abs(vN.x) > .5 ? vP.zy : vP.xy; vec2 cel = vec2(2.3, 3.1); vec2 id = floor(uv / cel); vec2 f = fract(uv / cel);' +
+        '   float jan = step(.2, f.x) * step(f.x, .8) * step(.25, f.y) * step(f.y, .74);' +
+        '   float acesa = step(.6, h1(id + s * 91.7));' +
+        '   vec3 cor = mix(vec3(1.0,.72,.4), vec3(.72,.85,1.0), step(.8, h1(id.yx + s * 13.3)));' +
+        '   float andar = h1(vec2(id.y, s * 7.0));' +
+        '   if (andar > .968) { cor = mix(vec3(.95,.1,.18), vec3(.15,.36,1.0), step(.984, andar)); acesa = 1.0; }' +
+        '   vec3 luz = cor * jan * acesa * (.55 + .6 * h1(id * 1.7 + s)) + vec3(.04,.05,.1) * jan * (1.0 - acesa);' +
+        '   float lod = smoothstep(160.0, 520.0, dist);' +
+        '   col += mix(luz, cor * .1, lod);' +
+        '   col *= .82 + .3 * clamp(dot(vN, normalize(vec3(-.4, .3, -.85))), 0.0, 1.0);' +
+        '   col += vec3(.4,.13,.1) * exp(-vP.y / 16.0) * .22;' +
+        '  } else { col = base * .75; }' +
+        ' }' +
+        ' float nev = 1.0 - exp(-dist * dist * uDens * uDens);' +
+        ' gl_FragColor = vec4(mix(col, uNevoa, clamp(nev, 0.0, 1.0)), 1.0); }');
+      pPts = prog('attribute vec3 aP; attribute vec4 aC; attribute float aV; uniform mat4 uPV; uniform float uT, uEsc, uZ0, uZL; varying vec3 vC; varying float vA;' +
+        'void main(){ vec3 p = aP; float vis = 1.0;' +
+        ' if (aV > 900.0) vis = step(.5, fract(uT * .7 + aP.x * .013));' +
+        ' else if (aV != 0.0) p.z = uZ0 - mod(uZ0 - (p.z + aV * uT), uZL);' +
+        ' vec4 c = uPV * vec4(p, 1.0); gl_Position = c;' +
+        ' gl_PointSize = clamp(aC.a * uEsc / max(c.w, .1), 1.0, 48.0);' +
+        ' vC = aC.rgb; vA = vis * clamp(1.15 - c.w / 1100.0, 0.0, 1.0); }',
+        PREC + 'varying vec3 vC; varying float vA; void main(){ float a = smoothstep(.5, 0.0, length(gl_PointCoord - .5)); gl_FragColor = vec4(vC * a * a * vA, 1.0); }');
+      U.ceu = locs(pCeu, ['aQ', 'uR', 'uU', 'uF', 'uLua', 'uTx', 'uTy']);
+      U.pred = locs(pPred, ['aP', 'aN', 'aE', 'uPV', 'uCam', 'uNevoa', 'uDens', 'uAV']);
+      U.pts = locs(pPts, ['aP', 'aC', 'aV', 'uPV', 'uT', 'uEsc', 'uZ0', 'uZL']);
+      bQuad = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bQuad);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+      // prédios: 5 faces por prédio (sem fundo) + o chão
+      var vtx = [], idx = [], nv = 0;
+      function face(q, n, s, h) {
+        for (var j = 0; j < 4; j++) vtx.push(q[j][0], q[j][1], q[j][2], n[0], n[1], n[2], s, h);
+        idx.push(nv, nv + 1, nv + 2, nv, nv + 2, nv + 3); nv += 4;
+      }
+      predios.forEach(function (b) {
+        var x0 = b.x - b.w / 2, x1 = b.x + b.w / 2, z0 = b.z - b.d / 2, z1 = b.z + b.d / 2, h = b.h, s = b.s;
+        face([[x0, 0, z1], [x1, 0, z1], [x1, h, z1], [x0, h, z1]], [0, 0, 1], s, h);
+        face([[x1, 0, z0], [x0, 0, z0], [x0, h, z0], [x1, h, z0]], [0, 0, -1], s, h);
+        face([[x1, 0, z1], [x1, 0, z0], [x1, h, z0], [x1, h, z1]], [1, 0, 0], s, h);
+        face([[x0, 0, z0], [x0, 0, z1], [x0, h, z1], [x0, h, z0]], [-1, 0, 0], s, h);
+        face([[x0, h, z1], [x1, h, z1], [x1, h, z0], [x0, h, z0]], [0, 1, 0], s, h);
+      });
+      face([[-1200, 0, Z0 + 300], [1200, 0, Z0 + 300], [1200, 0, Z1 - 500], [-1200, 0, Z1 - 500]], [0, 1, 0], -1, 0);
+      bPred = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bPred); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vtx), gl.STATIC_DRAW);
+      bIdx = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, bIdx); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(idx), gl.STATIC_DRAW);
+      nIdx = idx.length;
+      // luzes: postes, carros andando (faróis e lanternas) e o pisca vermelho no alto dos prédios
+      var pt = [];
+      function luz(x, y, z, r, g, b, t, v) { pt.push(x, y, z, r, g, b, t, v); }
+      for (var zz = Z0; zz > Z1; zz -= 18) { luz(-(AV - 1.2), 7.5, zz, 1, .6, .28, 3.4, 0); luz(AV - 1.2, 7.5, zz - 9, 1, .6, .28, 3.4, 0); }
+      for (var c = 0; c < 180; c++) {
+        var fx = [-7.6, -2.8, 2.8, 7.6][c % 4], vai = fx < 0, z = Z0 - rnd() * (Z0 - Z1), v = (vai ? -1 : 1) * (13 + rnd() * 11);
+        var cr = vai ? [1, .12, .1] : [1, .93, .78];
+        luz(fx - .7, .9, z, cr[0], cr[1], cr[2], 1.7, v); luz(fx + .7, .9, z, cr[0], cr[1], cr[2], 1.7, v);
+      }
+      predios.forEach(function (b) { if (b.h > 140) luz(b.x, b.h + 2.5, b.z, 1, .12, .14, 5, 999); });
+      bPts = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bPts); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pt), gl.STATIC_DRAW);
+      nPts = pt.length / 8;
+    }
+    function liga(buf, lista, passo) {
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      for (var j = 0; j < 6; j++) gl.disableVertexAttribArray(j);
+      lista.forEach(function (a) { if (a[0] < 0) return; gl.enableVertexAttribArray(a[0]); gl.vertexAttribPointer(a[0], a[1], gl.FLOAT, false, passo * 4, a[2] * 4); });
+    }
+    // ---- matrizes (coluna por coluna, como o WebGL espera) ----
+    function norm(v) { var l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; }
+    function cruz(a, b) { return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+    function pto(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+    function mult(a, b) { var o = new Float32Array(16); for (var c = 0; c < 4; c++) for (var r = 0; r < 4; r++) { var s = 0; for (var q = 0; q < 4; q++) s += a[q * 4 + r] * b[c * 4 + q]; o[c * 4 + r] = s; } return o; }
+    function proj(PV, x, y, z) {
+      var cx = PV[0] * x + PV[4] * y + PV[8] * z + PV[12], cy = PV[1] * x + PV[5] * y + PV[9] * z + PV[13], cw = PV[3] * x + PV[7] * y + PV[11] * z + PV[15];
+      if (cw < .5) return null;
+      return { x: (cx / cw * .5 + .5) * CW, y: (1 - (cy / cw * .5 + .5)) * CH, w: cw };
+    }
+
+    var CW = 1, CH = 1, vis = false, uS = 0, ultT = 0, ultP = null, velS = 0, ultI = -1, andou = false, hud = { a: -1, v: -1 };
+    function tam() {
+      CW = palco.clientWidth || innerWidth; CH = palco.clientHeight || innerHeight;
+      var d2 = Math.min(window.devicePixelRatio || 1, 2), dg = Math.min(window.devicePixelRatio || 1, toque ? 1.35 : 1.5);
+      cv2.width = Math.round(CW * d2); cv2.height = Math.round(CH * d2); o2.setTransform(d2, 0, 0, d2, 0, 0);
+      if (gl) { cv.width = Math.round(CW * dg); cv.height = Math.round(CH * dg); }
+    }
+    tam(); window.addEventListener('resize', function () { tam(); if (vis) agenda(quadro); });
+
+    function quadro(t) {
+      if (!vis) return false;
+      var r = sec.getBoundingClientRect(), tot = r.height - CH;
+      var prog0 = tot > 1 ? Math.max(0, Math.min(1, -r.top / tot)) : .32;
+      var alvoU = prog0 * (NS + 1);
+      var dt = ultT ? Math.min(.05, (t - ultT) / 1000) : .016; ultT = t;
+      uS = embed ? alvoU : uS + (alvoU - uS) * (1 - Math.exp(-dt * 6));
+      var P = pose(uS);
+      // vento: a câmera nunca fica totalmente parada
+      var vento = reduz ? 0 : 1, ex = P.x + Math.sin(t * .0011) * .5 * vento, ey = P.y + Math.cos(t * .0009) * .35 * vento, ez = P.z;
+      if (ultP) { var v = Math.hypot(P.x - ultP.x, P.y - ultP.y, P.z - ultP.z) / dt * 3.6; velS += (Math.min(160, v) - velS) * Math.min(1, dt * 4); }
+      ultP = P;
+      // pra onde olha: o caminho logo à frente, misturado com a avenida
+      var Pa = pose(Math.min(NS + 1, uS + .03)), fw = norm([Pa.x - P.x, Pa.y - P.y, Pa.z - P.z]);
+      var baixo = uS > NS ? -.18 - .32 * (uS - NS) : -.1;
+      fw = norm([fw[0] * .5, fw[1] * .45 + baixo, fw[2] * .5 - .55]);
+      var dir = norm(cruz(fw, [0, 1, 0])), cima = cruz(dir, fw);
+      var roll = reduz ? 0 : -P.lado * .2 * P.lean + Math.sin(t * .0007) * .015 * vento, cr = Math.cos(roll), sr = Math.sin(roll);
+      var up = [cima[0] * cr + dir[0] * sr, cima[1] * cr + dir[1] * sr, cima[2] * cr + dir[2] * sr];
+      var zc = [-fw[0], -fw[1], -fw[2]], xc = norm(cruz(up, zc)), yc = cruz(zc, xc), e = [ex, ey, ez];
+      var V = [xc[0], yc[0], zc[0], 0, xc[1], yc[1], zc[1], 0, xc[2], yc[2], zc[2], 0, -pto(xc, e), -pto(yc, e), -pto(zc, e), 1];
+      var asp = CW / CH, fovY = (asp < 1 ? 74 : 58) * Math.PI / 180 + Math.min(.12, velS / 900), ty = Math.tan(fovY / 2), near = .5, far = 2600;
+      var Pm = [1 / (ty * asp), 0, 0, 0, 0, 1 / ty, 0, 0, 0, 0, (far + near) / (near - far), -1, 0, 0, 2 * far * near / (near - far), 0];
+      var PV = mult(Pm, V);
+      if (gl) {
+        gl.viewport(0, 0, cv.width, cv.height);
+        gl.clearColor(.016, .022, .065, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        // céu
+        gl.disable(gl.DEPTH_TEST); gl.depthMask(false); gl.disable(gl.BLEND);
+        gl.useProgram(pCeu); liga(bQuad, [[U.ceu.aQ, 2, 0]], 2);
+        gl.uniform3fv(U.ceu.uR, xc); gl.uniform3fv(U.ceu.uU, yc); gl.uniform3fv(U.ceu.uF, fw);
+        gl.uniform3fv(U.ceu.uLua, norm([-.42, .3, -1])); gl.uniform1f(U.ceu.uTx, ty * asp); gl.uniform1f(U.ceu.uTy, ty);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        // prédios e chão
+        gl.enable(gl.DEPTH_TEST); gl.depthMask(true);
+        gl.useProgram(pPred); liga(bPred, [[U.pred.aP, 3, 0], [U.pred.aN, 3, 3], [U.pred.aE, 2, 6]], 8);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, bIdx);
+        gl.uniformMatrix4fv(U.pred.uPV, false, PV); gl.uniform3fv(U.pred.uCam, e);
+        gl.uniform3f(U.pred.uNevoa, .1, .07, .16); gl.uniform1f(U.pred.uDens, .0024); gl.uniform1f(U.pred.uAV, AV);
+        gl.drawElements(gl.TRIANGLES, nIdx, gl.UNSIGNED_SHORT, 0);
+        // luzes (somam brilho)
+        gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE); gl.depthMask(false);
+        gl.useProgram(pPts); liga(bPts, [[U.pts.aP, 3, 0], [U.pts.aC, 4, 3], [U.pts.aV, 1, 7]], 8);
+        gl.uniformMatrix4fv(U.pts.uPV, false, PV); gl.uniform1f(U.pts.uT, t / 1000);
+        gl.uniform1f(U.pts.uEsc, cv.height / (2 * ty)); gl.uniform1f(U.pts.uZ0, Z0); gl.uniform1f(U.pts.uZL, Z0 - Z1);
+        gl.drawArrays(gl.POINTS, 0, nPts);
+        gl.depthMask(true); gl.disable(gl.BLEND);
+      }
+      desenha2D(P, PV, t);
+      // legendas e painel
+      legendas.forEach(function (l) {
+        var o = Math.min(Math.max(0, Math.min(1, (prog0 - l.de) / .04)), Math.max(0, Math.min(1, (l.ate - prog0) / .04)));
+        if (Math.abs(o - l.o) > .01) { l.o = o; l.el.style.opacity = o.toFixed(3); l.el.style.transform = 'translateY(' + ((1 - o) * 26).toFixed(1) + 'px)'; }
+      });
+      var alt = Math.round(ey), vl = Math.round(velS);
+      if (alt !== hud.a) { hud.a = alt; hudAlt.textContent = alt; }
+      if (vl !== hud.v) { hud.v = vl; hudVel.textContent = vl; }
+      if (P.i !== ultI) {
+        if (P.i < NS) {
+          hudTeia.textContent = (P.i < 9 ? '0' : '') + (P.i + 1);
+          if (ultI !== -1 && P.i > ultI) { som.thwip(); onomatopeia(CW / 2 + ancoras[P.i].lado * CW * .3, CH * .72); }
+        }
+        ultI = P.i;
+      }
+      if (!andou && prog0 > .015) { andou = true; sec.classList.add('andou'); }
+      return true;
+    }
+    function desenha2D(P, PV, t) {
+      o2.clearRect(0, 0, CW, CH);
+      o2.lineCap = 'round';
+      if (P.i < NS) {
+        var A = ancoras[P.i], f = P.f, tiro = Math.min(1, f / .07), solta = f > .93 ? Math.min(1, (f - .93) / .07) : 0, c = proj(PV, A.x, A.y, A.z);
+        if (c) {
+          var mx = CW / 2 + A.lado * CW * .38, my = CH + 12, e = 1 - Math.pow(1 - tiro, 3);
+          var ex = mx + (c.x - mx) * e, ey = my + (c.y - my) * e, alfa = 1 - solta;
+          var nx = -(ey - my), ny = ex - mx, nl = Math.hypot(nx, ny) || 1, curva = (1 - tiro) * 34 + Math.sin(t * .02) * 2;
+          var qx = (mx + ex) / 2 + nx / nl * curva, qy = (my + ey) / 2 + ny / nl * curva;
+          var tracos = verso ? [[-3, 'rgb(255,40,100)', 2, .7], [3, 'rgb(0,210,255)', 2, .7]] : [];
+          tracos.push([0, '#fff', 9, .14], [0, '#fff', 2.4, 1], [1.8, '#fff', 1, .55]);
+          tracos.forEach(function (tr) {
+            o2.strokeStyle = tr[1]; o2.lineWidth = tr[2]; o2.globalAlpha = alfa * tr[3];
+            o2.beginPath(); o2.moveTo(mx + tr[0], my); o2.quadraticCurveTo(qx + tr[0], qy, ex + tr[0], ey); o2.stroke();
+          });
+          if (tiro >= 1) { // teia grudada no prédio
+            var R = Math.max(5, Math.min(34, 1500 / c.w));
+            o2.globalAlpha = alfa * .9; o2.strokeStyle = '#fff'; o2.lineWidth = 1.2; o2.beginPath();
+            for (var s = 0; s < 8; s++) { var a = s / 8 * 6.283 + .3; o2.moveTo(c.x, c.y); o2.lineTo(c.x + Math.cos(a) * R, c.y + Math.sin(a) * R); }
+            o2.stroke(); o2.beginPath(); o2.arc(c.x, c.y, R * .5, 0, 6.29); o2.stroke();
+          }
+        }
+      }
+      // linhas de velocidade na parte de baixo do balanço
+      var forca = reduz ? 0 : Math.max(0, Math.min(1, (velS - 50) / 70));
+      if (forca > 0) {
+        var R0 = Math.hypot(CW, CH) * .5; o2.strokeStyle = '#fff'; o2.lineWidth = 1.2;
+        for (var q = 0; q < 26; q++) {
+          var an = Math.random() * 6.283, r1 = R0 * (.45 + Math.random() * .3), r2 = r1 + R0 * (.12 + forca * .3);
+          o2.globalAlpha = forca * (.12 + Math.random() * .22);
+          o2.beginPath(); o2.moveTo(CW / 2 + Math.cos(an) * r1, CH / 2 + Math.sin(an) * r1); o2.lineTo(CW / 2 + Math.cos(an) * r2, CH / 2 + Math.sin(an) * r2); o2.stroke();
+        }
+      }
+      o2.globalAlpha = 1;
+    }
+    if ('IntersectionObserver' in window) {
+      // só desenha com pelo menos 1 px aparecendo (encostar na borda conta como "visível" pro observador)
+      new IntersectionObserver(function (es) { vis = es[0].isIntersecting && es[0].intersectionRect.height > 1; if (vis) { ultT = 0; agenda(quadro); } }, { threshold: [0, .001, .01] }).observe(sec);
+    } else { vis = true; agenda(quadro); }
+  })();
+
+  // título da aba quando a pessoa sai
+  var tituloAba = document.title;
+  document.addEventListener('visibilitychange', function () { document.title = document.hidden ? 'Volta, amigão da vizinhança!' : tituloAba; });
 
   /* ================= MENU ================= */
   var btnMenu = $('.btn-menu'), menu = $('#menu'), linksMenu = $$('#menu a');
