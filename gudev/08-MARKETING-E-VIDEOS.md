@@ -145,3 +145,11 @@ Ordem sugerida: 5, 1, 8, depois intercalar Google (2, 3, 6) com site (4, 7, 9).
 - 3 aberturas pra testar (pergunta seca com música cortando, "a gente fez e a gente avisa", POV do cliente com o comercial dentro do celular); miolo e final iguais. Roteiro em `gudev/videos/comercial-sem-recepcao/ROTEIRO.md`.
 - Cuidados: o perfil ruim é sempre de empresa fictícia (nunca a Andrade), dizer "avaliações respondidas" e nunca prometer mais avaliações, e pedir o ok do padrinho antes de postar.
 - Comerciais em vídeo pra clientes ficam como possível serviço futuro; hoje servem de gancho pro que a GuDev vende (Google em Dia e site).
+
+## Filme "Construindo o próximo passo" (21/11/2026, produzido)
+- 35,8 s vertical, **4K (2160×3840) + versão 1080**, em `gudev/videos/proximo-passo/` (README com roteiro, som, material e como refazer). É a versão "campanha de agência" da ideia do "Comercial sem recepção": gancho com 5,4 s do comercial da Andrade → "De que adianta atrair clientes se você não sabe recebê-los?" → ATRAÇÃO / ATENDIMENTO / CONFIANÇA / CONVERSÃO → "Cada oportunidade merece uma boa experiência." → logo na pancada final da música, "Sua empresa merece evoluir." e "GuDev. Construindo o próximo passo."
+- **Estátuas como linguagem da marca:** imagens recortadas (BiRefNet) e passadas pra tom de mármore, inclusive pele e mãos; assim estátua, mãos da Criação de Adão, cérebro e aperto de mão em retícula parecem da mesma campanha. Cada palavra-chave ganhou uma imagem e uma animação própria (ímã, grade, contorno que enche, clarão).
+- **Crescimento progressivo sem editar a música:** filtro passa-baixa que muda com o tempo (feito no espectro, em numpy): começa abafada, abre até ficar cheia, abafa de novo na pausa e abre numa subida até a pancada. Se a música tiver uma pancada final, usar ela no logo.
+- **Corte do gancho pro escuro:** congelar o quadro, tirar a cor, "fita parando" de verdade (o próprio áudio desacelerando) e barras pretas fechando até virar um fio de luz. O fio de luz volta no fim e vira o "_" do logo.
+- Tipografia que repete o logo: grotesca (Inter Display) + serifa itálica (Instrument Serif) nas palavras de emoção.
+- Pendências: ok do padrinho, trocar as imagens de terceiros se virar anúncio pago, ouvir no celular.
