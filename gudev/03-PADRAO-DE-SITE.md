@@ -137,6 +137,11 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - voo pela parede através de duas linhas na névoa até o portfólio se formar na bruma; texto de SEO em cara de teletexto ("Pág. 200").
   - técnica da recriação: câmera = `transform` num mural com `transform-origin:0 0`; interpolar a escala em log e o ponto central do mundo (não o translate), senão a câmera "escorrega". Tela da TV com `inset` em %, nunca `padding` em % (padding usa a largura do pai, não da TV).
 
+- **Checkpoint Barbearia (conceito, 21/11/2026, `sites/checkpoint/`):**
+  - abertura de console: aviso, holofote, poeira de luz em canvas e botão pulsando; acorde gerado em Web Audio;
+  - escolher o barbeiro como quem escolhe jogador;
+  - serviços em blocos com o fundo inteiro trocando de tema (SVG gerado, poeira muda de cor), "página do jogo" com o pedido pro WhatsApp e cartão fidelidade como conquistas.
+
 ## Repertório de efeitos prontos (testados, ainda não usados em cliente)
 Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS puro em canvas, sem biblioteca. Testado no celular (09/11/2026). O Davi gostou. Ponto de partida pra variar, nunca pra colar igual.
 - **Nome em partículas:** o texto se forma com ~2.000 pontinhos que voam de todo lado. O dedo empurra e o toque explode, e eles voltam pro lugar.
