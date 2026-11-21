@@ -235,3 +235,8 @@ O Davi mandou 3 vídeos de referência + um prompt de vídeo de IA (10 s, fotorr
 ## 21/11/2026: Homem-Aranha v3 (vídeos de referência no site)
 Palavras: mergulho na lente, olho da máscara, sequência de quadros, vista de fora, gameplay, Times Square, telão, cinema, tarjas, lua, vídeo no canvas.
 O Davi pediu pra usar os 3 vídeos de referência no site. `sites/homem-aranha/`: close da lente virou a transição pra cidade (rolagem entra no olho), gameplay virou a "vista de fora" no canto da cidade, cena do filme virou um telão com tarjas que abrem. Prévia continua em 1,6 MB.
+
+## 21/11/2026: Filme "Construindo o próximo passo" (campanha da GuDev, 4K)
+Palavras: vídeo publicitário, campanha, agência, cinematográfico, 4K, preto e branco, estátua, mármore, filósofo com notebook, Davi olhando pra cima, Criação de Adão, cérebro nas mãos, aperto de mão, retícula, ATRAÇÃO, ATENDIMENTO, CONFIANÇA, CONVERSÃO, "De que adianta atrair clientes se você não sabe recebê-los?", "Cada oportunidade merece uma boa experiência", "Sua empresa merece evoluir", "Construindo o próximo passo", gancho Andrade, fita parando, crescimento progressivo, passa-baixa, ivanrmusic, degraumental.
+O Davi mandou um prompt de 5 cenas (35 s), o comercial da Andrade, 2 vídeos de referência (bonecos brancos em fundo preto = linguagem; visualizador roxo = a música) e 6 imagens de estátuas/mãos. Feito por código em `gudev/videos/proximo-passo/` (HTML `seek(t)` + Playwright a 120 q/s em 4K + ffmpeg + trilha em numpy). Sem voz. Pendente: ok do padrinho, imagens de terceiros (trocar se for anúncio pago), ouvir no celular.
+

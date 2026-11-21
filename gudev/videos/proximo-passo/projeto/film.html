@@ -1,0 +1,417 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:"ISerif";src:url(assets/InstrumentSerif-Italic.ttf);font-style:italic}
+@font-face{font-family:"ISerifR";src:url(assets/InstrumentSerif-Regular.ttf)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#050505}
+#st{position:absolute;inset:0;overflow:hidden;background:#050505;color:#f2f0ec;font-family:"Inter Display",sans-serif}
+.a{position:absolute;left:0;top:0;will-change:transform,opacity}
+.full{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.sc{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none}
+img{display:block}
+.serif{font-family:"ISerif";font-style:italic;font-weight:400;letter-spacing:-.01em}
+.sans{font-family:"Inter Display";font-weight:500;letter-spacing:-.02em}
+.w{display:inline-block;will-change:transform,opacity,filter}
+.lbl{position:absolute;left:118px;font:500 34px/1.2 "Inter Display";letter-spacing:.02em;color:#8d8b87;white-space:nowrap}
+.lbl b{display:block;font:600 22px/1 "Inter Display";letter-spacing:.32em;color:#f2f0ec;margin-bottom:16px}
+.word{position:absolute;left:0;width:1080px;text-align:center;font-family:"Inter Display";font-weight:800;text-transform:uppercase;letter-spacing:-.035em;line-height:1;white-space:nowrap}
+.word .l{display:inline-block;will-change:transform,opacity,filter}
+.card{position:absolute;border:2px solid rgba(242,240,236,.85);border-radius:40px;background:#0b0b0b;box-shadow:0 40px 120px rgba(0,0,0,.8),0 0 80px rgba(255,255,255,.05)}
+.bar{position:absolute;height:18px;border-radius:9px;background:#2a2a2a}
+.bub{position:absolute;padding:24px 32px;border-radius:34px;font:500 34px/1.25 "Inter Display";letter-spacing:-.01em;white-space:nowrap}
+.bub.in{background:#1d1d1d;color:#f2f0ec;border-bottom-left-radius:10px}
+.bub.out{background:#f2f0ec;color:#0a0a0a;border-bottom-right-radius:10px}
+.chip{position:absolute;left:0;display:flex;align-items:center;gap:18px;font:500 31px/1 "Inter Display";color:#f2f0ec;white-space:nowrap}
+.chip i{display:block;width:44px;height:44px;border-radius:50%;border:2px solid #f2f0ec;position:relative}
+.chip i:after{content:"";position:absolute;left:14px;top:8px;width:10px;height:19px;border:solid #0b0b0b;border-width:0 4px 4px 0;transform:rotate(45deg)}
+.chip i.on{background:#f2f0ec}
+svg{position:absolute;left:0;top:0;overflow:visible}
+.ln{fill:none;stroke:#f2f0ec;stroke-linecap:round}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<filter id="vb" x="-5%" y="-30%" width="110%" height="160%"><feGaussianBlur id="vbs" stdDeviation="0 0"/></filter>
+</defs></svg>
+<div id="st">
+
+<!-- ===== CENA 1→2: quadro congelado do comercial que se fecha ===== -->
+<div class="sc" id="s0">
+  <img id="frz" class="a" src="assets/andrade_freeze.jpg" style="width:1080px;height:1920px;transform-origin:50% 45%">
+  <div id="shT" class="a" style="width:1080px;height:1000px;background:#050505"></div>
+  <div id="shB" class="a" style="width:1080px;height:1000px;background:#050505"></div>
+  <div id="slit" class="a" style="width:1080px;height:3px;top:958px;background:#fff;box-shadow:0 0 18px 3px rgba(255,255,255,.7)"></div>
+</div>
+
+<!-- ===== CENA 2: reflexão ===== -->
+<div class="sc" id="s2">
+  <div id="s2spot" class="full" style="background:radial-gradient(60% 40% at 62% 70%,rgba(255,255,255,.10),transparent 70%)"></div>
+  <img id="filo" class="a" src="assets/filosofo.webp" style="width:800px;transform-origin:50% 100%">
+  <div id="filoGlow" class="a" style="width:520px;height:340px;border-radius:50%;background:radial-gradient(closest-side,rgba(200,220,255,.20),transparent);"></div>
+  <div id="q" class="a" style="left:84px;top:190px;width:920px">
+    <div class="sans" style="font-size:78px;line-height:1.06;color:#bdbab4"><span class="w">De</span> <span class="w">que</span> <span class="w">adianta</span></div>
+    <div class="serif" style="font-size:132px;line-height:1.0;margin-top:4px"><span class="w">atrair</span> <span class="w">clientes</span></div>
+    <div class="sans" style="font-size:78px;line-height:1.06;color:#bdbab4;margin-top:34px"><span class="w">se</span> <span class="w">você</span> <span class="w">não</span> <span class="w">sabe</span></div>
+    <div class="serif" style="font-size:168px;line-height:1.0;margin-top:0"><span class="w">recebê-los?</span></div>
+  </div>
+</div>
+
+<!-- ===== CENA 3: a jornada (câmera desce pelo trilho) ===== -->
+<div class="sc" id="s3">
+ <div id="world" class="a" style="width:1080px;height:7680px">
+  <!-- trilho -->
+  <div class="a" style="left:63px;top:180px;width:2px;height:5900px;background:#232323"></div>
+  <div id="railF" class="a" style="left:63px;top:180px;width:2px;height:0;background:#f2f0ec;box-shadow:0 0 10px rgba(255,255,255,.6)"></div>
+  <div class="a nd" style="left:52px;top:202px"></div>
+
+  <!-- 01 ATRAÇÃO -->
+  <div id="g1" class="a" style="width:1080px;height:1920px;top:0">
+    <div class="lbl" id="l1" style="top:196px"><b>01</b><span id="l1a">O anúncio encontra o cliente.</span></div>
+    <div id="rings" class="a"></div>
+    <div id="ad" class="card" style="left:280px;top:420px;width:520px;height:640px;transform-origin:50% 50%">
+      <div style="position:absolute;left:34px;top:32px;display:flex;gap:16px;align-items:center">
+        <div style="width:54px;height:54px;border-radius:50%;border:2px solid #f2f0ec"></div>
+        <div><div class="bar" style="position:relative;width:170px;height:16px;background:#f2f0ec"></div><div style="font:500 22px 'Inter Display';color:#7c7a76;margin-top:10px;letter-spacing:.06em">Patrocinado</div></div>
+      </div>
+      <div style="position:absolute;left:34px;top:118px;width:452px;height:290px;border-radius:24px;background:linear-gradient(160deg,#1e1e1e,#101010);overflow:hidden">
+        <svg width="452" height="290" viewBox="0 0 452 290"><g class="ln" style="stroke-width:5">
+          <path d="M146 214V128h160v86M126 128l20-44h160l20 44zM126 128q20 22 40 0q20 22 40 0q20 22 40 0q20 22 40 0q20 22 40 0M206 214v-50h40v50"/></g></svg>
+      </div>
+      <div class="bar" style="left:34px;top:440px;width:380px"></div>
+      <div class="bar" style="left:34px;top:474px;width:270px"></div>
+      <div id="adBtn" style="position:absolute;left:34px;top:530px;width:452px;height:74px;border-radius:37px;background:#f2f0ec;color:#0a0a0a;font:600 30px/74px 'Inter Display';text-align:center;letter-spacing:.01em">Saiba mais</div>
+      <div id="tap" class="a" style="width:60px;height:60px;border-radius:50%;border:4px solid #fff;left:400px;top:537px"></div>
+    </div>
+    <img id="mao" class="a" src="assets/mao.webp" style="width:720px;transform-origin:5% 2%">
+    <div id="b1" class="bub in a" style="left:200px;top:1130px">Oi! Vi o seu anúncio.</div>
+    <div id="w1" class="word" style="top:1560px;font-size:168px"></div>
+  </div>
+
+  <!-- 02 ATENDIMENTO -->
+  <div id="g2" class="a" style="width:1080px;height:1920px;top:1920px">
+    <div class="lbl" style="top:196px"><b>02</b>Atendimento claro e organizado.</div>
+    <img id="cer" class="a" src="assets/cerebro.webp" style="width:760px;left:290px;top:520px;opacity:.5;transform-origin:50% 50%">
+    <div id="chat" class="card" style="left:120px;top:400px;width:840px;height:820px;background:rgba(11,11,11,.86)">
+      <div style="position:absolute;left:0;top:0;width:100%;height:104px;border-bottom:2px solid #222;display:flex;align-items:center;gap:20px;padding-left:36px">
+        <div style="width:52px;height:52px;border-radius:50%;background:#f2f0ec"></div>
+        <div><div style="font:600 30px 'Inter Display'">Sua empresa</div><div id="onl" style="font:500 22px 'Inter Display';color:#8d8b87;margin-top:6px">online</div></div>
+      </div>
+      <div id="typ" class="a" style="left:500px;top:300px;width:120px;height:64px;border-radius:32px;background:#262626"></div>
+      <div id="b2" class="bub out a" style="left:236px;top:300px">Oi! Que bom que chamou.<br>Como posso te ajudar?</div>
+      <div id="chips" class="a" style="left:48px;top:520px">
+        <div class="chip" id="c1" style="top:0"><i class="on"></i>Dúvida respondida</div>
+        <div class="chip" id="c2" style="top:84px"><i class="on"></i>Orçamento enviado</div>
+        <div class="chip" id="c3" style="top:168px"><i class="on"></i>Horário marcado</div>
+      </div>
+    </div>
+    <div id="grid2" class="a" style="left:40px;top:1544px;width:1000px;height:150px"></div>
+    <div id="w2" class="word" style="top:1560px;font-size:122px"></div>
+  </div>
+
+  <!-- 03 CONFIANÇA -->
+  <div id="g3" class="a" style="width:1080px;height:1920px;top:3840px">
+    <div class="lbl" style="top:196px"><b>03</b>A confiança cresce.</div>
+    <svg id="gauge" width="1080" height="1920">
+      <path d="M150 1000 A390 390 0 0 1 930 1000" class="ln" style="stroke:#262626;stroke-width:6"/>
+      <path id="garc" d="M150 1000 A390 390 0 0 1 930 1000" class="ln" style="stroke-width:6;filter:drop-shadow(0 0 8px rgba(255,255,255,.7))"/>
+      <g id="ticks"></g>
+      <g id="needle"><path d="M540 1000 L540 650" class="ln" style="stroke-width:4"/><circle cx="540" cy="1000" r="14" fill="#f2f0ec"/></g>
+    </svg>
+    <div class="a" style="left:110px;top:1036px;font:600 22px 'Inter Display';letter-spacing:.3em;color:#6d6b67">DÚVIDA</div>
+    <div class="a" id="gCert" style="left:800px;top:1036px;font:600 22px 'Inter Display';letter-spacing:.3em;color:#6d6b67">CERTEZA</div>
+    <img id="aperto" class="a" src="assets/aperto.webp" style="width:600px;left:240px;top:1080px;transform-origin:50% 50%">
+    <div id="w3" class="word" style="top:1560px;font-size:150px;color:transparent;-webkit-text-stroke:2.5px #f2f0ec"></div>
+    <div id="w3f" class="word" style="top:1560px;font-size:150px"></div>
+  </div>
+
+  <!-- 04 CONVERSÃO -->
+  <div id="g4" class="a" style="width:1080px;height:1920px;top:5760px">
+    <div class="lbl" style="top:196px"><b>04</b>A oportunidade vira venda.</div>
+    <div id="hL" class="a" style="width:1500px;height:481px;top:700px;overflow:hidden;clip-path:inset(0 48.6% 0 0)"><img src="assets/adao.webp" style="width:1500px"></div>
+    <div id="hR" class="a" style="width:1500px;height:481px;top:700px;overflow:hidden;clip-path:inset(0 0 0 51.4%)"><img src="assets/adao.webp" style="width:1500px"></div>
+    <div id="spark" class="a" style="width:900px;height:900px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,1),rgba(255,255,255,.35) 25%,transparent 70%)"></div>
+    <svg id="burst" width="1080" height="1920"></svg>
+    <div id="w4" class="word" style="top:1300px;font-size:156px"></div>
+    <svg id="path4" width="1080" height="1920">
+      <line x1="170" y1="1580" x2="910" y2="1580" class="ln" style="stroke:#2a2a2a;stroke-width:3"/>
+      <line id="p4l" x1="170" y1="1580" x2="170" y2="1580" class="ln" style="stroke-width:3"/>
+      <g id="p4n"></g>
+    </svg>
+    <div id="p4t" class="a" style="top:1626px;width:1080px"></div>
+  </div>
+ </div>
+ <div id="flash" class="full" style="background:#fff;opacity:0"></div>
+</div>
+
+<!-- ===== CENA 4: impacto ===== -->
+<div class="sc" id="s4">
+  <div id="beam" class="full" style="background:linear-gradient(196deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.05) 30%,transparent 55%);opacity:0"></div>
+  <img id="davi" class="a" src="assets/davi.webp" style="width:1240px;transform-origin:45% 30%">
+  <canvas id="dust" class="a" width="1080" height="1920"></canvas>
+  <div id="q4" class="a" style="left:0;top:220px;width:1080px;text-align:center">
+    <div class="sans" style="font-size:70px;line-height:1.1;color:#cfccc6"><span class="w">Cada</span> <span class="w">oportunidade</span></div>
+    <div class="sans" style="font-size:70px;line-height:1.1;color:#cfccc6;margin-top:6px"><span class="w">merece</span> <span class="w">uma</span></div>
+    <div class="serif" style="font-size:150px;line-height:1.02;margin-top:6px"><span class="w">boa</span> <span class="w">experiência.</span></div>
+  </div>
+</div>
+
+<!-- ===== CENA 5: assinatura ===== -->
+<div class="sc" id="s5">
+  <div id="halo" class="a" style="width:1400px;height:1400px;left:-160px;top:110px;border-radius:50%;background:radial-gradient(closest-side,rgba(240,97,45,.20),rgba(240,97,45,.06) 45%,transparent 75%)"></div>
+  <div id="line5" class="a" style="height:4px;top:858px;background:#fff;box-shadow:0 0 24px 4px rgba(255,255,255,.8)"></div>
+  <div id="logoW" class="a" style="width:840px;height:195px;left:120px;top:690px;transform-origin:50% 50%">
+    <img id="logo" src="assets/logo.png" style="width:840px">
+    <div id="cur" class="a" style="left:722px;top:153px;width:118px;height:30px;background:#0b0b0b"></div>
+    <div id="sweep" class="a" style="width:840px;height:195px;mix-blend-mode:screen;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);background-size:300% 100%;-webkit-mask:url(assets/logo.png) 0 0/840px auto no-repeat"></div>
+  </div>
+  <div id="q5" class="a" style="left:0;top:1010px;width:1080px;text-align:center">
+    <div style="white-space:nowrap"><span class="sans w" style="font-size:74px;margin-right:22px">Sua empresa merece</span><span class="serif w" style="font-size:104px">evoluir.</span></div>
+  </div>
+  <div id="sig" class="a" style="left:0;top:1196px;width:1080px;text-align:center;font:500 30px 'Inter Display';letter-spacing:.24em;color:#9a9893;text-transform:uppercase">GuDev. Construindo o próximo passo.</div>
+  <div id="ig" class="a" style="left:390px;top:1560px;width:300px;height:76px;border:2px solid rgba(242,240,236,.5);border-radius:38px;font:500 32px/72px 'Inter Display';text-align:center;color:#f2f0ec">@gudev.ofc</div>
+</div>
+
+<div id="vig" class="full" style="background:radial-gradient(85% 65% at 50% 50%,transparent 55%,rgba(0,0,0,.55) 100%);pointer-events:none"></div>
+<div id="fade" class="full" style="background:#000;opacity:0"></div>
+</div>
+
+<script>
+// ---------- tempo e música ----------
+const T0 = 5.40;                 // o HTML começa aqui (antes é o comercial da Andrade)
+const BAR = 1.35363, BT = BAR/4, M0 = 5.95; // compasso da música, 1º tempo dela no filme
+const B = k => M0 + k*BAR;       // B(3) = 10.011 ...
+const BOOM = 31.149;             // a pancada final da música = logo
+const END = 35.8;
+
+// ---------- utilidades ----------
+const $ = id => document.getElementById(id);
+const cl = (x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const seg = (t,a,b)=>cl((t-a)/(b-a));
+const lerp=(a,b,p)=>a+(b-a)*p;
+const eo3=p=>1-Math.pow(1-p,3), eo5=p=>1-Math.pow(1-p,5), ei3=p=>p*p*p;
+const eio=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+const eexp=p=>p>=1?1:1-Math.pow(2,-10*p);
+const spring=(p,z=.42,w=11)=>p<=0?0:1-Math.exp(-z*w*p)*Math.cos(w*Math.sqrt(1-z*z)*p);   // p em segundos
+function S(el,o){ if(typeof el=='string')el=$(el); const s=el.style;
+  if(o.x!==undefined||o.y!==undefined||o.s!==undefined||o.r!==undefined||o.sx!==undefined)
+    s.transform=`translate(${(o.x||0).toFixed(2)}px,${(o.y||0).toFixed(2)}px) rotate(${(o.r||0).toFixed(3)}deg) scale(${o.sx!==undefined?o.sx.toFixed(4)+','+o.sy.toFixed(4):(o.s===undefined?1:o.s).toFixed(4)})`;
+  if(o.o!==undefined)s.opacity=cl(o.o).toFixed(3);
+  if(o.f!==undefined)s.filter=o.f;
+}
+const show=(id,v)=>{$(id).style.display=v?'block':'none'};
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+
+// ---------- montagem de palavras ----------
+function letters(id,txt){const el=$(id);el.innerHTML=[...txt].map(c=>`<span class="l">${c===' '?'&nbsp;':c}</span>`).join('');return [...el.children]}
+const L1=letters('w1','ATRAÇÃO.'), L2=letters('w2','ATENDIMENTO.'), L3=letters('w3','CONFIANÇA.'), L3f=letters('w3f','CONFIANÇA.'), L4=letters('w4','CONVERSÃO.');
+const W2=[...document.querySelectorAll('#q .w')], W4=[...document.querySelectorAll('#q4 .w')], W5=[...document.querySelectorAll('#q5 .w')];
+
+// grade do ATENDIMENTO
+(()=>{let h='';for(let i=0;i<=12;i++)h+=`<div class="a gl" style="left:${i*1000/12}px;top:0;width:1px;height:150px;background:#3a3a3a"></div>`;
+ h+=`<div class="a gl" style="left:0;top:0;width:1000px;height:1px;background:#3a3a3a"></div><div class="a gl" style="left:0;top:149px;width:1000px;height:1px;background:#3a3a3a"></div>`;$('grid2').innerHTML=h})();
+const GL=[...document.querySelectorAll('#grid2 .gl')];
+// marcas do medidor
+(()=>{let h='';for(let i=0;i<=20;i++){const a=Math.PI+i/20*Math.PI,r1=i%5?350:335,r2=372;h+=`<line x1="${540+Math.cos(a)*r1}" y1="${1000+Math.sin(a)*r1}" x2="${540+Math.cos(a)*r2}" y2="${1000+Math.sin(a)*r2}" class="ln tk" style="stroke:#3a3a3a;stroke-width:${i%5?2:3}"/>`}$('ticks').innerHTML=h})();
+const TK=[...document.querySelectorAll('#ticks line')];
+const ARCLEN=Math.PI*390; $('garc').style.strokeDasharray=ARCLEN;
+// estouro de traços na conversão
+(()=>{let h='';for(let i=0;i<28;i++){const a=i/28*Math.PI*2+rnd(i)*.15;h+=`<line data-a="${a}" data-r="${0.6+rnd(i+9)*0.7}" class="ln bl" style="stroke-width:${2+rnd(i+3)*2}"/>`}$('burst').innerHTML=h})();
+const BL=[...document.querySelectorAll('#burst line')];
+// caminho resumido
+const P4=['ATRAÇÃO','ATENDIMENTO','CONFIANÇA','CONVERSÃO'];
+(()=>{let h='',t='';P4.forEach((p,i)=>{const x=170+i*740/3;h+=`<circle cx="${x}" cy="1580" r="13" class="pn" style="fill:#050505;stroke:#3a3a3a;stroke-width:3"/>`;t+=`<div class="a pt" style="left:${x-150}px;width:300px;text-align:center;font:600 19px 'Inter Display';letter-spacing:.26em;color:#5e5c58">${p}</div>`});
+ h+=`<path id="ck" d="M897 1580 l9 9 l17 -19" class="ln" style="stroke:#050505;stroke-width:4;opacity:0"/>`;$('p4n').innerHTML=h;$('p4t').innerHTML=t})();
+const PN=[...document.querySelectorAll('#p4n circle')], PT=[...document.querySelectorAll('#p4t .pt')];
+// anéis do anúncio
+(()=>{let h='';for(let i=0;i<9;i++)h+=`<div class="a rg" style="width:200px;height:200px;border-radius:50%;border:2px solid #f2f0ec"></div>`;$('rings').innerHTML=h})();
+const RG=[...document.querySelectorAll('#rings .rg')];
+// poeira na luz
+const DC=$('dust').getContext('2d');
+
+// ---------- palavra que aparece (blur → nítido, sobe) ----------
+function wordIn(el,t,t0,d=.45,dy=40,bl=14){const p=seg(t,t0,t0+d),e=eo3(p);S(el,{y:(1-e)*dy,o:e,f:`blur(${((1-e)*bl).toFixed(2)}px)`})}
+
+// =====================================================
+function seek(t){
+  t=+t;
+  // ---------- quadro congelado + obturador (5,40–6,10) ----------
+  show('s0', t<6.12);
+  if(t<6.12){
+    const p=seg(t,T0,5.62);
+    S('frz',{s:1+0.05*eo3(seg(t,T0,6.0)),f:`grayscale(${eo3(p)}) brightness(${lerp(1,.55,eo3(seg(t,5.45,5.85)))}) contrast(1.1)`});
+    const c=ei3(seg(t,5.50,5.82)); // barras fecham
+    S('shT',{y:-1000+c*958});S('shB',{y:1920-c*960});
+    const lw=seg(t,5.80,6.08); show('slit',t>5.79);
+    S('slit',{sx:1-eio(lw),sy:1,o:1-seg(t,6.0,6.1)});
+  }
+
+  // ---------- CENA 2: reflexão (5,95–10,2) ----------
+  const on2=t>=5.8&&t<10.35; show('s2',on2);
+  if(on2){
+    const ex=eio(seg(t,B(3)-0.32,B(3)+0.05));          // sai empurrando pra frente
+    const k=seg(t,5.95,10.0);
+    // filósofo nasce do escuro e aproxima devagar
+    const lit=eo3(seg(t,6.0,7.6));
+    S('filo',{x:330,y:1920-1090+ (1-eo3(seg(t,5.95,8)))*60 - ex*40, s:1.0+0.06*k+ex*.25,o:1-ex,
+      f:`brightness(${(0.15+0.75*lit).toFixed(3)}) contrast(1.08) blur(${(ex*10).toFixed(2)}px)`});
+    // brilho da tela do notebook
+    S('filoGlow',{x:330+10,y:1920-1090+470,o:lit*(0.6+0.4*Math.sin(t*3)*0.5)*(1-ex)});
+    S('s2spot',{o:lit*(1-ex)});
+    const tw=[5.95,5.95+BT*.5,5.95+BT, 5.95+BT*2,5.95+BT*3, B(1),B(1)+BT*.5,B(1)+BT,B(1)+BT*1.5, B(1)+BT*2.5];
+    W2.forEach((w,i)=>wordIn(w,t,tw[i]-0.06,i==9?.7:.42,i==9?60:34,i==9?22:12));
+    // "recebê-los?" acende um pouco mais na batida seguinte
+    S('q',{y:-ex*120,s:1+ex*.12,o:1-ex,f:`blur(${(ex*8).toFixed(2)}px)`});
+    $('q').style.transformOrigin='50% 30%';
+  }
+
+  // ---------- CENA 3: jornada (10,0–24,9) ----------
+  const on3=t>=B(3)-0.12&&t<B(14)+0.02; show('s3',on3);
+  if(on3){
+    // câmera: 3 descidas, cada uma termina na batida
+    const mv=[[B(6)-0.52,B(6)],[B(9)-0.52,B(9)],[B(11)-0.52,B(11)]];
+    let cy=0,vel=0;mv.forEach(([a,b])=>{const p=seg(t,a,b);cy+=eio(p)*1920;const dp=(eio(cl(p+.02))-eio(cl(p-.02)))/.04;vel+= (p>0&&p<1)?dp:0});
+    const ent=eo5(seg(t,B(3)-0.12,B(3)+0.5));
+    $('vbs').setAttribute('stdDeviation',`0 ${(vel*9).toFixed(2)}`);
+    $('world').style.filter=vel>0.05?'url(#vb)':'none';
+    S('world',{y:-cy});
+    ['g1','g2','g3','g4'].forEach((g,k)=>{$(g).style.display=Math.abs(cy-k*1920)<1920?'block':'none'});
+    $('railF').style.height=(Math.max(0,cy+ (t>B(3)?60*eo3(seg(t,B(3),B(4))):0)))+'px';
+
+    // 01 — anúncio
+    const pa=spring(t-(B(3)-0.1),.5,9);
+    S('ad',{s:lerp(.55,1,pa),o:cl(seg(t,B(3)-0.12,B(3)+.2)),f:`blur(${((1-ent)*18).toFixed(2)}px)`});
+    $('ad').style.transform+=` perspective(1600px) rotateX(${((1-ent)*18+Math.sin(t*1.1)*2).toFixed(2)}deg) rotateY(${(Math.cos(t*.9)*3).toFixed(2)}deg)`;
+    // anéis de sinal na batida
+    RG.forEach((r,i)=>{const t0=B(3)+0.2+i*BT*2;const p=seg(t,t0,t0+1.5);
+      S(r,{x:540-100,y:740-100,s:1+eo3(p)*5.2,o:(p>0&&p<1)?(1-p)*.55:0});});
+    // a mão chega
+    const ph=spring(t-(B(3)+BT*2),.55,7);
+    const tipX=700, tipY=990; // ponta do dedo no botão "Saiba mais"
+    const press=Math.max(0,Math.sin(seg(t,B(5)-0.08,B(5)+0.16)*Math.PI));
+    S('mao',{x:tipX-36+(1-ph)*520+press*-6,y:tipY-17+(1-ph)*640+press*10,r:(1-ph)*12,o:cl(seg(t,B(3)+BT*2,B(3)+BT*2+.25)),f:`brightness(.92) contrast(1.05) drop-shadow(0 30px 60px rgba(0,0,0,.8))`});
+    // toque no botão
+    const pt=seg(t,B(5),B(5)+.5);
+    S('tap',{s:.3+eo3(pt)*2.4,o:(pt>0&&pt<1)?1-pt:0});
+    S('adBtn',{s:1-press*.05});
+    // palavra ATRAÇÃO: letras puxadas como ímã
+    L1.forEach((l,i)=>{const st=B(4)-0.5+i*0.035;const p=spring(t-st,.62,8.5);const a=rnd(i+1)*6.28,R=380+rnd(i+7)*420;
+      S(l,{x:Math.cos(a)*R*(1-p),y:Math.sin(a)*R*(1-p),r:(1-p)*(rnd(i+3)*80-40),s:.6+.4*p,o:cl((t-st)/.18),f:`blur(${(Math.max(0,1-p)*10).toFixed(2)}px)`})});
+    // contato: balão sai do anúncio
+    const pb=spring(t-(B(5)+0.1),.55,10);
+    const gone=eio(seg(t,B(6)-0.52,B(6)));
+    S('b1',{x:(1-pb)*200,y:(1-pb)*-160+gone*0,s:.4+.6*pb,o:cl((t-B(5)-0.1)/.15)*(1-seg(t,B(6)-0.6,B(6)-0.45))});
+    $('b1').style.transformOrigin='70% 0';
+    $('l1a').textContent=t<B(5)?'O anúncio encontra o cliente.':'Ele se interessa e chama.';
+    S('l1a',{o:t<B(5)?1:eo3(seg(t,B(5),B(5)+.3))});
+
+    // 02 — atendimento
+    const tC=B(6);
+    S('cer',{y:Math.sin(t*1.3)*10-20*seg(t,tC-0.5,B(9)),s:1.02,o:.45*cl(seg(t,tC-0.4,tC+.4)),f:`brightness(.85)`});
+    // a mensagem do cliente chega primeiro (balão desce junto com a câmera)
+    const ib=$('b2').previousElementSibling; // typ
+    const inB=document.getElementById('b2in')||(()=>{const d=document.createElement('div');d.id='b2in';d.className='bub in a';d.style.left='48px';d.style.top='150px';d.textContent='Oi! Vi o seu anúncio.';$('chat').appendChild(d);return d})();
+    const pin=spring(t-(tC-0.25),.6,10);
+    S(inB,{y:(1-pin)*-260,o:cl(seg(t,tC-0.4,tC-0.2))});
+    // digitando...
+    const ty=t>tC+0.12&&t<tC+BT*2+0.05;
+    S('typ',{s:ty?1:0.001,o:ty?1:0});
+    $('typ').innerHTML=[0,1,2].map(i=>`<div style="position:absolute;left:${26+i*26}px;top:24px;width:16px;height:16px;border-radius:50%;background:#bbb;opacity:${.35+.65*Math.max(0,Math.sin(t*12-i*1.1))}"></div>`).join('');
+    const pr=spring(t-(tC+BT*2),.6,11);
+    S('b2',{y:(1-pr)*40,s:.85+.15*pr,o:cl(seg(t,tC+BT*2,tC+BT*2+.12))});$('b2').style.transformOrigin='100% 100%';
+    ['c1','c2','c3'].forEach((c,i)=>{const t0=B(7)+BT*2+i*BT*2;const p=spring(t-t0,.6,12);S(c,{x:(1-p)*-30,o:cl(seg(t,t0,t0+.15))})});
+    // palavra ATENDIMENTO: letras encaixam na grade
+    GL.forEach((g,i)=>{const p=seg(t,B(7)-0.55+i*0.015,B(7)-0.25+i*0.015);const out=seg(t,B(7)+0.35,B(7)+0.9);S(g,{o:(p*(1-out))*.9})});
+    L2.forEach((l,i)=>{const st=B(7)-0.32+i*0.03;const p=eo5(seg(t,st,st+.32));const dir=i%2?1:-1;
+      S(l,{y:dir*(1-p)*150,o:p});});
+    $('w2').style.clipPath='inset(0 0 -10px 0)';
+
+    // 03 — confiança
+    const tF=B(9);
+    const ps=spring(t-(tF-0.05),.45,13);
+    S('aperto',{s:lerp(1.5,1,ps),r:lerp(-10,-2,ps),o:cl(seg(t,tF-0.1,tF+.05)),f:`contrast(1.1) brightness(1.05) drop-shadow(0 30px 50px rgba(0,0,0,.9))`});
+    const pg=eio(seg(t,tF+0.15,B(10)+0.05));
+    const g=pg+Math.sin(seg(t,B(10),B(10)+.6)*Math.PI)*.025*(1-seg(t,B(10)+.3,B(10)+.6));
+    $('needle').setAttribute('transform',`rotate(${-90+180*g} 540 1000)`);
+    $('garc').style.strokeDashoffset=ARCLEN*(1-pg);
+    TK.forEach((k,i)=>{k.style.stroke=i/20<=pg+0.001?'#f2f0ec':'#3a3a3a'});
+    $('gCert').style.color=pg>.98?'#f2f0ec':'#6d6b67';
+    // palavra CONFIANÇA: contorno se desenha e depois enche
+    const pw=seg(t,B(10)-0.9,B(10)-0.1);
+    $('w3').style.clipPath=`inset(0 ${(100-eio(pw)*100).toFixed(2)}% 0 0)`;
+    const pf=seg(t,B(10)-0.04,B(10)+0.22);
+    L3f.forEach((l,i)=>{S(l,{o:eo3(cl(pf*1.6-i*0.06))})});
+    S('w3f',{f:`drop-shadow(0 0 ${(30*(1-seg(t,B(10),B(10)+.8))).toFixed(1)}px rgba(255,255,255,.8))`});
+
+    // 04 — conversão
+    const tV=B(11), tK=B(13);
+    const ap=eo3(seg(t,tV-0.3,tK-0.25));
+    const close=eio(seg(t,tK-0.25,tK));
+    const gap=lerp(330,30,ap)-30*close;
+    S('hL',{x:-210-gap,y:Math.sin(t*1.2)*6,f:'brightness(.95)'});
+    S('hR',{x:-210+gap,y:-Math.sin(t*1.2)*6,f:'brightness(.95)'});
+    const sp=seg(t,tK,tK+.9);
+    S('spark',{x:540-450,y:700+190-450,s:.2+eo3(sp)*1.6,o:(t>=tK)?(1-eo3(sp)):(close*.25)});
+    BL.forEach(l=>{const a=+l.dataset.a,r=+l.dataset.r;const p=seg(t,tK,tK+.6);const r1=60+eo3(p)*700*r,r2=60+eo3(cl(p*1.35))*900*r;
+      l.setAttribute('x1',540+Math.cos(a)*r1);l.setAttribute('y1',890+Math.sin(a)*r1);l.setAttribute('x2',540+Math.cos(a)*r2);l.setAttribute('y2',890+Math.sin(a)*r2);l.style.opacity=(p>0&&p<1)?(1-p):0});
+    $('flash').style.opacity=(t>=tK)?(.85*(1-eo3(seg(t,tK,tK+.35)))):0;
+    // palavra CONVERSÃO: bate com luz
+    const pv=spring(t-tK,.5,12);
+    L4.forEach((l,i)=>{const d=(i-4.5);S(l,{x:d*(1-pv)*40,s:lerp(1.25,1,pv),o:t>=tK?1:0,f:`blur(${(Math.max(0,1-pv)*8).toFixed(2)}px)`})});
+    S('w4',{f:`drop-shadow(0 0 ${(40*(1-seg(t,tK,tK+1))).toFixed(1)}px rgba(255,255,255,.9))`});
+    // caminho: os 4 pontos acendem
+    const pl=seg(t,tK+BT*1,tK+BT*3.4);
+    $('p4l').setAttribute('x2',170+740*eio(pl));
+    PN.forEach((n,i)=>{const lit=pl>=i/3-0.001&&t>tK+BT*1;n.style.fill=lit?'#f2f0ec':'#050505';n.style.stroke=lit?'#f2f0ec':'#3a3a3a';PT[i].style.color=lit?'#f2f0ec':'#5e5c58';});
+    PN[3].setAttribute('r',13+ (pl>=1?9*spring(t-(tK+BT*3.4),.5,12):0));
+    $('ck').style.opacity=pl>=1?1:0;
+    S('p4t',{o:cl(seg(t,tK+BT*.5,tK+BT*1.5))});
+    // corte seco pro escuro no fim
+    $('st').style.background='#050505';
+  }
+
+  // ---------- CENA 4: impacto (24,9–30,4) ----------
+  const on4=t>=B(14)&&t<30.75; show('s4',on4);
+  if(on4){
+    const t4=B(14);
+    const lit=eo3(seg(t,t4+0.35,t4+2.4));
+    const out=eio(seg(t,29.9,30.55));
+    const k=seg(t,t4,30.5);
+    S('davi',{x:-40,y:620-k*40,s:1+0.07*k+out*.08,f:`brightness(${(0.06+0.86*lit+out*0.6).toFixed(3)}) contrast(1.12) blur(${(out*6).toFixed(2)}px)`,o:1-out*.9});
+    $('davi').style.webkitMaskImage=`radial-gradient(${(55+40*lit).toFixed(1)}% ${(45+35*lit).toFixed(1)}% at ${(40+10*lit).toFixed(1)}% ${(18+12*lit).toFixed(1)}%,#000 40%,transparent 100%)`;
+    S('beam',{o:lit*(0.9+0.1*Math.sin(t*2))*(1-out)+out*.8});
+    // poeira
+    DC.clearRect(0,0,1080,1920);
+    for(let i=0;i<70;i++){const x=(rnd(i)*1180-50+ (t-t4)*(8+rnd(i+1)*14))%1080;const y=(rnd(i+2)*1920-(t-t4)*(10+rnd(i+3)*20)+1920)%1920;
+      const inBeam=Math.max(0,1-Math.abs((x-540)-(y-700)*-0.3)/520);const a=lit*inBeam*(.25+.6*rnd(i+4))*(0.6+0.4*Math.sin(t*2+i))*(1-out);
+      if(a>0.01){DC.fillStyle=`rgba(255,255,255,${a.toFixed(3)})`;DC.beginPath();DC.arc(x,y,1+rnd(i+5)*2.2,0,7);DC.fill()}}
+    const tw=[t4+0.9,t4+1.25, t4+1.85,t4+2.1, t4+2.65,t4+2.95];
+    W4.forEach((w,i)=>{const p=seg(t,tw[i],tw[i]+(i>=4?1.1:.8)),e=eo3(p);S(w,{y:(1-e)*(i>=4?26:18),o:e*(1-out),f:`blur(${((1-e)*(i>=4?16:10)).toFixed(2)}px)`});});
+    S('q4',{y:-k*16});
+  }
+
+  // ---------- CENA 5: assinatura (30,3–35,8) ----------
+  const on5=t>=30.2; show('s5',on5);
+  if(on5){
+    // linha de luz cresce no centro e vira o "_" do logo na pancada
+    const pl=eo3(seg(t,30.3,BOOM-0.12));
+    const toCur=eio(seg(t,BOOM-0.12,BOOM));
+    const w0=1080*pl*(1-toCur)+118*toCur, x0=lerp(540-w0/2,120+722,toCur);
+    const lw=t<BOOM?w0:118;
+    S('line5',{x:t<BOOM?x0:842,y:t<BOOM?0:(853-858+0),o:t<BOOM?pl:0});$('line5').style.width=lw+'px';
+    $('line5').style.height=lerp(4,30,toCur)+'px';
+    $('line5').style.background=toCur>0.5?'#F0612D':'#fff';
+    const pb=spring(t-BOOM,.55,9);
+    S('logoW',{s:t>=BOOM?lerp(1.12,1,pb):1,o:t>=BOOM?1:0,f:`blur(${(t>=BOOM?Math.max(0,(1-pb))*6:0).toFixed(2)}px) drop-shadow(0 0 ${(t>=BOOM?50*(1-seg(t,BOOM,BOOM+1.2)):0).toFixed(1)}px rgba(255,140,90,.7))`});
+    // cursor "_" pisca depois de entrar
+    const blink=t>BOOM+1.6 && (Math.floor((t-BOOM-1.6)/0.53)%2==1);
+    $('cur').style.opacity=blink?1:0;
+    $('sweep').style.backgroundPosition=`${lerp(120,-120,eio(seg(t,BOOM+0.05,BOOM+0.9)))}% 0`;
+    $('sweep').style.opacity=t>BOOM&&t<BOOM+1?1:0;
+    S('halo',{s:.9+.1*eo3(seg(t,BOOM,BOOM+2)),o:t>=BOOM?eo3(seg(t,BOOM,BOOM+1.5)):0});
+    const fl=$('flash');
+    W5.forEach((w,i)=>wordIn(w,t,BOOM+1.0+i*0.32,.7,30,14));
+    wordIn($('sig'),t,BOOM+2.3,.8,18,8);
+    wordIn($('ig'),t,BOOM+3.0,.6,18,6);
+    $('fade').style.opacity=seg(t,END-0.45,END);
+  } else $('fade').style.opacity=0;
+}
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.decode().catch(()=>{})))).then(()=>{seek(T0);return true});
+</script></body></html>
