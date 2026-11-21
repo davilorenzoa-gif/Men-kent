@@ -4,7 +4,8 @@ Gera a prévia "num arquivo só" de um site da GuDev, pra abrir no celular
 (visualizador de arquivo do app, WhatsApp, e-mail) sem depender de nada de fora.
 
 O que faz:
-  1. Embute as imagens locais (img/..., favicon.png, apple-touch-icon.png) como data URI.
+  1. Embute as imagens locais (img/..., favicon.png, apple-touch-icon.png) e as fontes
+     do CSS (url(fonts/...woff2)) como data URI. Tira o <link rel="preload" as="image">.
   2. Embute as bibliotecas de CDN (<script src="https://..." integrity="...">):
      baixa do próprio CDN; se o CDN estiver bloqueado, baixa o pacote do npm.
      Confere o hash SRI antes de embutir. Hash diferente = para com erro.
@@ -90,9 +91,11 @@ def main():
         dado = base64.b64encode(open(local, "rb").read()).decode()
         return f'{m.group(1)}data:{tipo};base64,{dado}{m.group(3)}'
 
+    # preload de imagem viraria uma 2ª cópia da foto dentro do arquivo: sai
+    html = re.sub(r'<link rel="preload" as="image" href="[^"]+">\n?', '', html)
     html = re.sub(r'((?:src|href)=")((?:img/)[^"]+|favicon\.png|apple-touch-icon\.png)(")', troca_img, html)
-    # imagens chamadas pelo CSS: url(img/...)
-    html = re.sub(r'(url\(["\']?)(img/[^"\')]+)(["\']?\))', troca_img, html)
+    # imagens e fontes chamadas pelo CSS: url(img/...) e url(fonts/...woff2)
+    html = re.sub(r'(url\(["\']?)((?:img|fonts)/[^"\')]+)(["\']?\))', troca_img, html)
 
     # 2. bibliotecas de CDN
     cache = {}
