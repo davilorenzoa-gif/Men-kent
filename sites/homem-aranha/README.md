@@ -7,6 +7,7 @@ Pedido do Davi: um vídeo de referência (site "Cine Daily" do Deadpool III, rol
 ## Arquivos
 - `index.html`: o site (CSS e JS dentro). GSAP 3.13 + ScrollTrigger + Lenis por CDN com SRI.
 - `homem-aranha-arquivo-unico.html`: prévia num arquivo só (1,45 MB) com fotos, fontes e bibliotecas dentro. Abre sem internet. Gerada por `python3 gudev/ferramentas/previa_embutida.py sites/homem-aranha sites/homem-aranha/homem-aranha-arquivo-unico.html`.
+- `img/cidade.webp`: imagem reserva da cidade 3D (print do próprio WebGL), aparece se o WebGL não abrir.
 - `img/`: recortes (`aranha-agachado.webp`, `aranha-coracao.webp`, ISNet + limpeza de máscara), `teia.webp`, `teia-cantos.webp` e `fios.webp` (fundo preto/verde virou transparência), `aranha.svg` (o símbolo do fundo verde vetorizado com potrace, 14 KB), 4 fotos das cartas.
 - `fonts/`: Bebas Neue (títulos, como no vídeo) e Archivo variável (textos), só latin.
 
@@ -22,7 +23,14 @@ Pedido do Davi: um vídeo de referência (site "Cine Daily" do Deadpool III, rol
 | Colunas 01–04, card de ingresso, ilustrações cortadas na diagonal | Colunas = os 4 atores; ficha que vira (estreia, direção, filmes); fotos na diagonal |
 | Final "In theaters" com o coração | "Seu amigão da vizinhança", o Aranha sobe fazendo coração |
 
-## Efeitos inusitados
+## Versão 2 (21/11/2026, pedido do Davi: "as teias estão bugadas, quero mais efeitos, algo que me surpreenda")
+- **Bug da teia corrigido:** no celular (tela 2x/3x) o canvas da teia aparecia com o dobro do tamanho, então a teia saía longe do dedo e gigante. Agora o canvas tem tamanho em CSS. A corda também ficou mais estável (mais pedaços em fio longo, passo fixo de 1/60 s, encolhe como elástico) e o fio tem brilho + um 2º fio enrolado.
+- **Balançar pela cidade (seção nova entre o topo e a revista):** Nova York à noite em 3D, **WebGL puro sem biblioteca** (~730 prédios gerados com semente fixa, janelas acesas no shader, andares de neon vermelho e azul, postes, carros andando, pisca vermelho no alto dos prédios, lua e estrelas). A rolagem te leva em 8 balanços de teia (pêndulo de verdade: rápido embaixo, devagar nas pontas), com a teia saindo da sua mão no canto da tela e grudando no prédio, linhas de velocidade, painel de altura e velocidade e, no fim, um salto por cima dos prédios. Imagem reserva (`img/cidade.webp`) se o WebGL não abrir.
+- **Aranha radioativa:** clica na aranha pendurada (ou em "aranha radioativa" no texto) e ela desce no fio, cai na tela e **anda atrás do cursor** com 8 patas articuladas (cinemática inversa, passos alternados). Parou o mouse, ela te pica: clarão, tela treme, celular vibra e libera o…
+- **Modo Aranhaverso** (também no botão de dois círculos do topo): retícula de gibi na tela toda, impressão desalinhada vermelho/azul nos títulos e fotos, glitch no herói (fatias deslocadas) e cada teia faz **THWIP!/SPLAT!** em balão de quadrinho (FWOOSH! nas cartas, NHAC! na picada, S2! no coração).
+- Detalhes: olhos da fita piscam, título da aba muda quando você sai ("Volta, amigão da vizinhança!").
+
+## Efeitos inusitados (versão 1)
 1. **Teia no clique (o principal):** clique/toque em qualquer lugar vazio e sai um fio da mão do herói (ou do canto da tela, fora do herói) até o ponto; gruda uma teia radial e o fio vira corda com física (verlet), encolhe e fica balançando. No final, a teia sai em forma de coração. Canvas fixo, laço só roda com teia na tela.
 2. **Som "thwip" opcional** (botão de alto-falante): ruído filtrado com Web Audio, nada de arquivo de som. Começa desligado.
 3. **Sentido aranha:** rabiscos em volta da cabeça quando o mouse chega perto (ou toque na cabeça) e nas bordas da tela quando a rolagem é muito rápida.
@@ -38,3 +46,10 @@ Amazing Fantasy #15 (capa de agosto de 1962, 12 centavos, última edição da re
 - Modos: `?embed` (sem abertura, tudo no estado final), "reduzir movimento", sem JavaScript e sem CDN (conteúdo aparece em todos).
 - Prévia num arquivo: aberta com toda a rede bloqueada em 390 e 1440 (GSAP, Lenis e fontes carregam de dentro).
 - **Não testado:** celular de verdade (fluidez a 60 fps, vibração no toque, som no iPhone).
+
+## QA da versão 2 (21/11)
+- Teia num celular simulado com tela 3x: cai exatamente onde o dedo toca (antes caía no dobro da posição).
+- Cidade: renderiza no Chromium com e sem GPU (SwiftShader), sem erro de shader, em 1440 e 390; janelas sem chiado. Só desenha quando a seção aparece (antes rodava escondida no topo e derrubava o herói pra 4 fps no navegador sem GPU; agora 46 a 61).
+- Aranha: solta, anda até o cursor, pica, liga o Aranhaverso, foge e volta pro fio. Testado também dentro da prévia num arquivo, sem internet.
+- 390, 768, 1024 e 1440 sem erro e sem rolagem lateral; `?embed`, reduzir movimento, sem JS e sem CDN ok. Prévia: 1,56 MB.
+- **Não testado:** fluidez da cidade 3D num celular de verdade (no Playwright não tem GPU), vibração e som.
