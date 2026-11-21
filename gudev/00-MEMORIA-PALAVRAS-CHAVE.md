@@ -215,3 +215,5 @@ O Davi mandou um prompt grande ("equipe de agência internacional") + 12 prints 
 Palavras: console, PlayStation, PS5, GTA, slide do trabalho, boot, abertura, holofote, poeira de luz, aperte o botão, escolher perfil, escolher jogador, home de console, blocos, tema dinâmico, página do jogo, Jogar agora, conquistas, troféus, Checkpoint, barbearia, Web Audio, som de interface.
 O Davi mandou 2 vídeos (slide estilo console com tema de GTA VI e a abertura de um console) e pediu um site nessa pegada. Feito em `sites/checkpoint/` (conceito, barbearia fictícia, nada de marca da Sony/Rockstar): liga como console, escolhe o barbeiro como jogador, serviços em blocos com o fundo trocando de tema, página de cada serviço com o WhatsApp, cartão fidelidade como conquistas e aba "Quero um site assim". HTML único sem imagem (tudo SVG + canvas + Web Audio). Dados no topo do script, dá pra trocar de nicho.
 
+
+Depois o Davi aprovou ("ficou legal") e disse que com referências dá pra fazer sites assim pra leads. Palavras: interface conhecida, imitar app, Netflix, Spotify, streaming, playlist. Regra e nichos que servem no `03` (bloco do Checkpoint).

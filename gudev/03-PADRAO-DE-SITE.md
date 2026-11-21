@@ -141,6 +141,7 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - abertura de console: aviso, holofote, poeira de luz em canvas e botão pulsando; acorde gerado em Web Audio;
   - escolher o barbeiro como quem escolhe jogador;
   - serviços em blocos com o fundo inteiro trocando de tema (SVG gerado, poeira muda de cor), "página do jogo" com o pedido pro WhatsApp e cartão fidelidade como conquistas.
+  - **Aprovado pelo Davi pra usar em lead (21/11):** o formato "site que imita uma interface conhecida" (console, app de streaming, celular, playlist) funciona pra comércio de público jovem: barbearia, hamburgueria, açaí, academia, loja de games/celular. Não serve pra público mais velho ou B2B (Andrade, Péçaí atacado, Vivian Modolo). Regra: copiar a **lógica** da interface (ligar, escolher perfil, blocos, página do item), nunca logo, nome, som ou arte da marca original. Pra fazer bem: 1 vídeo de referência da interface + os dados reais do lead (fotos, serviços, preços).
 
 ## Repertório de efeitos prontos (testados, ainda não usados em cliente)
 Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS puro em canvas, sem biblioteca. Testado no celular (09/11/2026). O Davi gostou. Ponto de partida pra variar, nunca pra colar igual.
