@@ -30,6 +30,13 @@ Pedido do Davi: um vídeo de referência (site "Cine Daily" do Deadpool III, rol
 - **Modo Aranhaverso** (também no botão de dois círculos do topo): retícula de gibi na tela toda, impressão desalinhada vermelho/azul nos títulos e fotos, glitch no herói (fatias deslocadas) e cada teia faz **THWIP!/SPLAT!** em balão de quadrinho (FWOOSH! nas cartas, NHAC! na picada, S2! no coração).
 - Detalhes: olhos da fita piscam, título da aba muda quando você sai ("Volta, amigão da vizinhança!").
 
+## Versão 3 (21/11/2026): os vídeos de referência do Davi viraram parte do site
+- **Mergulho na lente** (seção nova entre o topo e a cidade): o close da máscara virou 25 quadros numa imagem só (`img/lente.webp`, 177 KB). A rolagem passa os quadros (misturando um no outro pra ficar liso), entra no olho, dá zoom no reflexo e acende um clarão que emenda com a cidade em primeira pessoa. "Olha nos olhos dele." → "Agora você vê o que ele vê."
+- **Vista de fora** na cidade: trecho do gameplay na Times Square (`img/vista-de-fora.mp4`, 94 KB, cortado pra tirar a marca do TikTok), num cantinho com "gravando", só toca enquanto a cidade aparece. O vídeo é desenhado num canvas (vídeo dentro de palco grudado às vezes aparecia fora do lugar).
+- **Telão** entre "Criadores" e "Atores": trecho do filme (silhueta na frente da lua + máscara no pôr do sol, `img/cinema.mp4`, 124 KB). As tarjas pretas abrem com a rolagem como cortina de cinema; no celular a tela fica vertical.
+- Pra caber tudo na prévia (1,6 MB), diminuí a teia de fundo, as fotos das cartas, a imagem reserva da cidade e cortei a fonte Archivo só na faixa usada.
+- Créditos no rodapé: fotos e trechos de vídeo (filme e o jogo Marvel's Spider-Man, via @mcfc.dex no TikTok) são de terceiros, só referência.
+
 ## Efeitos inusitados (versão 1)
 1. **Teia no clique (o principal):** clique/toque em qualquer lugar vazio e sai um fio da mão do herói (ou do canto da tela, fora do herói) até o ponto; gruda uma teia radial e o fio vira corda com física (verlet), encolhe e fica balançando. No final, a teia sai em forma de coração. Canvas fixo, laço só roda com teia na tela.
 2. **Som "thwip" opcional** (botão de alto-falante): ruído filtrado com Web Audio, nada de arquivo de som. Começa desligado.

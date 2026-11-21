@@ -15,7 +15,7 @@ if(/[?&]embed\b/.test(location.search))h.classList.add('embed');})();
 </script>
 <style>
 @font-face{font-family:"Bebas Neue";src:url(fonts/bebas-neue.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"Archivo";src:url(fonts/archivo.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap}
+@font-face{font-family:"Archivo";src:url(fonts/archivo.woff2) format("woff2");font-weight:400 700;font-stretch:100% 125%;font-style:normal;font-display:swap}
 
 :root{
   --noite:#070B1C; --noite-2:#0B1128; --linha:rgba(255,255,255,.12);
@@ -358,6 +358,38 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .portal.on i:nth-child(3n){animation-delay:.09s;background:#0B0B12}
 @keyframes portal{0%{translate:-110% 0}45%,55%{translate:0 0}100%{translate:110% 0}}
 
+/* ============ mergulho na lente (sequência de quadros guiada pela rolagem) ============ */
+.lente{position:relative;height:260vh;background:#050308;z-index:2}
+.lente-palco{position:sticky;top:0;height:100svh;overflow:hidden}
+.lente-tela{position:absolute;inset:0;width:100%;height:100%;display:block}
+.lente-quadros{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.lente-palco::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(110% 85% at 50% 50%,transparent 50%,rgba(3,2,6,.8) 100%)}
+.lente-brilho{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 55%,#fff 0,rgba(226,236,255,.92) 22%,rgba(150,180,255,.35) 55%,rgba(10,14,40,0) 80%)}
+.lente-frase{position:absolute;z-index:3;left:var(--m);bottom:13svh;margin:0;max-width:10ch;font-family:var(--f-titulo);font-weight:400;font-size:clamp(46px,7.4vw,120px);line-height:.88;color:#fff;text-shadow:0 6px 34px rgba(0,0,0,.7);opacity:0;will-change:opacity,transform}
+.lente-f2{left:auto;right:var(--m);text-align:right}
+.embed .lente{height:auto}
+.embed .lente-palco{position:relative;height:100vh}
+
+/* ============ vista de fora (câmera de jogo no canto da cidade) ============ */
+.vista{position:absolute;right:var(--m);top:84px;z-index:3;margin:0;width:clamp(150px,17vw,250px);border-radius:12px;overflow:hidden;background:#000;box-shadow:0 14px 34px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.35);opacity:0;transform:translateY(-8px);transition:opacity .5s,transform .5s;pointer-events:none}
+.cidade.andou .vista,.embed .vista{opacity:1;transform:none}
+.vista video{position:absolute;inset:0;width:100%;height:100%;opacity:0}
+.vista canvas{display:block;position:relative;width:100%;height:auto;aspect-ratio:16/9}
+.vista figcaption{position:absolute;left:8px;top:7px;display:flex;align-items:center;gap:6px;font-size:8.5px;font-stretch:120%;letter-spacing:.18em;text-transform:uppercase;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.9)}
+.vista figcaption i{width:7px;height:7px;border-radius:50%;background:#ff3040;animation:grava 1.1s steps(2) infinite}
+@keyframes grava{50%{opacity:.15}}
+
+/* ============ telão de cinema ============ */
+.cinema{position:relative;z-index:2;background:#000;color:#fff;overflow:hidden}
+.cinema-tela{position:relative;width:100%;aspect-ratio:16/9;max-height:100svh;margin:0 auto}
+.cinema-video{display:block;width:100%;height:100%;object-fit:cover}
+.tarja{position:absolute;left:0;right:0;height:50%;background:#000;transform:scaleY(.13);will-change:transform}
+.tarja-cima{top:0;transform-origin:50% 0}
+.tarja-baixo{bottom:0;transform-origin:50% 100%}
+.cinema-texto{position:absolute;left:var(--m);bottom:clamp(28px,9%,90px);z-index:2;max-width:560px}
+.cinema-titulo{margin:12px 0 0;font-family:var(--f-titulo);font-weight:400;font-size:clamp(44px,7vw,112px);line-height:.88;text-shadow:0 6px 30px rgba(0,0,0,.65)}
+.cinema-nota{margin:10px 0 0;font-size:11px;color:#C9CDDC;text-shadow:0 1px 6px rgba(0,0,0,.8)}
+
 /* ============ tablet ============ */
 @media (max-width:1023px){
   .nav{display:none}
@@ -380,6 +412,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   .cidade-hud{gap:18px;bottom:20px}
   .cidade-hud b{font-size:24px}
   .cidade-role{top:auto;bottom:90px}
+  .vista{top:66px;width:140px;border-radius:9px}
+  .cinema-tela{aspect-ratio:4/5;max-height:92svh}
+  .lente{height:220vh}
   .heroi-centro{top:calc(64% - var(--d) / 2 - 78px)}
   .elenco{grid-template-columns:1fr 1fr;row-gap:4px;font-size:clamp(15px,3.4vw,24px);padding:0;margin-bottom:8px}
   .elenco li:nth-child(3){display:none}
@@ -552,6 +587,17 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   </div>
 </section>
 
+<!-- ================= MERGULHO NA LENTE ================= -->
+<section class="lente" id="lente" data-tema="escuro" aria-labelledby="lente-titulo">
+  <div class="lente-palco">
+    <canvas class="lente-tela" aria-hidden="true"></canvas>
+    <img class="lente-quadros" src="img/lente.webp" alt="" aria-hidden="true" width="2080" height="2080" decoding="async">
+    <div class="lente-brilho" aria-hidden="true"></div>
+    <h2 class="lente-frase lente-f1" id="lente-titulo">Olha nos olhos dele.</h2>
+    <p class="lente-frase lente-f2" aria-hidden="true">Agora você vê o que ele vê.</p>
+  </div>
+</section>
+
 <!-- ================= BALANCE PELA CIDADE ================= -->
 <section class="cidade" id="cidade" data-tema="escuro" aria-labelledby="cidade-titulo">
   <div class="cidade-palco">
@@ -569,6 +615,11 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
       <div><small>Teia</small><b class="hud-teia">01</b>/08</div>
     </div>
     <p class="cidade-role" aria-hidden="true"><i></i>Role</p>
+    <figure class="vista" aria-hidden="true">
+      <video class="vista-video" src="img/vista-de-fora.mp4" muted loop playsinline preload="auto" width="352" height="198"></video>
+      <canvas class="vista-tela" width="352" height="198"></canvas>
+      <figcaption><i></i>Vista de fora</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -625,6 +676,22 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   <p class="galeria">Galeria <b class="galeria-num">01</b>/04</p>
 </section>
 
+</div>
+
+<!-- ================= TELÃO (cena de cinema) ================= -->
+<section class="cinema" id="cinema" data-tema="escuro" aria-labelledby="cinema-titulo">
+  <div class="cinema-tela">
+    <video class="cinema-video" src="img/cinema.mp4" muted loop playsinline preload="metadata" width="576" height="324" aria-label="Trecho de filme: o Homem-Aranha balançando na frente da lua cheia e depois de máscara no alto de um prédio, no pôr do sol"></video>
+    <span class="tarja tarja-cima" aria-hidden="true"></span><span class="tarja tarja-baixo" aria-hidden="true"></span>
+  </div>
+  <div class="cinema-texto">
+    <p class="rotulo"><i class="bolinha"></i>Sessão da noite</p>
+    <h2 class="cinema-titulo" id="cinema-titulo">Do gibi pro cinema.</h2>
+    <p class="cinema-nota">Trecho de filme, aqui só como referência deste fan site.</p>
+  </div>
+</section>
+
+<div class="claras" data-tema="claro">
 <!-- ================= ATORES ================= -->
 <section class="atores" id="atores" aria-labelledby="atores-titulo">
   <div class="colunas" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
@@ -701,7 +768,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 </main>
 
 <footer class="rodape">
-  <p>Fan site conceito, sem fins comerciais. Homem-Aranha é personagem da Marvel Comics, criado por Stan Lee e Steve Ditko. As fotos são de fãs e servem só de referência.</p>
+  <p>Fan site conceito, sem fins comerciais. Homem-Aranha é personagem da Marvel Comics, criado por Stan Lee e Steve Ditko. As fotos e os trechos de vídeo (filme e o jogo Marvel's Spider-Man, via @mcfc.dex no TikTok) são de terceiros e estão aqui só como referência.</p>
   <a href="#topo">Voltar ao topo</a>
 </footer>
 
@@ -996,7 +1063,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     var o = origem(e.clientX);
     var forma = alvo.closest('.final') ? 'coracao' : 'radial';
     // dentro da cidade o palco fica parado na tela: a teia gruda na tela, não na página
-    var fixo = !!alvo.closest('.cidade'), sy = fixo ? 0 : window.scrollY;
+    var fixo = !!alvo.closest('.cidade, .lente'), sy = fixo ? 0 : window.scrollY;
     disparar(o.x, o.y + sy, e.clientX, e.clientY + sy, corDe(alvo), forma, fixo);
     onomatopeia(e.clientX, e.clientY - 46, forma === 'coracao' ? 'S2!' : null, forma === 'coracao' ? '#F0323D' : null);
     if (navigator.vibrate && toque) try { navigator.vibrate(12); } catch (er) {}
@@ -1578,6 +1645,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     }
 
     var CW = 1, CH = 1, vis = false, uS = 0, ultT = 0, ultP = null, velS = 0, ultI = -1, andou = false, hud = { a: -1, v: -1 };
+    var vistaV = $('.vista-video'), vistaC = $('.vista-tela').getContext('2d');
     function tam() {
       CW = palco.clientWidth || innerWidth; CH = palco.clientHeight || innerHeight;
       var d2 = Math.min(window.devicePixelRatio || 1, 2), dg = Math.min(window.devicePixelRatio || 1, toque ? 1.35 : 1.5);
@@ -1651,6 +1719,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
         ultI = P.i;
       }
       if (!andou && prog0 > .015) { andou = true; sec.classList.add('andou'); }
+      // vista de fora: o vídeo é desenhado num canvas (vídeo dentro de palco grudado às vezes aparece fora do lugar)
+      if (vistaV.readyState >= 2 && (andou || embed)) { try { vistaC.drawImage(vistaV, 0, 0, 352, 198); } catch (er) {} }
       return true;
     }
     function desenha2D(P, PV, t) {
@@ -1691,9 +1761,54 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     }
     if ('IntersectionObserver' in window) {
       // só desenha com pelo menos 1 px aparecendo (encostar na borda conta como "visível" pro observador)
-      new IntersectionObserver(function (es) { vis = es[0].isIntersecting && es[0].intersectionRect.height > 1; if (vis) { ultT = 0; agenda(quadro); } }, { threshold: [0, .001, .01] }).observe(sec);
+      new IntersectionObserver(function (es) {
+        vis = es[0].isIntersecting && es[0].intersectionRect.height > 1;
+        if (vis) { ultT = 0; agenda(quadro); toca(vistaV); } else vistaV.pause();
+      }, { threshold: [0, .001, .01] }).observe(sec);
     } else { vis = true; agenda(quadro); }
   })();
+
+  /* ================= MERGULHO NA LENTE: 25 quadros do vídeo, guiados pela rolagem ================= */
+  (function () {
+    var sec = $('.lente'), cvL = $('.lente-tela'), cl = cvL.getContext('2d'), img = $('.lente-quadros'), brilho = $('.lente-brilho');
+    var frases = [[$('.lente-f1'), .03, .38], [$('.lente-f2'), .46, .8]].map(function (f) { return { el: f[0], de: f[1], ate: f[2], o: -1 }; });
+    var N = 25, COLS = 5, T = 416, LW = 1, LH = 1, vis = false, pS = -1, pDes = -2;
+    function tamL() { var d = Math.min(window.devicePixelRatio || 1, 2); LW = cvL.clientWidth || innerWidth; LH = cvL.clientHeight || innerHeight; cvL.width = Math.round(LW * d); cvL.height = Math.round(LH * d); cl.setTransform(d, 0, 0, d, 0, 0); pDes = -2; }
+    tamL(); window.addEventListener('resize', function () { tamL(); if (vis) agenda(quadroL); });
+    function lim(x) { return Math.max(0, Math.min(1, x)); }
+    function desenha(p) {
+      if (!img.complete || !img.naturalWidth) return false;
+      var fr = lim(p / .7) * (N - 1), i = Math.min(N - 1, Math.floor(fr)), mis = fr - i;
+      // no fim, zoom pra dentro do reflexo na lente
+      var k = Math.pow(lim((p - .58) / .42), 2), z = 1 + k * 3.2, S = Math.max(LW, LH) * z;
+      var x0 = (LW - S) / 2 + ((LW / 2 - .52 * S) - (LW - S) / 2) * k, y0 = (LH - S) / 2 + ((LH / 2 - .6 * S) - (LH - S) / 2) * k;
+      cl.clearRect(0, 0, LW, LH); cl.globalAlpha = 1;
+      cl.drawImage(img, (i % COLS) * T, Math.floor(i / COLS) * T, T, T, x0, y0, S, S);
+      if (mis > .01 && i + 1 < N) { // mistura com o quadro seguinte: fica liso mesmo com poucos quadros
+        cl.globalAlpha = mis; cl.drawImage(img, ((i + 1) % COLS) * T, Math.floor((i + 1) / COLS) * T, T, T, x0, y0, S, S); cl.globalAlpha = 1;
+      }
+      brilho.style.opacity = lim((p - .74) / .22).toFixed(3);
+      frases.forEach(function (f) {
+        var o = Math.min(lim((p - f.de) / .05), lim((f.ate - p) / .05));
+        if (Math.abs(o - f.o) > .01) { f.o = o; f.el.style.opacity = o.toFixed(3); f.el.style.transform = 'translateY(' + ((1 - o) * 24).toFixed(1) + 'px)'; }
+      });
+      return true;
+    }
+    function quadroL() {
+      if (!vis) return false;
+      var r = sec.getBoundingClientRect(), tot = r.height - LH, p = tot > 1 ? lim(-r.top / tot) : .5;
+      pS = pS < 0 || embed ? p : pS + (p - pS) * .22;
+      if (Math.abs(pS - pDes) > .0004) { if (desenha(pS)) pDes = pS; }
+      return true;
+    }
+    if (!img.complete) img.addEventListener('load', function () { pDes = -2; if (vis) agenda(quadroL); });
+    new IntersectionObserver(function (es) { vis = es[0].isIntersecting && es[0].intersectionRect.height > 1; if (vis) agenda(quadroL); }, { threshold: [0, .001, .01] }).observe(sec);
+  })();
+
+  /* ================= VÍDEOS: só tocam quando aparecem ================= */
+  function toca(v) { if (!v) return; try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (er) {} }
+  var cinemaV = $('.cinema-video');
+  new IntersectionObserver(function (es) { if (es[0].isIntersecting) { cinemaV.preload = 'auto'; toca(cinemaV); } else cinemaV.pause(); }, { threshold: .25 }).observe($('.cinema'));
 
   // título da aba quando a pessoa sai
   var tituloAba = document.title;
@@ -1793,7 +1908,10 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   });
 
   // tema do cabeçalho e pausa do fundo do herói
-  ST.create({ trigger: '.claras', start: 'top 40px', end: 'bottom 40px', onToggle: function (s) { $('.cabecalho').classList.toggle('claro', s.isActive); } });
+  var clarasAtivas = 0;
+  $$('.claras').forEach(function (cl) {
+    ST.create({ trigger: cl, start: 'top 40px', end: 'bottom 40px', onToggle: function (s) { clarasAtivas += s.isActive ? 1 : -1; $('.cabecalho').classList.toggle('claro', clarasAtivas > 0); } });
+  });
   ST.create({ trigger: '.heroi', start: 'bottom 80px', end: 'max', onToggle: function (s) { $('.cabecalho').classList.toggle('rolou', s.isActive); } });
   ST.create({ trigger: '.heroi', start: 'top top', end: 'bottom top', onToggle: function (s) { $('.heroi').classList.toggle('pausa', !s.isActive); } });
   [['#topo', 0], ['#numeros', 1], ['#criadores', 2], ['#atores', 3]].forEach(function (p) {
@@ -1812,6 +1930,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   G.fromTo(letrasCriado, { x: function (i, el) { return desvio(el) * 0.3; }, opacity: .1 }, { x: 0, opacity: 1, ease: 'none', scrollTrigger: { trigger: '.criadores', start: 'top 80%', end: 'top 15%', scrub: .6, invalidateOnRefresh: true } });
   G.from('.criadores .cantos i', { scale: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.criadores', start: 'top 60%' } });
   // ficha entra virando
+  // telão: as tarjas pretas abrem com a rolagem, como cortina de cinema
+  G.fromTo('.tarja', { scaleY: 1 }, { scaleY: .13, ease: 'none', scrollTrigger: { trigger: '.cinema', start: 'top 88%', end: 'top 12%', scrub: .4 } });
+  G.from('.cinema-texto > *', { y: 40, opacity: 0, duration: 1, stagger: .1, ease: 'expo.out', scrollTrigger: { trigger: '.cinema', start: 'top 35%' } });
   G.from('.ficha', { rotationX: -55, y: 90, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: '.ficha-palco', start: 'top 88%' } });
   G.from('.ladrilho img', { y: 60, opacity: 0, duration: 1, stagger: .1, ease: 'expo.out', scrollTrigger: { trigger: '.atores-meio', start: 'top 80%' } });
   // atores apagam quando o final chega
