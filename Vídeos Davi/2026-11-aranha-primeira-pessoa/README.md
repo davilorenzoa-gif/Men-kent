@@ -6,7 +6,7 @@ Pedido do Davi: 3 vídeos de referência (gameplay balançando pela Times Square
 Aqui não tem gerador de vídeo por IA (Veo/Sora), então o Homem-Aranha fotorrealista em terceira pessoa não sai daqui. O que foi feito é a versão **em primeira pessoa, renderizada por código**: cada quadro é desenhado em 3D (WebGL), montado no ffmpeg e com som sintetizado.
 
 ## Arquivo final
-- `aranha-primeira-pessoa.mp4`: 10 s, 1920×1080, 24 fps, com som.
+- `aranha-primeira-pessoa.mp4`: 10 s, 1920×1080, 24 fps, com som (14 MB; com granulação mais forte passava de 30 MB).
 
 ## O roteiro (igual ao prompt, adaptado pra primeira pessoa)
 | Tempo | O que acontece |
