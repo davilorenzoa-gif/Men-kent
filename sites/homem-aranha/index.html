@@ -1,0 +1,1181 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Homem-Aranha | Cine Teia (fan site)</title>
+<meta name="description" content="Fan site conceito do Homem-Aranha: atores, criadores e a primeira aparição em 1962. Clique em qualquer lugar e solte teia.">
+<meta name="theme-color" content="#070B1C">
+<link rel="icon" href="img/aranha.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="img/aranha-agachado.webp">
+<script>
+(function(){var h=document.documentElement;h.classList.add('js');
+if(!/[?&]embed\b/.test(location.search)&&!matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('intro');setTimeout(function(){h.classList.remove('intro')},3500);}
+if(/[?&]embed\b/.test(location.search))h.classList.add('embed');})();
+</script>
+<style>
+@font-face{font-family:"Bebas Neue";src:url(fonts/bebas-neue.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Archivo";src:url(fonts/archivo.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap}
+
+:root{
+  --noite:#070B1C; --noite-2:#0B1128; --linha:rgba(255,255,255,.12);
+  --vermelho:#DA1F2B; --vermelho-vivo:#F0323D; --azul:#2350D8; --azul-escuro:#142E86;
+  --papel:#F4F2EE; --tinta:#0B0B12; --cinza:#8C91A8; --cinza-2:#5B6072;
+  --f-titulo:"Bebas Neue", Impact, "Arial Narrow", sans-serif;
+  --f-texto:"Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --m:clamp(18px, 2.8vw, 44px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html.lenis{scroll-behavior:auto}
+body{margin:0;background:var(--noite);color:#fff;font-family:var(--f-texto);font-size:15px;line-height:1.5;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--vermelho-vivo);outline-offset:3px;border-radius:4px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.rotulo{font-stretch:125%;font-weight:600;font-size:10px;letter-spacing:.22em;text-transform:uppercase;margin:0;display:flex;align-items:center;gap:10px}
+.bolinha{width:14px;height:14px;border-radius:50%;background:var(--vermelho);display:inline-grid;place-items:center;flex:none}
+.bolinha::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--noite)}
+.intro .heroi-palco,.intro .cabecalho{opacity:0}
+.icone-aranha{fill:currentColor}
+
+/* ============ cabeçalho ============ */
+.cabecalho{position:fixed;inset:0 0 auto 0;z-index:50;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:18px var(--m);transition:color .35s}
+.cabecalho::before{content:"";position:absolute;inset:0 0 -26px;z-index:-1;opacity:0;transition:opacity .4s,background .4s;background:linear-gradient(var(--noite) 35%,rgba(7,11,28,0));pointer-events:none}
+.cabecalho.rolou::before{opacity:1}
+.cabecalho.claro{color:var(--tinta)}
+.cabecalho.claro::before{background:linear-gradient(var(--papel) 35%,rgba(244,242,238,0))}
+.logo{display:inline-flex;align-items:center;gap:2px;font-family:var(--f-titulo);font-size:27px;letter-spacing:.02em;text-decoration:none;line-height:1;justify-self:start}
+.logo svg{width:22px;height:26px;color:var(--vermelho);margin:0 1px;transform:translateY(-1px)}
+.nav{position:relative;display:flex;align-items:center;gap:16px;font-stretch:125%;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase}
+.nav a{text-decoration:none;opacity:.86;padding:6px 0}
+.nav a:hover,.nav a[aria-current="true"]{opacity:1}
+.nav i{font-style:normal;opacity:.5}
+.nav-ponto{position:absolute;left:0;bottom:-8px;width:5px;height:5px;border-radius:50%;background:var(--vermelho);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.acoes{justify-self:end;display:flex;gap:8px;align-items:center}
+.btn-icone{width:38px;height:38px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;opacity:.9;transition:background .25s,color .25s}
+.btn-icone svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.btn-icone[aria-pressed="true"]{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
+.btn-icone .onda{opacity:0;transition:opacity .2s}
+.btn-icone[aria-pressed="true"] .onda{opacity:1}
+.btn-icone[aria-pressed="true"] .mudo{opacity:0}
+.btn-menu{width:44px;height:44px;border-radius:50%;background:#fff;color:var(--tinta);display:grid;place-items:center;gap:0;transition:background .3s,color .3s}
+.cabecalho.claro .btn-menu{background:var(--tinta);color:#fff}
+.btn-menu span{display:block;width:16px;height:1.6px;background:currentColor;border-radius:2px;transition:transform .35s}
+.btn-menu span+span{margin-top:-14px;width:10px;justify-self:end;transform:translate(-3px,5px)}
+.btn-menu{grid-template-rows:1fr}
+.btn-menu .tracos{display:grid;gap:4px;width:16px}
+.btn-menu .tracos i{display:block;height:1.6px;background:currentColor;border-radius:2px;transition:transform .35s,width .35s}
+.btn-menu .tracos i:last-child{width:10px;justify-self:end}
+.menu-aberto .btn-menu .tracos i:first-child{transform:translateY(2.8px) rotate(45deg)}
+.menu-aberto .btn-menu .tracos i:last-child{width:16px;transform:translateY(-2.8px) rotate(-45deg)}
+
+/* menu */
+.menu{position:fixed;inset:0;z-index:48;background:var(--noite);color:#fff;display:grid;align-content:center;padding:90px var(--m) 40px;clip-path:circle(0 at calc(100% - var(--m) - 22px) 40px);transition:clip-path .7s cubic-bezier(.7,0,.2,1);visibility:hidden}
+.menu-aberto .menu{clip-path:circle(150% at calc(100% - var(--m) - 22px) 40px);visibility:visible}
+.menu-aberto .cabecalho{color:#fff}
+.menu-aberto .cabecalho .btn-menu{background:#fff;color:var(--tinta)}
+.menu-teia{position:absolute;right:-10vw;top:50%;width:min(80vw,760px);translate:0 -50%;opacity:.08;pointer-events:none}
+.menu ol{list-style:none;margin:0;padding:0;counter-reset:m}
+.menu li{counter-increment:m;border-top:1px solid var(--linha)}
+.menu li:last-child{border-bottom:1px solid var(--linha)}
+.menu a{display:flex;align-items:baseline;gap:18px;font-family:var(--f-titulo);font-size:clamp(46px,9vw,110px);line-height:1;padding:10px 0 4px;text-decoration:none;transition:color .25s,padding .35s}
+.menu a::before{content:"0" counter(m);font-family:var(--f-texto);font-size:11px;letter-spacing:.2em;color:var(--cinza)}
+.menu a:hover{color:var(--vermelho-vivo);padding-left:12px}
+
+/* ============ herói ============ */
+.heroi{position:relative;height:100svh;min-height:620px;overflow:hidden;background:radial-gradient(120% 80% at 50% 45%, #101a44 0%, var(--noite) 62%)}
+.heroi-palco{position:absolute;inset:0;will-change:transform}
+.heroi-fundo{position:absolute;inset:0;pointer-events:none}
+.heroi-teia{position:absolute;left:50%;top:52%;width:max(118vw,118svh);max-width:none;translate:-50% -50%;opacity:.055;animation:gira 160s linear infinite}
+.pausa .heroi-teia{animation-play-state:paused}
+@keyframes gira{to{rotate:360deg}}
+.heroi-mira{position:absolute;inset:0;width:100%;height:100%}
+.heroi-mira line,.heroi-mira circle{stroke:rgba(255,255,255,.08);stroke-width:1;fill:none;vector-effect:non-scaling-stroke}
+.heroi-topo{position:absolute;top:86px;left:var(--m);right:var(--m);display:flex;justify-content:space-between;align-items:center;z-index:6}
+.tags{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.tags li{border:1px solid rgba(255,255,255,.5);border-radius:99px;padding:3px 10px 2px;font-size:9px;font-stretch:115%;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.aparicao{margin:0;font-size:9.5px;font-stretch:115%;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.aparicao b{font-weight:700}
+.circulo{position:absolute;left:50%;top:53%;width:min(37vw,66svh);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 38% 34%, var(--vermelho-vivo), var(--vermelho) 48%, #a31420 100%);translate:-50% -50%;z-index:1}
+.pendulo{position:absolute;left:50%;top:calc(53% - min(18.5vw,33svh) - min(11.5svh,7.4vw));width:min(5.6svh,3.6vw);margin-left:calc(min(5.6svh,3.6vw) / -2);aspect-ratio:162/318;z-index:2;transform-origin:50% -60svh;color:#fff}
+.pendulo-fio{position:absolute;left:50%;bottom:96%;width:1.2px;height:70svh;background:linear-gradient(to top,rgba(255,255,255,.9) 0,rgba(255,255,255,.35) 46px,transparent 84px);translate:-50% 0}
+.pendulo svg{width:100%;height:100%;display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}
+.heroi-centro{position:absolute;left:var(--m);right:var(--m);top:calc(53% - min(9.6vw,18svh) - 3.6vw);z-index:3}
+.elenco{list-style:none;margin:0 0 .4vw;padding:0 1.2%;display:grid;grid-template-columns:1fr 1fr 1.25fr 1fr 1fr;font-family:var(--f-titulo);font-size:clamp(17px,2.05vw,31px);letter-spacing:.03em;line-height:1}
+.elenco li:nth-child(4){text-align:left;padding-left:12%}
+.elenco li:nth-child(5){text-align:right}
+.elenco li:nth-child(2){padding-left:6%}
+.elenco .l{display:inline-block}
+.titulo{position:relative;margin:0;font-family:var(--f-titulo);font-weight:400;font-size:min(18.2vw,34svh);line-height:.8;letter-spacing:-.005em;text-align:center;white-space:nowrap;padding-top:.04em}
+.titulo .linha{display:inline}
+.titulo .l{display:inline-block}
+.ano-vertical{position:absolute;right:-.2vw;top:52%;translate:0 -50%;writing-mode:vertical-rl;font-family:var(--f-titulo);font-size:clamp(15px,1.7vw,26px);letter-spacing:.06em;z-index:3}
+.corda{position:absolute;left:0;top:calc(76% - 60px);width:100%;height:120px;z-index:4;overflow:visible;pointer-events:none}
+.corda path{fill:none;stroke:#fff;vector-effect:non-scaling-stroke}
+.corda .corda-fio{stroke-width:1.1;opacity:.55}
+.corda .corda-gotas{stroke-width:3.2;stroke-linecap:round;stroke-dasharray:0 18;opacity:.75}
+.fios{position:absolute;left:50%;bottom:0;height:96%;width:auto;max-width:none;translate:-50% 0;transform-origin:50% 100%;opacity:.16;z-index:4;pointer-events:none}
+.heroi-figura{position:absolute;left:50%;bottom:-1px;height:min(79%,64vw);aspect-ratio:654/1011;translate:-50% 0;z-index:5}
+.heroi-img{width:100%;height:100%;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 20px 40px rgba(0,0,0,.5))}
+.sentido{position:absolute;left:44%;top:12.5%;width:64%;aspect-ratio:1;translate:-50% -50%;overflow:visible;pointer-events:none}
+.sentido path,.sentido-tela path{fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-dasharray:44;stroke-dashoffset:44;opacity:0}
+.sentido.on path,.sentido-tela.on path{animation:formiga .8s cubic-bezier(.2,.7,.2,1) both}
+.sentido.on g:nth-child(2n) path,.sentido-tela.on g:nth-child(2) path{animation-delay:.07s}
+.sentido.on g:nth-child(3n) path,.sentido-tela.on g:nth-child(3) path{animation-delay:.13s}
+@keyframes formiga{0%{stroke-dashoffset:44;opacity:0;transform:translateX(-6px)}35%{opacity:1}100%{stroke-dashoffset:0;opacity:0;transform:translateX(10px)}}
+.sentido-tela{position:fixed;inset:0;z-index:44;pointer-events:none}
+.st-lado{position:absolute;left:0;top:50%;width:clamp(60px,7vw,90px);height:auto;translate:0 -50%;overflow:visible}
+.st-dir{left:auto;right:0;scale:-1 1}
+.sentido-tela path{stroke:var(--vermelho-vivo);stroke-width:4}
+.historia{position:absolute;left:var(--m);bottom:76px;width:min(310px,25vw);z-index:6}
+.historia p{margin:10px 0 0;font-size:11.5px;line-height:1.55;color:#C9CDDC}
+.historia b{color:#fff;font-weight:700;font-stretch:110%}
+.heroi-acoes{position:absolute;right:var(--m);bottom:66px;z-index:6;display:grid;justify-items:end;gap:14px}
+.heroi-acoes .linha-acao{display:flex;align-items:center;gap:14px}
+.dica{margin:0;font-size:10px;font-stretch:115%;letter-spacing:.14em;text-transform:uppercase;color:var(--cinza);display:flex;gap:8px;align-items:center}
+.dica svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.6}
+.pilula{display:inline-flex;align-items:center;gap:10px;border:1.5px solid #fff;border-radius:99px;padding:9px 18px 8px;font-family:var(--f-titulo);font-size:17px;letter-spacing:.06em;text-decoration:none;transition:background .25s,color .25s}
+.pilula:hover{background:#fff;color:var(--tinta)}
+.selo-num{font-family:var(--f-titulo);font-size:15px;width:30px;height:30px;border:1px solid currentColor;border-radius:50%;display:grid;place-items:center;line-height:1;padding-top:2px}
+.selo{width:92px;height:92px;position:relative;flex:none}
+.selo svg.anel{width:100%;height:100%;animation:gira 14s linear infinite}
+.selo text{font-family:var(--f-texto);font-stretch:120%;font-weight:700;font-size:8.6px;letter-spacing:.08em;fill:#fff;text-transform:uppercase}
+.selo-miolo{position:absolute;inset:22%;border-radius:50%;background:var(--vermelho);display:grid;place-items:center;box-shadow:inset 0 0 0 3px var(--noite),inset 0 0 0 4px rgba(255,255,255,.5)}
+.selo-miolo svg{height:68%;width:auto;color:var(--tinta)}
+
+/* ============ fitas + números ============ */
+.numeros{position:relative;z-index:3;overflow-x:clip;background:radial-gradient(90% 70% at 50% 40%, #0f1736 0%, var(--noite) 70%);border-radius:0 0 clamp(28px,4vw,56px) clamp(28px,4vw,56px);padding:130px var(--m) 0;margin-top:0;box-shadow:0 2px 0 var(--vermelho),0 14px 40px rgba(218,31,43,.35)}
+.fitas{position:absolute;left:-8vw;right:-8vw;top:-34px;height:150px;pointer-events:none;z-index:2}
+.fita{position:absolute;left:0;right:0;height:50px;overflow:hidden;display:flex;align-items:center;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+.fita-vermelha{top:46px;background:var(--vermelho);rotate:-3.2deg;border-top:2px solid #ff5560;border-bottom:2px solid #8f0f19}
+.fita-azul{top:40px;background:var(--azul-escuro);rotate:2.4deg;height:42px}
+.trilho{display:flex;flex:none;will-change:transform}
+.trilho .olhos{width:62px;height:25px;margin:0 16px;flex:none}
+.trilho .mini{width:14px;height:28px;margin:0 22px;flex:none;color:var(--tinta)}
+.trilho .mini.claro{color:#fff;opacity:.85}
+.numeros-grade{position:relative;display:grid;grid-template-columns:1fr auto 1fr;gap:40px;align-items:start;z-index:1}
+.editora-nome{font-family:var(--f-titulo);font-size:30px;letter-spacing:.03em;line-height:1;margin:12px 0 0}
+.editora-nome small{display:block;font-family:var(--f-texto);font-size:11px;letter-spacing:.04em;color:var(--cinza);margin-top:6px}
+.contador{display:flex;align-items:center;gap:14px;margin-top:34px}
+.contador .selo-num{width:34px;height:34px;font-size:16px}
+.pontos{display:flex;gap:6px}
+.pontos i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25);transition:background .3s,transform .3s}
+.pontos i.on{background:var(--vermelho-vivo);transform:scale(1.3)}
+.circulos{list-style:none;margin:0;padding:0;display:flex;gap:16px}
+.circ{width:118px;height:118px;border-radius:50%;display:grid;place-content:center;text-align:center;line-height:1}
+.circ small{font-family:var(--f-titulo);font-size:14px;letter-spacing:.05em;opacity:.8}
+.circ strong{font-family:var(--f-titulo);font-weight:400;font-size:44px;display:block;margin-top:2px}
+.circ-branco{background:#fff;color:var(--tinta)}
+.circ-vermelho{background:var(--vermelho);color:#fff}
+.circ-azul{background:var(--azul);color:#fff}
+.frase{margin:0;justify-self:end;max-width:300px;border-left:2px solid var(--vermelho);padding-left:16px}
+.frase p{margin:0;font-family:var(--f-titulo);font-size:23px;line-height:1.08;letter-spacing:.02em}
+.frase footer{margin-top:12px;font-size:11.5px;color:#C9CDDC;line-height:1.5}
+.pilha-area{position:relative;height:clamp(250px,22vw,300px);margin-top:6px;z-index:4}
+.pilha{position:absolute;left:50%;top:0;width:clamp(220px,21vw,300px);aspect-ratio:3/4.2;translate:-50% 0}
+.carta{position:absolute;inset:0;margin:0;border-radius:16px;overflow:hidden;background:#111;box-shadow:0 22px 50px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.1);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;will-change:transform}
+.carta:active{cursor:grabbing}
+.carta img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.carta figcaption{position:absolute;left:10px;bottom:10px;right:10px;font-size:9.5px;font-stretch:120%;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#fff;background:rgba(7,11,28,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:6px 10px 5px;border-radius:99px;width:max-content;max-width:100%}
+.pilha-fio{position:absolute;left:-200%;top:-200%;width:500%;height:500%;pointer-events:none;overflow:visible;z-index:20}
+.pilha-fio path{fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;opacity:0;transition:opacity .2s}
+.pilha-fio.on path{opacity:.9}
+.redondo{position:absolute;z-index:30;bottom:34px;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;transition:transform .25s}
+.redondo:hover{transform:scale(1.08)}
+.redondo svg{width:18px;height:18px;fill:currentColor}
+.voltar{left:0;background:var(--vermelho);color:#fff}
+.avancar{right:0;background:#fff;color:var(--tinta)}
+.pilha-dica{margin:16px 0 0;font-size:10px;font-stretch:115%;letter-spacing:.14em;text-transform:uppercase;color:var(--cinza);max-width:220px;line-height:1.6}
+
+/* ============ seções claras ============ */
+.claras{position:relative;z-index:1;overflow-x:clip;background:var(--papel);color:var(--tinta)}
+.cantos{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.cantos i{position:absolute;width:min(30vw,300px);aspect-ratio:368/350;background-color:var(--tinta);opacity:.13;-webkit-mask:url(img/teia-cantos.webp) no-repeat;mask:url(img/teia-cantos.webp) no-repeat;-webkit-mask-size:200% 200%;mask-size:200% 200%}
+.cantos .te{left:0;top:0;-webkit-mask-position:0 0;mask-position:0 0;transform-origin:0 0}
+.cantos .td{right:0;top:0;-webkit-mask-position:100% 0;mask-position:100% 0;transform-origin:100% 0}
+.cantos .be{left:0;bottom:0;-webkit-mask-position:0 100%;mask-position:0 100%;transform-origin:0 100%}
+.cantos .bd{right:0;bottom:0;-webkit-mask-position:100% 100%;mask-position:100% 100%;transform-origin:100% 100%}
+.criadores{position:relative;padding:230px var(--m) 110px;margin-top:-56px}
+.criadores .bloco{position:absolute;right:var(--m);top:250px;max-width:340px}
+.criadores .bloco p{margin:10px 0 0;font-size:12px;line-height:1.55;color:var(--cinza-2)}
+.criadores .bloco b{color:var(--tinta)}
+.criado{margin:0;font-family:var(--f-titulo);font-weight:400;line-height:.84;font-size:min(10.4vw,190px);position:relative}
+.criado .l{display:inline-block}
+.criado .linha{display:block;white-space:nowrap}
+.criado .linha2{text-align:right}
+.criado .por{font-size:.3em;margin:0 .35em;vertical-align:.55em;display:inline-block}
+.galeria{margin-top:22px;font-size:10px;font-stretch:120%;letter-spacing:.2em;text-transform:uppercase;color:var(--cinza-2)}
+.galeria b{color:var(--tinta)}
+
+/* atores */
+.atores{position:relative;padding:40px var(--m) 120px}
+.colunas{position:absolute;inset:0 var(--m);display:grid;grid-template-columns:repeat(4,1fr);pointer-events:none}
+.colunas span{border-left:1px solid rgba(11,11,18,.08)}
+.colunas span:last-child{border-right:1px solid rgba(11,11,18,.08)}
+.atores-conteudo{position:relative}
+.numeracao{display:grid;grid-template-columns:repeat(4,1fr);list-style:none;margin:0;padding:0}
+.numeracao button{font-family:var(--f-titulo);font-size:19px;padding:8px 10px;position:relative;text-align:left;opacity:.45;transition:opacity .25s}
+.numeracao button::after{content:"";position:absolute;left:10px;bottom:2px;width:16px;height:2px;background:var(--vermelho);transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.numeracao button[aria-pressed="true"]{opacity:1}
+.numeracao button[aria-pressed="true"]::after{transform:scaleX(1)}
+.atores-titulo{text-align:center;margin:30px auto 0;font-family:var(--f-titulo);font-weight:400;font-size:clamp(30px,3.6vw,54px);line-height:1;max-width:24ch}
+.seletor{display:flex;justify-content:center;align-items:center;gap:28px;margin-top:22px}
+.avatares{display:flex;gap:6px}
+.avatares button{width:34px;height:34px;border-radius:50%;background:#d7d6d2;font-family:var(--f-titulo);font-size:14px;padding-top:2px;color:var(--tinta);transition:background .25s,color .25s,transform .25s}
+.avatares button[aria-pressed="true"]{background:var(--vermelho);color:#fff;transform:scale(1.12)}
+.setas{display:flex;gap:4px}
+.setas button{width:40px;height:34px;display:grid;place-items:center;color:var(--tinta)}
+.setas svg{width:28px;height:12px;stroke:currentColor;fill:none;stroke-width:1.6}
+.setas button:last-child{color:var(--vermelho)}
+.atores-meio{display:grid;grid-template-columns:1fr auto 1fr;gap:40px;align-items:start;margin-top:36px}
+.lado p{margin:10px 0 0;font-size:12px;line-height:1.55;color:var(--cinza-2);max-width:270px}
+.lado b{color:var(--tinta)}
+.lado-dir{justify-self:end}
+.ladrilho{margin-top:34px;width:150px;height:170px;position:relative}
+.ladrilho img{position:absolute;width:110px;height:130px;object-fit:cover;border-radius:6px}
+.ladrilho img:first-child{left:0;top:40px;clip-path:polygon(0 0,100% 0,100% 62%,62% 100%,0 100%)}
+.ladrilho img:last-child{left:44px;top:0;clip-path:polygon(38% 0,100% 0,100% 100%,0 100%,0 38%)}
+.lado-dir .ladrilho{margin-left:auto}
+.ficha-palco{perspective:1000px}
+.ficha{width:min(300px,82vw);background:linear-gradient(170deg,#121a3c,var(--noite));color:#fff;border-radius:24px;padding:34px 18px 18px;position:relative;box-shadow:0 30px 60px rgba(7,11,28,.35);transform-style:preserve-3d}
+.ficha-selo{position:absolute;left:50%;top:-18px;translate:-50% 0;width:38px;height:38px;border-radius:50%;background:var(--vermelho);display:grid;place-items:center;box-shadow:0 0 0 4px var(--papel)}
+.ficha-selo svg{height:24px;width:auto;color:#fff}
+.ficha .rotulo{justify-content:center;color:var(--cinza)}
+.ficha-nome{margin:8px 0 16px;font-family:var(--f-titulo);font-weight:400;font-size:34px;text-align:center;line-height:1}
+.ficha-grade{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ficha-grade > div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 12px}
+.ficha-grade small{display:block;font-size:8.5px;font-stretch:120%;letter-spacing:.18em;text-transform:uppercase;color:var(--cinza)}
+.ficha-grade strong{display:block;font-family:var(--f-titulo);font-weight:400;font-size:20px;line-height:1.05;margin-top:4px}
+.ficha-teia{grid-row:span 2;position:relative;overflow:hidden;min-height:120px;display:grid!important;place-items:center}
+.ficha-teia img{position:absolute;inset:-30%;width:160%;max-width:none;height:160%;object-fit:cover;opacity:.2}
+.ficha-teia strong{position:relative;font-size:58px!important}
+.ficha-filmes{margin:12px 2px 14px;font-size:11px;line-height:1.5;color:#C9CDDC;min-height:50px}
+.ficha-botao{width:100%;background:var(--vermelho);color:#fff;border-radius:12px;padding:12px 14px 10px;display:flex;justify-content:space-between;align-items:center;font-family:var(--f-titulo);font-size:18px;letter-spacing:.04em;transition:background .25s}
+.ficha-botao:hover{background:var(--vermelho-vivo)}
+.ficha-botao svg{width:22px;height:22px;color:#fff}
+.selo3{position:absolute;right:0;top:110px;display:flex;align-items:center;gap:10px;color:var(--tinta)}
+.selo3 .selo-miolo{background:var(--azul);box-shadow:inset 0 0 0 3px var(--papel),inset 0 0 0 4px rgba(11,11,18,.25)}
+.selo3 .selo-miolo svg{color:#fff}
+.selo3 text{fill:var(--tinta)}
+
+/* final */
+.final{position:relative;min-height:100svh;padding:110px var(--m) 0;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-content:start;text-align:center}
+.final-aneis{position:absolute;left:50%;top:58%;width:min(130vw,1500px);aspect-ratio:1;translate:-50% -50%;pointer-events:none}
+.final-aneis circle{fill:none;stroke:rgba(11,11,18,.07)}
+.final .rotulo{justify-content:center;color:var(--cinza-2)}
+.final-titulo{position:relative;margin:14px 0 0;font-family:var(--f-titulo);font-weight:400;font-size:min(13.5vw,250px);line-height:.82}
+.final-titulo .l{display:inline-block}
+.final-lados{position:relative;width:100%;max-width:1060px;display:flex;justify-content:space-between;font-family:var(--f-titulo);font-size:clamp(20px,2.3vw,34px);margin-top:10px;z-index:2}
+.final-figura{position:relative;width:min(500px,100%,62svh);margin-top:-3vw;z-index:1}
+.final-figura img{width:100%;-webkit-mask:linear-gradient(to right,transparent 0,#000 24%,#000 76%,transparent 100%),linear-gradient(to bottom,#000 70%,transparent 99%);-webkit-mask-composite:source-in;mask:linear-gradient(to right,transparent 0,#000 24%,#000 76%,transparent 100%),linear-gradient(to bottom,#000 70%,transparent 99%);mask-composite:intersect}
+.final-dica{position:absolute;left:50%;bottom:26px;translate:-50% 0;z-index:3;margin:0;background:var(--tinta);color:#fff;border-radius:99px;padding:8px 16px 7px;font-size:10px;font-stretch:115%;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+
+.rodape{position:relative;z-index:2;background:var(--noite);color:#C9CDDC;padding:34px var(--m);display:flex;justify-content:space-between;gap:20px;align-items:center;font-size:11.5px;flex-wrap:wrap}
+.rodape p{margin:0;max-width:620px}
+.rodape a{font-family:var(--f-titulo);font-size:17px;letter-spacing:.06em;color:#fff;text-decoration:none;border:1.5px solid #fff;border-radius:99px;padding:8px 16px 6px}
+
+#teia-tela{position:fixed;inset:0;z-index:45;pointer-events:none}
+
+/* ============ tablet ============ */
+@media (max-width:1023px){
+  .nav{display:none}
+  .cabecalho{grid-template-columns:1fr auto}
+  .numeros-grade{grid-template-columns:1fr 1fr}
+  .circulos{grid-column:1 / -1;grid-row:2;justify-content:center}
+  .criadores .bloco{position:static;margin-bottom:40px}
+  .atores-meio{grid-template-columns:1fr 1fr;gap:28px}
+  .ficha-palco{grid-column:1 / -1;grid-row:1;justify-self:center}
+  .lado-dir{justify-self:end}
+  .selo3{display:none}
+}
+/* ============ celular e tablet em pé: título em 2 linhas acima do Aranha ============ */
+@media (max-width:899px){
+  .heroi{--d:min(84vw,56svh)}
+  .circulo{width:var(--d);top:64%}
+  .pendulo{top:calc(64% - var(--d) / 2 - 150px);width:min(6vw,34px);margin-left:calc(min(6vw,34px) / -2)}
+  .heroi-centro{top:calc(64% - var(--d) / 2 - 78px)}
+  .elenco{grid-template-columns:1fr 1fr;row-gap:4px;font-size:clamp(15px,3.4vw,24px);padding:0;margin-bottom:8px}
+  .elenco li:nth-child(3){display:none}
+  .elenco li:nth-child(2),.elenco li:nth-child(5){text-align:right;padding:0}
+  .elenco li:nth-child(4){padding:0}
+  .titulo{font-size:min(35vw,19svh);line-height:.82}
+  .titulo .linha{display:block}
+  .ano-vertical{display:none}
+  .heroi-figura{height:54%}
+  .corda{top:calc(83% - 60px)}
+}
+/* ============ celular ============ */
+@media (max-width:699px){
+  body{font-size:14px}
+  .cabecalho{padding:12px var(--m)}
+  .logo{font-size:24px}
+  .btn-icone{width:36px;height:36px}
+  .btn-menu{width:40px;height:40px}
+  .heroi{min-height:600px}
+  .heroi-topo{top:70px}
+  .aparicao{font-size:8.5px}
+  .tags li{font-size:8px;padding:3px 8px 2px}
+  .historia{display:none}
+  .heroi-figura{height:51%}
+  .heroi-acoes{left:var(--m);right:var(--m);bottom:16px;grid-template-columns:1fr auto;align-items:end;justify-items:start}
+  .heroi-acoes .dica{grid-column:1 / -1;grid-row:1;font-size:9px;justify-self:center;background:rgba(7,11,28,.6);padding:5px 10px;border-radius:99px}
+  .heroi-acoes .linha-acao{display:contents}
+  .pilula{font-size:15px;padding:8px 14px 7px;background:rgba(7,11,28,.55)}
+  .heroi-acoes .selo-num{display:none}
+  .selo{width:72px;height:72px;justify-self:end}
+  .numeros{padding-top:130px}
+  .numeros-grade{grid-template-columns:1fr;gap:26px}
+  .circulos{grid-row:auto;gap:10px}
+  .circ{width:min(98px,28vw);height:min(98px,28vw)}
+  .circ strong{font-size:34px}
+  .circ small{font-size:12px}
+  .frase{justify-self:start;max-width:none}
+  .contador{margin-top:18px}
+  .pilha-area{height:240px}
+  .pilha{width:min(210px,56vw)}
+  .redondo{width:52px;height:52px;bottom:24px}
+  .criadores{padding-top:190px}
+  .criado{font-size:19.4vw}
+  .criado .linha1b{display:block}
+  .atores-titulo{font-size:34px}
+  .numeracao button{font-size:17px;padding:8px 6px}
+  .numeracao button::after{left:6px}
+  .atores-meio{grid-template-columns:1fr;justify-items:center;text-align:left}
+  .lado,.lado-dir{justify-self:stretch}
+  .lado p{max-width:none}
+  .ladrilho{display:none}
+  .final{padding-top:96px}
+  .final-titulo{font-size:22vw}
+  .final-titulo .linha{display:block}
+  .final-lados{font-size:20px}
+  .final-figura{margin-top:0;width:104vw;max-width:none}
+  .rodape{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .heroi-teia,.selo svg.anel{animation:none}
+  .sentido.on path,.sentido-tela.on path{animation-duration:.01s}
+}
+.embed .heroi-teia,.embed .selo svg.anel{animation:none}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="aranha" viewBox="0 0 162 318"><path fill="currentColor" fill-rule="evenodd" d="M98.2,303C98.2,301.5 98.3,300.5 98.5,300.5C98.7,300.5 98.8,301.5 98.8,303C98.8,304.5 98.7,305.5 98.5,305.5C98.3,305.5 98.2,304.5 98.2,303ZM62.2,289.9C62.1,284.7 62,272.4 62,262.8C62,245.9 62,245.1 61.5,244.1C61,243.2 61,242.4 61,226.3C61,210.1 61,209.5 60.5,208.2C59.8,206.5 59.8,203.5 60.5,201.8C61.3,199.8 61.3,189.2 60.5,187.3C60,186 60,185.4 60,173.3C60,161.1 60,160.5 59.5,159.3C59,158.1 59,157.4 59,150.2C59,143.1 59,142.4 58.5,141.2C58.1,140.3 58,139.4 58,137.8C58,136.1 57.9,135.2 57.5,134.3C57.2,133.4 57,132.4 57,131.2C57,130.1 56.8,129.1 56.5,128.2C56.2,127.6 56,126.4 56,125.8C56,125.1 55.8,123.9 55.5,123.3C55.2,122.4 55,121.4 55,120.2C55,119.2 54.8,118.1 54.6,117.6C54.4,117 54.1,115.8 54,114.8C53.9,113.4 53.6,112.4 52.9,111C52.4,109.9 52,108.7 52,108.3C52,107.9 51.8,106.9 51.5,106.3C51.2,105.4 51,104.4 51,103.3C51,102.1 50.8,101.1 50.5,100.3C50.2,99.6 50,98.7 50,98.3C50,97.8 49.8,96.9 49.5,96.3C49.2,95.6 49,94.7 49,94.3C49,94 48.3,91.7 47.5,89.3C46.7,86.9 46,84.4 45.9,83.9C45.9,83.3 45.5,82.2 45.1,81.4C44,79.1 42.9,75.7 43.1,74.9C43.2,74.6 43.6,73.9 44,73.4C44.4,72.9 45.1,71.7 45.6,70.6C46.6,68.7 47.1,68.2 48.7,67.9C49.1,67.8 49.9,67.4 50.4,67C50.9,66.6 51.8,66.1 52.3,66C52.9,65.8 55.3,64.7 57.7,63.5C61.4,61.7 62.2,61.2 63.4,60C64.9,58.4 65,57.8 64.2,56.9C63.2,56 62,55.8 60.3,56.5C59.2,56.9 58.4,57 55.8,57C52.8,57 52.7,57 48.9,58.3C45.1,59.5 37.9,62.9 36.5,64.1C36.1,64.4 35,65.1 34,65.6C33,66.1 31.8,66.9 31.2,67.3C30.6,67.8 29.7,68.3 29.3,68.6C28.9,68.8 28,69.4 27.2,69.9C26.5,70.5 25.3,71.2 24.6,71.7C23.9,72.1 22.9,72.8 22.4,73.2C21.8,73.6 21,74.1 20.6,74.3C20.2,74.5 19.1,75.5 18.1,76.6C15.2,79.6 15.3,80.7 18.8,84.2C20.5,85.8 21.6,86.7 22.9,87.4C23.9,87.9 25.1,88.6 25.5,88.9C26.4,89.6 27.3,90 28.4,90C30.2,90 32,92 32,94.2C32,94.9 32.2,96 32.5,96.8C32.8,97.4 33,98.6 33,99.3C33,99.9 33.2,101.1 33.5,101.8C33.8,102.6 34,103.6 34,104.8C34,105.9 34.2,106.9 34.5,107.8C34.9,108.7 35,109.6 35,111.3C35,112.9 35.1,113.8 35.5,114.8C35.8,115.4 36,116.6 36,117.3C36,117.9 36.2,119.1 36.5,119.8C36.9,120.9 37,121.6 37,126.8C37,131.9 37.1,132.6 37.5,133.8C37.9,134.9 38,135.6 38,139.8C38,143.9 38.1,144.6 38.5,145.8C39,147 39,147.6 39,167.9C39,188.1 39,188.9 39.5,189.9C40.1,191.2 40.1,192.7 39.5,194.1C39.1,195.1 39,196 38.9,209.2C38.8,223.1 38.8,223.4 38.3,224.4C38,225 37.8,225.9 37.8,226.5C37.8,228.4 37.3,227.5 37.2,225.3C37,223.2 37,222.9 37.6,221.8C38.5,219.9 38.5,216.1 37.6,214.3L37,213L37,198.1C37,183.8 37,183.1 36.5,182.1C36.1,181.2 36,180.5 36,172.8C36,165.1 36,164.4 35.5,163.3C35.1,162.1 35,161.4 35,156.8C35,152.1 34.9,151.4 34.5,150.3C34.1,149.3 34,148.4 34,146.3C34,144.1 33.9,143.2 33.5,142.2C33.1,141.3 33,140.4 33,138.8C33,137.1 32.9,136.2 32.5,135.2C32.2,134.6 32,133.4 32,132.8C32,132.1 31.8,130.9 31.5,130.2C31.2,129.4 31,128.4 31,127.3C31,126.1 30.8,125.1 30.5,124.3C30.2,123.4 30,122.4 30,121.3C30,120.1 29.8,119.1 29.5,118.3C29.2,117.6 29,116.7 29,116.3C29,115.9 28.5,114.3 28,112.8C27.5,111.2 27,109.6 27,109.3C27,108.1 24.5,101.3 23.7,100.2C23.2,99.6 22.7,98.7 22.4,98.3C20.7,95.6 19.9,94.6 17.7,92.3C16.3,90.9 14.7,89.5 14.1,89.2C13.6,88.9 12.4,88 11.5,87.1C10.6,86.3 9.5,85.4 9,85.1C8.6,84.9 7.7,84.2 7,83.7C6.4,83.1 5.5,82.3 4.9,81.9C3.7,81 3.7,80.4 5.2,77.4C6.3,75.2 6.8,74.6 8.8,72.6C10.6,70.8 11.4,70.2 12.2,70C13.6,69.6 15.6,68.6 16.6,67.9C16.9,67.5 21.2,65.3 26,62.9C30.9,60.5 35.2,58.2 35.6,57.9C36,57.5 37.4,56.7 38.6,56.1C40.9,55 41.1,55 43.2,55C44.9,55 45.8,54.9 46.7,54.5C47.7,54.1 48.6,54 50.7,54C52.9,54 53.8,53.9 54.7,53.5C55.7,53.1 56.6,53 58.2,53C61.8,53 65,51.6 63.7,50.5C63.5,50.4 62.7,50.2 61.9,50C61,49.9 60,49.6 59.4,49.4C58.8,49.1 57.7,49 55.3,49C52.6,49 51.8,48.9 50.7,48.5C49.6,48.1 48.9,48 44.6,48L39.6,48L36.8,49C35.2,49.5 33.6,50 33.3,50C32.3,50 28.5,51.4 25.7,52.7C22.6,54.2 21.3,54.4 20,53.4C19.5,53 18.7,52.6 18.2,52.3C17.8,52 16.9,51.5 16.4,51C15.9,50.6 15.1,50.2 14.7,50.1C13.2,49.8 13,49.4 13,47.1C13,45.6 13.1,44.7 13.5,43.8C13.9,42.8 14,41.9 14,40.3C14,38.6 14.1,37.7 14.5,36.8C14.8,36.1 15,34.9 15,34.3C15,33.6 15.2,32.4 15.5,31.8C15.8,30.9 16,29.9 16,28.8C16,27.6 16.2,26.6 16.5,25.8C16.8,25.1 17,24 17,23.3C17,21.9 17.9,19.1 19.3,16.2C20.5,13.8 23.8,10.1 25.8,9.1C26.4,8.8 27.1,8.4 27.3,8.1C27.8,7.5 30.9,6 31.6,6C32.5,6 32.7,6.7 32,7.3C31.3,7.9 30,8.7 28.4,9.8C27.8,10.2 27.3,10.6 27.2,10.7C27.2,10.9 26.8,11.6 26.2,12.4C25.2,13.8 24,16.1 24,16.8C24,16.9 23.6,17.9 23.1,19C22.6,20 22.1,21.5 22,22.2C21.9,23 21.6,24 21.4,24.6C21.1,25.3 21,26.7 21,33.4L21,41.4L21.7,43.4C22.5,45.6 22.9,46 24.6,46C25.1,46 25.9,45.8 26.4,45.6C27,45.3 28.4,45.1 30.2,45C32.9,44.9 33.3,44.8 35.1,43.9C36.1,43.4 37.3,43 37.7,43C38.1,43 39.1,42.8 39.7,42.5C41.5,41.8 44.5,41.8 46.3,42.5C46.9,42.8 47.8,43 48.3,43C48.7,43 49.6,43.2 50.3,43.5C50.9,43.8 52.1,44 52.8,44C53.4,44 54.6,44.2 55.3,44.5C56.1,44.8 57.1,45 58.3,45C59.3,45 60.4,45.2 60.9,45.4C63.3,46.4 63.8,45.3 61.8,43.5C59.3,41.3 55.3,39 53.8,39C53.4,39 52.4,38.8 51.8,38.5C50.6,38.1 49.9,38 45.7,38C39.5,38 39,37.7 39,34.5C39,33.3 39.2,32.6 39.9,31.1C40.3,30.1 40.8,28.8 41,28.3C41.1,27.8 41.8,26.2 42.5,24.8C43.2,23.4 43.8,22 43.9,21.6C44.2,20.1 45.3,18.2 46.3,17C46.9,16.4 47.7,15.5 48,15.1C48.3,14.5 49.2,13.9 50.3,13.3C51.3,12.8 52.4,12.2 52.8,11.8C53.3,11.5 53.9,11.2 54.4,11.2C55.2,11.2 55.2,11.3 52,14.6C48.7,17.9 48,18.9 48,20.2C48,20.6 47.5,22.2 47,23.8C46.5,25.3 46,26.9 46,27.3C46,27.7 45.8,28.6 45.5,29.3C44.9,30.9 44.8,32.5 45.5,33.3C45.9,33.9 46.1,33.9 50.7,34C55.7,34.1 55.9,34.2 57.1,35.5C57.5,35.9 58.3,36.5 58.8,36.8C59.4,37.1 60.3,37.8 61,38.4C62,39.3 64.5,40.8 66.3,41.5C67,41.7 67.1,41.7 67.8,41C68.2,40.5 68.5,40.1 68.5,40C68.5,39.7 70.4,38.8 71,38.8C71.7,38.7 71.8,39.1 71.5,40.1C71.2,40.8 71.2,41.1 71.5,41.7C72.3,43.7 73.2,44.1 75.1,43.4C76.6,42.8 78,42.9 79.3,43.8C80.5,44.6 81,44.5 83.1,43.4C84.1,42.9 85.7,42.9 87,43.4C88.3,43.9 89.1,43.6 89.6,42.4C90.2,41.1 90.1,40.2 89.4,38.9C89,38.3 88.8,37.7 88.8,37.6C88.8,37.4 90,37.5 90.1,37.8C90.2,37.9 91.1,38.6 92.1,39.4C93.3,40.2 94,41 94.1,41.4C94.3,42.2 94.9,42.2 96.7,41.1C97.5,40.5 98.7,39.8 99.4,39.4C100,39 101.6,37.7 102.7,36.6C103.9,35.5 105.1,34.4 105.4,34.3C105.8,34.1 107.6,34 110.2,34C115.2,34 116.1,33.8 116.6,32.4C117,31.6 117,31.4 116.5,30.2C116.2,29.6 116,28.5 116,27.9C116,26.7 114,20.4 113,18.2C112.4,17 107.9,12.4 106.6,11.7C105.6,11.2 105.5,10.4 106.3,10.1C107.1,9.8 110,11.4 111.6,13C112.5,13.8 113.6,14.7 114.2,15.1C115.5,15.7 116.5,17.3 117,19.3C117.2,19.9 118.1,21.9 119,23.9C120,25.8 120.9,27.8 121,28.3C121.2,28.8 121.7,30.1 122.1,31.1C122.8,32.6 123,33.3 123,34.5C123,37.8 122.6,38 115.9,38C110.8,38 110.7,38 108.4,38.8C107.2,39.2 105.9,39.7 105.6,40C105.3,40.2 104.6,40.8 104,41.2C99.8,43.8 99,44.4 99,45.1C99,46.1 100.7,46.3 102.8,45.5C103.4,45.2 104.6,45 105.2,45C105.9,45 107.1,44.8 107.7,44.5C108.4,44.2 109.6,44 110.2,44C110.9,44 112.1,43.8 112.7,43.5C113.4,43.2 114.3,43 114.7,43C115.2,43 116.1,42.8 116.7,42.5C119.4,41.5 122.8,42 127.2,44C128.1,44.5 129.5,44.9 130.2,45C131,45.1 132,45.4 132.6,45.6C133.1,45.8 134,46 134.7,46C135.4,46 136.4,46.2 137,46.4C138.9,47.1 140,45.9 140,43.3C140,42.6 140.2,41.4 140.5,40.8C141,39.6 141,38.9 141,33C141,27.1 141,26.4 140.5,25.3C140.2,24.6 140,23.5 140,22.8C140,21.5 138.9,18.2 137.6,15.4C136.8,13.7 136.2,12.9 134.1,10.7C131.5,8 131.1,7.2 132.1,7C132.9,6.9 133.6,7.2 134.8,8.1C135.4,8.6 136,9 136.2,9C136.8,9 141.4,13.7 142.1,15.1C142.9,16.8 145,23 145,23.8C145,24.2 145.2,25.1 145.5,25.7C145.9,26.7 146,27.6 146,29.3C146,30.9 146.1,31.8 146.5,32.8C146.8,33.6 147,34.6 147,35.8C147,36.9 147.2,37.9 147.5,38.8C147.9,39.9 148,40.6 148,44.5C148,50.3 148,50.3 145,51.2C144.5,51.4 143.7,51.9 143.2,52.4C141.4,54.3 140,54.5 137.1,53.1C136.1,52.7 135,52.2 134.6,52.1C134.2,52 132.7,51.4 131.3,50.7C126,48.2 125.1,48 118.9,48C114.1,48 113.4,48.1 112.2,48.5C111.2,48.9 110.4,49 107.2,49C104.4,49 103.3,49.1 102.5,49.4C101.9,49.6 100.8,49.9 100.1,50.1C98.8,50.3 98.6,50.4 98.6,51C98.6,51.7 99.2,51.9 100.9,52C101.5,52 102.6,52.2 103.3,52.5C103.9,52.8 105.1,53 105.8,53C106.4,53 107.6,53.2 108.3,53.5C109.4,53.9 110.1,54 114.3,54L119,54L120.9,54.9C121.9,55.3 123.1,55.8 123.7,56C124.9,56.3 126.9,57.3 127.6,58C127.9,58.2 129.4,59.1 130.9,59.9C132.5,60.7 134.1,61.6 134.5,61.9C134.9,62.2 137.3,63.6 140,64.9C142.6,66.2 145.1,67.5 145.4,67.9C145.8,68.2 146.9,68.9 147.9,69.4C148.9,69.9 150.1,70.5 150.4,70.8C150.8,71.2 151.6,71.7 152.3,72.1C154,73.1 155.6,74.9 156.9,77.6C158.4,80.8 158.4,80.9 156.2,82.6C154.4,83.9 154,84.2 151.6,85.6C150,86.6 141.9,94.6 141.3,95.8C141,96.2 140.5,97 140.1,97.6C138.3,99.7 134,110.3 134,112.4C134,112.7 133.8,113.6 133.5,114.3C133.2,115.1 133,116.1 133,117.3C133,118.4 132.8,119.4 132.5,120.3C132.2,120.9 132,121.8 132,122.3C132,122.7 131.8,123.6 131.5,124.3C131.2,125.1 131,126.1 131,127.3C131,128.4 130.8,129.4 130.5,130.3C130.2,130.9 130,132.1 130,132.8C130,133.4 129.8,134.6 129.5,135.3C129.1,136.2 129,137.1 129,139.3C129,141.4 128.9,142.3 128.5,143.3C128.1,144.2 128,145.1 128,146.8C128,148.4 127.9,149.3 127.5,150.3C127.1,151.3 127,152.1 127,155.8C127,159.4 126.9,160.2 126.5,161.3C126.1,162.3 126,163.1 126,166.7C126,169.4 125.9,171.2 125.7,171.7C125.3,172.7 125.3,173.5 125,200.4C124.9,214.1 124.8,225.4 124.8,225.4C124.5,225.9 124.2,225.2 124.2,224C124.2,222.9 124.1,222.2 123.6,221.2L123,220L123,203.1C123,186.8 123,186.1 122.5,185.1C121.8,183.7 121.8,178.3 122.5,176.9C123,175.9 123,175.2 123,160.9C123,146.8 123,146 123.5,144.8C123.9,143.8 123.9,143.4 123.7,142.5C123.5,141.8 123.5,141.2 123.7,140.4C123.9,139.8 124,137.6 124,135.6C124,132.6 124.1,131.8 124.5,130.8C124.9,129.6 125,128.9 125,124.3C125,119.6 125.1,118.9 125.5,117.8C125.8,117.1 126,115.9 126,115.3C126,114.6 126.2,113.4 126.5,112.8C126.9,111.8 127,110.9 127,109.3C127,107.6 127.1,106.7 127.5,105.8C127.8,104.9 128,103.9 128,102.8C128,101.6 128.2,100.6 128.5,99.8C128.8,99.1 129,98.2 129,97.8C129,97.3 129.2,96.4 129.5,95.8C129.8,95 130,93.9 130,93.2C130,91.8 130.5,91 131.3,91C131.8,91 134.7,89.6 135.5,88.9C135.9,88.5 136.7,88.1 137.3,88C139.4,87.4 141.1,86.3 143,84.3C146.3,80.9 146.7,78.5 144.2,77.2C143.7,76.9 142.7,76.2 142,75.6C141.4,75 140,74.1 139,73.6C138,73.1 136.7,72.2 136.1,71.7C135.1,70.8 134,70 131.7,68.6C131.3,68.3 130.4,67.8 129.8,67.3C129.2,66.9 128,66.1 127,65.6C126.1,65.1 124.9,64.4 124.4,64C123.9,63.6 123.3,63.3 123.2,63.3C123.1,63.3 122.5,62.8 121.9,62.4C121.1,61.8 119.8,61.2 118,60.6C116.6,60.1 114.6,59.4 113.8,59C112.9,58.5 111.5,58.1 110.8,58C110,57.9 109,57.6 108.4,57.4C107.2,56.9 99,56.8 98,57.3C96.4,58.1 97.9,59.8 101.9,61.9C103.5,62.7 105.1,63.5 105.4,63.9C105.8,64.2 108.2,65.5 110.7,66.8C115.1,69 115.3,69.1 116.4,70.6C118.5,73.4 118.9,75.2 117.8,77.7C117.3,78.7 117,79.8 117,80.2C117,80.6 116.8,81.6 116.5,82.3C116.2,82.9 116,83.8 116,84.2C116,84.5 115.3,86.8 114.5,89.2C113.6,92 113,94.1 113,94.8C113,95.4 112.6,97.1 112,98.8C111.5,100.3 111,101.9 111,102.2C111,102.5 110.3,104.8 109.5,107.2C108.5,110.1 108,112.1 108,112.8C108,113.5 107.8,114.6 107.5,115.3C107.2,115.9 107,116.8 107,117.3C107,117.7 106.8,118.6 106.5,119.3C106.2,119.9 106,121.1 106,121.8C106,122.4 105.8,123.6 105.5,124.3C105.1,125.2 105,126.1 105,128.3C105,130.4 104.9,131.3 104.5,132.3C104,133.4 104,134.1 104,139.8C104,145.4 104,146.1 103.5,147.3C103.1,148.3 103,149.1 103,151.8C103,154.4 102.9,155.2 102.5,156.3C102,157.5 102,158.1 102,169.3C102,180.3 102,181.1 101.5,182.2C101,183.4 101,183.5 101.4,184.7C101.8,185.7 101.8,186 101.5,186.9C101.2,187.8 101,194.3 100.8,222.3C100.8,222.9 100.6,223.9 100.4,224.5C100,225.4 100,228.8 100,250.3L100,275L99.4,276.2C99,277 98.8,277.9 98.8,278.5C98.8,279.1 99,280 99.4,280.7C100,282 100,282.1 100,288C100,293.1 99.9,294 99.6,294.4C99.1,294.9 98.9,294.9 98.4,294.3C98,294 98,292.8 98,283.7C98.1,273.6 98.1,273.4 97.5,272.2L97,271L97,214.5C97,158.6 97,158 97.5,156.8C98,155.6 98,154.9 98,148.3C98,141.6 98,140.9 98.5,139.8C98.9,138.7 99,137.9 99,134.2C99,130.6 99.1,129.8 99.5,128.8C99.9,127.8 100,126.9 100,124.8C100,122.6 100.1,121.7 100.5,120.8C100.8,119.9 101,118.9 101,117.8C101,116.6 101.2,115.6 101.5,114.8C101.9,113.8 102,112.9 102,111.3C102,109.6 102.1,108.7 102.5,107.8C102.9,106.7 103,105.9 103,102.8C103,99.6 103.1,98.8 103.5,97.8C103.8,96.9 104,95.9 104,94.7C104,92.7 104.2,92.3 105.6,90.8C106.9,89.3 108.2,86.6 109.7,82.1L110.9,78.5L110.2,76.3C109.5,74.3 109.3,74 107.8,72.4C106.9,71.5 105.7,70.5 105.2,70.2C104.6,69.9 103.7,69.2 103,68.6C102.4,68 101,67.1 100,66.6C99,66.1 97.6,65.1 96.8,64.5C94.9,62.7 93.1,62.8 92.3,64.6C92,65.4 92,65.6 92.5,66.8C92.8,67.5 93.6,68.8 94.2,69.6C94.8,70.4 95.2,71.1 95.2,71.2C95.2,71.3 95.6,71.9 96,72.4C97.9,74.8 98.4,77 97.5,79.3C97.2,79.9 97,80.8 97,81.3C97,81.7 96.8,82.6 96.5,83.3C96.2,83.9 96,85 96,85.7C96,86.4 95.6,88 95,89.8C94.4,91.4 94,93.1 94,93.7C94,94.9 90.2,106.5 89,109.2C88.6,110 88.2,111.2 88,111.7C87.9,112.3 87.6,113 87.4,113.4C87.2,113.8 87,114.6 87,115.1C87,116.3 86.4,117.3 85.8,117.3C85.3,117.2 85,116.8 85,115.8C85,113.3 82.1,112.3 79,113.6C77.6,114.3 77,115 77,116C77,116.8 76.7,117.2 76.2,117.2C75.7,117.2 75,116.4 75,115.7C75,115.4 74.8,114.8 74.6,114.4C74,113 70,100.8 70,100.2C70,99.9 69.3,97.7 68.5,95.3C67.7,92.8 67,90.5 67,90.2C67,89.8 66.8,88.9 66.5,88.3C66.2,87.6 66,86.7 66,86.3C66,85.8 65.8,84.9 65.5,84.3C65.2,83.6 65,82.4 65,81.8C65,81.1 64.8,79.9 64.5,79.3C63.9,77.8 63.8,75.3 64.4,74.3C64.5,73.9 65.1,73.3 65.5,72.9C65.9,72.5 66.5,71.8 66.7,71.4C66.9,71 67.5,70.1 68,69.4C68.5,68.7 69.2,67.5 69.5,66.8C70,65.6 70,65.4 69.6,64.6C69,63.2 68.3,63 66.4,64C65.6,64.4 64.3,65.2 63.6,65.6C62.9,66.1 61.9,66.8 61.2,67.3C60.6,67.7 59.7,68.3 59.2,68.6C58.8,69 57.8,69.6 57.1,70C55.2,71.1 52.2,74.3 51.6,76L51,77.4L52.3,81.1C53.6,84.9 56.9,92.1 58.1,93.5C58.8,94.4 58.9,95 58.4,96.5C57.9,97.9 57.9,99.2 58.5,100.8C58.9,101.7 59,102.6 59,104.8C59,106.9 59.1,107.8 59.5,108.8C59.9,109.7 60,110.6 60,112.3C60,113.9 60.1,114.8 60.5,115.8C60.9,116.8 61,117.6 61,121.3C61,124.9 61.1,125.7 61.5,126.8C61.9,127.7 62,128.6 62,130.8C62,132.9 62.1,133.8 62.5,134.8C62.9,135.8 63,136.6 63,139.8C63,142.9 63.1,143.7 63.5,144.8C64,146 64,146.6 64,158.2C64,169.9 64,170.5 64.5,171.8C65.2,173.4 65.2,179.4 64.6,181C64.2,181.9 64.2,182.1 64.6,183C65,183.9 65,185.9 65,200.5C65,216.4 65,217 64.5,218.2C64.2,219 64,220.1 64,221C64,221.9 64.2,223 64.5,223.8C64.9,224.6 65,225.6 65,227C65,228.4 64.9,229.4 64.5,230.2C64,231.5 64,232.1 64,258.3L64,285L63.4,286.2C62.8,287.5 62.8,287.6 62.8,293.5C62.8,296.8 62.7,299.5 62.5,299.5C62.4,299.5 62.3,295.2 62.2,289.9Z"/></symbol>
+    <symbol id="aranha-curta" viewBox="10 0 142 132"><path fill="currentColor" fill-rule="evenodd" d="M98.2,303C98.2,301.5 98.3,300.5 98.5,300.5C98.7,300.5 98.8,301.5 98.8,303C98.8,304.5 98.7,305.5 98.5,305.5C98.3,305.5 98.2,304.5 98.2,303ZM62.2,289.9C62.1,284.7 62,272.4 62,262.8C62,245.9 62,245.1 61.5,244.1C61,243.2 61,242.4 61,226.3C61,210.1 61,209.5 60.5,208.2C59.8,206.5 59.8,203.5 60.5,201.8C61.3,199.8 61.3,189.2 60.5,187.3C60,186 60,185.4 60,173.3C60,161.1 60,160.5 59.5,159.3C59,158.1 59,157.4 59,150.2C59,143.1 59,142.4 58.5,141.2C58.1,140.3 58,139.4 58,137.8C58,136.1 57.9,135.2 57.5,134.3C57.2,133.4 57,132.4 57,131.2C57,130.1 56.8,129.1 56.5,128.2C56.2,127.6 56,126.4 56,125.8C56,125.1 55.8,123.9 55.5,123.3C55.2,122.4 55,121.4 55,120.2C55,119.2 54.8,118.1 54.6,117.6C54.4,117 54.1,115.8 54,114.8C53.9,113.4 53.6,112.4 52.9,111C52.4,109.9 52,108.7 52,108.3C52,107.9 51.8,106.9 51.5,106.3C51.2,105.4 51,104.4 51,103.3C51,102.1 50.8,101.1 50.5,100.3C50.2,99.6 50,98.7 50,98.3C50,97.8 49.8,96.9 49.5,96.3C49.2,95.6 49,94.7 49,94.3C49,94 48.3,91.7 47.5,89.3C46.7,86.9 46,84.4 45.9,83.9C45.9,83.3 45.5,82.2 45.1,81.4C44,79.1 42.9,75.7 43.1,74.9C43.2,74.6 43.6,73.9 44,73.4C44.4,72.9 45.1,71.7 45.6,70.6C46.6,68.7 47.1,68.2 48.7,67.9C49.1,67.8 49.9,67.4 50.4,67C50.9,66.6 51.8,66.1 52.3,66C52.9,65.8 55.3,64.7 57.7,63.5C61.4,61.7 62.2,61.2 63.4,60C64.9,58.4 65,57.8 64.2,56.9C63.2,56 62,55.8 60.3,56.5C59.2,56.9 58.4,57 55.8,57C52.8,57 52.7,57 48.9,58.3C45.1,59.5 37.9,62.9 36.5,64.1C36.1,64.4 35,65.1 34,65.6C33,66.1 31.8,66.9 31.2,67.3C30.6,67.8 29.7,68.3 29.3,68.6C28.9,68.8 28,69.4 27.2,69.9C26.5,70.5 25.3,71.2 24.6,71.7C23.9,72.1 22.9,72.8 22.4,73.2C21.8,73.6 21,74.1 20.6,74.3C20.2,74.5 19.1,75.5 18.1,76.6C15.2,79.6 15.3,80.7 18.8,84.2C20.5,85.8 21.6,86.7 22.9,87.4C23.9,87.9 25.1,88.6 25.5,88.9C26.4,89.6 27.3,90 28.4,90C30.2,90 32,92 32,94.2C32,94.9 32.2,96 32.5,96.8C32.8,97.4 33,98.6 33,99.3C33,99.9 33.2,101.1 33.5,101.8C33.8,102.6 34,103.6 34,104.8C34,105.9 34.2,106.9 34.5,107.8C34.9,108.7 35,109.6 35,111.3C35,112.9 35.1,113.8 35.5,114.8C35.8,115.4 36,116.6 36,117.3C36,117.9 36.2,119.1 36.5,119.8C36.9,120.9 37,121.6 37,126.8C37,131.9 37.1,132.6 37.5,133.8C37.9,134.9 38,135.6 38,139.8C38,143.9 38.1,144.6 38.5,145.8C39,147 39,147.6 39,167.9C39,188.1 39,188.9 39.5,189.9C40.1,191.2 40.1,192.7 39.5,194.1C39.1,195.1 39,196 38.9,209.2C38.8,223.1 38.8,223.4 38.3,224.4C38,225 37.8,225.9 37.8,226.5C37.8,228.4 37.3,227.5 37.2,225.3C37,223.2 37,222.9 37.6,221.8C38.5,219.9 38.5,216.1 37.6,214.3L37,213L37,198.1C37,183.8 37,183.1 36.5,182.1C36.1,181.2 36,180.5 36,172.8C36,165.1 36,164.4 35.5,163.3C35.1,162.1 35,161.4 35,156.8C35,152.1 34.9,151.4 34.5,150.3C34.1,149.3 34,148.4 34,146.3C34,144.1 33.9,143.2 33.5,142.2C33.1,141.3 33,140.4 33,138.8C33,137.1 32.9,136.2 32.5,135.2C32.2,134.6 32,133.4 32,132.8C32,132.1 31.8,130.9 31.5,130.2C31.2,129.4 31,128.4 31,127.3C31,126.1 30.8,125.1 30.5,124.3C30.2,123.4 30,122.4 30,121.3C30,120.1 29.8,119.1 29.5,118.3C29.2,117.6 29,116.7 29,116.3C29,115.9 28.5,114.3 28,112.8C27.5,111.2 27,109.6 27,109.3C27,108.1 24.5,101.3 23.7,100.2C23.2,99.6 22.7,98.7 22.4,98.3C20.7,95.6 19.9,94.6 17.7,92.3C16.3,90.9 14.7,89.5 14.1,89.2C13.6,88.9 12.4,88 11.5,87.1C10.6,86.3 9.5,85.4 9,85.1C8.6,84.9 7.7,84.2 7,83.7C6.4,83.1 5.5,82.3 4.9,81.9C3.7,81 3.7,80.4 5.2,77.4C6.3,75.2 6.8,74.6 8.8,72.6C10.6,70.8 11.4,70.2 12.2,70C13.6,69.6 15.6,68.6 16.6,67.9C16.9,67.5 21.2,65.3 26,62.9C30.9,60.5 35.2,58.2 35.6,57.9C36,57.5 37.4,56.7 38.6,56.1C40.9,55 41.1,55 43.2,55C44.9,55 45.8,54.9 46.7,54.5C47.7,54.1 48.6,54 50.7,54C52.9,54 53.8,53.9 54.7,53.5C55.7,53.1 56.6,53 58.2,53C61.8,53 65,51.6 63.7,50.5C63.5,50.4 62.7,50.2 61.9,50C61,49.9 60,49.6 59.4,49.4C58.8,49.1 57.7,49 55.3,49C52.6,49 51.8,48.9 50.7,48.5C49.6,48.1 48.9,48 44.6,48L39.6,48L36.8,49C35.2,49.5 33.6,50 33.3,50C32.3,50 28.5,51.4 25.7,52.7C22.6,54.2 21.3,54.4 20,53.4C19.5,53 18.7,52.6 18.2,52.3C17.8,52 16.9,51.5 16.4,51C15.9,50.6 15.1,50.2 14.7,50.1C13.2,49.8 13,49.4 13,47.1C13,45.6 13.1,44.7 13.5,43.8C13.9,42.8 14,41.9 14,40.3C14,38.6 14.1,37.7 14.5,36.8C14.8,36.1 15,34.9 15,34.3C15,33.6 15.2,32.4 15.5,31.8C15.8,30.9 16,29.9 16,28.8C16,27.6 16.2,26.6 16.5,25.8C16.8,25.1 17,24 17,23.3C17,21.9 17.9,19.1 19.3,16.2C20.5,13.8 23.8,10.1 25.8,9.1C26.4,8.8 27.1,8.4 27.3,8.1C27.8,7.5 30.9,6 31.6,6C32.5,6 32.7,6.7 32,7.3C31.3,7.9 30,8.7 28.4,9.8C27.8,10.2 27.3,10.6 27.2,10.7C27.2,10.9 26.8,11.6 26.2,12.4C25.2,13.8 24,16.1 24,16.8C24,16.9 23.6,17.9 23.1,19C22.6,20 22.1,21.5 22,22.2C21.9,23 21.6,24 21.4,24.6C21.1,25.3 21,26.7 21,33.4L21,41.4L21.7,43.4C22.5,45.6 22.9,46 24.6,46C25.1,46 25.9,45.8 26.4,45.6C27,45.3 28.4,45.1 30.2,45C32.9,44.9 33.3,44.8 35.1,43.9C36.1,43.4 37.3,43 37.7,43C38.1,43 39.1,42.8 39.7,42.5C41.5,41.8 44.5,41.8 46.3,42.5C46.9,42.8 47.8,43 48.3,43C48.7,43 49.6,43.2 50.3,43.5C50.9,43.8 52.1,44 52.8,44C53.4,44 54.6,44.2 55.3,44.5C56.1,44.8 57.1,45 58.3,45C59.3,45 60.4,45.2 60.9,45.4C63.3,46.4 63.8,45.3 61.8,43.5C59.3,41.3 55.3,39 53.8,39C53.4,39 52.4,38.8 51.8,38.5C50.6,38.1 49.9,38 45.7,38C39.5,38 39,37.7 39,34.5C39,33.3 39.2,32.6 39.9,31.1C40.3,30.1 40.8,28.8 41,28.3C41.1,27.8 41.8,26.2 42.5,24.8C43.2,23.4 43.8,22 43.9,21.6C44.2,20.1 45.3,18.2 46.3,17C46.9,16.4 47.7,15.5 48,15.1C48.3,14.5 49.2,13.9 50.3,13.3C51.3,12.8 52.4,12.2 52.8,11.8C53.3,11.5 53.9,11.2 54.4,11.2C55.2,11.2 55.2,11.3 52,14.6C48.7,17.9 48,18.9 48,20.2C48,20.6 47.5,22.2 47,23.8C46.5,25.3 46,26.9 46,27.3C46,27.7 45.8,28.6 45.5,29.3C44.9,30.9 44.8,32.5 45.5,33.3C45.9,33.9 46.1,33.9 50.7,34C55.7,34.1 55.9,34.2 57.1,35.5C57.5,35.9 58.3,36.5 58.8,36.8C59.4,37.1 60.3,37.8 61,38.4C62,39.3 64.5,40.8 66.3,41.5C67,41.7 67.1,41.7 67.8,41C68.2,40.5 68.5,40.1 68.5,40C68.5,39.7 70.4,38.8 71,38.8C71.7,38.7 71.8,39.1 71.5,40.1C71.2,40.8 71.2,41.1 71.5,41.7C72.3,43.7 73.2,44.1 75.1,43.4C76.6,42.8 78,42.9 79.3,43.8C80.5,44.6 81,44.5 83.1,43.4C84.1,42.9 85.7,42.9 87,43.4C88.3,43.9 89.1,43.6 89.6,42.4C90.2,41.1 90.1,40.2 89.4,38.9C89,38.3 88.8,37.7 88.8,37.6C88.8,37.4 90,37.5 90.1,37.8C90.2,37.9 91.1,38.6 92.1,39.4C93.3,40.2 94,41 94.1,41.4C94.3,42.2 94.9,42.2 96.7,41.1C97.5,40.5 98.7,39.8 99.4,39.4C100,39 101.6,37.7 102.7,36.6C103.9,35.5 105.1,34.4 105.4,34.3C105.8,34.1 107.6,34 110.2,34C115.2,34 116.1,33.8 116.6,32.4C117,31.6 117,31.4 116.5,30.2C116.2,29.6 116,28.5 116,27.9C116,26.7 114,20.4 113,18.2C112.4,17 107.9,12.4 106.6,11.7C105.6,11.2 105.5,10.4 106.3,10.1C107.1,9.8 110,11.4 111.6,13C112.5,13.8 113.6,14.7 114.2,15.1C115.5,15.7 116.5,17.3 117,19.3C117.2,19.9 118.1,21.9 119,23.9C120,25.8 120.9,27.8 121,28.3C121.2,28.8 121.7,30.1 122.1,31.1C122.8,32.6 123,33.3 123,34.5C123,37.8 122.6,38 115.9,38C110.8,38 110.7,38 108.4,38.8C107.2,39.2 105.9,39.7 105.6,40C105.3,40.2 104.6,40.8 104,41.2C99.8,43.8 99,44.4 99,45.1C99,46.1 100.7,46.3 102.8,45.5C103.4,45.2 104.6,45 105.2,45C105.9,45 107.1,44.8 107.7,44.5C108.4,44.2 109.6,44 110.2,44C110.9,44 112.1,43.8 112.7,43.5C113.4,43.2 114.3,43 114.7,43C115.2,43 116.1,42.8 116.7,42.5C119.4,41.5 122.8,42 127.2,44C128.1,44.5 129.5,44.9 130.2,45C131,45.1 132,45.4 132.6,45.6C133.1,45.8 134,46 134.7,46C135.4,46 136.4,46.2 137,46.4C138.9,47.1 140,45.9 140,43.3C140,42.6 140.2,41.4 140.5,40.8C141,39.6 141,38.9 141,33C141,27.1 141,26.4 140.5,25.3C140.2,24.6 140,23.5 140,22.8C140,21.5 138.9,18.2 137.6,15.4C136.8,13.7 136.2,12.9 134.1,10.7C131.5,8 131.1,7.2 132.1,7C132.9,6.9 133.6,7.2 134.8,8.1C135.4,8.6 136,9 136.2,9C136.8,9 141.4,13.7 142.1,15.1C142.9,16.8 145,23 145,23.8C145,24.2 145.2,25.1 145.5,25.7C145.9,26.7 146,27.6 146,29.3C146,30.9 146.1,31.8 146.5,32.8C146.8,33.6 147,34.6 147,35.8C147,36.9 147.2,37.9 147.5,38.8C147.9,39.9 148,40.6 148,44.5C148,50.3 148,50.3 145,51.2C144.5,51.4 143.7,51.9 143.2,52.4C141.4,54.3 140,54.5 137.1,53.1C136.1,52.7 135,52.2 134.6,52.1C134.2,52 132.7,51.4 131.3,50.7C126,48.2 125.1,48 118.9,48C114.1,48 113.4,48.1 112.2,48.5C111.2,48.9 110.4,49 107.2,49C104.4,49 103.3,49.1 102.5,49.4C101.9,49.6 100.8,49.9 100.1,50.1C98.8,50.3 98.6,50.4 98.6,51C98.6,51.7 99.2,51.9 100.9,52C101.5,52 102.6,52.2 103.3,52.5C103.9,52.8 105.1,53 105.8,53C106.4,53 107.6,53.2 108.3,53.5C109.4,53.9 110.1,54 114.3,54L119,54L120.9,54.9C121.9,55.3 123.1,55.8 123.7,56C124.9,56.3 126.9,57.3 127.6,58C127.9,58.2 129.4,59.1 130.9,59.9C132.5,60.7 134.1,61.6 134.5,61.9C134.9,62.2 137.3,63.6 140,64.9C142.6,66.2 145.1,67.5 145.4,67.9C145.8,68.2 146.9,68.9 147.9,69.4C148.9,69.9 150.1,70.5 150.4,70.8C150.8,71.2 151.6,71.7 152.3,72.1C154,73.1 155.6,74.9 156.9,77.6C158.4,80.8 158.4,80.9 156.2,82.6C154.4,83.9 154,84.2 151.6,85.6C150,86.6 141.9,94.6 141.3,95.8C141,96.2 140.5,97 140.1,97.6C138.3,99.7 134,110.3 134,112.4C134,112.7 133.8,113.6 133.5,114.3C133.2,115.1 133,116.1 133,117.3C133,118.4 132.8,119.4 132.5,120.3C132.2,120.9 132,121.8 132,122.3C132,122.7 131.8,123.6 131.5,124.3C131.2,125.1 131,126.1 131,127.3C131,128.4 130.8,129.4 130.5,130.3C130.2,130.9 130,132.1 130,132.8C130,133.4 129.8,134.6 129.5,135.3C129.1,136.2 129,137.1 129,139.3C129,141.4 128.9,142.3 128.5,143.3C128.1,144.2 128,145.1 128,146.8C128,148.4 127.9,149.3 127.5,150.3C127.1,151.3 127,152.1 127,155.8C127,159.4 126.9,160.2 126.5,161.3C126.1,162.3 126,163.1 126,166.7C126,169.4 125.9,171.2 125.7,171.7C125.3,172.7 125.3,173.5 125,200.4C124.9,214.1 124.8,225.4 124.8,225.4C124.5,225.9 124.2,225.2 124.2,224C124.2,222.9 124.1,222.2 123.6,221.2L123,220L123,203.1C123,186.8 123,186.1 122.5,185.1C121.8,183.7 121.8,178.3 122.5,176.9C123,175.9 123,175.2 123,160.9C123,146.8 123,146 123.5,144.8C123.9,143.8 123.9,143.4 123.7,142.5C123.5,141.8 123.5,141.2 123.7,140.4C123.9,139.8 124,137.6 124,135.6C124,132.6 124.1,131.8 124.5,130.8C124.9,129.6 125,128.9 125,124.3C125,119.6 125.1,118.9 125.5,117.8C125.8,117.1 126,115.9 126,115.3C126,114.6 126.2,113.4 126.5,112.8C126.9,111.8 127,110.9 127,109.3C127,107.6 127.1,106.7 127.5,105.8C127.8,104.9 128,103.9 128,102.8C128,101.6 128.2,100.6 128.5,99.8C128.8,99.1 129,98.2 129,97.8C129,97.3 129.2,96.4 129.5,95.8C129.8,95 130,93.9 130,93.2C130,91.8 130.5,91 131.3,91C131.8,91 134.7,89.6 135.5,88.9C135.9,88.5 136.7,88.1 137.3,88C139.4,87.4 141.1,86.3 143,84.3C146.3,80.9 146.7,78.5 144.2,77.2C143.7,76.9 142.7,76.2 142,75.6C141.4,75 140,74.1 139,73.6C138,73.1 136.7,72.2 136.1,71.7C135.1,70.8 134,70 131.7,68.6C131.3,68.3 130.4,67.8 129.8,67.3C129.2,66.9 128,66.1 127,65.6C126.1,65.1 124.9,64.4 124.4,64C123.9,63.6 123.3,63.3 123.2,63.3C123.1,63.3 122.5,62.8 121.9,62.4C121.1,61.8 119.8,61.2 118,60.6C116.6,60.1 114.6,59.4 113.8,59C112.9,58.5 111.5,58.1 110.8,58C110,57.9 109,57.6 108.4,57.4C107.2,56.9 99,56.8 98,57.3C96.4,58.1 97.9,59.8 101.9,61.9C103.5,62.7 105.1,63.5 105.4,63.9C105.8,64.2 108.2,65.5 110.7,66.8C115.1,69 115.3,69.1 116.4,70.6C118.5,73.4 118.9,75.2 117.8,77.7C117.3,78.7 117,79.8 117,80.2C117,80.6 116.8,81.6 116.5,82.3C116.2,82.9 116,83.8 116,84.2C116,84.5 115.3,86.8 114.5,89.2C113.6,92 113,94.1 113,94.8C113,95.4 112.6,97.1 112,98.8C111.5,100.3 111,101.9 111,102.2C111,102.5 110.3,104.8 109.5,107.2C108.5,110.1 108,112.1 108,112.8C108,113.5 107.8,114.6 107.5,115.3C107.2,115.9 107,116.8 107,117.3C107,117.7 106.8,118.6 106.5,119.3C106.2,119.9 106,121.1 106,121.8C106,122.4 105.8,123.6 105.5,124.3C105.1,125.2 105,126.1 105,128.3C105,130.4 104.9,131.3 104.5,132.3C104,133.4 104,134.1 104,139.8C104,145.4 104,146.1 103.5,147.3C103.1,148.3 103,149.1 103,151.8C103,154.4 102.9,155.2 102.5,156.3C102,157.5 102,158.1 102,169.3C102,180.3 102,181.1 101.5,182.2C101,183.4 101,183.5 101.4,184.7C101.8,185.7 101.8,186 101.5,186.9C101.2,187.8 101,194.3 100.8,222.3C100.8,222.9 100.6,223.9 100.4,224.5C100,225.4 100,228.8 100,250.3L100,275L99.4,276.2C99,277 98.8,277.9 98.8,278.5C98.8,279.1 99,280 99.4,280.7C100,282 100,282.1 100,288C100,293.1 99.9,294 99.6,294.4C99.1,294.9 98.9,294.9 98.4,294.3C98,294 98,292.8 98,283.7C98.1,273.6 98.1,273.4 97.5,272.2L97,271L97,214.5C97,158.6 97,158 97.5,156.8C98,155.6 98,154.9 98,148.3C98,141.6 98,140.9 98.5,139.8C98.9,138.7 99,137.9 99,134.2C99,130.6 99.1,129.8 99.5,128.8C99.9,127.8 100,126.9 100,124.8C100,122.6 100.1,121.7 100.5,120.8C100.8,119.9 101,118.9 101,117.8C101,116.6 101.2,115.6 101.5,114.8C101.9,113.8 102,112.9 102,111.3C102,109.6 102.1,108.7 102.5,107.8C102.9,106.7 103,105.9 103,102.8C103,99.6 103.1,98.8 103.5,97.8C103.8,96.9 104,95.9 104,94.7C104,92.7 104.2,92.3 105.6,90.8C106.9,89.3 108.2,86.6 109.7,82.1L110.9,78.5L110.2,76.3C109.5,74.3 109.3,74 107.8,72.4C106.9,71.5 105.7,70.5 105.2,70.2C104.6,69.9 103.7,69.2 103,68.6C102.4,68 101,67.1 100,66.6C99,66.1 97.6,65.1 96.8,64.5C94.9,62.7 93.1,62.8 92.3,64.6C92,65.4 92,65.6 92.5,66.8C92.8,67.5 93.6,68.8 94.2,69.6C94.8,70.4 95.2,71.1 95.2,71.2C95.2,71.3 95.6,71.9 96,72.4C97.9,74.8 98.4,77 97.5,79.3C97.2,79.9 97,80.8 97,81.3C97,81.7 96.8,82.6 96.5,83.3C96.2,83.9 96,85 96,85.7C96,86.4 95.6,88 95,89.8C94.4,91.4 94,93.1 94,93.7C94,94.9 90.2,106.5 89,109.2C88.6,110 88.2,111.2 88,111.7C87.9,112.3 87.6,113 87.4,113.4C87.2,113.8 87,114.6 87,115.1C87,116.3 86.4,117.3 85.8,117.3C85.3,117.2 85,116.8 85,115.8C85,113.3 82.1,112.3 79,113.6C77.6,114.3 77,115 77,116C77,116.8 76.7,117.2 76.2,117.2C75.7,117.2 75,116.4 75,115.7C75,115.4 74.8,114.8 74.6,114.4C74,113 70,100.8 70,100.2C70,99.9 69.3,97.7 68.5,95.3C67.7,92.8 67,90.5 67,90.2C67,89.8 66.8,88.9 66.5,88.3C66.2,87.6 66,86.7 66,86.3C66,85.8 65.8,84.9 65.5,84.3C65.2,83.6 65,82.4 65,81.8C65,81.1 64.8,79.9 64.5,79.3C63.9,77.8 63.8,75.3 64.4,74.3C64.5,73.9 65.1,73.3 65.5,72.9C65.9,72.5 66.5,71.8 66.7,71.4C66.9,71 67.5,70.1 68,69.4C68.5,68.7 69.2,67.5 69.5,66.8C70,65.6 70,65.4 69.6,64.6C69,63.2 68.3,63 66.4,64C65.6,64.4 64.3,65.2 63.6,65.6C62.9,66.1 61.9,66.8 61.2,67.3C60.6,67.7 59.7,68.3 59.2,68.6C58.8,69 57.8,69.6 57.1,70C55.2,71.1 52.2,74.3 51.6,76L51,77.4L52.3,81.1C53.6,84.9 56.9,92.1 58.1,93.5C58.8,94.4 58.9,95 58.4,96.5C57.9,97.9 57.9,99.2 58.5,100.8C58.9,101.7 59,102.6 59,104.8C59,106.9 59.1,107.8 59.5,108.8C59.9,109.7 60,110.6 60,112.3C60,113.9 60.1,114.8 60.5,115.8C60.9,116.8 61,117.6 61,121.3C61,124.9 61.1,125.7 61.5,126.8C61.9,127.7 62,128.6 62,130.8C62,132.9 62.1,133.8 62.5,134.8C62.9,135.8 63,136.6 63,139.8C63,142.9 63.1,143.7 63.5,144.8C64,146 64,146.6 64,158.2C64,169.9 64,170.5 64.5,171.8C65.2,173.4 65.2,179.4 64.6,181C64.2,181.9 64.2,182.1 64.6,183C65,183.9 65,185.9 65,200.5C65,216.4 65,217 64.5,218.2C64.2,219 64,220.1 64,221C64,221.9 64.2,223 64.5,223.8C64.9,224.6 65,225.6 65,227C65,228.4 64.9,229.4 64.5,230.2C64,231.5 64,232.1 64,258.3L64,285L63.4,286.2C62.8,287.5 62.8,287.6 62.8,293.5C62.8,296.8 62.7,299.5 62.5,299.5C62.4,299.5 62.3,295.2 62.2,289.9Z"/></symbol>
+    <symbol id="olhos" viewBox="0 0 100 40">
+      <path d="M45 35 C44 21 36 9 22 6 C13 4 6 6 4 10 C7 23 25 33 45 35 Z" fill="#fff" stroke="#0B0B12" stroke-width="4.5" stroke-linejoin="round"/>
+      <path d="M55 35 C56 21 64 9 78 6 C87 4 94 6 96 10 C93 23 75 33 55 35 Z" fill="#fff" stroke="#0B0B12" stroke-width="4.5" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="rabisco" viewBox="0 0 34 12"><path d="M2 6 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 6 2"/></symbol>
+  </defs>
+</svg>
+
+<canvas id="teia-tela" aria-hidden="true"></canvas>
+<div class="sentido-tela" aria-hidden="true">
+  <svg class="st-lado" viewBox="0 0 90 240"><g transform="translate(8 62) rotate(-28)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g><g transform="translate(8 120)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g><g transform="translate(8 178) rotate(28)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g></svg>
+  <svg class="st-lado st-dir" viewBox="0 0 90 240"><g transform="translate(8 62) rotate(-28)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g><g transform="translate(8 120)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g><g transform="translate(8 178) rotate(28)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g></svg>
+</div>
+
+<header class="cabecalho">
+  <a class="logo" href="#topo" aria-label="Cine Teia, voltar ao início"><span>CINE</span><svg aria-hidden="true"><use href="#aranha-curta"/></svg><span>TEIA</span></a>
+  <nav class="nav" aria-label="Seções">
+    <a href="#topo">Elenco</a><i aria-hidden="true">.</i>
+    <a href="#numeros">A revista</a><i aria-hidden="true">.</i>
+    <a href="#criadores">Criadores</a><i aria-hidden="true">.</i>
+    <a href="#atores">Atores</a>
+    <span class="nav-ponto" aria-hidden="true"></span>
+  </nav>
+  <div class="acoes">
+    <button class="btn-icone btn-som" type="button" aria-pressed="false" aria-label="Ligar o som da teia" title="Som da teia">
+      <svg viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path class="onda" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="mudo" d="M17 9.5l5 5M22 9.5l-5 5"/></svg>
+    </button>
+    <button class="btn-menu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><span class="tracos" aria-hidden="true"><i></i><i></i></span></button>
+  </div>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <img class="menu-teia" src="img/teia.webp" alt="" aria-hidden="true">
+  <ol>
+    <li><a href="#topo" tabindex="-1">Elenco</a></li>
+    <li><a href="#numeros" tabindex="-1">A revista</a></li>
+    <li><a href="#criadores" tabindex="-1">Criadores</a></li>
+    <li><a href="#atores" tabindex="-1">Atores</a></li>
+    <li><a href="#final" tabindex="-1">Amigão da vizinhança</a></li>
+  </ol>
+</div>
+
+<main>
+<!-- ================= HERÓI ================= -->
+<section class="heroi" id="topo" data-tema="escuro">
+  <div class="heroi-palco">
+    <div class="heroi-fundo" aria-hidden="true">
+      <img class="heroi-teia" src="img/teia.webp" alt="" width="736" height="1308">
+      <svg class="heroi-mira" preserveAspectRatio="none" viewBox="0 0 100 100"><line x1="0" y1="53" x2="100" y2="53"/><line x1="50" y1="0" x2="50" y2="100"/></svg>
+    </div>
+    <div class="heroi-topo">
+      <ul class="tags" aria-label="Gêneros"><li>Ação</li><li>Aventura</li><li>HQ</li></ul>
+      <p class="aparicao">1ª aparição <b>[ago. 1962]</b></p>
+    </div>
+    <div class="circulo" aria-hidden="true"></div>
+    <div class="pendulo" aria-hidden="true"><span class="pendulo-fio"></span><svg><use href="#aranha"/></svg></div>
+    <div class="heroi-centro">
+      <ul class="elenco" aria-label="Atores que viveram o Homem-Aranha no cinema">
+        <li>Tobey Maguire</li><li>Andrew Garfield</li><li aria-hidden="true"></li><li>Tom Holland</li><li>Shameik Moore</li>
+      </ul>
+      <h1 class="titulo"><span class="linha">Homem-</span><span class="linha">Aranha</span></h1>
+      <span class="ano-vertical" aria-hidden="true">[1962]</span>
+    </div>
+    <svg class="corda" aria-hidden="true"><path class="corda-fio"/><path class="corda-gotas"/></svg>
+    <img class="fios" src="img/fios.webp" alt="" aria-hidden="true" width="360" height="640">
+    <div class="heroi-figura">
+      <img class="heroi-img" src="img/aranha-agachado.webp" width="654" height="1011" alt="Homem-Aranha agachado no alto de um poste, de uniforme vermelho e azul" fetchpriority="high">
+      <svg class="sentido" viewBox="-100 -100 200 200" aria-hidden="true">
+        <g transform="rotate(-170) translate(52 0)"><use href="#rabisco" width="34" height="12" y="-6"/></g>
+      </svg>
+    </div>
+    <div class="historia">
+      <p class="rotulo"><i class="bolinha"></i>A história</p>
+      <p><b>PARTE A.</b> Peter Parker, um estudante do Queens, é picado por uma aranha radioativa e ganha a força e a agilidade dela.</p>
+    </div>
+    <div class="heroi-acoes">
+      <p class="dica"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 2v12M2 8h12M3.8 3.8l8.4 8.4M12.2 3.8l-8.4 8.4"/></svg><span class="dica-txt">Clique em qualquer lugar: sai teia</span></p>
+      <div class="linha-acao">
+        <a class="pilula" href="#atores">Conhecer os atores</a>
+        <span class="selo-num">01</span>
+        <div class="selo" aria-hidden="true">
+          <svg class="anel" viewBox="0 0 120 120"><defs><path id="anel1" d="M60,60 m-47,0 a47,47 0 1,1 94,0 a47,47 0 1,1 -94,0"/></defs><text><textPath href="#anel1" textLength="292" lengthAdjust="spacing">Com grandes poderes vêm grandes responsabilidades •</textPath></text></svg>
+          <div class="selo-miolo"><svg viewBox="10 0 142 132"><use href="#aranha-curta"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NÚMEROS ================= -->
+<section class="numeros" id="numeros" data-tema="escuro" aria-labelledby="numeros-titulo">
+  <div class="fitas" aria-hidden="true">
+    <div class="fita fita-azul"><div class="trilho" data-dir="1"></div></div>
+    <div class="fita fita-vermelha"><div class="trilho" data-dir="-1"></div></div>
+  </div>
+  <h2 class="sr-only" id="numeros-titulo">A revista que começou tudo</h2>
+  <div class="numeros-grade">
+    <div class="editora">
+      <p class="rotulo"><i class="bolinha"></i>Editora</p>
+      <p class="editora-nome">Marvel Comics<small>Revista Amazing Fantasy</small></p>
+      <div class="contador"><span class="selo-num contador-num">01</span><span class="pontos" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span></div>
+      <p class="pilha-dica">Arraste a foto de cima: ela volta presa na teia</p>
+    </div>
+    <ul class="circulos">
+      <li class="circ circ-branco"><small>Edição</small><strong>#15</strong></li>
+      <li class="circ circ-vermelho"><small>Preço</small><strong>12¢</strong></li>
+      <li class="circ circ-azul"><small>Ano</small><strong>1962</strong></li>
+    </ul>
+    <blockquote class="frase">
+      <p>“Com grandes poderes vêm grandes responsabilidades.”</p>
+      <footer>A frase fecha a última página de Amazing Fantasy #15, a revista de 1962 em que o herói apareceu pela primeira vez.</footer>
+    </blockquote>
+  </div>
+  <div class="pilha-area">
+    <button class="redondo voltar" type="button" aria-label="Foto anterior"><svg viewBox="0 0 16 16"><path d="M11 3L4 8l7 5z"/></svg></button>
+    <div class="pilha" role="group" aria-label="Galeria de fotos do Homem-Aranha. Arraste a foto de cima ou use os botões.">
+      <svg class="pilha-fio" aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke"/></svg>
+      <figure class="carta"><img src="img/card-selfie.webp" alt="Homem-Aranha fazendo sinal de paz numa selfie à noite, no telhado" width="640" height="800" loading="lazy"><figcaption>Selfie no telhado</figcaption></figure>
+      <figure class="carta"><img src="img/card-grana.webp" alt="Homem-Aranha segurando um maço de dinheiro como se fosse um telefone" width="640" height="843" loading="lazy"><figcaption>Dia de pagamento</figcaption></figure>
+      <figure class="carta"><img src="img/card-coracao.webp" alt="Homem-Aranha fazendo um coração com as mãos, fundo preto" width="640" height="1043" loading="lazy"><figcaption>Amigão da vizinhança</figcaption></figure>
+      <figure class="carta"><img src="img/card-telhado.webp" alt="Homem-Aranha agachado no alto de um poste, céu azul ao fundo" width="640" height="1138" loading="lazy"><figcaption>De vigia no poste</figcaption></figure>
+    </div>
+    <button class="redondo avancar" type="button" aria-label="Próxima foto"><svg viewBox="0 0 16 16"><path d="M5 3l7 5-7 5z"/></svg></button>
+    <p class="sr-only" id="pilha-status" aria-live="polite"></p>
+  </div>
+</section>
+
+<div class="claras" data-tema="claro">
+<!-- ================= CRIADORES ================= -->
+<section class="criadores" id="criadores" aria-labelledby="criado-titulo">
+  <div class="cantos" aria-hidden="true"><i class="te"></i><i class="td"></i></div>
+  <div class="bloco">
+    <p class="rotulo"><i class="bolinha"></i>1ª aparição</p>
+    <p><b>PARTE B.</b> Peter Parker estreou em Amazing Fantasy #15, com capa de agosto de 1962. Era a última edição da revista, e o herói ganhou título próprio logo depois.</p>
+  </div>
+  <h2 class="criado" id="criado-titulo" aria-label="Criado por Stan Lee e Steve Ditko">
+    <span class="linha linha1"><span class="pt">Criado</span><span class="por">por</span><span class="pt linha1b">Stan Lee &amp;</span></span>
+    <span class="linha linha2"><span class="pt">Steve Ditko</span></span>
+  </h2>
+  <p class="galeria">Galeria <b class="galeria-num">01</b>/04</p>
+</section>
+
+<!-- ================= ATORES ================= -->
+<section class="atores" id="atores" aria-labelledby="atores-titulo">
+  <div class="colunas" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <div class="atores-conteudo">
+    <ol class="numeracao" aria-label="Escolha o ator">
+      <li><button type="button" aria-pressed="true" data-i="0" aria-label="01, Tobey Maguire">01</button></li>
+      <li><button type="button" aria-pressed="false" data-i="1" aria-label="02, Andrew Garfield">02</button></li>
+      <li><button type="button" aria-pressed="false" data-i="2" aria-label="03, Tom Holland">03</button></li>
+      <li><button type="button" aria-pressed="false" data-i="3" aria-label="04, Shameik Moore">04</button></li>
+    </ol>
+    <h2 class="atores-titulo" id="atores-titulo">Homem-Aranha no cinema: quem vestiu a máscara</h2>
+    <div class="seletor">
+      <div class="avatares" role="group" aria-label="Atores">
+        <button type="button" aria-pressed="true" data-i="0" title="Tobey Maguire">TM</button>
+        <button type="button" aria-pressed="false" data-i="1" title="Andrew Garfield">AG</button>
+        <button type="button" aria-pressed="false" data-i="2" title="Tom Holland">TH</button>
+        <button type="button" aria-pressed="false" data-i="3" title="Shameik Moore">SM</button>
+      </div>
+      <div class="setas">
+        <button type="button" class="ator-ant" aria-label="Ator anterior"><svg viewBox="0 0 28 12"><path d="M27 6H2M7 1L2 6l5 5"/></svg></button>
+        <button type="button" class="ator-prox" aria-label="Próximo ator"><svg viewBox="0 0 28 12"><path d="M1 6h25M21 1l5 5-5 5"/></svg></button>
+      </div>
+    </div>
+    <div class="atores-meio">
+      <div class="lado">
+        <p class="rotulo"><i class="bolinha"></i>Queens</p>
+        <p><b>PARTE C.</b> Peter Parker mora com a tia May no Queens, em Nova York, e divide a vida entre a escola, o trabalho e o uniforme.</p>
+        <div class="ladrilho" aria-hidden="true"><img src="img/card-selfie.webp" alt="" loading="lazy" width="640" height="800"><img src="img/card-telhado.webp" alt="" loading="lazy" width="640" height="1138"></div>
+      </div>
+      <div class="ficha-palco">
+        <article class="ficha" aria-live="polite">
+          <span class="ficha-selo" aria-hidden="true"><svg viewBox="10 0 142 132"><use href="#aranha-curta"/></svg></span>
+          <p class="rotulo">Ator</p>
+          <h3 class="ficha-nome">Tobey Maguire</h3>
+          <div class="ficha-grade">
+            <div class="ficha-teia"><img src="img/teia.webp" alt="" aria-hidden="true" loading="lazy" width="736" height="1308"><strong class="ficha-num">01</strong></div>
+            <div><small>Personagem</small><strong class="ficha-personagem">Peter Parker</strong></div>
+            <div><small>Estreia</small><strong class="ficha-estreia">2002</strong></div>
+          </div>
+          <div class="ficha-grade" style="margin-top:8px;grid-template-columns:1fr"><div><small>Direção</small><strong class="ficha-direcao">Sam Raimi</strong></div></div>
+          <p class="ficha-filmes">Homem-Aranha (2002), Homem-Aranha 2 (2004) e Homem-Aranha 3 (2007).</p>
+          <button type="button" class="ficha-botao">Próximo Aranha <svg viewBox="10 0 142 132" aria-hidden="true"><use href="#aranha-curta"/></svg></button>
+        </article>
+      </div>
+      <div class="lado lado-dir">
+        <p class="rotulo"><i class="bolinha"></i>Clarim Diário</p>
+        <p><b>PARTE D.</b> Pra pagar as contas, Peter vende fotos do próprio Homem-Aranha pro jornal de J. Jonah Jameson, que vive chamando o herói de ameaça.</p>
+        <div class="ladrilho" aria-hidden="true"><img src="img/card-grana.webp" alt="" loading="lazy" width="640" height="843"><img src="img/card-coracao.webp" alt="" loading="lazy" width="640" height="1043"></div>
+      </div>
+    </div>
+    <div class="selo3" aria-hidden="true">
+      <span class="selo-num">03</span>
+      <div class="selo">
+        <svg class="anel" viewBox="0 0 120 120"><defs><path id="anel2" d="M60,60 m-47,0 a47,47 0 1,1 94,0 a47,47 0 1,1 -94,0"/></defs><text><textPath href="#anel2" textLength="292" lengthAdjust="spacing">Seu amigão da vizinhança • Queens, Nova York •</textPath></text></svg>
+        <div class="selo-miolo"><svg viewBox="10 0 142 132"><use href="#aranha-curta"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL ================= -->
+<section class="final" id="final" aria-labelledby="final-titulo">
+  <svg class="final-aneis" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="20" vector-effect="non-scaling-stroke"/><circle cx="50" cy="50" r="32" vector-effect="non-scaling-stroke"/><circle cx="50" cy="50" r="46" vector-effect="non-scaling-stroke"/></svg>
+  <div class="cantos" aria-hidden="true"><i class="be"></i><i class="bd"></i></div>
+  <p class="rotulo">Seu amigão da vizinhança</p>
+  <h2 class="final-titulo" id="final-titulo"><span class="linha">Homem-</span><span class="linha">Aranha</span></h2>
+  <div class="final-lados" aria-hidden="true"><span>Queens</span><span>Nova York</span></div>
+  <div class="final-figura">
+    <img class="final-img" src="img/aranha-coracao.webp" alt="Homem-Aranha fazendo um coração com as mãos" width="735" height="1036" loading="lazy">
+  </div>
+  <p class="final-dica">Clique aqui: a teia sai em forma de coração</p>
+</section>
+</div>
+</main>
+
+<footer class="rodape">
+  <p>Fan site conceito, sem fins comerciais. Homem-Aranha é personagem da Marvel Comics, criado por Stan Lee e Steve Ditko. As fotos são de fãs e servem só de referência.</p>
+  <a href="#topo">Voltar ao topo</a>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous"></script>
+<script>
+/* ====== Homem-Aranha · Cine Teia (fan site conceito) ====== */
+(function () {
+  'use strict';
+  var $ = function (s, el) { return (el || document).querySelector(s); };
+  var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
+  var raiz = document.documentElement;
+  var embed = /[?&]embed\b/.test(location.search);
+  var dentro = window.parent !== window;
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fino = matchMedia('(pointer: fine)').matches;
+  var G = window.gsap, ST = window.ScrollTrigger;
+  var temGsap = !!(G && ST);
+  if (temGsap) G.registerPlugin(ST);
+  var toque = !fino;
+  if (toque) { $('.dica-txt').textContent = 'Toque em qualquer lugar: sai teia'; $('.final-dica').textContent = 'Toque aqui: a teia sai em forma de coração'; }
+
+  /* ---------- laço único: cada tarefa devolve true pra continuar ---------- */
+  var tarefas = [], rodando = false;
+  function agenda(fn) { if (tarefas.indexOf(fn) < 0) tarefas.push(fn); if (!rodando) { rodando = true; requestAnimationFrame(passo); } }
+  function passo(t) {
+    var vivas = [];
+    for (var i = 0; i < tarefas.length; i++) if (tarefas[i](t)) vivas.push(tarefas[i]);
+    tarefas = vivas;
+    if (tarefas.length) requestAnimationFrame(passo); else rodando = false;
+  }
+
+  /* ---------- letras ---------- */
+  function separa(el) {
+    var txt = el.textContent, out = [];
+    el.textContent = '';
+    for (var i = 0; i < txt.length; i++) {
+      var s = document.createElement('span');
+      s.className = 'l'; s.setAttribute('aria-hidden', 'true');
+      s.textContent = txt[i] === ' ' ? ' ' : txt[i];
+      el.appendChild(s); out.push(s);
+    }
+    return out;
+  }
+  // título: letra com índice dentro da própria linha (no celular são 2 linhas)
+  function separaLinhas(sel) {
+    var todas = [];
+    $$(sel).forEach(function (ln) { todas = todas.concat(separa(ln)); });
+    return todas;
+  }
+  // distância (px) do centro da letra até o centro do título, pelo layout (transform não interfere)
+  function desvio(el) { var p = el.offsetParent || el.parentNode; return el.offsetLeft + el.offsetWidth / 2 - p.clientWidth / 2; }
+  var titulo = $('.titulo'); titulo.setAttribute('aria-label', 'Homem-Aranha');
+  var letrasTitulo = separaLinhas('.titulo .linha');
+  var letrasElenco = [];
+  $$('.elenco li').forEach(function (li) { if (li.textContent.trim()) { li.setAttribute('aria-label', li.textContent); letrasElenco = letrasElenco.concat(separa(li)); } });
+  var letrasCriado = separaLinhas('.criado .pt');
+  $('.final-titulo').setAttribute('aria-label', 'Homem-Aranha');
+  var letrasFinal = separaLinhas('.final-titulo .linha');
+
+  /* ---------- fitas: monta os trilhos ---------- */
+  (function () {
+    var azul = '', verm = '';
+    for (var i = 0; i < 16; i++) {
+      azul += '<svg class="mini' + (i % 2 ? ' claro' : '') + '" viewBox="10 0 142 132"><use href="#aranha-curta"/></svg>';
+      verm += '<svg class="olhos" viewBox="0 0 100 40"><use href="#olhos"/></svg>';
+    }
+    $$('.trilho').forEach(function (t) { var h = t.dataset.dir === '1' ? azul : verm; t.innerHTML = h + h; });
+  })();
+
+  /* ---------- som (Web Audio, só toca depois que a pessoa liga) ---------- */
+  var som = {
+    on: false, ctx: null, ruido: null,
+    prepara: function () {
+      if (!this.ctx) {
+        var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+        this.ctx = new AC();
+        var n = Math.floor(this.ctx.sampleRate * 0.35);
+        this.ruido = this.ctx.createBuffer(1, n, this.ctx.sampleRate);
+        var d = this.ruido.getChannelData(0);
+        for (var i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+      }
+      if (this.ctx.state === 'suspended') this.ctx.resume();
+    },
+    thwip: function () {
+      if (!this.on || !this.ctx) return;
+      var c = this.ctx, t = c.currentTime;
+      var src = c.createBufferSource(); src.buffer = this.ruido;
+      var f = c.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 7;
+      f.frequency.setValueAtTime(3600, t); f.frequency.exponentialRampToValueAtTime(480, t + 0.17);
+      var g = c.createGain(); g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.7, t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+      src.connect(f); f.connect(g); g.connect(c.destination); src.start(t); src.stop(t + 0.24);
+    },
+    tic: function () {
+      if (!this.on || !this.ctx) return;
+      var c = this.ctx, t = c.currentTime + 0.01;
+      var o = c.createOscillator(); o.type = 'triangle'; o.frequency.setValueAtTime(1700, t); o.frequency.exponentialRampToValueAtTime(700, t + 0.05);
+      var g = c.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.18, t + 0.005); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.07);
+      o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + 0.08);
+    }
+  };
+  var btnSom = $('.btn-som');
+  btnSom.addEventListener('click', function () {
+    som.on = !som.on; som.prepara();
+    btnSom.setAttribute('aria-pressed', String(som.on));
+    btnSom.setAttribute('aria-label', som.on ? 'Desligar o som da teia' : 'Ligar o som da teia');
+    if (som.on) som.thwip();
+  });
+
+  /* ================= TEIA NO CLIQUE (canvas fixo) ================= */
+  var tela = $('#teia-tela'), ctx = tela.getContext('2d');
+  var TW = 0, TH = 0;
+  function dimensiona() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    TW = innerWidth; TH = innerHeight;
+    tela.width = Math.round(TW * dpr); tela.height = Math.round(TH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  dimensiona();
+  var fios = [], marcas = [];
+  var GRAV = 0.32;
+
+  function criaMarca(x, y, cor, forma) {
+    var n = 8 + Math.floor(Math.random() * 3), R = (toque ? 30 : 34) + Math.random() * 14, raios = [];
+    var giro = Math.random() * Math.PI * 2;
+    for (var i = 0; i < n; i++) raios.push({ a: giro + i * Math.PI * 2 / n + (Math.random() - .5) * .35, r: R * (.78 + Math.random() * .34) });
+    var gotas = [];
+    for (var k = 0; k < 4; k++) { var a = Math.random() * 6.28, d = R * (1.05 + Math.random() * .35); gotas.push({ x: Math.cos(a) * d, y: Math.sin(a) * d, r: 1 + Math.random() * 1.6 }); }
+    marcas.push({ x: x, y: y, cor: cor, forma: forma, raios: raios, R: R, gotas: gotas, t0: performance.now(), vida: 4600 });
+    if (marcas.length > 16) marcas.shift();
+  }
+  // origem do disparo: a mão do herói (se aparece) ou um canto de baixo da tela
+  var heroiImg = $('.heroi-img');
+  function origem(vx) {
+    var r = heroiImg.getBoundingClientRect();
+    if (r.bottom > 90 && r.top < TH - 40) return { x: r.left + r.width * 0.5, y: r.top + r.height * 0.6 };
+    return { x: vx < TW / 2 ? -12 : TW + 12, y: TH + 12 };
+  }
+  function disparar(ox, oy, tx, ty, cor, forma) { // coordenadas da página
+    var d = Math.hypot(tx - ox, ty - oy);
+    fios.push({ ox: ox, oy: oy, tx: tx, ty: ty, cor: cor, forma: forma, t0: performance.now(), dur: Math.min(240, 70 + d * 0.16), pts: null, colou: 0 });
+    if (fios.length > 7) fios.shift();
+    som.thwip();
+    agenda(desenhaTeia);
+  }
+  window.disparaTeia = disparar;
+  function corDe(el) { var s = el && el.closest ? el.closest('[data-tema]') : null; return s && s.dataset.tema === 'claro' ? '#0B0B12' : '#ffffff'; }
+
+  function cordaDeFio(f) { // vira corda (verlet) presa no ponto de impacto
+    var N = 16, pts = [];
+    for (var i = 0; i <= N; i++) {
+      var p = i / N, x = f.tx + (f.ox - f.tx) * p, y = f.ty + (f.oy - f.ty) * p;
+      pts.push({ x: x, y: y, px: x - (f.tx - f.ox) * 0.012 * p, py: y - (f.ty - f.oy) * 0.012 * p });
+    }
+    f.pts = pts; f.L0 = Math.hypot(f.ox - f.tx, f.oy - f.ty) / N; f.colou = performance.now();
+  }
+  function desenhaTeia(agora) {
+    var sy = window.scrollY;
+    ctx.clearRect(0, 0, TW, TH);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    // fios
+    for (var i = fios.length - 1; i >= 0; i--) {
+      var f = fios[i], idade = agora - f.t0;
+      ctx.strokeStyle = f.cor;
+      if (!f.pts) {
+        var p = Math.min(1, idade / f.dur), e = 1 - Math.pow(1 - p, 3);
+        var x = f.ox + (f.tx - f.ox) * e, y = f.oy + (f.ty - f.oy) * e;
+        var nx = -(f.ty - f.oy), ny = f.tx - f.ox, nl = Math.hypot(nx, ny) || 1, onda = Math.sin(p * 9) * 7 * (1 - p);
+        ctx.globalAlpha = .95; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(f.ox, f.oy - sy);
+        ctx.quadraticCurveTo((f.ox + x) / 2 + nx / nl * onda, (f.oy + y) / 2 + ny / nl * onda - sy, x, y - sy); ctx.stroke();
+        if (p >= 1) { cordaDeFio(f); criaMarca(f.tx, f.ty, f.cor, f.forma); som.tic(); }
+        continue;
+      }
+      var vida = agora - f.colou;
+      if (vida > 2200) { fios.splice(i, 1); continue; }
+      var L = f.L0 * (0.22 + 0.78 * Math.exp(-vida / 260)), pts = f.pts, k;
+      for (k = 1; k < pts.length; k++) {
+        var q = pts[k], vx = (q.x - q.px) * 0.985, vy = (q.y - q.py) * 0.985;
+        q.px = q.x; q.py = q.y; q.x += vx; q.y += vy + GRAV;
+      }
+      for (var it = 0; it < 5; it++) {
+        pts[0].x = f.tx; pts[0].y = f.ty;
+        for (k = 1; k < pts.length; k++) {
+          var a = pts[k - 1], b = pts[k], dx = b.x - a.x, dy = b.y - a.y, dist = Math.hypot(dx, dy) || 0.001, dif = (dist - L) / dist;
+          if (k === 1) { b.x -= dx * dif; b.y -= dy * dif; }
+          else { a.x += dx * dif * .5; a.y += dy * dif * .5; b.x -= dx * dif * .5; b.y -= dy * dif * .5; }
+        }
+      }
+      ctx.globalAlpha = Math.max(0, 1 - vida / 2200) * .9; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y - sy);
+      for (k = 1; k < pts.length - 1; k++) ctx.quadraticCurveTo(pts[k].x, pts[k].y - sy, (pts[k].x + pts[k + 1].x) / 2, (pts[k].y + pts[k + 1].y) / 2 - sy);
+      ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y - sy); ctx.stroke();
+    }
+    // marcas (teia grudada)
+    for (var m = marcas.length - 1; m >= 0; m--) {
+      var mk = marcas[m], id = agora - mk.t0;
+      if (id > mk.vida) { marcas.splice(m, 1); continue; }
+      var yv = mk.y - sy;
+      if (yv < -120 || yv > TH + 120) continue;
+      var s = id < 240 ? voltaAtras(id / 240) : 1;
+      var alfa = id > mk.vida - 900 ? (mk.vida - id) / 900 : 1;
+      ctx.save(); ctx.translate(mk.x, yv); ctx.scale(s, s);
+      ctx.globalAlpha = alfa * .92; ctx.strokeStyle = mk.cor; ctx.fillStyle = mk.cor;
+      if (mk.forma === 'coracao') desenhaCoracao(mk); else desenhaRadial(mk);
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+    return fios.length || marcas.length;
+  }
+  function voltaAtras(p) { var c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); }
+  function desenhaRadial(mk) {
+    var rs = mk.raios, n = rs.length, i;
+    ctx.lineWidth = 1.5; ctx.beginPath();
+    for (i = 0; i < n; i++) { ctx.moveTo(0, 0); ctx.lineTo(Math.cos(rs[i].a) * rs[i].r, Math.sin(rs[i].a) * rs[i].r); }
+    ctx.stroke();
+    ctx.lineWidth = 1.1;
+    [.3, .58, .88].forEach(function (fr) {
+      ctx.beginPath();
+      for (var j = 0; j < n; j++) {
+        var A = rs[j], B = rs[(j + 1) % n], am = (A.a + B.a + (j === n - 1 ? Math.PI * 2 : 0)) / 2;
+        var ax = Math.cos(A.a) * A.r * fr, ay = Math.sin(A.a) * A.r * fr, bx = Math.cos(B.a) * B.r * fr, by = Math.sin(B.a) * B.r * fr;
+        var rm = (A.r + B.r) / 2 * fr * .8;
+        if (j === 0) ctx.moveTo(ax, ay);
+        ctx.quadraticCurveTo(Math.cos(am) * rm, Math.sin(am) * rm, bx, by);
+      }
+      ctx.stroke();
+    });
+    mk.gotas.forEach(function (g) { ctx.beginPath(); ctx.arc(g.x, g.y, g.r, 0, 6.29); ctx.fill(); });
+  }
+  function ptCoracao(t, esc) { var s = Math.sin(t); return { x: 16 * s * s * s * esc, y: -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) * esc }; }
+  function desenhaCoracao(mk) {
+    var esc = mk.R / 15, i, p;
+    ctx.lineWidth = 1.4; ctx.beginPath();
+    for (i = 0; i < 12; i++) { p = ptCoracao(i / 12 * Math.PI * 2, esc); ctx.moveTo(0, -1.5 * esc); ctx.lineTo(p.x, p.y); }
+    ctx.stroke();
+    ctx.lineWidth = 1.2;
+    [.35, .68, 1].forEach(function (fr) {
+      ctx.beginPath();
+      for (i = 0; i <= 48; i++) { p = ptCoracao(i / 48 * Math.PI * 2, esc * fr); if (i) ctx.lineTo(p.x, p.y - 1.5 * esc * (1 - fr)); else ctx.moveTo(p.x, p.y - 1.5 * esc * (1 - fr)); }
+      ctx.stroke();
+    });
+  }
+  document.addEventListener('click', function (e) {
+    if (e.button !== 0 && e.pointerType !== 'touch') return;
+    var alvo = e.target;
+    if (alvo.closest('a, button, input, textarea, select, label, .carta, .menu, [contenteditable]')) return;
+    var sy = window.scrollY, o = origem(e.clientX);
+    var forma = alvo.closest('.final') ? 'coracao' : 'radial';
+    disparar(o.x, o.y + sy, e.clientX, e.clientY + sy, corDe(alvo), forma);
+    if (navigator.vibrate && toque) try { navigator.vibrate(12); } catch (er) {}
+  });
+
+  /* ================= SENTIDO ARANHA ================= */
+  // rabiscos em volta da cabeça (gerados aqui pra não repetir no HTML)
+  (function () {
+    var svg = $('.sentido'), h = '';
+    [-178, -150, -122, -58, -30, -2, 24, 156].forEach(function (a) {
+      h += '<g transform="rotate(' + a + ') translate(54 0)"><path d="M0 0 c3 -6 6 -6 8 0 s5 6 8 0 s5 -6 8 0 s5 6 7 2"/></g>';
+    });
+    svg.innerHTML = h;
+  })();
+  var sentido = $('.sentido'), sentidoTela = $('.sentido-tela'), ultimoSentido = 0, ultimoTela = 0;
+  function pisca(el) { el.classList.remove('on'); void el.getBoundingClientRect(); el.classList.add('on'); }
+  function sentirCabeca() { var t = performance.now(); if (t - ultimoSentido < 1400) return; ultimoSentido = t; pisca(sentido); }
+  function sentirTela() { var t = performance.now(); if (t - ultimoTela < 1600 || reduz) return; ultimoTela = t; pisca(sentidoTela); }
+  var ptr = { x: -999, y: -999, vx: 0, ultimo: 0 };
+  var checaCabeca = 0;
+  window.addEventListener('pointermove', function (e) {
+    var t = performance.now();
+    if (ptr.ultimo) ptr.vx = (e.clientX - ptr.x) / Math.max(8, t - ptr.ultimo);
+    ptr.x = e.clientX; ptr.y = e.clientY; ptr.ultimo = t;
+    if (fino && t - checaCabeca > 90) {
+      checaCabeca = t;
+      var r = heroiImg.getBoundingClientRect();
+      if (r.bottom > 0) {
+        var cx = r.left + r.width * .44, cy = r.top + r.height * .125;
+        if (Math.hypot(e.clientX - cx, e.clientY - cy) < Math.max(150, r.width * .38)) sentirCabeca();
+      }
+    }
+  }, { passive: true });
+  heroiImg.addEventListener('click', function (e) {
+    var r = heroiImg.getBoundingClientRect();
+    if (e.clientY < r.top + r.height * .3) sentirCabeca();
+  });
+
+  /* ================= PÊNDULO (aranha pendurada) ================= */
+  var pendulo = $('.pendulo'), pAng = 0, pVel = 0;
+  function balancaPendulo() {
+    pVel += -pAng * 0.018; pVel *= 0.965; pAng += pVel;
+    pendulo.style.rotate = (pAng * 57.3).toFixed(3) + 'deg';
+    return Math.abs(pAng) > 0.0006 || Math.abs(pVel) > 0.0006;
+  }
+  window.addEventListener('pointermove', function () {
+    if (!fino || reduz) return;
+    var r = pendulo.getBoundingClientRect();
+    if (r.bottom < 0 || Math.abs(ptr.y - (r.top + r.height / 2)) > 260) return;
+    pVel += Math.max(-0.006, Math.min(0.006, -ptr.vx * 0.0028));
+    agenda(balancaPendulo);
+  }, { passive: true });
+  function empurraPendulo(v) { if (reduz) return; pVel += v; agenda(balancaPendulo); }
+
+  /* ================= CORDA QUE VIBRA ================= */
+  var corda = $('.corda'), cFio = $('.corda-fio'), cGotas = $('.corda-gotas');
+  var cW = 0, cDisp = 0, cVel = 0, cX = 0.5, cXAlvo = 0.5, cBase = 60, cSag = 10;
+  function medeCorda() { cW = corda.clientWidth || innerWidth; corda.setAttribute('viewBox', '0 0 ' + cW + ' 120'); desenhaCorda(); }
+  function desenhaCorda() {
+    var cx = cW * cX, cy = cBase + cSag * 2 + cDisp * 2;
+    var d = 'M-10 ' + cBase + ' Q' + cx.toFixed(1) + ' ' + cy.toFixed(1) + ' ' + (cW + 10) + ' ' + cBase;
+    cFio.setAttribute('d', d); cGotas.setAttribute('d', d);
+  }
+  function vibraCorda() {
+    cVel += -cDisp * 0.16; cVel *= 0.9; cDisp += cVel; cX += (cXAlvo - cX) * 0.2;
+    desenhaCorda();
+    return Math.abs(cDisp) > 0.05 || Math.abs(cVel) > 0.05;
+  }
+  function belisca(xFrac, forca) { if (reduz) return; cXAlvo = Math.max(.08, Math.min(.92, xFrac)); cVel += forca; agenda(vibraCorda); }
+  var cordaUltY = null;
+  window.addEventListener('pointermove', function (e) {
+    var r = corda.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) { cordaUltY = null; return; }
+    var linhaY = r.top + (cBase + cSag) * (r.height / 120);
+    if (cordaUltY !== null && (cordaUltY - linhaY) * (e.clientY - linhaY) < 0) {
+      belisca((e.clientX - r.left) / r.width, Math.max(-16, Math.min(16, (e.clientY - cordaUltY) * 0.9)));
+    }
+    cordaUltY = e.clientY;
+  }, { passive: true });
+  medeCorda();
+
+  /* ================= PILHA DE CARTAS PRESA NA TEIA ================= */
+  var cartas = $$('.carta').map(function (el, i) { return { el: el, i: i, x: 0, y: 0, r: 0, vx: 0, vy: 0, vr: 0, alvo: { x: 0, y: 0, r: 0 }, arrasta: false, voa: false }; });
+  var ordem = cartas.map(function (c, i) { return cartas.length - 1 - i; }); // último = topo (a 1ª do HTML)
+  var abre = (embed || reduz || !temGsap) ? 1 : 0;
+  var SLOT = [{ x: 0, y: 0, r: 0 }, { x: -46, y: 8, r: -9 }, { x: 44, y: 12, r: 8 }, { x: -12, y: 20, r: -15 }];
+  var pilhaFio = $('.pilha-fio'), pilhaPath = $('.pilha-fio path'), pilha = $('.pilha');
+  var fioCarta = null;
+  function alvos() {
+    var n = ordem.length;
+    ordem.forEach(function (ci, k) {
+      var c = cartas[ci], pos = n - 1 - k, s = SLOT[pos] || SLOT[3], esc = innerWidth < 700 ? 0.6 : 1;
+      if (!c.voa && !c.arrasta) c.alvo = { x: s.x * abre * esc, y: s.y * abre, r: s.r * abre };
+      c.el.style.zIndex = String(k + 1);
+      c.el.setAttribute('aria-hidden', pos === 0 ? 'false' : 'true');
+    });
+  }
+  function aplica(c) { c.el.style.transform = 'translate3d(' + c.x.toFixed(2) + 'px,' + c.y.toFixed(2) + 'px,0) rotate(' + c.r.toFixed(2) + 'deg)'; }
+  function moveCartas() {
+    var vivo = false;
+    cartas.forEach(function (c) {
+      if (!c.arrasta) {
+        c.vx += (c.alvo.x - c.x) * 0.11; c.vy += (c.alvo.y - c.y) * 0.11; c.vr += (c.alvo.r - c.r) * 0.1;
+        c.vx *= 0.74; c.vy *= 0.74; c.vr *= 0.72;
+        c.x += c.vx; c.y += c.vy; c.r += c.vr;
+        if (Math.abs(c.vx) + Math.abs(c.vy) + Math.abs(c.vr) > 0.02 || Math.abs(c.alvo.x - c.x) + Math.abs(c.alvo.y - c.y) > 0.2) vivo = true;
+      } else vivo = true;
+      aplica(c);
+    });
+    // fio de teia da pilha até a carta solta
+    if (fioCarta) {
+      var c = fioCarta, w = pilha.clientWidth, h = pilha.clientHeight;
+      var longe = Math.hypot(c.x - c.alvo.x, c.y - c.alvo.y);
+      if (!c.arrasta && !c.voa && longe < 6) { fioCarta = null; pilhaFio.classList.remove('on'); }
+      else {
+        // ponta: topo da carta (gira junto)
+        var rad = c.r * Math.PI / 180, tx = w / 2 + c.x + Math.sin(rad) * h * 0.5 * 0 - Math.sin(rad) * (-h / 2) * -1, ty = c.y + h / 2 - Math.cos(rad) * h / 2;
+        tx = w / 2 + c.x + Math.sin(rad) * h / 2; ty = h / 2 + c.y - Math.cos(rad) * h / 2;
+        var ax = w / 2, ay = h * 0.18;
+        var mx = (ax + tx) / 2, my = (ay + ty) / 2 + Math.min(60, longe * 0.12);
+        // o svg cobre 500% (de -200% a 300%): converte pra 0..100
+        var cx = function (v) { return ((v + 2 * w) / (5 * w) * 100).toFixed(2); }, cy = function (v) { return ((v + 2 * h) / (5 * h) * 100).toFixed(2); };
+        pilhaPath.setAttribute('d', 'M' + cx(ax) + ' ' + cy(ay) + ' Q' + cx(mx) + ' ' + cy(my) + ' ' + cx(tx) + ' ' + cy(ty));
+        vivo = true;
+      }
+    }
+    return vivo;
+  }
+  function acorda() { alvos(); agenda(moveCartas); }
+  var status = $('#pilha-status'), contNum = $('.contador-num'), galNum = $('.galeria-num'), pontosEls = $$('.pontos i');
+  function atualizaContador(anuncia) {
+    var topo = cartas[ordem[ordem.length - 1]], i = topo.i + 1, n = cartas.length;
+    var s = (i < 10 ? '0' : '') + i;
+    contNum.textContent = s; galNum.textContent = s;
+    pontosEls.forEach(function (p, k) { p.classList.toggle('on', k === topo.i); });
+    if (anuncia) status.textContent = 'Foto ' + i + ' de ' + n + ': ' + topo.el.querySelector('figcaption').textContent;
+  }
+  function jogaPraTras(c, dx, dy) {
+    c.voa = true; c.alvo = { x: dx, y: dy, r: dx * 0.06 };
+    fioCarta = c; pilhaFio.classList.add('on'); som.thwip();
+    agenda(moveCartas);
+    setTimeout(function () {
+      ordem.splice(ordem.indexOf(c.i), 1); ordem.unshift(c.i);
+      c.voa = false; c.el.style.zIndex = '0'; acorda(); atualizaContador(true);
+    }, 230);
+  }
+  function proxima() { jogaPraTras(cartas[ordem[ordem.length - 1]], 330, -50); }
+  function anterior() {
+    var c = cartas[ordem[0]];
+    c.voa = true; c.alvo = { x: -330, y: -40, r: -16 }; fioCarta = c; pilhaFio.classList.add('on'); som.thwip(); agenda(moveCartas);
+    setTimeout(function () { ordem.shift(); ordem.push(c.i); c.voa = false; acorda(); atualizaContador(true); }, 230);
+  }
+  $('.avancar').addEventListener('click', proxima);
+  $('.voltar').addEventListener('click', anterior);
+  var arr = null;
+  pilha.addEventListener('pointerdown', function (e) {
+    var el = e.target.closest('.carta'); if (!el) return;
+    var c = cartas.filter(function (k) { return k.el === el; })[0];
+    if (c.i !== ordem[ordem.length - 1]) return;
+    arr = { c: c, x0: e.clientX - c.x, y0: e.clientY - c.y, t: performance.now(), lx: e.clientX, ly: e.clientY, vx: 0, vy: 0, id: e.pointerId };
+    c.arrasta = true; fioCarta = c; pilhaFio.classList.add('on');
+    try { el.setPointerCapture(e.pointerId); } catch (er) {}
+    agenda(moveCartas);
+  });
+  pilha.addEventListener('pointermove', function (e) {
+    if (!arr || e.pointerId !== arr.id) return;
+    var t = performance.now(), dt = Math.max(8, t - arr.t);
+    arr.vx = (e.clientX - arr.lx) / dt; arr.vy = (e.clientY - arr.ly) / dt; arr.lx = e.clientX; arr.ly = e.clientY; arr.t = t;
+    var c = arr.c; c.x = e.clientX - arr.x0; c.y = e.clientY - arr.y0; c.r = c.x * 0.06;
+  });
+  function solta(e) {
+    if (!arr || (e && e.pointerId !== arr.id)) return;
+    var c = arr.c, dist = Math.hypot(c.x, c.y), vel = Math.hypot(arr.vx, arr.vy);
+    c.arrasta = false;
+    if (dist > 110 || vel > 0.9) jogaPraTras(c, c.x * 1.7 + arr.vx * 120, c.y * 1.7 + arr.vy * 120);
+    else { c.vx = 0; c.vy = 0; acorda(); }
+    arr = null;
+  }
+  pilha.addEventListener('pointerup', solta);
+  pilha.addEventListener('pointercancel', solta);
+  alvos(); cartas.forEach(function (c) { c.x = c.alvo.x; c.y = c.alvo.y; c.r = c.alvo.r; aplica(c); });
+  atualizaContador(false);
+
+  /* ================= ATORES ================= */
+  var ATORES = [
+    { nome: 'Tobey Maguire', personagem: 'Peter Parker', estreia: '2002', direcao: 'Sam Raimi', filmes: 'Homem-Aranha (2002), Homem-Aranha 2 (2004) e Homem-Aranha 3 (2007). Voltou em Sem Volta para Casa (2021).' },
+    { nome: 'Andrew Garfield', personagem: 'Peter Parker', estreia: '2012', direcao: 'Marc Webb', filmes: 'O Espetacular Homem-Aranha (2012) e O Espetacular Homem-Aranha 2 (2014). Voltou em Sem Volta para Casa (2021).' },
+    { nome: 'Tom Holland', personagem: 'Peter Parker', estreia: '2016', direcao: 'Jon Watts (filmes solo)', filmes: 'Estreou em Capitão América: Guerra Civil (2016). Solo: De Volta ao Lar (2017), Longe de Casa (2019) e Sem Volta para Casa (2021).' },
+    { nome: 'Shameik Moore', personagem: 'Miles Morales (voz)', estreia: '2018', direcao: 'Persichetti, Ramsey e Rothman', filmes: 'Homem-Aranha no Aranhaverso (2018), Oscar de melhor animação, e Através do Aranhaverso (2023).' }
+  ];
+  var atual = 0, ficha = $('.ficha');
+  function preencheFicha(i) {
+    var a = ATORES[i];
+    $('.ficha-nome').textContent = a.nome; $('.ficha-num').textContent = '0' + (i + 1);
+    $('.ficha-personagem').textContent = a.personagem; $('.ficha-estreia').textContent = a.estreia;
+    $('.ficha-direcao').textContent = a.direcao; $('.ficha-filmes').textContent = a.filmes;
+    $$('.numeracao button, .avatares button').forEach(function (b) { b.setAttribute('aria-pressed', String(+b.dataset.i === i)); });
+  }
+  function mostraAtor(i, deEl) {
+    i = (i + ATORES.length) % ATORES.length;
+    if (i === atual) return;
+    atual = i;
+    if (deEl && !reduz) { // a teia sai do botão e gruda na ficha
+      var a = deEl.getBoundingClientRect(), b = ficha.getBoundingClientRect(), sy = window.scrollY;
+      disparar(a.left + a.width / 2, a.top + a.height / 2 + sy, b.left + b.width / 2 + (Math.random() - .5) * 60, b.top + 30 + sy, '#0B0B12', 'radial');
+    }
+    if (temGsap && !reduz) {
+      G.timeline().to(ficha, { rotationY: 90, duration: .2, ease: 'power2.in', onComplete: function () { preencheFicha(i); } })
+        .fromTo(ficha, { rotationY: -90 }, { rotationY: 0, duration: .45, ease: 'back.out(1.6)' });
+    } else preencheFicha(i);
+  }
+  $$('.numeracao button, .avatares button').forEach(function (b) { b.addEventListener('click', function () { mostraAtor(+b.dataset.i, b); }); });
+  $('.ator-ant').addEventListener('click', function (e) { mostraAtor(atual - 1, e.currentTarget); });
+  $('.ator-prox').addEventListener('click', function (e) { mostraAtor(atual + 1, e.currentTarget); });
+  $('.ficha-botao').addEventListener('click', function () { mostraAtor(atual + 1, $$('.numeracao button')[(atual + 1) % 4]); });
+
+  /* ================= MENU ================= */
+  var btnMenu = $('.btn-menu'), menu = $('#menu'), linksMenu = $$('#menu a');
+  function abreMenu(abrir) {
+    raiz.classList.toggle('menu-aberto', abrir);
+    btnMenu.setAttribute('aria-expanded', String(abrir));
+    btnMenu.setAttribute('aria-label', abrir ? 'Fechar menu' : 'Abrir menu');
+    menu.setAttribute('aria-hidden', String(!abrir));
+    linksMenu.forEach(function (a) { a.tabIndex = abrir ? 0 : -1; });
+    if (lenis) abrir ? lenis.stop() : lenis.start();
+    if (abrir) setTimeout(function () { linksMenu[0].focus(); }, 300); else btnMenu.focus({ preventScroll: true });
+  }
+  btnMenu.addEventListener('click', function () { abreMenu(!raiz.classList.contains('menu-aberto')); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && raiz.classList.contains('menu-aberto')) abreMenu(false); });
+  linksMenu.forEach(function (a) { a.addEventListener('click', function () { abreMenu(false); }); });
+
+  /* ================= ROLAGEM MACIA (só computador) ================= */
+  var lenis = null;
+  if (temGsap && window.Lenis && !embed && !dentro && !reduz && fino && innerWidth > 900) {
+    lenis = new Lenis({ lerp: 0.1 });
+    raiz.classList.add('lenis');
+    lenis.on('scroll', ST.update);
+    G.ticker.add(function (t) { lenis.raf(t * 1000); });
+    G.ticker.lagSmoothing(0);
+  }
+  $$('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var alvo = document.querySelector(a.getAttribute('href'));
+      if (!alvo) return;
+      if (lenis) { e.preventDefault(); lenis.scrollTo(alvo, { duration: 1.4 }); }
+    });
+  });
+
+  /* ================= REDIMENSIONAR (só quando a largura muda) ================= */
+  var largura = innerWidth;
+  window.addEventListener('resize', function () {
+    dimensiona();
+    if (innerWidth === largura) return;
+    largura = innerWidth; medeCorda(); medeNav();
+  });
+
+  /* ================= NAV: ponto vermelho no item ativo ================= */
+  var navLinks = $$('.nav a'), navPonto = $('.nav-ponto'), navPos = [];
+  function medeNav() { navPos = navLinks.map(function (a) { return a.offsetLeft + a.offsetWidth / 2 - 2.5; }); marcaNav(navAtivo); }
+  var navAtivo = 0;
+  function marcaNav(i) { navAtivo = i; navLinks.forEach(function (a, k) { a.setAttribute('aria-current', String(k === i)); }); if (navPos[i] != null) navPonto.style.transform = 'translateX(' + navPos[i] + 'px)'; }
+  medeNav();
+
+  /* ================= SEM GSAP: tudo no estado final ================= */
+  if (!temGsap) { raiz.classList.remove('intro'); return; }
+
+  /* ================= ABERTURA ================= */
+  function abertura() {
+    var tl = G.timeline({ defaults: { ease: 'power3.out' } });
+    tl.from('.pendulo', { yPercent: -260, duration: 1.05, ease: 'back.out(1.25)' }, 0)
+      .add(function () { empurraPendulo(0.03); }, .9)
+      .from('.circulo', { scale: 0, duration: 1.1, ease: 'expo.out' }, .55)
+      .from(letrasTitulo, { x: function (i, el) { return desvio(el) * 0.42; }, opacity: 0.1, duration: 1.4, ease: 'expo.out' }, .3)
+      .from(letrasElenco, { opacity: 0, duration: .01, stagger: { each: .02, from: 'random' } }, .75)
+      .from('.heroi-figura', { opacity: 0, y: 80, duration: 1.25 }, .8)
+      .fromTo('.fios', { opacity: 0, scaleY: .25 }, { opacity: .95, scaleY: 1.05, duration: .4, ease: 'power2.out' }, .9)
+      .to('.fios', { opacity: .16, scaleY: 1, duration: 1.3 }, 1.3)
+      .from(['.cabecalho', '.heroi-topo', '.ano-vertical'], { opacity: 0, y: -14, duration: .7, stagger: .06 }, 1.25)
+      .from(['.historia', '.heroi-acoes'], { opacity: 0, y: 18, duration: .7, stagger: .08 }, 1.4)
+      .add(function () { belisca(.32, 14); }, 1.35)
+      .add(sentirCabeca, 1.9);
+    raiz.classList.remove('intro');
+  }
+  if (embed) { raiz.classList.remove('intro'); }
+  else if (reduz) { raiz.classList.remove('intro'); G.from('.heroi-palco', { opacity: 0, duration: .5 }); }
+  else if (document.fonts && document.fonts.ready) { Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 900); })]).then(abertura); }
+  else abertura();
+
+  /* ================= ROLAGEM ================= */
+  // fitas andam sozinhas e aceleram com a velocidade da rolagem
+  var velRolagem = 0;
+  ST.create({ start: 0, end: 'max', onUpdate: function (s) { velRolagem = s.getVelocity(); if (Math.abs(velRolagem) > 2600) sentirTela(); } });
+  var trilhos = $$('.trilho').map(function (t) { return { el: t, x: 0, dir: +t.dataset.dir, metade: 0 }; });
+  function medeTrilhos() { trilhos.forEach(function (t) { t.metade = t.el.scrollWidth / 2; }); }
+  medeTrilhos();
+  var fitasVisiveis = false;
+  ST.create({ trigger: '.numeros', start: 'top bottom', end: 'top -40%', onToggle: function (s) { fitasVisiveis = s.isActive; } });
+  if (!embed) G.ticker.add(function () {
+    if (!fitasVisiveis) return;
+    var extra = reduz ? 0 : Math.min(14, Math.abs(velRolagem) / 260);
+    trilhos.forEach(function (t) {
+      if (!t.metade) t.metade = t.el.scrollWidth / 2;
+      t.x += t.dir * (reduz ? 0.15 : 0.6 + extra);
+      if (t.x <= -t.metade) t.x += t.metade; if (t.x > 0) t.x -= t.metade;
+      t.el.style.transform = 'translate3d(' + t.x.toFixed(1) + 'px,0,0)';
+    });
+    velRolagem *= 0.92;
+  });
+
+  // tema do cabeçalho e pausa do fundo do herói
+  ST.create({ trigger: '.claras', start: 'top 40px', end: 'bottom 40px', onToggle: function (s) { $('.cabecalho').classList.toggle('claro', s.isActive); } });
+  ST.create({ trigger: '.heroi', start: 'bottom 80px', end: 'max', onToggle: function (s) { $('.cabecalho').classList.toggle('rolou', s.isActive); } });
+  ST.create({ trigger: '.heroi', start: 'top top', end: 'bottom top', onToggle: function (s) { $('.heroi').classList.toggle('pausa', !s.isActive); } });
+  [['#topo', 0], ['#numeros', 1], ['#criadores', 2], ['#atores', 3]].forEach(function (p) {
+    ST.create({ trigger: p[0], start: 'top 50%', end: 'bottom 50%', onToggle: function (s) { if (s.isActive) marcaNav(p[1]); } });
+  });
+
+  if (embed || reduz) { abre = 1; acorda(); return; }
+
+  // herói fica pra trás enquanto a seção de baixo sobe por cima
+  G.to('.heroi-palco', { yPercent: 24, ease: 'none', scrollTrigger: { trigger: '.heroi', start: 'top top', end: 'bottom top', scrub: true } });
+  // círculos dos números
+  G.from('.circ', { scale: 0, rotation: -120, duration: .9, stagger: .12, ease: 'back.out(1.7)', scrollTrigger: { trigger: '.circulos', start: 'top 85%' } });
+  // pilha abre em leque com a rolagem
+  ST.create({ trigger: '.pilha-area', start: 'top 95%', end: 'top 35%', scrub: true, onUpdate: function (s) { abre = s.progress; acorda(); } });
+  // "Criado por Stan Lee & Steve Ditko": letras espalhadas que se juntam
+  G.fromTo(letrasCriado, { x: function (i, el) { return desvio(el) * 0.3; }, opacity: .1 }, { x: 0, opacity: 1, ease: 'none', scrollTrigger: { trigger: '.criadores', start: 'top 80%', end: 'top 15%', scrub: .6, invalidateOnRefresh: true } });
+  G.from('.criadores .cantos i', { scale: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.criadores', start: 'top 60%' } });
+  // ficha entra virando
+  G.from('.ficha', { rotationX: -55, y: 90, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: '.ficha-palco', start: 'top 88%' } });
+  G.from('.ladrilho img', { y: 60, opacity: 0, duration: 1, stagger: .1, ease: 'expo.out', scrollTrigger: { trigger: '.atores-meio', start: 'top 80%' } });
+  // atores apagam quando o final chega
+  G.to('.atores-conteudo', { opacity: .18, ease: 'none', scrollTrigger: { trigger: '.final', start: 'top 85%', end: 'top 25%', scrub: true } });
+  // final: título se junta e o Aranha sobe fazendo coração
+  G.fromTo(letrasFinal, { x: function (i, el) { return desvio(el) * 0.4; }, opacity: .1 }, { x: 0, opacity: 1, ease: 'none', scrollTrigger: { trigger: '.final', start: 'top 85%', end: 'top 20%', scrub: .6, invalidateOnRefresh: true } });
+  G.fromTo('.final-img', { yPercent: 40 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: '.final', start: 'top 80%', end: 'top -5%', scrub: .5 } });
+  G.from('.final .cantos i', { scale: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.final', start: 'top 50%' } });
+
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ST.refresh(); medeNav(); medeTrilhos(); });
+  window.addEventListener('load', function () { ST.refresh(); });
+})();
+</script>
+</body>
+</html>

@@ -164,5 +164,13 @@ O Davi achou a aliança da demo de HDRI "meio ruim": tinha um bico fino na borda
 ## 18/11/2026: prompt do getlayers com assets (Soda)
 O prompt do getlayers aponta pra .glb/.png em `api.getlayers.ai`, que dá 403 aqui. E o vídeo do template mostrava lata de **marca real** (Guaraná Antarctica). Saída: refazer os objetos em código (Lathe + CanvasTexture com rótulo original) e usar HDRI do Poly Haven. Regra: em template com `<model-viewer>` por objeto, trocar por poucos canvas Three.js (mais de ~16 contextos WebGL trava o celular). Exemplo em `gudev/aprendizados/soda/`.
 
+## 21/11/2026: fan site do Homem-Aranha
+- **`arquivo_unico.py` tira a transparência** (converte tudo pra RGB): recorte PNG/WebP vira retângulo preto. Pra site com recorte, a prévia sai do `previa_embutida.py` (que agora também embute `url(fonts/...)` e tira o preload de imagem).
+- **Conferir qual upload é qual antes de nomear.** Os arquivos em `/root/.claude/uploads/` vêm na ordem da lista "saved at", que é a mesma das imagens na mensagem; troquei duas fotos de nome e só vi no print. Abrir a miniatura ou conferir o tamanho (largura × altura) antes.
+- **Letras que se juntam por índice se sobrepõem** quando o título tem 2 `span` de linha que no computador ficam na mesma linha (cada metade espalhava em volta do próprio centro). Usar a posição real da letra (`offsetLeft`, que não sofre com transform).
+- **SVG em tela cheia com `preserveAspectRatio="none"` + `transform` em px no CSS:** o px vira unidade do viewBox (10px = 10% da tela) e o traço estica. Desenho fixo na borda = SVG pequeno com proporção normal em cada lado.
+- **Fundo do recorte escuro (foto do coração):** o ISNet deixou braço e peito meio transparentes. Resolveu: limiar 0,4 + "o que é claro e encosta no corpo também é corpo" + fechamento de 41 px + tapar buracos + maior pedaço + borda suave da máscara original (`fixmask` descrito no README do site).
+- **Trava de segurança do Claude Code:** comando Python em heredoc com `$$(` dentro e `mv` que sobrescreve arquivo foram barrados ("pode apagar mais do que devia"), mesmo sem apagar nada. Saída: editar o HTML com a ferramenta de edição e trocar nomes com `mv -n` passando por um nome temporário.
+
 ## 18/11/2026: GSAP + transform no CSS (vinheta do Jimmy Neutron)
 Elemento com `transform:translateX(-120%) skewX(...)` no CSS e animado com `xPercent` no GSAP: o GSAP leu o -120% como `x` em px e somou, as faixas nunca entraram na tela. Regra: posição inicial de algo animado pelo GSAP vai no `gsap.set`, nunca no CSS.

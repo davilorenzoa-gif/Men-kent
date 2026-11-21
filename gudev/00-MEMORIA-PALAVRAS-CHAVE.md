@@ -16,6 +16,7 @@
 | **Andrade, padrinho** | Pitch presencial com o padrinho (falou-se R$ 1.200 em 22/10; hoje nada fechado) | `sites/andrade-ferro-e-aco`, `01`, `04` |
 | **APEX** | Conceito automotivo de luxo (React + TS + Tailwind + Motion), fotos Wikimedia com crédito | `sites/apex` |
 | **APEX GT, Beyond the Limits, túnel de vento, dinamômetro, duelo 0–100** | APEX v2 (20/11): React + GSAP + Lenis + Three.js; fumaça contornando o GT3 RS, dyno de 1.000 a 9.000 rpm, coleção com duelo de 0–100 | `sites/apex-gt` |
+| **Homem-Aranha, Spider-Man, Cine Teia, Cine Daily, Deadpool, teia no clique** | Fan site conceito (21/11) recriando o vídeo do Deadpool com o Aranha: teia em qualquer clique, sentido aranha, cartas presas na teia | `sites/homem-aranha/`, efeitos no `03` |
 | **arquivo único, prévia, 2 MB** | HTML com tudo embutido pra abrir no celular; prévia do app não abre 7 MB nem arquivo externo | `gudev/ferramentas/arquivo_unico.py`, `previa_embutida.py`, `05` |
 | **avó, ENTRElinhas** | Lead quente (avó do Davi) | `sites/entrelinhas`, `04` |
 | **Basalto, Espelho, Moenda, Sulco, Prumo** | Demos antigas (Espelho 28/10, Moenda 23/10, Sulco 04/11 vidro líquido) | `sites/`, `gudev/demos/sulco-vidro-liquido.html` |
@@ -76,6 +77,7 @@
 
 | Data | Sessão | Resultado / pendência |
 |---|---|---|
+| 21/11 | Fan site do Homem-Aranha (vídeo Cine Daily/Deadpool) | `sites/homem-aranha/` + `homem-aranha-arquivo-unico.html` (1,45 MB). Só estudo (Marvel). Falta o Davi ver no celular |
 | 17/11 | Comercial da Andrade, versão 2 | Fachada real (caminhonete + letreiro), relógio "desde 1989", colunas na estátua, grão na estátua, esmerilhadeira alta. Mesmas pendências da v1 |
 | 16–17/11 | Comercial da Andrade Ferro e Aço | `gudev/videos/andrade-comercial/andrade-comercial.mp4` (música de referência do Davi + efeitos). Falta: confirmar telefone (prompt dizia 3261-4402, site diz 2581-4404), ouvir o som, ok do padrinho |
 | 15/11 | Campanha The Digital Presence | Filme de marca em `gudev/videos/presenca-digital/` (final: música do Davi + efeitos + voz ElevenLabs Adam; só Katraka/Andrade/Péçaí) |
@@ -217,3 +219,7 @@ O Davi mandou 2 vídeos (slide estilo console com tema de GTA VI e a abertura de
 
 
 Depois o Davi aprovou ("ficou legal") e disse que com referências dá pra fazer sites assim pra leads. Palavras: interface conhecida, imitar app, Netflix, Spotify, streaming, playlist. Regra e nichos que servem no `03` (bloco do Checkpoint).
+
+## 21/11/2026: Homem-Aranha (fan site do vídeo Cine Daily)
+Palavras: Homem-Aranha, Spider-Man, Cine Teia, Cine Daily, Deadpool III, fan site, teia, disparar teia, thwip, sentido aranha, olhos do Aranha, fita diagonal, pilha de cartas, carta presa na teia, fio que vibra, pêndulo, aranha pendurada, Stan Lee, Steve Ditko, Amazing Fantasy #15, Tobey Maguire, Andrew Garfield, Tom Holland, Shameik Moore, coração com as mãos, potrace, chroma key, ISNet.
+O Davi mandou um vídeo de um site de filme (Cine Daily, Deadpool III) + 8 imagens do Aranha e pediu "igual do vídeo, mas do Homem-Aranha", com as cores do herói e efeitos inusitados. Feito em `sites/homem-aranha/` (mesma estrutura do vídeo, em vermelho/azul/noite): título que se junta com o Aranha agachado na frente do círculo vermelho, fitas com os olhos dele, números da Amazing Fantasy #15, pilha de fotos presa por teia, "Criado por Stan Lee & Steve Ditko", ficha dos 4 atores e o final com o coração. Efeito-chave: **teia que sai em qualquer clique** (fio + teia grudada + corda com física; no final vira coração), com som "thwip" opcional. Só estudo: personagem da Marvel e fotos sem licença. Prévia: `homem-aranha-arquivo-unico.html`. `previa_embutida.py` agora embute também as fontes (`url(fonts/...)`) e tira o preload de imagem.

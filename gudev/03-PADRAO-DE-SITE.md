@@ -201,6 +201,16 @@ Recriado de um prompt grande do getlayers.ai (card "Kimi"). **Só estudo:** usa 
 - **Medidas em `cqw`:** `px(v) = v/1440*100 cqw` com `container-type: inline-size` no bloco: o bloco é a arte de 1440 em qualquer largura; texto pequeno ganha piso `max(..., 13px)`.
 - **Falha visível:** todo arquivo que não carrega vira uma faixa laranja com o endereço. Nada de véu travado pra sempre.
 
+### Homem-Aranha · Cine Teia (21/11/2026, fan site em `sites/homem-aranha/`, GSAP + canvas)
+Recriação do vídeo "Cine Daily" (Deadpool) com o Aranha. **Só estudo** (personagem da Marvel). O que dá pra levar pra cliente, trocando o assunto:
+- **Clique que deixa marca:** canvas fixo por cima de tudo (`pointer-events:none`), o clique em área vazia dispara um fio da mão do personagem (ou do canto da tela) até o ponto em ~150 ms; no impacto gruda uma forma desenhada em código (teia radial, ou coração com a curva `16 sin³t`) e o fio vira **corda verlet** (16 pontos, gravidade, 5 passadas de restrição) presa no ponto, que encolhe e balança. Coordenadas guardadas na página (`y + scrollY`), então a marca rola junto. O laço só roda com marca na tela. Em cliente: gota de calda no açaí, respingo de tinta no estúdio, faísca na oficina, carimbo na barbearia.
+- **Som gerado, sem arquivo:** "thwip" = ruído branco num filtro passa-banda que cai de 3.600 para 480 Hz em 0,17 s. Botão com `aria-pressed`, começa desligado (o navegador só toca depois de um toque).
+- **Pilha de fotos presa por um fio:** arrasta a de cima, uma linha (SVG) liga a carta à pilha; soltou longe ou rápido, ela voa e volta por baixo puxada pelo fio; perto, volta com mola. Leque abre com a rolagem (uma variável `abre` 0→1, molas próprias, sem GSAP nas cartas pra não brigar). `touch-action: pan-y` pra não travar a rolagem do celular.
+- **Fio que vibra:** curva quadrática atravessando o topo; quando o mouse cruza a linha, a velocidade vertical vira empurrão numa mola (k 0,16, amortecimento 0,9) no ponto cruzado. Gotas = mesmo `path` com `stroke-dasharray: 0 18`.
+- **Rabiscos de "perigo"** (sentido aranha): traços ondulados em volta de um ponto, desenhados com `stroke-dashoffset` e saindo pra fora. Disparam por proximidade do mouse ou por rolagem acima de ~2.600 px/s.
+- **Letras espalhadas que se juntam:** o deslocamento de cada letra vem da posição real dela (`offsetLeft` até o centro do título), não do índice. Assim funciona em 1 ou 2 linhas sem letras se sobrepondo.
+- **Recorte de símbolo em fundo verde → SVG:** máscara por cor, borrar 3 px no tamanho 4×, `potracer` (pip) e coordenadas ÷ 4: símbolo nítido em qualquer tamanho com 14 KB, colorido por `currentColor`.
+
 ### Efeitos do Mestre das Motos (10/11/2026, código em `sites/mestre-das-motos/index.html`, JS puro)
 Já usados nesse cliente: pra outro, variar a ideia, não colar igual.
 - **Filme com frases (o Davi pediu e gostou da ideia):** seção alta (`560svh`) com palco `sticky`; vídeo de fundo em loop (não preso na rolagem, então nunca parece "travado"); 5 frases gigantes que trocam pela rolagem. Uma fonte de progresso só, folga de 8% perto da troca, uma troca a cada 380 ms, palavras entram por tempo (CSS), a frase que sai sobe e some com `opacity`. Barra vermelha de progresso e zoom leve no vídeo seguem a rolagem direto. Serve pra qualquer negócio com vídeo bom: estética, academia, restaurante.
