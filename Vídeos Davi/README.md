@@ -10,6 +10,7 @@ As edições usam fotos de figuras públicas e música de terceiros. Elas são p
 | `2026-10-xo-sai-pra-la/` | Edição "xô sai pra lá" estilo TikTok (verde e amarelo, letra animada) com fotos do Lula, do Flávio e um meme | v1 (igual à referência), v2 (transições, Juliet, corrente, enfeites) |
 | `2026-11-nizia-figueira-whiteboard/` | Trabalho de Literatura: documentário de 4 min sobre "Nízia Figueira, sua criada" refeito em whiteboard animation (mão desenhando), áudio original intacto | v2 (mão real, movimentos suavizados) |
 | `2026-11-dk-utilidades/` | Comercial de 45 s "O tempo passa" pra DK Utilidades (relógio, globo, estátuas de mármore, preto e ouro), feito por código com recorte de fundo verde | filme completo de 38 s; produtos ainda são vídeos de banco e falta o contato |
+| `2026-11-aranha-primeira-pessoa/` | Homem-Aranha balançando na teia **em primeira pessoa**, pôr do sol em Nova York, 10 s em 1080p com som. Cidade 3D em WebGL renderizada quadro a quadro (sombras do sol, vidro que reflete, caixas d'água), desfoque de movimento por subquadros, som sintetizado (vento, thwip) | v1 |
 
 ## Como fazer uma edição nova a partir de um vídeo de referência
 
@@ -52,3 +53,10 @@ Motor separado, em HTML/SVG + Playwright: `2026-11-nizia-figueira-whiteboard/pro
 O mesmo motor serve pro vídeo de 15 s do primeiro contato (ver `gudev/02-VENDAS-E-MENSAGENS.md`).
 Dá pra fazer com texto animado no ritmo, prints do site recortados e as mesmas transições.
 Nesse caso valem as regras da GuDev: só dado real do cliente, nada inventado.
+
+## Vídeo 3D renderizado por código (21/11/2026, Homem-Aranha em primeira pessoa)
+- Motor: `2026-11-aranha-primeira-pessoa/projeto/` (cidade + caminho em Python, WebGL quadro a quadro no Playwright, som sintetizado). Serve pra qualquer voo de câmera por cidade.
+- **Câmera de balanço:** pêndulo físico com teia de 100 m leva ~20 s por balanço (lento demais). Usar arcos controlados em forma de pêndulo (`ease` mais rápido no meio) emendados por voos balísticos.
+- **Desfoque de movimento:** renderizar 4 subquadros por quadro e juntar com `tmix=frames=4` + `select` de 1 em 4. Sem isso, câmera rápida "pisca".
+- **Tempo:** 1280×720 com sombra leva ~1,8 s por subquadro no SwiftShader (sem GPU); 960 subquadros ≈ 35 min com 2 processos.
+- Sombra em WebGL 1: profundidade empacotada em RGBA (funciona sem extensão), mapa preso na grade de texels pra a sombra não "ferver" com a câmera andando.

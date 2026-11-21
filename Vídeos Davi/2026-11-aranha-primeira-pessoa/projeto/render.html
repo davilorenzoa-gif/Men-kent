@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Render: teia em primeira pessoa</title>
+<style>
+  html,body{margin:0;background:#000;overflow:hidden}
+  #palco{position:relative}
+  #palco canvas{position:absolute;left:0;top:0;display:block}
+</style>
+</head>
+<body>
+<div id="palco"><canvas id="gl"></canvas><canvas id="o2"></canvas></div>
+<script>
+/* Renderizador quadro a quadro: pôr do sol em Nova York, primeira pessoa, WebGL puro.
+   window.quadro(t) desenha o instante t (s) e devolve o JPEG em base64. Parâmetros: ?w=1280&h=720 */
+(async function () {
+  'use strict';
+  var q = new URLSearchParams(location.search), W = +(q.get('w') || 1280), H = +(q.get('h') || 720);
+  var palco = document.getElementById('palco'), cv = document.getElementById('gl'), c2 = document.getElementById('o2');
+  palco.style.width = W + 'px'; palco.style.height = H + 'px';
+  [cv, c2].forEach(function (c) { c.width = W; c.height = H; c.style.width = W + 'px'; c.style.height = H + 'px'; });
+  var o2 = c2.getContext('2d');
+  var cena = await (await fetch('cena.json')).json(), cam = await (await fetch('caminho.json')).json();
+  var gl = cv.getContext('webgl', { antialias: true, preserveDrawingBuffer: true, alpha: false });
+  if (!gl.getExtension('OES_element_index_uint')) throw new Error('sem índice de 32 bits');
+  var SOL = norm([.37, .156, -.916]);
+  var SM = 2048, RAIO_SOMBRA = 520;
+
+  function norm(v) { var l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; }
+  function cruz(a, b) { return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+  function pto(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+  function mult(a, b) { var o = new Float32Array(16); for (var c = 0; c < 4; c++) for (var r = 0; r < 4; r++) { var s = 0; for (var k = 0; k < 4; k++) s += a[k * 4 + r] * b[c * 4 + k]; o[c * 4 + r] = s; } return o; }
+  function olhar(e, alvo, up) {
+    var z = norm([e[0] - alvo[0], e[1] - alvo[1], e[2] - alvo[2]]), x = norm(cruz(up, z)), y = cruz(z, x);
+    return [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -pto(x, e), -pto(y, e), -pto(z, e), 1];
+  }
+  function orto(r, n, f) { return [1 / r, 0, 0, 0, 0, 1 / r, 0, 0, 0, 0, -2 / (f - n), 0, 0, 0, -(f + n) / (f - n), 1]; }
+
+  // ---------- GLSL em comum: céu, nuvens, névoa, sombra, tom ----------
+  var COMUM = [
+    'precision highp float;',
+    'uniform vec3 uSol; uniform vec3 uCam; uniform float uT;',
+    'float h1(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
+    'float ruido(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);',
+    '  return mix(mix(h1(i), h1(i + vec2(1,0)), f.x), mix(h1(i + vec2(0,1)), h1(i + vec2(1,1)), f.x), f.y); }',
+    'float fbm(vec2 p){ float s = 0.0, a = .5; for (int i = 0; i < 5; i++){ s += a * ruido(p); p = p * 2.03 + vec2(1.7, 9.2); a *= .5; } return s; }',
+    'vec3 ceu(vec3 d){',
+    '  float y = d.y, sd = max(dot(d, uSol), 0.0);',
+    '  vec3 zen = vec3(.13,.25,.52), meio = vec3(.42,.5,.62), hor = vec3(1.0,.62,.36);',
+    '  vec3 c = mix(hor, meio, smoothstep(-.02, .2, y)); c = mix(c, zen, smoothstep(.15, .7, y));',
+    '  c += vec3(1.0,.48,.2) * pow(sd, 5.0) * .55 + vec3(1.0,.75,.45) * pow(sd, 40.0) * 1.2;',
+    '  c = mix(c, vec3(.62,.42,.32), smoothstep(.0, -.2, y));',
+    '  return c; }',
+    'vec3 nuvens(vec3 d, vec3 c){',
+    '  if (d.y < .012) return c;',
+    '  vec2 uv = d.xz / (d.y + .05) * .8 + vec2(uT * .012, 0.0);',
+    '  float n = fbm(uv * vec2(.5, 1.7)); float a = smoothstep(.5, .78, n) * smoothstep(.012, .1, d.y) * (1.0 - smoothstep(.45, .85, d.y));',
+    '  float sd = max(dot(d, uSol), 0.0);',
+    '  vec3 cn = mix(vec3(.55,.42,.5), vec3(1.0,.7,.42), pow(sd, 2.5)) + vec3(1.0,.58,.28) * pow(sd, 16.0) * .9;',
+    '  return mix(c, cn, a * .8); }',
+    'vec3 skyline(vec3 R, vec3 c, float sh){',
+    '  float az = atan(R.x, -R.z);',
+    '  float alt = .05 + .2 * pow(ruido(vec2(az * 9.0, 3.1)), 1.6) + .12 * step(.78, ruido(vec2(az * 31.0, 7.7)));',
+    '  if (R.y > alt) return c;',
+    '  float jx = fract(az * 260.0), jy = fract(R.y * 140.0);',
+    '  float jan = step(.3, jx) * step(jx, .75) * step(.25, jy) * step(jy, .7);',
+    '  vec3 p = mix(vec3(.1,.1,.12), vec3(.26,.2,.17), ruido(vec2(az * 9.0, 1.0)));',
+    '  p += vec3(.5,.3,.16) * max(dot(normalize(vec3(-R.x, 0.0, -R.z)), uSol), 0.0) * .5 * sh;',
+    '  p = mix(p, ceu(vec3(R.x, .02, R.z)) * .45, jan * .55);',
+    '  return mix(p, c, smoothstep(alt - .004, alt, R.y)); }',
+    'vec3 sol(vec3 d){ float sd = dot(d, uSol); return vec3(1.0,.9,.72) * (smoothstep(.99955, .99975, sd) * 8.0 + pow(max(sd, 0.0), 800.0) * 3.0); }',
+    'vec3 nevoa(vec3 col, vec3 P){',
+    '  vec3 d = P - uCam; float dist = length(d); vec3 dir = d / dist;',
+    '  float hgt = exp(-max(min(P.y, uCam.y), 0.0) / 150.0);',
+    '  float f = 1.0 - exp(-dist * .00105 * (.5 + 1.4 * hgt));',
+    '  vec3 fc = ceu(normalize(vec3(dir.x, clamp(dir.y, -.02, .05), dir.z))) * .86;',
+    '  return mix(col, fc, clamp(f, 0.0, 1.0)); }',
+    'vec3 tom(vec3 c){ c = max(c, 0.0); c = (c * (2.51 * c + .03)) / (c * (2.43 * c + .59) + .14); return clamp(c, 0.0, 1.0); }'
+  ].join('\n');
+  var SOMBRA = [
+    'uniform sampler2D uSombra; uniform mat4 uLPV; uniform float uTexel;',
+    'float desempacota(vec4 c){ return dot(c, vec4(1.0, 1.0/255.0, 1.0/65025.0, 1.0/16581375.0)); }',
+    'float luzSol(vec3 P, vec3 N){',
+    '  vec4 lp = uLPV * vec4(P + N * .45, 1.0); vec3 c = lp.xyz / lp.w * .5 + .5;',
+    '  if (c.x < .001 || c.x > .999 || c.y < .001 || c.y > .999 || c.z > 1.0) return 1.0;',
+    '  float s = 0.0;',
+    '  for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) s += step(c.z - .00025, desempacota(texture2D(uSombra, c.xy + vec2(float(i), float(j)) * uTexel)));',
+    '  return s / 9.0; }'
+  ].join('\n');
+
+  function prog(vs, fs) {
+    var p = gl.createProgram();
+    [[gl.VERTEX_SHADER, vs], [gl.FRAGMENT_SHADER, fs]].forEach(function (s) {
+      var sh = gl.createShader(s[0]); gl.shaderSource(sh, s[1]); gl.compileShader(sh);
+      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh) + '\n' + s[1].slice(0, 200));
+      gl.attachShader(p, sh);
+    });
+    gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+    return p;
+  }
+  function locs(p, nomes) { var o = {}; nomes.forEach(function (n) { o[n] = n.charAt(0) === 'a' ? gl.getAttribLocation(p, n) : gl.getUniformLocation(p, n); }); return o; }
+
+  // ---------- programas ----------
+  var pCeu = prog('attribute vec2 aQ; varying vec2 vU; void main(){ vU = aQ; gl_Position = vec4(aQ, 0.0, 1.0); }',
+    COMUM + '\nvarying vec2 vU; uniform vec3 uR, uU, uF; uniform float uTx, uTy;' +
+    'void main(){ vec3 d = normalize(uF + vU.x * uTx * uR + vU.y * uTy * uU);' +
+    ' vec3 c = nuvens(d, ceu(d)) + sol(d); gl_FragColor = vec4(tom(c), 1.0); }');
+  var Uc = locs(pCeu, ['aQ', 'uR', 'uU', 'uF', 'uTx', 'uTy', 'uSol', 'uCam', 'uT']);
+
+  var pProf = prog('attribute vec3 aP; uniform mat4 uLPV; void main(){ gl_Position = uLPV * vec4(aP, 1.0); }',
+    'precision highp float; void main(){ vec4 e = vec4(1.0, 255.0, 65025.0, 16581375.0) * gl_FragCoord.z; e = fract(e); e -= e.yzww * vec4(1.0/255.0, 1.0/255.0, 1.0/255.0, 0.0); gl_FragColor = e; }');
+  var Uprof = locs(pProf, ['aP', 'uLPV']);
+
+  var pPred = prog('attribute vec3 aP; attribute vec3 aN; attribute vec4 aM; uniform mat4 uPV; varying vec3 vP; varying vec3 vN; varying vec4 vM;' +
+    'void main(){ vP = aP; vN = aN; vM = aM; gl_Position = uPV * vec4(aP, 1.0); }',
+    COMUM + '\n' + SOMBRA + '\nvarying vec3 vP; varying vec3 vN; varying vec4 vM;' +
+    'void main(){' +
+    ' vec3 N = normalize(vN), P = vP, V = normalize(P - uCam); float dist = length(P - uCam);' +
+    ' float tipo = floor(vM.x + .5), s = floor(vM.y * 997.0 + .5) / 997.0;' +
+    ' vec3 sunC = vec3(1.0,.7,.43) * 3.0;' +
+    ' float ndl = max(dot(N, uSol), 0.0); float sh = ndl > 0.0 ? luzSol(P, N) : 0.0; float luz = ndl * sh;' +
+    ' float canion = mix(.5, 1.0, smoothstep(0.0, 150.0, P.y));' +
+    ' vec3 amb = mix(vec3(.3,.36,.5), vec3(.42,.47,.58), N.y * .5 + .5) * .42 * canion;' +
+    ' amb += vec3(.32,.2,.12) * .12 * (1.0 - smoothstep(20.0, 120.0, P.y));' +   // luz rebatida, quente, embaixo
+    ' vec3 col;' +
+    ' if (tipo < -.5) {' +                                       // chão
+    '  float ax = abs(P.x), zc = mod(P.z, 80.0); bool cruza = zc < 18.0;' +
+    '  vec3 alb = vec3(.2,.19,.19);' +
+    '  if (ax < 11.0) { alb = vec3(.11,.11,.12) + ruido(P.xz * 1.3) * .03;' +
+    '   alb += vec3(.5,.48,.42) * step(abs(abs(P.x) - 3.3), .07) * step(.45, fract(P.z / 9.0)) * .7;' +
+    '   alb += vec3(.6,.5,.12) * step(ax, .14) * .8;' +
+    '   if (cruza && (zc < 3.0 || zc > 15.0)) alb += vec3(.55) * step(.5, fract(P.x / 1.2)) * .6; }' +
+    '  else if (!cruza) alb = vec3(.38,.36,.34);' +
+    '  col = alb * (amb * .9 + sunC * luz);' +
+    ' } else if (N.y > .5) {' +                                  // telhados
+    '  vec3 alb = mix(vec3(.3,.29,.28), vec3(.46,.42,.37), s) * (.8 + .25 * ruido(P.xz * .4) + .12 * ruido(P.xz * 6.0));' +
+    '  if (tipo == 3.0) alb = vec3(.25,.17,.12);' +
+    '  col = alb * (amb * 2.2 + sunC * luz * 1.3);' +
+    ' } else {' +
+    '  vec2 uv = abs(N.x) > .5 ? vec2(P.z, P.y) : vec2(P.x, P.y);' +
+    '  float ao = mix(.5, 1.0, smoothstep(0.0, 28.0, P.y - vM.z * 0.0));' +
+    '  float lod = smoothstep(150.0, 700.0, dist);' +
+    '  if (tipo == 1.0) {' +                                      // vidro espelhado
+    '   vec2 cel = vec2(1.5, 3.7); vec2 id = floor(uv / cel), f = fract(uv / cel);' +
+    '   float mul = step(.045, f.x) * step(f.x, .955) * step(.035, f.y) * step(f.y, .965);' +
+    '   vec3 Np = normalize(N + (vec3(h1(id), h1(id + 7.1), h1(id + 3.3)) - .5) * .035);' +
+    '   vec3 R = reflect(V, Np);' +
+    '   vec3 refl = nuvens(R, ceu(R)) + sol(R) * 1.3 * sh;' +
+    '   refl = skyline(R, refl, sh);' +                           // o vidro reflete a silhueta dos outros prédios
+    '   float fres = .12 + .88 * pow(1.0 - max(dot(-V, Np), 0.0), 4.0);' +
+    '   vec3 tint = mix(vec3(.03,.07,.1), vec3(.06,.09,.1), s);' +
+    '   vec3 vidro = mix(tint * (amb * 2.0 + sunC * luz * .2), refl * mix(vec3(.7,.86,.95), vec3(.95,.92,.85), s), clamp(fres + .35, 0.0, 1.0));' +
+    '   vec3 caix = vec3(.2,.2,.21) * (amb + sunC * luz);' +
+    '   col = mix(caix, vidro, mix(mul, .92, lod));' +
+    '  } else if (tipo == 3.0) {' +                               // madeira da caixa d'água
+    '   float tab = .8 + .2 * step(.12, fract((P.x + P.z) * 2.2)); float aro = step(.88, fract((P.y - vM.z) * 1.1));' +
+    '   vec3 alb = mix(vec3(.36,.24,.16), vec3(.48,.34,.22), s) * tab; alb = mix(alb, vec3(.12,.12,.13), aro);' +
+    '   col = alb * (amb * 1.2 + sunC * luz);' +
+    '  } else if (tipo == 4.0) {' +                               // concreto/pedra lisa (mureta, cornija)
+    '   vec3 alb = mix(vec3(.55,.52,.48), vec3(.68,.64,.58), s) * (.9 + .15 * ruido(uv * 1.5));' +
+    '   col = alb * (amb * ao + sunC * luz);' +
+    '  } else {' +                                                // pedra (0) ou tijolo (2) com janelas
+    '   vec3 alb = tipo > 1.5 ? mix(vec3(.38,.17,.12), vec3(.52,.28,.19), s) : mix(vec3(.58,.54,.47), vec3(.76,.71,.62), s);' +
+    '   alb *= .9 + .2 * ruido(uv * vec2(.6, 2.0));' +
+    '   vec2 cel = vec2(2.4 + s * 1.4, 3.3 + fract(s * 7.3) * .6); vec2 id = floor(uv / cel), f = fract(uv / cel);' +
+    '   float lw = .2 + fract(s * 13.7) * .14; float par = step(.5, fract(s * 5.1));' +
+    '   float jx = par > .5 ? abs(fract(uv.x / (cel.x * 2.0)) - .5) * 2.0 : f.x;' +
+    '   float jan = par > .5 ? step(.08, jx) * step(jx, .5) * step(.2, f.y) * step(f.y, .8) : step(lw, f.x) * step(f.x, 1.0 - lw) * step(.2, f.y) * step(f.y, .8);' +
+    '   float sombraJan = jan * (step(f.y, .3) * 0.0 + step(.7, f.y));' +
+    '   vec3 parede = alb * (amb * ao + sunC * luz);' +
+    '   vec3 R = reflect(V, N);' +
+    '   vec3 vid = mix(vec3(.025,.03,.04), ceu(R) * .8, .25 + .5 * pow(1.0 - max(dot(-V, N), 0.0), 3.0)) + sol(R) * .4 * sh;' +
+    '   vid += vec3(1.0,.66,.36) * step(.92, h1(id + s * 31.0)) * .35;' +
+    '   vid *= 1.0 - .55 * sombraJan;' +                         // o recuo da janela faz sombra
+    '   float pil = step(.86, fract(uv.x / (cel.x * (3.0 + floor(fract(s * 3.7) * 3.0)))));' +
+    '   jan *= 1.0 - pil;' +
+    '   parede *= 1.0 - .1 * pil + .06 * step(.5, fract(floor(uv.y / cel.y) * .5));' +
+    '   col = mix(parede, vid, mix(jan, .32, lod));' +
+    '   col *= 1.0 - .16 * step(.955, fract(P.y / 3.5));' +
+    '  }' +
+    '  col *= ao;' +
+    ' }' +
+    ' col = nevoa(col, P);' +
+    ' gl_FragColor = vec4(tom(col), 1.0); }');
+  var Up = locs(pPred, ['aP', 'aN', 'aM', 'uPV', 'uSol', 'uCam', 'uT', 'uSombra', 'uLPV', 'uTexel']);
+
+  var pCar = prog('attribute vec3 aP; attribute vec3 aN; attribute vec4 aC; attribute vec3 aCor; uniform mat4 uPV; uniform float uT, uZ0, uZL; varying vec3 vP; varying vec3 vN; varying vec3 vCor; varying float vLoc;' +
+    'void main(){ vec3 p = aP; float z = aC.y + aC.z * uT; z = uZ0 - mod(uZ0 - z, uZL); p.z += z; p.x += aC.x; vP = p; vN = aN; vCor = aCor; vLoc = aP.y / max(aC.w, .1); gl_Position = uPV * vec4(p, 1.0); }',
+    COMUM + '\n' + SOMBRA + '\nvarying vec3 vP; varying vec3 vN; varying vec3 vCor; varying float vLoc;' +
+    'void main(){ vec3 sunC = vec3(1.0,.7,.43) * 3.0, amb = vec3(.35,.4,.52) * .4;' +
+    ' float luz = max(dot(vN, uSol), 0.0) * luzSol(vP, vN);' +
+    ' vec3 col = vCor * (amb + sunC * luz);' +
+    ' if (vLoc > .64 && vN.y < .5) col = mix(col, vec3(.04,.05,.07) + vec3(.3,.25,.2) * luz, .8);' +
+    ' col = nevoa(col, vP); gl_FragColor = vec4(tom(col), 1.0); }');
+  var Ucar = locs(pCar, ['aP', 'aN', 'aC', 'aCor', 'uPV', 'uSol', 'uCam', 'uT', 'uZ0', 'uZL', 'uSombra', 'uLPV', 'uTexel']);
+
+  // ---------- geometria ----------
+  var vtx = [], idx = [], nv = 0;
+  function face(qd, n, m) { for (var j = 0; j < 4; j++) vtx.push(qd[j][0], qd[j][1], qd[j][2], n[0], n[1], n[2], m[0], m[1], m[2], m[3]); idx.push(nv, nv + 1, nv + 2, nv, nv + 2, nv + 3); nv += 4; }
+  cena.predios.forEach(function (b) {
+    var x0 = b.x0, x1 = b.x1, z0 = b.z0, z1 = b.z1, y0 = b.y0, y1 = b.y1, m = [b.tipo, b.s, y0, y1];
+    face([[x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1]], [0, 0, 1], m);
+    face([[x1, y0, z0], [x0, y0, z0], [x0, y1, z0], [x1, y1, z0]], [0, 0, -1], m);
+    face([[x1, y0, z1], [x1, y0, z0], [x1, y1, z0], [x1, y1, z1]], [1, 0, 0], m);
+    face([[x0, y0, z0], [x0, y0, z1], [x0, y1, z1], [x0, y1, z0]], [-1, 0, 0], m);
+    face([[x0, y1, z1], [x1, y1, z1], [x1, y1, z0], [x0, y1, z0]], [0, 1, 0], m);
+  });
+  cena.prismas.forEach(function (p) {   // caixa d'água: 8 lados + tampa cônica
+    var n = 8, m = [p.tipo, p.s, p.y0, p.y1];
+    for (var k = 0; k < n; k++) {
+      var a0 = k / n * 6.2832, a1 = (k + 1) / n * 6.2832, am = (a0 + a1) / 2;
+      var x0 = p.cx + Math.cos(a0) * p.r, z0 = p.cz + Math.sin(a0) * p.r, x1 = p.cx + Math.cos(a1) * p.r, z1 = p.cz + Math.sin(a1) * p.r;
+      face([[x0, p.y0, z0], [x1, p.y0, z1], [x1, p.y1, z1], [x0, p.y1, z0]], [Math.cos(am), 0, Math.sin(am)], m);
+      var tp = p.y1 + p.r * .55;   // telhadinho
+      face([[x0, p.y1, z0], [x1, p.y1, z1], [p.cx, tp, p.cz], [p.cx, tp, p.cz]], norm([Math.cos(am), .9, Math.sin(am)]), [3, p.s, p.y0, p.y1]);
+    }
+  });
+  face([[-2600, 0, 900], [2600, 0, 900], [2600, 0, -3600], [-2600, 0, -3600]], [0, 1, 0], [-1, 0, 0, 0]);
+  var bPred = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bPred); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vtx), gl.STATIC_DRAW);
+  var bIdx = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, bIdx); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(idx), gl.STATIC_DRAW);
+  var nIdx = idx.length;
+  var CORES = { taxi: [.95, .68, .06], preto: [.03, .03, .035], branco: [.78, .78, .78], cinza: [.32, .33, .35], prata: [.55, .57, .6], azul: [.08, .15, .35], vermelho: [.5, .05, .05] };
+  var cvb = [], ci = [], nc = 0;
+  function caixa(x0, x1, y0, y1, z0, z1, C, cor) {
+    var F = [[[x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1], [0, 0, 1]], [[x1, y0, z0], [x0, y0, z0], [x0, y1, z0], [x1, y1, z0], [0, 0, -1]],
+      [[x1, y0, z1], [x1, y0, z0], [x1, y1, z0], [x1, y1, z1], [1, 0, 0]], [[x0, y0, z0], [x0, y0, z1], [x0, y1, z1], [x0, y1, z0], [-1, 0, 0]], [[x0, y1, z1], [x1, y1, z1], [x1, y1, z0], [x0, y1, z0], [0, 1, 0]]];
+    F.forEach(function (f) { for (var j = 0; j < 4; j++) cvb.push(f[j][0], f[j][1], f[j][2], f[4][0], f[4][1], f[4][2], C[0], C[1], C[2], C[3], cor[0], cor[1], cor[2]); ci.push(nc, nc + 1, nc + 2, nc, nc + 2, nc + 3); nc += 4; });
+  }
+  cena.carros.forEach(function (c) {
+    var L = c.onibus ? 12 : 4.6, Wd = c.onibus ? 2.6 : 1.9, Hc = c.onibus ? 3.2 : 1.45, cor = c.onibus ? [.12, .26, .6] : CORES[c.cor], C = [c.x, c.z, c.v, Hc];
+    caixa(-Wd / 2, Wd / 2, .25, Hc * .62, -L / 2, L / 2, C, cor);
+    caixa(-Wd / 2 + .12, Wd / 2 - .12, Hc * .62, Hc, -L / 2 + (c.onibus ? .2 : 1.1), L / 2 - (c.onibus ? .2 : 1.0), C, cor);
+  });
+  var bCar = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bCar); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(cvb), gl.STATIC_DRAW);
+  var bCi = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, bCi); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(ci), gl.STATIC_DRAW);
+  var nCi = ci.length;
+  var bQuad = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bQuad); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  function liga(buf, lista, passo) {
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    for (var j = 0; j < 8; j++) gl.disableVertexAttribArray(j);
+    lista.forEach(function (a) { if (a[0] < 0) return; gl.enableVertexAttribArray(a[0]); gl.vertexAttribPointer(a[0], a[1], gl.FLOAT, false, passo * 4, a[2] * 4); });
+  }
+  // mapa de sombra (profundidade empacotada em RGBA, funciona em qualquer WebGL 1)
+  var texS = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, texS);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, SM, SM, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+  [gl.TEXTURE_MIN_FILTER, gl.TEXTURE_MAG_FILTER].forEach(function (p) { gl.texParameteri(gl.TEXTURE_2D, p, gl.NEAREST); });
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  var fbS = gl.createFramebuffer(), rbS = gl.createRenderbuffer();
+  gl.bindRenderbuffer(gl.RENDERBUFFER, rbS); gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, SM, SM);
+  gl.bindFramebuffer(gl.FRAMEBUFFER, fbS); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texS, 0);
+  gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, rbS);
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+
+  // ---------- câmera no instante t ----------
+  var A = cam.amostras, FPS = cam.fps;
+  function amostra(t) {
+    var x = Math.max(0, Math.min(A.length - 1.001, t * FPS)), i = Math.floor(x), f = x - i, a = A[i], b = A[i + 1];
+    function l(k) { return a[k] + (b[k] - a[k]) * f; }
+    return { P: [l(1), l(2), l(3)], V: [l(4), l(5), l(6)], F: norm([l(8), l(9), l(10)]), U: norm([l(11), l(12), l(13)]), fov: l(14) };
+  }
+  function tremida(t) {
+    var k = 0; cam.roteiro.webs.forEach(function (w) { var d = t - w.prende; if (d > 0 && d < .6) k += Math.exp(-d * 8); });
+    var r = function (fq, fs) { return Math.sin(t * fq + fs) * .5 + Math.sin(t * fq * 2.13 + fs * 3.1) * .3; };
+    return [r(37, 1) * k * .01, r(41, 2) * k * .01];
+  }
+  function solVisivel(P) {
+    var vis = 0, off = [[0, 0], [.004, 0], [-.004, 0], [0, .004], [0, -.004]];
+    off.forEach(function (o) {
+      var d = norm([SOL[0] + o[0], SOL[1] + o[1], SOL[2]]), bloq = false;
+      for (var i = 0; i < cena.predios.length && !bloq; i++) {
+        var b = cena.predios[i], tmin = 0, tmax = 6000;
+        var e = [[b.x0, b.x1, P[0], d[0]], [b.y0, b.y1, P[1], d[1]], [b.z0, b.z1, P[2], d[2]]];
+        for (var k = 0; k < 3; k++) {
+          var lo = e[k][0], hi = e[k][1], o0 = e[k][2], dd = e[k][3];
+          if (Math.abs(dd) < 1e-9) { if (o0 < lo || o0 > hi) { tmin = 1; tmax = 0; } continue; }
+          var t1 = (lo - o0) / dd, t2 = (hi - o0) / dd; if (t1 > t2) { var tt = t1; t1 = t2; t2 = tt; }
+          tmin = Math.max(tmin, t1); tmax = Math.min(tmax, t2);
+        }
+        if (tmax >= tmin && tmax > 0) bloq = true;
+      }
+      if (!bloq) vis += .2;
+    });
+    return vis;
+  }
+
+  window.quadro = function (t) {
+    var s = amostra(t), P = s.P, fw = s.F, up = s.U;
+    var tr = tremida(t), dir0 = norm(cruz(fw, up));
+    fw = norm([fw[0] + dir0[0] * tr[0] + up[0] * tr[1], fw[1] + dir0[1] * tr[0] + up[1] * tr[1], fw[2] + dir0[2] * tr[0] + up[2] * tr[1]]);
+    var zc = [-fw[0], -fw[1], -fw[2]], xc = norm(cruz(up, zc)), yc = cruz(zc, xc), e = P;
+    var V = [xc[0], yc[0], zc[0], 0, xc[1], yc[1], zc[1], 0, xc[2], yc[2], zc[2], 0, -pto(xc, e), -pto(yc, e), -pto(zc, e), 1];
+    var asp = W / H, fovH = s.fov * Math.PI / 180, ty = Math.tan(fovH / 2) / asp, near = .4, far = 5600;
+    var Pm = [1 / (ty * asp), 0, 0, 0, 0, 1 / ty, 0, 0, 0, 0, (far + near) / (near - far), -1, 0, 0, 2 * far * near / (near - far), 0];
+    var PV = mult(Pm, V);
+    // ---- mapa de sombra: centrado um pouco à frente, preso na grade de texels (sombra não "ferve") ----
+    var hf = norm([fw[0], 0, fw[2]]), C = [P[0] + hf[0] * 200, 60, P[2] + hf[2] * 200];
+    var Lr = norm(cruz([0, 1, 0], [-SOL[0], -SOL[1], -SOL[2]])), Lu = cruz([-SOL[0], -SOL[1], -SOL[2]], Lr), tx = 2 * RAIO_SOMBRA / SM;
+    var cr = pto(C, Lr), cu = pto(C, Lu);
+    C = [C[0] - Lr[0] * (cr % tx) - Lu[0] * (cu % tx), C[1] - Lr[1] * (cr % tx) - Lu[1] * (cu % tx), C[2] - Lr[2] * (cr % tx) - Lu[2] * (cu % tx)];
+    var LV = olhar([C[0] + SOL[0] * 1800, C[1] + SOL[1] * 1800, C[2] + SOL[2] * 1800], C, [0, 1, 0]);
+    var LPV = mult(orto(RAIO_SOMBRA, 10, 3600), LV);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbS); gl.viewport(0, 0, SM, SM);
+    gl.clearColor(1, 1, 1, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL); gl.disable(gl.CULL_FACE);
+    gl.useProgram(pProf); liga(bPred, [[Uprof.aP, 3, 0]], 10); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, bIdx);
+    gl.uniformMatrix4fv(Uprof.uLPV, false, LPV);
+    gl.drawElements(gl.TRIANGLES, nIdx - 6, gl.UNSIGNED_INT, 0);   // sem o chão
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    // ---- cena ----
+    gl.viewport(0, 0, W, H); gl.clearColor(0, 0, 0, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.disable(gl.DEPTH_TEST); gl.depthMask(false);
+    gl.useProgram(pCeu); liga(bQuad, [[Uc.aQ, 2, 0]], 2);
+    gl.uniform3fv(Uc.uR, xc); gl.uniform3fv(Uc.uU, yc); gl.uniform3fv(Uc.uF, fw); gl.uniform1f(Uc.uTx, ty * asp); gl.uniform1f(Uc.uTy, ty);
+    gl.uniform3fv(Uc.uSol, SOL); gl.uniform3fv(Uc.uCam, P); gl.uniform1f(Uc.uT, t);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    gl.depthMask(true); gl.enable(gl.DEPTH_TEST);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texS);
+    gl.useProgram(pPred); liga(bPred, [[Up.aP, 3, 0], [Up.aN, 3, 3], [Up.aM, 4, 6]], 10);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, bIdx);
+    gl.uniformMatrix4fv(Up.uPV, false, PV); gl.uniform3fv(Up.uSol, SOL); gl.uniform3fv(Up.uCam, P); gl.uniform1f(Up.uT, t);
+    gl.uniform1i(Up.uSombra, 0); gl.uniformMatrix4fv(Up.uLPV, false, LPV); gl.uniform1f(Up.uTexel, 1 / SM);
+    gl.drawElements(gl.TRIANGLES, nIdx, gl.UNSIGNED_INT, 0);
+    gl.useProgram(pCar); liga(bCar, [[Ucar.aP, 3, 0], [Ucar.aN, 3, 3], [Ucar.aC, 4, 6], [Ucar.aCor, 3, 10]], 13);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, bCi);
+    gl.uniformMatrix4fv(Ucar.uPV, false, PV); gl.uniform3fv(Ucar.uSol, SOL); gl.uniform3fv(Ucar.uCam, P); gl.uniform1f(Ucar.uT, t);
+    gl.uniform1f(Ucar.uZ0, cena.Z0); gl.uniform1f(Ucar.uZL, cena.Z0 - cena.Z1);
+    gl.uniform1i(Ucar.uSombra, 0); gl.uniformMatrix4fv(Ucar.uLPV, false, LPV); gl.uniform1f(Ucar.uTexel, 1 / SM);
+    gl.drawElements(gl.TRIANGLES, nCi, gl.UNSIGNED_INT, 0);
+
+    // ---------- camada 2D: teias e reflexo de lente ----------
+    o2.setTransform(1, 0, 0, 1, 0, 0); o2.globalCompositeOperation = 'source-over'; o2.globalAlpha = 1;
+    o2.drawImage(cv, 0, 0);
+    function proj(p) {
+      var cx = PV[0] * p[0] + PV[4] * p[1] + PV[8] * p[2] + PV[12], cy = PV[1] * p[0] + PV[5] * p[1] + PV[9] * p[2] + PV[13], cw = PV[3] * p[0] + PV[7] * p[1] + PV[11] * p[2] + PV[15];
+      if (cw < near * 1.01) return null;
+      return [(cx / cw * .5 + .5) * W, (1 - (cy / cw * .5 + .5)) * H, cw];
+    }
+    var K = H / 720;
+    cam.roteiro.webs.forEach(function (w, wi) {
+      if (t < w.tiro || t > w.solta + .14) return;
+      var lado = w.mao === 'D' ? 1 : -1;
+      var mao = [P[0] + xc[0] * .3 * lado - yc[0] * .42 + fw[0] * .6, P[1] + xc[1] * .3 * lado - yc[1] * .42 + fw[1] * .6, P[2] + xc[2] * .3 * lado - yc[2] * .42 + fw[2] * .6];
+      var an = w.ancora, voo = Math.min(1, (t - w.tiro) / (w.prende - w.tiro)), ev = 1 - Math.pow(1 - voo, 2.2);
+      var solta = t > w.solta ? (t - w.solta) / .14 : 0, alfa = 1 - solta;
+      var ponta = [mao[0] + (an[0] - mao[0]) * ev, mao[1] + (an[1] - mao[1]) * ev, mao[2] + (an[2] - mao[2]) * ev];
+      var N = 48, pts = [], dd = Math.hypot(ponta[0] - mao[0], ponta[1] - mao[1], ponta[2] - mao[2]);
+      var lat = norm(cruz([ponta[0] - mao[0], ponta[1] - mao[1], ponta[2] - mao[2]], [0, 1, 0]));
+      for (var k = 0; k <= N; k++) {
+        var u = k / N, x = mao[0] + (ponta[0] - mao[0]) * u, y = mao[1] + (ponta[1] - mao[1]) * u, z = mao[2] + (ponta[2] - mao[2]) * u;
+        var onda = Math.sin(u * 14 - t * 40) * (1 - voo) * dd * .012 * Math.sin(u * Math.PI);
+        var barriga = (solta * 6 + (1 - voo) * 1.5) * Math.sin(u * Math.PI) * dd * .02;
+        var p3 = proj([x + lat[0] * onda, y - barriga, z + lat[2] * onda]);
+        if (p3) pts.push(p3);
+      }
+      if (pts.length < 2) return;
+      o2.lineCap = 'round'; o2.lineJoin = 'round';
+      [[8, 'rgba(255,226,190,', .1], [2.8, 'rgba(250,244,236,', .95], [1.1, 'rgba(255,255,255,', .55]].forEach(function (camada, ci2) {
+        for (var k = 1; k < pts.length; k++) {
+          var a = pts[k - 1], b = pts[k], larg = camada[0] * K * Math.max(.16, Math.min(3.4, 2.2 / Math.max(.4, a[2] * .9)));
+          var off = ci2 === 2 ? Math.sin(k * .9 + t * 30) * 1.6 * K : 0;
+          o2.strokeStyle = camada[1] + (camada[2] * alfa).toFixed(3) + ')'; o2.lineWidth = larg;
+          o2.beginPath(); o2.moveTo(a[0] + off, a[1]); o2.lineTo(b[0] + off, b[1]); o2.stroke();
+        }
+      });
+      if (voo >= 1) {
+        var pa = proj(an); if (pa) {
+          var R = Math.max(2, Math.min(40, 900 * K / pa[2])) * (1 + Math.max(0, .3 - (t - w.prende)) * 2);
+          o2.strokeStyle = 'rgba(255,248,238,' + (.85 * alfa) + ')'; o2.lineWidth = 1.1 * K; o2.beginPath();
+          for (var r2 = 0; r2 < 9; r2++) { var ang = r2 / 9 * 6.283 + wi; o2.moveTo(pa[0], pa[1]); o2.lineTo(pa[0] + Math.cos(ang) * R, pa[1] + Math.sin(ang) * R); }
+          o2.stroke(); o2.beginPath(); o2.arc(pa[0], pa[1], R * .45, 0, 6.29); o2.stroke();
+        }
+      }
+    });
+    var ps = proj([P[0] + SOL[0] * 3000, P[1] + SOL[1] * 3000, P[2] + SOL[2] * 3000]);
+    if (ps && ps[0] > -W * .3 && ps[0] < W * 1.3 && ps[1] > -H * .3 && ps[1] < H * 1.3) {
+      var vis = solVisivel(P);
+      if (vis > 0) {
+        o2.globalCompositeOperation = 'lighter';
+        var g = o2.createRadialGradient(ps[0], ps[1], 0, ps[0], ps[1], 440 * K);
+        g.addColorStop(0, 'rgba(255,214,150,' + (.5 * vis) + ')'); g.addColorStop(.25, 'rgba(255,150,70,' + (.16 * vis) + ')'); g.addColorStop(1, 'rgba(255,120,40,0)');
+        o2.fillStyle = g; o2.fillRect(0, 0, W, H);
+        var g2 = o2.createLinearGradient(ps[0] - W * .6, 0, ps[0] + W * .6, 0);
+        g2.addColorStop(0, 'rgba(255,170,90,0)'); g2.addColorStop(.5, 'rgba(255,200,140,' + (.32 * vis) + ')'); g2.addColorStop(1, 'rgba(255,170,90,0)');
+        o2.fillStyle = g2; o2.fillRect(ps[0] - W * .6, ps[1] - 2 * K, W * 1.2, 4 * K);
+        [[.35, 38, 'rgba(120,200,255,'], [.6, 22, 'rgba(255,170,90,'], [1.25, 60, 'rgba(160,255,190,'], [1.6, 14, 'rgba(255,120,200,']].forEach(function (f) {
+          var gx = ps[0] + (W / 2 - ps[0]) * f[0] * 1.6, gy = ps[1] + (H / 2 - ps[1]) * f[0] * 1.6, r = f[1] * K;
+          var gg = o2.createRadialGradient(gx, gy, 0, gx, gy, r); gg.addColorStop(0, f[2] + (.1 * vis) + ')'); gg.addColorStop(.8, f[2] + (.05 * vis) + ')'); gg.addColorStop(1, f[2] + '0)');
+          o2.fillStyle = gg; o2.beginPath(); o2.arc(gx, gy, r, 0, 6.29); o2.fill();
+        });
+        o2.globalCompositeOperation = 'source-over';
+      }
+    }
+    return c2.toDataURL('image/jpeg', .94).split(',')[1];
+  };
+  window.pronto = true;
+})().catch(function (e) { window.erro = String(e && e.stack || e); });
+</script>
+</body>
+</html>

@@ -227,3 +227,11 @@ O Davi mandou um vídeo de um site de filme (Cine Daily, Deadpool III) + 8 image
 ## 21/11/2026: Homem-Aranha v2 (teia consertada + cidade 3D + aranha radioativa)
 Palavras: teia bugada, devicePixelRatio, canvas dobrado, balançar pela cidade, Nova York 3D, WebGL puro, pêndulo, aranha radioativa, picada, cinemática inversa, patas, Aranhaverso, retícula, glitch, onomatopeia, THWIP, Terra-616, imagem reserva.
 O Davi disse "as teias estão bugadas, quero mais efeitos, faça seu máximo, algo que me surpreenda". Bug: canvas fixo sem tamanho em CSS ficava 2×/3× maior no celular (teia longe do dedo). Novidades em `sites/homem-aranha/`: seção "Balançar pela cidade" (Nova York à noite em WebGL puro, 8 balanços de teia guiados pela rolagem e salto final), aranha radioativa que desce do fio, anda atrás do cursor e pica, liberando o modo Aranhaverso (retícula, impressão desalinhada, glitch, THWIP! em balão), olhos da fita piscando. Prévia 1,56 MB. Lições no `05`, receitas no `03`.
+
+## 21/11/2026: Homem-Aranha em primeira pessoa (vídeo por código)
+Palavras: primeira pessoa, first person, web swinging, balançar na teia, pôr do sol, golden hour, Manhattanhenge, cinematic, AAA, prompt de vídeo, Veo, mortal, caixa d'água, desfoque de movimento, tmix, mapa de sombra, SwiftShader.
+O Davi mandou 3 vídeos de referência + um prompt de vídeo de IA (10 s, fotorrealista, terceira pessoa, "spider-man web swinging in first person"). Aqui não tem Veo/Sora: foi feita a versão em primeira pessoa por código em `Vídeos Davi/2026-11-aranha-primeira-pessoa/` (cidade 3D WebGL renderizada quadro a quadro com sombras, 3 teias, mortal, som sintetizado, 1080p). Pessoal, não é GuDev. Lições no README de `Vídeos Davi/`.
+
+## 21/11/2026: Homem-Aranha v3 (vídeos de referência no site)
+Palavras: mergulho na lente, olho da máscara, sequência de quadros, vista de fora, gameplay, Times Square, telão, cinema, tarjas, lua, vídeo no canvas.
+O Davi pediu pra usar os 3 vídeos de referência no site. `sites/homem-aranha/`: close da lente virou a transição pra cidade (rolagem entra no olho), gameplay virou a "vista de fora" no canto da cidade, cena do filme virou um telão com tarjas que abrem. Prévia continua em 1,6 MB.

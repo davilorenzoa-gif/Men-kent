@@ -175,6 +175,8 @@ O prompt do getlayers aponta pra .glb/.png em `api.getlayers.ai`, que dá 403 aq
 - **Chiado dentro das janelas do shader:** um valor por vértice igual nos 4 cantos chega no pixel com erro mínimo da interpolação, e o `fract(sin(x)·43758)` amplia esse erro. Arredondar o valor antes do hash.
 - **Física com passo travado em 0,05 s anda devagar quando o quadro demora:** no Playwright sem GPU a aranha andava 5× mais devagar. Movimento de personagem: limitar o passo em 0,1 s; corda e mola: passo fixo de 1/60 s com acumulador.
 - **Playwright "element is not stable"** em botão que balança (a aranha pendurada se mexe com o mouse): usar `click({ force: true })` no teste. Não é bug pra quem usa.
+- **Vídeo dentro de palco grudado (`position: sticky`) apareceu 600 px fora do lugar** num print (retângulo preto no canto da cidade). Saída: deixar o `<video>` invisível embaixo e desenhar o quadro num `<canvas>` dentro do laço que já roda. Também evita bug de "overlay" de vídeo no Android.
+- **Vídeo na prévia num arquivo:** `src="img/x.mp4"` vira data URI pelo `previa_embutida.py` e toca offline. Pra caber em ~2 MB: clipes de 5 s em 352 a 576 px, `crf 33`, sem som (~100 KB cada); sequência de rolagem em **uma imagem só** com os quadros em grade (25 quadros = 177 KB) em vez de vários arquivos.
 - **Trava de segurança do Claude Code:** comando Python em heredoc com `$$(` dentro e `mv` que sobrescreve arquivo foram barrados ("pode apagar mais do que devia"), mesmo sem apagar nada. Saída: editar o HTML com a ferramenta de edição e trocar nomes com `mv -n` passando por um nome temporário.
 
 ## 18/11/2026: GSAP + transform no CSS (vinheta do Jimmy Neutron)
