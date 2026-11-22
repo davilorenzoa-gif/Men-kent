@@ -10,6 +10,7 @@
 
 | Palavra-chave | O que é | Onde |
 |---|---|---|
+| **TikTok, Parece bom?, psicologia do consumidor, efeito halo, degraus, série** | Estratégia de TikTok (oficial vs. mercado vs. hipótese, 4 pilares, 10 vídeos, plano de 30 dias) + 1º vídeo "Parece bom?" (66,6 s, bonecos brancos com brilho, drop na virada) (22/11) | `gudev/12-TIKTOK-ESTRATEGIA.md`, `gudev/videos/parece-bom/` |
 | **filme de marca, campanha, Digital Presence, vídeo por código** | Reels de 32 s feito com HTML + Playwright + ffmpeg + trilha em numpy (15/11) | `gudev/videos/presenca-digital/`, `08` |
 | **açaí, Radar** | Radar de açaí e sorveterias da Zona Leste (até 100 km), 21/10 | artifact Va7xfagsqwHofaKFJ8WSiQ, `02` |
 | **comercial Andrade, Terra, hiperzoom, speed ramp, estátua de aço** | Reels de 24,6 s da Andrade (17/11): zoom do espaço até a fachada, tour com rampa de velocidade na batida, estátua em camadas, vento nos zooms | `gudev/videos/andrade-comercial/`, `08` |
@@ -77,6 +78,7 @@
 
 | Data | Sessão | Resultado / pendência |
 |---|---|---|
+| 22/11 | TikTok: estratégia + vídeo "Parece bom?" | `gudev/12-TIKTOK-ESTRATEGIA.md` + `gudev/videos/parece-bom/gudev-parece-bom.mp4` (66,6 s, sem voz). Falta: voz do Davi (tabela no README), ouvir no celular, decidir se a música passa no TikTok |
 | 21/11 | Fan site do Homem-Aranha (vídeo Cine Daily/Deadpool), v2 | `sites/homem-aranha/` + `homem-aranha-arquivo-unico.html` (1,56 MB). v2: teia consertada no celular, cidade 3D, aranha radioativa, Aranhaverso. Só estudo (Marvel). Falta ver no celular de verdade |
 | 17/11 | Comercial da Andrade, versão 2 | Fachada real (caminhonete + letreiro), relógio "desde 1989", colunas na estátua, grão na estátua, esmerilhadeira alta. Mesmas pendências da v1 |
 | 16–17/11 | Comercial da Andrade Ferro e Aço | `gudev/videos/andrade-comercial/andrade-comercial.mp4` (música de referência do Davi + efeitos). Falta: confirmar telefone (prompt dizia 3261-4402, site diz 2581-4404), ouvir o som, ok do padrinho |
@@ -243,4 +245,8 @@ O Davi mandou um prompt de 5 cenas (35 s), o comercial da Andrade, 2 vídeos de 
 ## 22/11/2026: Narração no "Construindo o próximo passo"
 Palavras: narração, voz, CapCut, legenda, encaixar voz, ducking, abaixar música, "Uma boa comunicação faz a diferença", Encerramento.
 O Davi mandou 2 exports do CapCut com a narração (só voz + legenda). Usada a 2ª (a 1ª lia "Encerramento" no meio). `gudev/videos/proximo-passo/projeto/narracao.py` corta cada frase nas pausas, põe na cena dela e abaixa a trilha 7,5 dB embaixo da fala. Filme esticado pra 38,2 s pra caber "GuDev. Construindo o próximo passo." falado.
+
+## 22/11/2026: TikTok, estratégia + "Parece bom?" (Psicologia do consumidor · 01)
+Palavras: TikTok, algoritmo, For You, retenção, gancho, re-gancho, SEO do TikTok, palavra-chave, hashtags, pilares, plano de 30 dias, série, Kahneman, substituição, "é bom? / parece bom?", efeito halo, prova social, Nudge, atrito, degrau, maldição do conhecimento, StoryBrand, Goldratt, gryn.red, mentedagrandeza, monaco_cars, caixa de comentário, porta de aço, "Qualidade faz o cliente voltar. Clareza faz ele chegar.", "A gente tira os degraus do caminho".
+O Davi mandou 2 vídeos de referência (bonecos brancos com brilho; números grandes + comentário no fim), a música de um vídeo de carros (140 bpm, drop em 4,91 s) e 3 prompts (roteirista de TikTok, vídeo de psicologia da confiança em 5 atos, estratégia de crescimento). Feito: `gudev/12-TIKTOK-ESTRATEGIA.md` (fontes oficiais do TikTok separadas de palpite, posicionamento, 4 pilares, receita de retenção, 10 conceitos, vídeo 1 completo, plano de 30 dias) e o vídeo em `gudev/videos/parece-bom/` (mesmo motor dos filmes: HTML `seek(t)` + Playwright 120 q/s + ffmpeg + trilha em numpy). Laranja do logo no lugar do azul/verde do prompt. Sem voz: tabela de tempos no README pro Davi gravar.
 
