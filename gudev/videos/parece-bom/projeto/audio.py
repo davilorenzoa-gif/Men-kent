@@ -204,12 +204,12 @@ def fades(x, a=0.006, b=0.008):
     x[:na] *= np.linspace(0, 1, na)[:, None]; x[-nb:] *= np.linspace(1, 0, nb)[:, None]; return x
 
 # 1) gancho: introdução da faixa até 4 tempos antes do refrão
-place(fades(M(MB(-4) - G0, MB(-4) + 0.012)) * 0.62, 0.0)
+place(fades(M(MB(-4) - G0, MB(-4) + 0.012)) * 0.22, 0.0)
 
 # 2) refrão em ordem, abafado, abrindo até o corte (88 tempos)
 bedm = grid(M(MB(0), MB(88) + 0.02))[:int((STOP - G0) * SR)]
-fc = [(G0, 210), (9.0, 230), (22.1, 280), (25.3, 380), (30.8, 600), (34.5, 900), (37.0, 1400), (40.0, 3000), (STOP, 3400)]
-gn = [(G0, 1.5), (22.1, 1.5), (28.5, -0.5), (STOP, -1.0)]
+fc = [(G0, 240), (10.0, 320), (17.0, 430), (24.0, 620), (30.0, 900), (35.0, 1400), (STOP, 2600)]   # abre devagar e sem saltos
+gn = [(G0, -9.0), (12.0, -7.0), (20.0, -5.5), (28.0, -4.0), (35.0, -2.5), (STOP, -1.5)]
 lf = stft_filter(bedm, lambda tc: env_pts(fc, tc + G0), lambda tc: env_pts(gn, tc + G0))
 place(fades(lf) * 0.95, G0)
 tail = reverb(bed, STOP - 0.35, STOP, decay=2.6, wet=0.22)
@@ -217,9 +217,11 @@ place(tail[int(0.35 * SR):], STOP)
 
 # 3) último compasso da subida + o ponto mais forte da faixa no drop
 sub_ = grid(M(MB(92), MB(96) + 0.012))     # subida: o grave some aos poucos (passa-alta de 120 a 900 Hz) e volta inteiro no drop
-sub_ = stft_filter(sub_, lambda tc: 120 * (900 / 120) ** min(1, tc / (4 * BT)), lambda tc: -1.5 * tc / (4 * BT), n=2048, hop=256, high=True)
+sub_ = stft_filter(sub_, lambda tc: 120 * (900 / 120) ** min(1, tc / (4 * BT)), lambda tc: -11.0 + 6.0 * tc / (4 * BT), n=2048, hop=256, high=True)
 place(fades(sub_, 0.01) * 0.9, BRK)
 fim = grid(M(MB(96), 59.72))
+# entra no drop um pouco abaixo e sobe até o volume cheio em ~5 s (sem estourar)
+fim = stft_filter(fim, lambda tc: 2200 * (20000 / 2200) ** min(1, tc / 3.0), lambda tc: -6.0 * max(0.0, 1 - tc / 5.0))
 nf = int(0.35 * SR); fim[-nf:] *= np.linspace(1, 0, nf)[:, None] ** 2
 place(fim * 0.95, DROP)
 lt = reverb(bed, HIT - 0.05, HIT + 0.45, decay=3.4, wet=0.18)
@@ -270,7 +272,7 @@ pop(26.75, 0.12, 560)
 for tr in (26.95, 28.25, 29.45): blip(tr, 0.16)
 # sai do celular, degraus
 wind(31.0, 0.3, 0.45, 0.4, 2600, 300)
-for i, tp in enumerate([K(67), K(68), K(69)]): thud(tp - 0.06, 0.62 + 0.1 * i, 95 - 12 * i)
+for i, tp in enumerate([K(67), K(68), K(69)]): thud(tp - 0.06, 0.40 + 0.06 * i, 95 - 12 * i)
 # ela vai embora
 tick(34.3, 0.08, 2000)
 for i in range(7): tick(34.6 + i * 0.25, 0.05, 1500, pan=-0.4)
@@ -292,9 +294,9 @@ s = bandnoise(0.18, 4000, 1500, 0.6) * np.exp(-np.arange(int(0.18 * SR)) / SR * 
 buzz(42.4, 0.3, 0.07)
 for i in range(3): pop(43.95 + i * 0.28, 0.15, 820 + 110 * i)
 # virada → drop
-riser(BRK, DROP - 0.01, 0.22, 300, 8000)
+riser(BRK, DROP - 0.01, 0.13, 300, 8000)
 wind(DROP - 0.05, 1.2, 0.2, 0.25, 200, 3000)
-sub(DROP, 1.0, 80, 30, 1.6); spark(DROP, 0.32)
+sub(DROP, 0.55, 80, 30, 1.6); spark(DROP, 0.15)
 for i in range(5):
     t0 = DROP + i * 2 * BT - 0.02
     wind(t0 + 0.12, 0.14, 0.1, 0.18, 900, 5000, pan=[-0.6, 0.6, -0.6, 0.6, 0][i])
