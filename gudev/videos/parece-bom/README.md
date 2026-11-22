@@ -58,6 +58,7 @@ Nada de cliente, número ou avaliação inventada: a empresa é "SUA EMPRESA" e 
   - 44,05–45,76 s → **45,65–47,36 s**: o último compasso da subida, com o grave sumindo aos poucos (passa-alta de 120 a 900 Hz).
   - 45,76 s → **47,36 s: DROP**, o trecho mais forte da faixa, com o grave voltando inteiro (o site se monta). A batida de 55,60 s da faixa é o logo (**57,19 s**); o final dela, que já vem diminuindo, fica embaixo da assinatura. A introdução volta baixinho embaixo da pergunta final.
 - Efeitos: vento em toda aproximação e afastamento (cabeça, celular, panorâmicas, logo), pops com mola nos ícones, digitação, "bip" de dúvida nos "?", pancadas graves nos degraus, lâmpadas falhando, chocalho da porta de aço subindo, sinos no halo e no logo.
+- **Subida gradual (pedido do Davi, 22/11: "estoura do nada")**: introdução mais baixa, refrão abafado que sobe de ~−22 a ~−15 LUFS até o corte, compasso da subida crescendo de −11 a −5 dB, e o drop entra 6 dB abaixo e abrindo o agudo, chegando ao volume cheio em ~5 s; pancadas do drop e dos degraus mais leves.
 - Volume: −13,4 LUFS integrado, pico −0,5 dB. **O Claude não ouve:** conferido por medição e espectrograma.
 
 ## Antes de postar

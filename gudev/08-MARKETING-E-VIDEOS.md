@@ -163,4 +163,4 @@ Ordem sugerida: 5, 1, 8, depois intercalar Google (2, 3, 6) com site (4, 7, 9).
 - **Quando só tiver trecho curto (15 s) pra vídeo de 66 s:** medir a grade (bpm e batida do drop), usar a introdução no gancho, o refrão **em loop de 16 tempos abafado** (passa-baixa que abre devagar) durante o problema, **corte seco** antes da solução e o **drop cheio** na virada; a última batida antes da vinheta do TikTok vira o logo.
 - Selo de série no quadro 0 ("PSICOLOGIA DO CONSUMIDOR · 01") dá contexto nos 3 primeiros segundos e põe a palavra-chave na tela.
 - Zona segura do TikTok: nada importante abaixo de y≈1480 nem na coluna da direita (x>940).
-
+- **Música sobe aos poucos, nunca de uma vez** (Davi, 22/11: "estoura numa parte do nada"): conferir a curva de volume (ebur128, valor S a cada 2 s) antes de entregar; nada de salto maior que ~3 LU fora de corte proposital. Drop entra abaixo e sobe em ~5 s.
