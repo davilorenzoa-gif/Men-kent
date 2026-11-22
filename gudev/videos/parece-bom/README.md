@@ -5,7 +5,7 @@
 Pedido do Davi: 2 vídeos de referência (@gryn.red: bonecos brancos com brilho em fundo preto e legenda no topo; @mentedagrandeza_: números grandes, uma cor de destaque e caixa de comentário no fim), a música de um vídeo de carros (@monaco_cars_1) e 3 prompts (roteirista de TikTok, "a psicologia por trás de uma empresa que transmite confiança" e estratégia de crescimento). Objetivo: reter views no TikTok.
 
 Arquivos:
-- **`gudev-parece-bom-voz.mp4`: versão com a narração do Davi** (22/11, export do CapCut encaixado frase por frase por `projeto/narracao.py`, música abaixa 7,5 dB na fala). **Faltam as 2 últimas falas** ("GuDev. A gente tira os degraus do caminho." em 57,2 s e "E o seu cliente, o que encontra quando te procura?" em 60,8 s): não vieram no export.
+- **`gudev-parece-bom-voz.mp4`: versão com a narração do Davi** (22/11, 2º export do CapCut, o que o Davi preferiu, encaixado frase por frase por `projeto/narracao.py`, música abaixa 10 dB na fala). **Faltam as 2 últimas falas** ("GuDev. A gente tira os degraus do caminho." em 57,2 s e "E o seu cliente, o que encontra quando te procura?" em 60,8 s): não vieram no export.
 - `gudev-parece-bom.mp4`: o vídeo com música e efeitos, **ainda sem voz** (a narração está escrita na tela, no topo).
 - `trilha.m4a` (música + efeitos) e `trilha-sfx.m4a` (só efeitos), pra montar no CapCut se precisar.
 - `projeto/orig/musica-ref.mp4`: a versão longa da música que o Davi mandou (faixa de terceiro, perfil @lonewql).
@@ -59,6 +59,7 @@ Nada de cliente, número ou avaliação inventada: a empresa é "SUA EMPRESA" e 
   - 45,76 s → **47,36 s: DROP**, o trecho mais forte da faixa, com o grave voltando inteiro (o site se monta). A batida de 55,60 s da faixa é o logo (**57,19 s**); o final dela, que já vem diminuindo, fica embaixo da assinatura. A introdução volta baixinho embaixo da pergunta final.
 - Efeitos: vento em toda aproximação e afastamento (cabeça, celular, panorâmicas, logo), pops com mola nos ícones, digitação, "bip" de dúvida nos "?", pancadas graves nos degraus, lâmpadas falhando, chocalho da porta de aço subindo, sinos no halo e no logo.
 - **Subida gradual (pedido do Davi, 22/11: "estoura do nada")**: introdução mais baixa, refrão abafado que sobe de ~−22 a ~−15 LUFS até o corte, compasso da subida crescendo de −11 a −5 dB, e o drop entra 6 dB abaixo e abrindo o agudo, chegando ao volume cheio em ~5 s; pancadas do drop e dos degraus mais leves.
+- **Sem corte seco (2º ajuste do Davi):** em 40,5 s a música não some mais; desce pra um fundo bem baixo e abafado embaixo de "Um site não salva um produto ruim" e volta a subir até o drop, que entra 4 dB abaixo e chega ao cheio em 6 s.
 - Volume: −13,4 LUFS integrado, pico −0,5 dB. **O Claude não ouve:** conferido por medição e espectrograma.
 
 ## Antes de postar
