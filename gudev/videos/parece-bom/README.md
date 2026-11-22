@@ -7,7 +7,7 @@ Pedido do Davi: 2 vídeos de referência (@gryn.red: bonecos brancos com brilho 
 Arquivos:
 - `gudev-parece-bom.mp4`: o vídeo com música e efeitos, **ainda sem voz** (a narração está escrita na tela, no topo).
 - `trilha.m4a` (música + efeitos) e `trilha-sfx.m4a` (só efeitos), pra montar no CapCut se precisar.
-- `projeto/orig/musica-ref.mp4`: o vídeo da música que o Davi mandou (faixa de terceiro).
+- `projeto/orig/musica-ref.mp4`: a versão longa da música que o Davi mandou (faixa de terceiro, perfil @lonewql).
 
 ## A ideia
 O cliente não consegue saber se a empresa é boa antes de comprar. Então o cérebro troca a pergunta difícil ("é bom?") por uma fácil ("parece bom?") e responde com o que estiver na frente. Cada dúvida sem resposta vira um degrau, e o cliente vai embora sem ninguém ver. O site entra como conclusão: **"Um site não salva um produto ruim. Mas responde as perguntas antes de virarem degrau."**
@@ -49,10 +49,15 @@ Nada de cliente, número ou avaliação inventada: a empresa é "SUA EMPRESA" e 
 - Render a 120 quadros/s misturados de 4 em 4 (desfoque de movimento), poeira de luz discreta e grão leve.
 
 ## Som (`projeto/audio.py`, numpy)
-- Música do Davi (faixa do vídeo de carros, **140,35 bpm**; drop da faixa em 4,91 s; a vinheta do TikTok começa em 15,5 s e foi cortada). Todos os cortes estão na grade dela (`K(k)` no código).
-- 0–2,9 s: introdução da faixa. 2,9–40,5 s: o refrão em loop de 16 tempos, **abafado** (passa-baixa em ~210 Hz) e abrindo aos poucos até 3,6 kHz (tensão do problema). 40,52 s: **corte seco** com grave e um zumbido baixo. 45,65 s: a virada original da faixa. **47,36 s: drop cheio** (o site se monta). 57,19 s: última batida = logo. Depois, a introdução volta baixinho embaixo da pergunta.
+- Música: a faixa que o Davi mandou. Na 1ª versão era um trecho de 15 s (34 kbps) em loop; no mesmo dia ele mandou a **versão longa (60 s, 128 kbps)** e a trilha foi refeita **com a música em ordem, sem loop**. É a mesma gravação (o trecho curto está 0,21 s à frente dentro da longa). **140,27 bpm**; cada trecho é acelerado 0,06% pra cair na grade do filme (140,35 bpm, `K(k)` no código). A vinheta do TikTok (59,9 s da faixa) ficou de fora.
+- Tempo da faixa → filme:
+  - 0,09–2,99 s → **0–2,90 s**: introdução no gancho.
+  - 4,70–42,34 s → **2,90–40,52 s**: refrão 1, refrão 2 e começo da subida, **abafados** (passa-baixa de ~210 Hz abrindo até 3,4 kHz). As paradas da própria faixa caem em 11,5 s (sinais) e 25,1 s (mergulho no celular).
+  - **40,52 s: corte seco**, silêncio com grave e zumbido baixo.
+  - 44,05–45,76 s → **45,65–47,36 s**: o último compasso da subida, com o grave sumindo aos poucos (passa-alta de 120 a 900 Hz).
+  - 45,76 s → **47,36 s: DROP**, o trecho mais forte da faixa, com o grave voltando inteiro (o site se monta). A batida de 55,60 s da faixa é o logo (**57,19 s**); o final dela, que já vem diminuindo, fica embaixo da assinatura. A introdução volta baixinho embaixo da pergunta final.
 - Efeitos: vento em toda aproximação e afastamento (cabeça, celular, panorâmicas, logo), pops com mola nos ícones, digitação, "bip" de dúvida nos "?", pancadas graves nos degraus, lâmpadas falhando, chocalho da porta de aço subindo, sinos no halo e no logo.
-- Volume: −17 LUFS integrado, pico −0,6 dB. **O Claude não ouve:** conferido por medição e espectrograma.
+- Volume: −13,4 LUFS integrado, pico −0,5 dB. **O Claude não ouve:** conferido por medição e espectrograma.
 
 ## Antes de postar
 1. **Voz.** Gravar a narração da tabela (ElevenLabs "Adam" ou CapCut, como no `proximo-passo`) e mandar o arquivo só com a voz: o Claude encaixa cada frase no tempo (`projeto/narracao.py`) e abaixa a música embaixo. Ou gravar direto no CapCut em cima do vídeo seguindo a legenda.

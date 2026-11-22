@@ -1,11 +1,13 @@
-"""Trilha do filme "Parece bom?" (numpy puro). Música: a faixa que o Davi mandou (vídeo de carros, ~140 bpm).
-Uso: python3 audio.py musica.wav trilha.wav   (gera também sfx.wav, só os efeitos)
-Mapa da música (tempo da faixa → tempo do filme):
-- 0 a 2,90 s: introdução da faixa (0,30–3,20) no gancho.
-- 2,90 a 40,52 s: o refrão (drop) em loop de 16 tempos, ABAFADO (passa-baixa) e abrindo aos poucos (tensão do problema).
-- 40,52 s: a música corta seco ("você nem percebe"). Silêncio com um zumbido grave.
-- 45,65 a 47,36 s: a virada original da faixa (3,20–4,91) e, em 47,36 s, o DROP cheio na descoberta (o site se monta).
-- 57,19 s: última batida antes da vinheta do TikTok = o logo. Depois, a introdução volta baixinho embaixo da pergunta final.
+"""Trilha do filme "Parece bom?" (numpy puro). Música: a faixa que o Davi mandou (versão longa, 60 s, 140,27 bpm).
+Uso: python3 audio.py musica.wav trilha.wav   (gera também trilha-sfx.wav, só os efeitos)
+A música toca EM ORDEM (sem loop), só com um corte de silêncio no meio. Tempo da faixa → tempo do filme:
+- 0,09–2,99 s → 0–2,90 s: introdução no gancho (pula a virada de 4 tempos).
+- 4,70–42,34 s → 2,90–40,52 s: refrão 1, refrão 2 e começo da subida, ABAFADOS (passa-baixa que abre aos poucos).
+- 40,52 s: corte seco, silêncio com zumbido grave ("você nem percebe").
+- 44,05–45,76 s → 45,65–47,36 s: o último compasso da subida da faixa.
+- 45,76 s → 47,36 s: o ponto mais forte da faixa cai no DROP (o site se monta). A batida de 55,60 s da faixa é o logo (57,19 s)
+  e o final dela (que já vem diminuindo) fica embaixo da assinatura. A introdução volta baixinho embaixo da pergunta final.
+Cada trecho é acelerado 0,06% pra cair na grade do filme (140,35 bpm), sem diferença audível.
 """
 import sys, subprocess, wave
 import numpy as np
@@ -16,7 +18,6 @@ N = int(END * SR)
 BT = 0.427503; G0 = 2.901
 K = lambda k: G0 + k * BT
 STOP, BRK, DROP, HIT = K(88), K(100), K(104), K(127)
-MD = 4.911            # batida do drop na faixa
 rng = np.random.default_rng(11)
 
 def load(path, ss=0, t=None):
@@ -26,14 +27,14 @@ def load(path, ss=0, t=None):
 def env_pts(pts, t):
     xs, ys = zip(*pts); return np.interp(t, xs, ys)
 
-def stft_filter(x, fc_of_t, g_of_t, n=4096, hop=1024):
+def stft_filter(x, fc_of_t, g_of_t, n=4096, hop=1024, high=False):
     """passa-baixa que muda com o tempo, feito no espectro (overlap-add)."""
     w = np.hanning(n); out = np.zeros_like(x); norm = np.zeros(len(x))
     f = np.fft.rfftfreq(n, 1 / SR)
     for i in range(0, len(x) - n, hop):
         tc = (i + n / 2) / SR
         fc = fc_of_t(tc); g = 10 ** (g_of_t(tc) / 20)
-        H = g / np.sqrt(1 + (f / fc) ** 6)
+        H = g / np.sqrt(1 + (fc / np.maximum(f, 1)) ** 6) if high else g / np.sqrt(1 + (f / fc) ** 6)
         for c in range(2):
             out[i:i + n, c] += np.fft.irfft(np.fft.rfft(x[i:i + n, c] * w) * H, n) * w
         norm[i:i + n] += w ** 2
@@ -188,46 +189,49 @@ mu = load(musica)
 M = lambda a, b: mu[int(a * SR):int(b * SR)].copy()
 
 # ================= MÚSICA =================
+BTS = 60 / 140.27; DA = 4.6975          # tempo da faixa e a 1ª batida do refrão nela
+MB = lambda k: DA + k * BTS              # k-ésima batida da faixa
+R = BT / BTS                             # acerto pra grade do filme
 bed = np.zeros((N, 2))
 def place(x, t):
     i = int(round(t * SR)); j = min(N, i + len(x)); bed[i:j] += x[:j - i]
+def grid(x):
+    """acelera o trecho em R (0,06%) pra bater com a grade do filme."""
+    n = int(len(x) * R); src = np.arange(n) / R
+    return np.stack([np.interp(src, np.arange(len(x)), x[:, c]) for c in range(2)], 1)
+def fades(x, a=0.006, b=0.008):
+    na, nb = int(a * SR), int(b * SR)
+    x[:na] *= np.linspace(0, 1, na)[:, None]; x[-nb:] *= np.linspace(1, 0, nb)[:, None]; return x
 
-# 1) gancho: introdução da faixa
-intro = M(0.30, MD - 4 * BT + 0.012)
-intro[:int(0.006 * SR)] *= np.linspace(0, 1, int(0.006 * SR))[:, None]
-place(intro * 0.62, 0.0)
+# 1) gancho: introdução da faixa até 4 tempos antes do refrão
+place(fades(M(MB(-4) - G0, MB(-4) + 0.012)) * 0.62, 0.0)
 
-# 2) refrão em loop, abafado, abrindo até o corte
-L16 = M(MD, MD + 16 * BT + 0.012)
-nloop = int(np.ceil((STOP - G0) / (16 * BT))) + 1
-loop = xfade_cat([L16] * nloop)[:int((STOP - G0) * SR)]
-fc = [(G0, 210), (9.0, 230), (22.1, 280), (25.3, 380), (30.8, 620), (34.5, 950), (37.0, 1500), (40.0, 3200), (STOP, 3600)]
-gn = [(G0, 1.5), (22.1, 1.5), (30.8, 0.5), (STOP, 0.0)]
-lf = stft_filter(loop, lambda tc: env_pts(fc, tc + G0), lambda tc: env_pts(gn, tc + G0))
-lf[-int(0.008 * SR):] *= np.linspace(1, 0, int(0.008 * SR))[:, None]
-place(lf * 0.95, G0)
-# cauda do corte (reverb do último instante)
+# 2) refrão em ordem, abafado, abrindo até o corte (88 tempos)
+bedm = grid(M(MB(0), MB(88) + 0.02))[:int((STOP - G0) * SR)]
+fc = [(G0, 210), (9.0, 230), (22.1, 280), (25.3, 380), (30.8, 600), (34.5, 900), (37.0, 1400), (40.0, 3000), (STOP, 3400)]
+gn = [(G0, 1.5), (22.1, 1.5), (28.5, -0.5), (STOP, -1.0)]
+lf = stft_filter(bedm, lambda tc: env_pts(fc, tc + G0), lambda tc: env_pts(gn, tc + G0))
+place(fades(lf) * 0.95, G0)
 tail = reverb(bed, STOP - 0.35, STOP, decay=2.6, wet=0.22)
 place(tail[int(0.35 * SR):], STOP)
 
-# 3) virada original + drop cheio
-brk = M(MD - 4 * BT, MD)
-brk[:int(0.01 * SR)] *= np.linspace(0, 1, int(0.01 * SR))[:, None]
-place(brk * 0.9, BRK)
-drop = M(MD, 15.32)
-nf = int(0.16 * SR); drop[-nf:] *= np.linspace(1, 0, nf)[:, None] ** 2
-place(drop * 0.95, DROP)
-# cauda do logo
-lt = reverb(bed, HIT - 0.05, HIT + 0.45, decay=3.4, wet=0.35)
+# 3) último compasso da subida + o ponto mais forte da faixa no drop
+sub_ = grid(M(MB(92), MB(96) + 0.012))     # subida: o grave some aos poucos (passa-alta de 120 a 900 Hz) e volta inteiro no drop
+sub_ = stft_filter(sub_, lambda tc: 120 * (900 / 120) ** min(1, tc / (4 * BT)), lambda tc: -1.5 * tc / (4 * BT), n=2048, hop=256, high=True)
+place(fades(sub_, 0.01) * 0.9, BRK)
+fim = grid(M(MB(96), 59.72))
+nf = int(0.35 * SR); fim[-nf:] *= np.linspace(1, 0, nf)[:, None] ** 2
+place(fim * 0.95, DROP)
+lt = reverb(bed, HIT - 0.05, HIT + 0.45, decay=3.4, wet=0.18)
 place(lt[int(0.5 * SR):], HIT + 0.45)
 
-# 4) volta a introdução baixinho embaixo da pergunta final
-I6 = M(MD - 10 * BT, MD - 4 * BT + 0.012)      # 6 tempos da introdução
+# 4) a introdução volta baixinho embaixo da pergunta final
+I6 = M(MB(-10), MB(-4) + 0.012)
 outro = xfade_cat([I6] * 4)
-ot = HIT + 0.9
+ot = 60.2
 outro = outro[:int((END - ot) * SR)]
-of = stft_filter(outro, lambda tc: 1400.0, lambda tc: -9.0)
-e = np.minimum(1, np.arange(len(of)) / SR / 0.9) * np.minimum(1, (len(of) / SR - np.arange(len(of)) / SR) / 1.2)
+of = stft_filter(outro, lambda tc: 1400.0, lambda tc: -10.0)
+e = np.minimum(1, np.arange(len(of)) / SR / 1.4) * np.minimum(1, (len(of) / SR - np.arange(len(of)) / SR) / 1.2)
 place(of * e[:, None], ot)
 
 # ================= EFEITOS =================
