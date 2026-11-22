@@ -17,32 +17,33 @@ def load(path, ss=None, to=None, filt=None):
 
 # (início no arquivo do Davi, fim, onde entra no filme, velocidade, [pausa interna a encurtar: (de, até, pausa nova)])
 # tempos de entrada no filme (README): 0.25 3.35 5.55 9.40 13.85 15.35 20.15 22.40 25.30 30.85 33.15 36.75 41.10 43.70 47.40 52.30 57.20 60.80
-FRASES = [   # export do CapCut do Davi (22/11), cortes pelo silencedetect
-    (0.33, 2.21, 0.25, 1.00, None),                 # Seu cliente não tem como saber se você é bom.
-    (2.92, 4.71, 3.30, 1.00, None),                 # Então o cérebro faz uma troca.
-    (5.30, 9.05, 5.20, 1.00, (6.55, 7.18, 0.38)),   # Em vez de "é bom?", ele pergunta: "parece bom?" (cai em ~8,06)
-    (9.84, 13.55, 9.70, 1.00, None),                # E usa o que tiver na frente: foto, preço, quem já comprou.
-    (14.44, 15.30, 13.85, 1.00, None),              # É o efeito halo:
-    (15.94, 20.15, 15.35, 1.00, None),              # se uma parte parece bem cuidada...
-    (20.74, 21.74, 20.15, 1.00, None),              # E o contrário também.
-    (22.35, 24.64, 22.40, 1.00, None),              # Agora imagina: alguém te indicou.
-    (25.41, 26.60, 25.30, 1.00, None),              # A pessoa te procura...
-    (27.18, 28.05, 26.84, 1.00, None),              # e não acha o preço.
-    (28.82, 29.37, 28.11, 1.00, None),              # Nem o horário.
-    (30.14, 30.90, 29.11, 1.00, None),              # Nem onde fica.
-    (31.62, 33.77, 30.85, 1.00, None),              # Cada dúvida vira um degrau.
-    (34.39, 35.17, 33.20, 1.00, None),              # Ela não reclama.
-    (35.84, 37.15, 34.30, 1.00, None),              # Só volta e clica no próximo.
-    (37.86, 40.82, 37.00, 1.00, None),              # E você nem percebe, porque já sabe todas as respostas.
-    (41.41, 43.49, 41.10, 1.00, None),              # Um site não salva um produto ruim.
-    (44.23, 47.05, 43.70, 1.00, None),              # Mas responde as perguntas antes de virarem degrau:
-    (47.80, 48.63, 47.40, 1.00, None),              # quem você é,   (um item por bloco do site, a cada 0,855 s)
-    (49.01, 49.82, 48.255, 1.00, None),             # o que faz,
-    (50.10, 50.74, 49.11, 1.00, None),              # quanto custa,
-    (51.07, 51.65, 49.965, 1.00, None),             # onde fica,
-    (52.09, 52.75, 50.82, 1.00, None),              # como chamar.
-    (53.44, 55.19, 52.40, 1.00, None),              # Qualidade faz o cliente voltar.
-    (55.75, 57.20, 54.60, 1.00, None),              # Clareza faz ele chegar.
+FRASES = [   # 2º export do CapCut do Davi (22/11, a narração que ele preferiu), cortes pelas pausas
+    (0.00, 3.06, 0.25, 1.00, None),                 # Seu cliente não tem como saber se você é bom.
+    (3.25, 5.32, 3.35, 1.00, None),                 # Então o cérebro faz uma troca.
+    (5.52, 7.59, 5.55, 1.00, None),                 # Em vez de "é bom?", ele pergunta:
+    (7.80, 8.60, 7.95, 1.00, None),                 # "parece bom?" (o cartão bate em 8,03)
+    (8.81, 13.13, 9.42, 1.00, None),                # E usa o que tiver na frente: foto (11,4), preço, quem já comprou.
+    (13.32, 14.47, 13.85, 1.00, None),              # É o efeito halo:
+    (14.70, 19.39, 15.35, 1.00, None),              # se uma parte parece bem cuidada...
+    (19.59, 20.87, 20.15, 1.00, None),              # E o contrário também.
+    (21.09, 23.76, 22.40, 1.00, None),              # Agora imagina: alguém te indicou.
+    (24.03, 25.43, 25.30, 1.00, None),              # A pessoa te procura...
+    (25.62, 26.81, 26.75, 1.00, None),              # e não acha o preço.
+    (26.96, 27.77, 28.10, 1.00, None),              # Nem o horário.
+    (27.95, 28.99, 29.15, 1.00, None),              # Nem onde fica.
+    (29.15, 30.98, 30.85, 1.00, None),              # Cada dúvida vira um degrau.
+    (31.20, 32.29, 33.20, 1.00, None),              # Ela não reclama.
+    (32.45, 34.45, 34.40, 1.00, None),              # Só volta e clica no próximo.
+    (34.64, 38.65, 36.55, 1.00, (36.05, 36.32, 0.12)),  # E você nem percebe, porque já sabe todas as respostas.
+    (38.89, 41.70, 41.10, 1.00, None),              # Um site não salva um produto ruim.
+    (41.75, 44.53, 44.00, 1.00, None),              # Mas responde as perguntas antes de virarem degrau:
+    (44.78, 45.60, 47.40, 1.00, None),              # quem você é,   (um item por bloco do site, a cada 0,855 s)
+    (45.76, 46.49, 48.255, 1.00, None),             # o que faz,
+    (46.68, 47.49, 49.11, 1.00, None),              # quanto custa,
+    (47.66, 48.43, 49.965, 1.00, None),             # onde fica,
+    (48.66, 49.48, 50.82, 1.00, None),              # como chamar.
+    (50.77, 53.00, 52.35, 1.00, None),              # Qualidade faz o cliente voltar.
+    (53.26, 54.86, 54.60, 1.00, None),              # Clareza faz ele chegar.
     # faltam no export: "GuDev. A gente tira os degraus do caminho." (57,20) e "E o seu cliente, o que encontra quando te procura?" (60,80)
 ]
 
@@ -94,7 +95,7 @@ for n in range(m - 1, -1, -1):   # abre um pouco antes da fala
 cur = 0
 for n in range(m):               # solta devagar depois
     cur = max(g[n], cur - 1 / k_off); g[n] = cur
-duck = 10 ** (-7.5 * np.repeat(g, hop) / 20)
+duck = 10 ** (-10.0 * np.repeat(g, hop) / 20)
 duck = np.concatenate([duck, np.ones(N - len(duck))])
 mix = bed * duck[:, None] + voz
 mix = np.tanh(mix / 0.86) * 0.86

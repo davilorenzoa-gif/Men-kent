@@ -212,16 +212,18 @@ fc = [(G0, 240), (10.0, 320), (17.0, 430), (24.0, 620), (30.0, 900), (35.0, 1400
 gn = [(G0, -9.0), (12.0, -7.0), (20.0, -5.5), (28.0, -4.0), (35.0, -2.5), (STOP, -1.5)]
 lf = stft_filter(bedm, lambda tc: env_pts(fc, tc + G0), lambda tc: env_pts(gn, tc + G0))
 place(fades(lf) * 0.95, G0)
-tail = reverb(bed, STOP - 0.35, STOP, decay=2.6, wet=0.22)
-place(tail[int(0.35 * SR):], STOP)
+# no "corte" a música não some: desce pra um fundo bem baixo e abafado e volta a subir até o drop (sem estouro)
+q = grid(M(MB(76), MB(88) + 0.02))[:int((BRK - STOP + 0.02) * SR)]
+q = stft_filter(q, lambda tc: 380 + 120 * tc / (BRK - STOP), lambda tc: -1.5 - 14.5 * min(1, tc / 0.7) + 4.0 * max(0, tc - 0.7) / (BRK - STOP - 0.7))
+place(fades(q, 0.004, 0.01), STOP)
 
 # 3) último compasso da subida + o ponto mais forte da faixa no drop
 sub_ = grid(M(MB(92), MB(96) + 0.012))     # subida: o grave some aos poucos (passa-alta de 120 a 900 Hz) e volta inteiro no drop
-sub_ = stft_filter(sub_, lambda tc: 120 * (900 / 120) ** min(1, tc / (4 * BT)), lambda tc: -11.0 + 6.0 * tc / (4 * BT), n=2048, hop=256, high=True)
+sub_ = stft_filter(sub_, lambda tc: 120 * (900 / 120) ** min(1, tc / (4 * BT)), lambda tc: -12.0 + 9.0 * tc / (4 * BT), n=2048, hop=256, high=True)
 place(fades(sub_, 0.01) * 0.9, BRK)
 fim = grid(M(MB(96), 59.72))
 # entra no drop um pouco abaixo e sobe até o volume cheio em ~5 s (sem estourar)
-fim = stft_filter(fim, lambda tc: 2200 * (20000 / 2200) ** min(1, tc / 3.0), lambda tc: -6.0 * max(0.0, 1 - tc / 5.0))
+fim = stft_filter(fim, lambda tc: 2200 * (20000 / 2200) ** min(1, tc / 3.0), lambda tc: -4.0 * max(0.0, 1 - tc / 6.0))
 nf = int(0.35 * SR); fim[-nf:] *= np.linspace(1, 0, nf)[:, None] ** 2
 place(fim * 0.95, DROP)
 lt = reverb(bed, HIT - 0.05, HIT + 0.45, decay=3.4, wet=0.18)
@@ -285,8 +287,7 @@ riser(36.9, 37.5, 0.05, 2000, 500)
 pop(38.05, 0.18, 600)
 for tp in (K(83), K(84), K(85)): tick(tp, 0.14, 5200); pop(tp + 0.01, 0.12, 1180)
 # corte seco
-sub(STOP, 1.0, 58, 28, 2.4)
-drone(STOP + 0.4, BRK + 0.2, 0.10)
+sub(STOP, 0.3, 58, 28, 1.6)
 # celular se desenha, estrela quebrada
 riser(40.85, 41.75, 0.05, 700, 2600)
 pop(41.85, 0.16, 520)
