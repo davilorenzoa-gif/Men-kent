@@ -17,7 +17,34 @@ def load(path, ss=None, to=None, filt=None):
 
 # (início no arquivo do Davi, fim, onde entra no filme, velocidade, [pausa interna a encurtar: (de, até, pausa nova)])
 # tempos de entrada no filme (README): 0.25 3.35 5.55 9.40 13.85 15.35 20.15 22.40 25.30 30.85 33.15 36.75 41.10 43.70 47.40 52.30 57.20 60.80
-FRASES = []   # preencher quando a voz chegar
+FRASES = [   # export do CapCut do Davi (22/11), cortes pelo silencedetect
+    (0.33, 2.21, 0.25, 1.00, None),                 # Seu cliente não tem como saber se você é bom.
+    (2.92, 4.71, 3.30, 1.00, None),                 # Então o cérebro faz uma troca.
+    (5.30, 9.05, 5.20, 1.00, (6.55, 7.18, 0.38)),   # Em vez de "é bom?", ele pergunta: "parece bom?" (cai em ~8,06)
+    (9.84, 13.55, 9.70, 1.00, None),                # E usa o que tiver na frente: foto, preço, quem já comprou.
+    (14.44, 15.30, 13.85, 1.00, None),              # É o efeito halo:
+    (15.94, 20.15, 15.35, 1.00, None),              # se uma parte parece bem cuidada...
+    (20.74, 21.74, 20.15, 1.00, None),              # E o contrário também.
+    (22.35, 24.64, 22.40, 1.00, None),              # Agora imagina: alguém te indicou.
+    (25.41, 26.60, 25.30, 1.00, None),              # A pessoa te procura...
+    (27.18, 28.05, 26.84, 1.00, None),              # e não acha o preço.
+    (28.82, 29.37, 28.11, 1.00, None),              # Nem o horário.
+    (30.14, 30.90, 29.11, 1.00, None),              # Nem onde fica.
+    (31.62, 33.77, 30.85, 1.00, None),              # Cada dúvida vira um degrau.
+    (34.39, 35.17, 33.20, 1.00, None),              # Ela não reclama.
+    (35.84, 37.15, 34.30, 1.00, None),              # Só volta e clica no próximo.
+    (37.86, 40.82, 37.00, 1.00, None),              # E você nem percebe, porque já sabe todas as respostas.
+    (41.41, 43.49, 41.10, 1.00, None),              # Um site não salva um produto ruim.
+    (44.23, 47.05, 43.70, 1.00, None),              # Mas responde as perguntas antes de virarem degrau:
+    (47.80, 48.63, 47.40, 1.00, None),              # quem você é,   (um item por bloco do site, a cada 0,855 s)
+    (49.01, 49.82, 48.255, 1.00, None),             # o que faz,
+    (50.10, 50.74, 49.11, 1.00, None),              # quanto custa,
+    (51.07, 51.65, 49.965, 1.00, None),             # onde fica,
+    (52.09, 52.75, 50.82, 1.00, None),              # como chamar.
+    (53.44, 55.19, 52.40, 1.00, None),              # Qualidade faz o cliente voltar.
+    (55.75, 57.20, 54.60, 1.00, None),              # Clareza faz ele chegar.
+    # faltam no export: "GuDev. A gente tira os degraus do caminho." (57,20) e "E o seu cliente, o que encontra quando te procura?" (60,80)
+]
 
 FRASES_PROXIMO_PASSO = [  # exemplo do filme anterior
     (0.35, 3.82, 6.05, 1.00, None),                 # De que adianta atrair clientes se você não sabe recebê-los?
