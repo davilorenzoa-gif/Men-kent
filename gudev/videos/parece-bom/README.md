@@ -6,7 +6,8 @@ Pedido do Davi: 2 vídeos de referência (@gryn.red: bonecos brancos com brilho 
 
 Arquivos:
 - `gudev-parece-bom.mp4`: o vídeo com música e efeitos, **ainda sem voz** (a narração está escrita na tela, no topo).
-- `projeto/trilha.wav` (música + efeitos) e `projeto/trilha-sfx.wav` (só efeitos), pra montar no CapCut se precisar.
+- `trilha.m4a` (música + efeitos) e `trilha-sfx.m4a` (só efeitos), pra montar no CapCut se precisar.
+- `projeto/orig/musica-ref.mp4`: o vídeo da música que o Davi mandou (faixa de terceiro).
 
 ## A ideia
 O cliente não consegue saber se a empresa é boa antes de comprar. Então o cérebro troca a pergunta difícil ("é bom?") por uma fácil ("parece bom?") e responde com o que estiver na frente. Cada dúvida sem resposta vira um degrau, e o cliente vai embora sem ninguém ver. O site entra como conclusão: **"Um site não salva um produto ruim. Mas responde as perguntas antes de virarem degrau."**
@@ -55,13 +56,14 @@ Nada de cliente, número ou avaliação inventada: a empresa é "SUA EMPRESA" e 
 
 ## Antes de postar
 1. **Voz.** Gravar a narração da tabela (ElevenLabs "Adam" ou CapCut, como no `proximo-passo`) e mandar o arquivo só com a voz: o Claude encaixa cada frase no tempo (`projeto/narracao.py`) e abaixa a música embaixo. Ou gravar direto no CapCut em cima do vídeo seguindo a legenda.
-2. **Música:** faixa de terceiro (veio de @monaco_cars_1). Se o TikTok silenciar, subir sem música e usar o mesmo som pelo app (perde os loops e o drop no ponto certo; nesse caso usar `trilha-sfx.wav` + voz).
+2. **Música:** faixa de terceiro (veio de @monaco_cars_1). Se o TikTok silenciar, subir sem música e usar o mesmo som pelo app (perde os loops e o drop no ponto certo; nesse caso usar `trilha-sfx.m4a` + voz).
 3. Ouvir no celular (o Claude não ouve).
 4. Legenda, hashtags e comentário fixado: seção 7 do `gudev/12-TIKTOK-ESTRATEGIA.md`.
 
 ## Refazer
 ```
 cd projeto
+ffmpeg -i orig/musica-ref.mp4 -vn -ac 2 -ar 48000 musica.wav
 python3 audio.py musica.wav trilha.wav             # gera trilha.wav e trilha-sfx.wav
 for k in 0 1 2 3; do node render.js seq $((k*1998)) $((k*1998+1998)) 120 & done; wait   # 7992 quadros, ~15 min
 bash juntar.sh                                      # → ../gudev-parece-bom.mp4
