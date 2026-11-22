@@ -240,3 +240,7 @@ O Davi pediu pra usar os 3 vídeos de referência no site. `sites/homem-aranha/`
 Palavras: vídeo publicitário, campanha, agência, cinematográfico, 4K, preto e branco, estátua, mármore, filósofo com notebook, Davi olhando pra cima, Criação de Adão, cérebro nas mãos, aperto de mão, retícula, ATRAÇÃO, ATENDIMENTO, CONFIANÇA, CONVERSÃO, "De que adianta atrair clientes se você não sabe recebê-los?", "Cada oportunidade merece uma boa experiência", "Sua empresa merece evoluir", "Construindo o próximo passo", gancho Andrade, fita parando, crescimento progressivo, passa-baixa, ivanrmusic, degraumental.
 O Davi mandou um prompt de 5 cenas (35 s), o comercial da Andrade, 2 vídeos de referência (bonecos brancos em fundo preto = linguagem; visualizador roxo = a música) e 6 imagens de estátuas/mãos. Feito por código em `gudev/videos/proximo-passo/` (HTML `seek(t)` + Playwright a 120 q/s em 4K + ffmpeg + trilha em numpy). Sem voz. Pendente: ok do padrinho, imagens de terceiros (trocar se for anúncio pago), ouvir no celular.
 
+## 22/11/2026: Narração no "Construindo o próximo passo"
+Palavras: narração, voz, CapCut, legenda, encaixar voz, ducking, abaixar música, "Uma boa comunicação faz a diferença", Encerramento.
+O Davi mandou 2 exports do CapCut com a narração (só voz + legenda). Usada a 2ª (a 1ª lia "Encerramento" no meio). `gudev/videos/proximo-passo/projeto/narracao.py` corta cada frase nas pausas, põe na cena dela e abaixa a trilha 7,5 dB embaixo da fala. Filme esticado pra 38,2 s pra caber "GuDev. Construindo o próximo passo." falado.
+
