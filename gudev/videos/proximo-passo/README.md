@@ -1,6 +1,6 @@
 # "Construindo o próximo passo" (21/11/2026)
 
-Filme publicitário da GuDev, vertical 9:16, **35,8 s**, preto e branco com o laranja só no logo. Pedido do Davi: prompt de "campanha de agência grande" em 5 cenas, com o comercial da Andrade como gancho, a música do vídeo de referência dele e as estátuas que ele mandou.
+Filme publicitário da GuDev, vertical 9:16, **38,2 s**, preto e branco com o laranja só no logo. Pedido do Davi: prompt de "campanha de agência grande" em 5 cenas, com o comercial da Andrade como gancho, a música do vídeo de referência dele e as estátuas que ele mandou.
 
 Arquivos:
 - `gudev-proximo-passo-4k.mp4`: master em **2160×3840 (4K)**, 30 fps.
@@ -17,7 +17,7 @@ Arquivos:
 | 18,1–20,8 s | **03 Confiança:** aperto de mão carimba na tela; o ponteiro vai de DÚVIDA a CERTEZA | **CONFIANÇA.** (contorno se desenha e enche) |
 | 20,8–24,9 s | **04 Conversão:** as mãos da "Criação de Adão" se aproximam e se tocam na batida: clarão e estouro de traços; o caminho ATRAÇÃO → ATENDIMENTO → CONFIANÇA → CONVERSÃO acende até o ✓ | **CONVERSÃO.** (bate com luz) |
 | 24,9–30,3 s | **Impacto:** corte seco pro escuro, música abafa. Estátua olhando pra cima recebe a luz de cima, poeira no feixe, câmera aproxima devagar | Cada oportunidade / merece uma / *boa experiência.* |
-| 30,3–35,8 s | **Assinatura:** um fio de luz cresce no centro e vira o "_" do logo na pancada final da música (31,15 s); brilho passa pelo logo, cursor pisca | Sua empresa merece *evoluir.* / GUDEV. CONSTRUINDO O PRÓXIMO PASSO. / @gudev.ofc |
+| 30,3–38,2 s | **Assinatura:** um fio de luz cresce no centro e vira o "_" do logo na pancada final da música (31,15 s); brilho passa pelo logo, cursor pisca | Sua empresa merece *evoluir.* / GUDEV. CONSTRUINDO O PRÓXIMO PASSO. / @gudev.ofc |
 
 Narrativa pedida (anúncio → interesse e contato → atendimento organizado → confiança → conversão) está toda na cena 3, com um trilho vertical à esquerda que liga as 4 etapas (01 a 04).
 
@@ -27,6 +27,24 @@ Narrativa pedida (anúncio → interesse e contato → atendimento organizado �
 - Todas as imagens viraram tom de mármore (pele das mãos inclusive), recortadas e sem fundo: parecem da mesma campanha.
 - Movimento: mola, desfoque que vira foco, câmera descendo com desfoque vertical. Renderizado a 120 quadros/s e misturado de 4 em 4 (desfoque de movimento real), grão de filme leve por cima.
 - "Sua empresa" no chat é genérico de propósito: nenhum cliente, número ou avaliação inventada.
+
+## Narração (22/11/2026, `projeto/narracao.py`)
+O Davi mandou a narração pronta, exportada do CapCut (`orig/narracao-capcut.mp4`, só voz com legenda). Usada a 2ª versão dele (a 1ª lia "Encerramento" no meio). Cada frase foi cortada nas pausas e posta na cena dela; a trilha abaixa 7,5 dB embaixo da voz. O final foi esticado de 35,8 s pra 38,2 s pra caber a assinatura falada.
+
+| Frase | Entra no filme | Ajuste |
+|---|---|---|
+| De que adianta atrair clientes se você não sabe recebê-los? | 6,05 s | |
+| O anúncio encontra o cliente. | 10,30 s | |
+| Ele se interessa e chama. | 12,80 s | |
+| Atendimento claro e organizado. | 14,40 s | 5% mais rápida |
+| Uma boa comunicação faz a diferença. | 16,42 s | 6% mais rápida, pausa do meio encurtada |
+| A confiança cresce. | 19,15 s | |
+| A oportunidade vira venda. | 21,00 s | |
+| Cada oportunidade merece uma boa experiência. | 26,00 s | |
+| Sua empresa merece evoluir. | 32,15 s | |
+| GuDev. Construindo o próximo passo. | 33,85 s | pausa depois de "GuDev" encurtada |
+
+"Uma boa comunicação faz a diferença." não aparece escrita na tela (é só falada, em cima do chat). Volume final: −13,9 LUFS, pico −1,4 dB.
 
 ## Som (`projeto/audio.py`, numpy puro)
 - 0–5,4 s: som original do comercial da Andrade (um pouco mais baixo, pra música crescer acima dele). Em 5,4 s, **fita parando de verdade** (o próprio áudio desacelerando).
@@ -50,9 +68,10 @@ python3 prep.py cut assets ../../presenca-digital/projeto/logo/logo.png
 ffmpeg -ss 5.40 -i orig/andrade-comercial-davi.mp4 -frames:v 1 -q:v 1 assets/andrade_freeze.jpg
 # som
 ffmpeg -i orig/musica.m4a -ac 2 -ar 48000 musica.wav
-python3 audio.py orig/andrade-comercial-davi.mp4 musica.wav audio.wav
-# quadros: o HTML começa em 5,40 s; 3648 quadros = 30,4 s × 120, em 4 processos (~15 min em 4K)
-for k in 0 1 2 3; do DSF=2 node render.js seq $((k*912)) $((k*912+912)) 120 & done; wait
+python3 audio.py orig/andrade-comercial-davi.mp4 musica.wav trilha.wav
+python3 narracao.py orig/narracao-capcut.mp4 trilha.wav audio.wav
+# quadros: o HTML começa em 5,40 s; 3936 quadros = 32,8 s × 120, em 4 processos (~15 min em 4K)
+for k in 0 1 2 3; do DSF=2 node render.js seq $((k*984)) $((k*984+984)) 120 & done; wait
 # fechar (ver juntar.sh)
 bash juntar.sh
 ```
@@ -64,4 +83,4 @@ Textos, tempos e posições: tudo dentro de `seek(t)` no `film.html`; `B(k)` é 
 2. **Imagens de terceiros:** a estátua olhando pra cima, o filósofo com notebook, o cérebro, o aperto de mão e a mão vieram da internet (Pinterest/banco). Pra post orgânico tudo bem; **em anúncio pago, trocar** por imagens com licença. A "Criação de Adão" é domínio público.
 3. **Música:** faixa de terceiro (@ivanrmusic). Se o Instagram barrar, subir o vídeo sem som e pôr a mesma faixa pelo app (os cortes continuam na batida se começar no mesmo ponto).
 4. **Ouvir no celular** antes de postar (o Claude não ouve).
-5. Sem voz, de propósito (o pedido era só texto + trilha). Se quiser narração, dá pra gerar no ElevenLabs (voz Adam) com as mesmas frases da tela e o Claude encaixa.
+5. Narração do Davi já entrou (22/11). Ouvir se nenhuma frase ficou cortada no começo ou no fim.

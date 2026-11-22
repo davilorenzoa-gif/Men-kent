@@ -153,3 +153,4 @@ Ordem sugerida: 5, 1, 8, depois intercalar Google (2, 3, 6) com site (4, 7, 9).
 - **Corte do gancho pro escuro:** congelar o quadro, tirar a cor, "fita parando" de verdade (o próprio áudio desacelerando) e barras pretas fechando até virar um fio de luz. O fio de luz volta no fim e vira o "_" do logo.
 - Tipografia que repete o logo: grotesca (Inter Display) + serifa itálica (Instrument Serif) nas palavras de emoção.
 - Pendências: ok do padrinho, trocar as imagens de terceiros se virar anúncio pago, ouvir no celular.
+- **Narração (22/11):** o Davi grava/gera a voz no CapCut e manda o export (voz + legenda, sem música). O Claude corta pelas pausas (`silencedetect`), põe cada frase na cena e abaixa a trilha embaixo (`projeto/narracao.py`, reaproveitável em qualquer vídeo). Se a voz não couber, esticar o fim renderizando só os quadros novos.

@@ -10,7 +10,7 @@ import sys, subprocess
 import numpy as np
 
 SR = 48000
-END = 35.8
+END = 38.2
 N = int(END * SR)
 BAR = 1.35363; BT = BAR / 4; M0 = 5.95
 B = lambda k: M0 + k * BAR
