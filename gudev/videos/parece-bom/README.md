@@ -5,7 +5,7 @@
 Pedido do Davi: 2 vídeos de referência (@gryn.red: bonecos brancos com brilho em fundo preto e legenda no topo; @mentedagrandeza_: números grandes, uma cor de destaque e caixa de comentário no fim), a música de um vídeo de carros (@monaco_cars_1) e 3 prompts (roteirista de TikTok, "a psicologia por trás de uma empresa que transmite confiança" e estratégia de crescimento). Objetivo: reter views no TikTok.
 
 Arquivos:
-- **`gudev-parece-bom-voz.mp4`: versão com a narração do Davi** (22/11, 2º export do CapCut, o que o Davi preferiu, encaixado frase por frase por `projeto/narracao.py`, música abaixa 10 dB na fala). **Faltam as 2 últimas falas** ("GuDev. A gente tira os degraus do caminho." em 57,2 s e "E o seu cliente, o que encontra quando te procura?" em 60,8 s): não vieram no export.
+- **`gudev-parece-bom-voz.mp4`: versão com narração.** Desde 23/11 é a voz **ElevenLabs "Adam - Dominant, Firm"** (v4, estab. 50, simil. 75) que o Davi gerou (`projeto/orig/narracao-elevenlabs-adam.mp3`). Antes: narração do Davi (22/11, 2º export do CapCut, o que o Davi preferiu, encaixado frase por frase por `projeto/narracao.py`, música abaixa 10 dB na fala). **Faltam as 2 últimas falas** ("GuDev. A gente tira os degraus do caminho." em 57,2 s e "E o seu cliente, o que encontra quando te procura?" em 60,8 s): não vieram no export.
 - `gudev-parece-bom.mp4`: o vídeo com música e efeitos, **ainda sem voz** (a narração está escrita na tela, no topo).
 - `trilha.m4a` (música + efeitos) e `trilha-sfx.m4a` (só efeitos), pra montar no CapCut se precisar.
 - `projeto/orig/musica-ref.mp4`: a versão longa da música que o Davi mandou (faixa de terceiro, perfil @lonewql).
