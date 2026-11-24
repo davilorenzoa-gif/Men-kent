@@ -3,6 +3,7 @@
 **Conceito, nunca case.** A Névoa não existe. Pedido do Davi: "faça um site de sua escolha para me apresentar o seu nível de capacidade atual".
 
 ## Arquivo
+- `nevoa-arquivo-unico.html` (352 KB): a prévia pro celular, com as fontes embutidas. Abre sem internet (testado com a rede bloqueada). Pra refazer depois de mexer no `index.html`: `python3 gudev/ferramentas/embute_google_fonts.py sites/nevoa/index.html sites/nevoa/nevoa-arquivo-unico.html`.
 - `index.html`: tudo dentro, sem nenhuma imagem e sem biblioteca. Só as fontes vêm do Google Fonts (Bodoni Moda + Manrope); sem internet, cai em Georgia/sistema e o resto funciona. Já é arquivo único: pode mandar direto.
 
 ## Direção
