@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fumaça de fluido</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--fundo,#DAD5E2);color:#221B33;font:400 16px/1.5 Manrope,system-ui,sans-serif;overflow-x:hidden}
+canvas{display:block} button,input{font:inherit;color:inherit}
+.nota{position:fixed;left:12px;bottom:12px;z-index:50;max-width:min(520px,calc(100% - 24px));font-size:12px;background:rgba(255,255,255,.75);border-radius:10px;padding:8px 12px}
+.topo{position:relative;height:100vh;height:100svh;min-height:520px;overflow:hidden;touch-action:pan-y;cursor:crosshair}
+#fluido{position:absolute;inset:0;width:100%;height:100%}
+.topo-fallback{position:absolute;inset:0;display:none;background:radial-gradient(40% 50% at 30% 60%,rgba(106,85,208,.28),transparent 70%),radial-gradient(35% 45% at 70% 40%,rgba(194,112,42,.25),transparent 70%)}
+.sem-gl .topo-fallback{display:block}
+.topo-texto{position:absolute;inset:0;display:grid;place-items:center;text-align:center;pointer-events:none;padding:0 16px}
+.topo h1{font:400 clamp(72px,18vw,240px)/.85 "Bodoni Moda",Georgia,serif;letter-spacing:-.035em}
+.dica{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-size:13px;font-weight:600;transition:opacity .6s}
+.dica.some{opacity:0}
+.borrifar{position:absolute;right:16px;bottom:18px;border:1px solid rgba(34,27,51,.16);background:rgba(255,255,255,.6);border-radius:99px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer}
+.nota{top:12px;bottom:auto}
+@media (max-width:640px){.dica{bottom:76px}.borrifar{left:50%;right:auto;transform:translateX(-50%)}}
+</style>
+</head>
+<body>
+<section class="topo" id="topo">
+  <div class="topo-fallback" aria-hidden="true"></div>
+  <canvas id="fluido" aria-hidden="true"></canvas>
+  <div class="topo-texto"><h1>Fumaça</h1></div>
+  <p class="dica" id="dica">Passe o dedo na fumaça</p>
+  <button class="borrifar" id="borrifar" type="button">Borrifar de novo</button>
+</section>
+<p class="nota">Efeito da Névoa (24/11/2026): simulação de fluido Navier-Stokes em WebGL2, sem biblioteca. <b id="fps">--</b>. Cores em <code>CONFIG</code> no topo do script.</p>
+<script>
+(() => {
+"use strict";
+const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const toque = matchMedia("(pointer: coarse)").matches;
+const $ = (s, el = document) => el.querySelector(s);
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const hex = h => [parseInt(h.slice(1,3),16)/255, parseInt(h.slice(3,5),16)/255, parseInt(h.slice(5,7),16)/255];
+/* ===== TROQUE AQUI pra cada cliente =====
+   fundo: cor da página (a fumaça "tinge" esse fundo como tinta na água; funciona melhor em fundo claro)
+   tintas: as cores da fumaça, em ordem (cada borrifada e cada toque usa a próxima) */
+const CONFIG = { fundo: "#DAD5E2", tintas: ["#6A55D0", "#C2702A", "#8FAE45", "#D0577A"] };
+document.documentElement.style.setProperty("--fundo", CONFIG.fundo);
+const Fluido = (() => {
+  const canvas = $("#fluido"), topo = $("#topo");
+  const gl = canvas.getContext("webgl2", {alpha:false, antialias:false, depth:false, stencil:false, preserveDrawingBuffer:false, powerPreference:"high-performance"});
+  if (!gl || !gl.getExtension("EXT_color_buffer_float")) { document.documentElement.classList.add("sem-gl"); return null; }
+  gl.getExtension("OES_texture_float_linear");
+
+  const CFG = {
+    simRes: toque ? 96 : 128,
+    dyeRes: toque ? 384 : 768,
+    pressaoIter: toque ? 16 : 22,
+    dissVel: .985, dissCor: .995,
+    curl: 22, empuxo: 1.8
+  };
+
+  const vs = `#version 300 es
+  precision highp float;
+  in vec2 aPos; uniform vec2 texel;
+  out vec2 vUv, vL, vR, vT, vB;
+  void main(){ vUv = aPos*.5+.5; vL = vUv-vec2(texel.x,0.); vR = vUv+vec2(texel.x,0.); vT = vUv+vec2(0.,texel.y); vB = vUv-vec2(0.,texel.y); gl_Position = vec4(aPos,0.,1.); }`;
+  const head = `#version 300 es
+  precision highp float; precision highp sampler2D;
+  in vec2 vUv, vL, vR, vT, vB; out vec4 o; uniform vec2 texel;`;
+  const FS = {
+    splat: head+`uniform sampler2D uAlvo; uniform float aspecto, raio; uniform vec3 cor; uniform vec2 ponto;
+      void main(){ vec2 p = vUv-ponto; p.x *= aspecto; vec3 s = exp(-dot(p,p)/raio)*cor; o = vec4(texture(uAlvo,vUv).xyz+s,1.); }`,
+    adveccao: head+`uniform sampler2D uVel, uFonte; uniform vec2 dyeTexel; uniform float dt, diss;
+      void main(){ vec2 c = vUv - dt*texture(uVel,vUv).xy*texel; o = diss*texture(uFonte,c); o.a = 1.; }`,
+    empuxo: head+`uniform sampler2D uVel, uCor; uniform float forca, dt;
+      void main(){ vec2 v = texture(uVel,vUv).xy; vec3 d = texture(uCor,vUv).rgb; float dens = clamp((d.r+d.g+d.b)*.33,0.,2.); v.y += forca*dens*dt*60.; o = vec4(v,0.,1.); }`,
+    curl: head+`uniform sampler2D uVel;
+      void main(){ float L=texture(uVel,vL).y, R=texture(uVel,vR).y, T=texture(uVel,vT).x, B=texture(uVel,vB).x; o = vec4(.5*(R-L-T+B),0.,0.,1.); }`,
+    vorticidade: head+`uniform sampler2D uVel, uCurl; uniform float curl, dt;
+      void main(){ float L=texture(uCurl,vL).x, R=texture(uCurl,vR).x, T=texture(uCurl,vT).x, B=texture(uCurl,vB).x, C=texture(uCurl,vUv).x;
+        vec2 f = .5*vec2(abs(T)-abs(B), abs(R)-abs(L)); f /= length(f)+1e-4; f *= curl*C; f.y *= -1.;
+        vec2 v = texture(uVel,vUv).xy + f*dt; o = vec4(clamp(v,-1000.,1000.),0.,1.); }`,
+    divergencia: head+`uniform sampler2D uVel;
+      void main(){ float L=texture(uVel,vL).x, R=texture(uVel,vR).x, T=texture(uVel,vT).y, B=texture(uVel,vB).y; vec2 C=texture(uVel,vUv).xy;
+        if(vL.x<0.) L=-C.x; if(vR.x>1.) R=-C.x; if(vT.y>1.) T=-C.y; if(vB.y<0.) B=-C.y; o = vec4(.5*(R-L+T-B),0.,0.,1.); }`,
+    limpa: head+`uniform sampler2D uTex; uniform float v; void main(){ o = v*texture(uTex,vUv); }`,
+    pressao: head+`uniform sampler2D uP, uDiv;
+      void main(){ float L=texture(uP,vL).x, R=texture(uP,vR).x, T=texture(uP,vT).x, B=texture(uP,vB).x, d=texture(uDiv,vUv).x; o = vec4((L+R+B+T-d)*.25,0.,0.,1.); }`,
+    gradiente: head+`uniform sampler2D uP, uVel;
+      void main(){ float L=texture(uP,vL).x, R=texture(uP,vR).x, T=texture(uP,vT).x, B=texture(uP,vB).x; vec2 v=texture(uVel,vUv).xy - vec2(R-L,T-B); o = vec4(v,0.,1.); }`,
+    tela: head+`uniform sampler2D uCor; uniform vec3 fundo; uniform float t;
+      float h(vec2 p){ return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453); }
+      void main(){ vec3 d = max(texture(uCor,vUv).rgb,0.);
+        float L=length(texture(uCor,vL).rgb), R=length(texture(uCor,vR).rgb), T=length(texture(uCor,vT).rgb), B=length(texture(uCor,vB).rgb);
+        vec3 n = normalize(vec3(L-R, T-B, .9)); float luz = clamp(dot(n, normalize(vec3(-.4,.6,1.))),0.,1.);
+        vec3 c = fundo*exp(-d*1.35);
+        c += (luz-.82)*.10*clamp(length(d),0.,1.);
+        c += (h(gl_FragCoord.xy+t)-.5)*.018;
+        o = vec4(c,1.); }`
+  };
+
+  function compila(tipo, src){ const s = gl.createShader(tipo); gl.shaderSource(s, src); gl.compileShader(s);
+    if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
+  const vsObj = compila(gl.VERTEX_SHADER, vs);
+  function programa(fs){
+    const p = gl.createProgram(); gl.attachShader(p, vsObj); gl.attachShader(p, compila(gl.FRAGMENT_SHADER, fs));
+    gl.bindAttribLocation(p, 0, "aPos"); gl.linkProgram(p);
+    if(!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+    const u = {}; const n = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS);
+    for(let i=0;i<n;i++){ const nm = gl.getActiveUniform(p,i).name; u[nm] = gl.getUniformLocation(p,nm); }
+    return {p, u};
+  }
+  let P;
+  try { P = Object.fromEntries(Object.entries(FS).map(([k,v]) => [k, programa(v)])); }
+  catch(e){ console.warn("Névoa: shader não compilou, usando plano B.", e); document.documentElement.classList.add("sem-gl"); return null; }
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,-1,1,1,1,1,-1]), gl.STATIC_DRAW);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array([0,1,2,0,2,3]), gl.STATIC_DRAW);
+  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0); gl.enableVertexAttribArray(0);
+
+  function fbo(w, h, fmt, f){
+    gl.activeTexture(gl.TEXTURE0);
+    const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, f); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, f);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D, 0, fmt.int, w, h, 0, fmt.fmt, gl.HALF_FLOAT, null);
+    const fb = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+    gl.viewport(0,0,w,h); gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT);
+    return { tex, fb, w, h, tx:1/w, ty:1/h, liga(i){ gl.activeTexture(gl.TEXTURE0+i); gl.bindTexture(gl.TEXTURE_2D, tex); return i; } };
+  }
+  function duplo(w,h,fmt,f){ let a=fbo(w,h,fmt,f), b=fbo(w,h,fmt,f); return { w,h,tx:a.tx,ty:a.ty, get ler(){return a;}, get esc(){return b;}, troca(){ [a,b]=[b,a]; } }; }
+  const RGBA = {int:gl.RGBA16F, fmt:gl.RGBA}, RG = {int:gl.RG16F, fmt:gl.RG}, R = {int:gl.R16F, fmt:gl.RED};
+
+  function res(n){ const a = gl.drawingBufferWidth / gl.drawingBufferHeight; const lo = Math.round(n), hi = Math.round(n * Math.max(a, 1/a));
+    return a > 1 ? {w:hi, h:lo} : {w:lo, h:hi}; }
+  let cor, vel, div, crl, pres;
+  function criaAlvos(){
+    const s = res(CFG.simRes), d = res(CFG.dyeRes), L = gl.LINEAR, N = gl.NEAREST;
+    cor = duplo(d.w, d.h, RGBA, L); vel = duplo(s.w, s.h, RG, L);
+    div = fbo(s.w, s.h, R, N); crl = fbo(s.w, s.h, R, N); pres = duplo(s.w, s.h, R, N);
+    if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) throw new Error("framebuffer incompleto");
+  }
+  function desenha(alvo){
+    if (alvo){ gl.viewport(0,0,alvo.w,alvo.h); gl.bindFramebuffer(gl.FRAMEBUFFER, alvo.fb); }
+    else { gl.viewport(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight); gl.bindFramebuffer(gl.FRAMEBUFFER, null); }
+    gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+  }
+  function usa(prog, tx, ty){ gl.useProgram(prog.p); gl.uniform2f(prog.u.texel, tx, ty); return prog.u; }
+
+  let largura = 0;
+  function ajusta(forca){
+    const dpr = Math.min(window.devicePixelRatio || 1, toque ? 1.5 : 2);
+    const w = Math.round(topo.clientWidth * dpr), h = Math.round(topo.clientHeight * dpr);
+    if (!forca && Math.abs(w - canvas.width) < 2 && (toque ? true : Math.abs(h - canvas.height) < 2) && largura === topo.clientWidth) return;
+    largura = topo.clientWidth; canvas.width = w; canvas.height = h; criaAlvos();
+  }
+  try { ajusta(true); } catch(e){ console.warn("Névoa: sem textura de meia precisão, plano B.", e); document.documentElement.classList.add("sem-gl"); return null; }
+
+  function splat(x, y, dx, dy, c, raio){
+    const a = canvas.width / canvas.height;
+    let u = usa(P.splat, vel.tx, vel.ty);
+    gl.uniform1i(u.uAlvo, vel.ler.liga(0)); gl.uniform1f(u.aspecto, a); gl.uniform2f(u.ponto, x, y);
+    gl.uniform3f(u.cor, dx, dy, 0); gl.uniform1f(u.raio, raio / 100 * (a > 1 ? a : 1));
+    desenha(vel.esc); vel.troca();
+    gl.uniform1i(u.uAlvo, cor.ler.liga(0)); gl.uniform3f(u.cor, c[0], c[1], c[2]);
+    desenha(cor.esc); cor.troca();
+  }
+
+  function passo(dt){
+    gl.disable(gl.BLEND);
+    let u = usa(P.empuxo, vel.tx, vel.ty);
+    gl.uniform1i(u.uVel, vel.ler.liga(0)); gl.uniform1i(u.uCor, cor.ler.liga(1)); gl.uniform1f(u.forca, CFG.empuxo); gl.uniform1f(u.dt, dt);
+    desenha(vel.esc); vel.troca();
+
+    u = usa(P.curl, vel.tx, vel.ty); gl.uniform1i(u.uVel, vel.ler.liga(0)); desenha(crl);
+    u = usa(P.vorticidade, vel.tx, vel.ty);
+    gl.uniform1i(u.uVel, vel.ler.liga(0)); gl.uniform1i(u.uCurl, crl.liga(1)); gl.uniform1f(u.curl, CFG.curl); gl.uniform1f(u.dt, dt);
+    desenha(vel.esc); vel.troca();
+
+    u = usa(P.divergencia, vel.tx, vel.ty); gl.uniform1i(u.uVel, vel.ler.liga(0)); desenha(div);
+    u = usa(P.limpa, pres.tx, pres.ty); gl.uniform1i(u.uTex, pres.ler.liga(0)); gl.uniform1f(u.v, .8); desenha(pres.esc); pres.troca();
+    u = usa(P.pressao, pres.tx, pres.ty); gl.uniform1i(u.uDiv, div.liga(0));
+    for (let i=0;i<CFG.pressaoIter;i++){ gl.uniform1i(u.uP, pres.ler.liga(1)); desenha(pres.esc); pres.troca(); }
+    u = usa(P.gradiente, vel.tx, vel.ty); gl.uniform1i(u.uP, pres.ler.liga(0)); gl.uniform1i(u.uVel, vel.ler.liga(1)); desenha(vel.esc); vel.troca();
+
+    u = usa(P.adveccao, vel.tx, vel.ty);
+    gl.uniform1i(u.uVel, vel.ler.liga(0)); gl.uniform1i(u.uFonte, vel.ler.liga(0)); gl.uniform1f(u.dt, dt); gl.uniform1f(u.diss, CFG.dissVel);
+    desenha(vel.esc); vel.troca();
+    gl.uniform1i(u.uVel, vel.ler.liga(0)); gl.uniform1i(u.uFonte, cor.ler.liga(1)); gl.uniform1f(u.diss, CFG.dissCor);
+    desenha(cor.esc); cor.troca();
+  }
+  const FUNDO = hex(CONFIG.fundo);
+  function mostra(t){ const u = usa(P.tela, cor.tx, cor.ty); gl.uniform1i(u.uCor, cor.ler.liga(0)); gl.uniform3f(u.fundo, ...FUNDO); gl.uniform1f(u.t, t % 100); desenha(null); }
+
+  /* absorção: a fumaça "tinge" o fundo claro como tinta na água */
+  const absorve = (h, k) => hex(h).map(c => (1 - c) * k);
+  const TINTAS = CONFIG.tintas;
+  let tinta = 0;
+
+  /* borrifada: sai do bico, de baixo pra cima, em leque */
+  let borrifo = null;
+  function borrifa(){ borrifo = { t:0, x:.5 + (Math.random()-.5)*.1, cor:TINTAS[tinta++ % TINTAS.length] }; }
+  function rodaBorrifo(dt){
+    if (!borrifo) return;
+    borrifo.t += dt;
+    const n = toque ? 2 : 3;
+    for (let i=0;i<n;i++){
+      const ang = (Math.random()-.5) * 1.1, f = (900 + Math.random()*700) * (toque ? .55 : 1);
+      splat(borrifo.x + (Math.random()-.5)*.02, .06, Math.sin(ang)*f, Math.cos(ang)*f, absorve(borrifo.cor, toque ? .12 : .2), (.18 + Math.random()*.2) * (toque ? .6 : 1));
+    }
+    if (borrifo.t > .55) borrifo = null;
+  }
+
+  /* dedo */
+  const ponteiro = { x:0, y:0, dx:0, dy:0, mexeu:false, ultimo:0 };
+  let tocou = false;
+  function mover(e){
+    const r = canvas.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width, y = 1 - (e.clientY - r.top) / r.height;
+    if (ponteiro.ultimo){ ponteiro.dx += (x - ponteiro.x) * 6000; ponteiro.dy += (y - ponteiro.y) * 6000 / (r.width / r.height); ponteiro.mexeu = true; }
+    ponteiro.x = x; ponteiro.y = y; ponteiro.ultimo = performance.now();
+    if (!tocou && ponteiro.mexeu){ tocou = true; $("#dica").classList.add("some"); }
+  }
+  topo.addEventListener("pointermove", mover, {passive:true});
+  topo.addEventListener("pointerdown", e => { ponteiro.ultimo = 0; mover(e); tinta++; }, {passive:true});
+  topo.addEventListener("pointerleave", () => { ponteiro.ultimo = 0; });
+  $("#borrifar").addEventListener("click", e => { e.stopPropagation(); borrifa(); });
+
+  let ativo = true, ant = performance.now(), parado = 0, fpsQ = 0, fpsT = 0, fps = 0;
+  new IntersectionObserver(([en]) => { ativo = en.isIntersecting; if (ativo){ ant = performance.now(); requestAnimationFrame(laco); } }, {threshold:0}).observe(topo);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && ativo){ ant = performance.now(); requestAnimationFrame(laco); } });
+  addEventListener("resize", () => { try { ajusta(false); } catch(e){} });
+
+  function laco(agora){
+    if (!ativo || document.hidden) return;
+    let dt = Math.min((agora - ant) / 1000, 1/30); ant = agora;
+    if (reduz) dt *= .5;
+    fpsQ++; fpsT += agora - (laco.u || agora); laco.u = agora;
+    if (fpsT > 500){ fps = Math.round(fpsQ * 1000 / fpsT); fpsQ = 0; fpsT = 0; }
+    if (ponteiro.mexeu){
+      const c = absorve(TINTAS[tinta % TINTAS.length], .085);
+      splat(ponteiro.x, ponteiro.y, ponteiro.dx, ponteiro.dy, c, toque ? .32 : .22);
+      ponteiro.dx = ponteiro.dy = 0; ponteiro.mexeu = false; parado = 0;
+    } else parado += dt;
+    if (parado > 6 && !borrifo){ borrifa(); parado = 0; }
+    rodaBorrifo(dt);
+    passo(dt);
+    mostra(agora / 1000);
+    requestAnimationFrame(laco);
+  }
+  setTimeout(borrifa, reduz ? 100 : 450);
+  requestAnimationFrame(laco);
+  return { fps: () => fps };
+})();
+if (Fluido) setInterval(() => { const f = Fluido.fps(); if (f) $("#fps").textContent = f + " quadros/s"; }, 600);
+else $("#fps").textContent = "sem WebGL2: plano B em CSS";
+})();
+</script>
+</body>
+</html>
