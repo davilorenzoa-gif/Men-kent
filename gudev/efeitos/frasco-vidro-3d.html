@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Frasco de vidro 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--fundo,#DAD5E2);color:#221B33;font:400 16px/1.5 Manrope,system-ui,sans-serif;overflow-x:hidden}
+canvas{display:block} button,input{font:inherit;color:inherit}
+.nota{position:fixed;left:12px;bottom:12px;z-index:50;max-width:min(520px,calc(100% - 24px));font-size:12px;background:rgba(255,255,255,.75);border-radius:10px;padding:8px 12px}
+:root{--berinjela-2:#4B4260;--ease:cubic-bezier(.2,.7,.2,1)}
+main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:24px;align-items:center;min-height:100vh;padding:24px max(16px,calc((100vw - 1100px)/2))}
+.frasco-box{position:relative;aspect-ratio:4/5;border-radius:28px;background:#C4BBD5;overflow:hidden}
+#frasco3d{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#frasco{position:absolute;inset:0;width:100%;height:100%;touch-action:pan-y;-webkit-tap-highlight-color:transparent;user-select:none}
+.frasco-dica{position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:13px;font-weight:600;color:var(--berinjela-2);pointer-events:none;transition:opacity .5s}
+.frasco-dica.some{opacity:0}
+.painel{display:grid;gap:12px}
+.painel h1{font:400 40px/1 "Bodoni Moda",Georgia,serif}
+#acoes{display:flex;flex-wrap:wrap;gap:8px}
+#acoes button,#sacudir{border:1px solid rgba(34,27,51,.2);background:#fff;border-radius:99px;padding:10px 16px 10px 32px;cursor:pointer;font-weight:600;position:relative}
+#acoes button::before{content:"";position:absolute;left:12px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:var(--c)}
+#sacudir{padding-left:16px;background:#221B33;color:#fff;justify-self:start}
+#nome{border:1px solid rgba(34,27,51,.2);border-radius:12px;padding:12px 14px;background:#fff}
+@media (max-width:820px){main{grid-template-columns:minmax(0,1fr)}.frasco-box{aspect-ratio:1/1;max-height:66vh}}
+</style>
+</head>
+<body>
+<main>
+  <div class="frasco-box" id="frascoBox" role="img" aria-label="Frasco de vidro arrastável com líquido">
+    <canvas id="frasco3d" aria-hidden="true"></canvas>
+    <canvas id="frasco"></canvas>
+    <p class="frasco-dica" id="frascoDica">Pegue o frasco e arraste</p>
+  </div>
+  <div class="painel">
+    <h1>Frasco de vidro 3D</h1>
+    <p>Arraste, arremesse, solte. Pingue uma cor e sacuda.</p>
+    <div id="acoes"></div>
+    <input id="nome" maxlength="18" placeholder="Nome no rótulo" autocomplete="off">
+    <button id="sacudir" type="button">Sacudir</button>
+    <p style="font-size:13px;color:#4B4260">Renderizando em: <b id="estado">--</b></p>
+  </div>
+</main>
+<p class="nota">Efeito da Névoa (24/11/2026): ray tracing de vidro e líquido em WebGL2, sem biblioteca; física em JS; plano B 2D.</p>
+<script>
+(() => {
+"use strict";
+const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const toque = matchMedia("(pointer: coarse)").matches;
+const $ = (s, el = document) => el.querySelector(s);
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const hex = h => [parseInt(h.slice(1,3),16)/255, parseInt(h.slice(3,5),16)/255, parseInt(h.slice(5,7),16)/255];
+/* ===== TROQUE AQUI =====
+   CONC muda a força da cor do líquido e o texto pequeno do rótulo; GOTAS são os botões de cor.
+   O líquido base (cor champanhe) está em camadas.push(...) dentro do módulo.
+   Geometria do vidro (frasco 3D): constantes BO, CAV, BI no shader FS3 (meia largura do corpo = 1). */
+const CONC = [
+  {id:"edt", nome:"Eau de toilette", faixa:"5 a 15% de óleo", forca:.55},
+  {id:"edp", nome:"Eau de parfum", faixa:"15 a 20% de óleo", forca:.8},
+  {id:"ext", nome:"Extrait", faixa:"20 a 40% de óleo", forca:1}
+];
+const GOTAS = [ {nome:"Rosa", cor:"#D0577A"}, {nome:"Violeta", cor:"#6A55D0"}, {nome:"Âmbar", cor:"#C2702A"} ];
+/* ===================================================================
+   WOW 3: monte o seu frasco
+   Física: o frasco é um corpo com massa (mola + amortecimento) que segue o dedo,
+   guarda a inércia ao soltar e volta com elástico. O líquido sente a aceleração
+   do frasco: a superfície é um pêndulo (modo de balanço) + 48 colunas de onda.
+   Tudo desenhado no referencial do frasco: tampa, gargalo, corpo e rótulo são uma peça só.
+   =================================================================== */
+const Frasco = (() => {
+  const box = $("#frascoBox"), cv = $("#frasco"), ctx = cv.getContext("2d"), dica = $("#frascoDica");
+  const off = document.createElement("canvas"), oc = off.getContext("2d");     /* o frasco (usado 2x: frasco e reflexo) */
+  const fundoC = document.createElement("canvas"), fc = fundoC.getContext("2d"); /* estúdio, pintado 1x por tamanho */
+  const fadeC = document.createElement("canvas"), dc = fadeC.getContext("2d");   /* chão por cima do reflexo */
+  const escolha = [null, null, null]; let conc = CONC[1], nome = "";
+  let W = 0, H = 0, dpr = 1, S = 1, chao = 0;
+  const B = {}, R = {x:0, y:0};
+  let pExt, pInt, pParede, pBase;
+
+  /* ---------- geometria (referencial do frasco, origem no centro do corpo) ---------- */
+  function caixa(p, x, y, w, h, rt, rb){
+    p.moveTo(x + rt, y); p.lineTo(x + w - rt, y); p.arcTo(x + w, y, x + w, y + rt, rt);
+    p.lineTo(x + w, y + h - rb); p.arcTo(x + w, y + h, x + w - rb, y + h, rb);
+    p.lineTo(x + rb, y + h); p.arcTo(x, y + h, x, y + h - rb, rb);
+    p.lineTo(x, y + rt); p.arcTo(x, y, x + rt, y, rt); p.closePath();
+  }
+  function geo(){
+    S = Math.min(W / 300, H / 390);
+    Object.assign(B, { bw:204*S, bh:184*S, rt:30*S, rb:40*S, parede:9*S, teto:10*S, base:24*S,
+      gw:30*S, gh:8*S, aw:42*S, ah:9*S, tw:68*S, th:52*S });
+    B.ix0 = -B.bw/2 + B.parede; B.ix1 = B.bw/2 - B.parede; B.iy0 = -B.bh/2 + B.teto; B.iy1 = B.bh/2 - B.base;
+    chao = H * .83; R.x = W / 2; R.y = chao - B.bh / 2;
+    pExt = new Path2D(); caixa(pExt, -B.bw/2, -B.bh/2, B.bw, B.bh, B.rt, B.rb);
+    pInt = new Path2D(); caixa(pInt, B.ix0, B.iy0, B.ix1 - B.ix0, B.iy1 - B.iy0, B.rt - B.parede*.8, B.rb - B.parede*1.4);
+    pParede = new Path2D(); pParede.addPath(pExt); pParede.addPath(pInt);
+    pBase = new Path2D(); pBase.rect(-B.bw/2, B.iy1 - 1, B.bw, B.bh/2 - B.iy1 + 1);
+    grudadas.length = 0;
+    for (let i = 0; i < 16; i++){ const u = .06 + Math.random()*.88, v = .3 + Math.random()*.66, r = (.8 + Math.random()*1.9) * S;
+      grudadas.push({ u, v, r, f: Math.random()*6, b3: [-.86 + 1.72*u, .78 - 1.42*v, (Math.random() < .5 ? -1 : 1)*(.262 - r/(B.bw/2)), r/(B.bw/2)] }); }
+  }
+  function pintaFundo(){
+    for (const c of [off, fundoC, fadeC]){ c.width = W*dpr; c.height = H*dpr; }
+    fc.setTransform(dpr,0,0,dpr,0,0);
+    let g = fc.createLinearGradient(0, 0, 0, chao);
+    g.addColorStop(0, "#CBC3DA"); g.addColorStop(1, "#B9AECD");
+    fc.fillStyle = g; fc.fillRect(0, 0, W, chao);
+    /* feixes de luz diagonais (luz de estúdio vindo do alto à esquerda) */
+    fc.save(); fc.beginPath(); fc.rect(0, 0, W, chao); fc.clip();
+    [[-.15,.16,.22],[.18,.1,.16],[.42,.2,.2],[.78,.08,.12]].forEach(([x, w, a]) => {
+      const x0 = W*x, lw = W*w, d = chao*.75;
+      const gg = fc.createLinearGradient(x0, 0, x0 + lw, 0);
+      gg.addColorStop(0, "rgba(255,255,255,0)"); gg.addColorStop(.5, `rgba(255,255,255,${a})`); gg.addColorStop(1, "rgba(255,255,255,0)");
+      fc.fillStyle = gg; fc.beginPath(); fc.moveTo(x0, 0); fc.lineTo(x0 + lw, 0); fc.lineTo(x0 + lw + d, chao); fc.lineTo(x0 + d, chao); fc.fill();
+    });
+    fc.restore();
+    g = fc.createLinearGradient(0, chao, 0, H);
+    g.addColorStop(0, "#DCD5E6"); g.addColorStop(.25, "#CFC6DC"); g.addColorStop(1, "#BCB1CE");
+    fc.fillStyle = g; fc.fillRect(0, chao, W, H - chao);
+    g = fc.createLinearGradient(0, chao - 2, 0, chao + 3);
+    g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(.5, "rgba(255,255,255,.55)"); g.addColorStop(1, "rgba(255,255,255,0)");
+    fc.fillStyle = g; fc.fillRect(0, chao - 2, W, 5);
+    /* o chão some o reflexo aos poucos: cópia do chão com alfa crescente */
+    dc.setTransform(1,0,0,1,0,0); dc.clearRect(0,0,fadeC.width,fadeC.height); dc.drawImage(fundoC, 0, 0);
+    dc.globalCompositeOperation = "destination-in";
+    g = dc.createLinearGradient(0, chao*dpr, 0, (chao + B.bh*.6)*dpr);
+    g.addColorStop(0, "rgba(0,0,0,0)"); g.addColorStop(1, "rgba(0,0,0,1)");
+    dc.fillStyle = g; dc.fillRect(0, chao*dpr, fadeC.width, fadeC.height);
+    dc.globalCompositeOperation = "source-over";
+  }
+
+  /* ---------- estado ---------- */
+  const F = { x:0, y:0, vx:0, vy:0, a:0, va:0, ax:0, ay:0, aa:0, yaw:.34, vyaw:0, ayaw:0, toque:0 };     /* frasco (yaw = giro no eixo vertical, mostra a lateral) */
+  const N = 48, onda = new Float32Array(N), vOnda = new Float32Array(N); /* altura de cada coluna (px/S, pra cima) */
+  const Lq = { phi:0, vphi:0, axAnt:0 };                               /* ângulo da superfície no mundo */
+  /* camadas: 0 saída, 1 coração, 2 fundo, 3 a base (álcool de perfumaria, já no frasco) */
+  const camadas = [0,0,0].map(() => ({vol:0, alvo:0, cor:[.85,.83,.88]}));
+  camadas.push({vol:.46, alvo:.46, cor:hex("#EFE2C2")});
+  let tampa = 0, mistura = 0, pega = null, ativo = false, t = 0;
+  const gotas = [], bolhas = [], grudadas = [];
+
+  function ajusta(){
+    dpr = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W*dpr; cv.height = H*dpr; geo(); pintaFundo();
+    if (typeof R3 !== "undefined" && R3){ R3.tamanho(W, H); rotulo3(); }
+    if (!pega){ F.x = R.x; F.y = R.y; F.vx = F.vy = 0; }
+  }
+
+  /* ---------- toque e arraste ---------- */
+  const ponto = e => { const r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  function local(x, y){ const dx = x - F.x, dy = y - F.y, c = Math.cos(-F.a), s = Math.sin(-F.a); return { x: dx*c - dy*s, y: dx*s + dy*c }; }
+  function acerta(p){ const l = local(p.x, p.y); return Math.abs(l.x) < B.bw/2 + 6*S && l.y < B.bh/2 + 6*S && l.y > -(B.bh/2 + B.gh + B.ah + B.th) && (l.y > -B.bh/2 || Math.abs(l.x) < B.tw/2 + 6*S); }
+  /* no celular: tocar no frasco não rola a página; tocar fora rola normal */
+  cv.addEventListener("touchstart", e => { const r = cv.getBoundingClientRect(), tq = e.touches[0];
+    if (acerta({x: tq.clientX - r.left, y: tq.clientY - r.top})) e.preventDefault(); }, {passive:false});
+  cv.addEventListener("pointerdown", e => {
+    const p = ponto(e); if (!acerta(p)) return;
+    const l = local(p.x, p.y);
+    pega = { id: e.pointerId, lx: l.x, ly: l.y, x: p.x, y: p.y, hist: [{x:p.x, y:p.y, t:performance.now()}] };
+    cv.setPointerCapture(e.pointerId); cv.style.cursor = "grabbing"; dica.classList.add("some");
+    /* resposta ao toque: o frasco desgruda do chão, o líquido treme e o vidro acende de leve */
+    F.vy -= 140*S; F.toque = 1; for (let i = 18; i < 30; i++) vOnda[i] += Math.sin((i - 18)/11*Math.PI) * .9;
+  });
+  cv.addEventListener("pointermove", e => {
+    const p = ponto(e);
+    if (!pega){ if (!toque) cv.style.cursor = acerta(p) ? "grab" : "default"; return; }
+    if (e.pointerId !== pega.id) return;
+    pega.x = p.x; pega.y = p.y; const agora = performance.now();
+    pega.hist.push({x:p.x, y:p.y, t:agora}); while (pega.hist.length > 2 && agora - pega.hist[0].t > 90) pega.hist.shift();
+  });
+  function larga(e){
+    if (!pega || (e && e.pointerId !== pega.id)) return;
+    const h = pega.hist, a = h[0], b = h[h.length-1], dtp = Math.max(16, b.t - a.t) / 1000;
+    const lim = 2600 * S, vx = clamp((b.x - a.x)/dtp, -lim, lim), vy = clamp((b.y - a.y)/dtp, -lim, lim);
+    if (performance.now() - b.t < 80){ F.vx = F.vx*.4 + vx*.6; F.vy = F.vy*.4 + vy*.6; }  /* arremesso */
+    pega = null; cv.style.cursor = toque ? "" : "grab";
+  }
+  cv.addEventListener("pointerup", larga); cv.addEventListener("pointercancel", larga);
+  cv.addEventListener("lostpointercapture", () => larga());
+
+  function sacode(){
+    if (pega) return;
+    const f = (reduz ? 220 : 520) * S; let k = 0;
+    const id = setInterval(() => { F.vx += (k % 2 ? -2 : 2) * f * (k ? 1 : .5); F.va += (k % 2 ? -1 : 1) * (reduz ? .8 : 2.2);
+      if (++k > 5){ clearInterval(id); F.vx -= Math.sign(F.vx) * f * .5; } }, 120);
+    mistura = clamp(mistura + .25, 0, 1);
+  }
+
+  /* ---------- física, passo fixo de 1/120 s ---------- */
+  const PERFIL = Array.from({length:8}, (_, j) => Math.exp(-j*j/14) * .45);
+  const PASSO = 1/120, G = () => 3300 * S;
+  function passo(dt){
+    const vx0 = F.vx, vy0 = F.vy, va0 = F.va;
+    let tx = R.x, ty = R.y, k = 70, z = .34, alvoA = 0;
+    if (pega){
+      /* o ponto pego fica embaixo do dedo: centro = dedo − rotação(ponto pego) */
+      const c = Math.cos(F.a), s = Math.sin(F.a);
+      tx = pega.x - (pega.lx*c - pega.ly*s); ty = pega.y - (pega.lx*s + pega.ly*c);
+      /* passou da caixa: o frasco resiste (elástico), não sai da tela */
+      const solto = d => Math.min(10*S, Math.sqrt(d*S)*1.6);
+      const borracha = (v, a, b) => v < a ? a - solto(a - v) : v > b ? b + solto(v - b) : v;
+      tx = borracha(tx, B.bw*.5 + 14*S, W - B.bw*.5 - 14*S); ty = borracha(ty, B.bh/2 + B.gh + B.ah + B.th + 8*S, R.y);
+      k = 520; z = .82;
+      /* inclinação vem do braço: pegou em cima, o fundo fica pra trás; pegou embaixo, o topo fica */
+      const braco = clamp(-pega.ly / (B.bh/2), -1.2, 1.6);
+      alvoA = clamp((F.vx / S) * .00075 * (.35 + braco), -.55, .55);
+    } else alvoA = clamp((F.vx / S) * .00018, -.25, .25);
+    const c = 2 * z * Math.sqrt(k);
+    F.vx += (k*(tx - F.x) - c*F.vx) * dt; F.vy += (k*(ty - F.y) - c*F.vy) * dt;
+    F.x += F.vx * dt; F.y += F.vy * dt;
+    /* paredes macias da caixa */
+    const lado = (B.bw/2)*Math.cos(F.a) + (B.bh/2)*Math.abs(Math.sin(F.a)) + 4*S;
+    const minX = lado, maxX = W - lado, minY = B.bh/2 + B.gh + B.ah + B.th + 6*S;
+    if (F.x < minX){ F.x = minX; if (F.vx < 0) F.vx *= -.3; }
+    if (F.x > maxX){ F.x = maxX; if (F.vx > 0) F.vx *= -.3; }
+    if (F.y < minY){ F.y = minY; if (F.vy < 0) F.vy *= -.3; }
+    /* rotação: mola própria; leve com o frasco solto pra balançar antes de parar */
+    const ka = pega ? 160 : 85, ca = 2 * (pega ? .75 : .2) * Math.sqrt(ka);
+    F.va += (ka*(alvoA - F.a) - ca*F.va) * dt;
+    if (Math.abs(F.a) > .6) F.va -= Math.sign(F.a) * (Math.abs(F.a) - .6) * 900 * dt;
+    F.a += F.va * dt;
+    /* giro no eixo vertical: arrastar de lado vira o frasco e mostra a espessura; solto, volta balançando */
+    const yaw0 = .34 + (reduz || pega ? 0 : Math.sin(t*.45)*.1);
+    const alvoY = pega ? yaw0 + clamp((F.vx / S) * .0011, -.85, .85) : yaw0;
+    const ky = pega ? 60 : 38, cyw = 2 * (pega ? .7 : .24) * Math.sqrt(ky), vy0w = F.vyaw;
+    F.vyaw += (ky*(alvoY - F.yaw) - cyw*F.vyaw) * dt; F.yaw += F.vyaw * dt;
+    F.ayaw += ((F.vyaw - vy0w)/dt - F.ayaw) * .3;
+    F.toque = Math.max(0, F.toque - dt*2.2);
+    /* chão: o ponto mais baixo do frasco girado não atravessa */
+    const desce = (B.bh/2)*Math.cos(F.a) + (B.bw/2)*Math.abs(Math.sin(F.a));
+    if (F.y + desce > chao){ F.y = chao - desce; if (F.vy > 0) F.vy *= -.25; }
+
+    /* aceleração medida (é ela que mexe o líquido) */
+    F.ax += ((F.vx - vx0)/dt - F.ax) * .3; F.ay += ((F.vy - vy0)/dt - F.ay) * .3;
+    F.aa += ((F.va - va0)/dt - F.aa) * .3;
+
+    /* modo de balanço: a superfície procura ficar perpendicular à gravidade efetiva (g − a) */
+    const gy = Math.max(G()*.25, G() - F.ay);
+    const phiEq = clamp(Math.atan(F.ax / gy), -.42, .42);
+    const w0 = 2*Math.PI*1.35, zl = reduz ? .4 : .1;
+    Lq.vphi += (-w0*w0*(Lq.phi - phiEq) - 2*zl*w0*Lq.vphi + .2*F.aa) * dt;
+    Lq.phi += Lq.vphi * dt;
+    if (Math.abs(Lq.phi) > .5){ Lq.phi = Math.sign(Lq.phi)*.5; Lq.vphi *= -.3; }  /* nunca vira de lado */
+
+    /* ondas: a variação da aceleração no eixo do frasco empurra as paredes */
+    const axl = F.ax*Math.cos(F.a) + F.ay*Math.sin(F.a), d = axl - Lq.axAnt; Lq.axAnt = axl;
+    const imp = clamp(d / S * .0005 + F.ayaw * .004, -1.2, 1.2) * (reduz ? .4 : 1);
+    for (let j = 0; j < 8; j++){ const w = PERFIL[j]; vOnda[j] += imp*w; vOnda[N-1-j] -= imp*w; }
+    const amort = reduz ? .975 : .9905;
+    for (let i = 0; i < N; i++){
+      const l = onda[i ? i-1 : 1], r = onda[i < N-1 ? i+1 : N-2];
+      vOnda[i] = (vOnda[i] + .26*(l + r - 2*onda[i])) * amort;
+      vOnda[i] += .09*(l + r - 2*onda[i]) * (reduz ? 1.5 : 1);  /* tira o serrilhado: crista arredondada */
+    }
+    let m = 0; for (let i = 0; i < N; i++){ onda[i] = clamp(onda[i] + vOnda[i], -9, 9); m += onda[i]; }
+    m /= N; for (let i = 0; i < N; i++) onda[i] -= m;   /* volume conservado */
+
+    const energia = Math.abs(Lq.vphi) + Math.abs(imp)*.3;
+    mistura = clamp(mistura + energia * dt * .045 - dt * .01, 0, 1);
+    if (!reduz && Math.random() < energia * dt * 5) bolha(B.ix0 + Math.random()*(B.ix1 - B.ix0), B.iy1 - Math.random()*8*S);
+  }
+  function bolha(x, y){ if (bolhas.length < 26) bolhas.push({ x, y, z: (Math.random() - .5)*.42, r: (.9 + Math.random()*2.2)*S, f: Math.random()*6, vida: 0 }); }
+
+  /* ---------- superfície ---------- */
+  const xs = new Float32Array(N), ys = new Float32Array(N);
+  function superficie(nivel, inc){
+    const x0 = B.ix0 - 6*S, span = (B.ix1 - B.ix0) + 12*S;
+    for (let i = 0; i < N; i++){
+      const x = x0 + span * i/(N-1);
+      const rip = reduz ? 0 : (Math.sin(x/S*.11 + t*3.1) * .45 + Math.sin(x/S*.27 - t*2.2) * .25) * S;
+      xs[i] = x; ys[i] = nivel + x*inc - onda[i]*S*.9 + rip;
+    }
+  }
+  function yEm(x){ const x0 = xs[0], span = xs[N-1] - x0, f = clamp((x - x0)/span, 0, 1) * (N-1), i = Math.min(N-2, Math.floor(f)), k = f - i; return ys[i]*(1-k) + ys[i+1]*k; }
+
+  const mix = (a, b, k) => a.map((v, i) => v + (b[i]-v)*k);
+  const css = (c, a = 1) => `rgba(${c.map(v => Math.round(clamp(v,0,1)*255)).join(",")},${a})`;
+  const claro = (c, k) => c.map(v => v + (1-v)*k);
+
+  /* ---------- desenho do frasco (no canvas fora da tela) ---------- */
+  function desenhaFrasco(){
+    const o = oc;
+    o.setTransform(1,0,0,1,0,0); o.clearRect(0, 0, off.width, off.height);
+    o.setTransform(dpr,0,0,dpr,0,0); o.translate(F.x, F.y); o.rotate(F.a);
+    const {bw, bh, ix0, ix1, iy0, iy1} = B;
+
+    const vol = camadas.reduce((s, c) => s + c.vol, 0);
+    const nivel = iy1 - (iy1 - iy0) * vol * .9;
+    const inc = Math.tan(clamp(Lq.phi - F.a, -.9, .9));
+    superficie(nivel, inc);
+    const media = camadas.reduce((s, c) => s.map((v, i) => v + c.cor[i]*c.vol), [0,0,0]).map(v => v / Math.max(vol, .001));
+    const alfa = .5 + conc.forca * .3;
+
+    /* vidro de trás */
+    o.fillStyle = "rgba(246,243,252,.16)"; o.fill(pExt);
+    let g = o.createLinearGradient(ix0, 0, ix1, 0);
+    g.addColorStop(0, "rgba(70,58,100,.16)"); g.addColorStop(.25, "rgba(255,255,255,.06)"); g.addColorStop(.75, "rgba(255,255,255,.04)"); g.addColorStop(1, "rgba(70,58,100,.18)");
+    o.fillStyle = g; o.fill(pInt);
+
+    /* ---- líquido, recortado no formato interno ---- */
+    o.save(); o.clip(pInt);
+    o.beginPath(); o.moveTo(xs[0], ys[0]); for (let i = 1; i < N; i++) o.lineTo(xs[i], ys[i]);
+    o.lineTo(ix1 + 40*S, iy1 + 60*S); o.lineTo(ix0 - 40*S, iy1 + 60*S); o.closePath();
+    const corpo = new Path2D(); corpo.moveTo(xs[0], ys[0]); for (let i = 1; i < N; i++) corpo.lineTo(xs[i], ys[i]);
+    corpo.lineTo(ix1 + 40*S, iy1 + 60*S); corpo.lineTo(ix0 - 40*S, iy1 + 60*S); corpo.closePath();
+    /* camadas: base embaixo, depois fundo, coração e saída; sacudir aproxima tudo da cor média */
+    const topo = Math.min(...ys);
+    g = o.createLinearGradient(0, iy1, 0, nivel);
+    let acc = 0; const borda = .1 + mistura*.5;
+    [3,2,1,0].forEach(k => { const c = camadas[k]; if (c.vol < .004) return; const cc = mix(c.cor, media, mistura);
+      const a0 = acc/vol, a1 = (acc + c.vol)/vol; acc += c.vol;
+      g.addColorStop(clamp(a0 + borda*.5*(a1-a0), 0, 1), css(cc, alfa));
+      g.addColorStop(clamp(a1 - borda*.5*(a1-a0), 0, 1), css(cc, alfa)); });
+    o.fillStyle = g; o.fill(corpo);
+    /* refração nas bordas: líquido mais denso perto do vidro */
+    g = o.createLinearGradient(ix0, 0, ix1, 0);
+    g.addColorStop(0, "rgba(40,30,60,.2)"); g.addColorStop(.14, "rgba(40,30,60,0)"); g.addColorStop(.86, "rgba(40,30,60,0)"); g.addColorStop(1, "rgba(40,30,60,.24)");
+    o.fillStyle = g; o.fill(corpo);
+    /* mais claro logo abaixo da superfície (luz entrando) */
+    g = o.createLinearGradient(0, topo, 0, topo + 46*S);
+    g.addColorStop(0, "rgba(255,255,255,.22)"); g.addColorStop(1, "rgba(255,255,255,0)");
+    o.fillStyle = g; o.fill(corpo);
+    /* cáustica no fundo */
+    o.save(); o.translate(-F.a*30*S, iy1 - 9*S); o.scale(1, .16);
+    g = o.createRadialGradient(0, 0, 0, 0, 0, (ix1 - ix0)*.46);
+    g.addColorStop(0, "rgba(255,252,240,.6)"); g.addColorStop(1, "rgba(255,252,240,0)");
+    o.fillStyle = g; o.beginPath(); o.arc(0, 0, (ix1 - ix0)*.46, 0, 6.283); o.fill(); o.restore();
+
+    /* folha da superfície: a borda de trás aparece um pouco acima (visto de leve de cima) */
+    const fol = 7*S * (1 - Math.min(.8, Math.abs(inc)*.7));
+    o.beginPath(); o.moveTo(xs[0], ys[0]);
+    for (let i = 1; i < N; i++) o.lineTo(xs[i], ys[i]);
+    for (let i = N-1; i >= 0; i--) o.lineTo(xs[i], ys[i] - fol + onda[N-1-i]*S*.35);
+    o.closePath();
+    const topoCor = claro(mix(camadas.find(c => c.vol > .01 && c !== camadas[3]) ? camadas[[0,1,2].find(k => camadas[k].vol > .01)].cor : camadas[3].cor, media, mistura), .45);
+    o.fillStyle = css(topoCor, .72); o.fill();
+    o.lineWidth = 1.6*S; o.strokeStyle = "rgba(255,255,255,.85)";
+    o.beginPath(); o.moveTo(xs[0], ys[0]); for (let i = 1; i < N; i++) o.lineTo(xs[i], ys[i]); o.stroke();
+    o.lineWidth = .9*S; o.strokeStyle = "rgba(255,255,255,.45)";
+    o.beginPath(); for (let i = 0; i < N; i++){ const y = ys[i] - fol + onda[N-1-i]*S*.35; i ? o.lineTo(xs[i], y) : o.moveTo(xs[i], y); } o.stroke();
+
+    /* bolhas: as soltas sobem e estouram na superfície; as grudadas ficam no vidro */
+    for (const b of grudadas){
+      const x = ix0 + (ix1 - ix0)*b.u, y = iy0 + (iy1 - iy0)*b.v;
+      if (y < yEm(x) + 3*S) continue;
+      desenhaBolha(o, x, y, b.r, .8 + Math.sin(t*1.3 + b.f)*.2);
+    }
+    for (const b of bolhas) desenhaBolha(o, b.x, b.y, b.r, 1);
+    o.restore();
+
+    /* ---- vidro grosso: parede com bordas claras e escuras ---- */
+    g = o.createLinearGradient(-bw/2, 0, bw/2, 0);
+    g.addColorStop(0, "rgba(255,255,255,.7)"); g.addColorStop(.03, "rgba(255,255,255,.18)"); g.addColorStop(.05, "rgba(60,48,90,.18)");
+    g.addColorStop(.5, "rgba(255,255,255,.12)");
+    g.addColorStop(.95, "rgba(60,48,90,.2)"); g.addColorStop(.97, "rgba(255,255,255,.2)"); g.addColorStop(1, "rgba(255,255,255,.6)");
+    o.fillStyle = g; o.fill(pParede, "evenodd");
+    /* base grossa: o líquido refrata ali dentro */
+    o.save(); o.clip(pExt);
+    g = o.createLinearGradient(0, iy1, 0, bh/2);
+    g.addColorStop(0, css(claro(media, .2), vol > .01 ? .42 : .1)); g.addColorStop(.35, "rgba(255,255,255,.55)"); g.addColorStop(.6, css(claro(media, .4), .25)); g.addColorStop(1, "rgba(60,48,90,.25)");
+    o.fillStyle = g; o.fill(pBase);
+    o.fillStyle = "rgba(255,255,255,.75)"; o.fillRect(-bw*.36, iy1 + 3*S, bw*.72, 1.2*S);
+    o.restore();
+    o.lineWidth = 1*S; o.strokeStyle = "rgba(255,255,255,.55)"; o.stroke(pInt);
+    o.lineWidth = 1.4*S; o.strokeStyle = "rgba(34,27,51,.42)"; o.stroke(pExt);
+
+    /* ---- rótulo (colado no vidro: gira junto) ---- */
+    const lw = bw*.58, lh = bh*.3, lx = -lw/2, ly = -bh*.1 - lh/2;
+    o.fillStyle = "rgba(34,27,51,.14)"; o.fillRect(lx + 1.5*S, ly + 2*S, lw, lh);
+    g = o.createLinearGradient(lx, ly, lx + lw, ly + lh);
+    g.addColorStop(0, "#F4F1F6"); g.addColorStop(1, "#E4DFEA");
+    o.fillStyle = g; o.fillRect(lx, ly, lw, lh);
+    o.strokeStyle = "rgba(34,27,51,.55)"; o.lineWidth = .9*S; o.strokeRect(lx + 5*S, ly + 5*S, lw - 10*S, lh - 10*S);
+    o.fillStyle = "#221B33"; o.textAlign = "center"; o.textBaseline = "middle";
+    const txt = nome || "névoa";
+    let fs = 25*S; o.font = `italic 400 ${fs}px "Bodoni Moda", Georgia, serif`;
+    while (o.measureText(txt).width > lw - 22*S && fs > 8){ fs -= 1; o.font = `italic 400 ${fs}px "Bodoni Moda", Georgia, serif`; }
+    o.fillText(txt, 0, ly + lh*.42);
+    o.font = `500 ${8.6*S}px Manrope, system-ui, sans-serif`; o.fillStyle = "#3a3150";
+    o.fillText(conc.nome.toLowerCase(), 0, ly + lh*.73);
+
+    /* ---- reflexos: luz fixa no mundo, então o brilho anda quando o frasco gira ---- */
+    o.save(); o.clip(pExt);
+    const desl = -F.a * bw * .55, forca = clamp(.62 - F.a*.6, .25, .95);
+    const faixa = (x, w, a) => { const gg = o.createLinearGradient(x - w, 0, x + w, 0);
+      gg.addColorStop(0, "rgba(255,255,255,0)"); gg.addColorStop(.5, `rgba(255,255,255,${a})`); gg.addColorStop(1, "rgba(255,255,255,0)");
+      o.fillStyle = gg; o.fillRect(x - w, -bh/2 + 14*S, w*2, bh - 30*S); };
+    faixa(-bw*.37 + desl, 6*S, forca*.8);
+    faixa(-bw*.3 + desl, 2.2*S, forca*.45);
+    faixa(bw*.4 + desl*.6, 8*S, (1.05 - forca)*.45);
+    /* ombro de cima pegando luz */
+    g = o.createRadialGradient(-bw*.22 + desl*.5, -bh/2, 0, -bw*.22 + desl*.5, -bh/2, bw*.5);
+    g.addColorStop(0, `rgba(255,255,255,${.4*forca})`); g.addColorStop(1, "rgba(255,255,255,0)");
+    o.fillStyle = g; o.fillRect(-bw/2, -bh/2, bw, bh*.35);
+    o.restore();
+    o.lineWidth = 2*S; o.lineCap = "round"; o.strokeStyle = `rgba(255,255,255,${.75*forca})`;
+    o.beginPath(); o.moveTo(-bw/2 + 3*S, -bh/2 + B.rt + 8*S); o.arcTo(-bw/2 + 3*S, -bh/2 + 3*S, -bw/2 + B.rt, -bh/2 + 3*S, B.rt - 3*S); o.lineTo(-bw*.05, -bh/2 + 3*S); o.stroke();
+
+    /* ---- gargalo, anel e tampa ---- */
+    const gy0 = -bh/2 - B.gh;
+    g = o.createLinearGradient(-B.gw/2, 0, B.gw/2, 0);
+    g.addColorStop(0, "rgba(90,80,115,.55)"); g.addColorStop(.3, "rgba(255,255,255,.55)"); g.addColorStop(.6, "rgba(160,150,180,.35)"); g.addColorStop(1, "rgba(70,60,95,.6)");
+    o.fillStyle = g; o.fillRect(-B.gw/2, gy0, B.gw, B.gh + 2*S);
+    const ay0 = gy0 - B.ah;
+    g = o.createLinearGradient(-B.aw/2, 0, B.aw/2, 0);
+    ["#5d5868","#d9d5e0","#8e889a","#f6f4f8","#a39daf","#4f4a5a"].forEach((c, i, l) => g.addColorStop(i/(l.length-1), c));
+    o.fillStyle = g; o.fillRect(-B.aw/2, ay0, B.aw, B.ah);
+    o.fillStyle = "rgba(255,255,255,.5)"; o.fillRect(-B.aw/2, ay0, B.aw, .9*S);
+    /* a tampa sobe enquanto as gotas entram */
+    const ty0 = ay0 - B.th - tampa*26*S, tx0 = -B.tw/2 + tampa*(B.tw*.5 + 30*S);
+    o.save(); o.translate(tx0 + B.tw/2, ty0 + B.th); o.rotate(tampa*.16); o.translate(-(tx0 + B.tw/2), -(ty0 + B.th));
+    const pt = new Path2D(); caixa(pt, tx0, ty0, B.tw, B.th, 6*S, 2*S);
+    g = o.createLinearGradient(tx0, 0, tx0 + B.tw, 0);
+    [[0,"#241c38"],[.12,"#3e3360"],[.27,"#76699c"],[.36,"#4b3f6e"],[.6,"#302749"],[.85,"#4a3e6a"],[1,"#1d1730"]].forEach(([p, c]) => g.addColorStop(p, c));
+    o.fillStyle = g; o.fill(pt);
+    g = o.createLinearGradient(0, ty0, 0, ty0 + B.th);
+    g.addColorStop(0, "rgba(255,255,255,.16)"); g.addColorStop(.12, "rgba(255,255,255,0)"); g.addColorStop(.85, "rgba(0,0,0,0)"); g.addColorStop(1, "rgba(0,0,0,.25)");
+    o.fillStyle = g; o.fill(pt);
+    o.restore();
+    return media;
+  }
+  function desenhaBolha(o, x, y, r, a){
+    o.globalAlpha = a;
+    o.fillStyle = "rgba(255,255,255,.14)"; o.beginPath(); o.arc(x, y, r, 0, 6.283); o.fill();
+    o.lineWidth = Math.max(.6, r*.35); o.strokeStyle = "rgba(255,255,255,.7)"; o.stroke();
+    o.fillStyle = "rgba(255,255,255,.95)"; o.beginPath(); o.arc(x - r*.35, y - r*.35, r*.28, 0, 6.283); o.fill();
+    o.globalAlpha = 1;
+  }
+
+  /* ---------- gotas (no mundo) ---------- */
+  function solta(cam, corHex){
+    const c = hex(corHex); camadas[cam].cor = c; camadas[cam].alvo = .16;
+    if (!W) return;
+    for (let i = 0; i < 12; i++) gotas.push({ dy: -(B.th + 70*S) - i*24*S, vy: 0, cor: c, r: (2.6 + Math.random()*2.2)*S, j: (Math.random()-.5)*6*S, y: null, x: null });
+    dica.textContent = "Arraste o frasco, solte e veja o líquido balançar"; dica.classList.remove("some");
+  }
+  function rodaGotas(dt){
+    const c = Math.cos(F.a), s = Math.sin(F.a), ly = -B.bh/2 - B.gh;
+    const bx = F.x - ly*s, by = F.y + ly*c;  /* boca do gargalo no mundo */
+    for (let i = gotas.length - 1; i >= 0; i--){
+      const g = gotas[i];
+      if (g.y === null){ g.y = Math.min(by - 30*S, 0) + g.dy + B.th + 70*S - 20*S; g.x = bx + g.j; }
+      g.vy += 1500*S*dt; g.y += g.vy*dt; g.x += (bx + g.j*.3 - g.x) * .18;
+      if (g.y > by){ vOnda[N >> 1] += 1.4; vOnda[(N >> 1) + 1] += 1; bolha((Math.random()-.5)*12*S, (B.iy0 + B.iy1)/2 + Math.random()*20*S); gotas.splice(i, 1); }
+    }
+  }
+
+  /* ---------- frasco em 3D de verdade: ray tracing analítico em WebGL2, sem biblioteca ----------
+     Cada pixel lança um raio: entra no vidro (Fresnel + refração), atravessa a parede grossa,
+     entra na cavidade, cruza a superfície do líquido (com as ondas da física), sai do outro lado
+     e enxerga o estúdio e o chão. A física continua igual (JS); aqui é só a imagem.
+     Unidade: meia largura do corpo = 1. Sem WebGL2: fica o desenho 2D. */
+  const FS3 = `#version 300 es
+precision highp float;
+out vec4 frag;
+uniform vec2 uRes, uC; uniform float uF; uniform vec3 uCam, uPos; uniform mat3 uRot;
+uniform float uFloor, uLift, uAltLiq, uLiq, uProf, uDens, uT, uRip, uMeio, uToque;
+uniform vec4 uPlano; uniform float uOnda[48]; uniform vec4 uBol[28]; uniform int uNB;
+uniform vec3 uCor[4]; uniform float uFim[4]; uniform vec3 uTampa, uMedia;
+uniform sampler2D uRotulo;
+const vec3 BO = vec3(1.,.902,.40); const float RO = .24;
+const vec3 CAV = vec3(0.,.07,0.); const vec3 BI = vec3(.86,.71,.27); const float RI = .15;
+const float IV = 1.5, IL = 1.36;
+const vec3 LUZ = vec3(-.48,.72,.5);
+
+float sdRB(vec3 p, vec3 b, float r){ vec3 q = abs(p) - (b - r); return length(max(q,0.)) + min(max(q.x,max(q.y,q.z)),0.) - r; }
+vec3 nRB(vec3 p, vec3 b, float r){ vec3 q = abs(p) - (b - r); vec3 m = max(q,0.);
+  if (dot(m,m) > 1e-10) return normalize(m*sign(p));
+  vec3 s = sign(p); if (q.x > q.y && q.x > q.z) return vec3(s.x,0.,0.); if (q.y > q.z) return vec3(0.,s.y,0.); return vec3(0.,0.,s.z); }
+vec2 iCaixa(vec3 ro, vec3 rd, vec3 b){ vec3 r2 = mix(rd, vec3(1e-6), lessThan(abs(rd), vec3(1e-6)));
+  vec3 m = 1./r2, n = m*ro, k = abs(m)*b, t1 = -n - k, t2 = -n + k;
+  return vec2(max(max(t1.x,t1.y),t1.z), min(min(t2.x,t2.y),t2.z)); }
+float entra(vec3 ro, vec3 rd, vec3 c, vec3 b, float r){
+  vec2 tt = iCaixa(ro - c, rd, b); if (tt.x > tt.y || tt.y < 0.) return -1.;
+  float t = max(tt.x, 0.);
+  for (int i = 0; i < 40; i++){ float d = sdRB(ro + rd*t - c, b, r); if (d < 2e-4) return t; t += d; if (t > tt.y) return -1.; }
+  return -1.; }
+float sai(vec3 ro, vec3 rd, vec3 c, vec3 b, float r){
+  float t = iCaixa(ro - c, rd, b).y;
+  for (int i = 0; i < 30; i++){ float d = sdRB(ro + rd*t - c, b, r); if (abs(d) < 2e-4) break; t -= d; }
+  return t; }
+float fres(float c, float f0){ return f0 + (1. - f0)*pow(1. - clamp(c,0.,1.), 5.); }
+vec3 mundoD(vec3 v){ return transpose(uRot)*v; }
+vec3 mundoP(vec3 p){ return transpose(uRot)*p + uPos; }
+
+/* estúdio: parede lilás, feixes suaves e softboxes (são eles que desenham os brilhos no vidro) */
+vec3 env(vec3 d){
+  vec3 c = mix(vec3(.70,.66,.79), vec3(.84,.81,.89), smoothstep(-.35,.75,d.y));
+  c += .035*smoothstep(.35,.0,abs(fract((d.x + d.y*.85)*1.3 + .2) - .5));
+  float k = 1. + uToque*.4;
+  float esq = smoothstep(.6,.7,-d.x)*smoothstep(.62,.42,abs(d.y - .1));
+  float dir = smoothstep(.74,.82,d.x)*smoothstep(.5,.32,abs(d.y - .05));
+  float topo = smoothstep(.84,.92,d.y)*smoothstep(.55,.35,abs(d.x + .1));
+  float tras = smoothstep(.62,.72,d.z)*smoothstep(.2,.12,abs(d.x + .32))*smoothstep(.5,.3,abs(d.y - .15));
+  c += vec3(1.,.98,1.02)*(esq*1.5 + dir*.85 + topo*1.1 + tras*.75)*k;
+  c = mix(c, vec3(.5,.46,.58), smoothstep(-.08,-.45,d.y)*.75);      /* chão visto pelo vidro: mais escuro */
+  c *= 1. - .38*smoothstep(.25,.6,abs(d.x))*(1. - esq - dir)*smoothstep(.9,.3,abs(d.y));  /* laterais sem luz */
+  c *= 1. - .3*smoothstep(.3,.9,d.z)*(1. - tras);                    /* atrás da câmera: estúdio escuro */
+  return c; }
+
+float onda(float x){ float f = clamp((x + .92)/1.84, 0., 1.)*47.; float fi = min(floor(f), 46.); int i = int(fi);
+  return mix(uOnda[i], uOnda[i+1], f - fi); }
+float sup(vec3 p){ float w = onda(p.x) + uRip*(sin(p.x*9. + uT*3.1)*.005 + sin(p.z*15. - uT*2.3 + p.x*4.)*.0035);
+  return dot(p, uPlano.xyz) - uPlano.w - w; }
+vec3 nSup(vec3 p){ const float e = .008; return normalize(vec3(sup(p + vec3(e,0,0)) - sup(p - vec3(e,0,0)),
+  sup(p + vec3(0,e,0)) - sup(p - vec3(0,e,0)), sup(p + vec3(0,0,e)) - sup(p - vec3(0,0,e)))); }
+vec3 corLiq(vec3 p){ float f = clamp(-sup(p)/max(uProf,.05), 0., 1.); vec3 c = uCor[0];
+  for (int i = 1; i < 4; i++) c = mix(c, uCor[i], smoothstep(uFim[i-1] - uMeio, uFim[i-1] + uMeio, f));
+  return c; }
+vec3 bolhas(vec3 ro, vec3 rd, float tmax){
+  vec3 c = vec3(0.);
+  for (int i = 0; i < 28; i++){ if (i >= uNB) break; vec4 b = uBol[i];
+    vec3 oc = ro - b.xyz; float bb = dot(oc,rd), h = bb*bb - dot(oc,oc) + b.w*b.w;
+    if (h > 0.){ float t = -bb - sqrt(h); if (t > 0. && t < tmax){ vec3 n = normalize(oc + rd*t); float f = 1. - abs(dot(n,rd));
+      c += vec3(.95,.95,1.)*(f*f*.5 + pow(max(dot(n, normalize(vec3(-.5,.75,.45))),0.), 36.)*1.1); } } }
+  return c; }
+
+/* chão: sombra macia que abre quando o frasco sobe, contato escuro, luz tingida pelo líquido e reflexo fosco */
+vec3 fundo(vec3 ro, vec3 rd, bool primario){
+  vec3 c = env(rd);
+  if (rd.y < -1e-4){
+    float t = (uFloor - ro.y)/rd.y;
+    if (t > 0.){
+      vec3 P = ro + rd*t;
+      vec3 ch = mix(vec3(.87,.84,.91), vec3(.75,.71,.82), smoothstep(1.5, 11., t));
+      vec3 q = uRot*(P - uPos);
+      vec2 h = abs(q.xz) - (vec2(1.,.4) - .24); float dd = length(max(h,0.)) + min(max(h.x,h.y),0.) - .24;
+      float L = uLift;
+      float sh = .4*exp(-max(dd,0.)*3./(1. + L*3.))/(1. + L*2.5);
+      float ct = .42*exp(-max(dd,0.)*30.)*exp(-L*16.);
+      ch *= 1. - min(sh + ct, .78);
+      vec2 cq = (q.xz - vec2(.28,.78))*vec2(1.25,2.4);
+      ch += uMedia*.2*exp(-dot(cq,cq))/(1. + L*3.)*uLiq;
+      if (primario && dd < 1.4){
+        vec3 lo = uRot*(P - uPos), ld = uRot*vec3(rd.x, -rd.y, rd.z);
+        float tr = entra(lo, ld, vec3(0.), BO, RO);
+        if (tr > 0.){ float hy = mundoP(lo + ld*tr).y - uFloor;
+          vec3 rc = hy < uAltLiq && uLiq > .5 ? mix(vec3(.88), uMedia, .75) : vec3(.9,.88,.94);
+          ch = mix(ch, rc, .22*exp(-hy*2.6)*smoothstep(1.4,.6,dd)); }
+      }
+      ch += env(reflect(rd, vec3(0.,1.,0.)))*.035;
+      c = mix(ch, c, smoothstep(5., 17., t));
+    }
+  }
+  return c; }
+
+vec4 iCil(vec3 ro, vec3 rd, float r, float y0, float y1){
+  float tb = 1e9; vec3 nb = vec3(0.);
+  float a = dot(rd.xz,rd.xz), b = dot(ro.xz,rd.xz), c = dot(ro.xz,ro.xz) - r*r, h = b*b - a*c;
+  if (h >= 0. && a > 1e-8){ float t = (-b - sqrt(h))/a; float y = ro.y + rd.y*t;
+    if (t > 0. && y > y0 && y < y1){ tb = t; nb = normalize(vec3(ro.x + rd.x*t, 0., ro.z + rd.z*t)); } }
+  if (rd.y < 0.){ float t = (y1 - ro.y)/rd.y; vec2 xz = ro.xz + rd.xz*t; if (t > 0. && t < tb && dot(xz,xz) < r*r){ tb = t; nb = vec3(0.,1.,0.); } }
+  if (rd.y > 0.){ float t = (y0 - ro.y)/rd.y; vec2 xz = ro.xz + rd.xz*t; if (t > 0. && t < tb && dot(xz,xz) < r*r){ tb = t; nb = vec3(0.,-1.,0.); } }
+  return vec4(nb, tb); }
+
+vec3 vidro(vec3 p, vec3 d, vec3 n){
+  vec3 acc = vec3(0.), T = vec3(1.);
+  float Fr = fres(-dot(d,n), .04);
+  acc += env(mundoD(reflect(d,n)))*Fr; T *= 1. - Fr;
+  vec3 dv = refract(d, n, 1./IV), pv = p - n*1e-3; float Lv = 0.;
+  float tc = entra(pv, dv, CAV, BI, RI);
+  if (tc > 0.){
+    Lv += tc;
+    vec3 p2 = pv + dv*tc, n2 = nRB(p2 - CAV, BI, RI);
+    bool liq = uLiq > .5 && sup(p2) < 0.;
+    vec3 d2 = refract(dv, n2, IV/(liq ? IL : 1.));
+    if (dot(d2,d2) < .5){ dv = reflect(dv, n2); pv = p2 + n2*1e-3; }
+    else {
+      float F2 = fres(-dot(dv,n2), liq ? .004 : .04);
+      if (liq){   /* detalhes do líquido vistos pela parede: menisco claro, sombra logo abaixo, luz no fundo, borda mais densa */
+        float ds = -sup(p2);
+        acc += T*(vec3(1.,.99,.97)*.42*exp(-ds*70.) - vec3(.1,.09,.06)*exp(-pow((ds - .045)*40., 2.)));
+        acc += T*uCor[3]*.22*exp(-(p2.y + .64)*9.);
+        T *= mix(1., .82, smoothstep(.55,.86,abs(p2.x)));
+      }
+      acc += T*env(mundoD(reflect(dv,n2)))*F2*.9; T *= 1. - F2;
+      vec3 q = p2 - n2*1e-3, dd = d2; float Ll = 0.; vec3 cl = vec3(1.); bool tem = false;
+      for (int k = 0; k < 3; k++){
+        float te = sai(q, dd, CAV, BI, RI);
+        float s0 = uLiq > .5 ? sup(q) : 1.; float tS = -1.;
+        if (uLiq > .5){ float a = 0., sa = s0;
+          for (int j = 1; j <= 10; j++){ float b = te*float(j)/10.; float sb = sup(q + dd*b);
+            if ((sb < 0.) != (sa < 0.)){ float lo = a, hi = b;
+              for (int m = 0; m < 6; m++){ float mid = (lo + hi)*.5; if ((sup(q + dd*mid) < 0.) == (sa < 0.)) lo = mid; else hi = mid; }
+              tS = (lo + hi)*.5; break; }
+            a = b; sa = sb; } }
+        float tf = tS > 0. ? tS : te;
+        bool dentro = s0 < 0.;
+        if (dentro){ Ll += tf; if (!tem){ cl = corLiq(q + dd*tf*.5); tem = true; } acc += T*bolhas(q, dd, tf)*.8; }
+        if (tS < 0.){ q += dd*te; break; }
+        vec3 ps = q + dd*tS, ns = nSup(ps);
+        if (!dentro){
+          float Fs = fres(-dot(dd,ns), .02);
+          acc += T*env(mundoD(reflect(dd,ns)))*Fs*1.7; T *= 1. - Fs;
+          vec3 dr = refract(dd, ns, 1./IL); dd = dot(dr,dr) > .5 ? dr : dd; q = ps - ns*2e-3;
+        } else {
+          vec3 dr = refract(dd, -ns, IL);
+          if (dot(dr,dr) < .5){ dd = reflect(dd, -ns); acc += T*vec3(.05); q = ps - ns*2e-3; }
+          else { dd = dr; q = ps + ns*2e-3; }
+        }
+      }
+      if (Ll > 0.){ acc += T*cl*(1. - exp(-Ll*1.3))*.05; T *= pow(clamp(cl,.03,1.), vec3(Ll*uDens)); }
+      vec3 n3 = nRB(q - CAV, BI, RI);
+      bool l3 = uLiq > .5 && sup(q) < 0.;
+      vec3 d3 = refract(dd, -n3, (l3 ? IL : 1.)/IV);
+      dv = dot(d3,d3) > .5 ? d3 : reflect(dd, -n3); pv = q + n3*1e-3;
+    }
+  }
+  float to = sai(pv, dv, vec3(0.), BO, RO); Lv += to;
+  vec3 p4 = pv + dv*to, n4 = nRB(p4, BO, RO);
+  vec3 d4 = refract(dv, -n4, IV);
+  if (dot(d4,d4) < .5){                      /* reflexão total na borda: mais um quique */
+    vec3 dv2 = reflect(dv, -n4), p4b = p4 - n4*1e-3;
+    float t2 = sai(p4b, dv2, vec3(0.), BO, RO); Lv += t2;
+    p4 = p4b + dv2*t2; n4 = nRB(p4, BO, RO);
+    d4 = refract(dv2, -n4, IV); if (dot(d4,d4) < .5) d4 = reflect(dv2, -n4);
+    T *= .92;
+  }
+  T *= exp(-Lv*vec3(.12,.1,.13));
+  return acc + T*fundo(mundoP(p4), mundoD(d4), false); }
+
+float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }
+void main(){
+  vec2 px = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
+  vec3 rd = normalize(vec3((px.x - uC.x)/uF, -(px.y - uC.y)/uF, -1.)), ro = uCam;
+  vec3 lo = uRot*(ro - uPos), ld = uRot*rd;
+  float tm = 1e9; int id = 0;
+  float tB = entra(lo, ld, vec3(0.), BO, RO); if (tB > 0.){ tm = tB; id = 1; }
+  vec4 cG = iCil(lo, ld, .15, .86, .985);        if (cG.w < tm){ tm = cG.w; id = 2; }
+  vec4 cA = iCil(lo, ld, .205, .98, 1.068);      if (cA.w < tm){ tm = cA.w; id = 3; }
+  vec4 cT = iCil(lo - uTampa, ld, .333, 1.068, 1.578); if (cT.w < tm){ tm = cT.w; id = 4; }
+  vec3 col; vec3 rw = rd;
+  if (id == 0) col = fundo(ro, rd, true);
+  else if (id == 1){
+    vec3 p = lo + ld*tm, n = nRB(p, BO, RO);
+    vec2 uv = vec2((p.x + .58)/1.16, (.45 - p.y)/.54);
+    if (n.z > .95 && uv.x > 0. && uv.x < 1. && uv.y > 0. && uv.y < 1.){
+      vec3 nw = mundoD(n);
+      col = texture(uRotulo, uv).rgb*(.8 + .2*max(dot(nw, normalize(LUZ)),0.)) + env(reflect(rw, nw))*.05;
+    } else col = vidro(p, ld, n);
+  } else {
+    vec3 n = id == 2 ? cG.xyz : id == 3 ? cA.xyz : cT.xyz;
+    vec3 nw = mundoD(n), rf = env(reflect(rw, nw)); float fr = fres(-dot(rw,nw), .04);
+    if (id == 4){            /* tampa: metal violeta acetinado */
+      vec3 base = vec3(.12,.09,.2);
+      vec3 r1 = reflect(rw, nw), sat = env(normalize(mix(r1, nw, .45)))*.6 + env(normalize(mix(r1, nw, .2)))*.4;
+      col = base*(.38 + .5*max(dot(nw, normalize(LUZ)),0.)) + sat*base*1.15*mix(.55,1.,fr) + rf*.045;
+      vec3 pt = lo + ld*tm - uTampa; if (n.y > .5) col *= .92 + .25*smoothstep(.27,.33,length(pt.xz));
+      col *= .9 + .1*smoothstep(1.06, 1.12, pt.y);
+    } else if (id == 3){     /* anel cromado */
+      col = rf*vec3(.86,.85,.92)*.78 + .02;
+    } else {                 /* gargalo de vidro */
+      col = mix(fundo(mundoP(lo + ld*tm), rw, false)*vec3(.82,.8,.88), rf, .25 + fr);
+    }
+  }
+  col += (hash(gl_FragCoord.xy + uT) - .5)/255.;
+  frag = vec4(col, 1.); }`;
+
+  function criaVidro3D(c3){
+    const gl = c3.getContext("webgl2", {antialias:false, alpha:false, depth:false, stencil:false, powerPreference:"high-performance"});
+    if (!gl) return null;
+    const sh = (tipo, src) => { const s = gl.createShader(tipo); gl.shaderSource(s, src); gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
+    let prog;
+    try {
+      prog = gl.createProgram();
+      gl.attachShader(prog, sh(gl.VERTEX_SHADER, "#version 300 es\nin vec2 aP; void main(){ gl_Position = vec4(aP,0.,1.); }"));
+      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS3));
+      gl.bindAttribLocation(prog, 0, "aP"); gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+    } catch (e){ console.warn("Névoa: frasco 3D indisponível, usando o 2D.", e); return null; }
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    const U = {}; const nU = gl.getProgramParameter(prog, gl.ACTIVE_UNIFORMS);
+    for (let i = 0; i < nU; i++){ const nm = gl.getActiveUniform(prog, i).name.replace(/\[0\]$/, ""); U[nm] = gl.getUniformLocation(prog, nm); }
+
+    /* rótulo: desenhado num canvas e colado na face da frente */
+    const rc = document.createElement("canvas"); rc.width = 512; rc.height = 238; const rx = rc.getContext("2d");
+    const tex = gl.createTexture(); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.uniform1i(U.uRotulo, 0);
+    function rotulo(txt, sub){
+      const g = rx.createLinearGradient(0, 0, 512, 238); g.addColorStop(0, "#F6F3F8"); g.addColorStop(1, "#E5E0EB");
+      rx.fillStyle = g; rx.fillRect(0, 0, 512, 238);
+      rx.strokeStyle = "rgba(34,27,51,.6)"; rx.lineWidth = 2.5; rx.strokeRect(16, 16, 480, 206);
+      rx.fillStyle = "#2A2140"; rx.textAlign = "center"; rx.textBaseline = "middle";
+      let fs = 92; rx.font = `italic 400 ${fs}px "Bodoni Moda", Georgia, serif`;
+      while (rx.measureText(txt).width > 420 && fs > 30){ fs -= 2; rx.font = `italic 400 ${fs}px "Bodoni Moda", Georgia, serif`; }
+      rx.fillText(txt, 256, 102);
+      rx.font = `500 30px Manrope, system-ui, sans-serif`; rx.fillStyle = "#3a3150"; rx.fillText(sub, 256, 178);
+      gl.bindTexture(gl.TEXTURE_2D, tex); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, rc); gl.generateMipmap(gl.TEXTURE_2D);
+    }
+    let escala = toque ? 1.25 : Math.min(devicePixelRatio || 1, 1.75), maxEscala = escala, medias = [], cw = 0, ch = 0;
+    function tamanho(w, h){ cw = w; ch = h; c3.width = Math.round(w*escala); c3.height = Math.round(h*escala); gl.viewport(0, 0, c3.width, c3.height); }
+    /* se o aparelho não segura, baixa a resolução (nunca a física) */
+    function mede(dt){ medias.push(dt); if (medias.length < 40) return; const m = medias.reduce((a,b)=>a+b)/medias.length; medias = [];
+      if (m > .024 && escala > .7){ escala = Math.max(.7, escala*.85); tamanho(cw, ch); } }
+    const DIST = 9, CAMY = 1.45, ond = new Float32Array(48), bol = new Float32Array(28*4), cores = new Float32Array(12), fins = new Float32Array(4);
+    function desenha(e){
+      const un = e.unidade, sc = escala;
+      gl.uniform2f(U.uRes, c3.width, c3.height); gl.uniform1f(U.uF, un*DIST*sc);
+      gl.uniform2f(U.uC, e.W/2*sc, (e.Ry - CAMY*un)*sc); gl.uniform3f(U.uCam, 0, CAMY, DIST);
+      gl.uniform3f(U.uPos, (e.x - e.W/2)/un, -(e.y - e.Ry)/un, 0);
+      const ca = Math.cos(e.a), sa = Math.sin(e.a), cy = Math.cos(e.yaw), sy = Math.sin(e.yaw);
+      /* mundo → frasco = Ry(−yaw)·Rz(a) (coluna por coluna) */
+      const M = [cy*ca, sa, sy*ca,  -cy*sa, ca, -sy*sa,  -sy, 0, cy];
+      gl.uniformMatrix3fv(U.uRot, false, M);
+      /* superfície: normal no mundo vem do balanço; leva pro frasco e passa pelo ponto que conserva o volume */
+      const nw = [Math.sin(e.phi), Math.cos(e.phi), 0];
+      let nl = [M[0]*nw[0] + M[3]*nw[1] + M[6]*nw[2], M[1]*nw[0] + M[4]*nw[1] + M[7]*nw[2], M[2]*nw[0] + M[5]*nw[1] + M[8]*nw[2]];
+      if (nl[1] < .45){ nl[1] = .45; } const ln = Math.hypot(...nl); nl = nl.map(v => v/ln);
+      const h0 = -.64 + e.vol*1.42*.94;
+      gl.uniform4f(U.uPlano, nl[0], nl[1], nl[2], nl[1]*h0);
+      gl.uniform1f(U.uProf, h0 + .64); gl.uniform1f(U.uLiq, e.vol > .01 ? 1 : 0); gl.uniform1f(U.uAltLiq, h0 + .902);
+      for (let i = 0; i < 48; i++) ond[i] = e.onda[i]*.0088;
+      gl.uniform1fv(U.uOnda, ond);
+      let nb = 0; for (const b of e.bolhas){ if (nb >= 28) break; bol.set(b, nb*4); nb++; }
+      gl.uniform4fv(U.uBol, bol); gl.uniform1i(U.uNB, nb);
+      e.cores.forEach((c, i) => cores.set(c, i*3)); gl.uniform3fv(U.uCor, cores);
+      fins.set(e.fins); gl.uniform1fv(U.uFim, fins); gl.uniform1f(U.uMeio, e.meio);
+      gl.uniform1f(U.uDens, e.dens); gl.uniform3f(U.uMedia, ...e.media);
+      gl.uniform1f(U.uFloor, -.902); gl.uniform1f(U.uLift, e.lift);
+      gl.uniform3f(U.uTampa, e.tampa*.63, e.tampa*.255, 0);
+      gl.uniform1f(U.uT, e.t); gl.uniform1f(U.uRip, reduz ? 0 : 1); gl.uniform1f(U.uToque, e.toque);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+    return { tamanho, rotulo, desenha, mede, get escala(){ return escala; } };
+  }
+
+  const cv3 = $("#frasco3d"); const R3 = criaVidro3D(cv3);
+  if (R3) box.classList.add("tem-3d");
+  const rotulo3 = () => R3 && R3.rotulo(nome || "névoa", conc.nome.toLowerCase());
+
+  /* ---------- laço ---------- */
+  let ant = performance.now(), sobra = 0, quadro = 0;
+  function laco(agora){
+    if (!ativo) return;
+    const dt = Math.min((agora - ant)/1000, .05); ant = agora; t += dt;
+    sobra += dt; let n = 0;
+    while (sobra >= PASSO && n < 8){ passo(PASSO); sobra -= PASSO; n++; }
+    if (n === 8) sobra = 0;
+    camadas.forEach(c => { c.vol += (c.alvo - c.vol) * Math.min(1, dt*3); });
+    tampa += ((gotas.length ? 1 : 0) - tampa) * Math.min(1, dt*8);
+    rodaGotas(dt);
+    for (let i = bolhas.length - 1; i >= 0; i--){
+      const b = bolhas[i]; b.vida += dt; b.y -= (14 + b.r/S*9) * S * dt; b.x += Math.sin(t*4 + b.f) * 6*S * dt;
+      if (b.y < yEm(b.x) + b.r){ const k = clamp(Math.round((b.x - xs[0])/(xs[N-1] - xs[0])*(N-1)), 0, N-1); vOnda[k] += .25; bolhas.splice(i, 1); }
+    }
+
+    /* parado (sem dedo, sem gota, líquido calmo): desenha 1 quadro sim, 1 não. Economiza bateria */
+    const calmo = !pega && !gotas.length && Math.abs(F.vx) + Math.abs(F.vy) < 4*S && Math.abs(Lq.vphi) < .02 && Math.abs(F.vyaw) < .05;
+    quadro++;
+    if (R3 && calmo && quadro % 2){ requestAnimationFrame(laco); return; }
+    if (R3){
+      if (!calmo) R3.mede(dt); R3.desenha(estado3D());
+      ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0, 0, cv.width, cv.height);
+    } else desenha2D();
+    /* gotas por cima */
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    for (const g2 of gotas){ if (g2.y === null) continue;
+      ctx.fillStyle = css(g2.cor, .92); ctx.beginPath(); ctx.ellipse(g2.x, g2.y, g2.r*.8, g2.r*(1.1 + Math.min(.6, g2.vy/(2200*S))), 0, 0, 6.283); ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.beginPath(); ctx.arc(g2.x - g2.r*.25, g2.y - g2.r*.3, g2.r*.25, 0, 6.283); ctx.fill(); }
+    requestAnimationFrame(laco);
+  }
+  /* o que o 3D precisa saber da física, em unidades do frasco */
+  function estado3D(){
+    const un = B.bw/2, vol = camadas.reduce((s, c) => s + c.vol, 0);
+    const media = camadas.reduce((s, c) => s.map((v, i) => v + c.cor[i]*c.vol), [0,0,0]).map(v => v / Math.max(vol, .001));
+    let acc = 0; const fins = [0,1,2,3].map(k => (acc += camadas[k].vol) / Math.max(vol, .001));
+    const desce = (B.bh/2)*Math.cos(F.a) + (B.bw/2)*Math.abs(Math.sin(F.a));
+    const bols = grudadas.slice(0, 12).map(g => g.b3).concat(bolhas.map(b => [b.x/un, -b.y/un, b.z, b.r/un]));
+    return { unidade: un, W, Ry: R.y, x: F.x, y: F.y, a: F.a, yaw: F.yaw, phi: Lq.phi, vol, onda,
+      bolhas: bols, cores: camadas.map((c, i) => claro(mix(c.cor, media, mistura), i === 3 ? .05 : .3)), fins, meio: .03 + mistura*.4,
+      dens: 1.3 + conc.forca*1.4, media: claro(media, .15), lift: Math.max(0, chao - (F.y + desce))/un,
+      tampa, t, toque: F.toque };
+  }
+  function desenha2D(){
+    const media = desenhaFrasco();
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.drawImage(fundoC, 0, 0);
+    /* reflexo no chão (o próprio frasco, espelhado e apagando) */
+    ctx.save(); ctx.beginPath(); ctx.rect(0, chao*dpr, cv.width, cv.height); ctx.clip();
+    ctx.globalAlpha = .26; ctx.setTransform(1,0,0,-1,0,2*chao*dpr); ctx.drawImage(off, 0, 0); ctx.restore();
+    ctx.drawImage(fadeC, 0, 0);
+    /* sombra e luz colorida que atravessa o líquido */
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const sobe = Math.max(0, chao - (F.y + B.bh/2)), k = clamp(1 - sobe/(H*.45), 0, 1);
+    ctx.save(); ctx.translate(F.x, chao); ctx.scale(1, .13);
+    let g = ctx.createRadialGradient(0, 0, 0, 0, 0, B.bw*(.62 + (1-k)*.4));
+    g.addColorStop(0, `rgba(34,27,51,${.38*k})`); g.addColorStop(1, "rgba(34,27,51,0)");
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, B.bw*(.62 + (1-k)*.4), 0, 6.283); ctx.fill();
+    ctx.translate(B.bw*.18, 70*S);
+    g = ctx.createRadialGradient(0, 0, 0, 0, 0, B.bw*.55);
+    g.addColorStop(0, css(claro(media, .1), .35*k)); g.addColorStop(1, css(media, 0));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, B.bw*.55, 0, 6.283); ctx.fill();
+    ctx.restore();
+    ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(off, 0, 0);
+  }
+  new IntersectionObserver(([en]) => { const era = ativo; ativo = en.isIntersecting; if (ativo && !era){ ant = performance.now(); requestAnimationFrame(laco); } }).observe(box);
+  let lw = innerWidth; addEventListener("resize", () => { if (innerWidth !== lw || !toque){ lw = innerWidth; ajusta(); } });
+  ajusta();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ajusta());
+
+  return {
+    escolhe(cam, nota){ escolha[cam] = nota; solta(cam, nota.cor); },
+    concentra(c){ conc = c; rotulo3(); },
+    nomeia(n){ nome = n; rotulo3(); },
+    sacode, escolha, get conc(){ return conc; },
+    get estado(){ return { tres: !!R3, escala: R3 ? R3.escala : 0, yaw:F.yaw, x:F.x, y:F.y, a:F.a, phi:Lq.phi, onda: Math.max(...onda.map(Math.abs)), bolhas: bolhas.length, rx:R.x, ry:R.y }; }
+  };
+})();
+GOTAS.forEach((g, i) => { const bt = document.createElement("button"); bt.type = "button"; bt.textContent = g.nome; bt.style.setProperty("--c", g.cor);
+  bt.addEventListener("click", () => Frasco.escolhe(i, g)); $("#acoes").append(bt); });
+$("#sacudir").addEventListener("click", () => Frasco.sacode());
+$("#nome").addEventListener("input", e => Frasco.nomeia(e.target.value.trim()));
+const st = $("#estado"); setInterval(() => { const e = Frasco.estado; st.textContent = e.tres ? `3D (resolução ${e.escala.toFixed(2)}×)` : "2D (sem WebGL2)"; }, 800);
+})();
+</script>
+</body>
+</html>

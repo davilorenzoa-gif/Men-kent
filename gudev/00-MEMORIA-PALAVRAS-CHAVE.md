@@ -269,3 +269,7 @@ O Davi mandou a folha com 8 ângulos do frasco névoa e pediu o frasco parecendo
 ## 24/11/2026: Névoa em arquivo único
 Palavras: manda em HTML, prévia, arquivo único, fontes embutidas, Google Fonts offline, embute_google_fonts.
 O Davi pediu o site em HTML. Gerado `sites/nevoa/nevoa-arquivo-unico.html` (352 KB, Bodoni Moda e Manrope embutidas, só o subconjunto latin). Ferramenta nova: `gudev/ferramentas/embute_google_fonts.py` (troca o <link> do Google Fonts pelas fontes em base64), pra site sem imagem que o `previa_embutida.py` não cobre.
+
+## 24/11/2026: Névoa guardada no repertório
+Palavras: repertório, guarda no repertório, efeito pronto, fumaça de fluido, evaporação na rolagem, frasco de vidro 3D, TROQUE AQUI, extrai_efeitos_nevoa.
+O Davi pediu pra guardar no repertório. Os 3 WOWs viraram arquivos independentes em `gudev/efeitos/` (fumaça de fluido, evaporação na rolagem, frasco de vidro 3D), testados sozinhos em 390 e 1280 sem erro. Seção "Névoa: 3 efeitos prontos" no `03` com o que trocar e pra quais nichos serve. `gudev/ferramentas/extrai_efeitos_nevoa.py` refaz os 3 a partir do site.
