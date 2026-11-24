@@ -265,3 +265,7 @@ O Davi mandou uma foto de um frasco "névoa eau de toilette" e pediu o frasco do
 ## 24/11/2026: Névoa, frasco v3 (3D de verdade)
 Palavras: frasco 3D, folha de ângulos, vista frontal, 3/4, lateral, ray tracing, raytracing, WebGL2, sem Three.js, SDF, caixa arredondada, refração, Fresnel, índice de refração, reflexão total, Beer, absorção, menisco, cáustica, softbox, estúdio, yaw, giro, resposta ao toque, resolução adaptativa, plano B 2D.
 O Davi mandou a folha com 8 ângulos do frasco névoa e pediu o frasco parecendo objeto 3D real (vidro espesso, líquido físico, interação fluida). O desenho do frasco virou ray tracing em WebGL2 sem biblioteca (canvas embaixo do 2D); física, notas, nome e WhatsApp iguais; 2D fica de plano B. Receita no `03`, lição no `05`, detalhes no README do site.
+
+## 24/11/2026: Névoa em arquivo único
+Palavras: manda em HTML, prévia, arquivo único, fontes embutidas, Google Fonts offline, embute_google_fonts.
+O Davi pediu o site em HTML. Gerado `sites/nevoa/nevoa-arquivo-unico.html` (352 KB, Bodoni Moda e Manrope embutidas, só o subconjunto latin). Ferramenta nova: `gudev/ferramentas/embute_google_fonts.py` (troca o <link> do Google Fonts pelas fontes em base64), pra site sem imagem que o `previa_embutida.py` não cobre.
