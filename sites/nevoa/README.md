@@ -24,6 +24,15 @@ Extras quietos: títulos palavra por palavra (único reveal), barra que vira vid
 ## Fatos usados (conferidos, sem número inventado)
 Bergamota da Calábria; pimenta-rosa = fruto da aroeira (nativa do Brasil); íris = rizoma que seca por anos; neroli = flor da laranja-amarga; âmbar em perfumaria = acorde (labdanum, benjoim); almíscar hoje sintético; faixas de concentração usuais (EDT 5 a 15%, EDP 15 a 20%, extrait 20 a 40%).
 
+## Frasco v3: 3D de verdade (24/11, folha de 8 ângulos do Davi)
+- **Ray tracing analítico em WebGL2, sem biblioteca** (canvas `#frasco3d`, por baixo do canvas 2D que cuida do toque e das gotas). Cada pixel: Fresnel no vidro, refração (vidro 1,5, líquido 1,36), parede grossa de verdade (caixa arredondada externa + cavidade interna, base de 0,26), superfície do líquido com as ondas da física, reflexão total por baixo da superfície, absorção por caminho (Beer), bolhas como esferas, saída pelo outro lado enxergando o estúdio. Estúdio com softboxes e laterais escuras: é o contraste que desenha a espessura nas quinas.
+- **Giro no eixo vertical (yaw):** parado fica a 20° mostrando a lateral e "respira" ±6°; arrastar de lado vira o frasco (até ±50°) e ele volta balançando. A aceleração do giro também mexe as ondas.
+- **Toque:** o frasco desgruda do chão, o líquido treme no meio e o vidro acende de leve.
+- **Chão:** sombra macia que abre conforme o frasco sobe, contato escuro, luz tingida pela cor do líquido, reflexo fosco que some com a altura (no lugar do espelho 2D).
+- **Tampa, anel e gargalo** com as proporções da referência (tampa mais estreita, violeta escuro acetinado; anel cromado).
+- **Desempenho:** resolução adaptativa (começa em 1,25× no celular e 1,75× no computador e baixa até 0,7× se a média passar de 24 ms); parado desenha a 30 quadros/s; a física não muda com a resolução. Sem WebGL2: volta o frasco 2D (testado com `--disable-3d-apis`).
+- Física igual à v2 (números do teste batem: balança ~2 s, parado em ~5 s).
+
 ## QA do frasco v2 (24/11)
 Playwright em 1440 e 390: arraste lento, arremesso, sacudir pela tampa, puxar pra fora da caixa, pingar 3 notas, botão Sacudir; toque de verdade (eventos de touch) no Pixel 7 com e sem "reduzir movimento". 62 quadros/s no laço do frasco, sem erro. Depois de soltar: balança ~2 s, parado em ~5 s. Não testado em celular de verdade.
 

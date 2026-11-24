@@ -121,7 +121,8 @@ h2.visto .palavra>span{transform:none}
 .componha{padding:clamp(90px,11vw,150px) 0 clamp(80px,10vw,130px);background:var(--perola-2);border-radius:clamp(24px,4vw,48px) clamp(24px,4vw,48px) 0 0}
 .bancada{margin-top:clamp(30px,4vw,56px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:start}
 .frasco-box{position:sticky;top:84px;aspect-ratio:4/5;border-radius:28px;background:#C4BBD5;overflow:hidden}
-#frasco{width:100%;height:100%;touch-action:pan-y;-webkit-tap-highlight-color:transparent;user-select:none}
+#frasco3d{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#frasco{position:absolute;inset:0;width:100%;height:100%;touch-action:pan-y;-webkit-tap-highlight-color:transparent;user-select:none}
 .frasco-dica{position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:13px;font-weight:600;color:var(--berinjela-2);pointer-events:none;transition:opacity .5s var(--ease)}
 .frasco-dica.some{opacity:0}
 .passo{padding:0 0 26px;margin-bottom:26px;border-bottom:1px solid var(--linha)}
@@ -249,6 +250,7 @@ h2.visto .palavra>span{transform:none}
       <p class="lead">Escolha uma nota de cada família, dê um nome e sacuda. A fórmula sai pronta pra mandar pra quem você quiser.</p>
       <div class="bancada">
         <div class="frasco-box" id="frascoBox" role="img" aria-label="Frasco de perfume que enche com as notas escolhidas. Arraste o frasco para balançar o líquido; o botão Sacudir faz o mesmo.">
+          <canvas id="frasco3d" aria-hidden="true"></canvas>
           <canvas id="frasco"></canvas>
           <p class="frasco-dica" id="frascoDica">Pegue o frasco e arraste</p>
         </div>
@@ -678,7 +680,7 @@ const Frasco = (() => {
   function geo(){
     S = Math.min(W / 300, H / 390);
     Object.assign(B, { bw:204*S, bh:184*S, rt:30*S, rb:40*S, parede:9*S, teto:10*S, base:24*S,
-      gw:48*S, gh:12*S, aw:60*S, ah:12*S, tw:92*S, th:74*S });
+      gw:30*S, gh:8*S, aw:42*S, ah:9*S, tw:68*S, th:52*S });
     B.ix0 = -B.bw/2 + B.parede; B.ix1 = B.bw/2 - B.parede; B.iy0 = -B.bh/2 + B.teto; B.iy1 = B.bh/2 - B.base;
     chao = H * .83; R.x = W / 2; R.y = chao - B.bh / 2;
     pExt = new Path2D(); caixa(pExt, -B.bw/2, -B.bh/2, B.bw, B.bh, B.rt, B.rb);
@@ -686,7 +688,8 @@ const Frasco = (() => {
     pParede = new Path2D(); pParede.addPath(pExt); pParede.addPath(pInt);
     pBase = new Path2D(); pBase.rect(-B.bw/2, B.iy1 - 1, B.bw, B.bh/2 - B.iy1 + 1);
     grudadas.length = 0;
-    for (let i = 0; i < 16; i++) grudadas.push({ u: .06 + Math.random()*.88, v: .3 + Math.random()*.66, r: (.8 + Math.random()*1.9) * S, f: Math.random()*6 });
+    for (let i = 0; i < 16; i++){ const u = .06 + Math.random()*.88, v = .3 + Math.random()*.66, r = (.8 + Math.random()*1.9) * S;
+      grudadas.push({ u, v, r, f: Math.random()*6, b3: [-.86 + 1.72*u, .78 - 1.42*v, (Math.random() < .5 ? -1 : 1)*(.262 - r/(B.bw/2)), r/(B.bw/2)] }); }
   }
   function pintaFundo(){
     for (const c of [off, fundoC, fadeC]){ c.width = W*dpr; c.height = H*dpr; }
@@ -719,18 +722,19 @@ const Frasco = (() => {
   }
 
   /* ---------- estado ---------- */
-  const F = { x:0, y:0, vx:0, vy:0, a:0, va:0, ax:0, ay:0, aa:0 };     /* frasco */
+  const F = { x:0, y:0, vx:0, vy:0, a:0, va:0, ax:0, ay:0, aa:0, yaw:.34, vyaw:0, ayaw:0, toque:0 };     /* frasco (yaw = giro no eixo vertical, mostra a lateral) */
   const N = 48, onda = new Float32Array(N), vOnda = new Float32Array(N); /* altura de cada coluna (px/S, pra cima) */
   const Lq = { phi:0, vphi:0, axAnt:0 };                               /* ângulo da superfície no mundo */
   /* camadas: 0 saída, 1 coração, 2 fundo, 3 a base (álcool de perfumaria, já no frasco) */
   const camadas = [0,0,0].map(() => ({vol:0, alvo:0, cor:[.85,.83,.88]}));
-  camadas.push({vol:.34, alvo:.34, cor:hex("#E6DBBE")});
+  camadas.push({vol:.46, alvo:.46, cor:hex("#EFE2C2")});
   let tampa = 0, mistura = 0, pega = null, ativo = false, t = 0;
   const gotas = [], bolhas = [], grudadas = [];
 
   function ajusta(){
     dpr = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; H = cv.clientHeight;
     cv.width = W*dpr; cv.height = H*dpr; geo(); pintaFundo();
+    if (typeof R3 !== "undefined" && R3){ R3.tamanho(W, H); rotulo3(); }
     if (!pega){ F.x = R.x; F.y = R.y; F.vx = F.vy = 0; }
   }
 
@@ -746,6 +750,8 @@ const Frasco = (() => {
     const l = local(p.x, p.y);
     pega = { id: e.pointerId, lx: l.x, ly: l.y, x: p.x, y: p.y, hist: [{x:p.x, y:p.y, t:performance.now()}] };
     cv.setPointerCapture(e.pointerId); cv.style.cursor = "grabbing"; dica.classList.add("some");
+    /* resposta ao toque: o frasco desgruda do chão, o líquido treme e o vidro acende de leve */
+    F.vy -= 140*S; F.toque = 1; for (let i = 18; i < 30; i++) vOnda[i] += Math.sin((i - 18)/11*Math.PI) * .9;
   });
   cv.addEventListener("pointermove", e => {
     const p = ponto(e);
@@ -805,6 +811,13 @@ const Frasco = (() => {
     F.va += (ka*(alvoA - F.a) - ca*F.va) * dt;
     if (Math.abs(F.a) > .6) F.va -= Math.sign(F.a) * (Math.abs(F.a) - .6) * 900 * dt;
     F.a += F.va * dt;
+    /* giro no eixo vertical: arrastar de lado vira o frasco e mostra a espessura; solto, volta balançando */
+    const yaw0 = .34 + (reduz || pega ? 0 : Math.sin(t*.45)*.1);
+    const alvoY = pega ? yaw0 + clamp((F.vx / S) * .0011, -.85, .85) : yaw0;
+    const ky = pega ? 60 : 38, cyw = 2 * (pega ? .7 : .24) * Math.sqrt(ky), vy0w = F.vyaw;
+    F.vyaw += (ky*(alvoY - F.yaw) - cyw*F.vyaw) * dt; F.yaw += F.vyaw * dt;
+    F.ayaw += ((F.vyaw - vy0w)/dt - F.ayaw) * .3;
+    F.toque = Math.max(0, F.toque - dt*2.2);
     /* chão: o ponto mais baixo do frasco girado não atravessa */
     const desce = (B.bh/2)*Math.cos(F.a) + (B.bw/2)*Math.abs(Math.sin(F.a));
     if (F.y + desce > chao){ F.y = chao - desce; if (F.vy > 0) F.vy *= -.25; }
@@ -823,7 +836,7 @@ const Frasco = (() => {
 
     /* ondas: a variação da aceleração no eixo do frasco empurra as paredes */
     const axl = F.ax*Math.cos(F.a) + F.ay*Math.sin(F.a), d = axl - Lq.axAnt; Lq.axAnt = axl;
-    const imp = clamp(d / S * .0005, -1.2, 1.2) * (reduz ? .4 : 1);
+    const imp = clamp(d / S * .0005 + F.ayaw * .004, -1.2, 1.2) * (reduz ? .4 : 1);
     for (let j = 0; j < 8; j++){ const w = PERFIL[j]; vOnda[j] += imp*w; vOnda[N-1-j] -= imp*w; }
     const amort = reduz ? .975 : .9905;
     for (let i = 0; i < N; i++){
@@ -838,7 +851,7 @@ const Frasco = (() => {
     mistura = clamp(mistura + energia * dt * .045 - dt * .01, 0, 1);
     if (!reduz && Math.random() < energia * dt * 5) bolha(B.ix0 + Math.random()*(B.ix1 - B.ix0), B.iy1 - Math.random()*8*S);
   }
-  function bolha(x, y){ if (bolhas.length < 26) bolhas.push({ x, y, r: (.9 + Math.random()*2.2)*S, f: Math.random()*6, vida: 0 }); }
+  function bolha(x, y){ if (bolhas.length < 26) bolhas.push({ x, y, z: (Math.random() - .5)*.42, r: (.9 + Math.random()*2.2)*S, f: Math.random()*6, vida: 0 }); }
 
   /* ---------- superfície ---------- */
   const xs = new Float32Array(N), ys = new Float32Array(N);
@@ -1008,7 +1021,7 @@ const Frasco = (() => {
 
   /* ---------- gotas (no mundo) ---------- */
   function solta(cam, corHex){
-    const c = hex(corHex); camadas[cam].cor = c; camadas[cam].alvo = .2;
+    const c = hex(corHex); camadas[cam].cor = c; camadas[cam].alvo = .16;
     if (!W) return;
     for (let i = 0; i < 12; i++) gotas.push({ dy: -(B.th + 70*S) - i*24*S, vy: 0, cor: c, r: (2.6 + Math.random()*2.2)*S, j: (Math.random()-.5)*6*S, y: null, x: null });
     dica.textContent = "Arraste o frasco, solte e veja o líquido balançar"; dica.classList.remove("some");
@@ -1024,8 +1037,297 @@ const Frasco = (() => {
     }
   }
 
+  /* ---------- frasco em 3D de verdade: ray tracing analítico em WebGL2, sem biblioteca ----------
+     Cada pixel lança um raio: entra no vidro (Fresnel + refração), atravessa a parede grossa,
+     entra na cavidade, cruza a superfície do líquido (com as ondas da física), sai do outro lado
+     e enxerga o estúdio e o chão. A física continua igual (JS); aqui é só a imagem.
+     Unidade: meia largura do corpo = 1. Sem WebGL2: fica o desenho 2D. */
+  const FS3 = `#version 300 es
+precision highp float;
+out vec4 frag;
+uniform vec2 uRes, uC; uniform float uF; uniform vec3 uCam, uPos; uniform mat3 uRot;
+uniform float uFloor, uLift, uAltLiq, uLiq, uProf, uDens, uT, uRip, uMeio, uToque;
+uniform vec4 uPlano; uniform float uOnda[48]; uniform vec4 uBol[28]; uniform int uNB;
+uniform vec3 uCor[4]; uniform float uFim[4]; uniform vec3 uTampa, uMedia;
+uniform sampler2D uRotulo;
+const vec3 BO = vec3(1.,.902,.40); const float RO = .24;
+const vec3 CAV = vec3(0.,.07,0.); const vec3 BI = vec3(.86,.71,.27); const float RI = .15;
+const float IV = 1.5, IL = 1.36;
+const vec3 LUZ = vec3(-.48,.72,.5);
+
+float sdRB(vec3 p, vec3 b, float r){ vec3 q = abs(p) - (b - r); return length(max(q,0.)) + min(max(q.x,max(q.y,q.z)),0.) - r; }
+vec3 nRB(vec3 p, vec3 b, float r){ vec3 q = abs(p) - (b - r); vec3 m = max(q,0.);
+  if (dot(m,m) > 1e-10) return normalize(m*sign(p));
+  vec3 s = sign(p); if (q.x > q.y && q.x > q.z) return vec3(s.x,0.,0.); if (q.y > q.z) return vec3(0.,s.y,0.); return vec3(0.,0.,s.z); }
+vec2 iCaixa(vec3 ro, vec3 rd, vec3 b){ vec3 r2 = mix(rd, vec3(1e-6), lessThan(abs(rd), vec3(1e-6)));
+  vec3 m = 1./r2, n = m*ro, k = abs(m)*b, t1 = -n - k, t2 = -n + k;
+  return vec2(max(max(t1.x,t1.y),t1.z), min(min(t2.x,t2.y),t2.z)); }
+float entra(vec3 ro, vec3 rd, vec3 c, vec3 b, float r){
+  vec2 tt = iCaixa(ro - c, rd, b); if (tt.x > tt.y || tt.y < 0.) return -1.;
+  float t = max(tt.x, 0.);
+  for (int i = 0; i < 40; i++){ float d = sdRB(ro + rd*t - c, b, r); if (d < 2e-4) return t; t += d; if (t > tt.y) return -1.; }
+  return -1.; }
+float sai(vec3 ro, vec3 rd, vec3 c, vec3 b, float r){
+  float t = iCaixa(ro - c, rd, b).y;
+  for (int i = 0; i < 30; i++){ float d = sdRB(ro + rd*t - c, b, r); if (abs(d) < 2e-4) break; t -= d; }
+  return t; }
+float fres(float c, float f0){ return f0 + (1. - f0)*pow(1. - clamp(c,0.,1.), 5.); }
+vec3 mundoD(vec3 v){ return transpose(uRot)*v; }
+vec3 mundoP(vec3 p){ return transpose(uRot)*p + uPos; }
+
+/* estúdio: parede lilás, feixes suaves e softboxes (são eles que desenham os brilhos no vidro) */
+vec3 env(vec3 d){
+  vec3 c = mix(vec3(.70,.66,.79), vec3(.84,.81,.89), smoothstep(-.35,.75,d.y));
+  c += .035*smoothstep(.35,.0,abs(fract((d.x + d.y*.85)*1.3 + .2) - .5));
+  float k = 1. + uToque*.4;
+  float esq = smoothstep(.6,.7,-d.x)*smoothstep(.62,.42,abs(d.y - .1));
+  float dir = smoothstep(.74,.82,d.x)*smoothstep(.5,.32,abs(d.y - .05));
+  float topo = smoothstep(.84,.92,d.y)*smoothstep(.55,.35,abs(d.x + .1));
+  float tras = smoothstep(.62,.72,d.z)*smoothstep(.2,.12,abs(d.x + .32))*smoothstep(.5,.3,abs(d.y - .15));
+  c += vec3(1.,.98,1.02)*(esq*1.5 + dir*.85 + topo*1.1 + tras*.75)*k;
+  c = mix(c, vec3(.5,.46,.58), smoothstep(-.08,-.45,d.y)*.75);      /* chão visto pelo vidro: mais escuro */
+  c *= 1. - .38*smoothstep(.25,.6,abs(d.x))*(1. - esq - dir)*smoothstep(.9,.3,abs(d.y));  /* laterais sem luz */
+  c *= 1. - .3*smoothstep(.3,.9,d.z)*(1. - tras);                    /* atrás da câmera: estúdio escuro */
+  return c; }
+
+float onda(float x){ float f = clamp((x + .92)/1.84, 0., 1.)*47.; float fi = min(floor(f), 46.); int i = int(fi);
+  return mix(uOnda[i], uOnda[i+1], f - fi); }
+float sup(vec3 p){ float w = onda(p.x) + uRip*(sin(p.x*9. + uT*3.1)*.005 + sin(p.z*15. - uT*2.3 + p.x*4.)*.0035);
+  return dot(p, uPlano.xyz) - uPlano.w - w; }
+vec3 nSup(vec3 p){ const float e = .008; return normalize(vec3(sup(p + vec3(e,0,0)) - sup(p - vec3(e,0,0)),
+  sup(p + vec3(0,e,0)) - sup(p - vec3(0,e,0)), sup(p + vec3(0,0,e)) - sup(p - vec3(0,0,e)))); }
+vec3 corLiq(vec3 p){ float f = clamp(-sup(p)/max(uProf,.05), 0., 1.); vec3 c = uCor[0];
+  for (int i = 1; i < 4; i++) c = mix(c, uCor[i], smoothstep(uFim[i-1] - uMeio, uFim[i-1] + uMeio, f));
+  return c; }
+vec3 bolhas(vec3 ro, vec3 rd, float tmax){
+  vec3 c = vec3(0.);
+  for (int i = 0; i < 28; i++){ if (i >= uNB) break; vec4 b = uBol[i];
+    vec3 oc = ro - b.xyz; float bb = dot(oc,rd), h = bb*bb - dot(oc,oc) + b.w*b.w;
+    if (h > 0.){ float t = -bb - sqrt(h); if (t > 0. && t < tmax){ vec3 n = normalize(oc + rd*t); float f = 1. - abs(dot(n,rd));
+      c += vec3(.95,.95,1.)*(f*f*.5 + pow(max(dot(n, normalize(vec3(-.5,.75,.45))),0.), 36.)*1.1); } } }
+  return c; }
+
+/* chão: sombra macia que abre quando o frasco sobe, contato escuro, luz tingida pelo líquido e reflexo fosco */
+vec3 fundo(vec3 ro, vec3 rd, bool primario){
+  vec3 c = env(rd);
+  if (rd.y < -1e-4){
+    float t = (uFloor - ro.y)/rd.y;
+    if (t > 0.){
+      vec3 P = ro + rd*t;
+      vec3 ch = mix(vec3(.87,.84,.91), vec3(.75,.71,.82), smoothstep(1.5, 11., t));
+      vec3 q = uRot*(P - uPos);
+      vec2 h = abs(q.xz) - (vec2(1.,.4) - .24); float dd = length(max(h,0.)) + min(max(h.x,h.y),0.) - .24;
+      float L = uLift;
+      float sh = .4*exp(-max(dd,0.)*3./(1. + L*3.))/(1. + L*2.5);
+      float ct = .42*exp(-max(dd,0.)*30.)*exp(-L*16.);
+      ch *= 1. - min(sh + ct, .78);
+      vec2 cq = (q.xz - vec2(.28,.78))*vec2(1.25,2.4);
+      ch += uMedia*.2*exp(-dot(cq,cq))/(1. + L*3.)*uLiq;
+      if (primario && dd < 1.4){
+        vec3 lo = uRot*(P - uPos), ld = uRot*vec3(rd.x, -rd.y, rd.z);
+        float tr = entra(lo, ld, vec3(0.), BO, RO);
+        if (tr > 0.){ float hy = mundoP(lo + ld*tr).y - uFloor;
+          vec3 rc = hy < uAltLiq && uLiq > .5 ? mix(vec3(.88), uMedia, .75) : vec3(.9,.88,.94);
+          ch = mix(ch, rc, .22*exp(-hy*2.6)*smoothstep(1.4,.6,dd)); }
+      }
+      ch += env(reflect(rd, vec3(0.,1.,0.)))*.035;
+      c = mix(ch, c, smoothstep(5., 17., t));
+    }
+  }
+  return c; }
+
+vec4 iCil(vec3 ro, vec3 rd, float r, float y0, float y1){
+  float tb = 1e9; vec3 nb = vec3(0.);
+  float a = dot(rd.xz,rd.xz), b = dot(ro.xz,rd.xz), c = dot(ro.xz,ro.xz) - r*r, h = b*b - a*c;
+  if (h >= 0. && a > 1e-8){ float t = (-b - sqrt(h))/a; float y = ro.y + rd.y*t;
+    if (t > 0. && y > y0 && y < y1){ tb = t; nb = normalize(vec3(ro.x + rd.x*t, 0., ro.z + rd.z*t)); } }
+  if (rd.y < 0.){ float t = (y1 - ro.y)/rd.y; vec2 xz = ro.xz + rd.xz*t; if (t > 0. && t < tb && dot(xz,xz) < r*r){ tb = t; nb = vec3(0.,1.,0.); } }
+  if (rd.y > 0.){ float t = (y0 - ro.y)/rd.y; vec2 xz = ro.xz + rd.xz*t; if (t > 0. && t < tb && dot(xz,xz) < r*r){ tb = t; nb = vec3(0.,-1.,0.); } }
+  return vec4(nb, tb); }
+
+vec3 vidro(vec3 p, vec3 d, vec3 n){
+  vec3 acc = vec3(0.), T = vec3(1.);
+  float Fr = fres(-dot(d,n), .04);
+  acc += env(mundoD(reflect(d,n)))*Fr; T *= 1. - Fr;
+  vec3 dv = refract(d, n, 1./IV), pv = p - n*1e-3; float Lv = 0.;
+  float tc = entra(pv, dv, CAV, BI, RI);
+  if (tc > 0.){
+    Lv += tc;
+    vec3 p2 = pv + dv*tc, n2 = nRB(p2 - CAV, BI, RI);
+    bool liq = uLiq > .5 && sup(p2) < 0.;
+    vec3 d2 = refract(dv, n2, IV/(liq ? IL : 1.));
+    if (dot(d2,d2) < .5){ dv = reflect(dv, n2); pv = p2 + n2*1e-3; }
+    else {
+      float F2 = fres(-dot(dv,n2), liq ? .004 : .04);
+      if (liq){   /* detalhes do líquido vistos pela parede: menisco claro, sombra logo abaixo, luz no fundo, borda mais densa */
+        float ds = -sup(p2);
+        acc += T*(vec3(1.,.99,.97)*.42*exp(-ds*70.) - vec3(.1,.09,.06)*exp(-pow((ds - .045)*40., 2.)));
+        acc += T*uCor[3]*.22*exp(-(p2.y + .64)*9.);
+        T *= mix(1., .82, smoothstep(.55,.86,abs(p2.x)));
+      }
+      acc += T*env(mundoD(reflect(dv,n2)))*F2*.9; T *= 1. - F2;
+      vec3 q = p2 - n2*1e-3, dd = d2; float Ll = 0.; vec3 cl = vec3(1.); bool tem = false;
+      for (int k = 0; k < 3; k++){
+        float te = sai(q, dd, CAV, BI, RI);
+        float s0 = uLiq > .5 ? sup(q) : 1.; float tS = -1.;
+        if (uLiq > .5){ float a = 0., sa = s0;
+          for (int j = 1; j <= 10; j++){ float b = te*float(j)/10.; float sb = sup(q + dd*b);
+            if ((sb < 0.) != (sa < 0.)){ float lo = a, hi = b;
+              for (int m = 0; m < 6; m++){ float mid = (lo + hi)*.5; if ((sup(q + dd*mid) < 0.) == (sa < 0.)) lo = mid; else hi = mid; }
+              tS = (lo + hi)*.5; break; }
+            a = b; sa = sb; } }
+        float tf = tS > 0. ? tS : te;
+        bool dentro = s0 < 0.;
+        if (dentro){ Ll += tf; if (!tem){ cl = corLiq(q + dd*tf*.5); tem = true; } acc += T*bolhas(q, dd, tf)*.8; }
+        if (tS < 0.){ q += dd*te; break; }
+        vec3 ps = q + dd*tS, ns = nSup(ps);
+        if (!dentro){
+          float Fs = fres(-dot(dd,ns), .02);
+          acc += T*env(mundoD(reflect(dd,ns)))*Fs*1.7; T *= 1. - Fs;
+          vec3 dr = refract(dd, ns, 1./IL); dd = dot(dr,dr) > .5 ? dr : dd; q = ps - ns*2e-3;
+        } else {
+          vec3 dr = refract(dd, -ns, IL);
+          if (dot(dr,dr) < .5){ dd = reflect(dd, -ns); acc += T*vec3(.05); q = ps - ns*2e-3; }
+          else { dd = dr; q = ps + ns*2e-3; }
+        }
+      }
+      if (Ll > 0.){ acc += T*cl*(1. - exp(-Ll*1.3))*.05; T *= pow(clamp(cl,.03,1.), vec3(Ll*uDens)); }
+      vec3 n3 = nRB(q - CAV, BI, RI);
+      bool l3 = uLiq > .5 && sup(q) < 0.;
+      vec3 d3 = refract(dd, -n3, (l3 ? IL : 1.)/IV);
+      dv = dot(d3,d3) > .5 ? d3 : reflect(dd, -n3); pv = q + n3*1e-3;
+    }
+  }
+  float to = sai(pv, dv, vec3(0.), BO, RO); Lv += to;
+  vec3 p4 = pv + dv*to, n4 = nRB(p4, BO, RO);
+  vec3 d4 = refract(dv, -n4, IV);
+  if (dot(d4,d4) < .5){                      /* reflexão total na borda: mais um quique */
+    vec3 dv2 = reflect(dv, -n4), p4b = p4 - n4*1e-3;
+    float t2 = sai(p4b, dv2, vec3(0.), BO, RO); Lv += t2;
+    p4 = p4b + dv2*t2; n4 = nRB(p4, BO, RO);
+    d4 = refract(dv2, -n4, IV); if (dot(d4,d4) < .5) d4 = reflect(dv2, -n4);
+    T *= .92;
+  }
+  T *= exp(-Lv*vec3(.12,.1,.13));
+  return acc + T*fundo(mundoP(p4), mundoD(d4), false); }
+
+float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }
+void main(){
+  vec2 px = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
+  vec3 rd = normalize(vec3((px.x - uC.x)/uF, -(px.y - uC.y)/uF, -1.)), ro = uCam;
+  vec3 lo = uRot*(ro - uPos), ld = uRot*rd;
+  float tm = 1e9; int id = 0;
+  float tB = entra(lo, ld, vec3(0.), BO, RO); if (tB > 0.){ tm = tB; id = 1; }
+  vec4 cG = iCil(lo, ld, .15, .86, .985);        if (cG.w < tm){ tm = cG.w; id = 2; }
+  vec4 cA = iCil(lo, ld, .205, .98, 1.068);      if (cA.w < tm){ tm = cA.w; id = 3; }
+  vec4 cT = iCil(lo - uTampa, ld, .333, 1.068, 1.578); if (cT.w < tm){ tm = cT.w; id = 4; }
+  vec3 col; vec3 rw = rd;
+  if (id == 0) col = fundo(ro, rd, true);
+  else if (id == 1){
+    vec3 p = lo + ld*tm, n = nRB(p, BO, RO);
+    vec2 uv = vec2((p.x + .58)/1.16, (.45 - p.y)/.54);
+    if (n.z > .95 && uv.x > 0. && uv.x < 1. && uv.y > 0. && uv.y < 1.){
+      vec3 nw = mundoD(n);
+      col = texture(uRotulo, uv).rgb*(.8 + .2*max(dot(nw, normalize(LUZ)),0.)) + env(reflect(rw, nw))*.05;
+    } else col = vidro(p, ld, n);
+  } else {
+    vec3 n = id == 2 ? cG.xyz : id == 3 ? cA.xyz : cT.xyz;
+    vec3 nw = mundoD(n), rf = env(reflect(rw, nw)); float fr = fres(-dot(rw,nw), .04);
+    if (id == 4){            /* tampa: metal violeta acetinado */
+      vec3 base = vec3(.12,.09,.2);
+      vec3 r1 = reflect(rw, nw), sat = env(normalize(mix(r1, nw, .45)))*.6 + env(normalize(mix(r1, nw, .2)))*.4;
+      col = base*(.38 + .5*max(dot(nw, normalize(LUZ)),0.)) + sat*base*1.15*mix(.55,1.,fr) + rf*.045;
+      vec3 pt = lo + ld*tm - uTampa; if (n.y > .5) col *= .92 + .25*smoothstep(.27,.33,length(pt.xz));
+      col *= .9 + .1*smoothstep(1.06, 1.12, pt.y);
+    } else if (id == 3){     /* anel cromado */
+      col = rf*vec3(.86,.85,.92)*.78 + .02;
+    } else {                 /* gargalo de vidro */
+      col = mix(fundo(mundoP(lo + ld*tm), rw, false)*vec3(.82,.8,.88), rf, .25 + fr);
+    }
+  }
+  col += (hash(gl_FragCoord.xy + uT) - .5)/255.;
+  frag = vec4(col, 1.); }`;
+
+  function criaVidro3D(c3){
+    const gl = c3.getContext("webgl2", {antialias:false, alpha:false, depth:false, stencil:false, powerPreference:"high-performance"});
+    if (!gl) return null;
+    const sh = (tipo, src) => { const s = gl.createShader(tipo); gl.shaderSource(s, src); gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
+    let prog;
+    try {
+      prog = gl.createProgram();
+      gl.attachShader(prog, sh(gl.VERTEX_SHADER, "#version 300 es\nin vec2 aP; void main(){ gl_Position = vec4(aP,0.,1.); }"));
+      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS3));
+      gl.bindAttribLocation(prog, 0, "aP"); gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+    } catch (e){ console.warn("Névoa: frasco 3D indisponível, usando o 2D.", e); return null; }
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    const U = {}; const nU = gl.getProgramParameter(prog, gl.ACTIVE_UNIFORMS);
+    for (let i = 0; i < nU; i++){ const nm = gl.getActiveUniform(prog, i).name.replace(/\[0\]$/, ""); U[nm] = gl.getUniformLocation(prog, nm); }
+
+    /* rótulo: desenhado num canvas e colado na face da frente */
+    const rc = document.createElement("canvas"); rc.width = 512; rc.height = 238; const rx = rc.getContext("2d");
+    const tex = gl.createTexture(); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.uniform1i(U.uRotulo, 0);
+    function rotulo(txt, sub){
+      const g = rx.createLinearGradient(0, 0, 512, 238); g.addColorStop(0, "#F6F3F8"); g.addColorStop(1, "#E5E0EB");
+      rx.fillStyle = g; rx.fillRect(0, 0, 512, 238);
+      rx.strokeStyle = "rgba(34,27,51,.6)"; rx.lineWidth = 2.5; rx.strokeRect(16, 16, 480, 206);
+      rx.fillStyle = "#2A2140"; rx.textAlign = "center"; rx.textBaseline = "middle";
+      let fs = 92; rx.font = `italic 400 ${fs}px "Bodoni Moda", Georgia, serif`;
+      while (rx.measureText(txt).width > 420 && fs > 30){ fs -= 2; rx.font = `italic 400 ${fs}px "Bodoni Moda", Georgia, serif`; }
+      rx.fillText(txt, 256, 102);
+      rx.font = `500 30px Manrope, system-ui, sans-serif`; rx.fillStyle = "#3a3150"; rx.fillText(sub, 256, 178);
+      gl.bindTexture(gl.TEXTURE_2D, tex); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, rc); gl.generateMipmap(gl.TEXTURE_2D);
+    }
+    let escala = toque ? 1.25 : Math.min(devicePixelRatio || 1, 1.75), maxEscala = escala, medias = [], cw = 0, ch = 0;
+    function tamanho(w, h){ cw = w; ch = h; c3.width = Math.round(w*escala); c3.height = Math.round(h*escala); gl.viewport(0, 0, c3.width, c3.height); }
+    /* se o aparelho não segura, baixa a resolução (nunca a física) */
+    function mede(dt){ medias.push(dt); if (medias.length < 40) return; const m = medias.reduce((a,b)=>a+b)/medias.length; medias = [];
+      if (m > .024 && escala > .7){ escala = Math.max(.7, escala*.85); tamanho(cw, ch); } }
+    const DIST = 9, CAMY = 1.45, ond = new Float32Array(48), bol = new Float32Array(28*4), cores = new Float32Array(12), fins = new Float32Array(4);
+    function desenha(e){
+      const un = e.unidade, sc = escala;
+      gl.uniform2f(U.uRes, c3.width, c3.height); gl.uniform1f(U.uF, un*DIST*sc);
+      gl.uniform2f(U.uC, e.W/2*sc, (e.Ry - CAMY*un)*sc); gl.uniform3f(U.uCam, 0, CAMY, DIST);
+      gl.uniform3f(U.uPos, (e.x - e.W/2)/un, -(e.y - e.Ry)/un, 0);
+      const ca = Math.cos(e.a), sa = Math.sin(e.a), cy = Math.cos(e.yaw), sy = Math.sin(e.yaw);
+      /* mundo → frasco = Ry(−yaw)·Rz(a) (coluna por coluna) */
+      const M = [cy*ca, sa, sy*ca,  -cy*sa, ca, -sy*sa,  -sy, 0, cy];
+      gl.uniformMatrix3fv(U.uRot, false, M);
+      /* superfície: normal no mundo vem do balanço; leva pro frasco e passa pelo ponto que conserva o volume */
+      const nw = [Math.sin(e.phi), Math.cos(e.phi), 0];
+      let nl = [M[0]*nw[0] + M[3]*nw[1] + M[6]*nw[2], M[1]*nw[0] + M[4]*nw[1] + M[7]*nw[2], M[2]*nw[0] + M[5]*nw[1] + M[8]*nw[2]];
+      if (nl[1] < .45){ nl[1] = .45; } const ln = Math.hypot(...nl); nl = nl.map(v => v/ln);
+      const h0 = -.64 + e.vol*1.42*.94;
+      gl.uniform4f(U.uPlano, nl[0], nl[1], nl[2], nl[1]*h0);
+      gl.uniform1f(U.uProf, h0 + .64); gl.uniform1f(U.uLiq, e.vol > .01 ? 1 : 0); gl.uniform1f(U.uAltLiq, h0 + .902);
+      for (let i = 0; i < 48; i++) ond[i] = e.onda[i]*.0088;
+      gl.uniform1fv(U.uOnda, ond);
+      let nb = 0; for (const b of e.bolhas){ if (nb >= 28) break; bol.set(b, nb*4); nb++; }
+      gl.uniform4fv(U.uBol, bol); gl.uniform1i(U.uNB, nb);
+      e.cores.forEach((c, i) => cores.set(c, i*3)); gl.uniform3fv(U.uCor, cores);
+      fins.set(e.fins); gl.uniform1fv(U.uFim, fins); gl.uniform1f(U.uMeio, e.meio);
+      gl.uniform1f(U.uDens, e.dens); gl.uniform3f(U.uMedia, ...e.media);
+      gl.uniform1f(U.uFloor, -.902); gl.uniform1f(U.uLift, e.lift);
+      gl.uniform3f(U.uTampa, e.tampa*.63, e.tampa*.255, 0);
+      gl.uniform1f(U.uT, e.t); gl.uniform1f(U.uRip, reduz ? 0 : 1); gl.uniform1f(U.uToque, e.toque);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+    return { tamanho, rotulo, desenha, mede, get escala(){ return escala; } };
+  }
+
+  const cv3 = $("#frasco3d"); const R3 = criaVidro3D(cv3);
+  if (R3) box.classList.add("tem-3d");
+  const rotulo3 = () => R3 && R3.rotulo(nome || "névoa", conc.nome.toLowerCase());
+
   /* ---------- laço ---------- */
-  let ant = performance.now(), sobra = 0;
+  let ant = performance.now(), sobra = 0, quadro = 0;
   function laco(agora){
     if (!ativo) return;
     const dt = Math.min((agora - ant)/1000, .05); ant = agora; t += dt;
@@ -1040,6 +1342,34 @@ const Frasco = (() => {
       if (b.y < yEm(b.x) + b.r){ const k = clamp(Math.round((b.x - xs[0])/(xs[N-1] - xs[0])*(N-1)), 0, N-1); vOnda[k] += .25; bolhas.splice(i, 1); }
     }
 
+    /* parado (sem dedo, sem gota, líquido calmo): desenha 1 quadro sim, 1 não. Economiza bateria */
+    const calmo = !pega && !gotas.length && Math.abs(F.vx) + Math.abs(F.vy) < 4*S && Math.abs(Lq.vphi) < .02 && Math.abs(F.vyaw) < .05;
+    quadro++;
+    if (R3 && calmo && quadro % 2){ requestAnimationFrame(laco); return; }
+    if (R3){
+      if (!calmo) R3.mede(dt); R3.desenha(estado3D());
+      ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0, 0, cv.width, cv.height);
+    } else desenha2D();
+    /* gotas por cima */
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    for (const g2 of gotas){ if (g2.y === null) continue;
+      ctx.fillStyle = css(g2.cor, .92); ctx.beginPath(); ctx.ellipse(g2.x, g2.y, g2.r*.8, g2.r*(1.1 + Math.min(.6, g2.vy/(2200*S))), 0, 0, 6.283); ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.beginPath(); ctx.arc(g2.x - g2.r*.25, g2.y - g2.r*.3, g2.r*.25, 0, 6.283); ctx.fill(); }
+    requestAnimationFrame(laco);
+  }
+  /* o que o 3D precisa saber da física, em unidades do frasco */
+  function estado3D(){
+    const un = B.bw/2, vol = camadas.reduce((s, c) => s + c.vol, 0);
+    const media = camadas.reduce((s, c) => s.map((v, i) => v + c.cor[i]*c.vol), [0,0,0]).map(v => v / Math.max(vol, .001));
+    let acc = 0; const fins = [0,1,2,3].map(k => (acc += camadas[k].vol) / Math.max(vol, .001));
+    const desce = (B.bh/2)*Math.cos(F.a) + (B.bw/2)*Math.abs(Math.sin(F.a));
+    const bols = grudadas.slice(0, 12).map(g => g.b3).concat(bolhas.map(b => [b.x/un, -b.y/un, b.z, b.r/un]));
+    return { unidade: un, W, Ry: R.y, x: F.x, y: F.y, a: F.a, yaw: F.yaw, phi: Lq.phi, vol, onda,
+      bolhas: bols, cores: camadas.map((c, i) => claro(mix(c.cor, media, mistura), i === 3 ? .05 : .3)), fins, meio: .03 + mistura*.4,
+      dens: 1.3 + conc.forca*1.4, media: claro(media, .15), lift: Math.max(0, chao - (F.y + desce))/un,
+      tampa, t, toque: F.toque };
+  }
+  function desenha2D(){
     const media = desenhaFrasco();
     ctx.setTransform(1,0,0,1,0,0);
     ctx.drawImage(fundoC, 0, 0);
@@ -1060,12 +1390,6 @@ const Frasco = (() => {
     ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, B.bw*.55, 0, 6.283); ctx.fill();
     ctx.restore();
     ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(off, 0, 0);
-    /* gotas por cima */
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    for (const g2 of gotas){ if (g2.y === null) continue;
-      ctx.fillStyle = css(g2.cor, .92); ctx.beginPath(); ctx.ellipse(g2.x, g2.y, g2.r*.8, g2.r*(1.1 + Math.min(.6, g2.vy/(2200*S))), 0, 0, 6.283); ctx.fill();
-      ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.beginPath(); ctx.arc(g2.x - g2.r*.25, g2.y - g2.r*.3, g2.r*.25, 0, 6.283); ctx.fill(); }
-    requestAnimationFrame(laco);
   }
   new IntersectionObserver(([en]) => { const era = ativo; ativo = en.isIntersecting; if (ativo && !era){ ant = performance.now(); requestAnimationFrame(laco); } }).observe(box);
   let lw = innerWidth; addEventListener("resize", () => { if (innerWidth !== lw || !toque){ lw = innerWidth; ajusta(); } });
@@ -1074,10 +1398,10 @@ const Frasco = (() => {
 
   return {
     escolhe(cam, nota){ escolha[cam] = nota; solta(cam, nota.cor); },
-    concentra(c){ conc = c; },
-    nomeia(n){ nome = n; },
+    concentra(c){ conc = c; rotulo3(); },
+    nomeia(n){ nome = n; rotulo3(); },
     sacode, escolha, get conc(){ return conc; },
-    get estado(){ return { x:F.x, y:F.y, a:F.a, phi:Lq.phi, onda: Math.max(...onda.map(Math.abs)), bolhas: bolhas.length, rx:R.x, ry:R.y }; }
+    get estado(){ return { tres: !!R3, escala: R3 ? R3.escala : 0, yaw:F.yaw, x:F.x, y:F.y, a:F.a, phi:Lq.phi, onda: Math.max(...onda.map(Math.abs)), bolhas: bolhas.length, rx:R.x, ry:R.y }; }
   };
 })();
 

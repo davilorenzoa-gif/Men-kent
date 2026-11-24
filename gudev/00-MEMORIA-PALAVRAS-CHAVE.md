@@ -261,3 +261,7 @@ O Davi pediu "um site de sua escolha para me apresentar o seu nível de capacida
 ## 24/11/2026: Névoa, frasco v2 (física de verdade)
 Palavras: frasco de perfume, foto de referência, vidro grosso, transparência, espessura, reflexo, tampa violeta, anel cromado, arrastar, inércia, arremesso, elástico, mola, amortecimento, balanço do líquido, sloshing, gravidade efetiva, ondas, serrote, bolhas, menisco, cáustica, reflexo no chão, luz dinâmica, touch, preventDefault, reduzir movimento.
 O Davi mandou uma foto de um frasco "névoa eau de toilette" e pediu o frasco do site com vidro realista, líquido independente que balança e física premium, sem mudar o resto. Reescrito só o módulo `Frasco` de `sites/nevoa/index.html` (mesma API: notas, concentração, nome e WhatsApp iguais). Detalhes no README do site, receita no `03`, lição do serrote no `05`.
+
+## 24/11/2026: Névoa, frasco v3 (3D de verdade)
+Palavras: frasco 3D, folha de ângulos, vista frontal, 3/4, lateral, ray tracing, raytracing, WebGL2, sem Three.js, SDF, caixa arredondada, refração, Fresnel, índice de refração, reflexão total, Beer, absorção, menisco, cáustica, softbox, estúdio, yaw, giro, resposta ao toque, resolução adaptativa, plano B 2D.
+O Davi mandou a folha com 8 ângulos do frasco névoa e pediu o frasco parecendo objeto 3D real (vidro espesso, líquido físico, interação fluida). O desenho do frasco virou ray tracing em WebGL2 sem biblioteca (canvas embaixo do 2D); física, notas, nome e WhatsApp iguais; 2D fica de plano B. Receita no `03`, lição no `05`, detalhes no README do site.
