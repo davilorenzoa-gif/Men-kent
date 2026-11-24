@@ -143,6 +143,12 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - serviços em blocos com o fundo inteiro trocando de tema (SVG gerado, poeira muda de cor), "página do jogo" com o pedido pro WhatsApp e cartão fidelidade como conquistas.
   - **Aprovado pelo Davi pra usar em lead (21/11):** o formato "site que imita uma interface conhecida" (console, app de streaming, celular, playlist) funciona pra comércio de público jovem: barbearia, hamburgueria, açaí, academia, loja de games/celular. Não serve pra público mais velho ou B2B (Andrade, Péçaí atacado, Vivian Modolo). Regra: copiar a **lógica** da interface (ligar, escolher perfil, blocos, página do item), nunca logo, nome, som ou arte da marca original. Pra fazer bem: 1 vídeo de referência da interface + os dados reais do lead (fotos, serviços, preços).
 
+- **Névoa** (conceito de perfumaria autoral, `sites/nevoa/`, 24/11/2026, "faça um site de sua escolha pra mostrar seu nível"; sem foto e sem biblioteca):
+  - névoa de verdade no topo: simulação de fluido Navier-Stokes em WebGL2 (advecção, vorticidade, pressão por Jacobi, empuxo pela densidade); a fumaça sai em borrifadas do pé da tela e o dedo mexe; a cor é **absorção** (`fundo * exp(-tinta)`), então ela tinge o fundo claro como tinta na água;
+  - "o perfume na pele, hora a hora": a rolagem é o relógio (0 a 10 h), cada família (saída, coração, fundo) tem a sua curva de evaporação, as moléculas sobem em pluma e os nomes das notas flutuam;
+  - "Monte o seu frasco": uma nota por família, gotas caem pelo gargalo (a tampa levanta), superfície com 40 molas, arrastar inclina e sacode e mistura as camadas, nome gravado no rótulo e fórmula pro WhatsApp.
+  - técnica: plano B em CSS se não tiver WebGL2 ou meia precisão (`sem-gl`); a simulação pausa fora da tela; no celular, grade menor (96/384) e borrifada mais fraca (a forte cobria a tela toda no 390).
+
 ## Repertório de efeitos prontos (testados, ainda não usados em cliente)
 Código em `efeitos/particulas-coracao-botao-fugitivo.html`: um arquivo só, JS puro em canvas, sem biblioteca. Testado no celular (09/11/2026). O Davi gostou. Ponto de partida pra variar, nunca pra colar igual.
 - **Nome em partículas:** o texto se forma com ~2.000 pontinhos que voam de todo lado. O dedo empurra e o toque explode, e eles voltam pro lugar.
