@@ -120,10 +120,10 @@ h2.visto .palavra>span{transform:none}
 /* ---------- WOW 3: componha ---------- */
 .componha{padding:clamp(90px,11vw,150px) 0 clamp(80px,10vw,130px);background:var(--perola-2);border-radius:clamp(24px,4vw,48px) clamp(24px,4vw,48px) 0 0}
 .bancada{margin-top:clamp(30px,4vw,56px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:start}
-.frasco-box{position:sticky;top:84px;aspect-ratio:4/5;border-radius:28px;background:var(--perola);overflow:hidden;touch-action:none;cursor:grab}
-.frasco-box:active{cursor:grabbing}
-#frasco{width:100%;height:100%}
-.frasco-dica{position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:13px;font-weight:600;color:var(--berinjela-2);pointer-events:none}
+.frasco-box{position:sticky;top:84px;aspect-ratio:4/5;border-radius:28px;background:#C4BBD5;overflow:hidden}
+#frasco{width:100%;height:100%;touch-action:pan-y;-webkit-tap-highlight-color:transparent;user-select:none}
+.frasco-dica{position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:13px;font-weight:600;color:var(--berinjela-2);pointer-events:none;transition:opacity .5s var(--ease)}
+.frasco-dica.some{opacity:0}
 .passo{padding:0 0 26px;margin-bottom:26px;border-bottom:1px solid var(--linha)}
 .passo h3{font:600 15px/1.3 var(--sans);margin-bottom:4px}
 .passo>p{font-size:14px;color:var(--berinjela-2);margin-bottom:14px}
@@ -248,9 +248,9 @@ h2.visto .palavra>span{transform:none}
       <h2 id="t-componha" class="revela">Monte o seu frasco</h2>
       <p class="lead">Escolha uma nota de cada família, dê um nome e sacuda. A fórmula sai pronta pra mandar pra quem você quiser.</p>
       <div class="bancada">
-        <div class="frasco-box" id="frascoBox" role="img" aria-label="Frasco de perfume que enche com as notas escolhidas. Arraste para sacudir.">
+        <div class="frasco-box" id="frascoBox" role="img" aria-label="Frasco de perfume que enche com as notas escolhidas. Arraste o frasco para balançar o líquido; o botão Sacudir faz o mesmo.">
           <canvas id="frasco"></canvas>
-          <p class="frasco-dica" id="frascoDica">Escolha as notas ao lado</p>
+          <p class="frasco-dica" id="frascoDica">Pegue o frasco e arraste</p>
         </div>
         <form class="controles" id="form" novalidate>
           <div class="passo">
@@ -652,157 +652,419 @@ const Fluido = (() => {
 })();
 
 /* ===================================================================
-   WOW 3: monte o seu frasco (líquido com mola, gotas, mistura)
+   WOW 3: monte o seu frasco
+   Física: o frasco é um corpo com massa (mola + amortecimento) que segue o dedo,
+   guarda a inércia ao soltar e volta com elástico. O líquido sente a aceleração
+   do frasco: a superfície é um pêndulo (modo de balanço) + 48 colunas de onda.
+   Tudo desenhado no referencial do frasco: tampa, gargalo, corpo e rótulo são uma peça só.
    =================================================================== */
 const Frasco = (() => {
   const box = $("#frascoBox"), cv = $("#frasco"), ctx = cv.getContext("2d"), dica = $("#frascoDica");
-  const escolha = [null, null, null]; let conc = CONC[1]; let nome = "";
-  let W=0, H=0, dpr=1;
-  function ajusta(){ dpr = Math.min(devicePixelRatio||1, 2); W = cv.clientWidth; H = cv.clientHeight; cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); geo(); }
-  /* geometria do frasco, em px do canvas */
-  let G = {};
+  const off = document.createElement("canvas"), oc = off.getContext("2d");     /* o frasco (usado 2x: frasco e reflexo) */
+  const fundoC = document.createElement("canvas"), fc = fundoC.getContext("2d"); /* estúdio, pintado 1x por tamanho */
+  const fadeC = document.createElement("canvas"), dc = fadeC.getContext("2d");   /* chão por cima do reflexo */
+  const escolha = [null, null, null]; let conc = CONC[1], nome = "";
+  let W = 0, H = 0, dpr = 1, S = 1, chao = 0;
+  const B = {}, R = {x:0, y:0};
+  let pExt, pInt, pParede, pBase;
+
+  /* ---------- geometria (referencial do frasco, origem no centro do corpo) ---------- */
+  function caixa(p, x, y, w, h, rt, rb){
+    p.moveTo(x + rt, y); p.lineTo(x + w - rt, y); p.arcTo(x + w, y, x + w, y + rt, rt);
+    p.lineTo(x + w, y + h - rb); p.arcTo(x + w, y + h, x + w - rb, y + h, rb);
+    p.lineTo(x + rb, y + h); p.arcTo(x, y + h, x, y + h - rb, rb);
+    p.lineTo(x, y + rt); p.arcTo(x, y, x + rt, y, rt); p.closePath();
+  }
   function geo(){
-    const s = Math.min(W / 300, H / 360);
-    const bw = 190*s, bh = 200*s, cx = W/2, base = H/2 + 140*s;
-    G = { s, cx, base, bw, bh, topo: base - bh, r: 26*s, gargalo: 34*s, gh: 22*s, tampa: 64*s, th: 52*s };
+    S = Math.min(W / 300, H / 390);
+    Object.assign(B, { bw:204*S, bh:184*S, rt:30*S, rb:40*S, parede:9*S, teto:10*S, base:24*S,
+      gw:48*S, gh:12*S, aw:60*S, ah:12*S, tw:92*S, th:74*S });
+    B.ix0 = -B.bw/2 + B.parede; B.ix1 = B.bw/2 - B.parede; B.iy0 = -B.bh/2 + B.teto; B.iy1 = B.bh/2 - B.base;
+    chao = H * .83; R.x = W / 2; R.y = chao - B.bh / 2;
+    pExt = new Path2D(); caixa(pExt, -B.bw/2, -B.bh/2, B.bw, B.bh, B.rt, B.rb);
+    pInt = new Path2D(); caixa(pInt, B.ix0, B.iy0, B.ix1 - B.ix0, B.iy1 - B.iy0, B.rt - B.parede*.8, B.rb - B.parede*1.4);
+    pParede = new Path2D(); pParede.addPath(pExt); pParede.addPath(pInt);
+    pBase = new Path2D(); pBase.rect(-B.bw/2, B.iy1 - 1, B.bw, B.bh/2 - B.iy1 + 1);
+    grudadas.length = 0;
+    for (let i = 0; i < 16; i++) grudadas.push({ u: .06 + Math.random()*.88, v: .3 + Math.random()*.66, r: (.8 + Math.random()*1.9) * S, f: Math.random()*6 });
   }
-  function caminhoCorpo(c){
-    const {cx, base, bw, bh, r} = G, x0 = cx - bw/2, y0 = base - bh;
-    c.beginPath();
-    c.moveTo(x0 + r, y0); c.lineTo(x0 + bw - r, y0); c.quadraticCurveTo(x0 + bw, y0, x0 + bw, y0 + r);
-    c.lineTo(x0 + bw, base - r); c.quadraticCurveTo(x0 + bw, base, x0 + bw - r, base);
-    c.lineTo(x0 + r, base); c.quadraticCurveTo(x0, base, x0, base - r);
-    c.lineTo(x0, y0 + r); c.quadraticCurveTo(x0, y0, x0 + r, y0); c.closePath();
+  function pintaFundo(){
+    for (const c of [off, fundoC, fadeC]){ c.width = W*dpr; c.height = H*dpr; }
+    fc.setTransform(dpr,0,0,dpr,0,0);
+    let g = fc.createLinearGradient(0, 0, 0, chao);
+    g.addColorStop(0, "#CBC3DA"); g.addColorStop(1, "#B9AECD");
+    fc.fillStyle = g; fc.fillRect(0, 0, W, chao);
+    /* feixes de luz diagonais (luz de estúdio vindo do alto à esquerda) */
+    fc.save(); fc.beginPath(); fc.rect(0, 0, W, chao); fc.clip();
+    [[-.15,.16,.22],[.18,.1,.16],[.42,.2,.2],[.78,.08,.12]].forEach(([x, w, a]) => {
+      const x0 = W*x, lw = W*w, d = chao*.75;
+      const gg = fc.createLinearGradient(x0, 0, x0 + lw, 0);
+      gg.addColorStop(0, "rgba(255,255,255,0)"); gg.addColorStop(.5, `rgba(255,255,255,${a})`); gg.addColorStop(1, "rgba(255,255,255,0)");
+      fc.fillStyle = gg; fc.beginPath(); fc.moveTo(x0, 0); fc.lineTo(x0 + lw, 0); fc.lineTo(x0 + lw + d, chao); fc.lineTo(x0 + d, chao); fc.fill();
+    });
+    fc.restore();
+    g = fc.createLinearGradient(0, chao, 0, H);
+    g.addColorStop(0, "#DCD5E6"); g.addColorStop(.25, "#CFC6DC"); g.addColorStop(1, "#BCB1CE");
+    fc.fillStyle = g; fc.fillRect(0, chao, W, H - chao);
+    g = fc.createLinearGradient(0, chao - 2, 0, chao + 3);
+    g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(.5, "rgba(255,255,255,.55)"); g.addColorStop(1, "rgba(255,255,255,0)");
+    fc.fillStyle = g; fc.fillRect(0, chao - 2, W, 5);
+    /* o chão some o reflexo aos poucos: cópia do chão com alfa crescente */
+    dc.setTransform(1,0,0,1,0,0); dc.clearRect(0,0,fadeC.width,fadeC.height); dc.drawImage(fundoC, 0, 0);
+    dc.globalCompositeOperation = "destination-in";
+    g = dc.createLinearGradient(0, chao*dpr, 0, (chao + B.bh*.6)*dpr);
+    g.addColorStop(0, "rgba(0,0,0,0)"); g.addColorStop(1, "rgba(0,0,0,1)");
+    dc.fillStyle = g; dc.fillRect(0, chao*dpr, fadeC.width, fadeC.height);
+    dc.globalCompositeOperation = "source-over";
   }
 
-  /* superfície do líquido: 40 molas */
-  const N = 40; const alt = new Float32Array(N), vel = new Float32Array(N);
-  /* camadas: volume (0..1 da altura útil) e cor; a mistura cresce ao sacudir */
+  /* ---------- estado ---------- */
+  const F = { x:0, y:0, vx:0, vy:0, a:0, va:0, ax:0, ay:0, aa:0 };     /* frasco */
+  const N = 48, onda = new Float32Array(N), vOnda = new Float32Array(N); /* altura de cada coluna (px/S, pra cima) */
+  const Lq = { phi:0, vphi:0, axAnt:0 };                               /* ângulo da superfície no mundo */
+  /* camadas: 0 saída, 1 coração, 2 fundo, 3 a base (álcool de perfumaria, já no frasco) */
   const camadas = [0,0,0].map(() => ({vol:0, alvo:0, cor:[.85,.83,.88]}));
-  let tampa = 0, mistura = 0, ang = 0, angVel = 0, angAlvo = 0;
-  const gotas = [];
-  let ativo = false;
+  camadas.push({vol:.34, alvo:.34, cor:hex("#E6DBBE")});
+  let tampa = 0, mistura = 0, pega = null, ativo = false, t = 0;
+  const gotas = [], bolhas = [], grudadas = [];
 
-  function solta(cam, corHex){
-    const c = hex(corHex); camadas[cam].cor = c; camadas[cam].alvo = .26;
-    if (!W) return;
-    for (let i=0;i<14;i++) gotas.push({ x: G.cx + (Math.random()-.5)*G.gargalo*.5, y: G.topo - G.gh - 20 - i*26, vy: 0, cor: c, cam, r: (3 + Math.random()*2.5) * G.s });
-    dica.textContent = toque ? "Arraste o frasco pra sacudir" : "Arraste o frasco pra sacudir";
+  function ajusta(){
+    dpr = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W*dpr; cv.height = H*dpr; geo(); pintaFundo();
+    if (!pega){ F.x = R.x; F.y = R.y; F.vx = F.vy = 0; }
   }
 
-  /* arrastar = inclinar e sacudir */
-  let arrast = null;
-  box.addEventListener("pointerdown", e => { arrast = {x:e.clientX, t:performance.now()}; box.setPointerCapture(e.pointerId); });
-  box.addEventListener("pointermove", e => {
-    if (!arrast) return;
-    const dx = e.clientX - arrast.x; arrast.x = e.clientX;
-    angAlvo = clamp(angAlvo + dx * .006, -.55, .55); angVel += dx * .002;
-    mistura = clamp(mistura + Math.abs(dx) * .0016, 0, 1);
-    const i = clamp(Math.round(((e.clientX - box.getBoundingClientRect().left) / W) * (N-1)), 0, N-1); vel[i] += dx * .25;
+  /* ---------- toque e arraste ---------- */
+  const ponto = e => { const r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  function local(x, y){ const dx = x - F.x, dy = y - F.y, c = Math.cos(-F.a), s = Math.sin(-F.a); return { x: dx*c - dy*s, y: dx*s + dy*c }; }
+  function acerta(p){ const l = local(p.x, p.y); return Math.abs(l.x) < B.bw/2 + 6*S && l.y < B.bh/2 + 6*S && l.y > -(B.bh/2 + B.gh + B.ah + B.th) && (l.y > -B.bh/2 || Math.abs(l.x) < B.tw/2 + 6*S); }
+  /* no celular: tocar no frasco não rola a página; tocar fora rola normal */
+  cv.addEventListener("touchstart", e => { const r = cv.getBoundingClientRect(), tq = e.touches[0];
+    if (acerta({x: tq.clientX - r.left, y: tq.clientY - r.top})) e.preventDefault(); }, {passive:false});
+  cv.addEventListener("pointerdown", e => {
+    const p = ponto(e); if (!acerta(p)) return;
+    const l = local(p.x, p.y);
+    pega = { id: e.pointerId, lx: l.x, ly: l.y, x: p.x, y: p.y, hist: [{x:p.x, y:p.y, t:performance.now()}] };
+    cv.setPointerCapture(e.pointerId); cv.style.cursor = "grabbing"; dica.classList.add("some");
   });
-  const solta2 = () => { arrast = null; angAlvo = 0; };
-  box.addEventListener("pointerup", solta2); box.addEventListener("pointercancel", solta2);
+  cv.addEventListener("pointermove", e => {
+    const p = ponto(e);
+    if (!pega){ if (!toque) cv.style.cursor = acerta(p) ? "grab" : "default"; return; }
+    if (e.pointerId !== pega.id) return;
+    pega.x = p.x; pega.y = p.y; const agora = performance.now();
+    pega.hist.push({x:p.x, y:p.y, t:agora}); while (pega.hist.length > 2 && agora - pega.hist[0].t > 90) pega.hist.shift();
+  });
+  function larga(e){
+    if (!pega || (e && e.pointerId !== pega.id)) return;
+    const h = pega.hist, a = h[0], b = h[h.length-1], dtp = Math.max(16, b.t - a.t) / 1000;
+    const lim = 2600 * S, vx = clamp((b.x - a.x)/dtp, -lim, lim), vy = clamp((b.y - a.y)/dtp, -lim, lim);
+    if (performance.now() - b.t < 80){ F.vx = F.vx*.4 + vx*.6; F.vy = F.vy*.4 + vy*.6; }  /* arremesso */
+    pega = null; cv.style.cursor = toque ? "" : "grab";
+  }
+  cv.addEventListener("pointerup", larga); cv.addEventListener("pointercancel", larga);
+  cv.addEventListener("lostpointercapture", () => larga());
 
   function sacode(){
-    let k = 0; const id = setInterval(() => { angVel += (k % 2 ? -1 : 1) * .09; mistura = clamp(mistura + .07, 0, 1); for (let i=0;i<N;i+=3) vel[i] += (Math.random()-.5)*14; if (++k > 9) clearInterval(id); }, 90);
+    if (pega) return;
+    const f = (reduz ? 220 : 520) * S; let k = 0;
+    const id = setInterval(() => { F.vx += (k % 2 ? -2 : 2) * f * (k ? 1 : .5); F.va += (k % 2 ? -1 : 1) * (reduz ? .8 : 2.2);
+      if (++k > 5){ clearInterval(id); F.vx -= Math.sign(F.vx) * f * .5; } }, 120);
+    mistura = clamp(mistura + .25, 0, 1);
   }
 
-  const mix = (a,b,t) => a.map((v,i) => v + (b[i]-v)*t);
-  const css = (c, a=1) => `rgba(${c.map(v=>Math.round(clamp(v,0,1)*255)).join(",")},${a})`;
-  let ant = performance.now();
+  /* ---------- física, passo fixo de 1/120 s ---------- */
+  const PERFIL = Array.from({length:8}, (_, j) => Math.exp(-j*j/14) * .45);
+  const PASSO = 1/120, G = () => 3300 * S;
+  function passo(dt){
+    const vx0 = F.vx, vy0 = F.vy, va0 = F.va;
+    let tx = R.x, ty = R.y, k = 70, z = .34, alvoA = 0;
+    if (pega){
+      /* o ponto pego fica embaixo do dedo: centro = dedo − rotação(ponto pego) */
+      const c = Math.cos(F.a), s = Math.sin(F.a);
+      tx = pega.x - (pega.lx*c - pega.ly*s); ty = pega.y - (pega.lx*s + pega.ly*c);
+      /* passou da caixa: o frasco resiste (elástico), não sai da tela */
+      const solto = d => Math.min(10*S, Math.sqrt(d*S)*1.6);
+      const borracha = (v, a, b) => v < a ? a - solto(a - v) : v > b ? b + solto(v - b) : v;
+      tx = borracha(tx, B.bw*.5 + 14*S, W - B.bw*.5 - 14*S); ty = borracha(ty, B.bh/2 + B.gh + B.ah + B.th + 8*S, R.y);
+      k = 520; z = .82;
+      /* inclinação vem do braço: pegou em cima, o fundo fica pra trás; pegou embaixo, o topo fica */
+      const braco = clamp(-pega.ly / (B.bh/2), -1.2, 1.6);
+      alvoA = clamp((F.vx / S) * .00075 * (.35 + braco), -.55, .55);
+    } else alvoA = clamp((F.vx / S) * .00018, -.25, .25);
+    const c = 2 * z * Math.sqrt(k);
+    F.vx += (k*(tx - F.x) - c*F.vx) * dt; F.vy += (k*(ty - F.y) - c*F.vy) * dt;
+    F.x += F.vx * dt; F.y += F.vy * dt;
+    /* paredes macias da caixa */
+    const lado = (B.bw/2)*Math.cos(F.a) + (B.bh/2)*Math.abs(Math.sin(F.a)) + 4*S;
+    const minX = lado, maxX = W - lado, minY = B.bh/2 + B.gh + B.ah + B.th + 6*S;
+    if (F.x < minX){ F.x = minX; if (F.vx < 0) F.vx *= -.3; }
+    if (F.x > maxX){ F.x = maxX; if (F.vx > 0) F.vx *= -.3; }
+    if (F.y < minY){ F.y = minY; if (F.vy < 0) F.vy *= -.3; }
+    /* rotação: mola própria; leve com o frasco solto pra balançar antes de parar */
+    const ka = pega ? 160 : 85, ca = 2 * (pega ? .75 : .2) * Math.sqrt(ka);
+    F.va += (ka*(alvoA - F.a) - ca*F.va) * dt;
+    if (Math.abs(F.a) > .6) F.va -= Math.sign(F.a) * (Math.abs(F.a) - .6) * 900 * dt;
+    F.a += F.va * dt;
+    /* chão: o ponto mais baixo do frasco girado não atravessa */
+    const desce = (B.bh/2)*Math.cos(F.a) + (B.bw/2)*Math.abs(Math.sin(F.a));
+    if (F.y + desce > chao){ F.y = chao - desce; if (F.vy > 0) F.vy *= -.25; }
+
+    /* aceleração medida (é ela que mexe o líquido) */
+    F.ax += ((F.vx - vx0)/dt - F.ax) * .3; F.ay += ((F.vy - vy0)/dt - F.ay) * .3;
+    F.aa += ((F.va - va0)/dt - F.aa) * .3;
+
+    /* modo de balanço: a superfície procura ficar perpendicular à gravidade efetiva (g − a) */
+    const gy = Math.max(G()*.25, G() - F.ay);
+    const phiEq = clamp(Math.atan(F.ax / gy), -.42, .42);
+    const w0 = 2*Math.PI*1.35, zl = reduz ? .4 : .1;
+    Lq.vphi += (-w0*w0*(Lq.phi - phiEq) - 2*zl*w0*Lq.vphi + .2*F.aa) * dt;
+    Lq.phi += Lq.vphi * dt;
+    if (Math.abs(Lq.phi) > .5){ Lq.phi = Math.sign(Lq.phi)*.5; Lq.vphi *= -.3; }  /* nunca vira de lado */
+
+    /* ondas: a variação da aceleração no eixo do frasco empurra as paredes */
+    const axl = F.ax*Math.cos(F.a) + F.ay*Math.sin(F.a), d = axl - Lq.axAnt; Lq.axAnt = axl;
+    const imp = clamp(d / S * .0005, -1.2, 1.2) * (reduz ? .4 : 1);
+    for (let j = 0; j < 8; j++){ const w = PERFIL[j]; vOnda[j] += imp*w; vOnda[N-1-j] -= imp*w; }
+    const amort = reduz ? .975 : .9905;
+    for (let i = 0; i < N; i++){
+      const l = onda[i ? i-1 : 1], r = onda[i < N-1 ? i+1 : N-2];
+      vOnda[i] = (vOnda[i] + .26*(l + r - 2*onda[i])) * amort;
+      vOnda[i] += .09*(l + r - 2*onda[i]) * (reduz ? 1.5 : 1);  /* tira o serrilhado: crista arredondada */
+    }
+    let m = 0; for (let i = 0; i < N; i++){ onda[i] = clamp(onda[i] + vOnda[i], -9, 9); m += onda[i]; }
+    m /= N; for (let i = 0; i < N; i++) onda[i] -= m;   /* volume conservado */
+
+    const energia = Math.abs(Lq.vphi) + Math.abs(imp)*.3;
+    mistura = clamp(mistura + energia * dt * .045 - dt * .01, 0, 1);
+    if (!reduz && Math.random() < energia * dt * 5) bolha(B.ix0 + Math.random()*(B.ix1 - B.ix0), B.iy1 - Math.random()*8*S);
+  }
+  function bolha(x, y){ if (bolhas.length < 26) bolhas.push({ x, y, r: (.9 + Math.random()*2.2)*S, f: Math.random()*6, vida: 0 }); }
+
+  /* ---------- superfície ---------- */
+  const xs = new Float32Array(N), ys = new Float32Array(N);
+  function superficie(nivel, inc){
+    const x0 = B.ix0 - 6*S, span = (B.ix1 - B.ix0) + 12*S;
+    for (let i = 0; i < N; i++){
+      const x = x0 + span * i/(N-1);
+      const rip = reduz ? 0 : (Math.sin(x/S*.11 + t*3.1) * .45 + Math.sin(x/S*.27 - t*2.2) * .25) * S;
+      xs[i] = x; ys[i] = nivel + x*inc - onda[i]*S*.9 + rip;
+    }
+  }
+  function yEm(x){ const x0 = xs[0], span = xs[N-1] - x0, f = clamp((x - x0)/span, 0, 1) * (N-1), i = Math.min(N-2, Math.floor(f)), k = f - i; return ys[i]*(1-k) + ys[i+1]*k; }
+
+  const mix = (a, b, k) => a.map((v, i) => v + (b[i]-v)*k);
+  const css = (c, a = 1) => `rgba(${c.map(v => Math.round(clamp(v,0,1)*255)).join(",")},${a})`;
+  const claro = (c, k) => c.map(v => v + (1-v)*k);
+
+  /* ---------- desenho do frasco (no canvas fora da tela) ---------- */
+  function desenhaFrasco(){
+    const o = oc;
+    o.setTransform(1,0,0,1,0,0); o.clearRect(0, 0, off.width, off.height);
+    o.setTransform(dpr,0,0,dpr,0,0); o.translate(F.x, F.y); o.rotate(F.a);
+    const {bw, bh, ix0, ix1, iy0, iy1} = B;
+
+    const vol = camadas.reduce((s, c) => s + c.vol, 0);
+    const nivel = iy1 - (iy1 - iy0) * vol * .9;
+    const inc = Math.tan(clamp(Lq.phi - F.a, -.9, .9));
+    superficie(nivel, inc);
+    const media = camadas.reduce((s, c) => s.map((v, i) => v + c.cor[i]*c.vol), [0,0,0]).map(v => v / Math.max(vol, .001));
+    const alfa = .5 + conc.forca * .3;
+
+    /* vidro de trás */
+    o.fillStyle = "rgba(246,243,252,.16)"; o.fill(pExt);
+    let g = o.createLinearGradient(ix0, 0, ix1, 0);
+    g.addColorStop(0, "rgba(70,58,100,.16)"); g.addColorStop(.25, "rgba(255,255,255,.06)"); g.addColorStop(.75, "rgba(255,255,255,.04)"); g.addColorStop(1, "rgba(70,58,100,.18)");
+    o.fillStyle = g; o.fill(pInt);
+
+    /* ---- líquido, recortado no formato interno ---- */
+    o.save(); o.clip(pInt);
+    o.beginPath(); o.moveTo(xs[0], ys[0]); for (let i = 1; i < N; i++) o.lineTo(xs[i], ys[i]);
+    o.lineTo(ix1 + 40*S, iy1 + 60*S); o.lineTo(ix0 - 40*S, iy1 + 60*S); o.closePath();
+    const corpo = new Path2D(); corpo.moveTo(xs[0], ys[0]); for (let i = 1; i < N; i++) corpo.lineTo(xs[i], ys[i]);
+    corpo.lineTo(ix1 + 40*S, iy1 + 60*S); corpo.lineTo(ix0 - 40*S, iy1 + 60*S); corpo.closePath();
+    /* camadas: base embaixo, depois fundo, coração e saída; sacudir aproxima tudo da cor média */
+    const topo = Math.min(...ys);
+    g = o.createLinearGradient(0, iy1, 0, nivel);
+    let acc = 0; const borda = .1 + mistura*.5;
+    [3,2,1,0].forEach(k => { const c = camadas[k]; if (c.vol < .004) return; const cc = mix(c.cor, media, mistura);
+      const a0 = acc/vol, a1 = (acc + c.vol)/vol; acc += c.vol;
+      g.addColorStop(clamp(a0 + borda*.5*(a1-a0), 0, 1), css(cc, alfa));
+      g.addColorStop(clamp(a1 - borda*.5*(a1-a0), 0, 1), css(cc, alfa)); });
+    o.fillStyle = g; o.fill(corpo);
+    /* refração nas bordas: líquido mais denso perto do vidro */
+    g = o.createLinearGradient(ix0, 0, ix1, 0);
+    g.addColorStop(0, "rgba(40,30,60,.2)"); g.addColorStop(.14, "rgba(40,30,60,0)"); g.addColorStop(.86, "rgba(40,30,60,0)"); g.addColorStop(1, "rgba(40,30,60,.24)");
+    o.fillStyle = g; o.fill(corpo);
+    /* mais claro logo abaixo da superfície (luz entrando) */
+    g = o.createLinearGradient(0, topo, 0, topo + 46*S);
+    g.addColorStop(0, "rgba(255,255,255,.22)"); g.addColorStop(1, "rgba(255,255,255,0)");
+    o.fillStyle = g; o.fill(corpo);
+    /* cáustica no fundo */
+    o.save(); o.translate(-F.a*30*S, iy1 - 9*S); o.scale(1, .16);
+    g = o.createRadialGradient(0, 0, 0, 0, 0, (ix1 - ix0)*.46);
+    g.addColorStop(0, "rgba(255,252,240,.6)"); g.addColorStop(1, "rgba(255,252,240,0)");
+    o.fillStyle = g; o.beginPath(); o.arc(0, 0, (ix1 - ix0)*.46, 0, 6.283); o.fill(); o.restore();
+
+    /* folha da superfície: a borda de trás aparece um pouco acima (visto de leve de cima) */
+    const fol = 7*S * (1 - Math.min(.8, Math.abs(inc)*.7));
+    o.beginPath(); o.moveTo(xs[0], ys[0]);
+    for (let i = 1; i < N; i++) o.lineTo(xs[i], ys[i]);
+    for (let i = N-1; i >= 0; i--) o.lineTo(xs[i], ys[i] - fol + onda[N-1-i]*S*.35);
+    o.closePath();
+    const topoCor = claro(mix(camadas.find(c => c.vol > .01 && c !== camadas[3]) ? camadas[[0,1,2].find(k => camadas[k].vol > .01)].cor : camadas[3].cor, media, mistura), .45);
+    o.fillStyle = css(topoCor, .72); o.fill();
+    o.lineWidth = 1.6*S; o.strokeStyle = "rgba(255,255,255,.85)";
+    o.beginPath(); o.moveTo(xs[0], ys[0]); for (let i = 1; i < N; i++) o.lineTo(xs[i], ys[i]); o.stroke();
+    o.lineWidth = .9*S; o.strokeStyle = "rgba(255,255,255,.45)";
+    o.beginPath(); for (let i = 0; i < N; i++){ const y = ys[i] - fol + onda[N-1-i]*S*.35; i ? o.lineTo(xs[i], y) : o.moveTo(xs[i], y); } o.stroke();
+
+    /* bolhas: as soltas sobem e estouram na superfície; as grudadas ficam no vidro */
+    for (const b of grudadas){
+      const x = ix0 + (ix1 - ix0)*b.u, y = iy0 + (iy1 - iy0)*b.v;
+      if (y < yEm(x) + 3*S) continue;
+      desenhaBolha(o, x, y, b.r, .8 + Math.sin(t*1.3 + b.f)*.2);
+    }
+    for (const b of bolhas) desenhaBolha(o, b.x, b.y, b.r, 1);
+    o.restore();
+
+    /* ---- vidro grosso: parede com bordas claras e escuras ---- */
+    g = o.createLinearGradient(-bw/2, 0, bw/2, 0);
+    g.addColorStop(0, "rgba(255,255,255,.7)"); g.addColorStop(.03, "rgba(255,255,255,.18)"); g.addColorStop(.05, "rgba(60,48,90,.18)");
+    g.addColorStop(.5, "rgba(255,255,255,.12)");
+    g.addColorStop(.95, "rgba(60,48,90,.2)"); g.addColorStop(.97, "rgba(255,255,255,.2)"); g.addColorStop(1, "rgba(255,255,255,.6)");
+    o.fillStyle = g; o.fill(pParede, "evenodd");
+    /* base grossa: o líquido refrata ali dentro */
+    o.save(); o.clip(pExt);
+    g = o.createLinearGradient(0, iy1, 0, bh/2);
+    g.addColorStop(0, css(claro(media, .2), vol > .01 ? .42 : .1)); g.addColorStop(.35, "rgba(255,255,255,.55)"); g.addColorStop(.6, css(claro(media, .4), .25)); g.addColorStop(1, "rgba(60,48,90,.25)");
+    o.fillStyle = g; o.fill(pBase);
+    o.fillStyle = "rgba(255,255,255,.75)"; o.fillRect(-bw*.36, iy1 + 3*S, bw*.72, 1.2*S);
+    o.restore();
+    o.lineWidth = 1*S; o.strokeStyle = "rgba(255,255,255,.55)"; o.stroke(pInt);
+    o.lineWidth = 1.4*S; o.strokeStyle = "rgba(34,27,51,.42)"; o.stroke(pExt);
+
+    /* ---- rótulo (colado no vidro: gira junto) ---- */
+    const lw = bw*.58, lh = bh*.3, lx = -lw/2, ly = -bh*.1 - lh/2;
+    o.fillStyle = "rgba(34,27,51,.14)"; o.fillRect(lx + 1.5*S, ly + 2*S, lw, lh);
+    g = o.createLinearGradient(lx, ly, lx + lw, ly + lh);
+    g.addColorStop(0, "#F4F1F6"); g.addColorStop(1, "#E4DFEA");
+    o.fillStyle = g; o.fillRect(lx, ly, lw, lh);
+    o.strokeStyle = "rgba(34,27,51,.55)"; o.lineWidth = .9*S; o.strokeRect(lx + 5*S, ly + 5*S, lw - 10*S, lh - 10*S);
+    o.fillStyle = "#221B33"; o.textAlign = "center"; o.textBaseline = "middle";
+    const txt = nome || "névoa";
+    let fs = 25*S; o.font = `italic 400 ${fs}px "Bodoni Moda", Georgia, serif`;
+    while (o.measureText(txt).width > lw - 22*S && fs > 8){ fs -= 1; o.font = `italic 400 ${fs}px "Bodoni Moda", Georgia, serif`; }
+    o.fillText(txt, 0, ly + lh*.42);
+    o.font = `500 ${8.6*S}px Manrope, system-ui, sans-serif`; o.fillStyle = "#3a3150";
+    o.fillText(conc.nome.toLowerCase(), 0, ly + lh*.73);
+
+    /* ---- reflexos: luz fixa no mundo, então o brilho anda quando o frasco gira ---- */
+    o.save(); o.clip(pExt);
+    const desl = -F.a * bw * .55, forca = clamp(.62 - F.a*.6, .25, .95);
+    const faixa = (x, w, a) => { const gg = o.createLinearGradient(x - w, 0, x + w, 0);
+      gg.addColorStop(0, "rgba(255,255,255,0)"); gg.addColorStop(.5, `rgba(255,255,255,${a})`); gg.addColorStop(1, "rgba(255,255,255,0)");
+      o.fillStyle = gg; o.fillRect(x - w, -bh/2 + 14*S, w*2, bh - 30*S); };
+    faixa(-bw*.37 + desl, 6*S, forca*.8);
+    faixa(-bw*.3 + desl, 2.2*S, forca*.45);
+    faixa(bw*.4 + desl*.6, 8*S, (1.05 - forca)*.45);
+    /* ombro de cima pegando luz */
+    g = o.createRadialGradient(-bw*.22 + desl*.5, -bh/2, 0, -bw*.22 + desl*.5, -bh/2, bw*.5);
+    g.addColorStop(0, `rgba(255,255,255,${.4*forca})`); g.addColorStop(1, "rgba(255,255,255,0)");
+    o.fillStyle = g; o.fillRect(-bw/2, -bh/2, bw, bh*.35);
+    o.restore();
+    o.lineWidth = 2*S; o.lineCap = "round"; o.strokeStyle = `rgba(255,255,255,${.75*forca})`;
+    o.beginPath(); o.moveTo(-bw/2 + 3*S, -bh/2 + B.rt + 8*S); o.arcTo(-bw/2 + 3*S, -bh/2 + 3*S, -bw/2 + B.rt, -bh/2 + 3*S, B.rt - 3*S); o.lineTo(-bw*.05, -bh/2 + 3*S); o.stroke();
+
+    /* ---- gargalo, anel e tampa ---- */
+    const gy0 = -bh/2 - B.gh;
+    g = o.createLinearGradient(-B.gw/2, 0, B.gw/2, 0);
+    g.addColorStop(0, "rgba(90,80,115,.55)"); g.addColorStop(.3, "rgba(255,255,255,.55)"); g.addColorStop(.6, "rgba(160,150,180,.35)"); g.addColorStop(1, "rgba(70,60,95,.6)");
+    o.fillStyle = g; o.fillRect(-B.gw/2, gy0, B.gw, B.gh + 2*S);
+    const ay0 = gy0 - B.ah;
+    g = o.createLinearGradient(-B.aw/2, 0, B.aw/2, 0);
+    ["#5d5868","#d9d5e0","#8e889a","#f6f4f8","#a39daf","#4f4a5a"].forEach((c, i, l) => g.addColorStop(i/(l.length-1), c));
+    o.fillStyle = g; o.fillRect(-B.aw/2, ay0, B.aw, B.ah);
+    o.fillStyle = "rgba(255,255,255,.5)"; o.fillRect(-B.aw/2, ay0, B.aw, .9*S);
+    /* a tampa sobe enquanto as gotas entram */
+    const ty0 = ay0 - B.th - tampa*26*S, tx0 = -B.tw/2 + tampa*(B.tw*.5 + 30*S);
+    o.save(); o.translate(tx0 + B.tw/2, ty0 + B.th); o.rotate(tampa*.16); o.translate(-(tx0 + B.tw/2), -(ty0 + B.th));
+    const pt = new Path2D(); caixa(pt, tx0, ty0, B.tw, B.th, 6*S, 2*S);
+    g = o.createLinearGradient(tx0, 0, tx0 + B.tw, 0);
+    [[0,"#241c38"],[.12,"#3e3360"],[.27,"#76699c"],[.36,"#4b3f6e"],[.6,"#302749"],[.85,"#4a3e6a"],[1,"#1d1730"]].forEach(([p, c]) => g.addColorStop(p, c));
+    o.fillStyle = g; o.fill(pt);
+    g = o.createLinearGradient(0, ty0, 0, ty0 + B.th);
+    g.addColorStop(0, "rgba(255,255,255,.16)"); g.addColorStop(.12, "rgba(255,255,255,0)"); g.addColorStop(.85, "rgba(0,0,0,0)"); g.addColorStop(1, "rgba(0,0,0,.25)");
+    o.fillStyle = g; o.fill(pt);
+    o.restore();
+    return media;
+  }
+  function desenhaBolha(o, x, y, r, a){
+    o.globalAlpha = a;
+    o.fillStyle = "rgba(255,255,255,.14)"; o.beginPath(); o.arc(x, y, r, 0, 6.283); o.fill();
+    o.lineWidth = Math.max(.6, r*.35); o.strokeStyle = "rgba(255,255,255,.7)"; o.stroke();
+    o.fillStyle = "rgba(255,255,255,.95)"; o.beginPath(); o.arc(x - r*.35, y - r*.35, r*.28, 0, 6.283); o.fill();
+    o.globalAlpha = 1;
+  }
+
+  /* ---------- gotas (no mundo) ---------- */
+  function solta(cam, corHex){
+    const c = hex(corHex); camadas[cam].cor = c; camadas[cam].alvo = .2;
+    if (!W) return;
+    for (let i = 0; i < 12; i++) gotas.push({ dy: -(B.th + 70*S) - i*24*S, vy: 0, cor: c, r: (2.6 + Math.random()*2.2)*S, j: (Math.random()-.5)*6*S, y: null, x: null });
+    dica.textContent = "Arraste o frasco, solte e veja o líquido balançar"; dica.classList.remove("some");
+  }
+  function rodaGotas(dt){
+    const c = Math.cos(F.a), s = Math.sin(F.a), ly = -B.bh/2 - B.gh;
+    const bx = F.x - ly*s, by = F.y + ly*c;  /* boca do gargalo no mundo */
+    for (let i = gotas.length - 1; i >= 0; i--){
+      const g = gotas[i];
+      if (g.y === null){ g.y = Math.min(by - 30*S, 0) + g.dy + B.th + 70*S - 20*S; g.x = bx + g.j; }
+      g.vy += 1500*S*dt; g.y += g.vy*dt; g.x += (bx + g.j*.3 - g.x) * .18;
+      if (g.y > by){ vOnda[N >> 1] += 1.4; vOnda[(N >> 1) + 1] += 1; bolha((Math.random()-.5)*12*S, (B.iy0 + B.iy1)/2 + Math.random()*20*S); gotas.splice(i, 1); }
+    }
+  }
+
+  /* ---------- laço ---------- */
+  let ant = performance.now(), sobra = 0;
   function laco(agora){
     if (!ativo) return;
-    const dt = Math.min((agora-ant)/1000, .04); ant = agora;
-    /* física */
-    angVel += (angAlvo - ang) * .08 - angVel * .14; ang += angVel;
-    for (let i=0;i<N;i++){ vel[i] += -alt[i]*.06 - vel[i]*.04; }
-    for (let it=0; it<2; it++) for (let i=0;i<N;i++){ const l = alt[Math.max(0,i-1)], r = alt[Math.min(N-1,i+1)]; vel[i] += ((l + r)/2 - alt[i]) * .3; }
-    for (let i=0;i<N;i++){ alt[i] += vel[i]; }
-    vel[0] += angVel * 30; vel[N-1] -= angVel * 30;
-    camadas.forEach(c => { c.vol += (c.alvo - c.vol) * .05; });
-    mistura = Math.max(0, mistura - dt * .02);
-    tampa += ((gotas.length ? 1 : 0) - tampa) * .12;
-
-    const vol = camadas.reduce((s,c) => s + c.vol, 0);
-    const util = G.bh - 14*G.s, nivel = G.base - 7*G.s - util * vol * .98;
-
-    ctx.clearRect(0,0,W,H);
-    /* sombra no chão */
-    const sg = ctx.createRadialGradient(G.cx, G.base + 10*G.s, 2, G.cx, G.base + 10*G.s, G.bw*.7);
-    sg.addColorStop(0, "rgba(34,27,51,.22)"); sg.addColorStop(1, "rgba(34,27,51,0)");
-    ctx.fillStyle = sg; ctx.fillRect(G.cx - G.bw, G.base - 10*G.s, G.bw*2, 40*G.s);
-
-    ctx.save();
-    ctx.translate(G.cx, G.base); ctx.rotate(ang); ctx.translate(-G.cx, -G.base);
-
-    /* líquido (recortado no corpo) */
-    ctx.save(); caminhoCorpo(ctx); ctx.clip();
-    if (vol > .002){
-      const inc = Math.tan(-ang);
-      ctx.beginPath();
-      for (let i=0;i<N;i++){
-        const x = G.cx - G.bw/2 - 20 + (G.bw + 40) * i/(N-1);
-        const y = nivel + (x - G.cx) * inc + alt[i] * G.s * .6;
-        i ? ctx.lineTo(x,y) : ctx.moveTo(x,y);
-      }
-      ctx.lineTo(G.cx + G.bw, G.base + 60); ctx.lineTo(G.cx - G.bw, G.base + 60); ctx.closePath();
-      /* gradiente vertical: fundo embaixo, coração no meio, saída em cima; mistura aproxima tudo da média */
-      const ativos = camadas.filter(c => c.vol > .01);
-      const media = ativos.length ? ativos.reduce((s,c) => s.map((v,i)=>v + c.cor[i]*c.vol), [0,0,0]).map(v => v / ativos.reduce((s,c)=>s+c.vol,0)) : [.8,.8,.8];
-      const gr = ctx.createLinearGradient(0, G.base, 0, nivel);
-      let acc = 0; const ordem = [2,1,0];
-      ordem.forEach(k => { const c = camadas[k]; if (c.vol < .005) return; const cc = mix(c.cor, media, mistura);
-        const a0 = acc / vol, a1 = (acc + c.vol) / vol; acc += c.vol;
-        const borda = .08 + mistura * .4;
-        gr.addColorStop(clamp(a0 + borda*.5*(a1-a0),0,1), css(cc, .55 + conc.forca*.35));
-        gr.addColorStop(clamp(a1 - borda*.5*(a1-a0),0,1), css(cc, .55 + conc.forca*.35)); });
-      ctx.fillStyle = gr; ctx.fill();
-      /* menisco brilhante */
-      ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.lineWidth = 2*G.s; ctx.stroke();
-      /* bolhas da mistura */
-      if (mistura > .05){ ctx.fillStyle = `rgba(255,255,255,${(mistura*.5).toFixed(2)})`;
-        for (let i=0;i<10;i++){ const bx = G.cx + Math.sin(agora/700 + i*2.1) * G.bw*.38, by = G.base - ((agora/18 + i*47) % Math.max(1, G.base - nivel));
-          ctx.beginPath(); ctx.arc(bx, by, (1.2 + (i%3)) * G.s, 0, 6.283); ctx.fill(); } }
+    const dt = Math.min((agora - ant)/1000, .05); ant = agora; t += dt;
+    sobra += dt; let n = 0;
+    while (sobra >= PASSO && n < 8){ passo(PASSO); sobra -= PASSO; n++; }
+    if (n === 8) sobra = 0;
+    camadas.forEach(c => { c.vol += (c.alvo - c.vol) * Math.min(1, dt*3); });
+    tampa += ((gotas.length ? 1 : 0) - tampa) * Math.min(1, dt*8);
+    rodaGotas(dt);
+    for (let i = bolhas.length - 1; i >= 0; i--){
+      const b = bolhas[i]; b.vida += dt; b.y -= (14 + b.r/S*9) * S * dt; b.x += Math.sin(t*4 + b.f) * 6*S * dt;
+      if (b.y < yEm(b.x) + b.r){ const k = clamp(Math.round((b.x - xs[0])/(xs[N-1] - xs[0])*(N-1)), 0, N-1); vOnda[k] += .25; bolhas.splice(i, 1); }
     }
-    ctx.restore();
 
-    /* vidro */
-    caminhoCorpo(ctx);
-    ctx.fillStyle = "rgba(255,255,255,.16)"; ctx.fill();
-    ctx.lineWidth = 2.4*G.s; ctx.strokeStyle = "rgba(34,27,51,.55)"; ctx.stroke();
-    /* reflexo */
-    ctx.save(); caminhoCorpo(ctx); ctx.clip();
-    const rg = ctx.createLinearGradient(G.cx - G.bw/2, 0, G.cx + G.bw/2, 0);
-    rg.addColorStop(0, "rgba(255,255,255,.0)"); rg.addColorStop(.12, "rgba(255,255,255,.55)"); rg.addColorStop(.2, "rgba(255,255,255,0)");
-    rg.addColorStop(.84, "rgba(255,255,255,0)"); rg.addColorStop(.9, "rgba(255,255,255,.28)"); rg.addColorStop(1, "rgba(255,255,255,0)");
-    ctx.fillStyle = rg; ctx.fillRect(G.cx - G.bw/2, G.topo, G.bw, G.bh);
+    const media = desenhaFrasco();
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.drawImage(fundoC, 0, 0);
+    /* reflexo no chão (o próprio frasco, espelhado e apagando) */
+    ctx.save(); ctx.beginPath(); ctx.rect(0, chao*dpr, cv.width, cv.height); ctx.clip();
+    ctx.globalAlpha = .26; ctx.setTransform(1,0,0,-1,0,2*chao*dpr); ctx.drawImage(off, 0, 0); ctx.restore();
+    ctx.drawImage(fadeC, 0, 0);
+    /* sombra e luz colorida que atravessa o líquido */
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const sobe = Math.max(0, chao - (F.y + B.bh/2)), k = clamp(1 - sobe/(H*.45), 0, 1);
+    ctx.save(); ctx.translate(F.x, chao); ctx.scale(1, .13);
+    let g = ctx.createRadialGradient(0, 0, 0, 0, 0, B.bw*(.62 + (1-k)*.4));
+    g.addColorStop(0, `rgba(34,27,51,${.38*k})`); g.addColorStop(1, "rgba(34,27,51,0)");
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, B.bw*(.62 + (1-k)*.4), 0, 6.283); ctx.fill();
+    ctx.translate(B.bw*.18, 70*S);
+    g = ctx.createRadialGradient(0, 0, 0, 0, 0, B.bw*.55);
+    g.addColorStop(0, css(claro(media, .1), .35*k)); g.addColorStop(1, css(media, 0));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, B.bw*.55, 0, 6.283); ctx.fill();
     ctx.restore();
-    /* rótulo */
-    const lw = G.bw*.62, lh = 62*G.s, lx = G.cx - lw/2, ly = G.base - G.bh*.56 - lh/2;
-    ctx.fillStyle = "rgba(232,228,238,.94)"; ctx.fillRect(lx, ly, lw, lh);
-    ctx.strokeStyle = "rgba(34,27,51,.35)"; ctx.lineWidth = 1; ctx.strokeRect(lx + 4*G.s, ly + 4*G.s, lw - 8*G.s, lh - 8*G.s);
-    ctx.fillStyle = "#221B33"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    const t = nome || "névoa";
-    let fs = 22*G.s; ctx.font = `italic 400 ${fs}px "Bodoni Moda", Georgia, serif`;
-    while (ctx.measureText(t).width > lw - 20*G.s && fs > 8) { fs -= 1; ctx.font = `italic 400 ${fs}px "Bodoni Moda", Georgia, serif`; }
-    ctx.fillText(t, G.cx, ly + lh*.42);
-    ctx.font = `600 ${8.5*G.s}px Manrope, system-ui, sans-serif`;
-    ctx.fillStyle = "#4B4260"; ctx.fillText(conc.nome.toLowerCase(), G.cx, ly + lh*.75);
-    /* gargalo e tampa */
-    ctx.fillStyle = "rgba(34,27,51,.55)"; ctx.fillRect(G.cx - G.gargalo/2, G.topo - G.gh, G.gargalo, G.gh);
-    const tg = ctx.createLinearGradient(G.cx - G.tampa/2, 0, G.cx + G.tampa/2, 0);
-    tg.addColorStop(0, "#2d2440"); tg.addColorStop(.35, "#5a4f74"); tg.addColorStop(.5, "#7b7095"); tg.addColorStop(1, "#221B33");
-    ctx.fillStyle = tg; ctx.beginPath();
-    const tx = G.cx - G.tampa/2 + tampa*G.tampa*.9, ty = G.topo - G.gh - G.th - tampa*70*G.s, tr = 6*G.s;
-    ctx.moveTo(tx+tr, ty); ctx.lineTo(tx+G.tampa-tr, ty); ctx.quadraticCurveTo(tx+G.tampa, ty, tx+G.tampa, ty+tr); ctx.lineTo(tx+G.tampa, ty+G.th); ctx.lineTo(tx, ty+G.th); ctx.lineTo(tx, ty+tr); ctx.quadraticCurveTo(tx, ty, tx+tr, ty); ctx.fill();
-    ctx.restore();
-
-    /* gotas caindo (em coordenadas do mundo, entram pelo gargalo: a tampa "abre" enquanto cai) */
-    for (let i = gotas.length-1; i>=0; i--){
-      const g = gotas[i]; g.vy += 1400 * dt; g.y += g.vy * dt;
-      if (g.y > nivel){ const k = clamp(Math.round((g.x - (G.cx - G.bw/2 - 20)) / (G.bw + 40) * (N-1)), 0, N-1); vel[k] += 3.2; gotas.splice(i,1); continue; }
-      if (g.y > -10){ ctx.fillStyle = css(g.cor, .9); ctx.beginPath(); ctx.ellipse(g.x, g.y, g.r*.8, g.r*1.25, 0, 0, 6.283); ctx.fill(); }
-    }
+    ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(off, 0, 0);
+    /* gotas por cima */
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    for (const g2 of gotas){ if (g2.y === null) continue;
+      ctx.fillStyle = css(g2.cor, .92); ctx.beginPath(); ctx.ellipse(g2.x, g2.y, g2.r*.8, g2.r*(1.1 + Math.min(.6, g2.vy/(2200*S))), 0, 0, 6.283); ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.beginPath(); ctx.arc(g2.x - g2.r*.25, g2.y - g2.r*.3, g2.r*.25, 0, 6.283); ctx.fill(); }
     requestAnimationFrame(laco);
   }
   new IntersectionObserver(([en]) => { const era = ativo; ativo = en.isIntersecting; if (ativo && !era){ ant = performance.now(); requestAnimationFrame(laco); } }).observe(box);
@@ -814,9 +1076,12 @@ const Frasco = (() => {
     escolhe(cam, nota){ escolha[cam] = nota; solta(cam, nota.cor); },
     concentra(c){ conc = c; },
     nomeia(n){ nome = n; },
-    sacode, escolha, get conc(){ return conc; }
+    sacode, escolha, get conc(){ return conc; },
+    get estado(){ return { x:F.x, y:F.y, a:F.a, phi:Lq.phi, onda: Math.max(...onda.map(Math.abs)), bolhas: bolhas.length, rx:R.x, ry:R.y }; }
   };
 })();
+
+window.__frasco = Frasco; /* estado lido pelo teste automático */
 
 /* ---------- controles do frasco ---------- */
 (() => {

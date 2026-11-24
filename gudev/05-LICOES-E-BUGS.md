@@ -181,3 +181,4 @@ O prompt do getlayers aponta pra .glb/.png em `api.getlayers.ai`, que dá 403 aq
 
 ## 18/11/2026: GSAP + transform no CSS (vinheta do Jimmy Neutron)
 Elemento com `transform:translateX(-120%) skewX(...)` no CSS e animado com `xPercent` no GSAP: o GSAP leu o -120% como `x` em px e somou, as faixas nunca entraram na tela. Regra: posição inicial de algo animado pelo GSAP vai no `gsap.set`, nunca no CSS.
+- **Líquido com ondas (Névoa, 24/11/2026):** empurrar só a 1ª e a última coluna da onda a cada quadro de sacudida cria um serrote regular e artificial. Espalhar o impulso em ~8 colunas (perfil gaussiano) e somar um pouco de difusão na velocidade. O balanço principal tem que ter limite (±0,5 rad) e amortecimento ~0,1, senão continua inclinado com o frasco parado.
