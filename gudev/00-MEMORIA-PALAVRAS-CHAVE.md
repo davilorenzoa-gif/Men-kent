@@ -281,3 +281,7 @@ O Davi pediu "me surpreenda novamente com algum site, efeitos e animações, pod
 ## 25/11/2026: Âncora v2 (relógio esqueleto do vídeo de referência)
 Palavras: vídeo de referência, watch movement exploded view, esqueleto, skeleton, mostrador vazado, submostrador, guilhochê, algarismos romanos, platina vazada, ponte em ferradura, rubis com chaton, cristal de safira, pulseira de couro, profundidade de campo, desfoque de lente, DOF, close no balanço, fundo azul-grafite, "seu relógio não está tão bom".
 O Davi gostou da ideia, mas achou o relógio fraco e mandou o vídeo de um relógio esqueleto desmontando. Refeito o modelo em `sites/ancora/src/app.js` (133 peças): esqueleto pela frente, pontes recortadas, cristal, pulseira, desmontagem vertical em 10 camadas com desfoque de lente e close no balanço. Prévia `ancora-arquivo-unico.html` (1,2 MB). Receita no `03`, lição no `05`.
+
+## 25/11/2026: Âncora v3 (fotos de referência do relógio e da bancada)
+Palavras: fotos de referência, mostrador branco, esmalte, submostrador 60 15 30 45, ponteiros pretos, ponte em V, alças com parafuso, gancho, costura, pulseira preta, bancada, flat lay, peças espalhadas, tapete, lupa de relojoeiro, pinça, chave de fenda, "Na bancada".
+O Davi mandou 2 imagens (relógio montado em 3 ângulos e as peças espalhadas numa bancada). Relógio ajustado pra bater com a foto e criado o passo 11 "Na bancada" (as peças deitam no tapete com ferramentas, depois o relógio se monta). 150 peças. Detalhes no README do site.
