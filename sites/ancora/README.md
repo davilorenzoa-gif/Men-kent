@@ -18,6 +18,14 @@
 - Fontes: Newsreader (títulos, itálico nos destaques) + Geist (texto) + Geist Mono (leituras de instrumento).
 - Princípio: relojoaria é confiança na mão de quem abre o relógio. O site abre o relógio na frente da pessoa.
 
+## v3 (25/11/2026): fotos de referência do Davi
+O Davi mandou 2 imagens: o relógio montado (3 ângulos) e as peças espalhadas numa bancada com lupa e pinça. Ajustado pra bater com elas:
+- **Mostrador branco largo** (esmalte com verniz) com números de 5 em 5 e barras às 12 e às 6; **submostrador branco** às 12 com 60/15/30/45, "ÂNCORA" e aro polido; **ponteiros pretos**. Sem pequenos segundos.
+- Ponte do balanço em **V** (dois parafusos azuis nas pontas, rubi no meio), platina cinza de grão fino.
+- **Alças em gancho com parafuso na ponta** (perfil lateral curvo extrudado na largura), pulseira preta lisa com **costura** e curva mais suave.
+- **Novo passo 11, "Na bancada"**: depois da desmontagem, as 10 camadas deitam espalhadas num tapete cinza, como a foto: lupa de relojoeiro em pé, pinça, 3 chaves de fenda e parafusinhos soltos. Cada camada sabe o centro e a base dela (`Box3` na criação) pra deitar certinho no tapete. Depois o relógio se monta de novo.
+- 150 peças. Rolagem do palco passou pra 760vh.
+
 ## v2 (25/11/2026): relógio esqueleto do vídeo de referência
 O Davi mandou um vídeo de "watch movement exploded view" (relógio esqueleto de luxo desmontando em camadas) e disse que o relógio da v1 "não estava tão bom". Refeito no estilo do vídeo:
 - **Esqueleto visto pela frente:** mostrador vazado (anel das horas em algarismos romanos + submostrador guilhochê às 12 com horas e minutos + pequenos segundos às 9), platina com ~26 janelas redondas (posicionadas por um algoritmo que não deixa uma encostar na outra), pontes de prata recortadas com furos, ponte em ferradura na borda, ponte do balanço atravessada com dois parafusos azuis, rubis com anel de ouro, 6 rodas de enfeite extras, índices aplicados.

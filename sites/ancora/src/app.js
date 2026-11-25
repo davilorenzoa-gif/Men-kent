@@ -75,7 +75,7 @@ function iniciar3D() {
   renderer.shadowMap.autoUpdate = false;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(28, 1, 0.5, 120);
+  const camera = new THREE.PerspectiveCamera(28, 1, 1, 300);
 
   /* ---------- luz de estúdio feita em código (vira reflexo nos metais) */
   {
@@ -127,7 +127,7 @@ function iniciar3D() {
       g.fillStyle = gr; g.beginPath(); g.arc(x, y, s * 0.72, 0, TAU); g.fill();
     }
   });
-  perlage.repeat.set(1.1, 1.1);
+  perlage.repeat.set(1.9, 1.9);
   // Côtes de Genève: listras das pontes
   const cotes = tex(256, 256, (g, w, h) => {
     const n = 4, sw = w / n;
@@ -156,7 +156,7 @@ function iniciar3D() {
     lataoFosco: new THREE.MeshStandardMaterial({ color: 0xc99d4f, metalness: 1, roughness: 0.4 }),
     aco: new THREE.MeshStandardMaterial({ color: 0xe2e5ea, metalness: 1, roughness: 0.14 }),
     acoEscovado: new THREE.MeshStandardMaterial({ color: 0xc8cbd1, metalness: 1, roughness: 0.3 }),
-    platina: new THREE.MeshStandardMaterial({ color: 0xf2f4f7, map: perlage, metalness: 1, roughness: 0.34 }),
+    platina: new THREE.MeshStandardMaterial({ color: 0xd4d8de, map: perlage, metalness: 1, roughness: 0.42 }),
     ponte: new THREE.MeshStandardMaterial({ color: 0xf4f6f9, map: cotes, metalness: 1, roughness: 0.24 }),
     rubi: new THREE.MeshPhysicalMaterial({ color: 0xb3102e, metalness: 0, roughness: 0.06, clearcoat: 1, clearcoatRoughness: 0.04, emissive: 0x3a0310, ior: 1.76, specularIntensity: 1 }),
     azul: new THREE.MeshStandardMaterial({ color: 0x2b4fc4, metalness: 1, roughness: 0.2 }),
@@ -256,7 +256,7 @@ function iniciar3D() {
     const r = (v) => v.clone().rotateAround(P(0, 0), phi);
     [C, F, T, E, B, PV, BC, dirFork] = [C, F, T, E, B, PV, BC, dirFork].map(r);
   }
-  const SUB = P(0, 1.72); // submostrador de horas e minutos (às 12)
+  const SUB = P(0, 1.42); // submostrador de horas e minutos (às 12)
 
   // platina vazada: janelas redondas que não se encostam
   const janelas = [];
@@ -442,7 +442,7 @@ function iniciar3D() {
     [1.7, 1.88].forEach((t) => parafuso(v2(3.765, t * Math.PI), z + 0.085, 'pontes'));
     // ponte do balanço atravessada, com dois parafusos azuis nas pontas
     const zb = 1.5;
-    const pa = BC.clone().add(P(-1.85, 0.32)), pb = BC.clone().add(P(1.85, 0.32));
+    const pa = BC.clone().add(P(-1.62, 0.95)), pb = BC.clone().add(P(1.62, 0.95));
     const galo = malha(extrudar(barraVazada([pa, BC, pb], 0.2), 0.12, 0.018, 8), M.ponte, 'ponte'); galo.position.z = zb; camadas.pontes.add(galo);
     const disco = malha(extrudar(new THREE.Shape().absarc(0, 0, 0.34, 0, TAU), 0.124, 0.018, 48), M.ponte, 'ponte'); disco.position.set(BC.x, BC.y, zb); camadas.pontes.add(disco);
     rubiEm(BC, zb + 0.08, 'pontes');
@@ -475,55 +475,46 @@ function iniciar3D() {
     t.repeat.set(1 / (2 * R), 1 / (2 * R)); t.offset.set(0.5, 0.5); t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping;
     return t;
   }
-  const PRATA = '#d9dce0', TINTA = '#23262b';
+  const TINTA = '#2a2c30';
+  const R_IN = 3.18; // anel branco largo
   function desenhaAnel(g, R) {
-    const gr = g.createRadialGradient(-R * 0.3, -R * 0.4, 0, 0, 0, R); gr.addColorStop(0, '#eef0f2'); gr.addColorStop(1, '#c3c7cc');
+    const gr = g.createRadialGradient(-R * 0.25, -R * 0.35, 0, 0, 0, R); gr.addColorStop(0, '#fbfaf7'); gr.addColorStop(1, '#eceae4');
     g.fillStyle = gr; g.fillRect(-R, -R, 2 * R, 2 * R);
     g.fillStyle = TINTA;
-    for (let i = 0; i < 60; i++) { g.save(); g.rotate(i * TAU / 60); g.fillRect(-1.5, -R * 0.985, 3, i % 5 ? R * 0.035 : R * 0.06); g.restore(); }
-    g.font = `400 ${R * 0.055}px Newsreader, Georgia, serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
-    const rom = ['XII', 'I', 'II', 'III', 'IIII', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'];
-    rom.forEach((t, i) => { if (i % 3 === 0) return; g.save(); g.rotate(i * TAU / 12); g.fillText(t, 0, -R * 0.9); g.restore(); });
+    for (let i = 0; i < 60; i++) { g.save(); g.rotate(i * TAU / 60); g.fillRect(-1.4, -R * 0.975, 2.8, i % 5 ? R * 0.03 : R * 0.045); g.restore(); }
+    g.font = `500 ${R * 0.05}px Geist, system-ui, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#55585e';
+    for (let i = 1; i < 12; i++) { if (i === 6) continue; const a = i * TAU / 12; g.fillText(String(i * 5), Math.sin(a) * R * 0.875, -Math.cos(a) * R * 0.875); }
+    g.fillStyle = '#3c3f45';
+    for (const k of [0, 6]) { g.save(); g.rotate(k * TAU / 12); g.fillRect(-R * 0.012, -R * 0.93, R * 0.024, R * 0.12); g.restore(); }
+    g.strokeStyle = 'rgba(40,44,50,.25)'; g.lineWidth = 2; g.beginPath(); g.arc(0, 0, R * (R_IN / 4.32) + 2, 0, TAU); g.stroke();
   }
   function desenhaSub(g, R) {
-    g.fillStyle = '#e3e6ea'; g.fillRect(-R, -R, 2 * R, 2 * R);
-    for (let r = 8; r < R; r += 7) { g.strokeStyle = r % 14 ? 'rgba(255,255,255,.55)' : 'rgba(80,88,98,.22)'; g.lineWidth = 3; g.beginPath(); g.arc(0, 0, r, 0, TAU); g.stroke(); }
+    g.fillStyle = '#fbfaf7'; g.fillRect(-R, -R, 2 * R, 2 * R);
+    for (let r = 10; r < R * 0.8; r += 9) { g.strokeStyle = 'rgba(120,120,125,.06)'; g.lineWidth = 2; g.beginPath(); g.arc(0, 0, r, 0, TAU); g.stroke(); }
     g.fillStyle = TINTA; g.textAlign = 'center'; g.textBaseline = 'middle';
-    for (let i = 0; i < 60; i++) { g.save(); g.rotate(i * TAU / 60); g.fillRect(-2, -R * 0.97, 4, i % 5 ? R * 0.05 : R * 0.1); g.restore(); }
-    g.font = `400 ${R * 0.13}px Newsreader, Georgia, serif`;
-    [['XII', 0], ['III', 1], ['VI', 2], ['IX', 3]].forEach(([t, k]) => { const a = k * TAU / 4; g.fillText(t, Math.sin(a) * R * 0.72, -Math.cos(a) * R * 0.72); });
-    g.font = `italic 500 ${R * 0.15}px Newsreader, Georgia, serif`; g.fillText('Âncora', 0, -R * 0.34);
-    g.font = `500 ${R * 0.06}px "Geist Mono", monospace`; g.fillText('MECÂNICO · ESQUELETO', 0, R * 0.36);
+    for (let i = 0; i < 60; i++) { g.save(); g.rotate(i * TAU / 60); g.fillRect(-1.6, -R * 0.965, 3.2, i % 5 ? R * 0.045 : R * 0.08); g.restore(); }
+    g.font = `500 ${R * 0.12}px Geist, system-ui, sans-serif`; g.fillStyle = '#55585e';
+    [['60', 0], ['15', 1], ['30', 2], ['45', 3]].forEach(([t, k]) => { const a = k * TAU / 4; g.fillText(t, Math.sin(a) * R * 0.7, -Math.cos(a) * R * 0.7); });
+    g.fillStyle = TINTA; g.font = `600 ${R * 0.075}px Geist, system-ui, sans-serif`;
+    if ('letterSpacing' in g) g.letterSpacing = `${R * 0.02}px`;
+    g.fillText('ÂNCORA', 0, -R * 0.38);
+    g.font = `500 ${R * 0.05}px "Geist Mono", monospace`; g.fillStyle = '#7a7d83';
+    g.fillText('SÃO PAULO', 0, R * 0.4);
   }
-  function desenhaSeg(g, R) {
-    g.fillStyle = '#cfd3d8'; g.fillRect(-R, -R, 2 * R, 2 * R);
-    g.fillStyle = TINTA;
-    for (let i = 0; i < 60; i++) { g.save(); g.rotate(i * TAU / 60); g.fillRect(-3, -R * 0.97, 6, i % 5 ? R * 0.12 : R * 0.22); g.restore(); }
-  }
-  const mostrador = { anel: null, sub: null, seg: null };
+  const mostrador = { anel: null, sub: null };
   function montaTexturas() {
     const novo = (k, R, f) => { const t = texDisco(R, f); if (mostrador[k]) { mostrador[k].material.map = t; mostrador[k].material.needsUpdate = true; } return t; };
-    return { anel: novo('anel', 4.32, desenhaAnel), sub: novo('sub', 1.45, desenhaSub), seg: novo('seg', 0.72, desenhaSeg) };
+    return { anel: novo('anel', 4.32, desenhaAnel), sub: novo('sub', 1.12, desenhaSub) };
   }
   {
     const tx = montaTexturas();
     const zd = 1.95;
-    const mat = (map) => new THREE.MeshStandardMaterial({ color: 0xffffff, map, metalness: 0.55, roughness: 0.38 });
-    const anel = new THREE.Shape(); anel.absarc(0, 0, 4.32, 0, TAU); const fur = new THREE.Path(); fur.absarc(0, 0, 3.66, 0, TAU, true); anel.holes.push(fur);
-    mostrador.anel = malha(extrudar(anel, 0.05, 0.01, 128), mat(tx.anel), 'mostrador'); mostrador.anel.position.z = zd; camadas.mostrador.add(mostrador.anel);
-    mostrador.sub = malha(extrudar(new THREE.Shape().absarc(0, 0, 1.45, 0, TAU), 0.05, 0.012, 96), mat(tx.sub), 'mostrador'); mostrador.sub.position.set(SUB.x, SUB.y, zd + 0.02); camadas.mostrador.add(mostrador.sub);
-    const sg = new THREE.Shape(); sg.absarc(0, 0, 0.72, 0, TAU); const fs = new THREE.Path(); fs.absarc(0, 0, 0.5, 0, TAU, true); sg.holes.push(fs);
-    mostrador.seg = malha(extrudar(sg, 0.04, 0.008, 64), mat(tx.seg), 'mostrador'); mostrador.seg.position.set(F.x, F.y, zd); camadas.mostrador.add(mostrador.seg);
-    // braços que seguram os submostradores no anel
-    const brac = (a, b) => { const m = malha(extrudar(barra([a, b], 0.07), 0.04, 0.008, 4), M.acoEscovado, 'mostrador'); m.position.z = zd - 0.005; camadas.mostrador.add(m); };
-    brac(SUB.clone().add(v2(1.3, 0.55)), v2(3.75, 0.58)); brac(SUB.clone().add(v2(1.3, Math.PI - 0.55)), v2(3.75, Math.PI - 0.58));
-    brac(F.clone().add(P(-0.68, 0)), P(-3.75, F.y)); brac(F.clone().add(P(0.68, 0)), SUB.clone().add(v2(1.38, Math.PI + 0.75)));
-    // índices aplicados (aço polido) nas 12, 3, 6 e 9
-    for (let i = 0; i < 12; i += 3) {
-      const a = Math.PI / 2 - i * TAU / 12;
-      const m = malha(new THREE.BoxGeometry(0.1, 0.42, 0.07), M.aco, 'mostrador');
-      const p = v2(3.95, a); m.position.set(p.x, p.y, zd + 0.06); m.rotation.z = a - Math.PI / 2; camadas.mostrador.add(m);
-    }
+    const esmalte = (map) => new THREE.MeshPhysicalMaterial({ color: 0xffffff, map, metalness: 0, roughness: 0.3, clearcoat: 0.7, clearcoatRoughness: 0.15 });
+    const anel = new THREE.Shape(); anel.absarc(0, 0, 4.32, 0, TAU); const fur = new THREE.Path(); fur.absarc(0, 0, R_IN, 0, TAU, true); anel.holes.push(fur);
+    mostrador.anel = malha(extrudar(anel, 0.05, 0.012, 128), esmalte(tx.anel), 'mostrador'); mostrador.anel.position.z = zd; camadas.mostrador.add(mostrador.anel);
+    mostrador.sub = malha(extrudar(new THREE.Shape().absarc(0, 0, 1.12, 0, TAU), 0.05, 0.014, 96), esmalte(tx.sub), 'mostrador'); mostrador.sub.position.set(SUB.x, SUB.y, zd + 0.03); camadas.mostrador.add(mostrador.sub);
+    // aro polido fininho em volta do submostrador
+    const aroS = malha(new THREE.TorusGeometry(1.13, 0.025, 8, 96), M.aco, 'mostrador'); aroS.position.set(SUB.x, SUB.y, zd + 0.07); camadas.mostrador.add(aroS);
   }
   document.fonts && document.fonts.ready.then(() => montaTexturas());
 
@@ -537,9 +528,10 @@ function iniciar3D() {
     g.add(cilindro(larg * 1.35, 0.05, mat, peca));
     g.position.set(pos.x, pos.y, z); camadas.ponteiros.add(g); return g;
   }
-  ponteiros.h = ponteiro(0.88, 0.1, 0.2, 2.06, 'ponteiro', M.aco, SUB);
-  ponteiros.m = ponteiro(1.32, 0.075, 0.26, 2.11, 'ponteiro', M.aco, SUB);
-  ponteiros.s = ponteiro(0.66, 0.035, 0.18, 2.03, 'ponteiro', M.azul, F);
+  const preto = new THREE.MeshStandardMaterial({ color: 0x141518, metalness: 0.85, roughness: 0.22 });
+  ponteiros.h = ponteiro(0.62, 0.075, 0.14, 2.08, 'ponteiro', preto, SUB);
+  ponteiros.m = ponteiro(0.95, 0.055, 0.18, 2.12, 'ponteiro', preto, SUB);
+  ponteiros.s = new THREE.Group();
 
   // cristal de safira com aro polido
   {
@@ -557,9 +549,26 @@ function iniciar3D() {
     const g = new THREE.LatheGeometry(perfil, 128); g.rotateX(Math.PI / 2);
     camadas.caixa.add(malha(g, M.caixa, 'caixa'));
     const fundo = cilindro(4.42, 0.06, new THREE.MeshStandardMaterial({ color: 0x2b3038, metalness: 0.9, roughness: 0.34 }), 'caixa', 96); fundo.position.z = -0.52; camadas.caixa.add(fundo);
-    for (const sy of [-1, 1]) for (const sx of [-1, 1]) {
-      const s = barra([P(sx * 1.72, sy * 4.5), P(sx * 1.8, sy * 5.9)], 0.34);
-      const m = malha(extrudar(s, 0.8, 0.12, 8), M.caixa, 'caixa'); m.position.z = 0.15; camadas.caixa.add(m);
+    // alça em gancho (perfil lateral extrudado na largura) com parafuso na ponta
+    {
+      const perf = new THREE.Shape();
+      perf.moveTo(4.35, 1.45);
+      perf.bezierCurveTo(5.0, 1.5, 5.7, 1.05, 5.95, 0.15);
+      perf.lineTo(5.95, -0.35);
+      perf.bezierCurveTo(5.95, -0.55, 5.55, -0.55, 5.55, -0.3);
+      perf.lineTo(5.55, 0.05);
+      perf.bezierCurveTo(5.35, 0.7, 4.95, 0.85, 4.35, 0.7);
+      perf.closePath();
+      const gl = new THREE.ExtrudeGeometry(perf, { depth: 0.42, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.05, bevelSegments: 3, curveSegments: 16 });
+      gl.translate(0, 0, -0.21);
+      gl.applyMatrix4(new THREE.Matrix4().set(0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1));
+      for (const sy of [-1, 1]) for (const sx of [-1, 1]) {
+        const m = malha(gl, M.caixa, 'caixa'); m.position.x = sx * 1.78; if (sy < 0) m.rotation.z = Math.PI; camadas.caixa.add(m);
+        const pz = new THREE.Group(); pz.position.set(sx * (1.78 + 0.27), sy * 5.76, -0.12); camadas.caixa.add(pz);
+        const cab = new THREE.CylinderGeometry(0.17, 0.17, 0.08, 24); cab.rotateZ(Math.PI / 2);
+        pz.add(malha(cab, M.caixa, 'parafuso'));
+        const fenda = malha(new THREE.BoxGeometry(0.03, 0.26, 0.04), M.escuro, 'parafuso'); fenda.position.x = sx * 0.04; fenda.rotation.x = 0.6 * sx * sy; pz.add(fenda);
+      }
     }
     const coroa = new THREE.Group(); coroa.position.set(5.4, 0, 0.55); camadas.caixa.add(coroa);
     const k = contorno(30, 0.05, { add: 0.5, ded: 0.6 });
@@ -567,33 +576,77 @@ function iniciar3D() {
     coroa.add(malha(cg, M.caixa, 'coroa'));
     const haste = cilindro(0.18, 0.4, M.caixa, 'coroa'); haste.rotation.set(0, Math.PI / 2, 0); haste.position.x = -0.35; coroa.add(haste);
     estado3d.coroa = coroa;
-    // couro com textura de escamas
-    const couro = tex(512, 512, (c, w, h) => {
-      c.fillStyle = '#060607'; c.fillRect(0, 0, w, h);
+    // couro preto liso com grão fino e costura nas bordas
+    const X0 = 1.5, Y0 = 5.45, Y1 = 14;
+    const couro = tex(256, 1024, (c, w, h) => {
+      c.fillStyle = '#121214'; c.fillRect(0, 0, w, h);
       let sem = 3; const rnd = () => ((sem = (sem * 16807) % 2147483647) / 2147483647);
-      for (let y = 0; y < h; y += 30) for (let x = -20; x < w; x += 36) {
-        const ww = 26 + rnd() * 12, hh = 22 + rnd() * 8, ox = (y / 30) % 2 ? 18 : 0;
-        const gr = c.createLinearGradient(x + ox, y, x + ox, y + hh); gr.addColorStop(0, '#26272a'); gr.addColorStop(1, '#141416');
-        c.fillStyle = gr; c.beginPath(); c.roundRect(x + ox + 2, y + 2, ww, hh, 8); c.fill();
-      }
+      for (let i = 0; i < 9000; i++) { const v = rnd(); c.fillStyle = v < 0.5 ? 'rgba(0,0,0,.35)' : 'rgba(255,255,255,.05)'; c.fillRect(rnd() * w, rnd() * h, 1.5, 1.5); }
+      c.strokeStyle = 'rgba(210,205,195,.55)'; c.lineWidth = 2.2; c.setLineDash([9, 6]);
+      for (const x of [16, w - 16]) { c.beginPath(); c.moveTo(x, 6); c.lineTo(x * 0.98 + (x > w / 2 ? w * 0.02 : 0), h); c.stroke(); }
+      c.beginPath(); c.moveTo(16, 14); c.lineTo(w - 16, 14); c.stroke();
     });
-    couro.repeat.set(0.42, 0.42);
-    const matCouro = new THREE.MeshPhysicalMaterial({ color: 0x4a4a4a, map: couro, metalness: 0, roughness: 0.6, clearcoat: 0.3, clearcoatRoughness: 0.45, envMapIntensity: 0.28 });
+    couro.wrapS = couro.wrapT = THREE.ClampToEdgeWrapping;
+    couro.repeat.set(1 / (2 * X0), 1 / (Y1 - Y0)); couro.offset.set(0.5, -Y0 / (Y1 - Y0));
+    const matCouro = new THREE.MeshPhysicalMaterial({ color: 0x3c3e42, map: couro, metalness: 0, roughness: 0.5, clearcoat: 0.25, clearcoatRoughness: 0.35, envMapIntensity: 0.22 });
     for (const sy of [-1, 1]) {
-      const s = new THREE.Shape(); const x0 = 1.36, y0 = 4.55, y1 = 13;
+      const s = new THREE.Shape(); const x0 = X0, y0 = Y0, y1 = Y1;
       const N = 22, xs = (t) => x0 * (1 - 0.08 * t);
       s.moveTo(-x0, y0); s.lineTo(x0, y0);
       for (let k = 1; k <= N; k++) { const t = k / N; s.lineTo(xs(t), lerp(y0, y1, t)); }
       for (let k = N; k >= 0; k--) { const t = k / N; s.lineTo(-xs(t), lerp(y0, y1, t)); }
-      const geo = new THREE.ExtrudeGeometry(s, { depth: 0.34, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.06, bevelSegments: 2, steps: 1, curveSegments: 4 });
+      const geo = new THREE.ExtrudeGeometry(s, { depth: 0.3, bevelEnabled: true, bevelThickness: 0.07, bevelSize: 0.07, bevelSegments: 3, steps: 1, curveSegments: 4 });
       // dobra a pulseira pra trás do pulso
       const p = geo.attributes.position;
-      for (let i = 0; i < p.count; i++) { const y = p.getY(i); const d = Math.max(0, y - 5.2); p.setZ(i, p.getZ(i) + 0.05 - 0.045 * d * d); }
-      // subdivide pouco: reconstrói com mais passos ao longo do comprimento
+      for (let i = 0; i < p.count; i++) { const y = p.getY(i); const d = Math.max(0, y - 5.9); p.setZ(i, p.getZ(i) - 0.32 - 0.016 * d * d); }
       geo.computeVertexNormals();
       const m = malha(geo, matCouro, 'pulseira'); if (sy < 0) m.rotation.z = Math.PI;
       camadas.caixa.add(m);
     }
+  }
+
+  // bancada: as peças deitam espalhadas no tapete, como na foto de referência
+  const MESA = {
+    caixa: [0, -10.8, 0.05], platina: [0, -1.3], trem: [-2.6, 5.6], tambor: [4.6, 4.4], escape: [8.2, 0.6], balanco: [-8.6, 3.6],
+    pontes: [3.4, 10.9], mostrador: [-9.6, -4.2], ponteiros: [-8.6, 8.6], cristal: [9.6, -4.4],
+  };
+  {
+    pivo.updateMatrixWorld(true);
+    const caixaB = new THREE.Box3();
+    for (const [id] of ORDEM) {
+      const grp = camadas[id];
+      const b = new THREE.Box3();
+      grp.traverse((o) => { if (o.isMesh && o.userData.peca !== 'pulseira') { o.geometry.computeBoundingBox(); caixaB.copy(o.geometry.boundingBox).applyMatrix4(o.matrixWorld); b.union(caixaB); } });
+      const c = b.getCenter(new THREE.Vector3());
+      const [mx, my, mz] = MESA[id];
+      grp.userData.mesa = new THREE.Vector3(mx - c.x, my - c.y, mz !== undefined ? mz : -1.69 - b.min.z + 0.01);
+    }
+  }
+  const tapete = new THREE.Group(); relogio.add(tapete); tapete.visible = false;
+  {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(140, 110), new THREE.MeshStandardMaterial({ color: 0x30353c, roughness: 0.95, metalness: 0 }));
+    m.position.set(0, -0.5, -1.7); m.receiveShadow = true; tapete.add(m);
+    const preto = new THREE.MeshStandardMaterial({ color: 0x0e0f11, metalness: 0.3, roughness: 0.35 });
+    // lupa de relojoeiro em pé
+    const lupaG = new THREE.LatheGeometry([P(0, 0), P(1.25, 0), P(1.3, 0.2), P(1.18, 1.3), P(1.05, 1.9), P(0.95, 1.95), P(0.9, 1.4)], 64); lupaG.rotateX(Math.PI / 2);
+    const lp = malha(lupaG, preto, 'ferramenta'); lp.position.set(11.6, 9.6, -1.7); tapete.add(lp);
+    const lente = malha(new THREE.CircleGeometry(0.95, 48), new THREE.MeshStandardMaterial({ color: 0x0b0d10, metalness: 1, roughness: 0.02 }), 'ferramenta'); lente.position.set(11.6, 9.6, 0.22); tapete.add(lente);
+    // pinça
+    for (const s of [-1, 1]) {
+      const pb = malha(extrudar(barra([P(0, 0), P(7.2, s * 0.22)], 0.16), 0.08, 0.02, 4), M.acoEscovado, 'ferramenta');
+      pb.position.set(-13.8, 10.8, -1.62 + (s + 1) * 0.04); pb.rotation.z = -0.5; tapete.add(pb);
+    }
+    // chaves de fenda
+    [[12.4, 3.6], [12.8, 1.6], [12.2, -0.6]].forEach(([x, y], k) => {
+      const ch = new THREE.Group(); ch.position.set(x, y, -1.46); ch.rotation.z = Math.PI + 0.08 * k; tapete.add(ch);
+      const cabo = contorno(24, 0.05, { add: 0.4, ded: 0.5 });
+      const cg = extrudar(cabo.shape, 2.6, 0.04, 4); cg.rotateY(Math.PI / 2);
+      ch.add(malha(cg, M.acoEscovado, 'ferramenta'));
+      const ponta = new THREE.CylinderGeometry(0.06, 0.08, 2.4, 12); ponta.rotateZ(Math.PI / 2); const pm = malha(ponta, M.aco, 'ferramenta'); pm.position.x = 2.5; ch.add(pm);
+      const tampa = new THREE.CylinderGeometry(0.42, 0.42, 0.3, 24); tampa.rotateZ(Math.PI / 2); const tm = malha(tampa, k === 1 ? M.azul : M.aco, 'ferramenta'); tm.position.x = -1.45; ch.add(tm);
+    });
+    // parafusinhos soltos
+    [[6.5, -8.2], [7.2, -8.9], [-5.6, -9.4], [10.8, 6.3], [-3.6, 9.6]].forEach(([x, y]) => { const g2 = cilindro(0.12, 0.1, M.aco, 'ferramenta', 12); g2.position.set(x, y, -1.64); tapete.add(g2); });
   }
 
   // fase de cada engrenagem pra os dentes encaixarem
@@ -645,7 +698,7 @@ function iniciar3D() {
   const NT = TOQUE ? 24 : 40;
   const posMat = new THREE.ShaderMaterial({
     depthTest: false, depthWrite: false, blending: THREE.NoBlending,
-    uniforms: { tCor: { value: rtCena.texture }, tProf: { value: rtCena.depthTexture }, near: { value: 0.5 }, far: { value: 120 }, foco: { value: 27 }, abertura: { value: 0 }, maxR: { value: 14 }, px: { value: new THREE.Vector2(1, 1) } },
+    uniforms: { tCor: { value: rtCena.texture }, tProf: { value: rtCena.depthTexture }, near: { value: 1 }, far: { value: 300 }, foco: { value: 27 }, abertura: { value: 0 }, maxR: { value: 14 }, px: { value: new THREE.Vector2(1, 1) } },
     vertexShader: 'varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.,1.); }',
     fragmentShader: `
       #include <packing>
@@ -856,52 +909,59 @@ function iniciar3D() {
 
     // fases da rolagem
     const g = smooth(0.03, 0.2, prog) * (1 - smooth(0.93, 1, prog));
-    const fecha = smooth(0.9, 0.99, prog);
+    const fecha = smooth(0.93, 0.99, prog);
+    const banca = smooth(0.79, 0.85, prog) * (1 - smooth(0.92, 0.96, prog));
     heroTxt.style.opacity = 1 - smooth(0.0, 0.06, prog);
     heroTxt.style.transform = `translate3d(0,${-prog * 260}px,0)`;
     controles.style.opacity = 1 - smooth(0.02, 0.07, prog);
     controles.style.pointerEvents = prog > 0.05 ? 'none' : '';
     const pv = smooth(0.2, 0.3, prog) * (1 - smooth(0.9, 0.96, prog));
     painel.style.opacity = pv; painel.style.visibility = pv > 0.01 ? 'visible' : 'hidden';
-    painel.classList.toggle('vazio', prog < 0.34 || prog > 0.92);
+    painel.classList.toggle('vazio', prog < 0.32 || prog > 0.92);
 
     // camadas
     const n = ORDEM.length;
-    const passoAtivo = prog < 0.34 || prog > 0.92 ? -1 : Math.min(n - 1, Math.floor((prog - 0.34) / (0.58 / n)));
+    const passoAtivo = prog < 0.32 || prog > 0.92 ? -1 : prog >= 0.79 ? n : Math.min(n - 1, Math.floor((prog - 0.32) / (0.47 / n)));
     if (passoAtivo !== ativo) { ativo = passoAtivo; itens.forEach((el, i) => el.classList.toggle('on', i === ativo)); }
-    const idAtivo = ativo >= 0 ? ROT[ativo][0] : null;
+    const idAtivo = ativo >= 0 && ativo < n ? ROT[ativo][0] : null;
     for (let i = 0; i < n; i++) {
       const [id, off] = ORDEM[i];
       const ex = smooth(0.1 + 0.012 * i, 0.3 + 0.012 * i, prog) * (1 - fecha);
-      const alvoZ = off * ex + (id === idAtivo ? 0.7 : 0);
-      const grp = camadas[id];
+      const grp = camadas[id], ms = grp.userData.mesa;
+      const alvoZ = lerp(off * ex + (id === idAtivo ? 0.7 : 0), ms.z, banca);
       grp.position.z += (alvoZ - grp.position.z) * Math.min(1, dtc * 9);
+      grp.position.x += (ms.x * banca - grp.position.x) * Math.min(1, dtc * 7);
+      grp.position.y += (ms.y * banca - grp.position.y) * Math.min(1, dtc * 7);
+      if (id === 'caixa') grp.rotation.z = Math.PI / 2 * banca;
       grp.userData.ex = ex;
     }
+    tapete.visible = banca > 0.02;
+    tapete.position.x = (1 - banca) * 26;
 
     // giro e enquadramento
     mouse.sx += (mouse.x - mouse.sx) * Math.min(1, dt * 3); mouse.sy += (mouse.y - mouse.sy) * Math.min(1, dt * 3);
     const retrato = W < H * 0.9;
-    const tx = lerp(-0.22 + mouse.sy * 0.1, -1.1 + mouse.sy * 0.04, g);
+    const tx = lerp(lerp(-0.22 + mouse.sy * 0.1, -1.1 + mouse.sy * 0.04, g), -0.82, banca);
     const ty = lerp(0.18 + mouse.sx * 0.16, 0.06 + mouse.sx * 0.08, g);
-    const tz = lerp(0, 0.6, g);
+    const tz = lerp(lerp(0, 0.6, g), 0.15, banca);
     rotAlvo.set(tx, ty, tz);
     pivo.rotation.x += (rotAlvo.x - pivo.rotation.x) * Math.min(1, dt * 6);
     pivo.rotation.y += (rotAlvo.y - pivo.rotation.y) * Math.min(1, dt * 6);
     pivo.rotation.z += (rotAlvo.z - pivo.rotation.z) * Math.min(1, dt * 6);
-    const distHero = retrato ? 28 / Math.max(0.3, camera.aspect) : 27, distGeral = retrato ? 30 / Math.max(0.3, camera.aspect) : 58, distPasso = retrato ? 26 / Math.max(0.3, camera.aspect) : 34;
+    const distHero = retrato ? 28 / Math.max(0.3, camera.aspect) : 29, distGeral = retrato ? 30 / Math.max(0.3, camera.aspect) : 58, distPasso = retrato ? 26 / Math.max(0.3, camera.aspect) : 34;
     let zFoco = 0, dAlvo = lerp(distHero, distGeral, g), zNitido = null;
-    if (ativo >= 0) {
+    if (idAtivo) {
       const [id, off] = ORDEM.find(([i]) => i === idAtivo);
       zNitido = off * (camadas[id].userData.ex || 0) + 0.7 + (id === 'balanco' ? 1.15 : id === 'caixa' ? 0.4 : id === 'cristal' ? 2.1 : id === 'ponteiros' ? 2.0 : id === 'mostrador' ? 1.9 : 0.9);
     }
     let xF = 0, yF = 0;
-    if (ativo >= 0 && idAtivo === 'balanco') {
+    if (idAtivo === 'balanco') {
       xF = BC.x + 0.3; yF = BC.y * 0.75; zFoco = zNitido;
       dAlvo = distPasso * 0.42;
-    } else if (ativo >= 0) {
+    } else if (idAtivo) {
       zFoco = lerp(5.2, zNitido, 0.3); dAlvo = distGeral * 0.84;
     } else if (g > 0.01) zFoco = 5.2 * g;
+    if (banca > 0.01) { zFoco = lerp(zFoco, 0, banca); yF = lerp(yF, -0.5, banca); dAlvo = lerp(dAlvo, retrato ? 120 : 64, banca); zNitido = null; }
     cam.z += (zFoco - cam.z) * Math.min(1, dtc * 3.2);
     cam.x += (xF - cam.x) * Math.min(1, dtc * 3.2); cam.y += (yF - cam.y) * Math.min(1, dtc * 3.2);
     cam.d += (dAlvo - cam.d) * Math.min(1, dtc * 3.2);
@@ -958,7 +1018,7 @@ function iniciar3D() {
     }
     renderer.autoClear = true;
     // cena → textura → desfoque pela profundidade → tela
-    const abAlvo = g < 0.02 ? 0 : (ativo < 0 ? 8 : idAtivo === 'balanco' ? 60 : 46) * g;
+    const abAlvo = g < 0.02 ? 0 : (ativo < 0 ? 8 : ativo === n ? 14 : idAtivo === 'balanco' ? 60 : 46) * g;
     lente.ab += (abAlvo - lente.ab) * Math.min(1, dtc * 3);
     posMat.uniforms.abertura.value = lente.ab;
     let fAlvo = cam.d;
