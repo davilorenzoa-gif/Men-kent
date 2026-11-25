@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230d0e10'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23dcae58' stroke-width='2'/%3E%3Cpath d='M16 16V9M16 16l5 3' stroke='%23dcae58' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 :root{
-  --noite:#0d0e10; --noite2:#16171a; --osso:#ede6d8; --osso2:#e2d9c7; --tinta:#17140f; --cinza:#6d675c;
+  --noite:#0b0d10; --noite2:#16171a; --osso:#ede6d8; --osso2:#e2d9c7; --tinta:#17140f; --cinza:#6d675c;
   --latao:#c99a46; --latao-claro:#e3b866; --rubi:#a3182f; --azul:#2b4fc4;
   --serif:'Newsreader', Georgia, 'Times New Roman', serif;
   --sans:'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -43,7 +43,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* palco 3D */
 #mov{position:relative;height:620vh}
 #palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
-  background:radial-gradient(120% 90% at 68% 45%, #23211d 0%, #121214 55%, #0b0b0d 100%)}
+  background:radial-gradient(85% 75% at 66% 46%, #2c343e 0%, #171c23 48%, #090b0e 100%)}
 #palco.com-lupa{cursor:none}
 #palco.com-lupa button, #palco.com-lupa a{cursor:pointer}
 #cena{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -98,6 +98,7 @@ h1 em{font-style:italic;color:var(--latao-claro)}
 .passo.on .t i{color:var(--latao-claro)}
 .passo.on p{max-height:120px;opacity:1;margin-top:6px}
 .contagem{margin-top:18px;color:#8d8576}
+@media (min-width:761px) and (max-height:820px){#painel{top:calc(50% + 30px)}#painel h2{font-size:30px;margin-bottom:14px}.passo{padding:7px 0}.passo .t{font-size:14px}}
 .contagem b{color:var(--latao-claro);font-weight:500}
 
 #rotulos{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0}
@@ -125,6 +126,9 @@ h1 em{font-style:italic;color:var(--latao-claro)}
   .passo p{padding-left:34px}
   .contagem{margin-top:10px;font-size:11px}
   #rotulos{display:none}
+  #painel.vazio{display:none}
+  #lupa-legenda{max-width:180px;font-size:12px;padding:8px 10px}
+  #lupa-legenda b{font-size:15px}
 }
 
 /* seções claras */
@@ -252,15 +256,16 @@ h2.t em{font-style:italic}
     <div id="painel">
       <h2 id="painel-ancora">Desmontando, <em>peça por peça.</em></h2>
       <ol class="passos">
-        <li class="passo"><div class="t"><i>01</i>Pontes e rubis</div><p>Seguram as rodas por cima. Nos furos, rubis sintéticos: duros e lisos, gastam menos o pivô. A catraca em cima trava a corda.</p></li>
-        <li class="passo"><div class="t"><i>02</i>Balanço e espiral</div><p>O coração: vai e volta 3 vezes por segundo, 21.600 alternâncias por hora. A raquete muda o comprimento útil da espiral, e é assim que se regula.</p></li>
-        <li class="passo"><div class="t"><i>03</i>Escape</div><p>A âncora trava e solta a roda de escape meio dente por vez. Cada soltura é um tique. Desenho atribuído a Thomas Mudge, por volta de 1755.</p></li>
-        <li class="passo"><div class="t"><i>04</i>Trem de rodas</div><p>Roda central (uma volta por hora), terceira e quarta (uma volta por minuto). Levam a força do tambor até o escape.</p></li>
-        <li class="passo"><div class="t"><i>05</i>Tambor</div><p>Uma mola de aço enrolada lá dentro guarda a corda. É a bateria do relógio mecânico.</p></li>
-        <li class="passo"><div class="t"><i>06</i>Platina</div><p>A base onde tudo se apoia. Os circulinhos são perlage, só acabamento.</p></li>
-        <li class="passo"><div class="t"><i>07</i>Mostrador</div><p>Horas e minutos no centro. Os segundos ficam às 6, presos direto na quarta roda.</p></li>
-        <li class="passo"><div class="t"><i>08</i>Ponteiros</div><p>Aço azulado no fogo. Mostram a hora certa de agora: este relógio começou a andar quando você abriu a página.</p></li>
-        <li class="passo"><div class="t"><i>09</i>Caixa e coroa</div><p>A coroa dá corda e acerta a hora. A caixa segura pó e água, se a vedação estiver em dia.</p></li>
+        <li class="passo"><div class="t"><i>01</i>Cristal</div><p>Safira abaulada com aro polido. Saindo ele, dá pra ver tudo.</p></li>
+        <li class="passo"><div class="t"><i>02</i>Ponteiros</div><p>Horas e minutos no mostradorzinho de cima; segundos às 9, presos direto na quarta roda. Mostram a hora de agora: o relógio começou a andar quando você abriu a página.</p></li>
+        <li class="passo"><div class="t"><i>03</i>Mostrador vazado</div><p>Só o anel das horas e os dois submostradores. O resto é janela pro movimento.</p></li>
+        <li class="passo"><div class="t"><i>04</i>Pontes e rubis</div><p>Seguram as rodas por cima, recortadas pra deixar a luz passar. Nos furos, rubis sintéticos em anéis de ouro: duros e lisos, gastam menos o pivô.</p></li>
+        <li class="passo"><div class="t"><i>05</i>Balanço e espiral</div><p>O coração: vai e volta 3 vezes por segundo, 21.600 alternâncias por hora. A raquete muda o comprimento útil da espiral, e é assim que se regula.</p></li>
+        <li class="passo"><div class="t"><i>06</i>Escape</div><p>A âncora trava e solta a roda de escape meio dente por vez. Cada soltura é um tique. Desenho atribuído a Thomas Mudge, por volta de 1755.</p></li>
+        <li class="passo"><div class="t"><i>07</i>Trem de rodas</div><p>Roda central (uma volta por hora), terceira e quarta (uma volta por minuto). Levam a força do tambor até o escape.</p></li>
+        <li class="passo"><div class="t"><i>08</i>Tambor</div><p>Uma mola de aço enrolada lá dentro guarda a corda. É a bateria do relógio mecânico.</p></li>
+        <li class="passo"><div class="t"><i>09</i>Platina</div><p>A base de tudo, vazada como o resto. Os circulinhos são perlage, só acabamento.</p></li>
+        <li class="passo"><div class="t"><i>10</i>Caixa e pulseira</div><p>Aço polido, coroa estriada pra dar corda e couro. A caixa segura pó e água, se a vedação estiver em dia.</p></li>
       </ol>
       <p class="contagem mono"><b data-pecas>—</b> peças desenhadas em código · nenhuma foto</p>
     </div>

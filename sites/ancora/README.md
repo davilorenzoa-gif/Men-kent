@@ -18,7 +18,16 @@
 - Fontes: Newsreader (títulos, itálico nos destaques) + Geist (texto) + Geist Mono (leituras de instrumento).
 - Princípio: relojoaria é confiança na mão de quem abre o relógio. O site abre o relógio na frente da pessoa.
 
-## O relógio (86 peças, todas em código, nenhuma foto)
+## v2 (25/11/2026): relógio esqueleto do vídeo de referência
+O Davi mandou um vídeo de "watch movement exploded view" (relógio esqueleto de luxo desmontando em camadas) e disse que o relógio da v1 "não estava tão bom". Refeito no estilo do vídeo:
+- **Esqueleto visto pela frente:** mostrador vazado (anel das horas em algarismos romanos + submostrador guilhochê às 12 com horas e minutos + pequenos segundos às 9), platina com ~26 janelas redondas (posicionadas por um algoritmo que não deixa uma encostar na outra), pontes de prata recortadas com furos, ponte em ferradura na borda, ponte do balanço atravessada com dois parafusos azuis, rubis com anel de ouro, 6 rodas de enfeite extras, índices aplicados.
+- Balanço grande de ouro às 6 (o layout inteiro gira pra ele ficar embaixo), espiral de 14 voltas.
+- Cristal de safira abaulado (reflexo somado por cima, sem escurecer nada), aro polido, fundo escuro, alças e **pulseira de couro** com escama e curva.
+- Fundo azul-grafite como o estúdio do vídeo.
+- **Desmontagem em 10 camadas na vertical**, bem separadas, e **desfoque de lente de verdade** (profundidade de campo por pós-processamento: cena num render target com textura de profundidade, desfoque em disco proporcional à distância do foco). Em cada passo o foco vai pra camada ativa; no passo do balanço a câmera faz o **close** como no vídeo (balanço nítido, o resto desfocado).
+- 133 peças, ainda tudo em código.
+
+## O relógio (v1: 86 peças, todas em código, nenhuma foto)
 Engrenagens com dente de verdade (`ExtrudeGeometry` de um perfil de dente + furos dos raios), relação de transmissão real e fase calculada pra os dentes encaixarem:
 - tambor 96 → pinhão central 12 (1 volta a cada 8 h); roda central 80 → pinhão 10; terceira 75 → pinhão 10; quarta 84 (1 volta por minuto) → pinhão de escape 7; roda de escape de 15 dentes.
 - balanço a 3 Hz (21.600 alt/h), amplitude ligada à corda, espiral que "respira" (fita de 520 pontos recalculada a cada quadro), âncora que vira a cada batida, roda de escape que anda meio dente por batida com recuo.
@@ -28,7 +37,7 @@ Engrenagens com dente de verdade (`ExtrudeGeometry` de um perfil de dente + furo
 
 ## Os 3 WOWs
 1. **Lupa de relojoeiro** (herói): uma 2ª passada da mesma câmera com `setViewOffset` renderiza só o pedacinho embaixo do cursor, ampliado 3,4×, num render target com MSAA; um shader desenha a lente (distorção de barril, aberração cromática na borda, aro de latão, brilho do vidro). Raycast diz o que está embaixo e mostra a ficha da peça. No celular a lupa passeia sozinha pelas peças e segue o dedo (fica acima do dedo pra não ficar escondida). Junto: "Segure pra dar corda" (catraca e coroa giram, reserva sobe), câmera lenta e som de tique-taque sintetizado.
-2. **Desmontando, peça por peça** (rolagem, 620vh com palco preso): o relógio deita e as 9 camadas se separam ao longo do eixo; depois a câmera visita uma camada por vez na ordem em que o relojoeiro desmonta (pontes → balanço → escape → trem → tambor → platina → mostrador → ponteiros → caixa), a camada ativa sobe um pouco, mostrador e ponteiros **viram** pra mostrar a cara; no fim o relógio se monta de novo.
+2. **Desmontando, peça por peça** (rolagem, 620vh com palco preso; v2: 10 camadas, ver acima): o relógio deita e as camadas se separam ao longo do eixo; depois a câmera visita uma camada por vez na ordem em que o relojoeiro desmonta (pontes → balanço → escape → trem → tambor → platina → mostrador → ponteiros → caixa), a camada ativa sobe um pouco, mostrador e ponteiros **viram** pra mostrar a cara; no fim o relógio se monta de novo.
 3. **Timegrapher** (seção clara): a pessoa escolhe o defeito (adianta, atrasa, ímã, tombo), vê a linha das batidas inclinada e acerta na raquete até a linha ficar reta; selo "Regulado" quando fica na faixa de cronômetro (−4 a +6 s/dia). Ímã precisa desmagnetizar antes; tombo mostra duas linhas separadas e diz que só abrindo.
 
 ## Fatos usados (conferidos)
