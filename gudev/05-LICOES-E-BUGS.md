@@ -189,3 +189,8 @@ Elemento com `transform:translateX(-120%) skewX(...)` no CSS e animado com `xPer
 - **Tempo negativo:** o 1º quadro do rAF pode ter `t` menor que o `performance.now()` guardado. `dt` negativo virou índice negativo (`% n`) e quebrou o laço. Sempre `clamp(dt, 0, máx)`.
 - **`overflow-x` no html e no body juntos quebra o `position: sticky`:** com `overflow-x: clip` no `html`, o `overflow-x: hidden` do `body` deixa de ir pra janela e o body vira caixa de rolagem própria; o palco preso some. Usar só `html { overflow-x: clip }`.
 - Suavização de câmera e de opacidade usa o tempo real (até 0,25 s), não o `dt` limitado a 0,05 da física: em aparelho lento a câmera chegava atrasada.
+
+## 25/11/2026: relógio "não está tão bom" (Âncora v1 → v2)
+- O Davi achou o relógio da v1 fraco e mandou um vídeo de referência. O que faltava: **densidade de detalhe** (platina lisa, poucas pontes, poucos parafusos), **ver por dentro pela frente** (esqueleto) e **acabamento de cinema** (fundo de estúdio, desfoque de lente, close). Lição: em objeto 3D "de luxo", liso = barato. Antes de mostrar, comparar com uma foto/vídeo real do produto e contar os elementos (parafusos, rubis, furos, bordas polidas).
+- Vidro com `AdditiveBlending` normal soma alfa 1 e vira um disco preto por cima do fundo transparente do canvas. Usar `CustomBlending` com `blendSrcAlpha: Zero, blendDstAlpha: One`.
+- Profundidade de campo: foco medido no centro do eixo deixa fora de foco uma peça que está fora do eixo (o balanço às 6). Medir o foco na posição da própria peça.

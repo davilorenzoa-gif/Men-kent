@@ -80,14 +80,14 @@ function iniciar3D() {
   /* ---------- luz de estúdio feita em código (vira reflexo nos metais) */
   {
     const s = new THREE.Scene();
-    s.add(new THREE.Mesh(new THREE.BoxGeometry(40, 40, 40), new THREE.MeshBasicMaterial({ color: 0x121315, side: THREE.BackSide })));
+    s.add(new THREE.Mesh(new THREE.BoxGeometry(40, 40, 40), new THREE.MeshBasicMaterial({ color: 0x161b22, side: THREE.BackSide })));
     const painel = (w, h, cor, i, pos) => {
       const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(cor).multiplyScalar(i), side: THREE.DoubleSide }));
       m.position.set(...pos); m.lookAt(0, 0, 0); s.add(m);
     };
     painel(16, 6, 0xfff1dc, 7, [-2, 14, 8]);   // softbox de cima, quente
     painel(3, 18, 0xffffff, 5, [-15, 1, 5]);   // faixa esquerda
-    painel(3, 18, 0xd6e4ff, 3.2, [15, -2, 6]); // faixa direita, fria
+    painel(3, 18, 0xd6e4ff, 4.2, [15, -2, 6]); // faixa direita, fria
     painel(12, 3, 0xffc98a, 1.6, [0, -14, 9]); // rebatedor de baixo
     painel(9, 9, 0xffffff, 0.9, [0, 0, -16]);
     painel(4, 4, 0xffffff, 9, [6, 6, 16]);     // ponto de brilho frontal
@@ -101,7 +101,7 @@ function iniciar3D() {
   sol.position.set(-7, 9, 14);
   sol.castShadow = true;
   sol.shadow.mapSize.set(TOQUE ? 1024 : 2048, TOQUE ? 1024 : 2048);
-  Object.assign(sol.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: 1, far: 40 });
+  Object.assign(sol.shadow.camera, { left: -9, right: 9, top: 13, bottom: -13, near: 1, far: 50 });
   sol.shadow.bias = -0.0004; sol.shadow.normalBias = 0.02; sol.shadow.radius = 3;
   scene.add(sol, sol.target);
   scene.add(new THREE.HemisphereLight(0xfff4e6, 0x1a1712, 0.25));
@@ -127,7 +127,7 @@ function iniciar3D() {
       g.fillStyle = gr; g.beginPath(); g.arc(x, y, s * 0.72, 0, TAU); g.fill();
     }
   });
-  perlage.repeat.set(0.6, 0.6);
+  perlage.repeat.set(1.1, 1.1);
   // Côtes de Genève: listras das pontes
   const cotes = tex(256, 256, (g, w, h) => {
     const n = 4, sw = w / n;
@@ -152,12 +152,12 @@ function iniciar3D() {
   const solTambor = soleil('#d8b062', '#c19346');
   const solCatraca = soleil('#d9dce2', '#b4b8bf', 240); solCatraca.repeat.set(0.49, 0.49); solCatraca.offset.set(0.5, 0.5);
   const M = {
-    latao: new THREE.MeshStandardMaterial({ color: 0xdcae58, metalness: 1, roughness: 0.24 }),
+    latao: new THREE.MeshStandardMaterial({ color: 0xe6b863, metalness: 1, roughness: 0.2 }),
     lataoFosco: new THREE.MeshStandardMaterial({ color: 0xc99d4f, metalness: 1, roughness: 0.4 }),
     aco: new THREE.MeshStandardMaterial({ color: 0xe2e5ea, metalness: 1, roughness: 0.14 }),
     acoEscovado: new THREE.MeshStandardMaterial({ color: 0xc8cbd1, metalness: 1, roughness: 0.3 }),
-    platina: new THREE.MeshStandardMaterial({ color: 0xffffff, map: perlage, metalness: 1, roughness: 0.36 }),
-    ponte: new THREE.MeshStandardMaterial({ color: 0xffffff, map: cotes, metalness: 1, roughness: 0.26 }),
+    platina: new THREE.MeshStandardMaterial({ color: 0xf2f4f7, map: perlage, metalness: 1, roughness: 0.34 }),
+    ponte: new THREE.MeshStandardMaterial({ color: 0xf4f6f9, map: cotes, metalness: 1, roughness: 0.24 }),
     rubi: new THREE.MeshPhysicalMaterial({ color: 0xb3102e, metalness: 0, roughness: 0.06, clearcoat: 1, clearcoatRoughness: 0.04, emissive: 0x3a0310, ior: 1.76, specularIntensity: 1 }),
     azul: new THREE.MeshStandardMaterial({ color: 0x2b4fc4, metalness: 1, roughness: 0.2 }),
     caixa: new THREE.MeshStandardMaterial({ color: 0xe8eaee, metalness: 1, roughness: 0.1 }),
@@ -228,83 +228,53 @@ function iniciar3D() {
     return new THREE.Shape(out);
   }
 
-  /* ---------- montagem do movimento */
+  /* ---------- montagem do movimento (esqueleto, visto pela frente) */
   const relogio = new THREE.Group();
   const pivo = new THREE.Group(); // gira o relógio inteiro
   pivo.add(relogio); scene.add(pivo);
   const camadas = {};
-  const ORDEM = [ // de baixo (lado do mostrador) pra cima (fundo do relógio)
-    ['caixa', -8.4], ['ponteiros', -5.9], ['mostrador', -3.7], ['platina', 0], ['tambor', 1.5], ['trem', 2.9], ['escape', 4.2], ['balanco', 5.5], ['pontes', 7.1],
+  // de baixo (fundo da caixa) pra cima (cristal, do lado de quem olha)
+  const ORDEM = [
+    ['caixa', -6.6], ['platina', 0], ['tambor', 1.9], ['trem', 3.7], ['escape', 5.3], ['balanco', 7.0], ['pontes', 8.9], ['mostrador', 10.9], ['ponteiros', 12.3], ['cristal', 14.0],
   ];
   for (const [id, off] of ORDEM) { const g = new THREE.Group(); g.userData.off = off; camadas[id] = g; relogio.add(g); }
 
   const P = (x, y) => new THREE.Vector2(x, y);
   const mod = 0.04;
-  const C = P(0, 0), F = P(0, -2.2);
+  // posições com a relação de engrenagens real; depois gira tudo pra o balanço ficar às 6
+  let C = P(0, 0), F = P(0, -2.2);
   const dCT = mod * (80 + 10) / 2, dTF = mod * (75 + 10) / 2, dFE = mod * (84 + 7) / 2, dBC = mod * (96 + 12) / 2;
   const yT = (dCT * dCT - dTF * dTF + 2.2 * 2.2) / (2 * 2.2);
-  const T = P(-Math.sqrt(dCT * dCT - yT * yT), -yT);
-  const E = F.clone().add(v2(dFE, 40 * Math.PI / 180));
-  const B = v2(dBC, 110 * Math.PI / 180);
-  const dirFork = v2(1, 45 * Math.PI / 180);
-  const PV = E.clone().addScaledVector(dirFork, 0.95);
-  const BC = PV.clone().addScaledVector(dirFork, 0.97);
+  let T = P(-Math.sqrt(dCT * dCT - yT * yT), -yT);
+  let E = F.clone().add(v2(dFE, 40 * Math.PI / 180));
+  let B = v2(dBC, 110 * Math.PI / 180);
+  let dirFork = v2(1, 45 * Math.PI / 180);
+  let PV = E.clone().addScaledVector(dirFork, 0.95);
+  let BC = PV.clone().addScaledVector(dirFork, 0.97);
+  {
+    const phi = -Math.PI / 2 - Math.atan2(BC.y, BC.x);
+    const r = (v) => v.clone().rotateAround(P(0, 0), phi);
+    [C, F, T, E, B, PV, BC, dirFork] = [C, F, T, E, B, PV, BC, dirFork].map(r);
+  }
+  const SUB = P(0, 1.72); // submostrador de horas e minutos (às 12)
 
-  // platina
+  // platina vazada: janelas redondas que não se encostam
+  const janelas = [];
+  function cabe(p, r, folga = 0.13) {
+    if (p.length() + r > 3.98) return false;
+    return janelas.every(([q, s]) => q.distanceTo(p) > r + s + folga);
+  }
+  function janela(p, r, min = 0.28) { for (let rr = r; rr >= min; rr -= 0.03) if (cabe(p, rr)) { janelas.push([p.clone(), rr]); return; } }
+  janela(BC, 1.32); janela(B, 1.15); janela(F, 1.15); janela(C, 1.1); janela(T, 1.0); janela(E, 0.62); janela(PV, 0.4);
+  {
+    let semente = 7; const rnd = () => ((semente = (semente * 16807) % 2147483647) / 2147483647);
+    for (let i = 0; i < 260 && janelas.length < 26; i++) { const a = rnd() * TAU, d = 1 + rnd() * 2.9, r = 0.16 + rnd() * 0.3; janela(v2(d, a), r, 0.16); }
+  }
   {
     const s = new THREE.Shape(); s.absarc(0, 0, 4.36, 0, TAU);
-    const g = extrudar(s, 0.25, 0.02, 96);
-    camadas.platina.add(malha(g, M.platina, 'platina'));
+    for (const [p, r] of janelas) { const h = new THREE.Path(); h.absarc(p.x, p.y, r, 0, TAU, true); s.holes.push(h); }
+    camadas.platina.add(malha(extrudar(s, 0.25, 0.022, 48), M.platina, 'platina'));
   }
-  // mostrador
-  let texMostrador = null;
-  function desenhaMostrador() {
-    const c = document.createElement('canvas'); c.width = c.height = 1024;
-    const g = c.getContext('2d'), R = 512;
-    g.fillStyle = '#ece4d3'; g.fillRect(0, 0, 1024, 1024);
-    const gr = g.createRadialGradient(470, 420, 60, 512, 512, 520); gr.addColorStop(0, 'rgba(255,255,255,.35)'); gr.addColorStop(1, 'rgba(120,100,70,.18)');
-    g.fillStyle = gr; g.fillRect(0, 0, 1024, 1024);
-    g.translate(R, R);
-    for (let i = 0; i < 60; i++) {
-      g.save(); g.rotate(i * TAU / 60);
-      g.fillStyle = '#1d1a15';
-      if (i % 5 === 0) g.fillRect(-7, -R * 0.93, 14, 66); else g.fillRect(-1.6, -R * 0.93, 3.2, 22);
-      g.restore();
-    }
-    g.fillStyle = '#1d1a15'; g.textAlign = 'center';
-    g.font = '500 64px Newsreader, Georgia, serif'; g.fillText('Âncora', 0, -R * 0.42);
-    g.font = '500 22px "Geist Mono", monospace'; g.fillText('MECÂNICO · 21.600 A/H', 0, -R * 0.42 + 40);
-    // pequeno segundo às 6 (fica sobre a quarta roda)
-    const sy = 2.2 / 4.3 * R;
-    g.strokeStyle = '#1d1a15'; g.lineWidth = 2; g.beginPath(); g.arc(0, sy, R * 0.25, 0, TAU); g.stroke();
-    for (let i = 0; i < 60; i++) { g.save(); g.translate(0, sy); g.rotate(i * TAU / 60); g.fillRect(-1, -R * 0.25, 2, i % 5 ? 10 : 20); g.restore(); }
-    g.font = '500 20px "Geist Mono", monospace';
-    [['60', 0], ['15', 1], ['30', 2], ['45', 3]].forEach(([t, k]) => { const a = k * TAU / 4; g.fillText(t, Math.sin(a) * R * 0.17, sy - Math.cos(a) * R * 0.17 + 7); });
-    if (!texMostrador) { texMostrador = new THREE.CanvasTexture(c); texMostrador.colorSpace = THREE.SRGBColorSpace; texMostrador.anisotropy = 8; }
-    else { texMostrador.image = c; texMostrador.needsUpdate = true; }
-  }
-  desenhaMostrador();
-  document.fonts && document.fonts.ready.then(desenhaMostrador);
-  {
-    const g = new THREE.CircleGeometry(4.3, 96); g.rotateY(Math.PI);
-    const m = malha(g, new THREE.MeshStandardMaterial({ map: texMostrador, roughness: 0.55, metalness: 0 }), 'mostrador', false);
-    m.position.z = -0.17; camadas.mostrador.add(m);
-    const b = malha(extrudar(new THREE.Shape().absarc(0, 0, 4.3, 0, TAU), 0.04, 0, 96), M.acoEscovado, 'mostrador');
-    b.position.z = -0.14; camadas.mostrador.add(b);
-  }
-  // ponteiros
-  const ponteiros = {};
-  function ponteiro(comp, larg, cauda, z, peca) {
-    const s = new THREE.Shape();
-    s.moveTo(0, -cauda); s.lineTo(larg, 0); s.lineTo(larg * 0.55, comp * 0.78); s.lineTo(0, comp); s.lineTo(-larg * 0.55, comp * 0.78); s.lineTo(-larg, 0); s.closePath();
-    const g = new THREE.Group();
-    const m = malha(extrudar(s, 0.025, 0.006, 4), M.azul, peca); g.add(m);
-    const cubo = cilindro(larg * 1.3, 0.05, M.azul, peca); g.add(cubo);
-    g.position.z = z; return g;
-  }
-  ponteiros.h = ponteiro(2.35, 0.17, 0.4, -0.27, 'ponteiro'); camadas.ponteiros.add(ponteiros.h);
-  ponteiros.m = ponteiro(3.55, 0.12, 0.55, -0.32, 'ponteiro'); camadas.ponteiros.add(ponteiros.m);
-  ponteiros.s = ponteiro(0.95, 0.045, 0.25, -0.24, 'ponteiro'); ponteiros.s.position.x = F.x; ponteiros.s.position.y = F.y; camadas.ponteiros.add(ponteiros.s);
 
   // eixos com roda e pinhão
   function eixo(pos, z0, z1, camada) {
@@ -313,28 +283,23 @@ function iniciar3D() {
     camadas[camada].add(g); return g;
   }
   const arv = {};
-  // tambor (barrilete) com a mola real dentro
   arv.B = eixo(B, 0.15, 1.2, 'tambor');
   {
     const d = roda(96, mod, 0.07, M.latao, 0, 'tambor'); d.position.z = 0.35; arv.B.add(d);
     const tampa = cilindro(1.74, 0.26, new THREE.MeshStandardMaterial({ color: 0xffffff, map: solTambor, metalness: 1, roughness: 0.3 }), 'tambor', 96); tampa.position.z = 0.35; arv.B.add(tampa);
   }
-  // roda central (minutos)
   arv.C = eixo(C, 0.15, 1.2, 'trem');
   { const p = pinhao(12, mod, 0.22, 'central'); p.position.z = 0.35; arv.C.add(p);
     const r = roda(80, mod, 0.06, M.latao, 5, 'central'); r.position.z = 0.8; arv.C.add(r);
     const c = cilindro(0.16, 0.1, M.latao, 'central'); c.position.z = 0.8; arv.C.add(c); }
-  // terceira roda
   arv.T = eixo(T, 0.15, 1.2, 'trem');
   { const p = pinhao(10, mod, 0.12, 'terceira'); p.position.z = 0.8; arv.T.add(p);
     const r = roda(75, mod, 0.06, M.latao, 4, 'terceira'); r.position.z = 0.62; arv.T.add(r);
     const c = cilindro(0.14, 0.1, M.latao, 'terceira'); c.position.z = 0.62; arv.T.add(c); }
-  // quarta roda (segundos)
-  arv.F = eixo(F, -0.3, 1.2, 'trem');
+  arv.F = eixo(F, 0.15, 2.0, 'trem');
   { const p = pinhao(10, mod, 0.12, 'quarta'); p.position.z = 0.62; arv.F.add(p);
     const r = roda(84, mod, 0.06, M.latao, 6, 'quarta'); r.position.z = 1.0; arv.F.add(r);
     const c = cilindro(0.15, 0.1, M.latao, 'quarta'); c.position.z = 1.0; arv.F.add(c); }
-  // roda de escape (15 dentes em bico, aço)
   arv.E = eixo(E, 0.15, 1.05, 'escape');
   {
     const z = 15, R = 0.62, r0 = 0.44, p = TAU / z, pts = [];
@@ -346,18 +311,35 @@ function iniciar3D() {
     const r = malha(extrudar(s, 0.05, 0.006, 6), M.aco, 'escape'); r.position.z = 0.7; arv.E.add(r);
     const pn = pinhao(7, mod, 0.12, 'escape'); pn.position.z = 1.0; arv.E.add(pn);
   }
+  // rodas de enfeite (mecanismo de corda e de acerto), giram junto com o trem
+  const extras = [];
+  {
+    const ocupado = [[C, 1.7, 0.8], [T, 1.6, 0.62], [F, 1.78, 1.0], [B, 1.98, 0.35], [E, 0.66, 0.7], [BC, 1.25, 1.15]];
+    const tenta = (p, z, dentes, zz) => {
+      const r = mod * dentes / 2 + 0.06;
+      if (p.length() + r > 3.95) return;
+      if (ocupado.some(([q, s, qz]) => Math.abs(qz - zz) < 0.14 && q.distanceTo(p) < r + s)) return;
+      ocupado.push([p, r, zz]);
+      const g = eixo(p, 0.15, zz + 0.1, 'trem');
+      const w = roda(dentes, mod, 0.05, M.latao, dentes > 30 ? 4 : 0, 'enfeite'); w.position.z = zz; g.add(w);
+      const cb = cilindro(0.09, 0.08, M.aco, 'enfeite'); cb.position.z = zz; g.add(cb);
+      extras.push([g, (Math.random() < 0.5 ? -1 : 1) * (8 + Math.random() * 30) / dentes]);
+    };
+    const cand = [[3.2, -1.2, 32, 0.5], [-3.1, -1.7, 28, 0.45], [2.6, 2.3, 24, 0.95], [-2.7, 2.2, 36, 0.95], [1.4, -1.0, 20, 1.05], [-1.2, 3.1, 18, 0.5], [3.5, 1.4, 16, 0.75], [-3.5, 0.9, 20, 0.5], [0.9, 2.9, 22, 0.55]];
+    for (const [x, y, d, z] of cand) tenta(P(x, y), z, d, z);
+  }
   // âncora (garfo) com as duas paletas de rubi
   const ancora = new THREE.Group(); ancora.position.set(PV.x, PV.y, 0.7); camadas.escape.add(ancora);
   {
     const loc = (v) => v.clone().sub(PV);
     const angF = Math.atan2(dirFork.y, dirFork.x);
     const qa = loc(E.clone().add(v2(0.6, angF + Math.PI - 0.66))), qb = loc(E.clone().add(v2(0.6, angF + Math.PI + 0.66)));
-    const braco = (q) => { const s = barra([P(0, 0), q], 0.055); const m = malha(extrudar(s, 0.045, 0.006, 4), M.aco, 'ancora'); ancora.add(m); };
+    const braco = (q) => ancora.add(malha(extrudar(barra([P(0, 0), q], 0.055), 0.045, 0.006, 4), M.aco, 'ancora'));
     braco(qa); braco(qb);
     const ponta = dirFork.clone().multiplyScalar(0.72);
-    const alav = malha(extrudar(barra([P(0, 0), ponta], 0.04), 0.045, 0.006, 4), M.aco, 'ancora'); ancora.add(alav);
+    ancora.add(malha(extrudar(barra([P(0, 0), ponta], 0.04), 0.045, 0.006, 4), M.aco, 'ancora'));
     const n = P(-dirFork.y, dirFork.x);
-    for (const sg of [-1, 1]) { // chifres do garfo
+    for (const sg of [-1, 1]) {
       const a = ponta.clone().addScaledVector(n, 0.07 * sg), b = a.clone().addScaledVector(dirFork, 0.14).addScaledVector(n, 0.03 * sg);
       ancora.add(malha(extrudar(barra([a, b], 0.025), 0.045, 0.004, 4), M.aco, 'ancora'));
     }
@@ -367,20 +349,22 @@ function iniciar3D() {
     }
     ancora.add(cilindro(0.05, 0.4, M.aco, 'ancora', 12));
   }
-  // balanço + espiral
+  // balanço grande de ouro + espiral
   const balanco = new THREE.Group(); balanco.position.set(BC.x, BC.y, 0); camadas.balanco.add(balanco);
   {
-    const s = new THREE.Shape(); s.absarc(0, 0, 1.2, 0, TAU, false);
-    s.holes.push(...furosRaios(0.15, 1.07, 3, 0.13, 0.5));
-    const r = malha(extrudar(s, 0.1, 0.012, 96), M.latao, 'balanco'); r.position.z = 1.13; balanco.add(r);
-    for (let i = 0; i < 8; i++) { const p = cilindro(0.045, 0.06, M.lataoFosco, 'balanco', 10); const a = i * TAU / 8 + 0.2; p.position.set(Math.cos(a) * 1.135, Math.sin(a) * 1.135, 1.2); balanco.add(p); }
-    const eixoB = cilindro(0.04, 0.95, M.aco, 'balanco', 12); eixoB.position.z = 1.05; balanco.add(eixoB);
+    const s = new THREE.Shape(); s.absarc(0, 0, 1.22, 0, TAU, false);
+    s.holes.push(...furosRaios(0.16, 1.06, 3, 0.12, 0.5));
+    const r = malha(extrudar(s, 0.12, 0.016, 96), M.latao, 'balanco'); r.position.z = 1.13; balanco.add(r);
+    for (let i = 0; i < 4; i++) { const p = cilindro(0.06, 0.07, M.lataoFosco, 'balanco', 12); const a = i * TAU / 4 + 0.5 + TAU / 6; p.position.set(Math.cos(a) * 1.14, Math.sin(a) * 1.14, 1.21); balanco.add(p); }
+    const eixoB = cilindro(0.04, 1.1, M.aco, 'balanco', 12); eixoB.position.z = 1.1; balanco.add(eixoB);
+    const colete = cilindro(0.13, 0.08, M.aco, 'balanco'); colete.position.z = 1.3; balanco.add(colete);
     const rolo = cilindro(0.17, 0.04, M.aco, 'balanco'); rolo.position.z = 0.7; balanco.add(rolo);
-    const pino = cilindro(0.03, 0.07, M.rubi, 'rubi', 10); pino.position.set(-0.13 * Math.cos(Math.PI / 4), -0.13 * Math.sin(Math.PI / 4), 0.72);
+    const pino = cilindro(0.03, 0.07, M.rubi, 'rubi', 10);
+    const ap = Math.atan2(-dirFork.y, -dirFork.x); pino.position.set(0.13 * Math.cos(ap), 0.13 * Math.sin(ap), 0.72);
     balanco.add(pino);
   }
   const espiral = (() => {
-    const N = 520, voltas = 12, r0 = 0.11, r1 = 0.74, h = 0.045, z = 1.29;
+    const N = 640, voltas = 14, r0 = 0.12, r1 = 0.78, h = 0.05, z = 1.29;
     const pos = new Float32Array(N * 2 * 3), nor = new Float32Array(N * 2 * 3), idx = [];
     for (let i = 0; i < N - 1; i++) { const a = i * 2, b = a + 1, c = a + 2, d = a + 3; idx.push(a, c, b, b, c, d); }
     const g = new THREE.BufferGeometry();
@@ -394,8 +378,7 @@ function iniciar3D() {
         const s = i / (N - 1);
         const a = s * voltas * TAU + theta * (1 - s);
         const r = lerp(r0, r1, s) * (1 + 0.012 * Math.sin(theta) * (1 - s));
-        const x = Math.cos(a) * r, y = Math.sin(a) * r;
-        const k = i * 6;
+        const x = Math.cos(a) * r, y = Math.sin(a) * r, k = i * 6;
         pos[k] = x; pos[k + 1] = y; pos[k + 2] = z; pos[k + 3] = x; pos[k + 4] = y; pos[k + 5] = z + h;
         const nx = Math.cos(a), ny = Math.sin(a);
         nor[k] = nx; nor[k + 1] = ny; nor[k + 2] = 0; nor[k + 3] = nx; nor[k + 4] = ny; nor[k + 5] = 0;
@@ -406,67 +389,211 @@ function iniciar3D() {
     return { atualiza };
   })();
 
-  // pontes, rubis, parafusos azulados, catraca
-  function rubiEm(p, z, camada) { const j = cilindro(0.085, 0.035, M.rubi, 'rubi', 20); j.position.set(p.x, p.y, z); camadas[camada].add(j); const f = cilindro(0.028, 0.04, M.aco, 'rubi', 8); f.position.set(p.x, p.y, z + 0.005); camadas[camada].add(f); }
-  function parafuso(p, z, camada) {
+  // pontes vazadas, rubis em chaton dourado, parafusos azulados, catraca
+  function rubiEm(p, z, camada) {
+    const ch = malha(new THREE.TorusGeometry(0.105, 0.03, 8, 24), M.latao, 'rubi'); ch.position.set(p.x, p.y, z); camadas[camada].add(ch);
+    const j = cilindro(0.09, 0.04, M.rubi, 'rubi', 20); j.position.set(p.x, p.y, z); camadas[camada].add(j);
+    const f = cilindro(0.026, 0.045, M.aco, 'rubi', 8); f.position.set(p.x, p.y, z + 0.004); camadas[camada].add(f);
+  }
+  function parafuso(p, z, camada, mat = M.azul) {
     const g = new THREE.Group(); g.position.set(p.x, p.y, z);
-    g.add(cilindro(0.1, 0.05, M.azul, 'parafuso', 20));
-    const f = malha(new THREE.BoxGeometry(0.17, 0.025, 0.03), M.escuro, 'parafuso'); f.position.z = 0.022; f.rotation.z = Math.random() * Math.PI; g.add(f);
+    g.add(cilindro(0.1, 0.05, mat, 'parafuso', 20));
+    const f = malha(new THREE.BoxGeometry(0.17, 0.025, 0.03), M.escuro, 'parafuso'); f.position.z = 0.022; f.rotation.z = (p.x * 7 + p.y * 3) % Math.PI; g.add(f);
     camadas[camada].add(g);
   }
+  // barra com furos redondos no meio dos trechos (cara de esqueleto)
+  function barraVazada(pts, w, furos = true) {
+    const s = barra(pts, w);
+    if (furos) for (let i = 0; i < pts.length - 1; i++) {
+      const a = pts[i], b = pts[i + 1], L = a.distanceTo(b);
+      const n = Math.max(0, Math.floor((L - 0.55) / (w * 1.7)));
+      for (let k = 0; k < n; k++) {
+        const t = (k + 1) / (n + 1), c = a.clone().lerp(b, t);
+        const h = new THREE.Path(); h.absarc(c.x, c.y, w * 0.5, 0, TAU, true); s.holes.push(h);
+      }
+    }
+    return s;
+  }
+  function arco(r0, r1, a0, a1) {
+    const s = new THREE.Shape(), N = 48;
+    for (let k = 0; k <= N; k++) { const a = a0 + (a1 - a0) * k / N; const p = v2(r1, a); k ? s.lineTo(p.x, p.y) : s.moveTo(p.x, p.y); }
+    for (let k = 0; k <= 12; k++) { const a = a1 + Math.PI * k / 12; const c = v2((r0 + r1) / 2, a1); const p = v2((r1 - r0) / 2, a).add(c); s.lineTo(p.x, p.y); }
+    for (let k = N; k >= 0; k--) { const a = a0 + (a1 - a0) * k / N; const p = v2(r0, a); s.lineTo(p.x, p.y); }
+    for (let k = 0; k <= 12; k++) { const a = a0 + Math.PI + Math.PI * k / 12; const c = v2((r0 + r1) / 2, a0); const p = v2((r1 - r0) / 2, a).add(c); s.lineTo(p.x, p.y); }
+    return s;
+  }
   {
-    const z = 1.2;
-    const trem = malha(extrudar(barra([C, T, F], 0.3), 0.12, 0.015, 8), M.ponte, 'ponte'); trem.position.z = z; camadas.pontes.add(trem);
-    [C, T, F].forEach((p) => rubiEm(p, z + 0.08, 'pontes'));
-    parafuso(C.clone().lerp(T, 0.5).add(P(0.1, 0.1)), z + 0.085, 'pontes');
-    parafuso(T.clone().lerp(F, 0.5).add(P(-0.05, -0.12)), z + 0.085, 'pontes');
-    const pal = malha(extrudar(barra([E, PV], 0.2), 0.09, 0.012, 8), M.ponte, 'ponte'); pal.position.z = 0.9; camadas.escape.add(pal);
-    rubiEm(E, 0.96, 'escape'); rubiEm(PV, 0.96, 'escape');
-    const bb = B.clone().add(P(-1.1, 1.0));
-    const tamb = malha(extrudar(barra([B, bb], 0.78), 0.13, 0.015, 12), M.ponte, 'ponte'); tamb.position.z = z; camadas.pontes.add(tamb);
-    parafuso(bb.clone().add(P(0.15, -0.1)), z + 0.09, 'pontes');
-    // galo (ponte do balanço) + raquete
-    const K = BC.clone().normalize().multiplyScalar(4.05);
-    const galo = malha(extrudar(barra([BC, K], 0.22), 0.13, 0.015, 8), M.ponte, 'ponte'); galo.position.z = 1.48; camadas.pontes.add(galo);
-    const disco = malha(extrudar(new THREE.Shape().absarc(0, 0, 0.36, 0, TAU), 0.134, 0.015, 48), M.ponte, 'ponte'); disco.position.set(BC.x, BC.y, 1.48); camadas.pontes.add(disco);
-    rubiEm(BC, 1.56, 'pontes');
-    const lira = malha(new THREE.TorusGeometry(0.16, 0.014, 6, 32, Math.PI * 1.55), M.latao, 'rubi'); lira.position.set(BC.x, BC.y, 1.57); lira.rotation.z = Math.atan2(BC.y, BC.x) + 0.7; camadas.pontes.add(lira);
-    parafuso(K.clone().lerp(BC, 0.25), 1.56, 'pontes');
-    const angR = Math.atan2(BC.y, BC.x) + Math.PI * 0.85;
-    const raquete = new THREE.Group(); raquete.position.set(BC.x, BC.y, 1.6); camadas.pontes.add(raquete);
-    const ra = malha(extrudar(barra([P(0, 0), v2(1.05, 0)], 0.035), 0.025, 0.005, 4), M.aco, 'raquete'); raquete.add(ra);
-    raquete.rotation.z = angR;
-    estado3d.raquete = raquete; estado3d.angR = angR;
-    // catraca + roda da coroa (dão corda no tambor)
-    const cat = new THREE.Group(); cat.position.set(B.x, B.y, 1.33); camadas.pontes.add(cat);
-    { const z = 40, pts = [], R = 1.02, r = 0.9;
-      for (let i = 0; i < z; i++) { const a = i * TAU / z; pts.push(v2(r, a), v2(R, a + 0.82 * TAU / z), v2(r, a + 0.86 * TAU / z)); }
-      const s = new THREE.Shape(pts); cat.add(malha(extrudar(s, 0.07, 0.008, 4), new THREE.MeshStandardMaterial({ color: 0xffffff, map: solCatraca, metalness: 1, roughness: 0.22 }), 'catraca'));
+    const z = 1.22;
+    const trem = malha(extrudar(barraVazada([C, T, F], 0.3), 0.12, 0.02, 8), M.ponte, 'ponte'); trem.position.z = z; camadas.pontes.add(trem);
+    [C, T, F].forEach((p) => rubiEm(p, z + 0.09, 'pontes'));
+    parafuso(C.clone().lerp(T, 0.5).add(P(0.32, 0.12)), z + 0.085, 'pontes');
+    parafuso(F.clone().add(P(-0.25, -0.42)), z + 0.085, 'pontes');
+    const pal = malha(extrudar(barra([E, PV], 0.2), 0.09, 0.014, 8), M.ponte, 'ponte'); pal.position.z = 0.9; camadas.escape.add(pal);
+    rubiEm(E, 0.97, 'escape'); rubiEm(PV, 0.97, 'escape');
+    // ponte do tambor, vazada
+    const fora = B.clone().normalize();
+    const b0 = B.clone().addScaledVector(fora, -0.9), b1 = B.clone().addScaledVector(fora, 1.15).add(P(-fora.y, fora.x).multiplyScalar(0.9));
+    const tamb = malha(extrudar(barraVazada([b0, B, b1], 0.55), 0.13, 0.02, 12), M.ponte, 'ponte'); tamb.position.z = z; camadas.pontes.add(tamb);
+    parafuso(b0, z + 0.09, 'pontes'); parafuso(b1, z + 0.09, 'pontes');
+    // ferradura em volta (ponte em arco, como no vídeo)
+    const ferr = malha(extrudar(arco(3.55, 3.98, 0.35 * Math.PI, 0.92 * Math.PI), 0.12, 0.02, 48), M.ponte, 'ponte'); ferr.position.z = z; camadas.pontes.add(ferr);
+    [0.42, 0.63, 0.85].forEach((t) => parafuso(v2(3.765, t * Math.PI), z + 0.085, 'pontes'));
+    const ferr2 = malha(extrudar(arco(3.55, 3.98, 1.62 * Math.PI, 1.95 * Math.PI), 0.12, 0.02, 32), M.ponte, 'ponte'); ferr2.position.z = z; camadas.pontes.add(ferr2);
+    [1.7, 1.88].forEach((t) => parafuso(v2(3.765, t * Math.PI), z + 0.085, 'pontes'));
+    // ponte do balanço atravessada, com dois parafusos azuis nas pontas
+    const zb = 1.5;
+    const pa = BC.clone().add(P(-1.85, 0.32)), pb = BC.clone().add(P(1.85, 0.32));
+    const galo = malha(extrudar(barraVazada([pa, BC, pb], 0.2), 0.12, 0.018, 8), M.ponte, 'ponte'); galo.position.z = zb; camadas.pontes.add(galo);
+    const disco = malha(extrudar(new THREE.Shape().absarc(0, 0, 0.34, 0, TAU), 0.124, 0.018, 48), M.ponte, 'ponte'); disco.position.set(BC.x, BC.y, zb); camadas.pontes.add(disco);
+    rubiEm(BC, zb + 0.08, 'pontes');
+    const lira = malha(new THREE.TorusGeometry(0.17, 0.014, 6, 32, Math.PI * 1.55), M.latao, 'rubi'); lira.position.set(BC.x, BC.y, zb + 0.1); lira.rotation.z = 0.8; camadas.pontes.add(lira);
+    parafuso(pa, zb + 0.08, 'pontes'); parafuso(pb, zb + 0.08, 'pontes');
+    const raquete = new THREE.Group(); raquete.position.set(BC.x, BC.y, zb + 0.11); camadas.pontes.add(raquete);
+    raquete.add(malha(extrudar(barra([P(0, 0), v2(0.95, 0)], 0.032), 0.025, 0.005, 4), M.aco, 'raquete'));
+    raquete.rotation.z = Math.PI * 0.62;
+    estado3d.raquete = raquete;
+    // catraca + roda da coroa
+    const cat = new THREE.Group(); cat.position.set(B.x, B.y, z + 0.13); camadas.pontes.add(cat);
+    { const zd = 40, pts = [], R = 1.02, r = 0.9;
+      for (let i = 0; i < zd; i++) { const a = i * TAU / zd; pts.push(v2(r, a), v2(R, a + 0.82 * TAU / zd), v2(r, a + 0.86 * TAU / zd)); }
+      cat.add(malha(extrudar(new THREE.Shape(pts), 0.07, 0.008, 4), new THREE.MeshStandardMaterial({ color: 0xffffff, map: solCatraca, metalness: 1, roughness: 0.22 }), 'catraca'));
       const c = cilindro(0.2, 0.09, M.azul, 'parafuso'); c.position.z = 0.02; cat.add(c); }
-    const coroaPos = P(-5.25, 0);
-    const dirCw = coroaPos.clone().sub(B).normalize();
+    const dirCw = P(5.3, 0).sub(B).normalize();
     const CW = B.clone().addScaledVector(dirCw, 1.42);
-    const rc = new THREE.Group(); rc.position.set(CW.x, CW.y, 1.33); camadas.pontes.add(rc);
+    const rc = new THREE.Group(); rc.position.set(CW.x, CW.y, z + 0.13); camadas.pontes.add(rc);
     rc.add(roda(18, 0.05, 0.07, M.acoEscovado, 0, 'catraca'));
     estado3d.catraca = cat; estado3d.rodaCoroa = rc;
-    const trinq = malha(extrudar(barra([B.clone().add(v2(1.1, -0.2)).sub(B), B.clone().add(v2(1.35, 0.25)).sub(B)], 0.05), 0.05, 0.006, 4), M.aco, 'catraca');
-    trinq.position.set(B.x, B.y, 1.33); camadas.pontes.add(trinq); estado3d.trinquete = trinq;
+    const trinq = malha(extrudar(barra([v2(1.08, 1.2), v2(1.32, 1.45)], 0.05), 0.05, 0.006, 4), M.aco, 'catraca');
+    trinq.position.set(B.x, B.y, z + 0.13); camadas.pontes.add(trinq); estado3d.trinquete = trinq;
+    // parafusos da platina
+    [0.1, 0.55, 1.05, 1.5].forEach((t) => parafuso(v2(4.12, t * Math.PI + 0.2), 0.15, 'platina', M.aco));
   }
-  // caixa, alças e coroa
+
+  // mostrador vazado: anel das horas + submostrador + pequenos segundos
+  function texDisco(R, desenhar) {
+    const t = tex(1024, 1024, (g, w) => { g.translate(w / 2, w / 2); desenhar(g, w / 2); });
+    t.repeat.set(1 / (2 * R), 1 / (2 * R)); t.offset.set(0.5, 0.5); t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping;
+    return t;
+  }
+  const PRATA = '#d9dce0', TINTA = '#23262b';
+  function desenhaAnel(g, R) {
+    const gr = g.createRadialGradient(-R * 0.3, -R * 0.4, 0, 0, 0, R); gr.addColorStop(0, '#eef0f2'); gr.addColorStop(1, '#c3c7cc');
+    g.fillStyle = gr; g.fillRect(-R, -R, 2 * R, 2 * R);
+    g.fillStyle = TINTA;
+    for (let i = 0; i < 60; i++) { g.save(); g.rotate(i * TAU / 60); g.fillRect(-1.5, -R * 0.985, 3, i % 5 ? R * 0.035 : R * 0.06); g.restore(); }
+    g.font = `400 ${R * 0.055}px Newsreader, Georgia, serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const rom = ['XII', 'I', 'II', 'III', 'IIII', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'];
+    rom.forEach((t, i) => { if (i % 3 === 0) return; g.save(); g.rotate(i * TAU / 12); g.fillText(t, 0, -R * 0.9); g.restore(); });
+  }
+  function desenhaSub(g, R) {
+    g.fillStyle = '#e3e6ea'; g.fillRect(-R, -R, 2 * R, 2 * R);
+    for (let r = 8; r < R; r += 7) { g.strokeStyle = r % 14 ? 'rgba(255,255,255,.55)' : 'rgba(80,88,98,.22)'; g.lineWidth = 3; g.beginPath(); g.arc(0, 0, r, 0, TAU); g.stroke(); }
+    g.fillStyle = TINTA; g.textAlign = 'center'; g.textBaseline = 'middle';
+    for (let i = 0; i < 60; i++) { g.save(); g.rotate(i * TAU / 60); g.fillRect(-2, -R * 0.97, 4, i % 5 ? R * 0.05 : R * 0.1); g.restore(); }
+    g.font = `400 ${R * 0.13}px Newsreader, Georgia, serif`;
+    [['XII', 0], ['III', 1], ['VI', 2], ['IX', 3]].forEach(([t, k]) => { const a = k * TAU / 4; g.fillText(t, Math.sin(a) * R * 0.72, -Math.cos(a) * R * 0.72); });
+    g.font = `italic 500 ${R * 0.15}px Newsreader, Georgia, serif`; g.fillText('Âncora', 0, -R * 0.34);
+    g.font = `500 ${R * 0.06}px "Geist Mono", monospace`; g.fillText('MECÂNICO · ESQUELETO', 0, R * 0.36);
+  }
+  function desenhaSeg(g, R) {
+    g.fillStyle = '#cfd3d8'; g.fillRect(-R, -R, 2 * R, 2 * R);
+    g.fillStyle = TINTA;
+    for (let i = 0; i < 60; i++) { g.save(); g.rotate(i * TAU / 60); g.fillRect(-3, -R * 0.97, 6, i % 5 ? R * 0.12 : R * 0.22); g.restore(); }
+  }
+  const mostrador = { anel: null, sub: null, seg: null };
+  function montaTexturas() {
+    const novo = (k, R, f) => { const t = texDisco(R, f); if (mostrador[k]) { mostrador[k].material.map = t; mostrador[k].material.needsUpdate = true; } return t; };
+    return { anel: novo('anel', 4.32, desenhaAnel), sub: novo('sub', 1.45, desenhaSub), seg: novo('seg', 0.72, desenhaSeg) };
+  }
   {
-    const perfil = [P(4.38, -0.62), P(4.75, -0.72), P(5.02, -0.5), P(5.12, 0.3), P(5.06, 1.35), P(4.86, 1.78), P(4.55, 1.86), P(4.4, 1.7)];
+    const tx = montaTexturas();
+    const zd = 1.95;
+    const mat = (map) => new THREE.MeshStandardMaterial({ color: 0xffffff, map, metalness: 0.55, roughness: 0.38 });
+    const anel = new THREE.Shape(); anel.absarc(0, 0, 4.32, 0, TAU); const fur = new THREE.Path(); fur.absarc(0, 0, 3.66, 0, TAU, true); anel.holes.push(fur);
+    mostrador.anel = malha(extrudar(anel, 0.05, 0.01, 128), mat(tx.anel), 'mostrador'); mostrador.anel.position.z = zd; camadas.mostrador.add(mostrador.anel);
+    mostrador.sub = malha(extrudar(new THREE.Shape().absarc(0, 0, 1.45, 0, TAU), 0.05, 0.012, 96), mat(tx.sub), 'mostrador'); mostrador.sub.position.set(SUB.x, SUB.y, zd + 0.02); camadas.mostrador.add(mostrador.sub);
+    const sg = new THREE.Shape(); sg.absarc(0, 0, 0.72, 0, TAU); const fs = new THREE.Path(); fs.absarc(0, 0, 0.5, 0, TAU, true); sg.holes.push(fs);
+    mostrador.seg = malha(extrudar(sg, 0.04, 0.008, 64), mat(tx.seg), 'mostrador'); mostrador.seg.position.set(F.x, F.y, zd); camadas.mostrador.add(mostrador.seg);
+    // braços que seguram os submostradores no anel
+    const brac = (a, b) => { const m = malha(extrudar(barra([a, b], 0.07), 0.04, 0.008, 4), M.acoEscovado, 'mostrador'); m.position.z = zd - 0.005; camadas.mostrador.add(m); };
+    brac(SUB.clone().add(v2(1.3, 0.55)), v2(3.75, 0.58)); brac(SUB.clone().add(v2(1.3, Math.PI - 0.55)), v2(3.75, Math.PI - 0.58));
+    brac(F.clone().add(P(-0.68, 0)), P(-3.75, F.y)); brac(F.clone().add(P(0.68, 0)), SUB.clone().add(v2(1.38, Math.PI + 0.75)));
+    // índices aplicados (aço polido) nas 12, 3, 6 e 9
+    for (let i = 0; i < 12; i += 3) {
+      const a = Math.PI / 2 - i * TAU / 12;
+      const m = malha(new THREE.BoxGeometry(0.1, 0.42, 0.07), M.aco, 'mostrador');
+      const p = v2(3.95, a); m.position.set(p.x, p.y, zd + 0.06); m.rotation.z = a - Math.PI / 2; camadas.mostrador.add(m);
+    }
+  }
+  document.fonts && document.fonts.ready.then(() => montaTexturas());
+
+  // ponteiros (aço polido; segundos azulado)
+  const ponteiros = {};
+  function ponteiro(comp, larg, cauda, z, peca, mat, pos) {
+    const s = new THREE.Shape();
+    s.moveTo(0, -cauda); s.lineTo(larg, 0); s.lineTo(larg * 0.55, comp * 0.8); s.lineTo(0, comp); s.lineTo(-larg * 0.55, comp * 0.8); s.lineTo(-larg, 0); s.closePath();
+    const g = new THREE.Group();
+    g.add(malha(extrudar(s, 0.022, 0.008, 4), mat, peca));
+    g.add(cilindro(larg * 1.35, 0.05, mat, peca));
+    g.position.set(pos.x, pos.y, z); camadas.ponteiros.add(g); return g;
+  }
+  ponteiros.h = ponteiro(0.88, 0.1, 0.2, 2.06, 'ponteiro', M.aco, SUB);
+  ponteiros.m = ponteiro(1.32, 0.075, 0.26, 2.11, 'ponteiro', M.aco, SUB);
+  ponteiros.s = ponteiro(0.66, 0.035, 0.18, 2.03, 'ponteiro', M.azul, F);
+
+  // cristal de safira com aro polido
+  {
+    const aro = new THREE.LatheGeometry([P(4.34, 1.92), P(4.78, 1.95), P(4.86, 2.15), P(4.72, 2.4), P(4.42, 2.46), P(4.36, 2.3)], 128); aro.rotateX(Math.PI / 2);
+    camadas.cristal.add(malha(aro, M.caixa, 'cristal'));
+    const R = 22, th = Math.asin(4.42 / R);
+    const dome = new THREE.SphereGeometry(R, 96, 12, 0, TAU, 0, th); dome.rotateX(Math.PI / 2);
+    const vidro = new THREE.Mesh(dome, new THREE.MeshStandardMaterial({ color: 0x000000, metalness: 1, roughness: 0.04, blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor, transparent: true, depthWrite: false, envMapIntensity: 0.3 }));
+    vidro.position.z = 2.36 - R * Math.cos(th); vidro.userData.peca = 'cristal'; vidro.renderOrder = 2;
+    camadas.cristal.add(vidro);
+  }
+  // caixa, alças, coroa, fundo e pulseira de couro
+  {
+    const perfil = [P(4.38, -0.62), P(4.75, -0.72), P(5.02, -0.5), P(5.12, 0.3), P(5.08, 1.4), P(4.9, 1.86), P(4.5, 1.92), P(4.4, 1.8)];
     const g = new THREE.LatheGeometry(perfil, 128); g.rotateX(Math.PI / 2);
     camadas.caixa.add(malha(g, M.caixa, 'caixa'));
+    const fundo = cilindro(4.42, 0.06, new THREE.MeshStandardMaterial({ color: 0x2b3038, metalness: 0.9, roughness: 0.34 }), 'caixa', 96); fundo.position.z = -0.52; camadas.caixa.add(fundo);
     for (const sy of [-1, 1]) for (const sx of [-1, 1]) {
-      const s = barra([P(sx * 1.75, sy * 4.6), P(sx * 1.85, sy * 6.2)], 0.36);
-      const m = malha(extrudar(s, 0.7, 0.08, 8), M.caixa, 'caixa'); m.position.z = 0.25; camadas.caixa.add(m);
+      const s = barra([P(sx * 1.72, sy * 4.5), P(sx * 1.8, sy * 5.9)], 0.34);
+      const m = malha(extrudar(s, 0.8, 0.12, 8), M.caixa, 'caixa'); m.position.z = 0.15; camadas.caixa.add(m);
     }
-    const coroa = new THREE.Group(); coroa.position.set(-5.38, 0, 0.55); camadas.caixa.add(coroa);
+    const coroa = new THREE.Group(); coroa.position.set(5.4, 0, 0.55); camadas.caixa.add(coroa);
     const k = contorno(30, 0.05, { add: 0.5, ded: 0.6 });
     const cg = extrudar(k.shape, 0.5, 0.04, 4); cg.rotateY(Math.PI / 2);
     coroa.add(malha(cg, M.caixa, 'coroa'));
-    const haste = cilindro(0.18, 0.4, M.caixa, 'coroa'); haste.rotation.set(0, Math.PI / 2, 0); haste.position.x = 0.35; coroa.add(haste);
+    const haste = cilindro(0.18, 0.4, M.caixa, 'coroa'); haste.rotation.set(0, Math.PI / 2, 0); haste.position.x = -0.35; coroa.add(haste);
     estado3d.coroa = coroa;
+    // couro com textura de escamas
+    const couro = tex(512, 512, (c, w, h) => {
+      c.fillStyle = '#060607'; c.fillRect(0, 0, w, h);
+      let sem = 3; const rnd = () => ((sem = (sem * 16807) % 2147483647) / 2147483647);
+      for (let y = 0; y < h; y += 30) for (let x = -20; x < w; x += 36) {
+        const ww = 26 + rnd() * 12, hh = 22 + rnd() * 8, ox = (y / 30) % 2 ? 18 : 0;
+        const gr = c.createLinearGradient(x + ox, y, x + ox, y + hh); gr.addColorStop(0, '#26272a'); gr.addColorStop(1, '#141416');
+        c.fillStyle = gr; c.beginPath(); c.roundRect(x + ox + 2, y + 2, ww, hh, 8); c.fill();
+      }
+    });
+    couro.repeat.set(0.42, 0.42);
+    const matCouro = new THREE.MeshPhysicalMaterial({ color: 0x4a4a4a, map: couro, metalness: 0, roughness: 0.6, clearcoat: 0.3, clearcoatRoughness: 0.45, envMapIntensity: 0.28 });
+    for (const sy of [-1, 1]) {
+      const s = new THREE.Shape(); const x0 = 1.36, y0 = 4.55, y1 = 13;
+      const N = 22, xs = (t) => x0 * (1 - 0.08 * t);
+      s.moveTo(-x0, y0); s.lineTo(x0, y0);
+      for (let k = 1; k <= N; k++) { const t = k / N; s.lineTo(xs(t), lerp(y0, y1, t)); }
+      for (let k = N; k >= 0; k--) { const t = k / N; s.lineTo(-xs(t), lerp(y0, y1, t)); }
+      const geo = new THREE.ExtrudeGeometry(s, { depth: 0.34, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.06, bevelSegments: 2, steps: 1, curveSegments: 4 });
+      // dobra a pulseira pra trás do pulso
+      const p = geo.attributes.position;
+      for (let i = 0; i < p.count; i++) { const y = p.getY(i); const d = Math.max(0, y - 5.2); p.setZ(i, p.getZ(i) + 0.05 - 0.045 * d * d); }
+      // subdivide pouco: reconstrói com mais passos ao longo do comprimento
+      geo.computeVertexNormals();
+      const m = malha(geo, matCouro, 'pulseira'); if (sy < 0) m.rotation.z = Math.PI;
+      camadas.caixa.add(m);
+    }
   }
 
   // fase de cada engrenagem pra os dentes encaixarem
@@ -512,6 +639,43 @@ function iniciar3D() {
   const lupaQuad = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), lupaMat);
   lupaCena.add(lupaQuad);
 
+  /* ---------- profundidade de campo (desfoque de lente na desmontagem) */
+  const rtCena = new THREE.WebGLRenderTarget(4, 4, { samples: TOQUE ? 2 : 4, type: THREE.HalfFloatType });
+  rtCena.depthTexture = new THREE.DepthTexture(4, 4);
+  const NT = TOQUE ? 24 : 40;
+  const posMat = new THREE.ShaderMaterial({
+    depthTest: false, depthWrite: false, blending: THREE.NoBlending,
+    uniforms: { tCor: { value: rtCena.texture }, tProf: { value: rtCena.depthTexture }, near: { value: 0.5 }, far: { value: 120 }, foco: { value: 27 }, abertura: { value: 0 }, maxR: { value: 14 }, px: { value: new THREE.Vector2(1, 1) } },
+    vertexShader: 'varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.,1.); }',
+    fragmentShader: `
+      #include <packing>
+      uniform sampler2D tCor, tProf; uniform float near, far, foco, abertura, maxR; uniform vec2 px; varying vec2 vUv;
+      float vz(vec2 uv){ return -perspectiveDepthToViewZ(texture2D(tProf, uv).x, near, far); }
+      float coc(float z){ return clamp(abs(z - foco) / z * abertura, 0., maxR); }
+      void main(){
+        vec4 c0 = texture2D(tCor, vUv);
+        float r0 = coc(vz(vUv));
+        vec4 acc = c0; float w = 1.;
+        if (abertura > 0.01) {
+          float giro = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) * 6.2832;
+          for (int i = 0; i < ${NT}; i++) {
+            float a = float(i) * 2.39996 + giro;
+            float rr = sqrt((float(i) + .5) / float(${NT}));
+            vec2 uv = vUv + vec2(cos(a), sin(a)) * rr * maxR * px;
+            float rs = coc(vz(uv));
+            float wi = clamp(rs - rr * maxR + 1., 0., 1.) ;
+            acc += texture2D(tCor, uv) * wi; w += wi;
+          }
+        }
+        gl_FragColor = acc / w;
+        #include <tonemapping_fragment>
+        #include <colorspace_fragment>
+      }`,
+  });
+  const posCena = new THREE.Scene(); posCena.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), posMat));
+  const posCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const lente = { ab: 0 };
+
   const lupa = { x: 0, y: 0, tx: 0, ty: 0, vis: 0, alvo: 0, r: TOQUE ? 78 : 112, zoom: 3.4, ultimoToque: -1e9, passeio: 0 };
   const legenda = $('#lupa-legenda');
   const LEGENDAS = {
@@ -531,8 +695,11 @@ function iniciar3D() {
     raquete: ['Raquete', 'Muda o comprimento útil da espiral. É com ela que se regula.'],
     coroa: ['Coroa', 'Dá corda e acerta a hora.'],
     caixa: ['Caixa', 'Aço polido. Protege o movimento do pó e da água.'],
-    mostrador: ['Mostrador', 'Pequenos segundos às 6, direto na quarta roda.'],
-    ponteiro: ['Ponteiros', 'Aço azulado.'],
+    mostrador: ['Mostrador vazado', 'Só o anel das horas e os submostradores. O resto é janela.'],
+    ponteiro: ['Ponteiros', 'Horas e minutos às 12; segundos às 9, direto na quarta roda.'],
+    cristal: ['Cristal', 'Safira abaulada. Risca quase nada.'],
+    pulseira: ['Pulseira', 'Couro com textura de escama.'],
+    enfeite: ['Roda do acerto', 'Parte do mecanismo de corda e de acertar a hora.'],
   };
   const ray = new THREE.Raycaster(); const ndc = new THREE.Vector2();
   let pecaLupa = null, contRay = 0;
@@ -548,11 +715,11 @@ function iniciar3D() {
     sim.batidas++; sim.snap = 0; sim.lado *= -1;
     Som.tique(sim.lado > 0);
   }
-  function passo(dt) {
+  function passo(dt, dtReal = 0) {
     const ts = sim.lento ? 0.08 : 1, d = dt * ts;
-    if (sim.girando) {
+    if (sim.girando && dtReal) {
       const antes = sim.corda;
-      sim.corda = Math.min(1, sim.corda + dt * 0.32);
+      sim.corda = Math.min(1, sim.corda + dtReal * 0.32);
       const dAng = (sim.corda - antes) * 9;
       sim.cat += dAng; sim.cliqueAcum += dAng;
       if (sim.cliqueAcum > TAU / 40) { sim.cliqueAcum = 0; Som.catraca(); }
@@ -583,9 +750,10 @@ function iniciar3D() {
     sim.garfo += (sim.lado - sim.garfo) * Math.min(1, 0.55);
     ancora.rotation.z = sim.garfo * 0.11;
     const segs = sim.batidas / 6;
-    ponteiros.s.rotation.z = (segs % 60) / 60 * TAU;
-    ponteiros.m.rotation.z = ((segs / 60) % 60) / 60 * TAU;
-    ponteiros.h.rotation.z = ((segs / 3600) % 12) / 12 * TAU;
+    ponteiros.s.rotation.z = -(segs % 60) / 60 * TAU;
+    ponteiros.m.rotation.z = -((segs / 60) % 60) / 60 * TAU;
+    ponteiros.h.rotation.z = -((segs / 3600) % 12) / 12 * TAU;
+    for (const [g, k] of extras) g.rotation.z = u * k * 6;
     estado3d.catraca.rotation.z = sim.cat;
     estado3d.rodaCoroa.rotation.z = -sim.cat * 40 / 18;
     estado3d.coroa.rotation.x = sim.cat * 3;
@@ -611,15 +779,16 @@ function iniciar3D() {
   const itens = $$('#painel .passo');
   const rotulosBox = $('#rotulos');
   const ROT = [
-    ['pontes', 'Pontes e rubis', P(3.6, -2.4), 1.3],
-    ['balanco', 'Balanço e espiral', P(3.9, 0.9), 1.2],
-    ['escape', 'Escape', P(1.9, -1.4), 0.8],
-    ['trem', 'Trem de rodas', P(-1.4, -3.0), 1.0],
-    ['tambor', 'Tambor', P(-2.3, 2.5), 0.4],
-    ['platina', 'Platina', P(4.3, -0.8), 0.1],
-    ['mostrador', 'Mostrador', P(4.25, -1.2), -0.17],
-    ['ponteiros', 'Ponteiros', P(0.4, 3.4), -0.32],
-    ['caixa', 'Caixa e coroa', P(-5.5, 0), 0.55],
+    ['cristal', 'Cristal', P(4.8, 0), 2.3],
+    ['ponteiros', 'Ponteiros', P(1.2, 2.6), 2.1],
+    ['mostrador', 'Mostrador vazado', P(4.3, -0.6), 1.95],
+    ['pontes', 'Pontes e rubis', P(3.95, 0.9), 1.25],
+    ['balanco', 'Balanço e espiral', P(1.25, -2.6), 1.15],
+    ['escape', 'Escape', P(-0.6, -1.5), 0.8],
+    ['trem', 'Trem de rodas', P(1.2, 0.9), 0.8],
+    ['tambor', 'Tambor', P(3.6, 0.5), 0.4],
+    ['platina', 'Platina', P(4.3, -0.5), 0.1],
+    ['caixa', 'Caixa e pulseira', P(5.4, 0), 0.5],
   ];
   const rotulos = ROT.map(([id, nome]) => {
     const el = document.createElement('div'); el.className = 'rotulo'; el.innerHTML = `<i></i><span>${nome}</span>`; rotulosBox.appendChild(el); return { id, el };
@@ -636,6 +805,8 @@ function iniciar3D() {
   function redimensiona() {
     W = palco.clientWidth; H = palco.clientHeight;
     renderer.setSize(W, H, false);
+    rtCena.setSize(Math.round(W * dpr), Math.round(H * dpr));
+    posMat.uniforms.px.value.set(1 / W, 1 / H);
     camera.aspect = W / H; camera.updateProjectionMatrix();
     lupa.r = Math.round(clamp(Math.min(W, H) * 0.14, 70, 120));
   }
@@ -660,7 +831,7 @@ function iniciar3D() {
   }
 
   // pontos de interesse pro passeio automático da lupa (celular)
-  const PASSEIO = [['balanco', BC.x + 0.6, BC.y + 0.7, 1.2], ['escape', E.x, E.y, 0.75], ['catraca', B.x + 0.4, B.y, 1.38], ['quarta', F.x - 0.9, F.y - 0.6, 1.0], ['raquete', BC.x - 0.4, BC.y + 0.2, 1.62]];
+  const PASSEIO = [['balanco', BC.x + 0.95, BC.y + 0.35, 1.2], ['escape', E.x, E.y, 0.75], ['catraca', B.x + 0.3, B.y + 0.2, 1.4], ['quarta', F.x + 0.2, F.y - 0.9, 1.0], ['mostrador', SUB.x, SUB.y, 2.0], ['espiral', BC.x - 0.4, BC.y + 0.2, 1.3]];
   const tmpV = new THREE.Vector3();
   function projeta(x, y, z, alvo, obj = relogio) {
     tmpV.set(x, y, z); obj.localToWorld(tmpV); tmpV.project(camera);
@@ -672,7 +843,7 @@ function iniciar3D() {
   let rodando = true;
   new IntersectionObserver(([e]) => { visivel = e.isIntersecting; if (visivel && !rodando) { rodando = true; ultimo = performance.now(); requestAnimationFrame(laco); } }, { rootMargin: '100px' }).observe(palco);
   const rotAlvo = new THREE.Euler();
-  const cam = { z: 0, d: 27 }, foco = new THREE.Vector3();
+  const cam = { x: 0, y: 0, z: 0, d: 27 }, foco = new THREE.Vector3();
   function laco(t) {
     if (!visivel) { rodando = false; return; }
     requestAnimationFrame(laco);
@@ -680,7 +851,7 @@ function iniciar3D() {
     medeProg();
 
     // físico
-    const sub = 4; for (let i = 0; i < sub; i++) passo(dt / sub);
+    const sub = 4; for (let i = 0; i < sub; i++) passo(dt / sub, dtc / sub);
     aplicaSim();
 
     // fases da rolagem
@@ -692,6 +863,7 @@ function iniciar3D() {
     controles.style.pointerEvents = prog > 0.05 ? 'none' : '';
     const pv = smooth(0.2, 0.3, prog) * (1 - smooth(0.9, 0.96, prog));
     painel.style.opacity = pv; painel.style.visibility = pv > 0.01 ? 'visible' : 'hidden';
+    painel.classList.toggle('vazio', prog < 0.34 || prog > 0.92);
 
     // camadas
     const n = ORDEM.length;
@@ -701,33 +873,39 @@ function iniciar3D() {
     for (let i = 0; i < n; i++) {
       const [id, off] = ORDEM[i];
       const ex = smooth(0.1 + 0.012 * i, 0.3 + 0.012 * i, prog) * (1 - fecha);
-      const alvoZ = off * ex + (id === idAtivo ? 0.9 : 0);
+      const alvoZ = off * ex + (id === idAtivo ? 0.7 : 0);
       const grp = camadas[id];
       grp.position.z += (alvoZ - grp.position.z) * Math.min(1, dtc * 9);
-      if (id === 'mostrador' || id === 'ponteiros') grp.rotation.x = Math.PI * smooth(0.25, 1, ex);
       grp.userData.ex = ex;
     }
 
     // giro e enquadramento
     mouse.sx += (mouse.x - mouse.sx) * Math.min(1, dt * 3); mouse.sy += (mouse.y - mouse.sy) * Math.min(1, dt * 3);
     const retrato = W < H * 0.9;
-    const tx = lerp(-0.22 + mouse.sy * 0.1, -1.08 + mouse.sy * 0.05, g);
+    const tx = lerp(-0.22 + mouse.sy * 0.1, -1.1 + mouse.sy * 0.04, g);
     const ty = lerp(0.18 + mouse.sx * 0.16, 0.06 + mouse.sx * 0.08, g);
     const tz = lerp(0, 0.6, g);
     rotAlvo.set(tx, ty, tz);
     pivo.rotation.x += (rotAlvo.x - pivo.rotation.x) * Math.min(1, dt * 6);
     pivo.rotation.y += (rotAlvo.y - pivo.rotation.y) * Math.min(1, dt * 6);
     pivo.rotation.z += (rotAlvo.z - pivo.rotation.z) * Math.min(1, dt * 6);
-    const distHero = retrato ? 28 / Math.max(0.3, camera.aspect) : 27, distGeral = retrato ? 82 : 50, distPasso = retrato ? 21 / Math.max(0.3, camera.aspect) : 27;
-    let zFoco = 0, dAlvo = lerp(distHero, distGeral, g);
+    const distHero = retrato ? 28 / Math.max(0.3, camera.aspect) : 27, distGeral = retrato ? 30 / Math.max(0.3, camera.aspect) : 58, distPasso = retrato ? 26 / Math.max(0.3, camera.aspect) : 34;
+    let zFoco = 0, dAlvo = lerp(distHero, distGeral, g), zNitido = null;
     if (ativo >= 0) {
       const [id, off] = ORDEM.find(([i]) => i === idAtivo);
-      zFoco = off * (camadas[id].userData.ex || 0) + 0.9 + (id === 'caixa' ? 0.4 : 0.6);
-      dAlvo = distPasso * (id === 'caixa' ? 1.35 : id === 'platina' || id === 'mostrador' ? 1.15 : id === 'escape' || id === 'ponteiros' ? 0.82 : 1);
-    } else if (g > 0.01) zFoco = -0.4 * g;
+      zNitido = off * (camadas[id].userData.ex || 0) + 0.7 + (id === 'balanco' ? 1.15 : id === 'caixa' ? 0.4 : id === 'cristal' ? 2.1 : id === 'ponteiros' ? 2.0 : id === 'mostrador' ? 1.9 : 0.9);
+    }
+    let xF = 0, yF = 0;
+    if (ativo >= 0 && idAtivo === 'balanco') {
+      xF = BC.x + 0.3; yF = BC.y * 0.75; zFoco = zNitido;
+      dAlvo = distPasso * 0.42;
+    } else if (ativo >= 0) {
+      zFoco = lerp(5.2, zNitido, 0.3); dAlvo = distGeral * 0.84;
+    } else if (g > 0.01) zFoco = 5.2 * g;
     cam.z += (zFoco - cam.z) * Math.min(1, dtc * 3.2);
+    cam.x += (xF - cam.x) * Math.min(1, dtc * 3.2); cam.y += (yF - cam.y) * Math.min(1, dtc * 3.2);
     cam.d += (dAlvo - cam.d) * Math.min(1, dtc * 3.2);
-    foco.set(0, 0, cam.z); pivo.localToWorld(foco);
+    foco.set(cam.x, cam.y, cam.z); pivo.localToWorld(foco);
     camera.position.set(foco.x, foco.y + cam.d * 0.02, foco.z + cam.d);
     camera.lookAt(foco);
     ox = retrato ? 0 : -W * lerp(0.22, 0.15, g);
@@ -744,7 +922,7 @@ function iniciar3D() {
         const el = rotulos[i].el;
         el.style.transform = `translate3d(${tmp.x.toFixed(1)}px,${tmp.y.toFixed(1)}px,0)`;
         el.classList.toggle('on', id === idAtivo);
-        el.style.opacity = !idAtivo || id === idAtivo ? '' : '0';
+        el.style.opacity = id === idAtivo ? '' : '0';
       });
     }
 
@@ -771,7 +949,7 @@ function iniciar3D() {
       const tam = 2 * lupa.r / lupa.zoom;
       camera.setViewOffset(W, H, ox + lupa.x - tam / 2, oy + lupa.y - tam / 2, tam, tam);
       renderer.setRenderTarget(rt);
-      renderer.setClearColor(0x15161a, 1);
+      renderer.setClearColor(0x161b22, 1);
       renderer.clear();
       renderer.render(scene, camera);
       renderer.setRenderTarget(null);
@@ -779,7 +957,20 @@ function iniciar3D() {
       camera.setViewOffset(W, H, ox, oy, W, H);
     }
     renderer.autoClear = true;
+    // cena → textura → desfoque pela profundidade → tela
+    const abAlvo = g < 0.02 ? 0 : (ativo < 0 ? 8 : idAtivo === 'balanco' ? 60 : 46) * g;
+    lente.ab += (abAlvo - lente.ab) * Math.min(1, dtc * 3);
+    posMat.uniforms.abertura.value = lente.ab;
+    let fAlvo = cam.d;
+    if (zNitido !== null) { tmpV.set(idAtivo === 'balanco' ? BC.x : 0, idAtivo === 'balanco' ? BC.y : 0, zNitido); pivo.localToWorld(tmpV); fAlvo = camera.position.z - tmpV.z; }
+    lente.f = lente.f === undefined ? fAlvo : lente.f + (fAlvo - lente.f) * Math.min(1, dtc * 4);
+    posMat.uniforms.foco.value = lente.f;
+    posMat.uniforms.maxR.value = Math.min(11, 3 + lente.ab * 0.16) * (TOQUE ? 0.65 : 1);
+    renderer.setRenderTarget(rtCena);
+    renderer.setClearColor(0x000000, 0); renderer.clear();
     renderer.render(scene, camera);
+    renderer.setRenderTarget(null);
+    renderer.render(posCena, posCam);
     if (lupa.vis > 0.02) {
       renderer.autoClear = false;
       lupaCam.left = 0; lupaCam.right = W; lupaCam.top = H; lupaCam.bottom = 0; lupaCam.updateProjectionMatrix();
@@ -794,7 +985,8 @@ function iniciar3D() {
       if (contRay++ % 6 === 0) {
         ndc.set((lupa.x / W) * 2 - 1, -(lupa.y / H) * 2 + 1);
         ray.setFromCamera(ndc, camera);
-        const hit = ray.intersectObject(relogio, true).find((h) => h.object.userData.peca);
+        const hits = ray.intersectObject(relogio, true).filter((h) => h.object.userData.peca);
+        const hit = hits.find((h) => h.object.userData.peca !== 'cristal') || hits[0];
         const p = hit ? hit.object.userData.peca : null;
         if (p !== pecaLupa) {
           pecaLupa = p;
@@ -825,7 +1017,7 @@ function iniciar3D() {
   requestAnimationFrame(laco);
   estado3d.pronto = true;
   estado3d.sim = sim;
-  window.__ancora = { sim, prog: () => prog, pecas: totalPecas, cam, foco, camera, lupa, ativo: () => ativo };
+  window.__ancora = { lente, sim, prog: () => prog, pecas: totalPecas, cam, foco, camera, lupa, ativo: () => ativo };
 }
 
 /* ================================================================== timegrapher */
