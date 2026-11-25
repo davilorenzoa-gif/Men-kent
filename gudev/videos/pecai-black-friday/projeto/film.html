@@ -1,0 +1,364 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Péçaí · Black Friday (25/11/2026). Filme vertical 1080×1920 renderizado quadro a quadro: seek(t) monta a cena no tempo t.
+     Cortes na grade da música do Davi (144,76 bpm). B(k) = k-ésimo tempo depois do drop. Textos e tempos: tudo em seek(). -->
+<style>
+@font-face{font-family:"Arc";src:url(assets/Archivo.ttf);font-weight:100 900;font-stretch:62% 125%}
+@font-face{font-family:"Arc";src:url(assets/Archivo-Italic.ttf);font-weight:100 900;font-stretch:62% 125%;font-style:italic}
+:root{--gold:linear-gradient(180deg,#fff7d6 0%,#f7d986 20%,#d6a443 44%,#8c5d16 50%,#c98f2e 58%,#f3cd78 78%,#fff1c2 100%)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#st{position:absolute;inset:0;overflow:hidden;background:#050404;font-family:"Arc";color:#f7f2e8}
+#cam{position:absolute;inset:0}
+.a{position:absolute;left:0;top:0;will-change:transform,opacity,filter}
+.full{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.sc{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none}
+img{display:block}
+.c{font-stretch:62%;font-weight:900;text-transform:uppercase;line-height:.86;letter-spacing:-.005em;white-space:nowrap}
+.ln{position:absolute;left:0;width:1080px;text-align:center}
+.w{display:inline-block;will-change:transform,opacity,filter}
+.gold{background-image:linear-gradient(100deg,rgba(255,255,255,0) 42%,rgba(255,255,255,.95) 50%,rgba(255,255,255,0) 58%),var(--gold);
+  background-size:300% 100%,100% 100%;background-position:var(--sh,120%) 0,0 0;background-repeat:no-repeat;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 5px 0 #3b2306) drop-shadow(0 0 34px rgba(255,186,70,.32))}
+.goldS{background-image:var(--gold);background-size:100% 1em;-webkit-background-clip:text;background-clip:text;color:transparent}
+.red{color:#ff2430;text-shadow:0 0 38px rgba(255,20,30,.55)}
+.wht{color:#f7f2e8;text-shadow:0 4px 0 rgba(0,0,0,.35),0 8px 40px rgba(0,0,0,.75)}
+.tag{display:inline-block;background:#e3111c;color:#fff;padding:.06em .16em .02em;box-shadow:0 0 60px rgba(255,20,30,.45)}
+.sm{font-stretch:100%;font-weight:600;letter-spacing:.42em;text-transform:uppercase;white-space:nowrap}
+.it{font-style:italic;font-stretch:88%;font-weight:500;letter-spacing:-.01em;white-space:nowrap}
+.dig{display:inline-block;overflow:hidden;vertical-align:top;position:relative}
+.strip{display:block;will-change:transform}
+.strip span{display:block;text-align:center}
+#flash{background:#fff;opacity:0;mix-blend-mode:normal}
+canvas{position:absolute;left:0;top:0}
+</style></head><body>
+<div id="st"><div id="cam">
+
+<!-- ===== imagem de fundo (vídeos) ===== -->
+<div id="fx" class="full" style="overflow:hidden">
+  <img id="v1" class="a" style="transform-origin:0 0">
+  <div id="v1bw" class="full" style="display:none"><img id="v1b" class="a" style="transform-origin:0 0"></div>
+</div>
+<div id="dim" class="full" style="background:#000;opacity:0"></div>
+<div id="grad" class="full" style="background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 62%,rgba(0,0,0,.7) 100%);opacity:0"></div>
+<div id="vig" class="full" style="background:radial-gradient(120% 75% at 50% 48%,rgba(0,0,0,0) 55%,rgba(0,0,0,.62) 100%)"></div>
+
+<!-- palco escuro (preço, calendário, cartaz) -->
+<div id="stage" class="full" style="display:none">
+  <div class="full" style="background:#060404"></div>
+  <div id="spot" class="full" style="background:radial-gradient(48% 34% at 50% 0%,rgba(255,226,170,.20),rgba(0,0,0,0) 70%)"></div>
+  <div id="redglow" class="full" style="background:radial-gradient(70% 28% at 50% 104%,rgba(227,17,28,.55),rgba(0,0,0,0) 70%)"></div>
+  <div id="floor" class="a" style="left:-60px;width:1200px;height:2px;background:linear-gradient(90deg,transparent,rgba(255,210,140,.5),transparent)"></div>
+</div>
+
+<canvas id="dust" width="1080" height="1920"></canvas>
+
+<!-- ===== INTRO ===== -->
+<div class="sc" id="sIntro">
+  <div id="apre" class="ln sm" style="top:250px;font-size:32px;color:#f1d692;text-shadow:0 2px 18px rgba(0,0,0,.8)">
+    <span style="display:inline-block;width:70px;height:1px;background:#e9c77a;vertical-align:middle;margin-right:22px;opacity:.7"></span>Péçaí apresenta<span style="display:inline-block;width:70px;height:1px;background:#e9c77a;vertical-align:middle;margin-left:4px;opacity:.7"></span>
+  </div>
+  <div id="ele" class="ln it wht" style="top:1490px;font-size:84px">Ele já sabe.</div>
+  <div id="evc" class="ln it wht" style="top:1490px;font-size:84px">E você?</div>
+</div>
+
+<!-- ===== BLACK FRIDAY ===== -->
+<div class="sc" id="sBF">
+  <div id="bfLock" class="a" style="width:1080px;height:1920px;transform-origin:540px 0">
+    <div id="bfB" class="ln c gold" style="top:560px;font-size:395px">Black</div>
+    <div id="bfF" class="ln c" style="top:900px;font-size:395px"><span id="bfFi" class="red" style="display:inline-block">Friday</span></div>
+  </div>
+  <div id="ring" class="a" style="left:40px;top:500px;width:1000px;height:1000px;border-radius:50%;border:6px solid rgba(255,214,140,.9);box-shadow:0 0 60px rgba(255,190,90,.6),inset 0 0 60px rgba(255,190,90,.4);opacity:0"></div>
+  <div id="flare" class="a" style="left:-200px;top:0;width:1480px;height:10px;border-radius:10px;background:radial-gradient(50% 50% at 50% 50%,#fff 0%,rgba(255,60,60,.95) 30%,rgba(255,20,30,0) 100%);filter:blur(2px);opacity:0"></div>
+</div>
+
+<!-- ===== VOCÊ NÃO VAI QUERER PERDER ESSA! ===== -->
+<div class="sc" id="sVoce">
+  <div class="ln c wht" style="top:820px;font-size:170px"><span class="w" id="v_1">Você</span> <span class="w" id="v_2">não vai</span></div>
+  <div class="ln c wht" style="top:975px;font-size:170px"><span class="w" id="v_3">querer</span> <span class="w" id="v_4">perder</span></div>
+  <div class="ln c" style="top:1140px;font-size:200px"><span class="w tag" id="v_5">essa!</span></div>
+</div>
+
+<!-- ===== OLHA O PREÇO ===== -->
+<div class="sc" id="sOlha">
+  <div class="ln c wht" style="top:780px;font-size:200px"><span class="w" id="o_1">Olha o</span></div>
+  <div class="ln c" style="top:960px;font-size:300px"><span class="w gold" id="o_2">preço.</span></div>
+</div>
+
+<!-- ===== PREÇO ===== -->
+<div class="sc" id="sPreco">
+  <div id="pLbl" class="ln sm" style="top:300px;font-size:30px;color:#e9c77a">Black Friday</div>
+  <div id="pote" class="a" style="left:0;top:0;width:520px">
+    <img src="assets/pote-frente.webp" style="width:520px">
+    <div id="poteRim" class="full" style="width:520px;height:780px;background:linear-gradient(90deg,rgba(255,30,40,.38),rgba(0,0,0,0) 22%,rgba(0,0,0,0) 78%,rgba(255,200,110,.30));mix-blend-mode:screen;-webkit-mask:url(assets/pote-frente.webp) 0 0/520px auto no-repeat;mask:url(assets/pote-frente.webp) 0 0/520px auto no-repeat"></div>
+  </div>
+  <div id="poteSh" class="a" style="width:520px;height:60px;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%,rgba(0,0,0,.85),rgba(0,0,0,0));"></div>
+  <div id="price" class="a c" style="left:0;top:0;width:1080px;text-align:center;line-height:1">
+    <span id="pRS" class="gold" style="display:inline-block;font-size:150px;vertical-align:top;margin-top:62px;margin-right:12px">R$</span><span id="pInt" style="display:inline-block;font-size:560px;vertical-align:top"></span><span style="display:inline-block;vertical-align:top;margin-top:40px"><span id="pDec" style="display:inline-block;font-size:280px"></span></span>
+  </div>
+</div>
+
+<!-- ===== SÓ SEGUNDA ===== -->
+<div class="sc" id="sSeg">
+  <div class="ln c wht" style="top:640px;font-size:150px"><span class="w" id="g_1">É somente</span></div>
+  <div class="ln c" style="top:800px;font-size:262px"><span class="w gold" id="g_2">segunda-</span></div>
+  <div class="ln c" style="top:1025px;font-size:262px"><span class="w gold" id="g_3">feira!</span></div>
+  <div id="gBar" class="a" style="left:190px;top:1268px;width:700px;height:22px;background:#e3111c;box-shadow:0 0 40px rgba(255,20,30,.6);transform-origin:0 50%"></div>
+</div>
+
+<!-- ===== DIA 30 ===== -->
+<div class="sc" id="sDia">
+  <div id="cal" class="a" style="left:240px;top:430px;width:600px;height:720px;transform-origin:50% 0;perspective:1600px">
+    <div id="calIn" class="full" style="width:600px;height:720px;transform-origin:50% 0;border-radius:36px;overflow:hidden;background:linear-gradient(180deg,#151010,#0a0707);border:3px solid rgba(233,199,122,.75);box-shadow:0 50px 120px rgba(0,0,0,.8),0 0 80px rgba(255,170,80,.12)">
+      <div style="position:absolute;left:0;top:0;width:600px;height:150px;background:#e3111c;display:flex;align-items:center;justify-content:center" class="c"><span style="font-size:96px;color:#fff;line-height:1;margin-top:8px">Segunda-feira</span></div>
+      <div class="ln sm" style="width:600px;top:190px;font-size:30px;color:#e9c77a">Dia</div>
+      <div class="ln c goldS" style="width:600px;top:220px;font-size:470px;line-height:1">30</div>
+    </div>
+  </div>
+  <svg id="circ" class="a" width="1080" height="1920" style="left:0;top:0;overflow:visible"><path id="circP" d="" fill="none" stroke="#ff2430" stroke-width="16" stroke-linecap="round" style="filter:drop-shadow(0 0 14px rgba(255,30,40,.8))"/></svg>
+  <div class="ln c wht" style="top:1230px;font-size:104px"><span class="w" id="d_1">Uma oportunidade</span></div>
+  <div class="ln c" style="top:1335px;font-size:104px"><span class="w red" id="d_2">por tempo limitado.</span></div>
+</div>
+
+<!-- ===== QUANDO ACABAR, ACABOU ===== -->
+<div class="sc" id="sAcabou">
+  <div class="ln c wht" style="top:820px;font-size:150px"><span class="w" id="q_1">Quando acabar,</span></div>
+  <div class="ln c" style="top:960px;font-size:250px"><span class="w tag" id="q_2">acabou.</span></div>
+</div>
+
+<!-- ===== CARTAZ FINAL ===== -->
+<div class="sc" id="sCTA">
+  <div id="kLogo" class="a" style="left:475px;top:150px;width:130px;height:130px"><img src="assets/logo-pecai.png" style="width:130px;border-radius:50%;box-shadow:0 0 0 3px rgba(233,199,122,.8),0 0 50px rgba(160,60,200,.5)"></div>
+  <div id="kBF" class="ln sm" style="top:308px;font-size:30px;color:#e9c77a">Black Friday</div>
+  <div class="ln c wht" style="top:360px;font-size:140px"><span class="w" id="k_1">Compre</span></div>
+  <div class="ln c wht" style="top:482px;font-size:140px"><span class="w" id="k_2">diretamente</span></div>
+  <div class="ln c" style="top:612px;font-size:140px"><span class="w tag" id="k_3">na loja!</span></div>
+  <div id="kPote" class="a" style="width:330px"><img src="assets/pote-frente.webp" style="width:330px"></div>
+  <div id="kPoteSh" class="a" style="width:330px;height:40px;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%,rgba(0,0,0,.9),rgba(0,0,0,0))"></div>
+  <div id="kPrice" class="a c" style="line-height:1;white-space:nowrap">
+    <span class="gold" style="display:inline-block;font-size:84px;vertical-align:top;margin-top:36px;margin-right:8px">R$</span><span class="gold" style="display:inline-block;font-size:300px;vertical-align:top">24</span><span class="gold" style="display:inline-block;font-size:150px;vertical-align:top;margin-top:22px">,99</span>
+  </div>
+  <div id="kEst" class="ln c wht" style="top:1330px;font-size:66px">Enquanto durarem os estoques.</div>
+  <div id="kDate" class="ln" style="top:1418px">
+    <span class="c" style="display:inline-block;font-size:64px;background:#e3111c;color:#fff;padding:14px 30px 8px;border-radius:999px;box-shadow:0 0 50px rgba(255,20,30,.45)">Só segunda · 30/11</span>
+  </div>
+  <div id="kIg" class="ln sm" style="top:1528px;font-size:28px;color:#cfc6b6;letter-spacing:.24em;text-transform:none">@curtapecai</div>
+</div>
+
+</div><!-- /cam -->
+<div id="flash" class="full"></div>
+</div>
+
+<script>
+// ---------- tempo da música ----------
+const BT=60/144.76, D=16*BT, B=k=>D+k*BT, END=B(32)+1.5;
+window.FILM={BT,D,END};
+// ---------- utilidades ----------
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const lerp=(a,b,p)=>a+(b-a)*p;
+const pr=(t,a,b)=>cl((t-a)/(b-a));
+const eOut=p=>1-Math.pow(1-p,3), eOut5=p=>1-Math.pow(1-p,5), eIO=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+const eExpo=p=>p>=1?1:1-Math.pow(2,-10*p);
+const eBack=p=>{const c1=1.9,c3=c1+1;return 1+c3*Math.pow(p-1,3)+c1*Math.pow(p-1,2)};
+const spring=(p,f=3.2,z=5)=>p<=0?0:1-Math.exp(-z*p)*Math.cos(f*Math.PI*p);
+function show(id,on){const e=$(id);e.style.display=on?'block':'none';return on}
+function S(e,tr,op,fl){e=typeof e=='string'?$(e):e;e.style.transform=tr||'none';if(op!==undefined)e.style.opacity=op;if(fl!==undefined)e.style.filter=fl}
+// palavra que "bate": cresce do grande pro tamanho certo, com desfoque
+function slam(id,t,t0,{from=1.6,dur=.2,blur=22,y=0}={}){const e=$(id);const p=pr(t,t0,t0+dur);if(t<t0){e.style.opacity=0;return}
+  const s=lerp(from,1,eExpo(p));e.style.opacity=cl((t-t0)/.05);e.style.transform=`translateY(${lerp(y,0,eExpo(p))}px) scale(${s})`;
+  const b=lerp(blur,0,eOut(p));const keep=e.dataset.f||'';e.style.filter=(b>.3?`blur(${b}px) `:'')+keep}
+// palavra que sobe (máscara)
+function rise(id,t,t0,{dur=.28,d=60}={}){const e=$(id);const p=eOut5(pr(t,t0,t0+dur));e.style.opacity=t<t0?0:cl((t-t0)/.08);e.style.transform=`translateY(${(1-p)*d}px)`;const b=(1-p)*10;e.style.filter=b>.3?`blur(${b}px)`:''}
+function shine(id,t,t0,dur=.9){const e=$(id);const p=pr(t,t0,t0+dur);e.style.setProperty('--sh',`${lerp(120,-20,eIO(p))}%`)}
+// tremida de câmera nas pancadas
+const HITS=[];function shake(t){let x=0,y=0,r=0;for(const [h,a] of HITS){const d=t-h;if(d>=0&&d<.45){const k=a*Math.exp(-d*11);x+=Math.sin(d*90+h)*k*14;y+=Math.cos(d*77+h*3)*k*11;r+=Math.sin(d*61)*k*.35}}return `translate(${x}px,${y}px) rotate(${r}deg)`}
+
+// ---------- vídeos (quadros com nitidez de IA) ----------
+const SETS={jas:{dir:'quadros/jas_up/',W:1912,H:3400,n0:96,n1:287,fps:24},gem:{dir:'quadros/gem_up/',W:3200,H:1800,n0:29,n1:168,fps:24}};
+const pad=n=>String(n).padStart(4,'0');
+const cache={};let curSrc='';
+function setImg(img,src){if(img.getAttribute('src')!==src){img.setAttribute('src',src)}return img.decode().catch(()=>{})}
+// coloca a imagem cobrindo a tela com zoom s e o ponto (px,py) da imagem na posição (sx,sy) da tela
+function place(img,set,s,px,py,sx=540,sy=960){const st=SETS[set];const base=Math.max(1080/st.W,1920/st.H);const k=base*s;
+  let L=sx-px*k,T=sy-py*k;L=cl(L,1080-st.W*k,0);T=cl(T,1920-st.H*k,0);img.style.width=st.W+'px';img.style.transform=`translate(${L}px,${T}px) scale(${k})`;return {L,T,k}}
+// rastreio do pote nas mãos dele (coordenadas do quadro ampliado 4x)
+const POT=[[7.85,235,690],[8.4,220,640],[9.0,168,530],[9.6,170,535],[10.4,172,530],[11.2,180,530],[12.0,185,525]];
+function pot(src){if(src<=POT[0][0])return [POT[0][1]*4,POT[0][2]*4];for(let i=1;i<POT.length;i++){if(src<=POT[i][0]){const p=(src-POT[i-1][0])/(POT[i][0]-POT[i-1][0]);return [lerp(POT[i-1][1],POT[i][1],p)*4,lerp(POT[i-1][2],POT[i][2],p)*4]}}const l=POT[POT.length-1];return [l[1]*4,l[2]*4]}
+
+// tomadas do anúncio (Gemini): quadro inicial, centro (px,py) no quadro 3200×1800, zoom de/para, escurecer
+const TAKES={
+  hero:{n:32,px:1640,py:820,s0:1.08,s1:1.16},
+  gota:{n:64,px:2330,py:950,s0:1.06,s1:1.14},
+  macro:{n:98,px:1900,py:900,s0:1.04,s1:1.22},
+  bowl:{n:134,px:2075,py:1150,s0:1.10,s1:1.18},
+  macro2:{n:113,px:1820,py:980,s0:1.28,s1:1.42}};
+// linha do tempo das imagens: [início, fim, tomada, escurecer]
+const GTL=[[B(2),B(4),'hero',.55],[B(4),B(6),'gota',.52],[B(6),B(8),'macro',.5],[B(14),B(16),'bowl',.5],[B(16),B(18),'macro2',.5],
+  [B(22),B(22.5),'hero',.46],[B(22.5),B(23),'gota',.46],[B(23),B(23.5),'macro2',.46],[B(23.5),B(24),'jpot',.40]];
+
+async function footage(t){
+  const v1=$('v1'),v1b=$('v1b'),bw=$('v1bw');let src=null,dim=0,grad=0;bw.style.display='none';$('fx').style.filter='';
+  if(t<D){ // ---- intro: Jason ----
+    let sT,s,px,py,sx=540,sy=960;
+    if(t<6*BT){sT=4.30+t;s=1.03+.06*eIO(t/(6*BT));px=956;py=1500;}
+    else{const u=t-6*BT;sT=7.85+u;const [qx,qy]=pot(sT);
+      const p1=eIO(pr(t,2.6,4.6)), p2=eIO(pr(t,4.4,6.36)), p3=Math.pow(pr(t,6.36,D),2.2);
+      const follow=lerp(.25,1,p2)*p1+ (1-p1)*.0;
+      px=lerp(956,qx,cl(.25*p1+.75*p2));py=lerp(1700,qy,cl(.25*p1+.75*p2));
+      s=1.0+.12*p1+1.25*p2+3.8*p3; sy=lerp(960,930,p2);
+      // foco: fundo desfoca, pote nítido
+      const fb=10*p2+18*p3; if(fb>.4){bw.style.display='block';bw.style.filter=`blur(${fb}px)`;
+        const sc=place(v1b,'jas',s,px,py,sx,sy);const cx=sc.L+qx*sc.k,cy=sc.T+qy*sc.k,r=95*sc.k*4*.55;
+        bw.style.webkitMaskImage=bw.style.maskImage=`radial-gradient(${r*1.05}px ${r*1.35}px at ${cx}px ${cy}px,transparent 55%,#000 100%)`;}
+      $('fx').style.filter=p3>0?`brightness(${1+p3*2.2}) blur(${p3*10}px)`:'';
+    }
+    const n=cl(Math.round(sT*24),96,287);src='quadros/jas_up/'+pad(n)+'.jpg';
+    place(v1,'jas',s,px,py,sx,sy);v1.style.display='block';
+    await setImg(v1,src);if(bw.style.display=='block')await setImg(v1b,src);
+    $('dim').style.opacity=0;$('grad').style.opacity=.55;return true;
+  }
+  for(const [a,b,k,dm] of GTL){if(t>=a&&t<b){
+    const u=t-a,p=(t-a)/(b-a);
+    if(k=='jpot'){const sT=10.6+u;const [qx,qy]=pot(sT);place(v1,'jas',2.1+.25*p,qx,qy,540,980);src='quadros/jas_up/'+pad(cl(Math.round(sT*24),96,287))+'.jpg'}
+    else{const T=TAKES[k];const n=cl(T.n+Math.round(u*24),29,168);const punch=1+.06*Math.exp(-u*14);
+      place(v1,'gem',lerp(T.s0,T.s1,p)*punch,T.px,T.py);src='quadros/gem_up/'+pad(n)+'.jpg'}
+    v1.style.display='block';await setImg(v1,src);$('dim').style.opacity=dm;$('grad').style.opacity=1;
+    $('fx').style.filter='contrast(1.06) saturate(1.08)';return true}}
+  v1.style.display='none';$('dim').style.opacity=0;$('grad').style.opacity=0;return false;
+}
+
+// ---------- poeira dourada (determinística) ----------
+const cv=$('dust'),cx=cv.getContext('2d');
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+const BURSTS=[[D,540,760,1],[B(1),540,1000,.7],[B(9),540,700,1.1],[B(15),540,1000,.6],[B(18.6),540,700,.8],[B(26),700,960,.6],[B(32),540,300,1]];
+function dust(t,amb){cx.clearRect(0,0,1080,1920);cx.globalCompositeOperation='lighter';
+  if(amb>0)for(let i=0;i<110;i++){const sp=30+rnd(i)*70,x=(rnd(i+3)*1180-50)+Math.sin(t*.7+i)*20,y=((rnd(i+7)*2100-t*sp)%2100+2100)%2100-90,r=1+rnd(i+9)*3.2,a=amb*(.25+.6*rnd(i+11))*(.6+.4*Math.sin(t*3+i));
+    cx.fillStyle=`rgba(255,${190+rnd(i)*50|0},${110+rnd(i+1)*60|0},${a})`;cx.beginPath();cx.arc(x,y,r,0,7);cx.fill()}
+  for(const [h,ox,oy,a] of BURSTS){const d=t-h;if(d<0||d>1.6)continue;for(let i=0;i<90;i++){const ang=rnd(i*3+h)*6.283,v=(300+rnd(i*5+h)*1300)*a,dd=1-Math.exp(-d*3.2);
+    const x=ox+Math.cos(ang)*v*dd/3.2,y=oy+Math.sin(ang)*v*dd/3.2*.8+d*d*120,al=Math.max(0,1-d/1.4)*(.5+.5*rnd(i+h*7));
+    cx.fillStyle=`rgba(255,${200+rnd(i)*40|0},120,${al})`;cx.beginPath();cx.arc(x,y,1.2+rnd(i+2)*3,0,7);cx.fill()}}
+  cx.globalCompositeOperation='source-over'}
+
+// ---------- preço que rola (caça-níquel) ----------
+function buildStrip(el,target,fs,goldCls,extra){el.innerHTML='';const seq=[];for(let i=0;i<extra;i++)seq.push((target+3+i*7)%10);seq.push(target);
+  const box=document.createElement('span');box.className='dig';box.style.height=fs+'px';box.style.lineHeight=fs+'px';
+  const st=document.createElement('span');st.className='strip goldS';st.style.backgroundSize=`100% ${fs}px`;
+  seq.forEach(d=>{const s=document.createElement('span');s.textContent=d;s.style.height=fs+'px';st.appendChild(s)});box.appendChild(st);el.appendChild(box);return {st,len:seq.length,fs}}
+let STR=[];
+function buildPrice(){const pi=$('pInt'),pd=$('pDec');pi.innerHTML='';pd.innerHTML='';
+  const mk=(par,d,fs,ex)=>{const w=document.createElement('span');par.appendChild(w);return buildStrip(w,d,fs,'',ex)};
+  STR=[mk(pi,2,560,9),mk(pi,4,560,12)];
+  const cm=document.createElement('span');cm.textContent=',';cm.className='goldS';cm.style.cssText='display:inline-block;vertical-align:top;line-height:280px;height:280px;background-size:100% 280px';pd.appendChild(cm);
+  STR.push(mk(pd,9,280,15),mk(pd,9,280,18));
+  $('price').style.filter='drop-shadow(0 6px 0 #3b2306) drop-shadow(0 0 40px rgba(255,186,70,.35))';}
+
+// ---------- círculo de caneta no 30 ----------
+function circlePath(cx,cy,rx,ry,p){const pts=[];const N=90,a0=-2.2,turn=6.283*1.12;for(let i=0;i<=N*p;i++){const q=i/N,a=a0+turn*q,j=1+.04*Math.sin(q*13)+.03*q;pts.push(`${(cx+Math.cos(a)*rx*j).toFixed(1)},${(cy+Math.sin(a)*ry*j-q*14).toFixed(1)}`)}return pts.length>1?'M'+pts.join(' L'):''}
+
+// ---------- montar a cena no tempo t ----------
+async function seek(t){
+  HITS.length=0;[[D,1.25],[B(1),.9],[B(4),.35],[B(9),1.1],[B(15),.6],[B(18),.8],[B(22),.4],[B(23),.5],[B(24),.6],[B(32),.8]].forEach(h=>HITS.push(h));
+  const hasF=await footage(t);
+  $('cam').style.transform=shake(t);
+
+  // ----- INTRO -----
+  if(show('sIntro',t<D)){
+    const a=$('apre');a.style.opacity=pr(t,.25,.75)*(1-pr(t,2.15,2.45));a.style.letterSpacing=`${lerp(.62,.42,eOut(pr(t,.25,2.4)))}em`;
+    rise('ele',t,9*BT,{dur:.5,d:30});$('ele').style.opacity=cl((t-9*BT)/.25)*(1-pr(t,13*BT-.18,13*BT));
+    rise('evc',t,13*BT,{dur:.4,d:30});$('evc').style.opacity=cl((t-13*BT)/.15)*(1-pr(t,D-.22,D-.08));
+  }
+  // ----- palco escuro -----
+  const stage=(t>=D&&t<B(2))||(t>=B(8)&&t<B(14))||(t>=B(18)&&t<B(22))||t>=B(24);
+  show('stage',stage);
+  if(stage){$('spot').style.opacity=t>=B(24)?.9:1;$('redglow').style.opacity=t<B(2)?eOut(pr(t,D,D+.6)):t>=B(24)?.8+.2*Math.sin(t*2):.65;$('floor').style.top='1745px';$('floor').style.opacity=t>=B(8)&&t<B(14)?.8:0}
+
+  // ----- BLACK FRIDAY -----
+  if(show('sBF',t>=D&&t<B(8))){
+    slam('bfB',t,D,{from:2.1,dur:.24,blur:30});slam('bfF',t,B(1),{from:2.1,dur:.24,blur:30});
+    shine('bfB',t,D+.12,.8);
+    const fi=$('bfFi');fi.style.textShadow=`0 0 ${38+40*Math.exp(-(t-B(1))*5)}px rgba(255,20,30,${.55+.4*Math.exp(-Math.max(0,t-B(1))*5)})`;
+    // vira cabeçalho no corte
+    const m=eExpo(pr(t,B(2),B(2)+.32));$('bfLock').style.transform=`translateY(${lerp(0,40,m)}px) scale(${lerp(1,.32,m)})`;
+    const r=$('ring'),rp=pr(t,D,D+.6);r.style.opacity=t<D?0:(1-rp)*.9;r.style.transform=`scale(${lerp(.3,1.5,eOut(rp))})`;
+    const f=$('flare'),fp=pr(t,D,D+.5),fp2=pr(t,B(1),B(1)+.5);f.style.top='905px';f.style.opacity=Math.max((1-fp)*(t>=D),(1-fp2)*(t>=B(1)))*.95;f.style.transform=`scaleX(${lerp(.2,1.3,eOut(Math.max(fp,fp2)))})`;
+  }
+  // ----- VOCÊ NÃO VAI QUERER PERDER ESSA! -----
+  if(show('sVoce',t>=B(2)&&t<B(6))){
+    slam('v_1',t,B(2),{from:1.4,dur:.18});slam('v_2',t,B(2.5),{from:1.4,dur:.18});slam('v_3',t,B(3),{from:1.4,dur:.18});slam('v_4',t,B(3.5),{from:1.4,dur:.18});
+    slam('v_5',t,B(4),{from:1.7,dur:.2,blur:26});const e=$('v_5');if(t>=B(4))e.style.transform+=` rotate(${lerp(-6,-2.5,eExpo(pr(t,B(4),B(4)+.25)))}deg)`;
+  }
+  // ----- OLHA O PREÇO -----
+  if(show('sOlha',t>=B(6)&&t<B(8))){slam('o_1',t,B(6),{from:1.3,dur:.18});slam('o_2',t,B(7),{from:1.8,dur:.22,blur:26});shine('o_2',t,B(7)+.1,.6)}
+
+  // ----- PREÇO -----
+  if(show('sPreco',t>=B(8)&&t<B(14))){
+    if(!STR.length)buildPrice();
+    const u=t-B(8);
+    // pote sobe do escuro
+    const pp=spring(pr(t,B(8),B(8)+1.0),2.2,4.6);const bob=Math.sin((t-B(8))*2.2)*6;
+    const ph=520*1038/692, px=280, py=1735-ph;
+    S('pote',`translate(${px}px,${lerp(py+500,py,pp)+bob}px) rotate(${lerp(4,0,pp)}deg)`,cl(pr(t,B(8),B(8)+.3)),`brightness(${lerp(.2,1,pp)}) contrast(1.05)`);
+    S('poteSh',`translate(${px}px,${1715}px) scale(${lerp(.4,1,pp)},1)`,pp*.9);
+    $('poteRim').style.opacity=.6+.4*Math.sin(u*3);
+    // dígitos rolando: travam um depois do outro, o último na batida B9
+    const locks=[B(8)+.22,B(8)+.30,B(8)+.36,B(9)];
+    STR.forEach((s,i)=>{const p=eOut5(pr(t,B(8),locks[i]));const y=-(s.len-1)*s.fs*p;s.st.style.transform=`translateY(${y}px)`;
+      const v=(1-pr(t,locks[i]-.05,locks[i]))*(t<locks[i]);s.st.style.filter=v>0?`blur(${v*7}px)`:'';});
+    const ap=pr(t,B(8),B(8)+.12),lk=eExpo(pr(t,B(9),B(9)+.25));
+    S('price',`translateY(${lerp(470,430,lk)}px) scale(${lerp(.92,1,ap)*(1+.06*Math.exp(-Math.max(0,t-B(9))*9)*(t>=B(9)))})`,ap);
+    $('price').style.top='0px';
+    $('pRS').style.opacity=pr(t,B(9),B(9)+.15);
+    // brilho que passa
+    const sh=pr(t,B(9)+.15,B(9)+1.05);$('pRS').style.setProperty('--sh',`${lerp(120,-20,eIO(sh))}%`);
+    STR.forEach(s=>{s.st.style.backgroundImage=`linear-gradient(100deg,rgba(255,255,255,0) 40%,rgba(255,255,255,${.95*Math.sin(Math.PI*sh)}) 50%,rgba(255,255,255,0) 60%),var(--gold)`;
+      s.st.style.backgroundSize=`300% 100%,100% ${s.fs}px`;s.st.style.backgroundPosition=`${lerp(120,-20,eIO(sh))}% 0,0 0`;s.st.style.backgroundRepeat='no-repeat,repeat-y'});
+    $('pLbl').style.opacity=pr(t,B(9),B(9)+.3);$('pLbl').style.letterSpacing=`${lerp(.7,.42,eOut(pr(t,B(9),B(11))))}em`;
+  }
+  // ----- É SOMENTE SEGUNDA-FEIRA -----
+  if(show('sSeg',t>=B(14)&&t<B(18))){
+    slam('g_1',t,B(14),{from:1.3,dur:.18});slam('g_2',t,B(15),{from:1.9,dur:.22,blur:28});slam('g_3',t,B(15)+.1,{from:1.9,dur:.22,blur:28});
+    shine('g_2',t,B(15)+.2,.7);shine('g_3',t,B(15)+.3,.7);
+    S('gBar',`scaleX(${eExpo(pr(t,B(16),B(16)+.35))})`,1);
+  }
+  // ----- DIA 30 -----
+  if(show('sDia',t>=B(18)&&t<B(22))){
+    const p=pr(t,B(18),B(18)+.55);$('calIn').style.transform=`perspective(1600px) rotateX(${lerp(-95,0,spring(p,2.6,5.5))}deg)`;
+    S('cal',`translateY(${lerp(-60,0,eOut(p))}px)`,cl((t-B(18))/.08));
+    // círculo de caneta em volta do 30
+    const cp=eIO(pr(t,B(19),B(19)+.55));$('circP').setAttribute('d',circlePath(540,905,250,215,cp));
+    slam('d_1',t,B(20),{from:1.25,dur:.18});slam('d_2',t,B(20.5),{from:1.25,dur:.18});
+  }
+  // ----- QUANDO ACABAR, ACABOU -----
+  if(show('sAcabou',t>=B(22)&&t<B(24))){slam('q_1',t,B(22),{from:1.3,dur:.16});slam('q_2',t,B(23),{from:1.9,dur:.2,blur:26});
+    const e=$('q_2');if(t>=B(23))e.style.transform+=` rotate(-3deg)`;}
+
+  // ----- CARTAZ -----
+  if(show('sCTA',t>=B(24))){
+    slam('k_1',t,B(24),{from:1.5,dur:.2});slam('k_2',t,B(24)+.12,{from:1.5,dur:.2});slam('k_3',t,B(25),{from:1.8,dur:.22,blur:26});
+    const e=$('k_3');if(t>=B(25))e.style.transform+=` rotate(-2.5deg)`;
+    $('kBF').style.opacity=pr(t,B(24),B(24)+.3);
+    const pp=spring(pr(t,B(26),B(26)+.9),2.2,4.8),bob=Math.sin((t-B(26))*2.1)*5,ph=330*1038/692;
+    S('kPote',`translate(${85}px,${lerp(1330,1285-ph,pp)+bob}px) rotate(${lerp(-8,-3,pp)}deg)`,cl(pr(t,B(26),B(26)+.2)),`brightness(${lerp(.3,1,pp)})`);
+    S('kPoteSh',`translate(85px,1268px) scale(${pp},1)`,pp*.9);
+    const kp=pr(t,B(26)+.1,B(26)+.3);S('kPrice',`translate(${430}px,${lerp(930,890,eExpo(kp))}px) scale(${lerp(1.3,1,eExpo(kp))})`,kp,kp<1?`blur(${(1-kp)*16}px)`:'');
+    $('kPrice').querySelectorAll('.gold').forEach((g,i)=>g.style.setProperty('--sh',`${lerp(120,-20,eIO(pr(t,B(32)+.05+i*.06,B(32)+.95+i*.06)))}%`));
+    rise('kEst',t,B(28),{dur:.35,d:40});
+    const dp=pr(t,B(30),B(30)+.3);S('kDate',`scale(${lerp(1.4,1,eExpo(dp))})`,dp);
+    rise('kIg',t,B(30)+.2,{dur:.4,d:20});
+    const lp=spring(pr(t,B(32),B(32)+.7),2.4,5);S('kLogo',`scale(${lp})`,cl((t-B(32))/.06));
+  }
+  // ----- poeira e clarões -----
+  dust(t,t>=D?(t>=B(8)&&t<B(14)||t>=B(24)?1:.55):0);
+  const fl=$('flash');let fo=0;
+  fo=Math.max(fo,t>=D-.03&&t<D+.12?1-pr(t,D,D+.12):0, t>=D-.25&&t<D?pr(t,D-.25,D-.03):0);
+  fo=Math.max(fo,t>=B(9)&&t<B(9)+.14?.55*(1-pr(t,B(9),B(9)+.14)):0, t>=B(32)&&t<B(32)+.18?.5*(1-pr(t,B(32),B(32)+.18)):0);
+  // cortes secos com piscada curta
+  for(const c of [B(2),B(4),B(6),B(14),B(16),B(18),B(22),B(22.5),B(23),B(23.5),B(24)]){if(t>=c&&t<c+.05)fo=Math.max(fo,.18*(1-pr(t,c,c+.05)))}
+  fl.style.opacity=fo;
+  return true;
+}
+window.seek=seek;
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].filter(i=>i.getAttribute('src')).map(i=>i.decode().catch(()=>{})))).then(async()=>{buildPrice();await seek(0);return true});
+</script>
+</body></html>

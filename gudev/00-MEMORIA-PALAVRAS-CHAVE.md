@@ -10,6 +10,7 @@
 
 | Palavra-chave | O que é | Onde |
 |---|---|---|
+| **Black Friday, Péçaí, R$ 24,99, segunda dia 30, Jason, GTA, comercial de varejo, preço caça-níquel, nitidez com IA, Real-ESRGAN sem torch** | Comercial vertical de 21,4 s da Péçaí (25/11) | `gudev/videos/pecai-black-friday/`, `gudev/ferramentas/nitidez_ia.py`, `08` |
 | **TikTok, Parece bom?, psicologia do consumidor, efeito halo, degraus, série** | Estratégia de TikTok (oficial vs. mercado vs. hipótese, 4 pilares, 10 vídeos, plano de 30 dias) + 1º vídeo "Parece bom?" (66,6 s, bonecos brancos com brilho, drop na virada) (22/11) | `gudev/12-TIKTOK-ESTRATEGIA.md`, `gudev/videos/parece-bom/` |
 | **filme de marca, campanha, Digital Presence, vídeo por código** | Reels de 32 s feito com HTML + Playwright + ffmpeg + trilha em numpy (15/11) | `gudev/videos/presenca-digital/`, `08` |
 | **açaí, Radar** | Radar de açaí e sorveterias da Zona Leste (até 100 km), 21/10 | artifact Va7xfagsqwHofaKFJ8WSiQ, `02` |
@@ -78,6 +79,7 @@
 
 | Data | Sessão | Resultado / pendência |
 |---|---|---|
+| 25/11 | Péçaí: comercial de Black Friday (R$ 24,99, só segunda 30/11, na loja) | `gudev/videos/pecai-black-friday/pecai-black-friday.mp4` (21,4 s). Falta: confirmar se o preço é do pote de 1 L, em qual loja vale, ouvir no celular |
 | 22/11 | TikTok: estratégia + vídeo "Parece bom?" | `gudev/12-TIKTOK-ESTRATEGIA.md` + `gudev/videos/parece-bom/gudev-parece-bom.mp4` (66,6 s, sem voz). Falta: voz do Davi (tabela no README), ouvir no celular, decidir se a música passa no TikTok |
 | 21/11 | Fan site do Homem-Aranha (vídeo Cine Daily/Deadpool), v2 | `sites/homem-aranha/` + `homem-aranha-arquivo-unico.html` (1,56 MB). v2: teia consertada no celular, cidade 3D, aranha radioativa, Aranhaverso. Só estudo (Marvel). Falta ver no celular de verdade |
 | 17/11 | Comercial da Andrade, versão 2 | Fachada real (caminhonete + letreiro), relógio "desde 1989", colunas na estátua, grão na estátua, esmerilhadeira alta. Mesmas pendências da v1 |
@@ -285,3 +287,8 @@ O Davi gostou da ideia, mas achou o relógio fraco e mandou o vídeo de um reló
 ## 25/11/2026: Âncora v3 (fotos de referência do relógio e da bancada)
 Palavras: fotos de referência, mostrador branco, esmalte, submostrador 60 15 30 45, ponteiros pretos, ponte em V, alças com parafuso, gancho, costura, pulseira preta, bancada, flat lay, peças espalhadas, tapete, lupa de relojoeiro, pinça, chave de fenda, "Na bancada".
 O Davi mandou 2 imagens (relógio montado em 3 ângulos e as peças espalhadas numa bancada). Relógio ajustado pra bater com a foto e criado o passo 11 "Na bancada" (as peças deitam no tapete com ferramentas, depois o relógio se monta). 150 peças. Detalhes no README do site.
+
+## 25/11/2026: Péçaí, comercial de Black Friday
+Palavras: Black Friday, Péçaí, açaí, pote de 1 L, R$ 24,99, segunda-feira, dia 30, 30/11, na loja, enquanto durarem os estoques, Jason, GTA 6, vídeo de IA, Gemini, Google Flow, propaganda do açaí, música subindo, drop, Slowed Songs, caça-níquel, calendário, caneta circulando, cartaz final, Cialdini, Godin, Kahneman, Hormozi, Real-ESRGAN, nitidez_ia, BiRefNet, Archivo.
+O Davi mandou um prompt de campanha de Black Friday (preto, vermelho, dourado; R$ 24,99; só segunda, dia 30; na loja; enquanto durarem os estoques), 3 fotos do pote de 1 L, o vídeo do "Jason" tomando açaí, a propaganda do açaí feita no Gemini e a música de referência (TikTok "Slowed Songs #128"). Feito `gudev/videos/pecai-black-friday/pecai-black-friday.mp4` (21,4 s): Jason → câmera entra no pote com a música subindo → drop no BLACK FRIDAY → takes do açaí com frases → preço em caça-níquel com a foto real do pote → calendário → cartaz final. Os trechos do Gemini com "EDIÇÃO PREMIUM" e "APROVEITE HOJE" escritos ficaram de fora. Ferramenta nova: `gudev/ferramentas/nitidez_ia.py` (Real-ESRGAN sem torch).
+
