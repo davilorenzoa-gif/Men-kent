@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Âncora · Relojoaria</title>
+<meta name="description" content="Conceito GuDev: relojoaria com o movimento mecânico inteiro desenhado em código. Lupa de relojoeiro, desmontagem peça por peça e regulagem no timegrapher.">
+<meta name="theme-color" content="#0d0e10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230d0e10'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23dcae58' stroke-width='2'/%3E%3Cpath d='M16 16V9M16 16l5 3' stroke='%23dcae58' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --noite:#0d0e10; --noite2:#16171a; --osso:#ede6d8; --osso2:#e2d9c7; --tinta:#17140f; --cinza:#6d675c;
+  --latao:#c99a46; --latao-claro:#e3b866; --rubi:#a3182f; --azul:#2b4fc4;
+  --serif:'Newsreader', Georgia, 'Times New Roman', serif;
+  --sans:'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --g:clamp(16px, 4vw, 48px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--noite);color:var(--osso);font:400 16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--latao-claro);outline-offset:3px;border-radius:4px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px var(--g);transition:color .3s, background .3s}
+.nav.clara{color:var(--tinta);background:rgba(237,230,216,.92);border-bottom:1px solid rgba(23,20,15,.08)}
+.marca{display:flex;align-items:baseline;gap:10px;text-decoration:none}
+.marca b{font:italic 400 26px/1 var(--serif)}
+.marca span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.nav nav{display:flex;gap:28px;align-items:center}
+.nav nav a{text-decoration:none;font-size:14px;opacity:.75}
+.nav nav a:hover{opacity:1}
+.nav .zap{opacity:1;padding:9px 16px;border:1px solid currentColor;border-radius:999px}
+@media (max-width:760px){.nav nav a:not(.zap){display:none}}
+
+/* palco 3D */
+#mov{position:relative;height:620vh}
+#palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+  background:radial-gradient(120% 90% at 68% 45%, #23211d 0%, #121214 55%, #0b0b0d 100%)}
+#palco.com-lupa{cursor:none}
+#palco.com-lupa button, #palco.com-lupa a{cursor:pointer}
+#cena{position:absolute;inset:0;width:100%;height:100%;display:block}
+.sem3d #cena, .sem3d #controles{display:none}
+.sem3d #palco{background:radial-gradient(60% 50% at 70% 50%, #2a2620, #0d0e10)}
+.sem-3d-aviso{display:none}
+.sem3d .sem-3d-aviso{display:block;position:absolute;right:var(--g);bottom:var(--g);max-width:300px;color:#a49c8c;font-size:14px}
+
+#hero-txt{position:absolute;left:var(--g);top:50%;translate:0 -54%;max-width:560px;z-index:5;will-change:transform,opacity}
+#hero-txt .mono{color:var(--latao-claro);display:block;margin-bottom:22px}
+h1{font:400 clamp(44px,6.4vw,96px)/.98 var(--serif);letter-spacing:-.02em}
+h1 em{font-style:italic;color:var(--latao-claro)}
+.sub{margin-top:24px;max-width:430px;color:#bdb5a6;font-size:17px}
+.acoes{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;font-weight:500;font-size:15px;text-decoration:none;transition:transform .2s, background .2s}
+.btn:active{transform:scale(.97)}
+.btn-latao{background:var(--latao-claro);color:#1a140a}
+.btn-latao:hover{background:#efc57a}
+.btn-linha{border:1px solid rgba(237,230,216,.3)}
+.btn-linha:hover{border-color:rgba(237,230,216,.7)}
+
+#controles{position:absolute;left:var(--g);right:var(--g);bottom:calc(22px + env(safe-area-inset-bottom));z-index:6;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.reserva{min-width:230px}
+.reserva .lin{display:flex;justify-content:space-between;gap:16px;color:#a39b8b}
+.reserva .lin b{color:var(--osso);font-weight:500}
+.trilho{margin-top:8px;height:3px;background:rgba(237,230,216,.14);border-radius:3px;overflow:hidden}
+#corda-barra{height:100%;background:var(--latao-claro);transform-origin:left;transform:scaleX(.6)}
+#l-estado{margin-top:8px;color:#8d8576;display:block}
+.parado #l-estado{color:#e6a23c}
+.botoes{display:flex;gap:8px;flex-wrap:wrap}
+.ctl{padding:11px 16px;border-radius:999px;border:1px solid rgba(237,230,216,.22);font-size:14px;background:rgba(13,14,16,.5);user-select:none;-webkit-user-select:none;touch-action:none;transition:border-color .2s, background .2s}
+.ctl:hover{border-color:rgba(237,230,216,.5)}
+.ctl[aria-pressed="true"]{background:var(--osso);color:var(--tinta);border-color:var(--osso)}
+#btn-corda{background:var(--latao-claro);color:#1a140a;border-color:transparent;font-weight:500;position:relative;overflow:hidden}
+#btn-corda.ativo{background:#f3cf8a}
+.parado #btn-corda{animation:pulsa 1.4s ease-in-out infinite}
+@keyframes pulsa{50%{box-shadow:0 0 0 8px rgba(227,184,102,.18)}}
+
+#lupa-legenda{position:absolute;left:0;top:0;z-index:7;max-width:220px;padding:10px 12px;background:rgba(237,230,216,.96);color:var(--tinta);border-radius:10px;font-size:13px;line-height:1.35;pointer-events:none;opacity:0;visibility:hidden}
+#lupa-legenda.on{visibility:visible}
+#lupa-legenda b{display:block;font:italic 500 17px/1.2 var(--serif);margin-bottom:2px}
+
+#painel{position:absolute;left:var(--g);top:50%;translate:0 -50%;z-index:5;width:min(360px, 34vw);opacity:0;visibility:hidden}
+#painel h2{font:400 clamp(30px,3.2vw,46px)/1.02 var(--serif);letter-spacing:-.015em;margin-bottom:24px}
+#painel h2 em{color:var(--latao-claro)}
+.passos{list-style:none;border-top:1px solid rgba(237,230,216,.12)}
+.passo{border-bottom:1px solid rgba(237,230,216,.12);padding:10px 0;color:#7e776a;transition:color .3s}
+.passo .t{display:flex;gap:12px;align-items:baseline;font-size:15px}
+.passo .t i{font-style:normal;font-family:var(--mono);font-size:11px;width:22px}
+.passo p{max-height:0;overflow:hidden;opacity:0;font-size:14px;color:#bdb5a6;transition:max-height .45s, opacity .35s, margin .3s;padding-left:34px}
+.passo.on{color:var(--osso)}
+.passo.on .t i{color:var(--latao-claro)}
+.passo.on p{max-height:120px;opacity:1;margin-top:6px}
+.contagem{margin-top:18px;color:#8d8576}
+.contagem b{color:var(--latao-claro);font-weight:500}
+
+#rotulos{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0}
+.rotulo{position:absolute;left:0;top:0;display:flex;align-items:center;gap:8px;white-space:nowrap;font-size:12px;color:#a39b8b;will-change:transform}
+.rotulo i{width:7px;height:7px;border-radius:50%;border:1px solid currentColor;flex:none}
+.rotulo span{font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase;font-size:11px;transform:translateX(6px)}
+.rotulo.on{color:var(--latao-claro)}
+.rotulo.on i{background:currentColor}
+
+@media (max-width:760px), (max-aspect-ratio: 9/10){
+  #hero-txt{top:calc(78px + env(safe-area-inset-top));translate:none;right:var(--g)}
+  h1{font-size:clamp(40px,11vw,60px)}
+  .sub{font-size:15px;margin-top:14px}
+  .acoes{margin-top:20px}
+  .acoes .btn-linha{display:none}
+  #controles{flex-direction:column;align-items:stretch;left:0;right:0;bottom:0;padding:44px var(--g) calc(16px + env(safe-area-inset-bottom));background:linear-gradient(to top, rgba(11,11,13,.96) 55%, rgba(11,11,13,0));gap:12px}
+  .reserva .lin + .lin{display:none}
+  .reserva{min-width:0}
+  .botoes .ctl{flex:1;text-align:center;padding:11px 10px}
+  #painel{top:auto;bottom:calc(18px + env(safe-area-inset-bottom));translate:none;right:var(--g);width:auto;background:rgba(13,14,16,.86);border:1px solid rgba(237,230,216,.1);border-radius:16px;padding:16px}
+  #painel h2{display:none}
+  .passos{border-top:0}
+  .passo{display:none;border:0;padding:0}
+  .passo.on{display:block}
+  .passo p{padding-left:34px}
+  .contagem{margin-top:10px;font-size:11px}
+  #rotulos{display:none}
+}
+
+/* seções claras */
+.claro{background:var(--osso);color:var(--tinta)}
+.sec{padding:clamp(80px,12vw,160px) var(--g)}
+.wrap{max-width:1240px;margin:0 auto}
+.olho{color:var(--rubi);display:block;margin-bottom:18px}
+h2.t{font:400 clamp(36px,5vw,72px)/1.02 var(--serif);letter-spacing:-.02em;max-width:820px}
+h2.t em{font-style:italic}
+.lead{margin-top:22px;max-width:560px;font-size:18px;color:#4a453c}
+
+/* timegrapher */
+.tg-grid{margin-top:56px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,64px);align-items:start}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 15px;border-radius:999px;border:1px solid rgba(23,20,15,.2);font-size:14px;transition:background .2s,border-color .2s}
+.chip:hover{border-color:var(--tinta)}
+.chip[aria-pressed="true"]{background:var(--tinta);color:var(--osso);border-color:var(--tinta)}
+#tg-msg{margin-top:22px;min-height:72px;font-size:16px;color:#3c372f}
+.raq-box{margin-top:18px;background:var(--osso2);border-radius:18px;padding:18px 18px 14px}
+.raq-box svg{display:block;width:100%;max-width:300px;height:auto;margin:0 auto}
+.raq-box input{width:100%;margin-top:6px;accent-color:var(--tinta)}
+.raq-box input:disabled{opacity:.35}
+.raq-esc{display:flex;justify-content:space-between;color:var(--cinza);margin-top:4px}
+#btn-desmag{margin-top:12px;width:100%;padding:13px;border-radius:12px;background:var(--azul);color:#fff;font-weight:500}
+.aparelho{background:#1a1b1a;border-radius:22px;padding:16px;box-shadow:0 30px 60px -30px rgba(23,20,15,.6), inset 0 1px 0 rgba(255,255,255,.06)}
+.leituras{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#2a2b29;border-radius:12px;overflow:hidden}
+.leituras div{background:#121312;padding:12px 12px 10px;color:#8b8677}
+.leituras b{display:block;color:#f0bd55;font:500 clamp(20px,2.4vw,30px)/1.1 var(--mono);margin-top:4px}
+.leituras small{font-family:var(--mono);font-size:11px;color:#6d695e}
+#tg{display:block;width:100%;height:clamp(220px,30vw,340px);margin-top:12px;border-radius:12px}
+.aparelho-rodape{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:#7f7a6c;gap:12px;flex-wrap:wrap}
+.aparelho-rodape .ctl{border-color:rgba(237,230,216,.2);color:#d9d2c2;background:transparent}
+.aparelho-rodape .ctl[aria-pressed="true"]{background:var(--osso);color:var(--tinta)}
+.selo-box{position:relative}
+#tg-selo{position:absolute;right:18px;top:96px;z-index:2;width:132px;height:132px;border-radius:50%;border:2px solid var(--rubi);color:var(--rubi);display:grid;place-content:center;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:rgba(237,230,216,.94);transform:rotate(-12deg) scale(1.25);opacity:0;pointer-events:none;transition:transform .35s cubic-bezier(.2,1.6,.4,1), opacity .2s}
+#tg-selo b{display:block;font:italic 500 24px/1.1 var(--serif);text-transform:none;letter-spacing:0;margin:4px 0}
+#tg-selo.on{opacity:1;transform:rotate(-12deg) scale(1)}
+.nota{margin-top:14px;color:var(--cinza);font-size:13px}
+@media (max-width:900px){.tg-grid{grid-template-columns:1fr}.leituras{grid-template-columns:repeat(2,1fr)}#tg-selo{top:auto;bottom:70px;width:112px;height:112px}}
+
+/* serviços */
+.serv{margin-top:56px;border-top:1px solid rgba(23,20,15,.15)}
+.serv li{list-style:none;display:grid;grid-template-columns:60px minmax(0,1.2fr) minmax(0,2fr);gap:24px;padding:26px 0;border-bottom:1px solid rgba(23,20,15,.15);align-items:baseline;transition:padding .3s}
+.serv li:hover{padding-left:12px}
+.serv .n{color:var(--cinza)}
+.serv h3{font:400 clamp(24px,2.6vw,34px)/1.1 var(--serif)}
+.serv p{color:#4a453c}
+@media (max-width:760px){.serv li{grid-template-columns:40px 1fr;gap:6px 14px}.serv p{grid-column:2}}
+
+.cuid{margin-top:56px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.cuid div{background:var(--osso2);border-radius:18px;padding:26px}
+.cuid h3{font:italic 400 26px/1.15 var(--serif);margin:14px 0 10px}
+.cuid p{color:#4a453c;font-size:15px}
+.cuid .mono{color:var(--rubi)}
+@media (max-width:900px){.cuid{grid-template-columns:1fr}}
+
+.passos-c{margin-top:56px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid rgba(23,20,15,.15)}
+.passos-c div{padding:24px 20px 0 0}
+.passos-c .mono{color:var(--cinza)}
+.passos-c h3{font:400 24px/1.2 var(--serif);margin:10px 0 8px}
+.passos-c p{font-size:15px;color:#4a453c}
+@media (max-width:900px){.passos-c{grid-template-columns:1fr 1fr;gap:10px}}
+@media (max-width:520px){.passos-c{grid-template-columns:1fr}}
+
+/* contato */
+.fim{background:var(--noite);color:var(--osso);text-align:left}
+.fim h2.t{color:var(--osso)}
+.fim h2.t em{color:var(--latao-claro)}
+.fim .lead{color:#bdb5a6}
+.fim .acoes{margin-top:36px}
+.relogio-txt{font-family:var(--mono);color:#8d8576;margin-top:40px}
+.rodape{border-top:1px solid rgba(237,230,216,.1);padding:28px var(--g) calc(28px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:#8d8576;font-size:14px;background:var(--noite)}
+.rodape a{color:var(--latao-claro)}
+.rodape .mono b{color:var(--osso);font-weight:500}
+
+.rev{opacity:0;transform:translateY(24px);transition:opacity .8s, transform .8s cubic-bezier(.2,.7,.2,1)}
+.rev.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.rev{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="marca" href="#topo" aria-label="Âncora, início"><b>Âncora</b><span>relojoaria</span></a>
+  <nav>
+    <a href="#mov">Por dentro</a>
+    <a href="#regulagem">Regulagem</a>
+    <a href="#servicos">Serviços</a>
+    <a class="zap" data-wa="Oi! Vi o conceito da Âncora (relojoaria) da GuDev e quero um site assim.">WhatsApp</a>
+  </nav>
+</header>
+
+<main id="topo">
+<section id="mov" aria-label="O movimento por dentro">
+  <div id="palco">
+    <canvas id="cena" aria-label="Movimento mecânico de relógio em 3D, funcionando" role="img"></canvas>
+    <p class="sem-3d-aviso">Seu navegador não abriu o 3D. O resto do site funciona normal.</p>
+
+    <div id="hero-txt">
+      <span class="mono">Relojoaria · conserto e revisão</span>
+      <h1>Relógio parado não é relógio <em>morto.</em></h1>
+      <p class="sub">Revisão de mecânico, troca de bateria, vidro e pulseira. Na bancada, com lupa e paciência.</p>
+      <div class="acoes">
+        <a class="btn btn-latao" data-wa="Oi! Vi o conceito da Âncora (relojoaria) da GuDev e quero um site assim.">Chamar no WhatsApp</a>
+        <a class="btn btn-linha" href="#painel-ancora">Ver por dentro ↓</a>
+      </div>
+    </div>
+
+    <div id="controles">
+      <div class="reserva" aria-live="off">
+        <div class="lin mono"><span>Reserva de marcha</span><b id="l-corda">64%</b></div>
+        <div class="trilho"><div id="corda-barra"></div></div>
+        <div class="lin mono" style="margin-top:8px"><span>Amplitude</span><b id="l-amp">—</b></div>
+        <span id="l-estado" class="mono">3 Hz</span>
+      </div>
+      <div class="botoes">
+        <button class="ctl" id="btn-corda" type="button">Segure pra dar corda</button>
+        <button class="ctl" id="btn-lento" type="button" aria-pressed="false">Câmera lenta</button>
+        <button class="ctl" id="btn-som" type="button" aria-pressed="false">Som</button>
+      </div>
+    </div>
+
+    <div id="lupa-legenda" aria-hidden="true"></div>
+    <div id="rotulos" aria-hidden="true"></div>
+
+    <div id="painel">
+      <h2 id="painel-ancora">Desmontando, <em>peça por peça.</em></h2>
+      <ol class="passos">
+        <li class="passo"><div class="t"><i>01</i>Pontes e rubis</div><p>Seguram as rodas por cima. Nos furos, rubis sintéticos: duros e lisos, gastam menos o pivô. A catraca em cima trava a corda.</p></li>
+        <li class="passo"><div class="t"><i>02</i>Balanço e espiral</div><p>O coração: vai e volta 3 vezes por segundo, 21.600 alternâncias por hora. A raquete muda o comprimento útil da espiral, e é assim que se regula.</p></li>
+        <li class="passo"><div class="t"><i>03</i>Escape</div><p>A âncora trava e solta a roda de escape meio dente por vez. Cada soltura é um tique. Desenho atribuído a Thomas Mudge, por volta de 1755.</p></li>
+        <li class="passo"><div class="t"><i>04</i>Trem de rodas</div><p>Roda central (uma volta por hora), terceira e quarta (uma volta por minuto). Levam a força do tambor até o escape.</p></li>
+        <li class="passo"><div class="t"><i>05</i>Tambor</div><p>Uma mola de aço enrolada lá dentro guarda a corda. É a bateria do relógio mecânico.</p></li>
+        <li class="passo"><div class="t"><i>06</i>Platina</div><p>A base onde tudo se apoia. Os circulinhos são perlage, só acabamento.</p></li>
+        <li class="passo"><div class="t"><i>07</i>Mostrador</div><p>Horas e minutos no centro. Os segundos ficam às 6, presos direto na quarta roda.</p></li>
+        <li class="passo"><div class="t"><i>08</i>Ponteiros</div><p>Aço azulado no fogo. Mostram a hora certa de agora: este relógio começou a andar quando você abriu a página.</p></li>
+        <li class="passo"><div class="t"><i>09</i>Caixa e coroa</div><p>A coroa dá corda e acerta a hora. A caixa segura pó e água, se a vedação estiver em dia.</p></li>
+      </ol>
+      <p class="contagem mono"><b data-pecas>—</b> peças desenhadas em código · nenhuma foto</p>
+    </div>
+  </div>
+</section>
+
+<section id="regulagem" class="claro sec">
+  <div class="wrap">
+    <span class="olho mono">Regulagem</span>
+    <h2 class="t rev">Ele adianta ou atrasa? <em>A gente escuta.</em></h2>
+    <p class="lead rev">Na bancada, o relógio vai pro timegrapher: um aparelho que ouve cada batida e desenha uma linha. Linha reta é relógio certo. Escolha o defeito e tente acertar na raquete.</p>
+
+    <div class="tg-grid">
+      <div class="rev">
+        <div class="chips" role="group" aria-label="Escolha o defeito">
+          <button class="chip" data-def="adianta" type="button" aria-pressed="true">Adianta</button>
+          <button class="chip" data-def="atrasa" type="button" aria-pressed="false">Atrasa</button>
+          <button class="chip" data-def="ima" type="button" aria-pressed="false">Ficou perto de ímã</button>
+          <button class="chip" data-def="tombo" type="button" aria-pressed="false">Levou um tombo</button>
+        </div>
+        <p id="tg-msg" aria-live="polite"></p>
+        <div class="raq-box">
+          <svg viewBox="0 0 320 170" aria-hidden="true">
+            <path d="M40 150 A120 120 0 0 1 280 150" fill="none" stroke="#17140f" stroke-opacity=".15" stroke-width="22" stroke-linecap="round"/>
+            <g stroke="#17140f" stroke-opacity=".55">
+              <line x1="104" y1="52" x2="98" y2="42"/><line x1="132" y1="40" x2="129" y2="29"/><line x1="160" y1="36" x2="160" y2="22"/><line x1="188" y1="40" x2="191" y2="29"/><line x1="216" y1="52" x2="222" y2="42"/>
+            </g>
+            <text x="78" y="44" font-family="Geist Mono, monospace" font-size="18" fill="#17140f">−</text>
+            <text x="232" y="44" font-family="Geist Mono, monospace" font-size="18" fill="#17140f">+</text>
+            <circle cx="160" cy="150" r="34" fill="#c8cbd1"/>
+            <circle cx="160" cy="150" r="34" fill="none" stroke="#17140f" stroke-opacity=".2"/>
+            <g id="raq-braco">
+              <path d="M155 150 L158 46 L162 46 L165 150 Z" fill="#17140f"/>
+              <circle cx="160" cy="46" r="5" fill="#17140f"/>
+            </g>
+            <circle cx="160" cy="150" r="9" fill="#a3182f"/>
+            <circle cx="160" cy="150" r="3" fill="#ede6d8"/>
+          </svg>
+          <label class="mono" for="raq" style="color:#6d675c">Raquete</label>
+          <input id="raq" type="range" min="-1" max="1" step="0.005" value="0" aria-label="Raquete: para a esquerda atrasa, para a direita adianta">
+          <div class="raq-esc mono"><span>− atrasa</span><span>adianta +</span></div>
+          <button id="btn-desmag" type="button" hidden>Desmagnetizar</button>
+        </div>
+      </div>
+      <div class="selo-box rev">
+        <div id="tg-selo" aria-live="polite">Regulado<b>+0 s/dia</b>na raquete</div>
+        <div class="aparelho">
+          <div class="leituras">
+            <div><small>Marcha</small><b id="tg-rate">+38</b><small>s/dia</small></div>
+            <div><small>Amplitude</small><b id="tg-amp">286°</b><small>graus</small></div>
+            <div><small>Erro de batida</small><b id="tg-be">0,3</b><small>ms</small></div>
+            <div><small>Frequência</small><b>21.600</b><small>alt/h · lift 52°</small></div>
+          </div>
+          <canvas id="tg" aria-label="Linha das batidas do relógio no timegrapher" role="img"></canvas>
+          <div class="aparelho-rodape mono"><span>Cada ponto é uma batida</span><button class="ctl" type="button" data-som aria-pressed="false">Ouvir as batidas</button></div>
+        </div>
+        <p class="nota">Simulação. A faixa de −4 a +6 s/dia é a tolerância de cronômetro (COSC) pra mecânico. Ímã costuma fazer o relógio adiantar muito; a gente desmagnetiza antes de regular.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicos" class="claro sec" style="padding-top:0">
+  <div class="wrap">
+    <span class="olho mono">Serviços</span>
+    <h2 class="t rev">Do quartzo ao <em>mecânico de avô.</em></h2>
+    <ul class="serv">
+      <li class="rev"><span class="n mono">01</span><h3>Troca de bateria</h3><p>Com teste do movimento e da vedação depois. Bateria velha esquecida pode vazar e estragar o relógio.</p></li>
+      <li class="rev"><span class="n mono">02</span><h3>Revisão de mecânico</h3><p>Desmonta, limpa, lubrifica, monta e regula no timegrapher. É o que você viu lá em cima, peça por peça.</p></li>
+      <li class="rev"><span class="n mono">03</span><h3>Vedação</h3><p>Troca das borrachas da caixa e da coroa, com teste de estanqueidade.</p></li>
+      <li class="rev"><span class="n mono">04</span><h3>Vidro e coroa</h3><p>Vidro riscado ou trincado, coroa que não puxa ou não rosqueia.</p></li>
+      <li class="rev"><span class="n mono">05</span><h3>Pulseira e polimento</h3><p>Ajuste de elos, troca de pulseira e polimento da caixa.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="claro sec" style="padding-top:0" aria-label="Cuidados">
+  <div class="wrap">
+    <span class="olho mono">Antes de trazer</span>
+    <h2 class="t rev">Três coisas que <em>salvam</em> um relógio.</h2>
+    <div class="cuid">
+      <div class="rev"><span class="mono">Água</span><h3>Não mexa na coroa molhado.</h3><p>Puxar ou girar a coroa debaixo d'água abre caminho pra umidade, mesmo em relógio "à prova d'água".</p></div>
+      <div class="rev"><span class="mono">Ímã</span><h3>Longe da caixa de som.</h3><p>Ímã de alto-falante, fecho de bolsa e capinha magnética podem magnetizar o mecânico. Ele dispara a adiantar.</p></div>
+      <div class="rev"><span class="mono">Gaveta</span><h3>Parado, tire a bateria.</h3><p>Se o quartzo vai ficar guardado muito tempo, a bateria velha pode vazar dentro dele.</p></div>
+    </div>
+    <div class="passos-c">
+      <div class="rev"><span class="mono">01</span><h3>Manda foto</h3><p>Do relógio e do defeito, pelo WhatsApp.</p></div>
+      <div class="rev"><span class="mono">02</span><h3>Traz na loja</h3><p>A gente abre e olha na lupa.</p></div>
+      <div class="rev"><span class="mono">03</span><h3>Orçamento</h3><p>Depois de abrir, sem chute.</p></div>
+      <div class="rev"><span class="mono">04</span><h3>Retira</h3><p>Regulado e testado.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contato" class="fim sec">
+  <div class="wrap">
+    <span class="olho mono" style="color:var(--latao-claro)">Contato</span>
+    <h2 class="t rev">Traz ele. <em>A gente dá corda.</em></h2>
+    <p class="lead rev">Manda uma foto do relógio e conta o que ele está fazendo. A resposta vem no WhatsApp.</p>
+    <div class="acoes rev">
+      <a class="btn btn-latao" data-wa="Oi! Vi o conceito da Âncora (relojoaria) da GuDev e quero um site assim.">Chamar no WhatsApp</a>
+      <a class="btn btn-linha" href="#topo">Voltar pro movimento ↑</a>
+    </div>
+    <p class="relogio-txt">Agora são <span id="hora-real">--:--</span>. O relógio lá de cima também acha.</p>
+  </div>
+</section>
+</main>
+
+<footer class="rodape">
+  <p>A Âncora não existe: é um conceito da GuDev pra mostrar o que dá pra fazer num site de relojoaria. <a id="tg-cta" target="_blank" rel="noopener">Quero um site assim</a></p>
+  <p class="mono">Por baixo do capô: <b data-pecas>—</b> peças · <b id="fps">—</b> quadros/s · Three.js</p>
+</footer>
+<!--APP-->
+</body>
+</html>
