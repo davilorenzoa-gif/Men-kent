@@ -296,3 +296,7 @@ O Davi mandou um prompt de campanha de Black Friday (preto, vermelho, dourado; R
 Palavras: Jason GTA, mais fiel, pôr do sol, neon Açaí, helicóptero, Vice City, foto do pote estranha, pote na mão, recorte tira a mão, panorâmica, vídeo horizontal em pé.
 O Davi mandou um Jason mais fiel ao GTA 6 (vídeo de IA horizontal 848×478 + 6 quadros de referência) e 3 fotos novas do pote, porque a foto antiga "tava meio estranha". Abertura refeita (panorâmica do neon "Açaí" até ele, depois ele levanta o pote pra câmera e a câmera entra) e o pote do preço e do cartaz trocado pela foto do pote na mão (a mão sai no recorte). O resto do filme ficou igual.
 
+## 25/11/2026: Péçaí Black Friday, versão só açaí
+Palavras: só açaí, sem Jason, música 2, edit de iPhone, 124,6 bpm, 15 segundos, emenda no tempo forte, MAPA, film-acai.
+O Davi pediu "um vídeo de propaganda só do Péçaí, só com esse vídeo (o do Gemini) e essa outra música". Feito `gudev/videos/pecai-black-friday/pecai-black-friday-so-acai.mp4` (17,2 s): mesma oferta e mesmo visual, sem o Jason, seguindo o roteiro do prompt (BLACK FRIDAY → preço → só segunda, dia 30 → na loja). A música foi emendada no tempo forte pra pancada final cair no logo. Detalhes no README do vídeo.
+

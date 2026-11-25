@@ -173,4 +173,5 @@ Ordem sugerida: 5, 1, 8, depois intercalar Google (2, 3, 6) com site (4, 7, 9).
 - **Vídeo de IA com texto escrito na imagem** ("EDIÇÃO PREMIUM", "APROVEITE HOJE"): cortar esses trechos. Texto que a IA inventa vira promessa que o cliente não fez.
 - **Abrir pergunta e fechar no drop:** "Ele já sabe." / "E você?" no gancho, a resposta é o BLACK FRIDAY. Último quadro = cartaz com tudo (preço, data, onde, condição), porque muita gente pausa no fim.
 - **Música "sobe aos poucos e depois fica alta":** som ambiente do próprio vídeo no começo, música entrando abafada (passa-baixa 420 Hz → aberta) de −28 a −19 LUFS momentâneo, puxada ao contrário + subida antes do drop, drop 1,5 dB abaixo chegando ao cheio em 2 compassos. Medido: −14,5 LUFS integrado, pico −2,2 dB.
+- **Versão mais curta com outra música sem reescrever o filme:** um `MAPA()` de tempo antigo → tempo novo em cima do mesmo `film.html` (cenas cortadas viram duração zero) e a música emendada num tempo forte (mesma posição no compasso dos dois lados, 12 ms de cruzamento antes da batida) pra pancada final da faixa cair no último quadro. Exemplo: `pecai-black-friday/projeto/film-acai.html` + `audio-acai.py`.
 

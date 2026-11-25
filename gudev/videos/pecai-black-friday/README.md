@@ -10,6 +10,19 @@ Arquivos:
 
 Conferido: −14,5 LUFS, pico −2,1 dB; cada pancada do som cai a menos de 10 ms do corte na imagem.
 
+## Versão só açaí (25/11, pedido do Davi: "só do Péçaí, só com esse vídeo e essa outra música")
+`pecai-black-friday-so-acai.mp4` (17,2 s, 24 MB) + `pecai-black-friday-so-acai-whatsapp.mp4` (8,7 MB). Sem o Jason: só os takes do Gemini + a foto real do pote, com a **música 2** do Davi (edit de iPhone no TikTok, 124,6 bpm, `projeto/orig/musica-2.m4a`). Segue o roteiro do prompt original de ~15 s:
+| Tempo | Cena |
+|---|---|
+| 0–1,9 s | Tela escura, o açaí em close sai do escuro (câmera se afastando, vento), PÉÇAÍ APRESENTA; 1 compasso de intro suave da música |
+| 1,9–2,9 s | Drop da música: **BLACK** / **FRIDAY** |
+| 2,9–4,8 s | Pote em close e gota de açaí: VOCÊ NÃO VAI QUERER PERDER **ESSA!** |
+| 4,8–7,7 s | **R$ 24,99** em caça-níquel + pote real subindo |
+| 7,7–9,1 s | Tigela de açaí: É SOMENTE **SEGUNDA-FEIRA!** |
+| 9,1–11,6 s | Calendário do **30** circulado + UMA OPORTUNIDADE POR TEMPO LIMITADO. |
+| 11,6–17,2 s | Cartaz final; a pancada final da música cai no logo (15,4 s) e a música acaba sozinha |
+Como: `projeto/film-acai.html` é o mesmo motor do `film.html` com um `MAPA()` que leva os tempos antigos pros novos (sem "Olha o preço" e sem "Quando acabar"); `projeto/audio-acai.py` emenda a faixa no tempo forte (filme 11,56 s = faixa 27,06 s) pra ela terminar junto com o cartaz. Refazer: `python3 audio-acai.py orig/musica-2.m4a audio-acai.wav`, `FILM=film-acai.html OUT=fr2 node render.js seq 0 2070 120`, `FR=fr2 AUDIO=audio-acai.wav SAIDA=pecai-black-friday-so-acai.mp4 GANHO=-1.3dB bash juntar.sh`. Conferido: −14,4 LUFS, pico −1,4 dB, pancadas a menos de 10 ms do corte.
+
 ## Roteiro (cortes na grade da música: 144,76 bpm, tempo de 0,414 s; o drop da faixa cai no BLACK FRIDAY)
 | Tempo | Imagem | Texto | Som |
 |---|---|---|---|
