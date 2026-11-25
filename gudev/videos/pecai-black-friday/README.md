@@ -2,6 +2,8 @@
 
 Comercial vertical 9:16 pra Reels, Stories e TikTok, **21,4 s**, 1080×1920, 30 q/s. Pedido do Davi: prompt de "campanha de grande varejista" (preto, vermelho e dourado; preço gigante; só segunda, dia 30; compra na loja; enquanto durarem os estoques) + a ideia dele: começar com o "Jason do GTA 6" tomando o açaí, câmera indo pro pote com a música subindo aos poucos e, quando entra a propaganda do açaí, música alta, cortes rápidos e frases.
 
+**Versão 2 (25/11, mesmo dia):** o Davi mandou um Jason mais fiel ao GTA 6 (vídeo de IA com pôr do sol, neon "Açaí", palmeiras e helicóptero) e fotos novas do pote, porque a foto antiga "tava meio estranha". Trocados a abertura e o pote do preço e do cartaz.
+
 Arquivos:
 - `pecai-black-friday.mp4`: 1080×1920, 30 q/s, 12 Mbps (31 MB), pra subir no Instagram/TikTok.
 - `pecai-black-friday-whatsapp.mp4`: mesma coisa mais leve (abaixo de 16 MB), pra mandar no WhatsApp.
@@ -11,12 +13,12 @@ Conferido: −14,5 LUFS, pico −2,1 dB; cada pancada do som cai a menos de 10 m
 ## Roteiro (cortes na grade da música: 144,76 bpm, tempo de 0,414 s; o drop da faixa cai no BLACK FRIDAY)
 | Tempo | Imagem | Texto | Som |
 |---|---|---|---|
-| 0–2,5 s | Jason prova o açaí, olhos fechados (vídeo dele, ampliado com IA) | PÉÇAÍ APRESENTA | música abafada e baixa, som ambiente do vídeo |
-| 2,5–6,6 s | Ele levanta o pote e sorri; a câmera entra no pote, o fundo desfoca, a imagem estoura em branco | *Ele já sabe.* → *E você?* | música abrindo aos poucos, vento na aproximação, puxada ao contrário |
+| 0–2,5 s | Abre no neon "Açaí" e corre até o Jason levando a colher à boca e saboreando (vídeo de IA estilo GTA, horizontal, recortado em pé e ampliado com IA) | PÉÇAÍ APRESENTA | música abafada e baixa, som ambiente do vídeo (cidade, helicóptero) |
+| 2,5–6,6 s | Última colherada, ele levanta o pote pra câmera e sorri; a câmera entra no pote, o fundo desfoca, a imagem estoura em branco | *Ele já sabe.* → *E você?* | música abrindo aos poucos, vento na aproximação, puxada ao contrário |
 | 6,6–7,5 s | Preto. **BLACK** (dourado) e **FRIDAY** (vermelho) batem um em cada tempo, anel de luz e poeira dourada | BLACK FRIDAY | **drop**: pancada de cinema + grave |
 | 7,5–9,1 s | BLACK FRIDAY vira cabeçalho. Pote em close, gota de açaí (cortes no tempo) | VOCÊ NÃO VAI / QUERER PERDER / **ESSA!** (fita vermelha) | batidas em cada palavra |
 | 9,1–9,9 s | Close do açaí na tigela | OLHA O / **PREÇO.** | subida + relógio |
-| 9,9–12,4 s | Palco preto, holofote. O pote real (foto do Davi recortada) sobe do escuro; os números rolam como caça-níquel e travam na batida | **R$ 24,99** (o maior texto depois de BLACK FRIDAY) | cliques dos rolos, pancada + brilho |
+| 9,9–12,4 s | Palco preto, holofote. O pote real (foto do Davi, a do pote na mão, com a mão recortada fora) sobe do escuro; os números rolam como caça-níquel e travam na batida | **R$ 24,99** (o maior texto depois de BLACK FRIDAY) | cliques dos rolos, pancada + brilho |
 | 12,4–14,1 s | Tigela com açaí, close | É SOMENTE / **SEGUNDA-FEIRA!** + faixa vermelha | |
 | 14,1–15,8 s | Folha de calendário cai: SEGUNDA-FEIRA · DIA **30**; caneta vermelha circula o 30 | UMA OPORTUNIDADE / **POR TEMPO LIMITADO.** | folha + carimbo + caneta |
 | 15,8–16,6 s | 4 cortes de meio tempo (pote, gota, açaí, pote na mão dele) | QUANDO ACABAR, / **ACABOU.** | passagens rápidas |
@@ -42,9 +44,9 @@ Nada de preço "de/por", desconto em %, quantidade de estoque, depoimento ou ben
 - Versão pra postar **no próprio dia 30** ("É HOJE"): só troca de texto, se ele quiser.
 
 ## Como foi feito
-- `projeto/orig/`: o que o Davi mandou (vídeo do Jason, propaganda do Gemini, 3 fotos do pote, música do vídeo de referência).
-- **Nitidez:** os dois vídeos são pequenos (478×850 do WhatsApp e 1280×720 do Gemini). Cada quadro usado passou por Real-ESRGAN (`realesr-general-x4v3`) com a ferramenta nova `gudev/ferramentas/nitidez_ia.py`, que **roda sem torch** (lê o .pth e monta o ONNX). ~3 s por quadro do Jason.
-- **Pote:** as 3 fotos recortadas com BiRefNet (`Vídeos Davi/ferramentas/recortar.py`) → `projeto/assets/pote-*.webp`. Logo: `sites/pecai/img/logo-pecai.png`.
+- `projeto/orig/`: o que o Davi mandou: `jason-gta.mp4` (Jason estilo GTA, 848×478) + `jason-gta-quadros.png` (os 6 quadros de referência dele), `acai-gemini.mp4` (propaganda do açaí), `pote-mao.jpg` (a foto usada) e `pote-nova-1/2.jpg`, `musica.m4a` (vídeo de referência). O Jason e as fotos do pote da 1ª versão saíram.
+- **Nitidez:** os dois vídeos são pequenos (848×478 do Jason e 1280×720 do Gemini). Cada quadro usado passou por Real-ESRGAN (`realesr-general-x4v3`) com a ferramenta nova `gudev/ferramentas/nitidez_ia.py`, que **roda sem torch** (lê o .pth e monta o ONNX). ~3 s por quadro do Jason.
+- **Pote:** a foto do pote na mão recortada com BiRefNet (`Vídeos Davi/ferramentas/recortar.py`, a mão sai junto com o fundo), ampliada com Real-ESRGAN → `projeto/assets/pote-hero.webp` (1022×1417). Logo: `sites/pecai/img/logo-pecai.png`.
 - **Imagem:** `projeto/film.html` (`seek(t)` monta cada quadro), `render.js` tira 120 quadros/s no Playwright e o `juntar.sh` mistura de 4 em 4 (desfoque de movimento real) com grão leve.
 - **Som:** `projeto/audio.py` (numpy puro). Música do Davi a partir de 6,92 s da faixa, com passa-baixa que abre de 320 Hz até cheia no drop e volume de −24 a 0 dB; efeitos sintetizados (pancada de cinema, grave, estalo, vento, cliques, folha, caneta, brilho). Fonte: Archivo (Google Fonts, OFL).
 
@@ -53,12 +55,12 @@ Nada de preço "de/por", desconto em %, quantidade de estoque, depoimento ou ben
 cd projeto
 S=<pasta temporária>
 python3 ../../../ferramentas/nitidez_ia.py modelo $S/realesr.onnx
-ffmpeg -ss 4.0 -i orig/jason-acai.mp4 -start_number 96 -frames:v 194 $S/jas_in/%04d.png
+ffmpeg -i orig/jason-gta.mp4 -start_number 0 $S/gta_in/%04d.png   # usa os quadros 19–101 e 182–287
 ffmpeg -ss 1.2 -i orig/acai-gemini.mp4 -start_number 29 -t 5.8 $S/gem_in/%04d.png
-python3 ../../../ferramentas/nitidez_ia.py quadros $S/realesr.onnx $S/jas_in $S/jas_up
+python3 ../../../ferramentas/nitidez_ia.py quadros $S/realesr.onnx $S/gta_in $S/gta_up
 python3 ../../../ferramentas/nitidez_ia.py quadros $S/realesr.onnx $S/gem_in $S/gem_up 3200
-ln -sfn $S quadros            # film.html lê quadros/jas_up e quadros/gem_up
-python3 audio.py orig/musica.m4a orig/jason-acai.mp4 audio.wav
+ln -sfn $S quadros            # film.html lê quadros/gta_up e quadros/gem_up
+python3 audio.py orig/musica.m4a orig/jason-gta.mp4 audio.wav
 for k in 0 1 2 3; do node render.js seq $((k*642)) $((k*642+642)) 120 & done; wait   # 2568 quadros
 bash juntar.sh
 ```
