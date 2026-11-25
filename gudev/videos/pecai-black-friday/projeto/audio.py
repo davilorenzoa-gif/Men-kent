@@ -1,7 +1,7 @@
 """Trilha do comercial Péçaí · Black Friday (numpy puro).
-Uso: python3 audio.py orig/musica.m4a orig/jason-acai.mp4 audio.wav
+Uso: python3 audio.py orig/musica.m4a orig/jason-gta.mp4 audio.wav
 Música: a faixa do vídeo de referência do Davi ("Slowed Songs #128", @hn_music1.0), 144,76 bpm, drop em 13,555 s da faixa.
-- 0 a 6,63 s (Jason): a música entra baixa e abafada e vai abrindo aos poucos; som ambiente do vídeo dele por baixo;
+- 0 a 6,63 s (Jason): a música entra baixa e abafada e vai abrindo aos poucos; som ambiente do vídeo dele (cidade, helicóptero) por baixo;
   vento na aproximação do pote e uma puxada ao contrário antes do drop.
 - 6,63 s: o drop da faixa cai no BLACK FRIDAY. Daí em diante a música fica alta e os efeitos marcam cada corte e cada frase.
 - 19,90 s: última pancada (cartaz completo) e a música corta com cauda de reverb até o fim (21,4 s).
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     put(tail * 0.28, B(32) - 0.35 + 0.15, 1.0, bus=mix)
 
     # ---------- som ambiente do vídeo do Jason (mesmos trechos da imagem) ----------
-    A1 = load(jason, 4.30, 6 * BT); A2 = load(jason, 7.85, D - 6 * BT)
+    A1 = load(jason, 1.0, 6 * BT); A2 = load(jason, 7.85, D - 6 * BT)
     amb = np.concatenate([A1, A2]); ta = np.arange(len(amb)) / SR
     amb *= (np.interp(ta, [0, .25, 5.4, D - .15], [0, 1, 1, 0]) * 10 ** (-3 / 20))[:, None]
     put(amb, 0, 1.0, bus=mix)
