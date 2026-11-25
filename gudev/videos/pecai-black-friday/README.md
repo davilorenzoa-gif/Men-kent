@@ -2,7 +2,11 @@
 
 Comercial vertical 9:16 pra Reels, Stories e TikTok, **21,4 s**, 1080×1920, 30 q/s. Pedido do Davi: prompt de "campanha de grande varejista" (preto, vermelho e dourado; preço gigante; só segunda, dia 30; compra na loja; enquanto durarem os estoques) + a ideia dele: começar com o "Jason do GTA 6" tomando o açaí, câmera indo pro pote com a música subindo aos poucos e, quando entra a propaganda do açaí, música alta, cortes rápidos e frases.
 
-Arquivo: `pecai-black-friday.mp4`.
+Arquivos:
+- `pecai-black-friday.mp4`: 1080×1920, 30 q/s, 12 Mbps (31 MB), pra subir no Instagram/TikTok.
+- `pecai-black-friday-whatsapp.mp4`: mesma coisa mais leve (abaixo de 16 MB), pra mandar no WhatsApp.
+
+Conferido: −14,5 LUFS, pico −2,1 dB; cada pancada do som cai a menos de 10 ms do corte na imagem.
 
 ## Roteiro (cortes na grade da música: 144,76 bpm, tempo de 0,414 s; o drop da faixa cai no BLACK FRIDAY)
 | Tempo | Imagem | Texto | Som |
