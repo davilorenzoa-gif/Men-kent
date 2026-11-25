@@ -29,6 +29,7 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **10/11/2026: o site virou só ATACADO (B2B):** açaí e cupuaçu de 10 L, 2 L e 1 L pra empresas (1 L e cupuaçu desde 11/11), pouco texto, pedido com frequência e palete. Falta: embalagem real, preço, pedido mínimo, região de entrega.
 - **Andamento:** site pronto pra mostrar. Fotos e vídeos estão em 2 pastas do Drive do Davi, que o ambiente não conseguiu abrir.
 - **18/11/2026: cartão fidelidade digital do atacado** (pedido da mãe do Davi): `sites/pecai/fidelidade.html` + planilha do Google + Apps Script (`sites/pecai/fidelidade/README.md`). Falta confirmar a regra e ligar com a conta da Péçaí.
+- **25/11/2026: comercial de Black Friday (varejo, na loja)** em `gudev/videos/pecai-black-friday/` (21,4 s, vertical): oferta passada pelo Davi = **R$ 24,99, só segunda-feira 30/11, compra direto na loja, enquanto durarem os estoques**. Abre com o "Jason" (vídeo de IA do Davi) tomando açaí no pote, entra no pote, drop no BLACK FRIDAY, takes do Gemini, preço em caça-níquel com a foto real do pote, calendário do 30 circulado, cartaz final. Falta: confirmar se o R$ 24,99 é o pote de 1 L, em qual loja vale (endereço no cartaz), ouvir no celular. Números do pote: (11) 99559-0081 e (11) 2484-1324 (impressos na embalagem).
 
 ## Açaí Happy (Açaí Heaven), Parque Prado, Campinas-SP · lead do Davi
 - **Dados:** 4,8 no Google, 701 avaliações.

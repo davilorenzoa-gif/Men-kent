@@ -164,3 +164,12 @@ Ordem sugerida: 5, 1, 8, depois intercalar Google (2, 3, 6) com site (4, 7, 9).
 - Selo de série no quadro 0 ("PSICOLOGIA DO CONSUMIDOR · 01") dá contexto nos 3 primeiros segundos e põe a palavra-chave na tela.
 - Zona segura do TikTok: nada importante abaixo de y≈1480 nem na coluna da direita (x>940).
 - **Música sobe aos poucos, nunca de uma vez** (Davi, 22/11: "estoura numa parte do nada"): conferir a curva de volume (ebur128, valor S a cada 2 s) antes de entregar; nada de salto maior que ~3 LU fora de corte proposital. Drop entra abaixo e sobe em ~5 s.
+
+## Comercial de varejo: Péçaí Black Friday (25/11/2026, produzido)
+- `gudev/videos/pecai-black-friday/` (21,4 s, 1080×1920, README com roteiro, persuasão, som e como refazer). Prompt de "grande varejista" (preto, vermelho, dourado) + ideia do Davi (Jason tomando açaí → foco no pote com a música subindo → propaganda do açaí com música alta, cortes e frases).
+- **Vídeo de WhatsApp/Gemini em tela cheia:** passar cada quadro usado por Real-ESRGAN com `gudev/ferramentas/nitidez_ia.py` (sem torch; ~3 s por quadro de 478×850, ~6 s por quadro de 1280×720). Só os quadros que entram no corte, pra não esperar à toa.
+- **Foto real do produto recortada (BiRefNet) no palco preto** vale mais que o produto do vídeo de IA: o rótulo é o de verdade. Preço com números rolando (caça-níquel) que travam na batida.
+- **Vídeo de IA com texto escrito na imagem** ("EDIÇÃO PREMIUM", "APROVEITE HOJE"): cortar esses trechos. Texto que a IA inventa vira promessa que o cliente não fez.
+- **Abrir pergunta e fechar no drop:** "Ele já sabe." / "E você?" no gancho, a resposta é o BLACK FRIDAY. Último quadro = cartaz com tudo (preço, data, onde, condição), porque muita gente pausa no fim.
+- **Música "sobe aos poucos e depois fica alta":** som ambiente do próprio vídeo no começo, música entrando abafada (passa-baixa 420 Hz → aberta) de −28 a −19 LUFS momentâneo, puxada ao contrário + subida antes do drop, drop 1,5 dB abaixo chegando ao cheio em 2 compassos. Medido: −14,5 LUFS integrado, pico −2,2 dB.
+
