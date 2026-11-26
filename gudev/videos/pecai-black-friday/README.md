@@ -11,7 +11,7 @@ Arquivos:
 Conferido: −14,5 LUFS, pico −2,1 dB; cada pancada do som cai a menos de 10 ms do corte na imagem.
 
 ## Missão longa (26/11): a versão principal agora
-`pecai-black-friday-missao-longa.mp4` (31,6 s) + `-whatsapp.mp4`. O Davi gostou da Missão e pediu "mais longo, imersivo, nessa pegada", com uma lista de ajustes (feita item por item) + a música longa (64 s) e 3 efeitos (leque de notas e caça-níquel em fundo verde, chuva de notas em fundo preto) + a foto de um carro roxo como referência de cor.
+`pecai-black-friday-missao-longa.mp4` (31,6 s, 46 MB) + `pecai-black-friday-missao-longa-whatsapp.mp4` (15,8 MB). Conferido: −14,1 LUFS, pico −1,9 dB; BLACK FRIDAY, preço, carimbo e pino a menos de 10 ms da batida. O Davi gostou da Missão e pediu "mais longo, imersivo, nessa pegada", com uma lista de ajustes (feita item por item) + a música longa (64 s) e 3 efeitos (leque de notas e caça-níquel em fundo verde, chuva de notas em fundo preto) + a foto de um carro roxo como referência de cor.
 | Tempo | Cena |
 |---|---|
 | 0–3,3 s | Jason no neon com HUD; NOVA MISSÃO · AÇAÍ DE SEGUNDA; "Vá até a **Péçaí**." |
