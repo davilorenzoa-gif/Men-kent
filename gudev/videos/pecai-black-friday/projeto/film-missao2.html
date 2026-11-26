@@ -98,8 +98,8 @@ canvas,svg{position:absolute;left:0;top:0}
       <div style="position:absolute;inset:0;background:var(--palm) center bottom/100% 45% no-repeat;opacity:.9"></div>
       <div style="position:absolute;left:0;top:24px;width:540px;text-align:center;font-size:26px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.9)">LEMBRETE</div>
       <div id="calW" style="position:absolute;left:70px;top:110px;width:400px;height:430px;border-radius:44px;background:rgba(255,255,255,.95);box-shadow:0 20px 50px rgba(40,10,60,.35);overflow:hidden;text-align:center">
-        <div style="background:#ff4f9e;color:#fff;font-weight:900;font-stretch:90%;font-size:58px;line-height:110px;letter-spacing:.04em">SEGUNDA</div>
-        <div style="font-weight:900;font-stretch:96%;font-size:250px;line-height:250px;color:#2a0f45;letter-spacing:-.04em">30</div>
+        <div style="background:#ff4f9e;color:#fff;font-weight:900;font-stretch:90%;font-size:58px;line-height:110px;letter-spacing:.04em">SEXTA</div>
+        <div style="font-weight:900;font-stretch:96%;font-size:250px;line-height:250px;color:#2a0f45;letter-spacing:-.04em">27</div>
         <div style="font-weight:800;font-size:40px;color:#8a5fd0;letter-spacing:.2em;margin-top:-6px">NOV</div>
       </div>
       <div id="notif" style="position:absolute;left:30px;top:580px;width:480px;border-radius:34px;background:rgba(20,8,32,.85);padding:24px 26px;display:flex;gap:20px;align-items:center">
@@ -130,7 +130,7 @@ canvas,svg{position:absolute;left:0;top:0}
     <div style="position:absolute;left:0;top:780px;width:780px;text-align:center;color:#3a1d0b;font-weight:900;font-stretch:84%;font-size:60px;line-height:1.05">POTE DE AÇAÍ · 1 LITRO</div>
     <div style="position:absolute;left:0;top:860px;width:780px;text-align:center;color:#3a1d0b;font-weight:700;font-size:36px;letter-spacing:.06em">VISTO POR ÚLTIMO NA PÉÇAÍ</div>
     <div id="pPr" class="C" style="top:930px;width:780px;font-size:150px;--b1:18px"></div>
-    <div id="pSeg" style="position:absolute;left:0;top:1095px;width:780px;text-align:center;color:#b0122a;font-weight:900;font-stretch:84%;font-size:50px">SÓ SEGUNDA, 30/11</div>
+    <div id="pSeg" style="position:absolute;left:0;top:1095px;width:780px;text-align:center;color:#b0122a;font-weight:900;font-stretch:84%;font-size:50px">SÓ SEXTA, 27/11</div>
   </div>
   <div id="pEst" class="sub" style="top:1530px;font-size:52px">Enquanto durarem <span class="y">os estoques</span>.</div>
 </div>
@@ -140,7 +140,7 @@ canvas,svg{position:absolute;left:0;top:0}
   <div id="jPote" class="a" style="width:280px"><img src="assets/pote-hero.webp" style="width:280px"></div>
   <div id="b2" class="badge" style="left:300px;top:760px;width:140px;height:140px"><div style="font-size:70px;line-height:82px;margin-top:4px">1</div><div style="font-size:26px;line-height:22px;letter-spacing:.06em">LITRO</div></div>
   <div id="c_pr3" class="C" style="top:0;font-size:190px;--b1:22px;text-align:left;width:640px"></div>
-  <div id="jChip" style="position:absolute;left:0;width:1080px;text-align:center;top:1250px"><span style="display:inline-block;font-weight:900;font-stretch:90%;font-size:60px;color:#fff;background:linear-gradient(90deg,#ff4f9e,#ff8a5c);padding:12px 34px 8px;border-radius:999px;box-shadow:0 0 0 6px #250a3e,0 0 40px rgba(255,80,160,.55)">SÓ SEGUNDA · 30/11</span></div>
+  <div id="jChip" style="position:absolute;left:0;width:1080px;text-align:center;top:1250px"><span style="display:inline-block;font-weight:900;font-stretch:90%;font-size:60px;color:#fff;background:linear-gradient(90deg,#ff4f9e,#ff8a5c);padding:12px 34px 8px;border-radius:999px;box-shadow:0 0 0 6px #250a3e,0 0 40px rgba(255,80,160,.55)">SÓ SEXTA · 27/11</span></div>
   <div id="jLoja" class="sub" style="top:1352px;font-size:48px">Na loja · <span class="y">enquanto durarem os estoques</span></div>
   <div id="jEnd" class="sub" style="top:1425px;font-size:38px;font-stretch:90%;line-height:1.3;font-weight:600">Av. Jurema, 436 · Pq. Jurema<br>R. Campo Maior, 357 · Pq. das Nações</div>
   <div id="jIg" style="position:absolute;left:0;width:1080px;text-align:center;top:1545px;font-size:34px;font-weight:700;letter-spacing:.18em;text-shadow:0 2px 10px #000">@curtapecai</div>
@@ -179,7 +179,7 @@ const palmTex=(function(){const c=document.createElement('canvas');c.width=800;c
 document.documentElement.style.setProperty('--palm',`url(${palmTex})`);
 function T(id,html){$(id).innerHTML=`<div class="o1">${html}</div><div class="l o2">${html}</div><div class="l f">${html}</div><div class="l f2">${html}</div>`}
 function Cc(id,html){$(id).innerHTML=`<div class="k1">${html}</div><div class="k2">${html}</div><div class="k3">${html}</div>`}
-T('t_m','Açaí de<br>segunda');T('t_bf','Black<br>Friday');T('t_bf2','Black Friday');T('t_bf3','Black Friday');T('t_bf4','Black Friday');
+T('t_m','Açaí de<br>sexta');T('t_bf','Black<br>Friday');T('t_bf2','Black Friday');T('t_bf3','Black Friday');T('t_bf4','Black Friday');
 const PR='<span style="font-size:.4em;vertical-align:.95em;margin-right:.06em">R$</span>24<span style="font-size:.5em;vertical-align:.62em">,99</span>';
 Cc('c_pr',PR);Cc('c_pr2',PR);Cc('c_pr3',PR);Cc('pPr',PR);
 if(PRECO_DE){$('pDe').style.display='block';$('pDeV').textContent=PRECO_DE}
