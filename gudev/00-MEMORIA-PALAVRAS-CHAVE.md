@@ -300,3 +300,7 @@ O Davi mandou um Jason mais fiel ao GTA 6 (vídeo de IA horizontal 848×478 + 6 
 Palavras: só açaí, sem Jason, música 2, edit de iPhone, 124,6 bpm, 15 segundos, emenda no tempo forte, MAPA, film-acai.
 O Davi pediu "um vídeo de propaganda só do Péçaí, só com esse vídeo (o do Gemini) e essa outra música". Feito `gudev/videos/pecai-black-friday/pecai-black-friday-so-acai.mp4` (17,2 s): mesma oferta e mesmo visual, sem o Jason, seguindo o roteiro do prompt (BLACK FRIDAY → preço → só segunda, dia 30 → na loja). A música foi emendada no tempo forte pra pancada final cair no logo. Detalhes no README do vídeo.
 
+## 26/11/2026: Péçaí Black Friday, versão Vice (clima GTA)
+Palavras: GTA, Vice City, Miami, synthwave, pôr do sol, palmeiras, letreiro degradê, tela de carregamento, arte ilustrada, missão, "Guarulhos, SP.", música 3, imagem dupla, tmix, __TQ, OpenCV, cartoon.
+O Davi mandou imagens do GTA VI (arte oficial, logo "VI", céu com palmeiras) e um vídeo com uma música synthwave e pediu o comercial do açaí "com referências do GTA". Feito `gudev/videos/pecai-black-friday/pecai-black-friday-vice.mp4` (16,6 s) com céu e palmeiras desenhados em código, letreiros com degradê, arte ilustrada a partir das imagens do próprio Davi e legenda de missão. Ficaram de fora o logo, o nome e a arte oficial do jogo (marca da Rockstar). Também corrigida a imagem dupla no movimento nos 3 vídeos (ver README e `05`).
+
