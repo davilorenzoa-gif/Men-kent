@@ -3,7 +3,7 @@
 // Quadros vão pra fr/ (ou OUT=pasta). O filme começa em t=0. FILM=film-acai.html pra versão só açaí.
 const {chromium}=require('playwright');const fs=require('fs');
 const [,, mode,a,b,fps]=process.argv; const DSF=+(process.env.DSF||1);
-(async()=>{const br=await chromium.launch({args:['--allow-file-access-from-files']});
+(async()=>{const br=await chromium.launch({args:['--allow-file-access-from-files'].concat(process.env.GL?['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl']:[])});
 const pg=await br.newPage({viewport:{width:1080,height:1920},deviceScaleFactor:DSF});
 pg.on('console',m=>{if(m.type()=='error')console.log('ERR',m.text())});pg.on('pageerror',e=>console.log('PE',e.message));
 await pg.goto('file://'+__dirname+'/'+(process.env.FILM||'film.html'));await pg.evaluate(()=>window.ready);

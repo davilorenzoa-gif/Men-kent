@@ -10,7 +10,17 @@ Arquivos:
 
 Conferido: −14,5 LUFS, pico −2,1 dB; cada pancada do som cai a menos de 10 ms do corte na imagem.
 
-## Missão longa (26/11): a versão principal agora
+> **26/11: a data certa é SEXTA, 27/11** (o Davi corrigiu: a promoção é amanhã, sexta-feira). A Missão longa e a Missão 3D já saem com "SÓ SEXTA · 27/11" e "AÇAÍ DE SEXTA". As versões mais antigas desta pasta (principal, só açaí, Vice, Missão curta) ainda dizem segunda, 30/11: **não postar essas**.
+
+## Missão 3D (26/11): a versão principal agora
+`pecai-black-friday-missao-3d.mp4` (33,5 s, 50 MB) + `pecai-black-friday-missao-3d-whatsapp.mp4` (14 MB). Conferido: −14,2 LUFS, pico −1,9 dB; pulos da troca, BLACK FRIDAY, preço e carimbo a menos de 10 ms da batida. O Davi pediu "animações legais, diferentes; gostei do minimizar e do menu de armas, faça algo mais impressionante; pode buscar objetos na internet, usar o Poly Haven".
+- **Poly Haven:** o site, a API e o download dão 403 neste ambiente (testado de novo em 26/11). Usei os HDRIs do Poly Haven que já estão no repo (`gudev/efeitos/hdri/sunset.exr`, CC0) pra luz e reflexo do 3D. Os objetos (cidade, pote, letreiro) foram modelados em código.
+- **Troca de personagem em 3D (8 tempos):** a imagem do Jason encolhe sobre uma cidade 3D (Three.js: prédios com janelas acesas, ruas com faixa, palmeiras, ~900 carros como pontos de luz, névoa e céu de pôr do sol); 3 pulos pra cima com baque e tela lavando; grade de GPS; a rota roxa se desenha no chão até o feixe de luz da Péçaí; rótulos presos aos pinos com bairro e endereço (Pq. Jurema · Av. Jurema, 436 e Pq. das Nações · R. Campo Maior, 357); a câmera desce em arco pela cidade e pousa numa praça em frente à fachada com o letreiro neon **PÉÇAÍ** ("Destino: Péçaí · Av. Jurema, 436"), empurra pra dentro e clareia no BLACK FRIDAY.
+- **Pote 3D com o rótulo de verdade:** `prep-pote3d.py` "desenrola" as fotos do Davi (frente com a logo + lado do tucano) numa faixa de 360° e a foto da tampa num círculo; o pote (corpo, aro e tampa) é desenhado em código com reflexo do HDRI e luz rosa/laranja de contorno. Na roda de itens ele sai do espaço de cima, voa pro centro girando 2 voltas e para de frente; no cartaz final ele gira 360° na pancada final.
+- O resto é a Missão longa com a data de sexta.
+Como: `projeto/film-missao3.html` + `projeto/assets/cena3d.js` (cidade e pote) + `projeto/assets/three-0.160-bundle.js` (Three.js 0.160 + EXRLoader em arquivo único, via esbuild) + `projeto/assets/hdri-sunset.js` (HDRI embutido) + `projeto/audio-missao3.py`. Render com WebGL por software: `GL=1 FILM=film-missao3.html OUT=fr6 node render.js seq 0 4020 120`, depois `FR=fr6 AUDIO=audio-missao3.wav SAIDA=pecai-black-friday-missao-3d.mp4 GANHO=-1.8dB bash juntar.sh`. Teste rápido do 3D: `GL=1 FILM=test3d.html node render.js stills 1,2.5,3.5,10`.
+
+## Missão longa (26/11)
 `pecai-black-friday-missao-longa.mp4` (31,6 s, 46 MB) + `pecai-black-friday-missao-longa-whatsapp.mp4` (15,8 MB). Conferido: −14,1 LUFS, pico −1,9 dB; BLACK FRIDAY, preço, carimbo e pino a menos de 10 ms da batida. O Davi gostou da Missão e pediu "mais longo, imersivo, nessa pegada", com uma lista de ajustes (feita item por item) + a música longa (64 s) e 3 efeitos (leque de notas e caça-níquel em fundo verde, chuva de notas em fundo preto) + a foto de um carro roxo como referência de cor.
 | Tempo | Cena |
 |---|---|

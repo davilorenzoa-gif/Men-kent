@@ -1,0 +1,407 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Péçaí · Black Friday, MISSÃO 3D (26/11/2026, ~33,5 s). Igual à Missão longa, mais: troca de personagem num voo 3D por uma cidade
+     (Three.js + HDRI sunset do Poly Haven, assets/cena3d.js) até a fachada neon da Péçaí, e o pote 3D com o rótulo real na roda e no cartaz.
+     Antes era a MISSÃO LONGA (26/11/2026, ~31,6 s). Mesma linguagem da versão Missão (HUD de jogo de mundo aberto),
+     mais longa e com o feedback do Davi: estrelas enchendo aos poucos até o "gran finale" (giroflex + rádio + OFERTA CRIMINOSA),
+     colherada sem texto em cima, roda com silhuetas de acompanhamentos atrás dos cadeados, selo 1 LITRO, preço em verde-dinheiro,
+     bairro/endereço nos pinos do mapa, JACKPOT com chuva de notas, cartaz de PROCURADO.
+     Música: versão longa do synthwave do Davi, tocada em ordem a partir de 30,0 s da faixa (126 bpm; tempo j do filme em 0,020 + j·0,47612 s);
+     a pausa da faixa (29,85–30,5 s do filme) e a pancada final (30,594 s) fecham o vídeo. Nada do jogo de verdade: tudo desenhado aqui. -->
+<style>
+@font-face{font-family:"Arc";src:url(assets/Archivo.ttf);font-weight:100 900;font-stretch:62% 125%}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#st{position:absolute;inset:0;overflow:hidden;background:#140b20;font-family:"Arc";color:#fff}
+#cam{position:absolute;inset:0}
+.a{position:absolute;left:0;top:0;will-change:transform,opacity,filter}
+.full{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.sc{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none}
+img{display:block}
+canvas,svg{position:absolute;left:0;top:0}
+.T{position:absolute;left:0;width:1080px;text-align:center;font-weight:900;font-stretch:106%;line-height:.9;letter-spacing:-.012em;white-space:nowrap;text-transform:uppercase}
+.T .l{position:absolute;left:0;top:0;width:100%}
+.T .o1{position:relative;color:#250a3e;-webkit-text-stroke:var(--b1,26px) #250a3e;filter:drop-shadow(0 0 30px rgba(255,70,170,.55)) drop-shadow(0 12px 0 #12041f)}
+.T .o2{color:transparent;-webkit-text-stroke:var(--b2,10px) #ff5fae}
+.T .f{background-image:var(--palm),linear-gradient(180deg,#5a6cf0 0%,#8d63e6 24%,#e65fc0 52%,#ff8d7a 74%,#ffc95e 100%);background-size:100% 100%,100% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.T .f2{color:transparent;background-image:linear-gradient(100deg,rgba(255,255,255,0) 42%,rgba(255,255,255,.9) 50%,rgba(255,255,255,0) 58%);background-size:300% 100%;background-position:var(--sh,130%) 0;background-repeat:no-repeat;-webkit-background-clip:text;background-clip:text}
+/* dinheiro (verde de jogo) */
+.C{position:absolute;left:0;width:1080px;text-align:center;font-weight:900;font-stretch:100%;line-height:.92;white-space:nowrap}
+.C .k1{position:relative;color:#06210e;-webkit-text-stroke:var(--b1,26px) #06210e;filter:drop-shadow(0 10px 0 #020a05) drop-shadow(0 0 40px rgba(60,255,120,.35))}
+.C .k2{position:absolute;left:0;top:0;width:100%;background:linear-gradient(180deg,#c9ffd2 0%,#6df08a 38%,#28b84e 70%,#1d8f3c 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.C .k3{position:absolute;left:0;top:0;width:100%;color:transparent;background-image:linear-gradient(100deg,rgba(255,255,255,0) 42%,rgba(255,255,255,.95) 50%,rgba(255,255,255,0) 58%);background-size:300% 100%;background-position:var(--sh,130%) 0;background-repeat:no-repeat;-webkit-background-clip:text;background-clip:text}
+.sub{position:absolute;left:40px;width:1000px;text-align:center;font-stretch:86%;font-weight:700;font-size:66px;line-height:1.16;color:#fff;
+  text-shadow:-3px -3px 0 #000,3px -3px 0 #000,-3px 3px 0 #000,3px 3px 0 #000,0 0 22px rgba(0,0,0,.8)}
+.sub .y{color:#ffd23f}.sub .p{color:#ff73b9}.sub .g{color:#6df08a}
+.lbl{font-weight:800;font-stretch:100%;letter-spacing:.32em;text-transform:uppercase}
+.badge{position:absolute;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3b0,#ffd23f 45%,#f0a81a);box-shadow:0 0 0 7px #250a3e,0 0 0 12px #ffd23f,0 14px 40px rgba(0,0,0,.5);
+  color:#250a3e;text-align:center;font-weight:900;font-stretch:90%}
+.stamp{position:absolute;padding:14px 34px 6px;border:12px solid #e3192c;border-radius:18px;color:#e3192c;font-weight:900;font-stretch:84%;text-transform:uppercase;white-space:nowrap;
+  background:rgba(255,235,235,.08);text-shadow:0 0 1px #e3192c;box-shadow:0 0 0 3px rgba(227,25,44,.35) inset}
+#flash{background:#fff;opacity:0}
+</style></head><body>
+<div id="st"><div id="cam">
+
+<canvas id="map" width="1080" height="1920"></canvas>
+<canvas id="city3d" width="1080" height="1920" style="display:none"></canvas>
+<div id="gps" class="full" style="display:none;background-image:linear-gradient(rgba(214,92,255,.35) 2px,transparent 2px),linear-gradient(90deg,rgba(214,92,255,.35) 2px,transparent 2px);background-size:90px 90px"></div>
+<div id="fx" class="full" style="overflow:hidden"><img id="v1" class="a" style="transform-origin:0 0"></div>
+<div id="tint" class="full" style="background:linear-gradient(180deg,rgba(90,80,220,.55),rgba(230,90,190,.35) 55%,rgba(255,150,90,.45));mix-blend-mode:soft-light;opacity:0"></div>
+<div id="dim" class="full" style="background:#100519;opacity:0"></div>
+<div id="bgJ" class="full" style="display:none;background:radial-gradient(70% 45% at 50% 42%,#4a1f6e,#1a0b29 70%,#0c0514)"></div>
+<div id="vig" class="full" style="background:radial-gradient(120% 78% at 50% 46%,rgba(0,0,0,0) 55%,rgba(16,5,25,.72) 100%)"></div>
+
+<!-- efeitos do Davi (recortados) -->
+<img id="leque" class="a" style="transform-origin:0 0;display:none">
+<img id="slot" class="a" style="display:none">
+<img id="chuva" class="a" style="display:none;width:1080px;height:1920px;mix-blend-mode:screen;object-fit:cover">
+
+<div id="siren" class="full" style="opacity:0;mix-blend-mode:screen"></div>
+
+<!-- ===== HUD ===== -->
+<div id="hud" class="full">
+  <div id="mm" class="a" style="left:46px;top:1330px;width:330px;height:240px;border-radius:26px;overflow:hidden;box-shadow:0 0 0 4px rgba(10,4,18,.85),0 10px 30px rgba(0,0,0,.5)"><canvas id="mmc" width="330" height="240"></canvas></div>
+  <div id="bars" class="a" style="left:46px;top:1582px;width:330px;height:12px;display:flex;gap:8px">
+    <div style="flex:1;background:#3fae5a;border-radius:3px;box-shadow:0 0 0 3px rgba(10,4,18,.85)"></div><div style="flex:1;background:#4a8be0;border-radius:3px;box-shadow:0 0 0 3px rgba(10,4,18,.85)"></div></div>
+  <svg id="stars" width="1080" height="340" style="top:0"></svg>
+</div>
+
+<!-- A. missão nova -->
+<div class="sc" id="sA">
+  <div id="mNova" class="lbl" style="position:absolute;left:0;width:1080px;text-align:center;top:640px;font-size:34px;color:#ffd23f;text-shadow:0 2px 0 #000,0 0 20px rgba(0,0,0,.7)">Nova missão</div>
+  <div id="t_m" class="T" style="top:700px;font-size:170px;--b1:24px;--b2:9px"></div>
+  <div id="obj1" class="sub" style="top:1180px">Vá até a <span class="y">Péçaí</span>.</div>
+</div>
+<canvas id="pot3d" width="1080" height="1920" style="position:absolute;left:0;top:0;display:none;pointer-events:none"></canvas>
+<!-- B2. rótulo da 2ª loja -->
+<div class="sc" id="sB2"><div id="dest2" class="a" style="padding:14px 22px;border-radius:18px;background:rgba(16,6,26,.82);box-shadow:0 0 0 3px rgba(255,95,174,.7);white-space:nowrap"><div style="font-size:40px;font-weight:900;font-stretch:90%">PÉÇAÍ · <span style="color:#ffd23f">PQ. DAS NAÇÕES</span></div><div style="font-size:30px;font-weight:600;color:#e7dcf5">R. Campo Maior, 357</div></div></div>
+<div class="sc" id="sB3"><div id="destSub" class="sub" style="top:1380px;font-size:60px">Destino: <span class="y">Péçaí</span> · Av. Jurema, 436</div></div>
+<!-- B. rótulo do destino no mapa -->
+<div class="sc" id="sB"><div id="destLbl" class="a" style="padding:20px 30px;border-radius:20px;background:rgba(16,6,26,.86);box-shadow:0 0 0 3px #ff5fae,0 12px 30px rgba(0,0,0,.5);white-space:nowrap">
+  <div style="font-size:24px;font-weight:800;letter-spacing:.18em;color:#ff9ccc">DESTINO</div>
+  <div style="font-size:54px;font-weight:900;font-stretch:90%">PÉÇAÍ · <span style="color:#ffd23f">PQ. JUREMA</span></div>
+  <div style="font-size:38px;font-weight:600;color:#e7dcf5">Av. Jurema, 436 · Guarulhos</div></div></div>
+<!-- C. BLACK FRIDAY -->
+<div class="sc" id="sC"><div id="t_bf" class="T" style="top:300px;font-size:200px"></div></div>
+<!-- D. açaí sem texto em cima; frase no alto depois -->
+<div class="sc" id="sD"><div id="obj2" class="sub" style="top:330px;font-size:70px">Você não vai querer<br>perder <span class="y">essa</span>.</div></div>
+<!-- E. roda -->
+<div class="sc" id="sE">
+  <div id="t_bf2" class="T" style="top:318px;font-size:84px;--b1:13px;--b2:5px"></div>
+  <svg id="wheel" width="1080" height="1920"></svg>
+  <div id="wPote" class="a" style="width:330px"><img src="assets/pote-hero.webp" style="width:330px"></div>
+  <div id="b1" class="badge" style="left:700px;top:600px"><div style="font-size:96px;line-height:112px;margin-top:6px">1</div><div style="font-size:36px;line-height:30px;letter-spacing:.06em">LITRO</div></div>
+  <div id="pDe" class="sub" style="top:1290px;font-size:56px;display:none">De <span id="pDeV" style="text-decoration:line-through;text-decoration-color:#ff3b4a;text-decoration-thickness:7px"></span> por</div>
+  <div id="c_pr" class="C" style="top:1360px;font-size:230px"></div>
+</div>
+<!-- F. JACKPOT -->
+<div class="sc" id="sF">
+  <div id="c_pr2" class="C" style="top:250px;font-size:170px;--b1:20px"></div>
+  <div id="f_lt" class="sub" style="top:440px;font-size:64px">Pote de <span class="y">1 litro</span>.</div>
+  <div id="t_bf3" class="T" style="top:1480px;font-size:110px;--b1:16px;--b2:6px"></div>
+</div>
+<!-- G. celular -->
+<div class="sc" id="sG">
+  <div id="phone" class="a" style="left:250px;top:0;width:580px;height:1160px;border-radius:78px;background:#0b0710;padding:20px;box-shadow:0 40px 120px rgba(0,0,0,.7),0 0 0 3px #2c2238 inset">
+    <div style="position:relative;width:540px;height:1120px;border-radius:60px;overflow:hidden;background:linear-gradient(180deg,#5a6cf0,#a768d6 40%,#f082b4 70%,#ffbe78)">
+      <div style="position:absolute;inset:0;background:var(--palm) center bottom/100% 45% no-repeat;opacity:.9"></div>
+      <div style="position:absolute;left:0;top:24px;width:540px;text-align:center;font-size:26px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.9)">LEMBRETE</div>
+      <div id="calW" style="position:absolute;left:70px;top:110px;width:400px;height:430px;border-radius:44px;background:rgba(255,255,255,.95);box-shadow:0 20px 50px rgba(40,10,60,.35);overflow:hidden;text-align:center">
+        <div style="background:#ff4f9e;color:#fff;font-weight:900;font-stretch:90%;font-size:58px;line-height:110px;letter-spacing:.04em">SEXTA</div>
+        <div style="font-weight:900;font-stretch:96%;font-size:250px;line-height:250px;color:#2a0f45;letter-spacing:-.04em">27</div>
+        <div style="font-weight:800;font-size:40px;color:#8a5fd0;letter-spacing:.2em;margin-top:-6px">NOV</div>
+      </div>
+      <div id="notif" style="position:absolute;left:30px;top:580px;width:480px;border-radius:34px;background:rgba(20,8,32,.85);padding:24px 26px;display:flex;gap:20px;align-items:center">
+        <img src="assets/logo-pecai.png" style="width:96px;height:96px;border-radius:50%">
+        <div><div style="font-size:26px;font-weight:700;color:#ffb3d6;letter-spacing:.06em">PÉÇAÍ · AGORA</div>
+          <div style="font-size:42px;font-weight:900;font-stretch:90%;line-height:1.05;margin-top:6px">Black Friday:<br><span style="color:#6df08a">R$ 24,99</span> o pote de 1 L</div></div>
+      </div>
+      <div id="notif2" style="position:absolute;left:30px;top:850px;width:480px;border-radius:34px;background:rgba(255,255,255,.93);color:#2a0f45;padding:24px 28px;font-size:40px;font-weight:800;font-stretch:90%;line-height:1.12;text-align:center">Só na loja.<br><span style="color:#d1307e">Enquanto durarem os estoques.</span></div>
+    </div>
+  </div>
+</div>
+<!-- H. objetivo + gran finale das estrelas -->
+<div class="sc" id="sH">
+  <div id="obj3" class="sub" style="top:1150px;font-size:72px">Missão: buscar seu<br>pote de <span class="y">1 litro</span>.</div>
+  <div id="obj4" class="sub" style="top:1150px;font-size:72px">Garanta o seu<br><span class="p">antes que acabe</span>.</div>
+  <div id="stp" class="stamp" style="left:170px;top:760px;font-size:104px;line-height:1">Oferta<br>criminosa</div>
+</div>
+<!-- I. PROCURADO -->
+<div class="sc" id="sI">
+  <div id="poster" class="a" style="left:150px;top:300px;width:780px;height:1180px;transform-origin:50% 0;
+    background:radial-gradient(120% 90% at 50% 40%,#f4e6c4,#e2cc9c 70%,#c9ad78);box-shadow:0 30px 80px rgba(0,0,0,.65),inset 0 0 60px rgba(120,80,30,.35);border-radius:6px">
+    <div style="position:absolute;left:50%;top:-18px;width:36px;height:36px;margin-left:-18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8fbf,#c21d6b);box-shadow:0 4px 8px rgba(0,0,0,.4)"></div>
+    <div style="position:absolute;left:0;top:60px;width:780px;text-align:center;color:#3a1d0b;font-weight:900;font-stretch:76%;font-size:128px;line-height:1;letter-spacing:.01em">PROCURADO</div>
+    <div style="position:absolute;left:60px;top:220px;width:660px;height:4px;background:#3a1d0b"></div>
+    <div style="position:absolute;left:190px;top:250px;width:400px;height:500px;background:#2a1640;box-shadow:inset 0 0 0 8px #3a1d0b;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(70% 60% at 50% 45%,#6a3a9a,#2a1640)"></div>
+      <img src="assets/pote-hero.webp" style="position:absolute;left:70px;top:40px;width:260px;filter:sepia(.25) contrast(1.05)"></div>
+    <div style="position:absolute;left:0;top:780px;width:780px;text-align:center;color:#3a1d0b;font-weight:900;font-stretch:84%;font-size:60px;line-height:1.05">POTE DE AÇAÍ · 1 LITRO</div>
+    <div style="position:absolute;left:0;top:860px;width:780px;text-align:center;color:#3a1d0b;font-weight:700;font-size:36px;letter-spacing:.06em">VISTO POR ÚLTIMO NA PÉÇAÍ</div>
+    <div id="pPr" class="C" style="top:930px;width:780px;font-size:150px;--b1:18px"></div>
+    <div id="pSeg" style="position:absolute;left:0;top:1095px;width:780px;text-align:center;color:#b0122a;font-weight:900;font-stretch:84%;font-size:50px">SÓ SEXTA, 27/11</div>
+  </div>
+  <div id="pEst" class="sub" style="top:1530px;font-size:52px">Enquanto durarem <span class="y">os estoques</span>.</div>
+</div>
+<!-- J. cartaz final no mapa -->
+<div class="sc" id="sJ">
+  <div id="t_bf4" class="T" style="top:615px;font-size:108px;--b1:16px;--b2:6px"></div>
+  <div id="jPote" class="a" style="width:280px"><img src="assets/pote-hero.webp" style="width:280px"></div>
+  <div id="b2" class="badge" style="left:300px;top:760px;width:140px;height:140px"><div style="font-size:70px;line-height:82px;margin-top:4px">1</div><div style="font-size:26px;line-height:22px;letter-spacing:.06em">LITRO</div></div>
+  <div id="c_pr3" class="C" style="top:0;font-size:190px;--b1:22px;text-align:left;width:640px"></div>
+  <div id="jChip" style="position:absolute;left:0;width:1080px;text-align:center;top:1250px"><span style="display:inline-block;font-weight:900;font-stretch:90%;font-size:60px;color:#fff;background:linear-gradient(90deg,#ff4f9e,#ff8a5c);padding:12px 34px 8px;border-radius:999px;box-shadow:0 0 0 6px #250a3e,0 0 40px rgba(255,80,160,.55)">SÓ SEXTA · 27/11</span></div>
+  <div id="jLoja" class="sub" style="top:1352px;font-size:48px">Na loja · <span class="y">enquanto durarem os estoques</span></div>
+  <div id="jEnd" class="sub" style="top:1425px;font-size:38px;font-stretch:90%;line-height:1.3;font-weight:600">Av. Jurema, 436 · Pq. Jurema<br>R. Campo Maior, 357 · Pq. das Nações</div>
+  <div id="jIg" style="position:absolute;left:0;width:1080px;text-align:center;top:1545px;font-size:34px;font-weight:700;letter-spacing:.18em;text-shadow:0 2px 10px #000">@curtapecai</div>
+</div>
+
+</div><!-- /cam -->
+<div id="flash" class="full"></div>
+</div>
+
+<script src="assets/three-0.160-bundle.js"></script><script src="assets/hdri-sunset.js"></script><script src="assets/cena3d.js"></script>
+<script>
+// ---------- dado que falta: preço normal do pote (o Davi informa). null = não aparece ----------
+const PRECO_DE=null;          // ex.: 'R$ 34,99'
+// ---------- grade da música ----------
+const BT=0.47612, K0=j=>0.020+j*BT, K=j=>K0(j>=11?j+4:j), H=32.498, END=H+1.0, SIL=31.754;   // troca de personagem: K0(7)→K0(15)
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), lerp=(a,b,p)=>a+(b-a)*p, pr=(t,a,b)=>cl((t-a)/(b-a));
+const eOut=p=>1-Math.pow(1-p,3), eOut5=p=>1-Math.pow(1-p,5), eIO=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2, eExpo=p=>p>=1?1:1-Math.pow(2,-10*p);
+const spring=(p,f=2.4,z=5)=>p<=0?0:1-Math.exp(-z*p)*Math.cos(f*Math.PI*p);
+function show(id,on){$(id).style.display=on?'block':'none';return on}
+function S(id,tr,op,fl){const e=$(id);e.style.transform=tr||'none';if(op!==undefined)e.style.opacity=op;if(fl!==undefined)e.style.filter=fl}
+function slam(id,t,t0,{from=1.5,dur=.24,blur=20,extra=''}={}){const e=$(id);const p=pr(t,t0,t0+dur);if(t<t0){e.style.opacity=0;return}
+  e.style.opacity=cl((t-t0)/.06);e.style.transform=`scale(${lerp(from,1,eExpo(p))}) ${extra}`;const b=lerp(blur,0,eOut(p));e.style.filter=b>.3?`blur(${b}px)`:''}
+function pop(id,t,t0,{dur=.3,d=24}={}){const e=$(id);const p=eOut5(pr(t,t0,t0+dur));e.style.opacity=t<t0?0:cl((t-t0)/.08);e.style.transform=`translateY(${(1-p)*d}px) scale(${lerp(1.08,1,p)})`}
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+
+// ---------- palmeiras (textura dos letreiros) ----------
+function palm(c,x,y,h,lean,sc,col){c.fillStyle=col;c.strokeStyle=col;const tx=x+lean,ty=y-h;c.beginPath();const n=24;
+  for(let i=0;i<=n;i++){const q=i/n;c.lineTo(x+lean*q*q-(16-9*q)*sc/2,y-h*q)}for(let i=n;i>=0;i--){const q=i/n;c.lineTo(x+lean*q*q+(16-9*q)*sc/2,y-h*q)}c.fill();
+  for(let f=0;f<11;f++){const a0=-Math.PI/2+(f/10-.5)*3.6,L=(95+rnd(f*3+x)*40)*sc,dr=.6+rnd(f*7+x)*.6;const pts=[];
+    for(let i=0;i<=16;i++){const q=i/16;pts.push([tx+Math.cos(a0)*L*q,ty+Math.sin(a0)*L*q+dr*L*q*q*.9,q])}
+    c.lineWidth=3*sc;c.beginPath();pts.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke();
+    for(let i=1;i<pts.length;i++){const [px,py,q]=pts[i],[ox,oy]=pts[i-1];const dx=px-ox,dy=py-oy,dl=Math.hypot(dx,dy)||1,nx=-dy/dl,ny=dx/dl,ll=(1-q*.75)*24*sc;
+      for(const s of [-1,1]){c.lineWidth=(3.2-2*q)*sc;c.beginPath();c.moveTo(px,py);c.lineTo(px+nx*ll*s-dx/dl*ll*.55,py+ny*ll*s-dy/dl*ll*.55+ll*.35);c.stroke()}}}}
+const palmTex=(function(){const c=document.createElement('canvas');c.width=800;c.height=400;const x=c.getContext('2d');
+  [[110,400,250,-20,.9],[250,400,180,15,.65],[560,400,230,-15,.85],[700,400,300,25,1.0]].forEach(a=>palm(x,...a,'rgba(120,50,170,.5)'));return c.toDataURL()})();
+document.documentElement.style.setProperty('--palm',`url(${palmTex})`);
+function T(id,html){$(id).innerHTML=`<div class="o1">${html}</div><div class="l o2">${html}</div><div class="l f">${html}</div><div class="l f2">${html}</div>`}
+function Cc(id,html){$(id).innerHTML=`<div class="k1">${html}</div><div class="k2">${html}</div><div class="k3">${html}</div>`}
+T('t_m','Açaí de<br>sexta');T('t_bf','Black<br>Friday');T('t_bf2','Black Friday');T('t_bf3','Black Friday');T('t_bf4','Black Friday');
+const PR='<span style="font-size:.4em;vertical-align:.95em;margin-right:.06em">R$</span>24<span style="font-size:.5em;vertical-align:.62em">,99</span>';
+Cc('c_pr',PR);Cc('c_pr2',PR);Cc('c_pr3',PR);Cc('pPr',PR);
+if(PRECO_DE){$('pDe').style.display='block';$('pDeV').textContent=PRECO_DE}
+function shineT(id,t,t0,d=.9){$(id).style.setProperty('--sh',`${lerp(130,-30,eIO(pr(t,t0,t0+d)))}%`)}
+
+// ---------- mapa estilizado (não é mapa de verdade) ----------
+const MW=2400,MH=4000,MAP=document.createElement('canvas');MAP.width=MW;MAP.height=MH;
+const ROUTE=[[620,3420],[620,2760],[1180,2760],[1180,1640],[1760,1640],[1760,980]];
+const DEST=ROUTE.at(-1), DEST2=[860,1360];
+function buildMap(){const c=MAP.getContext('2d');c.fillStyle='#231735';c.fillRect(0,0,MW,MH);
+  for(let gx=0;gx<MW;gx+=140)for(let gy=0;gy<MH;gy+=140){const j=rnd(gx*7+gy);c.fillStyle=j<.08?'#1f3a33':j<.14?'#2d2147':'#2a1d40';c.beginPath();c.roundRect(gx+14,gy+14,112,112,10);c.fill()}
+  c.strokeStyle='#1d2f63';c.lineWidth=90;c.lineCap='round';c.beginPath();c.moveTo(-100,1200);c.bezierCurveTo(700,1500,900,2300,1500,2250);c.bezierCurveTo(2000,2200,2200,2900,2600,3100);c.stroke();
+  c.strokeStyle='#2a3f7a';c.lineWidth=60;c.stroke();
+  c.strokeStyle='#3d2e58';c.lineWidth=12;for(let x=0;x<=MW;x+=140){c.beginPath();c.moveTo(x,0);c.lineTo(x,MH);c.stroke()}for(let y=0;y<=MH;y+=140){c.beginPath();c.moveTo(0,y);c.lineTo(MW,y);c.stroke()}
+  c.strokeStyle='#6c5891';c.lineWidth=24;[[[620,0],[620,MH]],[[0,2760],[MW,2760]],[[1180,0],[1180,MH]],[[0,1640],[MW,1640]],[[1760,0],[1760,MH]],[[0,1360],[MW,1360]]].forEach(([a,b])=>{c.beginPath();c.moveTo(...a);c.lineTo(...b);c.stroke()});
+  c.strokeStyle='#9b84c4';c.lineWidth=34;c.beginPath();c.moveTo(-100,3800);c.bezierCurveTo(800,3300,1500,3600,2500,2600);c.stroke();
+  c.fillStyle='rgba(255,255,255,.08)';c.font='900 190px Arc';c.textAlign='center';c.save();c.translate(1200,2150);c.rotate(-.18);c.fillText('GUARULHOS',0,0);c.restore()}
+const LOGO=new Image();LOGO.src='assets/logo-pecai.png';
+const RL=(()=>{let L=0;for(let i=1;i<ROUTE.length;i++)L+=Math.hypot(ROUTE[i][0]-ROUTE[i-1][0],ROUTE[i][1]-ROUTE[i-1][1]);return L})();
+function routeAt(p){let d=p*RL;for(let i=1;i<ROUTE.length;i++){const a=ROUTE[i-1],b=ROUTE[i],l=Math.hypot(b[0]-a[0],b[1]-a[1]);if(d<=l){const q=d/l;return [lerp(a[0],b[0],q),lerp(a[1],b[1],q),Math.atan2(b[1]-a[1],b[0]-a[0]),i]}d-=l}return [DEST[0],DEST[1],-Math.PI/2,ROUTE.length-1]}
+function pinAt(c,x,y,R,t){c.fillStyle='#ff4f9e';c.beginPath();c.moveTo(x,y);c.arc(x,y-R*1.6,R*1.02,Math.PI*.78,Math.PI*.22);c.closePath();c.fill();
+  c.save();c.beginPath();c.arc(x,y-R*1.6,R*.86,0,7);c.clip();if(LOGO.complete)c.drawImage(LOGO,x-R*.86,y-R*1.6-R*.86,R*1.72,R*1.72);c.restore()}
+function drawMap(c,W,Hh,cx,cy,s,prog,pp,t,{pin=1,labels=0}={}){c.save();c.clearRect(0,0,W,Hh);c.translate(W/2,Hh/2);c.scale(s,s);c.translate(-cx,-cy);
+  c.drawImage(MAP,0,0);c.lineCap='round';c.lineJoin='round';
+  c.strokeStyle='rgba(206,92,255,.35)';c.lineWidth=30;c.beginPath();ROUTE.forEach((p,i)=>i?c.lineTo(...p):c.moveTo(...p));c.stroke();
+  c.shadowColor='#e06bff';c.shadowBlur=30;c.strokeStyle='#d36bff';c.lineWidth=26;c.beginPath();c.moveTo(...ROUTE[0]);
+  const [ex,ey,,ei]=routeAt(prog);for(let i=1;i<ei;i++)c.lineTo(...ROUTE[i]);c.lineTo(ex,ey);c.stroke();c.shadowBlur=0;
+  const z=Math.max(.35,s);
+  if(pin>0){for(const [P,k] of [[DEST,1],[DEST2,.8]]){for(let r=0;r<2;r++){const ph=((t*1.2+r*.5)%1);c.strokeStyle=`rgba(255,110,190,${(1-ph)*.8})`;c.lineWidth=8/s;c.beginPath();c.arc(P[0],P[1],(60+ph*160)/z*.6*k,0,7);c.stroke()}
+    pinAt(c,P[0],P[1],70/z*.55*k*pin,t)}}
+  if(labels){for(const [P,n,e] of [[DEST,'PÉÇAÍ · PQ. JUREMA','Av. Jurema, 436'],[DEST2,'PÉÇAÍ · PQ. DAS NAÇÕES','R. Campo Maior, 357']]){c.save();c.translate(P[0]+60/z,P[1]-130/z);c.scale(1/z,1/z);
+    c.fillStyle='rgba(16,6,26,.85)';c.beginPath();c.roundRect(0,-62,400,96,16);c.fill();c.strokeStyle='#ff5fae';c.lineWidth=3;c.stroke();
+    c.fillStyle='#fff';c.font='900 30px Arc';c.textAlign='left';c.fillText(n,18,-22);c.fillStyle='#e7dcf5';c.font='600 26px Arc';c.fillText(e,18,16);c.restore()}}
+  if(pp!==null){const [px,py,ang]=routeAt(pp);c.save();c.translate(px,py);c.rotate(ang+Math.PI/2);const zz=34/z*.7;c.fillStyle='#fff';c.strokeStyle='#14081f';c.lineWidth=zz*.25;
+    c.beginPath();c.moveTo(0,-zz);c.lineTo(zz*.7,zz*.8);c.lineTo(0,zz*.4);c.lineTo(-zz*.7,zz*.8);c.closePath();c.stroke();c.fill();c.restore()}
+  c.restore()}
+
+// ---------- estrelas: enchem aos poucos, a 5ª no sorriso ----------
+const STAR_T=[K(12),K(17),K(24),K(33),K(43)];
+function starPath(cx,cy,r){let d='';for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;d+=(i?'L':'M')+(cx+Math.cos(a)*rr).toFixed(1)+','+(cy+Math.sin(a)*rr).toFixed(1)}return d+'Z'}
+const SX=i=>688+i*78;   // da esquerda pra direita
+$('stars').innerHTML=[0,1,2,3,4].map(i=>`<path d="${starPath(SX(i),250,32)}" fill="rgba(0,0,0,.35)" stroke="rgba(255,255,255,.6)" stroke-width="4"/><path id="sf${i}" d="${starPath(SX(i),250,32)}" fill="#fff" stroke="#14081f" stroke-width="5" opacity="0" style="filter:drop-shadow(0 0 10px rgba(255,255,255,.8))"/>`).join('');
+function stars(t){for(let i=0;i<5;i++){const f=$('sf'+i),ti=STAR_T[i];let o=t>=ti?1:0;
+  if(t>=ti&&t<ti+.6)o=(Math.floor((t-ti)*12)%2)?.35:1;
+  if(t>=K(43)&&t<K(47))o=(Math.floor((t-K(43))*8)%2)?.45:1;               // gran finale: todas piscam
+  if(t>=H&&t<H+.8)o=(Math.floor((t-H)*10)%2)?.5:1;
+  f.setAttribute('opacity',o);const s=t>=ti?1+.6*Math.exp(-(t-ti)*12)+(t>=K(43)?.25*Math.exp(-(t-K(43))*6):0):1;
+  f.setAttribute('transform',`translate(${SX(i)},250) scale(${s}) translate(${-SX(i)},-250)`)}}
+
+// ---------- roda de itens: silhuetas de acompanhamentos atrás dos cadeados ----------
+const WC=[540,860],RO=430,RI=180,NSEG=8;
+const ICON={ // silhuetas simples (centro 0,0)
+ morango:'<path d="M0,42 C-32,26 -44,-6 -30,-22 C-18,-34 18,-34 30,-22 C44,-6 32,26 0,42Z"/><path d="M-20,-24 L-6,-42 L0,-28 L6,-42 L20,-24 Z"/>',
+ po:'<rect x="-28" y="-30" width="56" height="70" rx="8"/><rect x="-32" y="-40" width="64" height="12" rx="5"/>',
+ condensado:'<rect x="-34" y="-16" width="68" height="50" rx="8"/><ellipse cx="0" cy="-16" rx="34" ry="9"/><path d="M22,-18 q6,16 0,26 q-6,-10 0,-26Z"/>',
+ cupuacu:'<ellipse cx="0" cy="4" rx="30" ry="40"/><rect x="-3" y="-46" width="6" height="12" rx="3"/>',
+ sorvete:'<path d="M-24,-2 L24,-2 L0,46 Z"/><circle cx="0" cy="-18" r="25"/>',
+ tapioca:'<path d="M-44,16 A44,44 0 0 1 44,16 Z"/>',
+ copo:'<path d="M-24,-20 L24,-20 L18,42 L-18,42 Z"/><path d="M-28,-20 A28,22 0 0 1 28,-20 Z"/><rect x="6" y="-58" width="6" height="40" rx="3"/>'};
+const SLOTS=['pote','morango','po','condensado','cupuacu','sorvete','tapioca','copo'];
+function arc(a0,a1,ro,ri){const p=(a,r)=>[(WC[0]+Math.cos(a)*r).toFixed(1),(WC[1]+Math.sin(a)*r).toFixed(1)];const [x0,y0]=p(a0,ro),[x1,y1]=p(a1,ro),[x2,y2]=p(a1,ri),[x3,y3]=p(a0,ri);
+  return `M${x0},${y0}A${ro},${ro} 0 0 1 ${x1},${y1}L${x2},${y2}A${ri},${ri} 0 0 0 ${x3},${y3}Z`}
+(function(){let h='<defs><radialGradient id="selg"><stop offset="0" stop-color="#ffd6ec"/><stop offset="1" stop-color="#ff5fae"/></radialGradient></defs>';
+  for(let i=0;i<NSEG;i++){const mid=-Math.PI/2+i*2*Math.PI/NSEG,a0=mid-Math.PI/NSEG+.035,a1=mid+Math.PI/NSEG-.035;
+    h+=`<path id="seg${i}" d="${arc(a0,a1,RO,RI)}" fill="rgba(16,6,26,.62)" stroke="rgba(255,255,255,.4)" stroke-width="3"/>`;
+    const r=(RO+RI)/2,cx=WC[0]+Math.cos(mid)*r,cy=WC[1]+Math.sin(mid)*r;
+    if(i){h+=`<g id="ic${i}" transform="translate(${cx.toFixed(1)},${(cy-6).toFixed(1)}) scale(1.25)" fill="rgba(255,255,255,.36)">${ICON[SLOTS[i]]}</g>`;
+      h+=`<g transform="translate(${(cx+30).toFixed(1)},${(cy+30).toFixed(1)}) scale(.6)"><circle r="30" fill="rgba(16,6,26,.9)"/><rect x="-14" y="-4" width="28" height="22" rx="4" fill="#fff"/><path d="M-8,-4 v-7 a8,8 0 0 1 16,0 v7" fill="none" stroke="#fff" stroke-width="4"/></g>`}}
+  h+=`<circle cx="${WC[0]}" cy="${WC[1]}" r="${RI-14}" fill="rgba(16,6,26,.7)" stroke="rgba(255,255,255,.35)" stroke-width="3"/>`;
+  h+=`<image href="assets/pote-hero.webp" x="${WC[0]-48}" y="${WC[1]-RO+52}" width="96" height="133"/>`;$('wheel').innerHTML=h})();
+const W0=K(19),WSEL=K(22);
+function wheel(t){const open=eOut5(pr(t,W0,W0+.3));const w=$('wheel');w.style.opacity=open;w.style.transformOrigin=`${WC[0]}px ${WC[1]}px`;w.style.transform=`scale(${lerp(.75,1,open)})`;
+  const sp=pr(t,W0+.15,WSEL);const steps=Math.floor(lerp(0,13,1-Math.pow(1-sp,2.2)));const sel=t>=WSEL?0:((steps+3)%NSEG);
+  for(let i=0;i<NSEG;i++){const s=$('seg'+i);const on=i===sel;s.setAttribute('fill',on?(t>=WSEL?'url(#selg)':'rgba(255,255,255,.88)'):'rgba(16,6,26,.62)');s.setAttribute('stroke',on?'#fff':'rgba(255,255,255,.4)');
+    const ic=$('ic'+i);if(ic)ic.setAttribute('fill',on?'rgba(40,14,60,.75)':'rgba(255,255,255,.36)')}}
+
+// ---------- imagens ----------
+const SETS={gta:{W:3392,H:1912},gem:{W:3200,H:1800}};
+const pad=n=>String(n).padStart(4,'0');
+function setImg(img,src){if(img.getAttribute('src')!==src)img.setAttribute('src',src);return img.decode().catch(()=>{})}
+function place(img,set,s,px,py,sx=540,sy=960){const st=SETS[set];const base=Math.max(1080/st.W,1920/st.H);const k=base*s;
+  let L=sx-px*k,Tt=sy-py*k;L=cl(L,1080-st.W*k,0);Tt=cl(Tt,1920-st.H*k,0);img.style.width=st.W+'px';img.style.transform=`translate(${L}px,${Tt}px) scale(${k})`}
+const POT=[[7.6,440,403],[8.2,461,398],[8.8,477,355],[9.3,429,276],[9.8,430,292],[10.4,424,322],[11.0,424,322],[11.5,424,318],[12.0,424,314]];
+function pot(s){if(s<=POT[0][0])return [POT[0][1]*4,POT[0][2]*4];for(let i=1;i<POT.length;i++)if(s<=POT[i][0]){const p=(s-POT[i-1][0])/(POT[i][0]-POT[i-1][0]);return [lerp(POT[i-1][1],POT[i][1],p)*4,lerp(POT[i-1][2],POT[i][2],p)*4]}return [POT.at(-1)[1]*4,POT.at(-1)[2]*4]}
+const gemTake=(n0,n1,t,a,tq,sp=1)=>'quadros/gem_up/'+pad(cl(n0+Math.floor(Math.max(0,tq-a)*24*sp),n0,n1))+'.jpg';
+
+async function footage(t){const v=$('v1'),tq=window.__TQ??t;let src=null,dim=0,tint=0,fl='';$('fx').style.transform='none';$('fx').style.transformOrigin='540px 960px';$('bgJ').style.display='none';
+  if(t<K0(7)+.45){ // A + subida pro mapa
+    const sT=1.0+tq*.98;place(v,'gta',1.0+.05*eIO(pr(t,0,K(7))),lerp(720,1520,eIO(pr(t,0,1.9))),900);src='quadros/gta_up/'+pad(cl(Math.floor(sT*24),19,101))+'.jpg';tint=.18;
+    const u=pr(t,K0(7),K0(7)+.45);if(u>0){$('fx').style.transform=`scale(${1/(1+u*2.5)})`;fl=`blur(${u*16}px) saturate(${1-u*.8}) brightness(${1+u*.6})`}
+  }else if(t>=K(11)&&t<K(13)){const u=t-K(11);place(v,'gem',1.12*(1+.06*Math.exp(-u*10)),1640,830);src=gemTake(30,52,t,K(11),tq);dim=.3;tint=.7;
+  }else if(t>=K(13)&&t<K(15)){const u=t-K(13);place(v,'gem',lerp(1.08,1.16,u/(2*BT)),2075,1120);src=gemTake(132,154,t,K(13),tq);dim=.22;tint=.6;
+  }else if(t>=K(15)&&t<K(17)){const u=t-K(15);place(v,'gem',lerp(1.05,1.12,u/(2*BT)),2330,950);src=gemTake(64,88,t,K(15),tq);dim=.04;tint=.35;   // colherada limpa
+  }else if(t>=K(17)&&t<K(19)){const u=t-K(17);place(v,'gem',lerp(1.04,1.18,u/(2*BT)),1900,930);src=gemTake(98,120,t,K(17),tq);dim=.12;tint=.4;
+  }else if(t>=K(19)&&t<K(27)){place(v,'gem',lerp(1.15,1.3,pr(t,K(19),K(27))),1900,900);src=gemTake(120,154,t,K(19),tq,.38);dim=.5;tint=.5;fl='saturate(.45) brightness(.8) blur(2px)';
+  }else if(t>=K(27)&&t<K(31)){$('bgJ').style.display='block';
+  }else if(t>=K(31)&&t<K(39)){const sT=7.7+Math.max(0,tq-K(31))*.5;place(v,'gta',1.1,1700,900);src='quadros/gta_up/'+pad(cl(Math.floor(sT*24),182,287))+'.jpg';dim=.35;tint=.2;fl='blur(10px)';
+  }else if(t>=K(39)&&t<K(47)){const sT=9.75+Math.max(0,tq-K(39))*.6;const [qx,qy]=pot(9.75+(t-K(39))*.6);place(v,'gta',lerp(1.02,1.12,pr(t,K(39),K(47))),lerp(1600,qx,.4),900,540,960);
+    src='quadros/gta_up/'+pad(cl(Math.floor(sT*24),182,287))+'.jpg';tint=.2;dim=.06;
+  }else if(t>=K(47)&&t<K(55)){$('bgJ').style.display='block'}
+  if(src){v.style.display='block';await setImg(v,src)}else v.style.display='none';
+  $('fx').style.filter=fl;$('dim').style.opacity=dim;$('tint').style.opacity=tint;return !!src}
+
+// efeitos do Davi
+async function efx(t){const tq=window.__TQ??t;const L=$('leque'),Sl=$('slot'),Ch=$('chuva');const jobs=[];
+  // leque de notas girando atrás do preço (roda) — fica no centro do preço
+  if(t>=K(23)&&t<K(27)){const n=40+Math.floor((tq-K(23))*30)%180;L.style.display='block';jobs.push(setImg(L,`quadros/efx/leque/${pad(n)}.webp`));
+    const k=2.1*lerp(.4,1,eOut5(pr(t,K(23),K(23)+.35)));L.style.width='736px';L.style.transform=`translate(${540-370*k}px,${1470-205*k}px) scale(${k})`;L.style.opacity=.85*pr(t,K(23),K(23)+.1)*(1-pr(t,K(27)-.15,K(27)));
+  }else L.style.display='none';
+  // caça-níquel JACKPOT
+  if(t>=K(27)&&t<K(31)){const n=cl(Math.floor((tq-K(27))*30),0,55);Sl.style.display='block';jobs.push(setImg(Sl,`quadros/efx/slot/${pad(n)}.webp`));
+    const p=eOut5(pr(t,K(27),K(27)+.3));Sl.style.width='1360px';Sl.style.transform=`translate(-140px,${lerp(520,330,p)}px) scale(${lerp(.85,1,p)})`;Sl.style.opacity=pr(t,K(27),K(27)+.12);
+  }else Sl.style.display='none';
+  // chuva de notas: no JACKPOT e no fim
+  const rain=(t>=K(28.5)&&t<K(31)+.3)||(t>=H&&t<END);
+  if(rain){const t0=t<K(32)?K(28.5):H;const n=cl(Math.floor((tq-t0)*30),0,299);Ch.style.display='block';jobs.push(setImg(Ch,`quadros/efx/chuva/${pad(n)}.jpg`));Ch.style.opacity=t<K(32)?.9*(1-pr(t,K(31),K(31)+.3)):.75}
+  else Ch.style.display='none';
+  await Promise.all(jobs)}
+
+async function seek(t){
+  await footage(t);await efx(t);
+  if(!((t>=K(22)&&t<K(27))||t>=K(57)))$('pot3d').style.display='none';
+  // ----- mapa -----
+  const mc=$('map'),m=mc.getContext('2d');
+  const c3=$('city3d'),gp=$('gps');
+  if(t>=K0(7)&&t<K0(15)){const tau=t-K0(7);c3.style.display='block';C3D.city(tau);
+    let f='';for(const th of C3D.THUMP){const d=tau-th;if(d>-.05&&d<.3){const a=Math.exp(-Math.max(0,d)*9);f=`saturate(${1-.7*a}) brightness(${1+.5*a}) blur(${a*6}px)`}}
+    const fin=Math.pow(pr(tau,3.62,3.81),1.5);if(fin>0)f+=` blur(${fin*12}px) brightness(${1+fin*1.5})`;c3.style.filter=f;
+    gp.style.display='block';gp.style.opacity=.9*pr(tau,.72,.9)*(1-pr(tau,1.25,1.6));gp.style.transform=`scale(${lerp(1.15,1,eOut(pr(tau,.72,1.2)))})`;mc.style.display='none';
+  }else{c3.style.display='none';gp.style.display='none'}
+  if(false){
+    const u=pr(t,K(7),K(7)+.6),trav=eIO(pr(t,K(7)+.55,K(10))),dive=Math.pow(pr(t,K(10),K(11)),2.3);
+    const [px,py]=routeAt(trav);const s=lerp(lerp(1.3,.58,eOut(u)),5.5,dive);let cx=lerp(px,DEST[0],dive),cy=lerp(py,DEST[1]-40,dive);
+    cx=cl(cx,540/s,MW-540/s);cy=cl(cy,960/s,MH-960/s);drawMap(m,1080,1920,cx,cy,s,trav,trav,t);window.__pin=[(DEST[0]-cx)*s+540,(DEST[1]-cy)*s+960];
+    mc.style.opacity=1;mc.style.filter=`blur(${dive*10+(1-u)*8}px) saturate(${lerp(.6,1,u)})`;
+  }else if(t>=K(55)){mc.style.display='block';const u=eOut(pr(t,K(55),K(55)+1.6));const sG=lerp(.5,.8,u);
+    drawMap(m,1080,1920,lerp(1300,DEST[0],u),DEST[1]+(960-586)/sG+lerp(500,0,u),sG,1,null,t,{pin:0,labels:0});mc.style.opacity=1;mc.style.filter='brightness(.5) saturate(.95)'}
+  else mc.style.display='none';
+  // rótulo do destino (bairro e endereço) no voo
+  const tau=t-K0(7);
+  if(show('sB',tau>=1.0&&tau<2.25)){const e=$('destLbl');const p=eOut5(pr(tau,1.0,1.3));e.style.opacity=p*(1-pr(tau,2.0,2.25));const P=C3D.project('store');e.style.transform=`translate(${cl(P[0]-300,30,1080-640)}px,${cl(P[1]-250,330,1450)}px) scale(${lerp(.8,1,p)})`}
+  const P1s=C3D.project('store'),P2s=C3D.project('store2'),far=Math.hypot(P1s[0]-P2s[0],P1s[1]-P2s[1])>420;
+  if(show('sB2',tau>=1.15&&tau<1.8&&far)){const e=$('dest2');const p=eOut5(pr(tau,1.15,1.45));e.style.opacity=p*(1-pr(tau,1.6,1.8));const P=C3D.project('store2');e.style.transform=`translate(${cl(P[0]-220,30,1080-520)}px,${cl(P[1]+70,520,1500)}px) scale(${lerp(.8,1,p)})`}
+  if(show('sB3',tau>=3.0&&tau<3.75)){pop('destSub',t,K0(7)+3.05);$('destSub').style.opacity=(tau<3.05?0:1)*(1-pr(tau,3.6,3.75))}
+  // ----- HUD -----
+  const hudOn=(t<K0(7))||(t>=K(11)&&t<K(55));$('hud').style.display=hudOn?'block':'none';
+  const mmOn=(t<K0(7))||(t>=K(11)&&t<K(15))||(t>=K(39)&&t<K(47));
+  if(hudOn){$('mm').style.display=$('bars').style.display=mmOn?'block':'none';
+    if(mmOn){const pp=t<K(7)?0:t<K(15)?.15:.55;const [px,py]=routeAt(pp);drawMap($('mmc').getContext('2d'),330,240,px,py-60,.22,1,pp,t,{pin:1})}stars(t)}
+  // giroflex (gran finale) e piscadas
+  const gOn=t>=K(43)&&t<K(47)+.2,sv=$('siren');
+  if(gOn){const ph=Math.floor((t-K(43))*5)%2;const a=.9*(1-pr(t,K(47)-.2,K(47)+.2));sv.style.opacity=a;
+    sv.style.background=ph?'radial-gradient(55% 50% at 0% 50%,rgba(255,30,60,.85),rgba(255,30,60,0) 70%),linear-gradient(180deg,rgba(255,30,60,.35),rgba(0,0,0,0) 12%)':'radial-gradient(55% 50% at 100% 50%,rgba(40,100,255,.9),rgba(40,100,255,0) 70%),linear-gradient(0deg,rgba(40,100,255,.35),rgba(0,0,0,0) 12%)'}else sv.style.opacity=0;
+  // ----- A -----
+  if(show('sA',t<K0(7))){const a=pr(t,.2,.45)*(1-pr(t,K(4)-.25,K(4)));$('mNova').style.opacity=a;$('mNova').style.letterSpacing=`${lerp(.6,.32,eOut(pr(t,.2,1.2)))}em`;
+    slam('t_m',t,.32,{from:1.25,dur:.3,blur:16});$('t_m').style.opacity=t<.32?0:cl((t-.32)/.06)*(1-pr(t,K(4)-.25,K(4)));shineT('t_m',t,.6,1.0);pop('obj1',t,K(4)+.05)}
+  // ----- C: BLACK FRIDAY (sobe e sai antes da colherada) -----
+  if(show('sC',t>=K(11)&&t<K(15))){slam('t_bf',t,K(11)+.02,{from:1.7,dur:.28,blur:26});shineT('t_bf',t,K(11)+.3,1.0);
+    const out=eIO(pr(t,K(14.4),K(15)));$('t_bf').style.transform+=` translateY(${-out*420}px)`;$('t_bf').style.opacity=(t<K(11)+.02?0:1)*(1-out)}
+  // ----- D: frase no alto só depois de a colherada brilhar -----
+  if(show('sD',t>=K(16.3)&&t<K(19))){pop('obj2',t,K(16.3))}
+  // ----- E: roda -----
+  if(show('sE',t>=K(19)&&t<K(27))){wheel(t);slam('t_bf2',t,K(19)+.1,{from:1.2,dur:.25,blur:10});
+    $('wPote').style.display='none';
+    if(t>=WSEL){const pc=$('pot3d');if(pc.parentNode!==$('sE'))$('sE').insertBefore(pc,$('b1'));pc.style.display='block';
+      const fl=eOut5(pr(t,WSEL,WSEL+.45)),sp=eOut(pr(t,WSEL,WSEL+1.6));
+      C3D.pot({x:540,y:lerp(WC[1]-RO+120,WC[1]-10,fl),h:lerp(120,470,fl),rotY:lerp(-Math.PI*4,0,sp)+Math.sin((t-WSEL)*1.6)*.22*pr(t,WSEL+1.4,WSEL+2),tilt:lerp(.5,.1,fl)+Math.sin((t-WSEL)*2.1)*.05,roll:Math.sin((t-WSEL)*1.3)*.04*fl})}
+    const bp=spring(pr(t,K(22.5),K(22.5)+.6),2.6,5);$('b1').style.opacity=cl((t-K(22.5))/.05);$('b1').style.transform=`rotate(${lerp(-40,-10,bp)}deg) scale(${bp})`;
+    if(PRECO_DE)pop('pDe',t,K(22.6));
+    slam('c_pr',t,K(23),{from:1.8,dur:.3,blur:26});shineT('c_pr',t,K(23)+.3,1.0);
+    const fade=1-pr(t,K(27)-.15,K(27));$('sE').style.opacity=fade}
+  // ----- F: JACKPOT -----
+  if(show('sF',t>=K(27)&&t<K(31))){slam('c_pr2',t,K(29.6),{from:1.6,dur:.26,blur:20});shineT('c_pr2',t,K(29.9),.8);pop('f_lt',t,K(30));slam('t_bf3',t,K(27)+.1,{from:1.2,dur:.25,blur:10})}
+  // ----- G: celular -----
+  if(show('sG',t>=K(31)&&t<K(39))){const p=spring(pr(t,K(31),K(31)+.8),2,4.4);const buzz=t>=K(31)+.05&&t<K(31)+.65?Math.sin((t-K(31))*130)*5:0;
+    S('phone',`translate(${buzz}px,${lerp(1950,420,p)}px) rotate(${lerp(10,-3,p)+buzz*.12}deg)`,1);
+    const n=$('notif');const np=eOut5(pr(t,K(32),K(32)+.3));n.style.opacity=np;n.style.transform=`translateY(${(1-np)*-60}px)`;
+    const n2=$('notif2');const n2p=eOut5(pr(t,K(35),K(35)+.3));n2.style.opacity=n2p;n2.style.transform=`translateY(${(1-n2p)*30}px)`;
+    const c=$('calW');const cp=pr(t,K(31)+.35,K(31)+.7);c.style.transform=`scale(${lerp(.9,1,eOut(cp))})`;c.style.opacity=cl(cp*2)}
+  // ----- H: objetivo, 5 estrelas e OFERTA CRIMINOSA -----
+  if(show('sH',t>=K(39)&&t<K(47))){pop('obj3',t,K(39)+.1);$('obj3').style.opacity=(t<K(39)+.1?0:1)*(1-pr(t,K(44.8),K(45)));
+    pop('obj4',t,K(45));const sp=pr(t,K(43.5),K(43.5)+.22);const st=$('stp');st.style.opacity=t<K(43.5)?0:cl((t-K(43.5))/.04);
+    st.style.transform=`rotate(-9deg) scale(${lerp(2.4,1,eExpo(sp))})`;st.style.filter=sp<1?`blur(${(1-sp)*8}px)`:''}
+  // ----- I: PROCURADO -----
+  if(show('sI',t>=K(47)&&t<K(55))){const p=spring(pr(t,K(47),K(47)+1),2.2,3.8);S('poster',`translate(0px,${lerp(-1500,0,p)}px) rotate(${Math.sin((t-K(47))*1.7)*1.4*(p)}deg)`,1);
+    slam('pPr',t,K(49),{from:1.7,dur:.25,blur:18});shineT('pPr',t,K(49)+.25,.9);
+    const sg=$('pSeg');const sp=pr(t,K(51),K(51)+.2);sg.style.opacity=t<K(51)?0:1;sg.style.transform=`scale(${lerp(1.6,1,eExpo(sp))}) rotate(-3deg)`;
+    pop('pEst',t,K(53));const out=pr(t,K(55)-.2,K(55));$('sI').style.opacity=1-out}
+  // ----- J: cartaz no mapa -----
+  if(show('sJ',t>=K(55))){slam('t_bf4',t,K(55.5),{from:1.3,dur:.28,blur:16});shineT('t_bf4',t,H+.05,1.0);
+    $('jPote').style.display='none';
+    if(t>=K(57)){const pc=$('pot3d');if(pc.parentNode!==$('sJ'))$('sJ').insertBefore(pc,$('b2'));pc.style.display='block';const pp=spring(pr(t,K(57),K(57)+.9),2.2,4.8);
+      const spin=t>=H?eOut(pr(t,H,H+.9))*Math.PI*2:0;C3D.pot({x:290,y:lerp(1300,990,pp),h:lerp(200,400,pp),rotY:lerp(-2.4,0,eOut(pr(t,K(57),K(57)+1.2)))+Math.sin((t-K(57))*1.2)*.25+spin,tilt:.12,roll:-.05})}
+    const bp=spring(pr(t,K(57.6),K(57.6)+.6),2.6,5);$('b2').style.opacity=cl((t-K(57.6))/.05);$('b2').style.transform=`rotate(${lerp(-40,-12,bp)}deg) scale(${bp})`;
+    const kp=pr(t,K(57)+.15,K(57)+.45);S('c_pr3',`translate(470px,${lerp(860,820,eExpo(kp))}px) scale(${lerp(1.3,1,eExpo(kp))})`,kp,kp<1?`blur(${(1-kp)*14}px)`:'');shineT('c_pr3',t,H+.12,1.0);
+    const cp=pr(t,K(59),K(59)+.3);$('jChip').style.opacity=cp;$('jChip').style.transform=`scale(${lerp(1.35,1,eExpo(cp))})`;
+    pop('jLoja',t,K(59.5));pop('jEnd',t,K(60.5));pop('jIg',t,K(61.5));
+    // pausa da música: tudo segura e escurece um pouco; pancada final: pino grande cai
+    $('sJ').style.filter=t>=SIL&&t<H?`brightness(${lerp(1,.75,pr(t,SIL,SIL+.25))})`:''}
+  if(t>=K(55)){const c=$('map').getContext('2d');const R=95*(t>=H?lerp(1.15,1,pr(t,H,H+.3)):1),y=lerp(-200,420,eOut5(pr(t,H-.22,H)));
+    if(t>=H-.22){c.save();c.translate(540,y);c.shadowColor='rgba(255,80,170,.7)';c.shadowBlur=40;pinAt(c,0,R*1.6,R,t);c.restore();
+      if(t>=H){const ph=pr(t,H,H+.8);c.strokeStyle=`rgba(255,120,200,${1-ph})`;c.lineWidth=6;c.beginPath();c.arc(540,420+R*1.6,40+ph*300,0,7);c.stroke()}}}
+  // clarões
+  let fo=0;for(const c of [K(11),K(15),K(19),K(27),K(31),K(39),K(47),K(55)])if(t>=c&&t<c+.07)fo=Math.max(fo,.22*(1-pr(t,c,c+.07)));
+  if(t>=K(11)-.18&&t<K(11))fo=Math.max(fo,pr(t,K(11)-.18,K(11))*.95);if(t>=K(11)&&t<K(11)+.16)fo=Math.max(fo,.95*(1-pr(t,K(11),K(11)+.16)));
+  if(t>=K0(7)+.1&&t<K0(7)+.35)fo=Math.max(fo,.18*(1-Math.abs(pr(t,K0(7)+.1,K0(7)+.35)*2-1)));
+  for(const c of [K(23),K(29.6),K(43.5),K(49)])if(t>=c&&t<c+.14)fo=Math.max(fo,.4*(1-pr(t,c,c+.14)));
+  if(t>=H&&t<H+.2)fo=Math.max(fo,.6*(1-pr(t,H,H+.2)));
+  $('flash').style.opacity=fo;
+  let sh='none';for(const h of [K(11),K(23),K(29.6),K(43.5),K(49),H]){const d=t-h;if(d>=0&&d<.4){const a=Math.exp(-d*10);sh=`translate(${Math.sin(d*80)*10*a}px,${Math.cos(d*70)*8*a}px)`}}$('cam').style.transform=sh;
+  return true}
+window.seek=seek;window.FILM={END};
+window.ready=document.fonts.ready.then(()=>new Promise(r=>LOGO.complete?r():LOGO.onload=r)).then(()=>document.fonts.load('900 190px Arc')).then(()=>buildMap()).then(()=>C3D.init($('city3d'),$('pot3d')))
+  .then(()=>Promise.all([...document.images].filter(i=>i.getAttribute('src')).map(i=>i.decode().catch(()=>{})))).then(async()=>{await seek(0);return true});
+</script>
+</body></html>
