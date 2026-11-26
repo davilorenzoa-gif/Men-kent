@@ -10,7 +10,29 @@ Arquivos:
 
 Conferido: −14,5 LUFS, pico −2,1 dB; cada pancada do som cai a menos de 10 ms do corte na imagem.
 
-## Versão Missão (26/11): a que substitui a Vice
+## Missão longa (26/11): a versão principal agora
+`pecai-black-friday-missao-longa.mp4` (31,6 s, 46 MB) + `pecai-black-friday-missao-longa-whatsapp.mp4` (15,8 MB). Conferido: −14,1 LUFS, pico −1,9 dB; BLACK FRIDAY, preço, carimbo e pino a menos de 10 ms da batida. O Davi gostou da Missão e pediu "mais longo, imersivo, nessa pegada", com uma lista de ajustes (feita item por item) + a música longa (64 s) e 3 efeitos (leque de notas e caça-níquel em fundo verde, chuva de notas em fundo preto) + a foto de um carro roxo como referência de cor.
+| Tempo | Cena |
+|---|---|
+| 0–3,3 s | Jason no neon com HUD; NOVA MISSÃO · AÇAÍ DE SEGUNDA; "Vá até a **Péçaí**." |
+| 3,3–5,2 s | Troca de personagem: sobe pro mapa, voa pela rota; **rótulo de destino preso ao pino: PÉÇAÍ · PQ. JUREMA / Av. Jurema, 436 · Guarulhos**; o 2º pino (Pq. das Nações) aparece no mapa; mergulho |
+| 5,2–7,2 s | BLACK FRIDAY no pote (★1); o letreiro sobe e sai **antes** da colherada |
+| 7,2–9,1 s | **Colherada caindo na tigela sem nada em cima** (meio compasso limpo), depois "Você não vai querer perder **essa**." no alto, sobre o açaí (★2) |
+| 9,1–12,9 s | Roda em câmera lenta: **silhuetas escurecidas** de morango, leite em pó, leite condensado, cupuaçu, sorvete, tapioca e copo atrás dos cadeados; o seletor trava no pote; **selo 1 LITRO**; **R$ 24,99 em verde-dinheiro** com o **leque de notas** girando atrás (★3) |
+| 12,9–14,8 s | **JACKPOT**: caça-níquel gira e dá 777, chuva de notas, R$ 24,99 · "Pote de **1 litro**." |
+| 14,8–18,6 s | Celular sobe **vibrando** com notificação: lembrete SEGUNDA · 30 · NOV, "Black Friday: R$ 24,99 o pote de 1 L", "Só na loja. Enquanto durarem os estoques." (★4) |
+| 18,6–22,4 s | Jason sorrindo com o pote: "Missão: buscar seu pote de **1 litro**." → **5ª estrela no sorriso = gran finale**: giroflex azul/vermelho nas bordas, chiado de rádio da polícia + bip, sirene abafada e o carimbo **OFERTA CRIMINOSA** em cima do pote → "Garanta o seu **antes que acabe**." (legenda nova, sem repetir "Vá até a Péçaí") |
+| 22,4–26,2 s | Cartaz de **PROCURADO**: pote de açaí · 1 litro, "visto por último na Péçaí", R$ 24,99 carimbado, SÓ SEGUNDA, 30/11; "Enquanto durarem os estoques." |
+| 26,2–31,6 s | Mapa escuro + cartaz: BLACK FRIDAY, pote + selo 1 LITRO + R$ 24,99, SÓ SEGUNDA · 30/11, na loja · enquanto durarem os estoques, **os 2 endereços** e @curtapecai. A música para sozinha (29,85 s), tudo escurece um pouco e o pino da Péçaí cai na pancada final (30,6 s) com chuva de notas |
+
+**O que ficou pendente de propósito:**
+- **"De R$ XX,XX por R$ 24,99"**: não tenho o preço normal do pote e não invento preço (o próprio prompt pedia isso). Está pronto no código: `PRECO_DE='R$ ...'` no topo do `projeto/film-missao2.html` mostra o preço riscado em cima do verde. É só o Davi mandar o valor que eu renderizo de novo.
+- **Lojas:** o mapa e o cartaz mostram as **2 lojas** (Av. Jurema, 436 · Pq. Jurema e R. Campo Maior, 357 · Pq. das Nações). Se a promoção for só numa, tirar a outra.
+- O carro roxo da referência é arte oficial do jogo (placa "Leonida"): usado só como referência de cor, não entra no vídeo.
+- Os 3 efeitos (leque, caça-níquel, chuva) vieram do Pinterest: ok pra post, trocar por efeito com licença se virar anúncio pago.
+Como: `projeto/film-missao2.html` + `projeto/audio-missao2.py` + `projeto/prep-efeitos.py` (recorta o verde dos efeitos). Refazer: `python3 prep-efeitos.py quadros/efx`, `python3 audio-missao2.py orig/musica-gta-longa.m4a audio-missao2.wav`, `FILM=film-missao2.html OUT=fr5 node render.js seq 0 3792 120`, `FR=fr5 AUDIO=audio-missao2.wav SAIDA=pecai-black-friday-missao-longa.mp4 GANHO=-1.8dB bash juntar.sh`.
+
+## Versão Missão (26/11): a que substituiu a Vice
 `pecai-black-friday-missao.mp4` (16,6 s, 25 MB) + `pecai-black-friday-missao-whatsapp.mp4` (9,9 MB). O Davi reprovou a Vice: "parece que as fotos foram colocadas aleatoriamente, as imagens cansam, não tem nada que surpreende". Resposta: **uma ideia só amarrando tudo**. O vídeo inteiro é uma missão de jogo, com HUD fixo (minimapa com rota roxa até a Péçaí, barras de vida, estrelas de procurado, legenda de objetivo) e 3 surpresas de jogo:
 | Tempo | Cena |
 |---|---|
