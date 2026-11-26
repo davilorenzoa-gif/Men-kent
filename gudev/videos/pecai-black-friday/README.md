@@ -10,7 +10,21 @@ Arquivos:
 
 Conferido: −14,5 LUFS, pico −2,1 dB; cada pancada do som cai a menos de 10 ms do corte na imagem.
 
-## Versão Vice, clima de GTA (26/11)
+## Versão Missão (26/11): a que substitui a Vice
+`pecai-black-friday-missao.mp4` (16,6 s, 25 MB) + `pecai-black-friday-missao-whatsapp.mp4` (9,9 MB). O Davi reprovou a Vice: "parece que as fotos foram colocadas aleatoriamente, as imagens cansam, não tem nada que surpreende". Resposta: **uma ideia só amarrando tudo**. O vídeo inteiro é uma missão de jogo, com HUD fixo (minimapa com rota roxa até a Péçaí, barras de vida, estrelas de procurado, legenda de objetivo) e 3 surpresas de jogo:
+| Tempo | Cena |
+|---|---|
+| 0–3,2 s | Jason no neon "Açaí" com o HUD já na tela. **NOVA MISSÃO · AÇAÍ DE SEGUNDA** (letreiro com degradê) → objetivo "Vá até a **Péçaí**." |
+| 3,2–5,1 s | **Surpresa 1, troca de personagem:** a imagem dele encolhe pra dentro de um mapa da cidade (desenhado em código), a música abafa, 3 batidas graves; a câmera voa pela rota roxa até o pino com a logo e mergulha nele |
+| 5,1–7,1 s | Clarão: **BLACK FRIDAY** batendo em cima do pote, a música volta inteira. **Surpresa 2:** as 5 estrelas de procurado enchem uma a uma, com sirene vermelha/azul nas bordas. "Você não vai querer perder **essa**." |
+| 7,1–9,9 s | **Surpresa 3, roda de itens em câmera lenta:** o fundo fica lento e sem cor, a música abafa, o seletor gira (cliques) e para no único item liberado (os outros têm cadeado): o pote real salta no centro e **R$ 24,99** bate na volta da música |
+| 9,9–11,8 s | Celular sobe: lembrete **SEGUNDA · 30 · NOV**, notificação "Péçaí: Black Friday R$ 24,99", "Só na loja. Enquanto durarem os estoques." |
+| 11,8–13,7 s | Jason mostrando o pote: "Vá até a **Péçaí**." / "Só **segunda, 30/11**. Na loja." |
+| 13,7–16,6 s | Mapa escuro com a rota acesa; o pino da Péçaí cai na pancada final da música (15,5 s); cartaz com BLACK FRIDAY, pote + R$ 24,99, SÓ SEGUNDA · 30/11, na loja, @curtapecai |
+Tudo desenhado aqui (mapa, HUD, estrelas, roda, celular): nada do jogo de verdade. O mapa é estilizado, não é o mapa real de Guarulhos.
+Como: `projeto/film-missao.html` + `projeto/audio-missao.py` (mesma música e emenda da Vice; a música abafa na subida pro mapa e na câmera lenta da roda). Refazer: `python3 audio-missao.py orig/musica-gta.m4a audio-missao.wav`, `FILM=film-missao.html OUT=fr4 node render.js seq 0 1998 120`, `FR=fr4 AUDIO=audio-missao.wav SAIDA=pecai-black-friday-missao.mp4 GANHO=-1.7dB bash juntar.sh`. Conferido: −14,0 LUFS, pico −1,7 dB.
+
+## Versão Vice, clima de GTA (26/11, reprovada pelo Davi)
 `pecai-black-friday-vice.mp4` (16,6 s, 26 MB) + `pecai-black-friday-vice-whatsapp.mp4` (10 MB). Pedido do Davi: "o comercial é do açaí mesmo, só que com referências do GTA: as cores, a música e as fotos com a mesma pegada". Música 3 (synthwave do vídeo de referência, `projeto/orig/musica-gta.m4a`, 126 bpm, pancada final em 30,73 s).
 | Tempo | Cena |
 |---|---|
