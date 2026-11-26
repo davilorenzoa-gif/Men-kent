@@ -308,3 +308,7 @@ O Davi mandou imagens do GTA VI (arte oficial, logo "VI", céu com palmeiras) e 
 Palavras: missão, HUD, minimapa, rota roxa, estrelas de procurado, sirene, troca de personagem, mapa, mergulho no pino, roda de itens, câmera lenta, cadeado, celular, lembrete, "fotos aleatórias", "imagens cansam", "nada surpreende".
 O Davi reprovou a Vice (parecia foto atrás de foto, sem surpresa). Refeito como uma missão de jogo do começo ao fim: HUD fixo + 3 surpresas (câmera sobe pro mapa e mergulha na Péçaí; estrelas de procurado com sirene no BLACK FRIDAY; preço revelado numa roda de itens em câmera lenta) + celular com o lembrete de segunda, 30/11. `gudev/videos/pecai-black-friday/pecai-black-friday-missao.mp4` (16,6 s). Lição no `08`.
 
+## 26/11/2026: Péçaí Black Friday, Missão longa (31,6 s)
+Palavras: missão longa, imersivo, gran finale, 5 estrelas, giroflex, rádio da polícia, sirene abafada, OFERTA CRIMINOSA, colherada limpa, food porn, silhuetas na roda, morango, leite em pó, leite condensado, 1 LITRO, verde-dinheiro, preço riscado, PRECO_DE, endereço no GPS, Pq. Jurema, Pq. das Nações, JACKPOT, caça-níquel, chuva de notas, leque de notas, PROCURADO, fundo verde, prep-efeitos.
+O Davi gostou da Missão e mandou uma lista de ajustes + música longa + 3 efeitos em fundo verde/preto. Feito `gudev/videos/pecai-black-friday/pecai-black-friday-missao-longa.mp4` com todos os itens. O Davi confirmou na mensagem que o R$ 24,99 é do **pote de 1 litro**. Falta: o preço normal pro "De R$ X por R$ 24,99" (não inventar) e confirmar se a promoção vale nas 2 lojas.
+
