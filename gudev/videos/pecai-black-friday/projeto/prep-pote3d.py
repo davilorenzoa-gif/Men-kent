@@ -24,7 +24,7 @@ def bilinear(img, x, y):
     x0, y0 = np.floor(x).astype(int), np.floor(y).astype(int); fx, fy = (x - x0)[..., None], (y - y0)[..., None]
     return (img[y0, x0] * (1 - fx) * (1 - fy) + img[y0, x0 + 1] * fx * (1 - fy) + img[y0 + 1, x0] * (1 - fx) * fy + img[y0 + 1, x0 + 1] * fx * fy)
 
-def unwrap(path, W=1024, Hh=1024, tmax=82):
+def unwrap(path, W=1024, Hh=1024, tmax=70):
     a = np.asarray(Image.open(path).convert('RGBA')).astype(np.float32)
     y0, y1, L, R = prof(a); bt, bb = body_rows(L, R, y0, y1)
     th = np.radians(np.linspace(-tmax, tmax, W)); v = np.linspace(0, 1, Hh)
@@ -42,8 +42,20 @@ if __name__ == "__main__":
     # faixa 360: [costas direita | frente | costas esquerda]  (u=.5 é a frente)
     half = Bk.shape[1] // 2
     band = np.concatenate([Bk[:, half:], F, Bk[:, :half]], 1)
-    Wt = band.shape[1]; xf = 70
-    for c in (half, half + F.shape[1]):     # emendas com degradê
+    # emendas: degradê largo (12% da faixa) entre o fim de uma foto e o começo da outra
+    Wt = band.shape[1]; xw = int(.06 * Wt)
+    for c in (half, half + F.shape[1]):
+        from PIL import ImageFilter
+        seg = band[:, c - 2 * xw:c + 2 * xw].copy()
+        blur = np.asarray(Image.fromarray(np.clip(seg, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(28))).astype(np.float32)
+        w = np.exp(-((np.arange(4 * xw) - 2 * xw) / (xw * .8)) ** 2)[None, :, None]
+        band[:, c - 2 * xw:c + 2 * xw] = seg * (1 - w) + blur * w
+    Image.fromarray(np.clip(band, 0, 255).astype(np.uint8)).resize((2048, 1024), Image.LANCZOS).save(f"{outd}/pote3d-rotulo.jpg", quality=92)
+    band = None
+    if band is None:
+        pass
+    Wt = 0; xf = 70
+    for c in ():     # (emendas antigas desligadas)
         for k in range(-xf, xf):
             p = (k + xf) / (2 * xf); i = c + k
             if 0 <= i < Wt: band[:, i] = band[:, i]  # mantém
@@ -53,7 +65,6 @@ if __name__ == "__main__":
         band[:, c - xf:c + xf] = seg * (1 - np.abs(wgt * 2 - 1))[..., :] * 0 + (l * (1 - wgt) + rr * wgt) * 0 + seg
         # mistura suave: média móvel horizontal só na faixa da emenda
         for _ in range(6): band[:, c - xf + 1:c + xf - 1] = (band[:, c - xf:c + xf - 2] + band[:, c - xf + 1:c + xf - 1] * 2 + band[:, c - xf + 2:c + xf]) / 4
-    Image.fromarray(band.astype(np.uint8)).resize((2048, 1024), Image.LANCZOS).save(f"{outd}/pote3d-rotulo.jpg", quality=92)
     # tampa: elipse de cima → círculo
     a = np.asarray(Image.open(tp).convert('RGBA')).astype(np.float32)
     y0, y1, L, R = prof(a); w = R - L; top = y0 + int(.35 * (y1 - y0))
