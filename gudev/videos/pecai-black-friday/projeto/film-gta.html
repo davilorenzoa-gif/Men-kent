@@ -1,0 +1,213 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Péçaí · Black Friday, versão VICE (26/11/2026): clima de jogo de mundo aberto em Miami (pôr do sol, palmeiras, letras com degradê,
+     arte de tela de carregamento, legenda de missão). Nada da marca do jogo: sem nome, sem logo, sem personagens oficiais.
+     Música: synthwave do vídeo de referência do Davi (126 bpm, tempo k em 0,388 + k·0,47604 s). seek(t) monta o quadro no tempo t. -->
+<style>
+@font-face{font-family:"Arc";src:url(assets/Archivo.ttf);font-weight:100 900;font-stretch:62% 125%}
+@font-face{font-family:"Arc";src:url(assets/Archivo-Italic.ttf);font-weight:100 900;font-stretch:62% 125%;font-style:italic}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#st{position:absolute;inset:0;overflow:hidden;background:#150a22;font-family:"Arc";color:#fff}
+#cam{position:absolute;inset:0}
+.a{position:absolute;left:0;top:0;will-change:transform,opacity,filter}
+.full{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.sc{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none}
+img{display:block}
+canvas{position:absolute;left:0;top:0}
+/* letreiro com degradê de pôr do sol e palmeiras por dentro (3 camadas: borda escura, filete, recheio) */
+.T{position:absolute;left:0;width:1080px;text-align:center;font-weight:900;font-stretch:106%;line-height:.9;letter-spacing:-.012em;white-space:nowrap;text-transform:uppercase}
+.T .l{position:absolute;left:0;top:0;width:1080px}
+.T .o1{position:relative;color:#250a3e;-webkit-text-stroke:var(--b1,30px) #250a3e;filter:drop-shadow(0 0 30px rgba(255,70,170,.55)) drop-shadow(0 14px 0 #12041f)}
+.T .o2{color:transparent;-webkit-text-stroke:var(--b2,11px) #ff5fae}
+.T .f{background-image:var(--palm),linear-gradient(180deg,#5a6cf0 0%,#8d63e6 24%,#e65fc0 52%,#ff8d7a 74%,#ffc95e 100%);background-size:100% 100%,100% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.T .f2{color:transparent;background-image:linear-gradient(100deg,rgba(255,255,255,0) 42%,rgba(255,255,255,.9) 50%,rgba(255,255,255,0) 58%);background-size:300% 100%;background-position:var(--sh,130%) 0;background-repeat:no-repeat;-webkit-background-clip:text;background-clip:text}
+.cap{position:absolute;left:0;width:1080px;text-align:center;color:#fff;font-weight:500;letter-spacing:.01em;text-shadow:0 2px 24px rgba(0,0,0,.6)}
+.mis{position:absolute;left:50px;width:980px;text-align:center;font-stretch:84%;font-weight:700;font-size:66px;line-height:1.18;color:#fff;
+  text-shadow:-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,2px 2px 0 #000,0 0 18px rgba(0,0,0,.7)}
+.mis .y{color:#ffd23f}.mis .p{color:#ff73b9}
+.w{display:inline-block;will-change:transform,opacity,filter}
+.chip{display:inline-block;font-weight:900;font-stretch:90%;text-transform:uppercase;font-size:60px;color:#fff;background:linear-gradient(90deg,#ff4fa0,#ff8a5c);padding:12px 34px 8px;border-radius:999px;
+  box-shadow:0 0 0 6px #250a3e,0 0 40px rgba(255,80,160,.55)}
+#flash{background:#ffe9f4;opacity:0}
+</style></head><body>
+<div id="st"><div id="cam">
+
+<!-- céu de pôr do sol desenhado aqui (não é foto de ninguém) -->
+<canvas id="sky" width="1080" height="1920"></canvas>
+<!-- vídeos / artes -->
+<div id="fx" class="full" style="overflow:hidden"><img id="v1" class="a" style="transform-origin:0 0"></div>
+<div id="tint" class="full" style="background:linear-gradient(180deg,rgba(90,80,220,.55),rgba(230,90,190,.35) 55%,rgba(255,150,90,.45));mix-blend-mode:soft-light;opacity:0"></div>
+<div id="dim" class="full" style="background:#12041f;opacity:0"></div>
+<div id="vig" class="full" style="background:radial-gradient(120% 78% at 50% 46%,rgba(0,0,0,0) 55%,rgba(18,4,31,.7) 100%)"></div>
+<div id="lowg" class="full" style="background:linear-gradient(180deg,rgba(18,4,31,0) 52%,rgba(18,4,31,.78) 92%);opacity:0"></div>
+<canvas id="fg" width="1080" height="1920"></canvas>
+
+<!-- 1. "Guarulhos, SP." -->
+<div class="sc" id="s1"><div id="gru" class="cap" style="top:905px;font-size:70px;font-weight:500">Guarulhos, SP.</div></div>
+
+<!-- 4. BLACK FRIDAY sobre a arte -->
+<div class="sc" id="s4"><div id="t_bf" class="T" style="top:250px;font-size:220px"></div></div>
+
+<!-- 5. frase de trailer -->
+<div class="sc" id="s5">
+  <div class="cap" style="top:1250px;font-size:92px;font-weight:700;line-height:1.08"><span class="w" id="c_1">Você não vai</span><br><span class="w" id="c_2">querer perder</span> <span class="w" id="c_3" style="color:#ffd23f">essa.</span></div>
+</div>
+
+<!-- 6. preço -->
+<div class="sc" id="s6">
+  <div id="t_bf2" class="T" style="top:240px;font-size:96px;--b1:16px;--b2:6px"></div>
+  <div id="t_pr" class="T" style="top:430px;font-size:320px;--b1:34px;--b2:12px"></div>
+  <div id="pote" class="a" style="width:500px"><img src="assets/pote-hero.webp" style="width:500px">
+    <div id="poteRim" class="full" style="width:500px;height:694px;background:linear-gradient(90deg,rgba(255,60,170,.5),rgba(0,0,0,0) 24%,rgba(0,0,0,0) 74%,rgba(255,170,90,.45));mix-blend-mode:screen;-webkit-mask:url(assets/pote-hero.webp) 0 0/500px auto no-repeat;mask:url(assets/pote-hero.webp) 0 0/500px auto no-repeat"></div></div>
+  <div id="poteSh" class="a" style="width:500px;height:56px;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%,rgba(20,4,30,.85),rgba(0,0,0,0))"></div>
+</div>
+
+<!-- 7. legenda de missão -->
+<div class="sc" id="s7">
+  <div id="m_1" class="mis" style="top:1290px;font-size:80px">Vá até a <span class="y">Péçaí</span>.</div>
+  <div id="m_2" class="mis" style="top:1395px">Só <span class="p">segunda, 30/11</span>, enquanto durarem os estoques.</div>
+</div>
+
+<!-- 8. cartaz final -->
+<div class="sc" id="s8">
+  <div id="kLogo" class="a" style="left:475px;top:150px;width:130px"><img src="assets/logo-pecai.png" style="width:130px;border-radius:50%;box-shadow:0 0 0 6px #250a3e,0 0 0 10px #ff5fae,0 0 50px rgba(255,80,170,.6)"></div>
+  <div id="t_bf3" class="T" style="top:330px;font-size:150px;--b1:22px;--b2:8px"></div>
+  <div id="kPote" class="a" style="width:340px"><img src="assets/pote-hero.webp" style="width:340px"></div>
+  <div id="t_pr2" class="T" style="top:0;font-size:190px;--b1:24px;--b2:9px;text-align:left;width:600px"></div>
+  <div id="kChip" class="cap" style="top:1215px"><span class="chip">Só segunda · 30/11</span></div>
+  <div id="kLoja" class="mis" style="top:1330px;font-size:52px">Na loja · <span class="y">enquanto durarem os estoques</span></div>
+  <div id="kIg" class="cap" style="top:1425px;font-size:34px;font-weight:600;letter-spacing:.18em">@curtapecai</div>
+</div>
+
+</div><!-- /cam -->
+<div id="flash" class="full"></div>
+</div>
+
+<script>
+// ---------- grade da música ----------
+const BT=0.47604, PH=0.388, K=k=>PH+k*BT, H=15.497, END=H+1.15;   // H = pancada final da faixa (emendada)
+window.FILM={END};
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), lerp=(a,b,p)=>a+(b-a)*p, pr=(t,a,b)=>cl((t-a)/(b-a));
+const eOut=p=>1-Math.pow(1-p,3), eOut5=p=>1-Math.pow(1-p,5), eIO=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2, eExpo=p=>p>=1?1:1-Math.pow(2,-10*p);
+const spring=(p,f=2.4,z=5)=>p<=0?0:1-Math.exp(-z*p)*Math.cos(f*Math.PI*p);
+function show(id,on){$(id).style.display=on?'block':'none';return on}
+function S(id,tr,op,fl){const e=$(id);e.style.transform=tr||'none';if(op!==undefined)e.style.opacity=op;if(fl!==undefined)e.style.filter=fl}
+function slam(id,t,t0,{from=1.5,dur=.24,blur=20}={}){const e=$(id);const p=pr(t,t0,t0+dur);if(t<t0){e.style.opacity=0;return}
+  e.style.opacity=cl((t-t0)/.06);e.style.transform=`scale(${lerp(from,1,eExpo(p))})`;const b=lerp(blur,0,eOut(p));e.style.filter=b>.3?`blur(${b}px)`:''}
+function rise(id,t,t0,{dur=.4,d=40}={}){const e=$(id);const p=eOut5(pr(t,t0,t0+dur));e.style.opacity=t<t0?0:cl((t-t0)/.12);e.style.transform=`translateY(${(1-p)*d}px)`;const b=(1-p)*8;e.style.filter=b>.3?`blur(${b}px)`:''}
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+
+// ---------- palmeiras (silhueta desenhada em código) ----------
+function palm(c,x,y,h,lean,sc,col){
+  c.fillStyle=col;c.strokeStyle=col;
+  // tronco que afina
+  const tx=x+lean,ty=y-h;c.beginPath();
+  const n=24;for(let i=0;i<=n;i++){const q=i/n,px=x+lean*q*q+Math.sin(q*3)*4*sc,py=y-h*q,w=(16-9*q)*sc;c.lineTo(px-w/2,py)}
+  for(let i=n;i>=0;i--){const q=i/n,px=x+lean*q*q+Math.sin(q*3)*4*sc,py=y-h*q,w=(16-9*q)*sc;c.lineTo(px+w/2,py)}
+  c.fill();
+  // folhas
+  const F=11;for(let f=0;f<F;f++){const a0=-Math.PI/2+(f/(F-1)-.5)*3.6+(rnd(f+x)-.5)*.25,L=(95+rnd(f*3+x)*40)*sc,droop=(.6+rnd(f*7+x)*.6);
+    c.lineWidth=2.2*sc;c.beginPath();let px=tx,py=ty;const pts=[];
+    for(let i=0;i<=16;i++){const q=i/16,ang=a0+droop*q*q*Math.sign(Math.cos(a0)||1)*1.2*(Math.abs(Math.cos(a0))>.15?1:.2);
+      px=tx+Math.cos(a0)*L*q;py=ty+Math.sin(a0)*L*q+droop*L*q*q*.9;pts.push([px,py,q])}
+    c.lineWidth=3*sc;c.beginPath();pts.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke();
+    for(let i=1;i<pts.length;i++){const [px,py,q]=pts[i],[ox,oy]=pts[i-1];const dx=px-ox,dy=py-oy,dl=Math.hypot(dx,dy)||1,nx=-dy/dl,ny=dx/dl,ll=(1-q*.75)*24*sc;
+      for(const s of [-1,1]){c.lineWidth=(3.2-2*q)*sc;c.beginPath();c.moveTo(px,py);c.lineTo(px+nx*ll*s-dx/dl*ll*.55,py+ny*ll*s-dy/dl*ll*.55+ll*.35);c.stroke()}}}
+}
+function birds(c,x,y,sc,col){c.strokeStyle=col;c.lineWidth=3*sc;c.lineCap='round';[[0,0,1],[46,10,.8],[22,34,1.1]].forEach(([dx,dy,s])=>{c.beginPath();c.moveTo(x+dx*sc-16*s*sc,y+dy*sc-6*s*sc);c.quadraticCurveTo(x+dx*sc-6*s*sc,y+dy*sc-10*s*sc,x+dx*sc,y+dy*sc);c.quadraticCurveTo(x+dx*sc+6*s*sc,y+dy*sc-12*s*sc,x+dx*sc+18*s*sc,y+dy*sc-4*s*sc);c.stroke()})}
+// céu (pré-desenhado) + palmeiras em 2 planos
+const skyC=document.createElement('canvas');skyC.width=1080;skyC.height=2400;(function(){const c=skyC.getContext('2d');
+  const g=c.createLinearGradient(0,0,0,2400);[[0,'#4f5fc4'],[.28,'#8f86d2'],[.52,'#d58bc8'],[.7,'#f493b0'],[.84,'#ffae86'],[1,'#ffcf86']].forEach(([o,cc])=>g.addColorStop(o,cc));c.fillStyle=g;c.fillRect(0,0,1080,2400);
+  for(let i=0;i<9;i++){const y=900+rnd(i)*900,w=500+rnd(i+1)*700,x=rnd(i+2)*1080;const r=c.createRadialGradient(x,y,0,x,y,w/2);r.addColorStop(0,`rgba(255,${150+rnd(i)*60|0},${170+rnd(i+5)*40|0},.28)`);r.addColorStop(1,'rgba(255,160,180,0)');c.save();c.translate(x,y);c.scale(1,.12);c.translate(-x,-y);c.fillStyle=r;c.fillRect(x-w,y-w,w*2,w*2);c.restore()}
+  const s=c.createRadialGradient(540,2250,0,540,2250,900);s.addColorStop(0,'rgba(255,214,150,.75)');s.addColorStop(1,'rgba(255,190,140,0)');c.fillStyle=s;c.fillRect(0,1200,1080,1200)})();
+const palmBack=document.createElement('canvas');palmBack.width=1080;palmBack.height=900;(function(){const c=palmBack.getContext('2d');const col='rgba(150,80,150,.72)';
+  [[60,900,330,-30,1.0],[180,900,240,20,.75],[330,900,190,-10,.6],[760,900,250,-18,.8],[930,900,360,30,1.05],[1050,900,220,-25,.7]].forEach(a=>palm(c,...a,col));})();
+const palmFront=document.createElement('canvas');palmFront.width=1080;palmFront.height=1100;(function(){const c=palmFront.getContext('2d');const col='#8a4f8f';
+  [[150,1100,560,-60,1.5],[880,1100,620,70,1.6]].forEach(a=>palm(c,...a,col));})();
+// textura de palmeiras pros letreiros
+const palmTex=(function(){const c=document.createElement('canvas');c.width=800;c.height=400;const x=c.getContext('2d');const col='rgba(120,50,170,.5)';
+  [[110,400,250,-20,.9],[250,400,180,15,.65],[560,400,230,-15,.85],[700,400,300,25,1.0]].forEach(a=>palm(x,...a,col));return c.toDataURL()})();
+document.documentElement.style.setProperty('--palm',`url(${palmTex})`);
+function drawSky(t,tilt,front){const c=$('sky').getContext('2d');c.drawImage(skyC,0,-tilt,1080,2400);
+  c.drawImage(palmBack,0,1920-900+Math.max(0,140-tilt*.4),1080,900);
+  birds(c,520+Math.sin(t*.6)*30+t*14,760-tilt*.3+Math.sin(t*2)*6,1.4,'rgba(120,60,140,.8)');
+  const f=$('fg').getContext('2d');f.clearRect(0,0,1080,1920);if(front)f.drawImage(palmFront,0,1920-1100+front,1080,1100)}
+function clearSky(){$('fg').getContext('2d').clearRect(0,0,1080,1920)}
+
+// ---------- letreiros ----------
+function T(id,html){const e=$(id);e.innerHTML=`<div class="o1">${html}</div><div class="l o2">${html}</div><div class="l f">${html}</div><div class="l f2">${html}</div>`}
+T('t_bf','Black<br>Friday');T('t_bf2','Black Friday');T('t_bf3','Black<br>Friday');
+T('t_pr','<span style="font-size:.4em;vertical-align:.95em;margin-right:.06em">R$</span>24<span style="font-size:.5em;vertical-align:.62em">,99</span>');
+T('t_pr2','<span style="font-size:.42em;vertical-align:.95em;margin-right:.06em">R$</span>24<span style="font-size:.5em;vertical-align:.62em">,99</span>');
+function shineT(id,t,t0,d=.9){$(id).style.setProperty('--sh',`${lerp(130,-30,eIO(pr(t,t0,t0+d)))}%`)}
+
+// ---------- imagens ----------
+const SETS={gta:{W:3392,H:1912},gem:{W:3200,H:1800},neon:{W:2416,H:1732},pote:{W:2416,H:1720}};
+const pad=n=>String(n).padStart(4,'0');
+function setImg(img,src){if(img.getAttribute('src')!==src)img.setAttribute('src',src);return img.decode().catch(()=>{})}
+function place(img,set,s,px,py,sx=540,sy=960){const st=SETS[set];const base=Math.max(1080/st.W,1920/st.H);const k=base*s;
+  let L=sx-px*k,T=sy-py*k;L=cl(L,1080-st.W*k,0);T=cl(T,1920-st.H*k,0);img.style.width=st.W+'px';img.style.transform=`translate(${L}px,${T}px) scale(${k})`}
+const POT=[[7.6,440,403],[8.2,461,398],[8.8,477,355],[9.3,429,276],[9.8,430,292],[10.4,424,322],[11.0,424,322],[11.5,424,318],[12.0,424,314]];
+function pot(s){if(s<=POT[0][0])return [POT[0][1]*4,POT[0][2]*4];for(let i=1;i<POT.length;i++)if(s<=POT[i][0]){const p=(s-POT[i-1][0])/(POT[i][0]-POT[i-1][0]);return [lerp(POT[i-1][1],POT[i][1],p)*4,lerp(POT[i-1][2],POT[i][2],p)*4]}return [POT.at(-1)[1]*4,POT.at(-1)[2]*4]}
+
+async function footage(t){const v=$('v1');let src=null,dim=0,tint=0,fl='';
+  // o quadro do vídeo muda só no começo de cada quadro final (30 q/s): sem imagem dupla no desfoque de movimento
+  const tq=window.__TQ??t;
+  if(t<K(2)){ // arte: neon → Jason
+    place(v,'neon',lerp(1.04,1.1,t/K(2)),lerp(820,1380,eIO(pr(t,.1,K(2)))),860);src='assets/gta-arte-neon.webp';dim=.38*(1-pr(t,1.05,K(2)))+.1;tint=.25;
+    fl=`brightness(${lerp(.25,1,eOut(pr(t,0,.5)))})`;
+  }else if(t<K(7)){const sT=1.0+(tq-K(2));place(v,'gta',1.0+.06*eIO(pr(t,K(2),K(7))),lerp(720,1520,eIO(pr(t,K(2),K(2)+1.9))),900);
+    src='quadros/gta_up/'+pad(cl(Math.floor(sT*24),19,287))+'.jpg';tint=.2;
+  }else if(t<K(10)){const sT=8.35+(tq-K(7));const [qx,qy]=pot(8.35+(t-K(7)));const p=eIO(pr(t,K(7),K(10)));
+    place(v,'gta',1.0+.38*p,lerp(1720,qx,p),lerp(956,qy,p),540,960);src='quadros/gta_up/'+pad(cl(Math.floor(sT*24),19,287))+'.jpg';tint=.2;
+  }else if(t<K(14)){place(v,'pote',lerp(1.06,1.16,pr(t,K(10),K(14))),1850,980,540,1060);src='assets/gta-arte-pote.webp';dim=.22;tint=.2;
+  }else if(t<K(16)){const u=t-K(14),uq=Math.max(0,tq-K(14));place(v,'gem',1.12*(1+.05*Math.exp(-u*12)),1640,830);src='quadros/gem_up/'+pad(cl(32+Math.floor(uq*24),29,52))+'.jpg';dim=.25;tint=.75;
+  }else if(t<K(18)){const u=t-K(16),uq=Math.max(0,tq-K(16));place(v,'gem',lerp(1.06,1.2,u/(2*BT))*(1+.05*Math.exp(-u*12)),1900,880);src='quadros/gem_up/'+pad(cl(100+Math.floor(uq*24),98,154))+'.jpg';dim=.25;tint=.75;
+  }else if(t>=K(24)&&t<K(28)){const sT=10.1+Math.max(0,tq-K(24));const [qx,qy]=pot(10.1+(t-K(24)));place(v,'gta',1.04,lerp(1600,qx,.4),900,540,960);
+    src='quadros/gta_up/'+pad(cl(Math.floor(sT*24),19,287))+'.jpg';tint=.2;dim=.08;}
+  $('lowg').style.opacity=(t>=K(14)&&t<K(18))||(t>=K(24)&&t<K(28))?1:0;
+  if(src){v.style.display='block';await setImg(v,src)}else v.style.display='none';
+  $('fx').style.filter=fl;$('dim').style.opacity=dim;$('tint').style.opacity=tint;return !!src}
+
+async function seek(t){
+  const hasF=await footage(t);
+  // céu desenhado só no preço e no cartaz
+  const skyOn=(t>=K(18)&&t<K(24))||t>=K(28);$('sky').style.display=skyOn?'block':'none';
+  if(skyOn){const tl=t<K(24)?lerp(420,300,pr(t,K(18),K(24))):lerp(520,380,eOut(pr(t,K(28),END)));drawSky(t,tl,t<K(24)?lerp(260,120,eOut(pr(t,K(18),K(19)+.4))):lerp(300,150,eOut(pr(t,K(28),K(29)+.3))))}else clearSky();
+  // tremida leve nas pancadas
+  let sh='none';for(const h of [K(10),K(18)+.0,H]){const d=t-h;if(d>=0&&d<.4){const a=Math.exp(-d*10);sh=`translate(${Math.sin(d*80)*9*a}px,${Math.cos(d*70)*7*a}px)`}}$('cam').style.transform=sh;
+
+  // 1. Guarulhos, SP.
+  if(show('s1',t<K(2))){const g=$('gru');g.style.opacity=pr(t,.35,.75)*(1-pr(t,K(2)-.22,K(2)-.05));g.style.letterSpacing=`${lerp(.12,.01,eOut(pr(t,.35,K(2))))}em`}
+  // 4. BLACK FRIDAY sobre a arte
+  if(show('s4',t>=K(10)&&t<K(14))){slam('t_bf',t,K(10),{from:1.35,dur:.3,blur:24});shineT('t_bf',t,K(10)+.25,1.1);
+    const e=$('t_bf');e.style.transform+=` translateY(${Math.sin((t-K(10))*1.6)*6}px)`}
+  // 5. frase de trailer
+  if(show('s5',t>=K(14)&&t<K(18))){rise('c_1',t,K(14)+.1);rise('c_2',t,K(15));rise('c_3',t,K(16)+.05)}
+  // 6. preço
+  if(show('s6',t>=K(18)&&t<K(24))){
+    slam('t_bf2',t,K(18)+.05,{from:1.2,dur:.25,blur:12});slam('t_pr',t,K(19),{from:1.6,dur:.3,blur:26});shineT('t_pr',t,K(19)+.3,1.0);shineT('t_bf2',t,K(18)+.3,.9);
+    const pp=spring(pr(t,K(18),K(18)+1.1),2,4.6),bob=Math.sin((t-K(18))*2)*6,ph=500*1417/1022,px=290,py=1660-ph;
+    S('pote',`translate(${px}px,${lerp(py+560,py,pp)+bob}px) rotate(${lerp(5,0,pp)}deg)`,cl(pr(t,K(18),K(18)+.25)));
+    S('poteSh',`translate(${px}px,1638px) scale(${lerp(.4,1,pp)},1)`,pp*.85);$('poteRim').style.opacity=.7+.3*Math.sin((t-K(18))*3)}
+  // 7. missão
+  if(show('s7',t>=K(24)&&t<K(28))){rise('m_1',t,K(24)+.08,{dur:.3,d:16});rise('m_2',t,K(26),{dur:.3,d:16})}
+  // 8. cartaz final
+  if(show('s8',t>=K(28))){
+    slam('t_bf3',t,K(28)+.02,{from:1.3,dur:.28,blur:18});shineT('t_bf3',t,H+.05,1.0);
+    const pp=spring(pr(t,K(29),K(29)+.9),2.2,4.8),bob=Math.sin((t-K(29))*2.1)*5,ph=340*1417/1022;
+    S('kPote',`translate(105px,${lerp(1260,1150-ph,pp)+bob}px) rotate(${lerp(-8,-4,pp)}deg)`,cl(pr(t,K(29),K(29)+.2)));
+    const kp=pr(t,K(29)+.15,K(29)+.45);S('t_pr2',`translate(470px,${lerp(820,780,eExpo(kp))}px) scale(${lerp(1.3,1,eExpo(kp))})`,kp,kp<1?`blur(${(1-kp)*14}px)`:'');shineT('t_pr2',t,H+.12,1.0);
+    const cp=pr(t,K(30),K(30)+.3);S('kChip',`scale(${lerp(1.35,1,eExpo(cp))})`,cp);
+    rise('kLoja',t,K(30)+.25,{dur:.35,d:24});rise('kIg',t,K(31),{dur:.4,d:16});
+    const lp=spring(pr(t,H,H+.7),2.4,5);S('kLogo',`scale(${lp})`,cl((t-H)/.06))}
+  // clarões: cortes e pancada final
+  let fo=0;for(const c of [K(2),K(7),K(10),K(14),K(16),K(18),K(24),K(28)])if(t>=c&&t<c+.07)fo=Math.max(fo,.22*(1-pr(t,c,c+.07)));
+  if(t>=H&&t<H+.22)fo=Math.max(fo,.6*(1-pr(t,H,H+.22)));if(t>=K(10)&&t<K(10)+.15)fo=Math.max(fo,.45*(1-pr(t,K(10),K(10)+.15)));
+  if(t>END-.5)fo=0;$('flash').style.opacity=fo;
+  return true}
+window.seek=seek;
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].filter(i=>i.getAttribute('src')).map(i=>i.decode().catch(()=>{})))).then(async()=>{await seek(0);return true});
+</script>
+</body></html>

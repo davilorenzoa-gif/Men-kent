@@ -202,9 +202,10 @@ const TAKES={
 const GTL=[[B(2),B(4),'hero',.55],[B(4),B(6),'gota',.52],[B(14),B(18),'bowl',.5]];
 
 async function footage(t){
+  const TQ=window.__TQ??t; // quadro do vídeo travado por quadro final (sem imagem dupla)
   const v1=$('v1'),v1b=$('v1b'),bw=$('v1bw');let src=null,dim=0,grad=0;bw.style.display='none';$('fx').style.filter='';
   if(t<D){ // ---- intro: o açaí sai do escuro ----
-    const T=TAKES.macro,n=cl(98+Math.round(t*24*.68),29,168),lit=eOut(pr(t,.05,1.3));
+    const T=TAKES.macro,n=cl(98+Math.floor(TQ*24*.68),29,168),lit=eOut(pr(t,.05,1.3));
     place(v1,'gem',lerp(1.32,1.12,eOut(pr(t,0,D))),1880,880);v1.style.display='block';await setImg(v1,'quadros/gem_up/'+pad(n)+'.jpg');
     const p3=Math.pow(pr(t,D-.3,D),2);$('fx').style.filter=`brightness(${lit*.95+p3*2.2}) contrast(1.08) saturate(1.1)`+(p3>0?` blur(${p3*8}px)`:'');
     $('dim').style.opacity=.12;$('grad').style.opacity=.6;return true;
@@ -223,15 +224,15 @@ async function footage(t){
         bw.style.webkitMaskImage=bw.style.maskImage=`radial-gradient(${r*1.2}px ${r*1.45}px at ${cx}px ${cy}px,transparent 58%,#000 100%)`;}
       $('fx').style.filter=p3>0?`brightness(${1+p3*2.2}) blur(${p3*10}px)`:'';
     }
-    const n=cl(Math.round(sT*24),19,287);src='quadros/gta_up/'+pad(n)+'.jpg';
+    const n=cl(Math.floor((sT-t+TQ)*24),19,287);src='quadros/gta_up/'+pad(n)+'.jpg';
     place(v1,'jas',s,px,py,sx,sy);v1.style.display='block';
     await setImg(v1,src);if(bw.style.display=='block')await setImg(v1b,src);
     $('dim').style.opacity=0;$('grad').style.opacity=.55;return true;
   }
   for(const [a,b,k,dm] of GTL){if(t>=a&&t<b){
     const u=t-a,p=(t-a)/(b-a);
-    if(k=='jpot'){const sT=10.6+u;const [qx,qy]=pot(sT);place(v1,'jas',1.3+.15*p,qx,qy,540,960);src='quadros/gta_up/'+pad(cl(Math.round(sT*24),19,287))+'.jpg'}
-    else{const T=TAKES[k];const n=cl(T.n+Math.round(u*24*(T.sp||1)),29,168);const punch=1+.06*Math.exp(-u*14);
+    if(k=='jpot'){const sT=10.6+u;const [qx,qy]=pot(sT);place(v1,'jas',1.3+.15*p,qx,qy,540,960);src='quadros/gta_up/'+pad(cl(Math.floor((10.6+Math.max(0,TQ-a))*24),19,287))+'.jpg'}
+    else{const T=TAKES[k];const n=cl(T.n+Math.floor(Math.max(0,TQ-a)*24*(T.sp||1)),29,168);const punch=1+.06*Math.exp(-u*14);
       place(v1,'gem',lerp(T.s0,T.s1,p)*punch,T.px,T.py);src='quadros/gem_up/'+pad(n)+'.jpg'}
     v1.style.display='block';await setImg(v1,src);$('dim').style.opacity=dm;$('grad').style.opacity=1;
     $('fx').style.filter='contrast(1.06) saturate(1.08)';return true}}

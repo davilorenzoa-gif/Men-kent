@@ -10,6 +10,24 @@ Arquivos:
 
 Conferido: −14,5 LUFS, pico −2,1 dB; cada pancada do som cai a menos de 10 ms do corte na imagem.
 
+## Versão Vice, clima de GTA (26/11)
+`pecai-black-friday-vice.mp4` (16,6 s, 26 MB) + `pecai-black-friday-vice-whatsapp.mp4` (10 MB). Pedido do Davi: "o comercial é do açaí mesmo, só que com referências do GTA: as cores, a música e as fotos com a mesma pegada". Música 3 (synthwave do vídeo de referência, `projeto/orig/musica-gta.m4a`, 126 bpm, pancada final em 30,73 s).
+| Tempo | Cena |
+|---|---|
+| 0–1,3 s | Arte de "tela de carregamento" (Jason no neon "Açaí", ilustrado) + **"Guarulhos, SP."** (homenagem ao "Vice City, USA." do trailer, com a cidade de verdade da Péçaí) |
+| 1,3–3,7 s | Vídeo do Jason: panorâmica do neon até ele comendo |
+| 3,7–5,1 s | Ele levanta o pote, a câmera entra (vento) |
+| 5,1–7,1 s | Arte do Jason com o pote e o helicóptero + letreiro **BLACK FRIDAY** com degradê de pôr do sol e palmeiras por dentro |
+| 7,1–9,0 s | Takes do açaí (Gemini) com luz de pôr do sol: "Você não vai querer perder **essa.**" |
+| 9,0–11,8 s | Céu de pôr do sol com palmeiras, pote real subindo, **R$ 24,99** no mesmo letreiro |
+| 11,8–13,7 s | Jason segurando o pote + legenda de missão: "Vá até a **Péçaí**." / "Só **segunda, 30/11**, enquanto durarem os estoques." (acorde de missão nova) |
+| 13,7–16,6 s | Cartaz: logo, BLACK FRIDAY, pote + R$ 24,99, SÓ SEGUNDA · 30/11, na loja · enquanto durarem os estoques, @curtapecai; a pancada final da música cai no logo (15,5 s) |
+
+**O que é do jogo e ficou de fora:** o logo "VI", o nome do jogo, a arte oficial com a Lucia e o Jason e a capa do álbum do vídeo da música. São da Rockstar; num anúncio de loja de verdade, isso dá denúncia e derruba o post (e não pode virar anúncio pago). O clima vem de coisas nossas: céu e palmeiras **desenhados em código**, letreiro com degradê, arte ilustrada feita das imagens do próprio Davi (`projeto/assets/gta-arte-*.webp`: quadros dele ampliados com Real-ESRGAN + filtro de ilustração com OpenCV: suavização que preserva borda, cores chapadas por k-means, contorno roxo-escuro de tinta, luz de pôr do sol) e a legenda no estilo "missão".
+Como: `projeto/film-gta.html` + `projeto/audio-gta.py` (música emendada no corte do tempo 24, 32 tempos à frente, pra pancada final cair no logo). Refazer: `python3 audio-gta.py orig/musica-gta.m4a audio-gta.wav`, `FILM=film-gta.html OUT=fr3 node render.js seq 0 1998 120`, `FR=fr3 AUDIO=audio-gta.wav SAIDA=pecai-black-friday-vice.mp4 GANHO=-1.1dB bash juntar.sh`. Conferido: −14,2 LUFS, pico −0,7 dB.
+
+**Correção nos 3 vídeos (26/11): imagem dupla no movimento.** O `juntar.sh` mistura 4 subquadros (120 → 30 q/s) e, quando o quadro do vídeo trocava no meio desse grupo, o rótulo do pote aparecia duplicado. Testado com uma sequência numerada: o `tmix=4` + `fps=30` mistura os subquadros **4k−2 a 4k+1**. Agora o `render.js` passa `window.__TQ` (o tempo do grupo) e os filmes escolhem o quadro do vídeo por ele. Os 3 mp4 foram refeitos.
+
 ## Versão só açaí (25/11, pedido do Davi: "só do Péçaí, só com esse vídeo e essa outra música")
 `pecai-black-friday-so-acai.mp4` (17,2 s, 24 MB) + `pecai-black-friday-so-acai-whatsapp.mp4` (8,7 MB). Sem o Jason: só os takes do Gemini + a foto real do pote, com a **música 2** do Davi (edit de iPhone no TikTok, 124,6 bpm, `projeto/orig/musica-2.m4a`). Segue o roteiro do prompt original de ~15 s:
 | Tempo | Cena |
