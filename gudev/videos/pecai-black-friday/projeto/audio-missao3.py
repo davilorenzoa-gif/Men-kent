@@ -107,7 +107,10 @@ if __name__ == "__main__":
     for k, th in enumerate((.238, .476, .714)): W.whoosh(T0 + th + .02, 0.32, 0.3); W.sub(T0 + th, 0.6 - k * .08, 66 - k * 6, 28, 0.7); W.crack(T0 + th, 0.12)
     B(T0 + .9, 0.14, 1568); B(T0 + 1.02, 0.12, 1318); B(T0 + 1.0, 0.1, 2093)       # pinos aparecem
     W.wind(T0 + 2.6, 1.5, 0.5, 0.26, 260, 1600)                                    # voo descendo
-    W.whoosh(T0 + 3.05, 0.3, 0.45)                                                  # mergulho até a praça
+    surf = au.bandnoise(1.8, 500, 260, 1.2); ts = np.arange(len(surf)) / SR                           # ondas quebrando na orla
+    surf *= (0.55 + 0.45 * np.sin(2 * np.pi * 0.7 * ts) ** 2) * np.minimum(1, ts / .4) * np.minimum(1, (1.8 - ts) / .5)
+    au.put(np.stack([surf, np.roll(surf, 900)], 1), T0 + 1.9, 0.16)
+    W.whoosh(T0 + 3.05, 0.3, 0.45)                                                  # pouso na areia
     m = int(0.8 * SR); tt = np.arange(m) / SR                                       # zumbido do neon
     hum = (np.sin(2 * np.pi * 120 * tt) + .4 * np.sin(2 * np.pi * 240 * tt) + .15 * np.sin(2 * np.pi * 360 * tt)) * np.minimum(1, tt / .1) * np.minimum(1, (.8 - tt) / .2)
     au.put(hum, T0 + 3.0, 0.07); B(T0 + 3.05, 0.1, 1760)

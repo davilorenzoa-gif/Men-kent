@@ -315,7 +315,7 @@ async function seek(t){
   const mc=$('map'),m=mc.getContext('2d');
   const c3=$('city3d'),gp=$('gps');
   if(t>=K0(7)&&t<K0(15)){const tau=t-K0(7);c3.style.display='block';C3D.city(tau);
-    let f='';for(const th of C3D.THUMP){const d=tau-th;if(d>-.05&&d<.3){const a=Math.exp(-Math.max(0,d)*9);f=`saturate(${1-.7*a}) brightness(${1+.5*a}) blur(${a*6}px)`}}
+    let f='';for(const th of C3D.THUMP){const d=tau-th;if(d>-.05&&d<.3){const a=Math.exp(-Math.max(0,d)*9);f=`saturate(${1-.6*a}) brightness(${1+.4*a}) blur(${a*1.6}px)`}}
     const fin=Math.pow(pr(tau,3.62,3.81),1.5);if(fin>0)f+=` blur(${fin*12}px) brightness(${1+fin*1.5})`;c3.style.filter=f;
     gp.style.display='block';gp.style.opacity=.9*pr(tau,.72,.9)*(1-pr(tau,1.25,1.6));gp.style.transform=`scale(${lerp(1.15,1,eOut(pr(tau,.72,1.2)))})`;mc.style.display='none';
   }else{c3.style.display='none';gp.style.display='none'}
