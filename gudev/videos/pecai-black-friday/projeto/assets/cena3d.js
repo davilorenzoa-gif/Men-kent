@@ -14,7 +14,7 @@
   const FRONT = new T.Vector3(OD - 15, 0, -7 * P + 40);    // fachada da Péçaí, virada pra praia (+x)
   const PIN1 = new T.Vector3(OD - 40, 0, -7 * P + 40);
   const ROUTE = [[-9 * P, 8 * P], [-9 * P, 2 * P], [OD, 2 * P], [OD, FRONT.z]].map(([a, b]) => new T.Vector3(a, 1.2, b));
-  const MID = new T.Vector3(110, 0, 60);
+  const MID = new T.Vector3(120, 0, 60);
   const SUN = new T.Vector3(.55, .065, -1).normalize();
   let rC, comp, sC, camC, routeTube, routeGlow, routeCount, beam1, beam2, ring1, ring2, pin1, pin2, arrow, ocean, cars, carMesh;
   let rP, sP, camP, pot;
@@ -280,31 +280,31 @@
 
   // câmera do voo (tau em segundos, 0 → 3.81)
   const THUMP = [.238, .476, .714];
-  const UP_E = new T.Vector3(1, 0, 0), UP_Y = new T.Vector3(0, 1, 0);
+  const UP_E = new T.Vector3(0, 0, -1), UP_Y = new T.Vector3(0, 1, 0);   // de cima: norte pra cima (orla na direita); descer = só inclinar, sem girar
   function cityCam(tau) {
     // 3 pulos pra cima (troca de personagem) já virando a tela pro mar (leste em cima)
-    let hgt = 30; const hs = [30, 170, 650, 2050];
+    let hgt = 30; const hs = [30, 170, 700, 2600];
     for (let i = 0; i < 3; i++) hgt = lerp(hgt, hs[i + 1], eExpo(pr(tau, THUMP[i], THUMP[i] + .16)));
     const cen = START.clone().lerp(MID, ease(pr(tau, .45, 1.0)));
     const top = cen.clone().setY(hgt);
     const fr = FRONT.clone();
     // viagem: desce em arco até em cima do mar, olhando de volta pra orla e pra loja
     // desce até a orla ao sul e voa rente aos hotéis rumo ao norte (mar à direita, sol na frente), depois vira pra loja
-    const a = ease(pr(tau, 1.45, 2.75));
-    const p1 = new T.Vector3(OD + 620, 800, fr.z + 1300), p2 = new T.Vector3(OD + 270, 110, fr.z + 820);
+    const a = ease(pr(tau, 1.75, 2.7));
+    const p1 = new T.Vector3(OD + 560, 760, fr.z + 1000), p2 = new T.Vector3(OD + 240, 115, fr.z + 520);
     const b = (u) => { const q = 1 - u; return new T.Vector3(q * q * top.x + 2 * q * u * p1.x + u * u * p2.x, q * q * top.y + 2 * q * u * p1.y + u * u * p2.y, q * q * top.z + 2 * q * u * p1.z + u * u * p2.z) };
     let pos = b(a);
-    const glide = ease(pr(tau, 2.75, 3.05));
-    pos.lerp(new T.Vector3(OD + 190, 38, fr.z + 330), glide);
+    const glide = ease(pr(tau, 2.6, 3.1));
+    pos.lerp(new T.Vector3(OD + 180, 62, fr.z + 230), glide);
     const tgt = cen.clone();
-    tgt.lerp(new T.Vector3(OD - 60, 30, fr.z - 500), ease(pr(tau, 1.45, 2.4)));
+    tgt.lerp(new T.Vector3(OD - 60, 30, fr.z - 500), ease(pr(tau, 1.75, 2.5)));
     tgt.lerp(new T.Vector3(fr.x, 10, fr.z), ease(pr(tau, 2.7, 3.1)));
     // pouso na areia em frente à fachada e empurrão pra dentro
     const c = ease(pr(tau, 3.0, 3.58)), d = Math.pow(pr(tau, 3.58, 3.81), 1.6);
     pos = pos.lerp(new T.Vector3(fr.x + 88, 7, fr.z + 10), c).lerp(new T.Vector3(fr.x + 30, 10.5, fr.z + 1), d);
     tgt.lerp(new T.Vector3(fr.x, 12.5, fr.z), c);
     camC.position.copy(pos);
-    camC.up.copy(UP_E).lerp(UP_Y, ease(pr(tau, 1.45, 2.0))).normalize();
+    camC.up.copy(UP_E).lerp(UP_Y, ease(pr(tau, 1.8, 2.4))).normalize();
     camC.lookAt(tgt); camC.fov = lerp(50, 58, d); camC.updateProjectionMatrix();
   }
 
