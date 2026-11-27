@@ -323,3 +323,7 @@ O Davi achou a cidade 3D de baixa qualidade e mandou 2 vídeos do Gemini de Miam
 ## 27/11/2026: bom dia pro administrativo + site da Silvani Vaz
 Palavras: bom dia, apresentação da GuDev, administrativo, encaminhar pro responsável, Silvani Vaz, doces e salgados, Mato Grosso, DDD 66, catálogo do WhatsApp, wa.me/c, selo confeitado, bico de confeitar, pitanga de chantilly, põe a mesa, monte a bandeja, forminhas, boleira, Instagram bloqueado.
 1) Mensagem de bom dia apresentando a GuDev pro administrativo de uma empresa (pede o nome do responsável, não fala preço, termina com pergunta). 2) Site da Silvani Vaz feito só com o print do perfil do WhatsApp: `sites/silvani-vaz/` + prévia `silvani-vaz-arquivo-unico.html`. 3) Mensagem estruturada de apresentação do site pra eles. O Instagram não abre aqui (rede).
+
+## 27/11/2026: Fio, site livre com Poly Haven
+Palavras: Fio, cutelaria, faca, damasco, aço carbono, inox, petty, chef, churrasco, pau-ferro, ipê, micarta, rebites, gravação na lâmina, afiar, pedra 1000/6000, teste do papel, tarugo, brasa, dobras, camadas, forja, faísca, têmpera, vapor, percloreto, Poly Haven, HDRI workshop, HDRI studio, environmentRotation, lâmina paramétrica, âncoras, canvas fixo, esbuild.
+O Davi pediu "um site aleatório pra ver seu nível, use o Poly Haven". Feito `sites/fio/` (prévia `fio-arquivo-unico.html`, 1,3 MB, abre offline). Tudo no README da pasta.
