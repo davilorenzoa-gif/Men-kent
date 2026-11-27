@@ -142,10 +142,13 @@ p{text-wrap:pretty}
 .bandeja-sec h2{font-size:clamp(32px,6vw,56px);max-width:15ch}
 .bandeja-sec > .wrap > p{margin-top:10px;color:var(--musgo);max-width:46ch}
 .bandeja-grade{display:grid;gap:24px;margin-top:32px;grid-template-columns:minmax(0,1fr)}
-@media(min-width:900px){.bandeja-grade{grid-template-columns:1.15fr 1fr;align-items:start}}
-.bandeja-vis{position:sticky;top:76px;z-index:1}
-@media(max-width:899px){.bandeja-vis{top:64px}}
-.bandeja{position:relative;aspect-ratio:4/3;border-radius:26px;background:linear-gradient(145deg,#f4f1ea,#d9d6cd);box-shadow:0 24px 40px -18px rgba(44,48,42,.45),inset 0 0 0 10px #e9e6de,inset 0 0 0 11px rgba(44,48,42,.08);overflow:hidden}
+@media(min-width:900px){.bandeja-grade{grid-template-columns:1.15fr 1fr;align-items:start}.bandeja{aspect-ratio:4/3}}
+.controle-bandeja{background:var(--acucar);border-radius:var(--r);padding:16px 18px;margin-top:12px;display:grid;gap:10px}
+.controle-bandeja{border:0;min-width:0}
+.controle-bandeja .titulo{font-weight:600;margin-bottom:4px}
+.bandeja-vis{position:relative}
+@media(min-width:900px){.bandeja-vis{position:sticky;top:96px}}
+.bandeja{position:relative;aspect-ratio:16/10;border-radius:26px;background:linear-gradient(145deg,#f4f1ea,#d9d6cd);box-shadow:0 24px 40px -18px rgba(44,48,42,.45),inset 0 0 0 10px #e9e6de,inset 0 0 0 11px rgba(44,48,42,.08);overflow:hidden}
 .forminha{position:absolute;border-radius:50%;transform:translate(-50%,-50%) scale(0);transition:transform .45s cubic-bezier(.3,1.6,.5,1), left .45s ease, top .45s ease;background:repeating-conic-gradient(#8a5a35 0 6deg,#a0704a 6deg 12deg);box-shadow:0 3px 5px -2px rgba(44,48,42,.4)}
 .forminha.sal{background:repeating-conic-gradient(#efe9dc 0 6deg,#ddd5c3 6deg 12deg)}
 .forminha.on{transform:translate(-50%,-50%) scale(1)}
@@ -338,26 +341,26 @@ p{text-wrap:pretty}
           <span class="contador" id="contador">30 pessoas</span>
           <div class="boleira" id="boleira"><img src="img/bolos.jpg" alt="" width="590" height="366"></div>
         </div>
+        <div class="controle-bandeja" role="group" aria-labelledby="tBand">
+            <p class="titulo" id="tBand"><span class="passo">Passo 1 de 3</span><br>Quantas pessoas e o que vai ter?</p>
+            <div class="faixa"><input type="range" id="pessoas" min="10" max="150" step="5" value="30" aria-label="Número de pessoas"><output id="pessoasOut" for="pessoas">30</output></div>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="it" form="form" value="doces" checked><span>Doces</span></label>
+              <label class="chip"><input type="checkbox" name="it" form="form" value="salgados" checked><span>Salgados</span></label>
+              <label class="chip"><input type="checkbox" name="it" form="form" value="bolo"><span>Bolo</span></label>
+            </div>
+          </div>
         <p class="legenda">Cada forminha é uma pessoa, só pra você visualizar. A quantidade certa a Silvani te ajuda a calcular.</p>
       </div>
       <div>
         <form class="form" id="form" novalidate>
           <fieldset>
-            <legend><span class="passo" id="passo1">Passo 1 de 3</span><br>Qual é a ocasião?</legend>
+            <legend><span class="passo">Passo 2 de 3</span><br>Qual é a ocasião?</legend>
             <div class="chips" id="ocasiao">
               <label class="chip"><input type="radio" name="oc" value="Aniversário" checked><span>Aniversário</span></label>
               <label class="chip"><input type="radio" name="oc" value="Café da empresa"><span>Café da empresa</span></label>
               <label class="chip"><input type="radio" name="oc" value="Reunião de família"><span>Reunião de família</span></label>
               <label class="chip"><input type="radio" name="oc" value="Outra ocasião"><span>Outra</span></label>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend><span class="passo">Passo 2 de 3</span><br>Quantas pessoas e o que vai ter?</legend>
-            <div class="faixa"><input type="range" id="pessoas" min="10" max="150" step="5" value="30" aria-label="Número de pessoas"><output id="pessoasOut" for="pessoas">30</output></div>
-            <div class="chips">
-              <label class="chip"><input type="checkbox" name="it" value="doces" checked><span>Doces</span></label>
-              <label class="chip"><input type="checkbox" name="it" value="salgados" checked><span>Salgados</span></label>
-              <label class="chip"><input type="checkbox" name="it" value="bolo"><span>Bolo</span></label>
             </div>
           </fieldset>
           <fieldset>
@@ -631,7 +634,7 @@ var pessoas=document.getElementById('pessoas'), pOut=document.getElementById('pe
 var form=document.getElementById('form'), previa=document.getElementById('previa'), obrigado=document.getElementById('obrigado');
 var cups=[];
 function semente(i){var x=Math.sin(i*99.13)*43758.5453;return x-Math.floor(x)}
-function itens(){return Array.prototype.map.call(form.querySelectorAll('input[name=it]:checked'),function(c){return c.value})}
+function itens(){return Array.prototype.map.call(document.querySelectorAll('input[name=it]:checked'),function(c){return c.value})}
 function desenhaBandeja(){
   var n=+pessoas.value, it=itens(), temBolo=it.indexOf('bolo')>=0;
   var temDoce=it.indexOf('doces')>=0, temSal=it.indexOf('salgados')>=0;
@@ -702,6 +705,7 @@ function mensagem(){
 function escrevePrevia(){previa.textContent=mensagem()}
 pessoas.addEventListener('input',desenhaBandeja);
 form.addEventListener('change',desenhaBandeja);
+document.querySelectorAll('input[name=it]').forEach(function(c){c.addEventListener('change',desenhaBandeja)});
 form.addEventListener('input',function(e){if(e.target.type==='text')escrevePrevia()});
 form.addEventListener('submit',function(e){
   e.preventDefault();
