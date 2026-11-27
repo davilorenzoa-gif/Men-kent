@@ -136,6 +136,11 @@ Os sites em `exemplos/` são o **nível mínimo**. Todo site novo tem que ser ig
   - do STD ao Série Ouro na rolagem: a câmera vai pro lado de cada acessório, itens novos marcados e, no Série Ouro, contraluz dourada e a porta abrindo;
   - as 16 cores de fábrica (código VW e linhas reais) pintam o carro na hora e viram o pedido do selo pelo WhatsApp.
   - técnica: **pintar um modelo 3D baixado** sem refazer textura: no shader (`onBeforeCompile`, depois do `map_fragment`) acha a cor original pela matiz/saturação e troca pela tinta, multiplicando pelo brilho relativo (mantém sombra e detalhe). Modelo com `meshopt` (1,8 → 1,1 MB) precisa de `setMeshoptDecoder`. Câmera em órbita por pose de seção + `setViewOffset` pra tirar o carro do meio da tela.
+- **Silvani Vaz Doces e Salgados** (lead, DDD 66-MT, `sites/silvani-vaz`, 27/11/2026, JS puro):
+  - selo confeitado: bico de confeitar dá a volta no selo deixando pitangas de chantilly (SVG `<use>` com mola), aros e texto em `textPath` revelados por máscara em sincronia; logo bate como carimbo; toque confeita onde o dedo tocou;
+  - "põe a mesa": a rolagem troca Café/Lanche/Festa, toalha muda e os pratos (fotos do catálogo) saem e entram girando;
+  - "monte a bandeja": nº de pessoas enche a bandeja de forminhas (favo de mel, do centro pra fora) com recortes das fotos reais dentro (`background-position` sorteado), boleira no meio se pedir bolo.
+  - técnica: imagem usada só pelo JS entra num `<div hidden>` com `<img>`, senão o `arquivo_unico.py` não embute.
 - **Site da própria GuDev** (página de venda, `sites/gudev`, 05/11/2026):
   - porta de aço laranja que sobe com a rolagem e mostra a rua, com um celular subindo e pedidos chegando;
   - conversa de WhatsApp que se escreve com a rolagem;

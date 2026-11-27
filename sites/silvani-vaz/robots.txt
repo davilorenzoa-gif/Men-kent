@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://proposta-silvani-vaz.netlify.app/sitemap.xml
