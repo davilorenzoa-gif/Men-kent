@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fio · Cutelaria feita à mão (conceito)</title>
+<meta name="description" content="Fio é uma cutelaria fictícia, um conceito da GuDev: a faca em 3D nasce do tarugo de aço damasco na rolagem, e você monta, grava e afia a sua.">
+<meta name="theme-color" content="#0e0e0f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ferro:#0e0e0f; --carvao:#171615; --linha:rgba(236,230,220,.14);
+  --aco:#c9cdd1; --papel:#ece6dc; --tinta:#1b1a18; --latao:#b89058; --brasa:#e5581f;
+  --mut:rgba(236,230,220,.62);
+  --f-dis:"Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-txt:"Archivo", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, monospace;
+  --gut:clamp(16px, 4vw, 56px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:auto}
+body{background:var(--ferro);color:var(--papel);font:400 16px/1.55 var(--f-txt);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--latao);color:var(--tinta)}
+:focus-visible{outline:2px solid var(--latao);outline-offset:3px}
+
+#cena{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;display:block}
+#brasa{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at var(--bx,50%) var(--by,50%), rgba(229,88,31,.55), rgba(140,30,8,.18) 28%, transparent 60%)}
+main{position:relative}
+header,footer{position:relative;z-index:2}
+main > section > *{position:relative;z-index:2}
+main > section > .corte{position:absolute;z-index:0}
+.cuidados{position:relative;z-index:2}
+
+/* topo */
+header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:14px var(--gut);transition:background .4s, backdrop-filter .4s}
+header.solido{background:rgba(14,14,15,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.marca{font:800 26px/1 var(--f-dis);letter-spacing:.06em;text-decoration:none;text-transform:uppercase}
+.marca i{font-style:normal;color:var(--latao)}
+nav{display:flex;gap:26px;align-items:center;font:500 13px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.08em}
+nav a{text-decoration:none;opacity:.75}
+nav a:hover{opacity:1}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 20px;border-radius:999px;
+  background:var(--papel);color:var(--tinta);font:600 15px/1 var(--f-txt);text-decoration:none;transition:transform .2s, background .2s}
+.btn:hover{transform:translateY(-1px);background:#fff}
+.btn.fantasma{background:transparent;color:var(--papel);border:1px solid var(--linha)}
+nav .btn{min-height:38px;padding:0 16px;font-size:13px;opacity:1}
+@media (max-width:720px){ nav a:not(.btn){display:none} }
+
+/* herói */
+.heroi{position:relative;height:100svh;min-height:560px;overflow:hidden}
+.corte{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%) rotate(var(--ang,-7deg));
+  font:900 clamp(180px, 38vw, 560px)/.8 var(--f-dis);letter-spacing:-.01em;color:#232220;user-select:none;white-space:nowrap}
+.corte span{display:block}
+.corte .b{position:absolute;inset:0}
+.corte .a{clip-path:polygon(-5% -5%,105% -5%,105% 52%,-5% 52%)}
+.corte .b{clip-path:polygon(-5% 52%,105% 52%,105% 105%,-5% 105%)}
+.corte .a,.corte .b{transition:transform 1.1s cubic-bezier(.2,.8,.2,1), color 1.2s}
+.corte.cortado .a{transform:translate(-.035em,-.035em)}
+.corte.cortado .b{transform:translate(.035em,.035em)}
+.corte .risco{position:absolute;left:-4%;right:-4%;top:52%;height:2px;margin-top:-1px;
+  background:linear-gradient(90deg,transparent,#fff 20%,#ffe2b8 50%,#fff 80%,transparent);
+  transform:scaleX(0);transform-origin:left;opacity:0;box-shadow:0 0 18px 2px rgba(255,220,170,.6)}
+.corte.cortado .risco{animation:risco 1.1s cubic-bezier(.6,0,.2,1) forwards}
+@keyframes risco{0%{transform:scaleX(0);opacity:1}55%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
+.heroi-txt{position:absolute;left:var(--gut);right:var(--gut);bottom:max(32px, 6svh);display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.heroi h1{font:800 clamp(34px, 5.2vw, 68px)/.95 var(--f-dis);text-transform:uppercase;letter-spacing:.01em;max-width:11ch}
+.heroi p{max-width:34ch;color:var(--mut);margin-top:14px}
+.heroi .acoes{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.dica{font:400 12px/1.4 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mut);text-align:right}
+.dica b{display:block;color:var(--papel);font-weight:500}
+.entra{opacity:0;transform:translateY(14px);transition:opacity .9s, transform .9s cubic-bezier(.2,.8,.2,1)}
+.pronto .entra{opacity:1;transform:none}
+.pronto .entra.d2{transition-delay:.12s}.pronto .entra.d3{transition-delay:.24s}
+@media (max-width:720px){
+  .heroi-txt{flex-direction:column;align-items:flex-start}
+  .dica{text-align:left}
+  .corte{top:40%}
+}
+
+/* processo */
+.processo{position:relative;height:560vh}
+.processo .fixo{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;grid-template-columns:minmax(300px,0.9fr) 1.1fr;align-items:center}
+.passos{position:relative;padding:0 var(--gut);height:min(440px,70svh)}
+.passo{position:absolute;left:var(--gut);right:var(--gut);top:50%;transform:translateY(-40%);opacity:0;transition:opacity .5s, transform .6s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.passo.ativo{opacity:1;transform:translateY(-50%)}
+.passo .num{font:500 13px/1 var(--f-mono);letter-spacing:.12em;color:var(--latao);text-transform:uppercase}
+.passo h2{font:800 clamp(48px, 7vw, 104px)/.9 var(--f-dis);text-transform:uppercase;margin:14px 0 18px}
+.passo p{max-width:36ch;color:var(--mut);font-size:17px}
+.leitura{margin-top:22px;font:500 14px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;display:flex;gap:10px;align-items:center}
+.leitura b{font:800 34px/1 var(--f-dis);letter-spacing:0;color:var(--papel);min-width:3ch}
+.trilho{transition:opacity .3s;position:absolute;left:var(--gut);bottom:max(24px,5svh);display:flex;gap:6px;align-items:center}
+.trilho i{display:block;width:34px;height:3px;background:var(--linha);border-radius:2px;overflow:hidden;position:relative}
+.trilho i::after{content:"";position:absolute;inset:0;background:var(--latao);transform:scaleX(var(--p,0));transform-origin:left}
+.palco-proc{height:100%}
+.antes{position:absolute;left:50%;top:14svh;transform:translateX(-50%);font:500 13px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut);opacity:0;transition:opacity .4s}
+@media (max-width:860px){
+  .processo .fixo{grid-template-columns:1fr;grid-template-rows:50svh 1fr;align-items:stretch}
+  .palco-proc{grid-row:1}
+  .passos{grid-row:2;height:auto}
+  .passo{top:8px;transform:translateY(10px)}
+  .passo.ativo{transform:none}
+  .passo h2{margin:8px 0 10px;font-size:clamp(44px,13vw,64px)}
+  .passo p{font-size:15.5px}
+  .leitura{margin-top:12px}
+  .leitura b{font-size:28px}
+  .antes{top:84px}
+}
+
+/* monte */
+.monte{position:relative;min-height:100svh;display:grid;grid-template-columns:1.15fr minmax(340px,.85fr);gap:0 var(--gut);padding:96px var(--gut) 64px;align-items:center}
+.palco{position:relative;height:min(68svh,620px);touch-action:pan-y;cursor:grab}
+.palco.afiando{cursor:ew-resize;touch-action:none}
+.palco .rot{position:absolute;left:0;bottom:0;font:400 12px/1.4 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.painel h2{font:800 clamp(44px,5.4vw,78px)/.9 var(--f-dis);text-transform:uppercase}
+.painel > p{color:var(--mut);margin:12px 0 26px;max-width:38ch}
+.grupo{border-top:1px solid var(--linha);padding:14px 0}
+.grupo legend,.grupo .tit{font:500 12px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:10px;display:flex;justify-content:space-between;width:100%}
+fieldset{border:0}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{min-height:42px;padding:0 14px;border-radius:999px;border:1px solid var(--linha);font:500 14px/1 var(--f-txt);display:inline-flex;align-items:center;gap:8px;transition:background .2s,border-color .2s,color .2s}
+.seg button:hover{border-color:rgba(236,230,220,.4)}
+.seg button[aria-pressed="true"]{background:var(--papel);color:var(--tinta);border-color:var(--papel)}
+.seg .amostra{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+.campo{display:flex;gap:8px}
+.campo input{flex:1;min-width:0;min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--linha);background:rgba(255,255,255,.04);color:var(--papel);font:600 16px/1 var(--f-dis);letter-spacing:.14em;text-transform:uppercase}
+.campo input::placeholder{color:rgba(236,230,220,.35)}
+.afiar{display:flex;align-items:center;gap:12px}
+.medidor{flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.medidor i{display:block;height:100%;width:0;background:linear-gradient(90deg,#8a8f94,#fff);transition:width .15s}
+.afiar .btn{min-height:42px;font-size:14px}
+.envio{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.envio .btn{justify-content:center;min-height:52px;font-size:16px}
+.envio small{color:var(--mut);font-size:12.5px}
+.aviso-afiar{position:absolute;left:50%;top:10px;transform:translateX(-50%);font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;background:rgba(14,14,15,.75);padding:9px 14px;border-radius:999px;border:1px solid var(--linha);opacity:0;transition:opacity .3s;white-space:nowrap;pointer-events:none}
+.palco.afiando .aviso-afiar{opacity:1}
+@media (max-width:900px){
+  .monte{grid-template-columns:1fr;padding-top:72px}
+  .palco{height:46svh;min-height:300px;margin-bottom:22px}
+}
+
+/* cuidados */
+.cuidados{background:var(--papel);color:var(--tinta);padding:110px var(--gut) 90px}
+.cuidados h2{font:800 clamp(48px,7vw,104px)/.9 var(--f-dis);text-transform:uppercase;max-width:12ch}
+.lista{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;margin-top:48px;border-top:1px solid rgba(27,26,24,.18)}
+.lista div{padding:22px 22px 26px 0;border-bottom:1px solid rgba(27,26,24,.18)}
+.lista b{display:block;font:800 26px/1 var(--f-dis);text-transform:uppercase;margin-bottom:8px}
+.lista p{color:rgba(27,26,24,.72);max-width:34ch}
+.lista .n{font:500 12px/1 var(--f-mono);color:#8a6a3a;letter-spacing:.1em;display:block;margin-bottom:14px}
+
+footer{background:var(--tinta);color:var(--papel);padding:60px var(--gut) 40px}
+footer .big{font:900 clamp(90px,22vw,300px)/.8 var(--f-dis);text-transform:uppercase;color:#2a2826;letter-spacing:-.01em}
+footer .linha{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:28px;color:var(--mut);font-size:14px}
+footer a{color:var(--papel)}
+.poly{font:400 12px/1.5 var(--f-mono);color:var(--mut)}
+
+.flutua{position:fixed;right:16px;bottom:16px;z-index:30;display:none}
+@media (max-width:720px){ .flutua{display:inline-flex;box-shadow:0 8px 30px rgba(0,0,0,.4)} }
+
+.sem3d #cena{display:none}
+.sem3d .palco{display:none}
+@media (prefers-reduced-motion:reduce){ .entra,.passo{transition:none} }
+</style>
+</head>
+<body>
+<canvas id="cena" aria-hidden="true"></canvas>
+<div id="brasa" aria-hidden="true"></div>
+
+<header id="topo-barra">
+  <a class="marca" href="#topo">Fi<i>o</i></a>
+  <nav>
+    <a href="#processo">Processo</a>
+    <a href="#monte">Monte a sua</a>
+    <a href="#cuidados">Cuidados</a>
+    <a class="btn" href="#monte">Encomendar</a>
+  </nav>
+</header>
+
+<main>
+  <section class="heroi" id="topo">
+    <div class="corte" id="corte" aria-hidden="true">
+      <span class="a">FIO</span><span class="b">FIO</span><i class="risco"></i>
+    </div>
+    <div class="heroi-txt">
+      <div>
+        <h1 class="entra">Facas feitas à mão, uma por vez.</h1>
+        <p class="entra d2">Aço damasco forjado em camadas, cabo de madeira e o fio acertado na pedra. Mexa o dedo: a luz da oficina corre na lâmina.</p>
+        <div class="acoes entra d3">
+          <a class="btn" href="#monte">Montar a minha</a>
+          <a class="btn fantasma" href="#processo">Ver como nasce</a>
+        </div>
+      </div>
+      <p class="dica entra d3"><b>Role pra baixo</b>a faca volta a ser aço em brasa</p>
+    </div>
+  </section>
+
+  <section class="processo" id="processo" aria-label="Como a faca é feita">
+    <div class="fixo">
+      <div class="passos">
+        <article class="passo" data-i="0">
+          <span class="num">01 · Tarugo</span>
+          <h2>Dois aços</h2>
+          <p>Um com mais carbono, outro com níquel. As chapas são empilhadas e soldadas no fogo, a martelo, até virar um bloco só.</p>
+        </article>
+        <article class="passo" data-i="1">
+          <span class="num">02 · Dobras</span>
+          <h2>Camadas</h2>
+          <p>A barra é esticada, cortada e empilhada de novo. A cada vez, o número de camadas dobra.</p>
+          <div class="leitura">camadas <b id="camadas">2</b></div>
+        </article>
+        <article class="passo" data-i="2">
+          <span class="num">03 · Forja</span>
+          <h2>A forma</h2>
+          <p>No martelo, o bloco se estica, a ponta é puxada e o fio vai afinando. Cada pancada, uma chuva de faísca.</p>
+        </article>
+        <article class="passo" data-i="3">
+          <span class="num">04 · Têmpera</span>
+          <h2>No óleo</h2>
+          <p>Aquecida de novo e mergulhada no óleo, a lâmina fica dura. Depois volta ao forno pra perder a fragilidade: é o revenimento.</p>
+        </article>
+        <article class="passo" data-i="4">
+          <span class="num">05 · Ataque</span>
+          <h2>O desenho</h2>
+          <p>No percloreto de ferro, um dos aços escurece mais que o outro, e as camadas aparecem. Cabo, rebites e fio: pronta.</p>
+        </article>
+      </div>
+      <div class="palco-proc" id="palco-proc"></div>
+      <div class="trilho" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="antes" id="antes">Antes de ser faca, era isto</p>
+    </div>
+  </section>
+
+  <section class="monte" id="monte" aria-label="Monte a sua faca">
+    <div class="palco" id="palco">
+      <p class="aviso-afiar">Arraste de um lado pro outro</p>
+      <p class="rot" id="rot-palco">Arraste pra girar</p>
+    </div>
+    <div class="painel">
+      <h2>Monte a sua</h2>
+      <p>Escolha o aço, o modelo e o cabo. Escreva a gravação e afie você mesmo antes de pedir.</p>
+
+      <fieldset class="grupo"><legend>Aço</legend>
+        <div class="seg" data-op="aco">
+          <button type="button" data-v="damasco" aria-pressed="true">Damasco</button>
+          <button type="button" data-v="carbono" aria-pressed="false">Carbono</button>
+          <button type="button" data-v="inox" aria-pressed="false">Inox</button>
+        </div>
+      </fieldset>
+      <fieldset class="grupo"><legend>Modelo</legend>
+        <div class="seg" data-op="modelo">
+          <button type="button" data-v="petty" aria-pressed="false">Petty 13 cm</button>
+          <button type="button" data-v="chef" aria-pressed="true">Chef 20 cm</button>
+          <button type="button" data-v="churrasco" aria-pressed="false">Churrasco 25 cm</button>
+        </div>
+      </fieldset>
+      <fieldset class="grupo"><legend>Cabo</legend>
+        <div class="seg" data-op="cabo">
+          <button type="button" data-v="pauferro" aria-pressed="true"><i class="amostra" style="background:#4a2a1d"></i>Pau-ferro</button>
+          <button type="button" data-v="ipe" aria-pressed="false"><i class="amostra" style="background:#6b5631"></i>Ipê</button>
+          <button type="button" data-v="micarta" aria-pressed="false"><i class="amostra" style="background:#1c1c1c"></i>Micarta</button>
+        </div>
+      </fieldset>
+      <div class="grupo">
+        <label class="tit" for="gravacao"><span>Gravação na lâmina</span><span id="conta">0/14</span></label>
+        <div class="campo"><input id="gravacao" maxlength="14" placeholder="Seu nome" autocomplete="off" spellcheck="false"></div>
+      </div>
+      <div class="grupo">
+        <div class="tit"><span>Fio</span><span id="fio-pct">0%</span></div>
+        <div class="afiar">
+          <div class="medidor" role="progressbar" aria-label="Quanto a faca está afiada" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="medidor"></i></div>
+          <button class="btn fantasma" type="button" id="btn-afiar">Afiar na pedra</button>
+        </div>
+      </div>
+      <div class="envio">
+        <a class="btn" id="pedir" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+        <small>Conceito: a mensagem vai pra GuDev, marcada como teste.</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="cuidados" id="cuidados">
+    <h2>Faca boa dura a vida toda</h2>
+    <div class="lista">
+      <div><span class="n">01</span><b>Lave à mão</b><p>Água, detergente e secar na hora. Lava-louça e molho estragam o fio e o cabo.</p></div>
+      <div><span class="n">02</span><b>Tábua certa</b><p>Madeira ou plástico. Vidro, granito e prato de louça cegam qualquer aço.</p></div>
+      <div><span class="n">03</span><b>Pátina é normal</b><p>Aço carbono escurece com o uso e protege a lâmina. Ferrugem só aparece se ficar molhado.</p></div>
+      <div><span class="n">04</span><b>Pedra, não chaira</b><p>A chaira só alinha o fio. Quem afia de verdade é a pedra, mantendo o mesmo ângulo.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="big" aria-hidden="true">FIO</div>
+  <div class="linha">
+    <p>A Fio não existe: é um conceito da GuDev pra mostrar o que dá pra fazer num site. <a id="cta-gudev" target="_blank" rel="noopener">Quero um site assim</a></p>
+    <p class="poly">Luz da oficina e do estúdio: HDRIs do Poly Haven (CC0)</p>
+  </div>
+</footer>
+
+<!--APP-->
+</body>
+</html>
