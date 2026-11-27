@@ -208,3 +208,7 @@ Elemento com `transform:translateX(-120%) skewX(...)` no CSS e animado com `xPer
 
 ## 27/11/2026: prévia presa no topo cobrindo o formulário (Silvani Vaz)
 A bandeja da encomenda ficava `position:sticky` no celular pra pessoa ver ela enchendo enquanto preenchia. Resultado: cobria os botões do formulário (o Davi reprovou pelo print). **Regra:** no celular, nada interativo fica preso por cima de outro conteúdo que se toca. Em vez disso, os controles que mudam a prévia ficam **logo embaixo dela**, num cartão só, e o resto do formulário segue normal. Sticky só no computador, com a prévia ao lado do formulário.
+
+## 27/11/2026: faca toda preta no celular (Fio)
+No Playwright a faca saía com o HDRI; no app do Davi, toda preta. Causa: o `EXRLoader.load()` busca o `data:` com `fetch`, e o visualizador do app bloqueia isso (CSP `connect-src`). Sem ambiente, metal com `metalness: 1` reflete o nada = preto. Reproduzido aqui com `<meta http-equiv="Content-Security-Policy" content="connect-src 'none'">`.
+**Regra:** em arquivo único, nunca carregar asset com `fetch`/loader por URL. Decodificar o base64 na mão e usar `loader.parse(buffer)` (HDRI, glTF, áudio). E sempre um ambiente reserva (`RoomEnvironment`) já no 1º quadro. **Testar toda prévia 3D com essa meta de CSP antes de mandar.**
