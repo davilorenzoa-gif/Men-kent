@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Silvani Vaz Doces e Salgados | Encomendas de café, lanche e festa</title>
+<meta name="description" content="Doces, salgados e bolos por encomenda desde 2001. Combos de café, lanche e festa. Monte o pedido e mande pelo WhatsApp.">
+<meta name="theme-color" content="#cbd7bf">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Silvani Vaz Doces e Salgados">
+<meta property="og:description" content="Combos de café, lanche e festa, doces, salgados e bolos por encomenda. Pedido pelo WhatsApp.">
+<meta property="og:image" content="img/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Bakery","name":"Silvani Vaz Doces e Salgados","telephone":"+55 66 9625-8876","image":"img/logo.png","servesCuisine":"Doces, salgados e bolos","foundingDate":"2001","sameAs":["https://www.instagram.com/silvanivazdocesesalgados/"],"url":"https://proposta-silvani-vaz.netlify.app/"}
+</script>
+<style>
+:root{
+  --salvia:#cbd7bf;      /* fundo do logo */
+  --salvia-2:#b4c4a5;
+  --musgo:#46533f;       /* texto forte, tom do traço do selo */
+  --grafite:#2c302a;
+  --caramelo:#c49a6c;    /* letra do logo */
+  --caramelo-esc:#8f6434;/* botão de WhatsApp (contraste com branco) */
+  --acucar:#f6f3ea;
+  --linho:#e9e4d6;
+  --r:18px;
+  --f-tit:'Fraunces', Georgia, serif;
+  --f-txt:'Figtree', system-ui, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--acucar);color:var(--grafite);font:400 17px/1.55 var(--f-txt);overflow-x:clip}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--caramelo-esc);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--f-tit);font-weight:600;line-height:1.05;text-wrap:balance;letter-spacing:-.01em}
+p{text-wrap:pretty}
+.wrap{width:min(1160px,100% - 32px);margin-inline:auto}
+
+/* ---------- botões ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55em;min-height:50px;padding:0 22px;border-radius:999px;border:0;cursor:pointer;font-weight:600;text-decoration:none;transition:transform .15s,background-color .15s}
+.btn:active{transform:scale(.97)}
+.btn-zap{background:var(--caramelo-esc);color:#fff}
+.btn-zap:hover{background:#7a5329}
+.btn-zap svg{width:20px;height:20px;flex:none}
+.btn-linha{background:transparent;color:var(--musgo);box-shadow:inset 0 0 0 1.5px var(--musgo)}
+.btn-linha:hover{background:rgba(70,83,63,.08)}
+
+/* ---------- topo ---------- */
+.topo{position:fixed;inset:0 0 auto;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;transition:background-color .3s, box-shadow .3s}
+.topo.solido{background:rgba(246,243,234,.92);box-shadow:0 1px 0 rgba(44,48,42,.08);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-tit);font-weight:600;font-size:18px;color:var(--musgo)}
+.marca img{width:44px;height:44px;border-radius:50%}
+.topo nav{display:none;gap:26px;font-weight:500}
+.topo nav a{text-decoration:none;color:var(--musgo)}
+.topo nav a:hover{text-decoration:underline;text-underline-offset:4px}
+.topo .btn{min-height:44px;padding:0 16px;font-size:15px}
+@media(min-width:900px){.topo{padding:14px 32px}.topo nav{display:flex}}
+
+/* ---------- WOW 1: o selo confeitado ---------- */
+.heroi{position:relative;min-height:100svh;background:var(--salvia);display:grid;align-items:center;padding:84px 0 40px;overflow:hidden;touch-action:manipulation}
+.heroi-grade{display:grid;gap:18px;align-items:center}
+.selo{width:min(86vw,440px);aspect-ratio:1;margin-inline:auto;position:relative}
+.selo svg{width:100%;height:100%;overflow:visible}
+.heroi-txt{text-align:center}
+.heroi h1{font-size:clamp(38px,9.4vw,76px);color:var(--grafite)}
+.heroi p.sub{margin:14px auto 0;max-width:34ch;font-size:clamp(17px,2.2vw,20px);color:var(--musgo)}
+.heroi .acoes{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+.heroi .info{margin-top:18px;font-size:15px;color:var(--musgo);display:flex;gap:8px;justify-content:center;align-items:center}
+.ponto-aberto{width:9px;height:9px;border-radius:50%;background:#5c8a3c;box-shadow:0 0 0 4px rgba(92,138,60,.2)}
+.dica-toque{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);font-size:13px;color:var(--musgo);opacity:.75;white-space:nowrap}
+#chantilly{position:absolute;inset:0;pointer-events:none;width:100%;height:100%}
+@media(min-width:900px){
+  .heroi-grade{grid-template-columns:1.05fr 1fr;gap:48px}
+  .heroi-txt{text-align:left;order:-1}
+  .heroi p.sub{margin-left:0}
+  .heroi .acoes,.heroi .info{justify-content:flex-start}
+  .selo{width:min(40vw,520px)}
+}
+/* entrada do texto (um momento só) */
+.heroi-txt > *{opacity:0;transform:translateY(14px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1)}
+.heroi.pronto .heroi-txt > *{opacity:1;transform:none}
+.heroi.pronto .heroi-txt > :nth-child(2){transition-delay:.08s}
+.heroi.pronto .heroi-txt > :nth-child(3){transition-delay:.16s}
+.heroi.pronto .heroi-txt > :nth-child(4){transition-delay:.24s}
+
+/* ---------- WOW 2: põe a mesa ---------- */
+.mesa-sec{position:relative;height:420vh;background:var(--linho)}
+.mesa-palco{position:sticky;top:0;height:100svh;padding-top:64px;display:grid;grid-template-rows:minmax(0,1fr) auto;overflow:hidden}
+.toalha{position:relative;overflow:hidden}
+.pano{position:absolute;inset:0;opacity:0;transition:opacity .7s ease}
+.pano.on{opacity:1}
+.pano-cafe{background:#dfe6d6;background-image:repeating-linear-gradient(0deg,rgba(70,83,63,.07) 0 2px,transparent 2px 7px),repeating-linear-gradient(90deg,rgba(70,83,63,.06) 0 2px,transparent 2px 9px)}
+.pano-lanche{background:#efe2cd;background-image:linear-gradient(90deg,rgba(196,154,108,.28) 50%,transparent 50%),linear-gradient(rgba(196,154,108,.28) 50%,transparent 50%);background-size:56px 56px}
+.pano-festa{background:#f3e9e4;background-image:radial-gradient(circle at 20% 30%,rgba(196,154,108,.35) 0 3px,transparent 4px),radial-gradient(circle at 70% 60%,rgba(70,83,63,.25) 0 3px,transparent 4px),radial-gradient(circle at 40% 80%,rgba(214,140,140,.35) 0 3px,transparent 4px);background-size:90px 90px,120px 120px,75px 75px}
+.prato{position:absolute;border-radius:50%;background:#fff;padding:3.2%;box-shadow:0 18px 30px -12px rgba(44,48,42,.35),inset 0 0 0 1px rgba(44,48,42,.06);transition:transform .85s cubic-bezier(.2,.9,.25,1.05), opacity .5s ease;will-change:transform}
+.prato::before{content:"";position:absolute;inset:6%;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(44,48,42,.08)}
+.prato img{width:100%;height:100%;object-fit:cover;border-radius:50%;aspect-ratio:1}
+.cartao{position:absolute;background:var(--acucar);padding:10px 16px 12px;border-radius:6px;box-shadow:0 10px 20px -10px rgba(44,48,42,.4);font-family:var(--f-tit);font-size:clamp(17px,2.4vw,24px);color:var(--grafite);transition:transform .8s cubic-bezier(.2,.9,.25,1.05),opacity .4s;white-space:nowrap}
+.cartao small{display:block;font:500 12px var(--f-txt);color:var(--musgo);margin-bottom:2px}
+.guardanapo{position:absolute;width:22%;aspect-ratio:1;transition:transform .8s cubic-bezier(.2,.9,.25,1.05),opacity .4s}
+.mesa-txt{background:var(--acucar);padding:18px 16px 22px;border-top:1px solid rgba(44,48,42,.08)}
+.mesa-abas{display:flex;gap:6px;margin-bottom:12px}
+.mesa-abas button{flex:1;min-height:44px;border-radius:999px;border:0;background:transparent;box-shadow:inset 0 0 0 1.5px rgba(70,83,63,.35);color:var(--musgo);font-weight:600;cursor:pointer;transition:background-color .2s,color .2s}
+.mesa-abas button[aria-selected="true"]{background:var(--musgo);color:var(--acucar);box-shadow:none}
+.mesa-txt h2{font-size:clamp(28px,6.4vw,46px)}
+.mesa-txt p{margin-top:8px;color:var(--musgo);max-width:46ch}
+.mesa-txt .btn{margin-top:14px}
+.troca{transition:opacity .35s ease, transform .35s ease}
+.troca.sai{opacity:0;transform:translateY(8px)}
+@media(min-width:900px){
+  .mesa-palco{grid-template-rows:none;grid-template-columns:1.35fr 1fr}
+  .mesa-txt{display:flex;flex-direction:column;justify-content:center;padding:48px;border-top:0;border-left:1px solid rgba(44,48,42,.08)}
+}
+.mesa-intro{padding:72px 0 8px;background:var(--linho)}
+.mesa-intro h2{font-size:clamp(32px,6vw,56px);max-width:16ch}
+.mesa-intro p{margin-top:10px;color:var(--musgo);max-width:44ch}
+
+/* ---------- cardápio ---------- */
+.cardapio{padding:80px 0;background:var(--acucar)}
+.cardapio h2{font-size:clamp(32px,6vw,56px)}
+.cardapio > .wrap > p{margin-top:10px;color:var(--musgo);max-width:48ch}
+.menus{display:grid;gap:16px;margin-top:32px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:760px){.menus{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.menu{background:#fff;border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.menu img{aspect-ratio:16/10;object-fit:cover;width:100%}
+.menu div{padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.menu h3{font-size:26px}
+.menu p{color:var(--musgo);font-size:16px;flex:1}
+.menu a{margin-top:8px;font-weight:600;color:var(--caramelo-esc);text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
+.catalogo{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.catalogo p{color:var(--musgo);font-size:15px;max-width:40ch}
+
+/* ---------- WOW 3: a bandeja ---------- */
+.bandeja-sec{padding:80px 0;background:var(--salvia)}
+.bandeja-sec h2{font-size:clamp(32px,6vw,56px);max-width:15ch}
+.bandeja-sec > .wrap > p{margin-top:10px;color:var(--musgo);max-width:46ch}
+.bandeja-grade{display:grid;gap:24px;margin-top:32px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:900px){.bandeja-grade{grid-template-columns:1.15fr 1fr;align-items:start}}
+.bandeja-vis{position:sticky;top:76px;z-index:1}
+@media(max-width:899px){.bandeja-vis{top:64px}}
+.bandeja{position:relative;aspect-ratio:4/3;border-radius:26px;background:linear-gradient(145deg,#f4f1ea,#d9d6cd);box-shadow:0 24px 40px -18px rgba(44,48,42,.45),inset 0 0 0 10px #e9e6de,inset 0 0 0 11px rgba(44,48,42,.08);overflow:hidden}
+.forminha{position:absolute;border-radius:50%;transform:translate(-50%,-50%) scale(0);transition:transform .45s cubic-bezier(.3,1.6,.5,1), left .45s ease, top .45s ease;background:repeating-conic-gradient(#8a5a35 0 6deg,#a0704a 6deg 12deg);box-shadow:0 3px 5px -2px rgba(44,48,42,.4)}
+.forminha.sal{background:repeating-conic-gradient(#efe9dc 0 6deg,#ddd5c3 6deg 12deg)}
+.forminha.on{transform:translate(-50%,-50%) scale(1)}
+.forminha i{position:absolute;inset:16%;border-radius:50%;background-size:520% auto;box-shadow:inset 0 -2px 4px rgba(0,0,0,.25)}
+.boleira{position:absolute;left:50%;top:50%;width:36%;aspect-ratio:1;border-radius:50%;background:#fff;padding:2.2%;box-shadow:0 14px 22px -10px rgba(44,48,42,.45);transform:translate(-50%,-50%) scale(0);transition:transform .55s cubic-bezier(.3,1.5,.5,1);z-index:2}
+.boleira.on{transform:translate(-50%,-50%) scale(1)}
+.boleira img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.legenda{margin-top:10px;font-size:14px;color:var(--musgo)}
+.contador{position:absolute;right:14px;top:12px;z-index:3;background:rgba(246,243,234,.92);border-radius:999px;padding:6px 12px;font-weight:600;font-size:14px;color:var(--musgo)}
+.form{background:var(--acucar);border-radius:var(--r);padding:22px 18px;display:grid;gap:18px}
+.form fieldset{border:0;display:grid;gap:10px;min-width:0}
+.form legend{font-weight:600;margin-bottom:8px}
+.passo{font-size:13px;color:var(--musgo);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;width:1px;height:1px}
+.chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;box-shadow:inset 0 0 0 1.5px rgba(70,83,63,.35);cursor:pointer;font-weight:500;transition:background-color .15s,color .15s}
+.chip input:checked + span{background:var(--musgo);color:var(--acucar);box-shadow:none}
+.chip input:focus-visible + span{outline:3px solid var(--caramelo-esc);outline-offset:2px}
+.faixa{display:flex;align-items:center;gap:14px}
+.faixa input[type=range]{flex:1;min-width:0;accent-color:var(--musgo);height:44px}
+.faixa output{font-family:var(--f-tit);font-size:30px;min-width:3ch;text-align:right;color:var(--grafite)}
+.campo{display:grid;gap:6px;min-width:0}
+.campo input{width:100%;min-width:0;min-height:48px;border-radius:12px;border:1.5px solid rgba(70,83,63,.3);background:#fff;padding:0 14px}
+.duas{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:520px){.duas{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.previa{background:#fff;border-radius:12px;padding:14px;font-size:14px;white-space:pre-line;color:var(--musgo);border:1px dashed rgba(70,83,63,.35)}
+.obrigado{display:none;text-align:center;padding:28px 10px}
+.obrigado.on{display:block;animation:abre .6s cubic-bezier(.2,.8,.2,1)}
+@keyframes abre{from{clip-path:circle(0 at 50% 30%)}to{clip-path:circle(150% at 50% 30%)}}
+.obrigado h3{font-size:32px;margin:12px 0 8px}
+.obrigado p{color:var(--musgo);max-width:36ch;margin:0 auto 16px}
+.laco{width:84px;margin:0 auto}
+
+/* ---------- dúvidas e rodapé ---------- */
+.duvidas{padding:80px 0;background:var(--acucar)}
+.duvidas h2{font-size:clamp(32px,6vw,56px)}
+.duvidas details{border-bottom:1px solid rgba(44,48,42,.12);max-width:760px}
+.duvidas summary{cursor:pointer;list-style:none;padding:18px 36px 18px 0;font-weight:600;font-size:18px;position:relative;min-height:44px}
+.duvidas summary::-webkit-details-marker{display:none}
+.duvidas summary::after{content:"+";position:absolute;right:4px;top:12px;font:400 28px var(--f-tit);color:var(--caramelo-esc);transition:transform .2s}
+.duvidas details[open] summary::after{transform:rotate(45deg)}
+.duvidas details p{padding:0 0 18px;color:var(--musgo);max-width:60ch}
+.duvidas .lista{margin-top:24px}
+.rodape{background:var(--musgo);color:var(--acucar);padding:56px 0 110px}
+.rodape .wrap{display:grid;gap:28px}
+@media(min-width:760px){.rodape .wrap{grid-template-columns:1.2fr 1fr 1fr}}
+.rodape img{width:84px;border-radius:50%}
+.rodape h3{font-size:22px;margin-bottom:8px}
+.rodape p,.rodape a{font-size:15px;color:#e6e9dd}
+.rodape a{text-underline-offset:4px}
+.rodape .pequeno{font-size:13px;opacity:.75;grid-column:1/-1}
+.rodape details summary{cursor:pointer;font-size:14px}
+.rodape details p{margin-top:8px;font-size:13px;max-width:60ch}
+
+/* ---------- botão fixo no celular ---------- */
+.zap-fixo{position:fixed;left:16px;right:16px;bottom:max(14px,env(safe-area-inset-bottom));z-index:50;box-shadow:0 12px 24px -10px rgba(44,48,42,.55);transform:translateY(140%);transition:transform .35s ease}
+.zap-fixo.on{transform:none}
+@media(min-width:900px){.zap-fixo{left:auto;right:28px;width:auto}}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition-duration:.2s !important;animation-duration:.2s !important}
+}
+</style>
+</head>
+<body>
+
+<header class="topo" id="topo">
+  <a class="marca" href="#inicio" aria-label="Silvani Vaz, voltar ao topo"><img src="img/logo.png" width="44" height="44" alt="Logo Silvani Vaz Doces e Salgados">Silvani Vaz</a>
+  <nav aria-label="Seções">
+    <a href="#mesa">Combos</a>
+    <a href="#cardapio">Cardápio</a>
+    <a href="#encomenda">Encomenda</a>
+    <a href="#duvidas">Dúvidas</a>
+  </nav>
+  <a class="btn btn-zap" data-zap="topo" href="#">Pedir pelo WhatsApp</a>
+</header>
+
+<main>
+<!-- WOW 1: o selo é confeitado com o bico de confeitar -->
+<section class="heroi" id="inicio">
+  <svg id="chantilly" aria-hidden="true"></svg>
+  <div class="wrap heroi-grade">
+    <div class="selo" aria-hidden="true">
+      <svg viewBox="0 0 600 600" id="seloSvg">
+        <defs>
+          <path id="arcoTxt" d="M300,300 m-228,0 a228,228 0 1,1 456,0 a228,228 0 1,1 -456,0"/>
+          <mask id="mTxt"><circle id="revTxt" cx="300" cy="300" r="228" fill="none" stroke="#fff" stroke-width="56" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" transform="rotate(180 300 300)"/></mask>
+          <symbol id="pitanga" viewBox="-12 -12 24 24">
+            <path d="M0-11 3-4 10-6 5 0 10 6 3 4 0 11-3 4-10 6-5 0-10-6-3-4Z" fill="#f6f3ea" stroke="#c49a6c" stroke-width="1.1" stroke-linejoin="round"/>
+            <circle r="2.6" fill="#e6d8c2"/>
+          </symbol>
+          <clipPath id="cLogo"><circle cx="300" cy="300" r="166"/></clipPath>
+        </defs>
+        <circle id="aro1" cx="300" cy="300" r="272" fill="none" stroke="#46533f" stroke-width="2" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" transform="rotate(180 300 300)"/>
+        <circle id="aro2" cx="300" cy="300" r="186" fill="none" stroke="#46533f" stroke-width="1.6" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" transform="rotate(180 300 300)"/>
+        <g mask="url(#mTxt)">
+          <text font-family="Figtree, sans-serif" font-weight="600" font-size="27" letter-spacing="9" fill="#46533f"><textPath href="#arcoTxt" startOffset="0">SILVANI VAZ • DOCES E SALGADOS • DESDE 2001 •</textPath></text>
+        </g>
+        <g id="pitangas"></g>
+        <g id="carimbo" style="opacity:0;transform-origin:300px 300px">
+                    <image href="img/logo.png" x="132" y="132" width="336" height="336" clip-path="url(#cLogo)"/>
+        </g>
+        <g id="bico" style="opacity:0">
+          <!-- saco de confeitar + bico de inox -->
+          <path d="M-30-120 L30-120 L9-34 L-9-34Z" fill="#fbfaf6" stroke="#46533f" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M-30-120 Q0-132 30-120" fill="none" stroke="#46533f" stroke-width="2.2"/>
+          <path d="M-14-96 L-6-48" stroke="#c49a6c" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+          <path d="M-9-34 L9-34 L5-12 L0-6 L-5-12Z" fill="#cfd3cc" stroke="#46533f" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M-5-12 L-3-24 M0-6 L0-24 M5-12 L3-24" stroke="#46533f" stroke-width="1.2"/>
+        </g>
+      </svg>
+    </div>
+    <div class="heroi-txt">
+      <h1>Doces e salgados pra mesa da casa, da empresa e da festa</h1>
+      <p class="sub">Combos de café, lanche e festa, bolos e docinhos por encomenda. Você monta o pedido aqui e manda pelo WhatsApp.</p>
+      <div class="acoes">
+        <a class="btn btn-zap" data-zap="heroi" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>Pedir pelo WhatsApp</a>
+        <a class="btn btn-linha" href="#mesa">Ver os combos</a>
+      </div>
+      <p class="info"><span class="ponto-aberto" aria-hidden="true"></span><span id="statusAberto">Atendimento das 7h às 18h</span></p>
+    </div>
+  </div>
+  <p class="dica-toque" aria-hidden="true">Toque na tela pra confeitar</p>
+</section>
+
+<!-- WOW 2: a rolagem põe a mesa -->
+<div class="mesa-intro" id="mesa">
+  <div class="wrap">
+    <h2>Café, lanche ou festa: a mesa já vem pronta</h2>
+    <p>Role a tela e veja cada combo chegar na mesa. Os itens e valores de cada um estão no catálogo do WhatsApp.</p>
+  </div>
+</div>
+<section class="mesa-sec" id="mesaSec" aria-label="Combos de café, lanche e festa">
+  <div class="mesa-palco">
+    <div class="toalha" id="toalha" aria-hidden="true">
+      <div class="pano pano-cafe on"></div>
+      <div class="pano pano-lanche"></div>
+      <div class="pano pano-festa"></div>
+    </div>
+    <div class="mesa-txt">
+      <div class="mesa-abas" role="tablist" aria-label="Escolha o combo">
+        <button role="tab" aria-selected="true" data-i="0">Café</button>
+        <button role="tab" aria-selected="false" data-i="1">Lanche</button>
+        <button role="tab" aria-selected="false" data-i="2">Festa</button>
+      </div>
+      <div class="troca" id="mesaTroca">
+        <h2 id="mesaTit">Combos de Café</h2>
+        <p id="mesaDesc"></p>
+        <a class="btn btn-zap" id="mesaBtn" href="#">Pedir combo de café</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- cardápio -->
+<section class="cardapio" id="cardapio">
+  <div class="wrap">
+    <h2>O cardápio da casa</h2>
+    <p>Três menus pra montar do seu jeito. Peça o menu completo com sabores e valores pelo WhatsApp.</p>
+    <div class="menus">
+      <article class="menu">
+        <img src="img/doces.jpg" width="590" height="366" alt="Bandeja de docinhos em forminhas: brigadeiros, beijinhos e docinhos coloridos" loading="lazy">
+        <div><h3>Doces</h3><p>Docinhos de festa em forminha, pra mesa do aniversário ou pra levar de mimo.</p><a data-zap="doces" href="#">Pedir o menu de doces</a></div>
+      </article>
+      <article class="menu">
+        <img src="img/salgados.jpg" width="590" height="366" alt="Salgadinhos fritos sortidos: coxinhas, bolinhas de queijo e risoles" loading="lazy">
+        <div><h3>Salgados</h3><p>Salgadinhos sortidos pra festa, reunião ou aquele lanche da tarde.</p><a data-zap="salgados" href="#">Pedir o menu de salgados</a></div>
+      </article>
+      <article class="menu">
+        <img src="img/bolos.jpg" width="590" height="366" alt="Bolo branco confeitado com chantilly e morangos" loading="lazy">
+        <div><h3>Bolos</h3><p>Bolos confeitados pra aniversário e data especial.</p><a data-zap="bolos" href="#">Pedir o menu de bolos</a></div>
+      </article>
+    </div>
+    <div class="catalogo">
+      <a class="btn btn-linha" href="https://wa.me/c/556696258876" target="_blank" rel="noopener">Abrir o catálogo no WhatsApp</a>
+      <a class="btn btn-linha" href="https://www.instagram.com/silvanivazdocesesalgados/" target="_blank" rel="noopener">Ver fotos no Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- WOW 3: monte a bandeja -->
+<section class="bandeja-sec" id="encomenda">
+  <div class="wrap">
+    <h2>Monte a bandeja da sua encomenda</h2>
+    <p>Diga quantas pessoas e o que não pode faltar. A bandeja enche na hora e o pedido sai pronto pro WhatsApp.</p>
+    <div class="bandeja-grade">
+      <div class="bandeja-vis">
+        <div class="bandeja" id="bandeja" role="img" aria-label="Bandeja ilustrando a encomenda">
+          <span class="contador" id="contador">30 pessoas</span>
+          <div class="boleira" id="boleira"><img src="img/bolos.jpg" alt="" width="590" height="366"></div>
+        </div>
+        <p class="legenda">Cada forminha é uma pessoa, só pra você visualizar. A quantidade certa a Silvani te ajuda a calcular.</p>
+      </div>
+      <div>
+        <form class="form" id="form" novalidate>
+          <fieldset>
+            <legend><span class="passo" id="passo1">Passo 1 de 3</span><br>Qual é a ocasião?</legend>
+            <div class="chips" id="ocasiao">
+              <label class="chip"><input type="radio" name="oc" value="Aniversário" checked><span>Aniversário</span></label>
+              <label class="chip"><input type="radio" name="oc" value="Café da empresa"><span>Café da empresa</span></label>
+              <label class="chip"><input type="radio" name="oc" value="Reunião de família"><span>Reunião de família</span></label>
+              <label class="chip"><input type="radio" name="oc" value="Outra ocasião"><span>Outra</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend><span class="passo">Passo 2 de 3</span><br>Quantas pessoas e o que vai ter?</legend>
+            <div class="faixa"><input type="range" id="pessoas" min="10" max="150" step="5" value="30" aria-label="Número de pessoas"><output id="pessoasOut" for="pessoas">30</output></div>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="it" value="doces" checked><span>Doces</span></label>
+              <label class="chip"><input type="checkbox" name="it" value="salgados" checked><span>Salgados</span></label>
+              <label class="chip"><input type="checkbox" name="it" value="bolo"><span>Bolo</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend><span class="passo">Passo 3 de 3</span><br>Pra quando e em nome de quem?</legend>
+            <div class="duas">
+              <label class="campo">Data<input type="text" id="data" inputmode="numeric" placeholder="dd/mm" maxlength="10" autocomplete="off"></label>
+              <label class="campo">Seu nome<input type="text" id="nome" autocomplete="given-name" maxlength="40"></label>
+            </div>
+          </fieldset>
+          <div class="previa" id="previa" aria-live="polite"></div>
+          <button class="btn btn-zap" type="submit">Mandar a encomenda pelo WhatsApp</button>
+        </form>
+        <div class="obrigado form" id="obrigado" tabindex="-1">
+          <svg class="laco" viewBox="0 0 84 60" aria-hidden="true"><path d="M42 30C30 10 6 6 8 24s28 10 34 6Zm0 0c12-20 36-24 34-6s-28 10-34 6Z" fill="#c49a6c"/><path d="M38 30 26 56M46 30l12 26" stroke="#8f6434" stroke-width="5" stroke-linecap="round"/><circle cx="42" cy="30" r="6" fill="#8f6434"/></svg>
+          <h3>Pedido montado!</h3>
+          <p>Abrimos o WhatsApp com tudo escrito. É só tocar em enviar. A Silvani confirma sabores, valores e a data por lá.</p>
+          <button class="btn btn-linha" type="button" id="refazer">Montar outra encomenda</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- dúvidas -->
+<section class="duvidas" id="duvidas">
+  <div class="wrap">
+    <h2>Dúvidas</h2>
+    <div class="lista">
+      <details><summary>Como faço uma encomenda?</summary><p>Pelo WhatsApp (66) 9625-8876. Você pode montar o pedido aqui no site, na bandeja, e ele já chega escrito lá.</p></details>
+      <details><summary>Onde vejo os preços?</summary><p>No catálogo do WhatsApp da Silvani, com os combos e os menus de doces, salgados e bolos.</p></details>
+      <details><summary>Tem opção pra café ou lanche da empresa?</summary><p>Tem os Combos de Café e os Combos de Lanche. Diga quantas pessoas e o horário que a Silvani monta o pedido.</p></details>
+      <details><summary>Fazem bolo de aniversário?</summary><p>Sim, tem o Menu de Bolos e os Combos de Festa, que juntam bolo, doces e salgados.</p></details>
+      <details><summary>Qual é o horário de atendimento?</summary><p>Das 7h às 18h.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <div>
+      <img src="img/logo.png" width="84" height="84" alt="Logo Silvani Vaz Doces e Salgados" loading="lazy">
+      <p style="margin-top:12px">Silvani Vaz Doces e Salgados. Desde 2001.</p>
+    </div>
+    <div>
+      <h3>Encomendas</h3>
+      <p><a data-zap="rodape" href="#">WhatsApp (66) 9625-8876</a></p>
+      <p><a href="tel:+5566996258876">Ligar: (66) 9625-8876</a></p>
+      <p><a href="https://wa.me/c/556696258876" target="_blank" rel="noopener">Catálogo no WhatsApp</a></p>
+      <p><a href="https://www.instagram.com/silvanivazdocesesalgados/" target="_blank" rel="noopener">Instagram @silvanivazdocesesalgados</a></p>
+    </div>
+    <div>
+      <h3>Horário</h3>
+      <p>Das 7h às 18h</p>
+    </div>
+    <div class="pequeno">
+      <details><summary>Privacidade</summary><p>Este site não guarda nenhum dado. O formulário da encomenda só monta a mensagem e abre o seu WhatsApp; nada é enviado sem você tocar em enviar. Não usamos cookies.</p></details>
+      <p style="margin-top:10px">Site feito pela GuDev.</p>
+    </div>
+  </div>
+</footer>
+
+<div hidden id="fotos"><img src="img/cafe.jpg" data-k="cafe" alt="" width="590" height="366"><img src="img/lanche.jpg" data-k="lanche" alt="" width="590" height="366"><img src="img/festa.jpg" data-k="festa" alt="" width="590" height="366"><img src="img/doces.jpg" data-k="doces" alt="" width="590" height="366"><img src="img/salgados.jpg" data-k="salgados" alt="" width="590" height="366"><img src="img/bolos.jpg" data-k="bolos" alt="" width="590" height="366"></div>
+
+<a class="btn btn-zap zap-fixo" id="zapFixo" data-zap="fixo" href="#">Pedir pelo WhatsApp</a>
+
+<script>
+/* ====== Silvani Vaz: comportamento ====== */
+(function(){
+'use strict';
+var FONE='556696258876';
+var FOTO={};document.querySelectorAll('#fotos img').forEach(function(i){FOTO[i.dataset.k]=i.src});
+var embed=/[?&]embed\b/.test(location.search);
+var reduz=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var msgs={
+  topo:'Olá, Silvani! Vim pelo site e quero fazer uma encomenda.',
+  heroi:'Olá, Silvani! Vim pelo site e quero fazer uma encomenda.',
+  fixo:'Olá, Silvani! Vim pelo site e quero fazer uma encomenda.',
+  rodape:'Olá, Silvani! Vim pelo site e quero fazer uma encomenda.',
+  doces:'Olá, Silvani! Vim pelo site. Pode me mandar o menu de doces com os valores?',
+  salgados:'Olá, Silvani! Vim pelo site. Pode me mandar o menu de salgados com os valores?',
+  bolos:'Olá, Silvani! Vim pelo site. Pode me mandar o menu de bolos com os valores?'
+};
+function zap(t){return 'https://wa.me/'+FONE+'?text='+encodeURIComponent(t)}
+document.querySelectorAll('[data-zap]').forEach(function(a){
+  a.href=zap(msgs[a.getAttribute('data-zap')]);a.target='_blank';a.rel='noopener';
+});
+
+/* aberto agora? (só pelo horário das 7h às 18h) */
+(function(){
+  var h=new Date().getHours(), el=document.getElementById('statusAberto');
+  if(h>=7&&h<18) el.textContent='Atendimento agora, das 7h às 18h';
+})();
+
+/* topo e botão fixo */
+var topo=document.getElementById('topo'), fixo=document.getElementById('zapFixo'), heroi=document.getElementById('inicio');
+function onScrollUI(){
+  var y=scrollY;
+  topo.classList.toggle('solido', y>40);
+  var hb=heroi.getBoundingClientRect().bottom;
+  var rod=document.querySelector('.rodape').getBoundingClientRect().top;
+  var ms=mesaSec.getBoundingClientRect();
+  var naMesa=ms.top<innerHeight*.5&&ms.bottom>innerHeight*.5;
+  var en=document.getElementById('encomenda').getBoundingClientRect();
+  var naEnc=en.top<innerHeight*.6&&en.bottom>innerHeight*.4;
+  fixo.classList.toggle('on', hb<80 && rod>innerHeight-40 && !naMesa && !naEnc);
+}
+
+/* ====== WOW 1: o selo confeitado ====== */
+var NS='http://www.w3.org/2000/svg';
+var gP=document.getElementById('pitangas'), bico=document.getElementById('bico');
+var aro1=document.getElementById('aro1'), aro2=document.getElementById('aro2'), revTxt=document.getElementById('revTxt'), carimbo=document.getElementById('carimbo');
+var N=44, R=272, pits=[];
+for(var i=0;i<N;i++){
+  var a=Math.PI+ (i/N)*Math.PI*2; // começa à esquerda, sentido horário (igual aos aros)
+  var u=document.createElementNS(NS,'use');
+  u.setAttribute('href','#pitanga');
+  var s=i%2?26:32;
+  u.setAttribute('width',s);u.setAttribute('height',s);
+  u.setAttribute('x',300+Math.cos(a)*R-s/2);u.setAttribute('y',300+Math.sin(a)*R-s/2);
+  u.style.transformBox='fill-box';u.style.transformOrigin='center';
+  u.style.transform='scale(0) rotate(-40deg)';
+  u.style.transition='transform .5s cubic-bezier(.3,1.7,.5,1)';
+  gP.appendChild(u);pits.push(u);
+}
+function finalSelo(){
+  aro1.style.strokeDashoffset=0;aro2.style.strokeDashoffset=0;revTxt.style.strokeDashoffset=0;
+  pits.forEach(function(p){p.style.transition='none';p.style.transform='none'});
+  carimbo.style.opacity=1;bico.style.opacity=0;heroi.classList.add('pronto');
+}
+function confeitar(){
+  var T=2300, t0=null, mostrados=0;
+  bico.style.opacity=1;
+  function passo(ts){
+    if(!t0)t0=ts;
+    var k=Math.min(1,(ts-t0)/T), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    var ang=Math.PI+e*Math.PI*2;
+    var x=300+Math.cos(ang)*(R+4), y=300+Math.sin(ang)*(R+4);
+    // o bico aponta pro aro, o saco fica pra fora
+    var rot=ang*180/Math.PI+90;
+    bico.setAttribute('transform','translate('+x+' '+y+') rotate('+rot+') translate(0 '+(Math.sin(ts/55)*1.5)+')');
+    aro1.style.strokeDashoffset=1-e;
+    aro2.style.strokeDashoffset=1-Math.min(1,e*1.15);
+    revTxt.style.strokeDashoffset=1-Math.max(0,Math.min(1,e*1.08-.04));
+    var alvo=Math.floor(e*N);
+    while(mostrados<alvo){pits[mostrados].style.transform='none';mostrados++}
+    if(k<1){requestAnimationFrame(passo)}
+    else{
+      while(mostrados<N){pits[mostrados].style.transform='none';mostrados++}
+      bico.style.transition='opacity .4s';bico.style.opacity=0;
+      carimbo.animate([{opacity:0,transform:'scale(1.18)',filter:'blur(6px)'},{opacity:1,transform:'scale(.97)',filter:'blur(0)',offset:.7},{opacity:1,transform:'scale(1)'}],{duration:620,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'});
+      carimbo.style.opacity=1;
+      setTimeout(function(){heroi.classList.add('pronto')},250);
+    }
+  }
+  requestAnimationFrame(passo);
+}
+if(embed||reduz){finalSelo()}
+else{
+  var foi=false;
+  var go=function(){if(foi)return;foi=true;confeitar()};
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){setTimeout(go,150)})}
+  setTimeout(go,900);
+}
+
+/* toque no topo = uma pitanga de chantilly onde o dedo tocou */
+var chant=document.getElementById('chantilly'), nPit=0;
+heroi.addEventListener('pointerdown',function(ev){
+  if(ev.target.closest('a,button'))return;
+  var r=heroi.getBoundingClientRect();
+  chant.setAttribute('viewBox','0 0 '+r.width+' '+r.height);
+  var u=document.createElementNS(NS,'use'), s=26+Math.random()*16;
+  u.setAttribute('href','#pitanga');u.setAttribute('width',s);u.setAttribute('height',s);
+  u.setAttribute('x',ev.clientX-r.left-s/2);u.setAttribute('y',ev.clientY-r.top-s/2);
+  u.style.transformBox='fill-box';u.style.transformOrigin='center';
+  chant.appendChild(u);
+  u.animate([{transform:'scale(0) rotate(-60deg)'},{transform:'scale(1.15) rotate(5deg)',offset:.6},{transform:'scale(1) rotate(0)'}],{duration:480,easing:'ease-out'});
+  nPit++; if(chant.childNodes.length>28) chant.removeChild(chant.firstChild);
+});
+
+/* ====== WOW 2: põe a mesa ====== */
+var MESAS=[
+  {tit:'Combos de Café',desc:'Pra começar o dia: reunião da manhã, recepção de cliente ou o café da família no domingo.',btn:'Pedir combo de café',msg:'Olá, Silvani! Vim pelo site e quero saber dos Combos de Café.',
+   pratos:[{img:'cafe',x:38,y:44,w:50},{img:'doces',x:78,y:24,w:30},{img:'bolos',x:80,y:72,w:28}],card:{x:10,y:80,t:'Combos de Café'},guard:{x:62,y:4,r:-18}},
+  {tit:'Combos de Lanche',desc:'Pro meio da tarde: lanche da equipe, aniversário na escola ou visita que chegou sem avisar.',btn:'Pedir combo de lanche',msg:'Olá, Silvani! Vim pelo site e quero saber dos Combos de Lanche.',
+   pratos:[{img:'lanche',x:60,y:46,w:52},{img:'salgados',x:20,y:26,w:32},{img:'cafe',x:22,y:76,w:26}],card:{x:56,y:84,t:'Combos de Lanche'},guard:{x:4,y:50,r:12}},
+  {tit:'Combos de Festa',desc:'Bolo, doces e salgados juntos, pra a festa sair sem correria.',btn:'Pedir combo de festa',msg:'Olá, Silvani! Vim pelo site e quero saber dos Combos de Festa.',
+   pratos:[{img:'festa',x:46,y:40,w:48},{img:'doces',x:16,y:74,w:30},{img:'salgados',x:82,y:74,w:30}],card:{x:66,y:8,t:'Combos de Festa'},guard:{x:2,y:6,r:-8}}
+];
+var toalha=document.getElementById('toalha'), panos=toalha.querySelectorAll('.pano'), mesaSec=document.getElementById('mesaSec');
+var abas=document.querySelectorAll('.mesa-abas button'), troca=document.getElementById('mesaTroca');
+var mTit=document.getElementById('mesaTit'), mDesc=document.getElementById('mesaDesc'), mBtn=document.getElementById('mesaBtn');
+var GUARD='<svg viewBox="0 0 100 100"><path d="M8 18 92 8 86 92 14 84Z" fill="#fbfaf6" stroke="rgba(44,48,42,.18)" stroke-width="1.5"/><path d="M8 18 86 92" stroke="rgba(44,48,42,.12)" stroke-width="1.5"/><path d="M20 22 84 14" stroke="#c49a6c" stroke-width="2" opacity=".6"/></svg>';
+var conjuntos=MESAS.map(function(m,ci){
+  var els=[];
+  m.pratos.forEach(function(p,pi){
+    var d=document.createElement('div');d.className='prato';
+    var im=new Image();im.src=FOTO[p.img];im.alt='';im.width=590;im.height=366;d.appendChild(im);
+    d.dataset.w=p.w; d.dataset.x=p.x; d.dataset.y=p.y;
+    // de onde o prato vem (e pra onde vai): da borda mais próxima
+    var dx=p.x<50?-130:130, dy=(p.y<50?-40:40);
+    d.dataset.fx=dx; d.dataset.fy=dy; d.dataset.rot=(pi%2?1:-1)*(25+pi*12);
+    toalha.appendChild(d); els.push(d);
+  });
+  var c=document.createElement('div');c.className='cartao';c.innerHTML='<small>Silvani Vaz</small>'+m.card.t;
+  c.style.left=m.card.x+'%';c.style.top=m.card.y+'%';c.dataset.fx=0;c.dataset.fy=160;c.dataset.rot=-8;c.dataset.card=1;
+  toalha.appendChild(c);els.push(c);
+  var g=document.createElement('div');g.className='guardanapo';g.innerHTML=GUARD;
+  g.style.left=m.guard.x+'%';g.style.top=m.guard.y+'%';g.dataset.fx=-140;g.dataset.fy=-60;g.dataset.rot=m.guard.r;g.dataset.g=1;
+  toalha.appendChild(g);els.push(g);
+  return els;
+});
+function layoutPratos(){
+  var r=toalha.getBoundingClientRect(), base=Math.min(r.width,r.height*1.25);
+  conjuntos.forEach(function(els){els.forEach(function(d){
+    if(d.dataset.w){
+      var w=base*d.dataset.w/100; d.style.width=w+'px';d.style.height=w+'px';
+      d.style.left=(r.width*d.dataset.x/100-w/2)+'px'; d.style.top=(r.height*d.dataset.y/100-w/2)+'px';
+    }
+  })});
+}
+var atual=-1, emFila=null, animando=false;
+function posFora(d){var fx=+d.dataset.fx, fy=+d.dataset.fy;return 'translate('+fx+'vw,'+fy+'vh) rotate('+d.dataset.rot+'deg)'}
+function posDentro(d,lp){
+  var rot=d.dataset.card?-3:(d.dataset.g?+d.dataset.rot:(lp||0)*(+d.dataset.rot>0?14:-14));
+  return 'translate(0,0) rotate('+rot+'deg)';
+}
+conjuntos.forEach(function(els){els.forEach(function(d){d.style.transform=posFora(d);d.style.opacity=0})});
+function mostraMesa(i, imediato){
+  if(i===atual)return;
+  if(animando&&!imediato){emFila=i;return}
+  var ant=atual; atual=i; animando=true;
+  abas.forEach(function(b,bi){b.setAttribute('aria-selected',bi===i?'true':'false')});
+  panos.forEach(function(p,pi){p.classList.toggle('on',pi===i)});
+  if(ant>=0) conjuntos[ant].forEach(function(d){d.style.transform=posFora(d);d.style.opacity=0});
+  var m=MESAS[i];
+  var aplica=function(){mTit.textContent=m.tit;mDesc.textContent=m.desc;mBtn.textContent=m.btn;mBtn.href=zap(m.msg);mBtn.target='_blank';mBtn.rel='noopener';troca.classList.remove('sai')};
+  if(imediato){aplica()}else{troca.classList.add('sai');setTimeout(aplica,300)}
+  conjuntos[i].forEach(function(d,k){
+    if(imediato){d.style.transition='none'}
+    setTimeout(function(){d.style.opacity=1;d.style.transform=posDentro(d,0)}, imediato?0:(ant>=0?260:0)+k*110);
+    if(imediato){d.offsetWidth;d.style.transition=''}
+  });
+  setTimeout(function(){animando=false;if(emFila!==null&&emFila!==atual){var f=emFila;emFila=null;mostraMesa(f)}else emFila=null}, imediato?0:900);
+}
+var largAnt=innerWidth;
+layoutPratos();
+function progressoMesa(){
+  var r=mesaSec.getBoundingClientRect(), total=r.height-innerHeight;
+  var p=Math.max(0,Math.min(1,-r.top/total));
+  // 3 estágios com folga de 8% perto da troca (não fica trocando quando a pessoa para no meio)
+  var bruto=p*3, alvo=atual<0?Math.min(2,Math.floor(bruto)):atual;
+  while(alvo<2&&bruto>alvo+1.08)alvo++;
+  while(alvo>0&&bruto<alvo-.08)alvo--;
+  if(atual<0) mostraMesa(alvo,true); else mostraMesa(alvo);
+  // giro sutil dos pratos dentro do estágio
+  var local=bruto-Math.floor(Math.min(bruto,2.999));
+  if(!animando) conjuntos[atual].forEach(function(d){if(d.dataset.w)d.style.transform=posDentro(d,local-.5)});
+}
+abas.forEach(function(b){b.addEventListener('click',function(){
+  var i=+b.dataset.i, r=mesaSec.getBoundingClientRect(), total=r.height-innerHeight;
+  var y=scrollY+r.top+total*((i+.5)/3);
+  scrollTo({top:y,behavior:reduz?'auto':'smooth'});
+  mostraMesa(i);
+})});
+if(embed){mesaSec.style.height='auto';document.querySelector('.mesa-palco').style.position='relative';mostraMesa(0,true)}
+
+/* ====== WOW 3: a bandeja ====== */
+var bandeja=document.getElementById('bandeja'), boleira=document.getElementById('boleira');
+var pessoas=document.getElementById('pessoas'), pOut=document.getElementById('pessoasOut'), contador=document.getElementById('contador');
+var form=document.getElementById('form'), previa=document.getElementById('previa'), obrigado=document.getElementById('obrigado');
+var cups=[];
+function semente(i){var x=Math.sin(i*99.13)*43758.5453;return x-Math.floor(x)}
+function itens(){return Array.prototype.map.call(form.querySelectorAll('input[name=it]:checked'),function(c){return c.value})}
+function desenhaBandeja(){
+  var n=+pessoas.value, it=itens(), temBolo=it.indexOf('bolo')>=0;
+  var temDoce=it.indexOf('doces')>=0, temSal=it.indexOf('salgados')>=0;
+  pOut.textContent=n; contador.textContent=n+' pessoas';
+  boleira.classList.toggle('on',temBolo);
+  var W=bandeja.clientWidth, H=bandeja.clientHeight, pad=W*.06;
+  // gera posições num favo de mel que cabe n forminhas (pulando o centro se tiver bolo)
+  var area=(W-2*pad)*(H-2*pad)-(temBolo?Math.PI*Math.pow(W*.2,2):0);
+  var d=Math.sqrt(area/(n*0.87)), pos=[];
+  for(var tent=0;tent<6&&pos.length<n;tent++){
+    pos=[];
+    var dy=d*.866, linhas=Math.floor((H-2*pad-d)/dy)+1;
+    var oy=(H-(linhas-1)*dy)/2, colsBase=Math.floor((W-2*pad-d)/d)+1;
+    for(var l=0;l<linhas;l++){
+      var cols=colsBase-(l%2);
+      var ox=(W-(cols-1)*d)/2;
+      for(var c=0;c<cols;c++){
+        var x=ox+c*d, y=oy+l*dy;
+        if(temBolo&&Math.hypot(x-W/2,y-H/2)<W*.2+d*.45)continue;
+        pos.push([x,y]);
+      }
+    }
+    if(pos.length<n)d*=.94;
+  }
+  // ordem: do centro pra fora, pra encher bonito
+  pos.sort(function(a,b){return Math.hypot(a[0]-W/2,(a[1]-H/2)*1.3)-Math.hypot(b[0]-W/2,(b[1]-H/2)*1.3)});
+  var tam=d*.9;
+  while(cups.length<150){
+    var el=document.createElement('div');el.className='forminha';el.appendChild(document.createElement('i'));
+    bandeja.appendChild(el);cups.push(el);
+  }
+  cups.forEach(function(el,k){
+    if(k<n&&pos[k]){
+      var sal=temSal&&(!temDoce||(k%2===1));
+      var vazio=!temDoce&&!temSal;
+      el.classList.toggle('sal',sal);
+      var ii=el.firstChild;
+      ii.style.backgroundImage=vazio?'none':'url("'+FOTO[sal?'salgados':'doces']+'")';
+      ii.style.backgroundPosition=(12+semente(k)*76).toFixed(0)+'% '+(15+semente(k+50)*70).toFixed(0)+'%';
+      el.style.width=el.style.height=tam+'px';
+      el.style.left=pos[k][0]+'px';el.style.top=pos[k][1]+'px';
+      el.style.transitionDelay=(Math.min(k,60)*6)+'ms';
+      el.classList.add('on');
+    }else{el.style.transitionDelay='0ms';el.classList.remove('on')}
+  });
+  escrevePrevia();
+}
+function dataLimpa(){
+  var v=document.getElementById('data').value.replace(/[^\d\/]/g,'').trim();
+  var m=v.match(/^(\d{1,2})\/?(\d{1,2})(?:\/?(\d{2,4}))?$/);
+  if(!m)return v;
+  return ('0'+m[1]).slice(-2)+'/'+('0'+m[2]).slice(-2)+(m[3]?'/'+m[3]:'');
+}
+function mensagem(){
+  var oc=(form.querySelector('input[name=oc]:checked')||{}).value||'Encomenda';
+  var it=itens(), nome=document.getElementById('nome').value.trim(), data=dataLimpa();
+  var nomes={doces:'doces',salgados:'salgados',bolo:'bolo'};
+  var lista=it.map(function(x){return nomes[x]});
+  var txt='Olá, Silvani! Vim pelo site e quero fazer uma encomenda.\n';
+  txt+='\n• Ocasião: '+oc;
+  txt+='\n• Pessoas: cerca de '+pessoas.value;
+  txt+='\n• Quero: '+(lista.length?lista.join(', ').replace(/, ([^,]*)$/,' e $1'):'ainda não sei, quero sugestão');
+  if(data)txt+='\n• Data: '+data;
+  if(nome)txt+='\n• Nome: '+nome;
+  txt+='\n\nPode me passar as opções e os valores?';
+  return txt;
+}
+function escrevePrevia(){previa.textContent=mensagem()}
+pessoas.addEventListener('input',desenhaBandeja);
+form.addEventListener('change',desenhaBandeja);
+form.addEventListener('input',function(e){if(e.target.type==='text')escrevePrevia()});
+form.addEventListener('submit',function(e){
+  e.preventDefault();
+  window.open(zap(mensagem()),'_blank','noopener');
+  form.style.display='none';obrigado.classList.add('on');obrigado.focus({preventScroll:true});
+});
+document.getElementById('refazer').addEventListener('click',function(){obrigado.classList.remove('on');form.style.display='';});
+
+/* ====== rolagem ====== */
+var pedido=false;
+function tick(){pedido=false;onScrollUI();if(!embed)progressoMesa()}
+function pede(){if(!pedido){pedido=true;requestAnimationFrame(tick)}}
+addEventListener('scroll',pede,{passive:true});
+setInterval(pede,500);
+addEventListener('resize',function(){
+  if(innerWidth===largAnt)return; largAnt=innerWidth;
+  layoutPratos();desenhaBandeja();
+});
+desenhaBandeja();tick();
+})();
+</script>
+</body>
+</html>

@@ -184,3 +184,9 @@ Nenhum fechou ainda. **Clientes reais na seção de cases: nenhum.** Quando o pr
 - **Davi 26:** trabalho de escola do Davi (`sites/presidente-davi-26/`), nem é GuDev.
 - **Âncora:** relojoaria fictícia (`sites/ancora/`, 25/11/2026), feita quando o Davi pediu "me surpreenda de novo, pode usar 3D". Relógio esqueleto em Three.js (v2 do vídeo de referência, 133 peças), lupa de relojoeiro, desmontagem peça por peça na rolagem, timegrapher pra regular. Conceito, nunca case; todos os WhatsApp vão pra GuDev ("quero um site assim").
 - **Névoa:** perfumaria fictícia (`sites/nevoa/`, 24/11/2026), feita quando o Davi pediu "um site de sua escolha pra mostrar seu nível atual". Conceito, nunca case. O WhatsApp do frasco abre sem número (a pessoa escolhe pra quem mandar); o "Quero um site assim" vai pra GuDev.
+
+## Silvani Vaz Doces e Salgados · lead (27/11/2026)
+- Doces, salgados e bolos por encomenda, WhatsApp Business verificado (66) 9625-8876 (MT), Instagram @silvanivazdocesesalgados, selo "desde 2001", atendimento 7h às 18h. Catálogo: Combos de Lanche, Café e Festa; Menus de Doces, Salgados e Bolos.
+- Sem site e sem perfil no Google achado na busca.
+- Prévia em `sites/silvani-vaz` (selo confeitado, põe a mesa, monte a bandeja). Faltas no README da pasta. Mensagem de apresentação escrita na conversa de 27/11 (abaixo).
+- Status: prévia pronta, mensagem ainda não enviada.
