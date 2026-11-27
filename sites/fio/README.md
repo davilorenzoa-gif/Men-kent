@@ -16,6 +16,13 @@
 - Paleta: ferro `#0E0E0F`, papel `#ECE6DC`, latão `#B89058`, brasa `#E5581F` (só no calor).
 - Fontes: Big Shoulders Display (títulos, cara de oficina) + Archivo (texto) + IBM Plex Mono (rótulos).
 
+## v2 (27/11, "a faca está toda preta" + "você pode mais")
+- **Preto consertado:** o app bloqueia `fetch` de `data:` (CSP); o HDRI agora é decodificado do base64 com `EXRLoader.parse`, e um `RoomEnvironment` fica de reserva desde o 1º quadro. Testado com `connect-src 'none'`.
+- **Bloom** (EffectComposer + UnrealBloomPass): brasa, faíscas e o brilho do fio acendem de verdade; fraco no "Monte a sua" pra não estourar o estúdio.
+- **"FIO" em 3D** atrás da faca, em duas metades: o risco de luz corta o nome na intro e, na rolagem, as metades se abrem e caem pra trás.
+- **Forja de verdade:** bigorna 3D embaixo do tarugo e **martelo que bate guiado pela rolagem** (12 pancadas, faísca em cada uma, tremor). Halo de brasa dentro da cena.
+- Bevel do fio mais acetinado (não some no escuro) e vapor/faísca só dentro do processo.
+
 ## Os 3 WOWs
 1. **O fio corta o nome:** a faca em 3D entra deslizando, um brilho corre pelo fio do cabo até a ponta e o "FIO" gigante atrás dela é cortado em dois na mesma linha. Depois a luz acompanha o dedo.
 2. **Do tarugo à lâmina (rolagem):** rolar pra baixo "rebobina" a faca de volta a um tarugo em brasa; daí em 5 passos: dois aços → dobras (contador 2 → 256 camadas) → forja (o bloco vira lâmina, faísca a cada martelada) → têmpera (vapor, esfria) → ataque ácido (o desenho do damasco aparece, entram cabo e rebites). A página ganha o brilho da brasa atrás da peça.

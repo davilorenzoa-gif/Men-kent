@@ -327,3 +327,7 @@ Palavras: bom dia, apresentação da GuDev, administrativo, encaminhar pro respo
 ## 27/11/2026: Fio, site livre com Poly Haven
 Palavras: Fio, cutelaria, faca, damasco, aço carbono, inox, petty, chef, churrasco, pau-ferro, ipê, micarta, rebites, gravação na lâmina, afiar, pedra 1000/6000, teste do papel, tarugo, brasa, dobras, camadas, forja, faísca, têmpera, vapor, percloreto, Poly Haven, HDRI workshop, HDRI studio, environmentRotation, lâmina paramétrica, âncoras, canvas fixo, esbuild.
 O Davi pediu "um site aleatório pra ver seu nível, use o Poly Haven". Feito `sites/fio/` (prévia `fio-arquivo-unico.html`, 1,3 MB, abre offline). Tudo no README da pasta.
+
+## 27/11/2026: Fio v2 (faca preta + "você pode mais")
+Palavras: faca preta, tudo preto, CSP, connect-src, fetch de data URL, EXRLoader.parse, RoomEnvironment reserva, bloom, UnrealBloomPass, EffectComposer, bigorna, martelo, pancadas na rolagem, FIO 3D, metades, risco de luz.
+O Davi viu a faca toda preta e não curtiu o site. Causa e regra no `05`; melhorias no README de `sites/fio/`.

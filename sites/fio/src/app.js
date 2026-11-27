@@ -4,10 +4,16 @@
 // Luz: HDRIs do Poly Haven (CC0), workshop e studio, de gudev/efeitos/hdri.
 import * as THREE from 'three';
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import hdrOficina from '../../../gudev/efeitos/hdri/workshop.exr';
 import hdrEstudio from '../../../gudev/efeitos/hdri/studio.exr';
 
 const WA = '5511964650141';
+const FUNDO = 0x0e0e0f;
 let ENV_EST = +(new URLSearchParams(location.search).get('er') || 1.57), ENV_INT = +(new URLSearchParams(location.search).get('ei') || 1.25);
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
@@ -66,7 +72,7 @@ function iniciar() {
   let dprMax = Math.min(devicePixelRatio || 1, movel ? 1.6 : 1.8);
   let dpr = dprMax;
   renderer.setPixelRatio(dpr);
-  renderer.setClearColor(0x000000, 0);
+  renderer.setClearColor(0x0e0e0f, 1);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -78,12 +84,30 @@ function iniciar() {
   const envs = {};
   let envAtual = null;
   const exr = new EXRLoader();
+  // O HDRI é decodificado direto do base64, sem fetch: o visualizador do app bloqueia
+  // fetch de data URL (CSP) e, sem ambiente, metal sai preto (bug de 27/11).
   function carregaEnv(nome, url) {
-    return new Promise((ok) => exr.load(url, (t) => {
-      t.mapping = THREE.EquirectangularReflectionMapping;
-      envs[nome] = pmrem.fromEquirectangular(t).texture; t.dispose(); ok();
-    }, undefined, () => ok()));
+    try {
+      const bin = atob(url.slice(url.indexOf(',') + 1));
+      const buf = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+      const d = exr.parse(buf.buffer);
+      const t = new THREE.DataTexture(d.data, d.width, d.height, d.format, d.type);
+      t.colorSpace = d.colorSpace; t.flipY = false; t.minFilter = t.magFilter = THREE.LinearFilter;
+      t.generateMipmaps = false; t.mapping = THREE.EquirectangularReflectionMapping; t.needsUpdate = true;
+      envs[nome] = pmrem.fromEquirectangular(t).texture; t.dispose();
+    } catch (e) { console.warn('HDRI', nome, e); }
   }
+  // reserva: estúdio gerado em código, pra nunca ficar preto
+  envs.reserva = pmrem.fromScene(new RoomEnvironment(), 0.03).texture;
+  scene.environment = envs.reserva;
+
+  scene.background = new THREE.Color(FUNDO);
+  const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType }));
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.6, 0.55, 0.9);
+  composer.addPass(bloom);
+  composer.addPass(new OutputPass());
 
   // luz de apoio pro cabo (o aço vive do HDRI)
   const key = new THREE.DirectionalLight(0xfff1e0, 0.6); key.position.set(2, 3, 4); scene.add(key);
@@ -203,7 +227,7 @@ float edgeLine = (1.0 - smoothstep(0.0, 0.03, v)) * step(0.001, abs(vPv.z));
 float nLow = fbm(q*0.7 + 7.0);
 vec3 claro = vec3(0.88, 0.89, 0.90);
 vec3 escuro = vec3(0.17, 0.17, 0.18);
-vec3 cDam = mix(claro, escuro, stripe*uEtch);
+vec3 cDam = mix(claro, escuro, stripe*uEtch*(1.0 - edgeZone*0.45));
 vec3 cCarb = mix(vec3(0.50, 0.49, 0.47), vec3(0.36, 0.38, 0.42), nLow);
 cCarb = mix(cCarb, vec3(0.78), edgeZone*0.55);
 vec3 cInox = vec3(0.82, 0.84, 0.86);
@@ -222,7 +246,8 @@ float rInox = 0.17 + 0.14*fbm(vec2(vObj.x*60.0, vObj.y*1.2));
 float rPol = rDam*uSteel.x + rCarb*uSteel.y + rInox*uSteel.z;
 roughnessFactor = mix(0.82, rPol, uPolish);
 roughnessFactor = mix(roughnessFactor, 0.62, eng);
-roughnessFactor = mix(roughnessFactor, 0.06, edgeLine*uSharp);`)
+roughnessFactor = mix(roughnessFactor, max(roughnessFactor, 0.34), edgeZone*uPolish);
+roughnessFactor = mix(roughnessFactor, 0.2, edgeLine*uSharp);`)
       .replace('#include <metalnessmap_fragment>', `#include <metalnessmap_fragment>
 metalnessFactor = mix(0.3, 1.0, uPolish);`)
       .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
@@ -232,7 +257,7 @@ h *= 0.75 + 0.25*(1.0 - abs(u*2.0 - 1.0));
 vec3 bb = h < 0.5 ? mix(vec3(0.0), vec3(0.8, 0.07, 0.0), h*2.0) : mix(vec3(0.8, 0.07, 0.0), vec3(1.0, 0.40, 0.08), (h - 0.5)*2.0);
 totalEmissiveRadiance += bb * h * 1.35;
 float sweep = exp(-pow((u - uSweep)/0.04, 2.0));
-totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*0.35);`);
+totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*0.07);`);
   };
   const lamina = new THREE.Mesh(geo, matAco);
   lamina.frustumCulled = false;
@@ -296,12 +321,66 @@ totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*
   const rebX = [-0.2, -0.5, -0.8];
   for (let i = 0; i < 3; i++) rebites.add(new THREE.Mesh(geoReb, matLatao));
 
+  /* ---------------- bigorna e martelo (processo) ---------------- */
+  const matFerro = new THREE.MeshStandardMaterial({ color: 0x8a8d92, metalness: 1, roughness: 0.34 });
+  const fb = new THREE.Shape();
+  fb.moveTo(-0.72, 0); fb.lineTo(0.72, 0); fb.lineTo(0.74, -0.24);
+  fb.quadraticCurveTo(0.5, -0.3, 0.46, -0.4); fb.quadraticCurveTo(0.3, -0.62, 0.42, -0.86);
+  fb.quadraticCurveTo(0.7, -0.92, 0.78, -1.08); fb.lineTo(-0.78, -1.08);
+  fb.quadraticCurveTo(-0.7, -0.92, -0.42, -0.86); fb.quadraticCurveTo(-0.3, -0.62, -0.46, -0.4);
+  fb.quadraticCurveTo(-0.6, -0.3, -0.78, -0.28); fb.quadraticCurveTo(-1.2, -0.2, -1.5, -0.06);
+  fb.quadraticCurveTo(-1.1, 0.01, -0.72, 0);
+  const geoBig = new THREE.ExtrudeGeometry(fb, { depth: 0.56, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelOffset: -0.03, bevelSegments: 4, curveSegments: 20 });
+  geoBig.translate(0, 0, -0.28);
+  const bigorna = new THREE.Mesh(geoBig, matFerro);
+  const martelo = new THREE.Group(), martCorpo = new THREE.Group();
+  const cabeca = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.3, 32), new THREE.MeshStandardMaterial({ color: 0x55585c, metalness: 1, roughness: 0.32 }));
+  cabeca.position.set(-1.35, 0, 0);
+  const geoTop = new THREE.CylinderGeometry(0.036, 0.04, 1.3, 16); geoTop.rotateZ(Math.PI / 2);
+  martCorpo.add(cabeca); martelo.add(martCorpo);
+  // brasa: halo atrás da peça quente (entra no bloom)
+  const canHalo = document.createElement('canvas'); canHalo.width = canHalo.height = 128;
+  { const g = canHalo.getContext('2d'), gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.35, 'rgba(255,255,255,.35)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = gr; g.fillRect(0, 0, 128, 128); }
+  const halo = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canHalo), color: 0xe5581f, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
+  halo.renderOrder = -1; scene.add(halo);
+
+  /* ---------------- "FIO" em 3D, atrás da faca, cortado em duas metades ---------------- */
+  const CORTE = 0.48; // altura do corte, de baixo pra cima
+  const canTxt = document.createElement('canvas');
+  const texTxt = new THREE.CanvasTexture(canTxt); texTxt.colorSpace = THREE.SRGBColorSpace; texTxt.anisotropy = 4;
+  const matTxt = new THREE.MeshBasicMaterial({ map: texTxt, transparent: true, depthWrite: false, toneMapped: false });
+  const txt = new THREE.Group(), txtA = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), matTxt), txtB = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), matTxt);
+  function uvFaixa(m, v0, v1) { const uv = m.geometry.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setY(i, uv.getY(i) > 0.5 ? v1 : v0); uv.needsUpdate = true; }
+  uvFaixa(txtA, CORTE, 1); uvFaixa(txtB, 0, CORTE);
+  const risco = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ color: new THREE.Color(4, 3.1, 2.2), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
+  txt.add(txtA, txtB, risco); scene.add(txt);
+  let txtW = 1, txtH = 1;
+  function desenhaTexto() {
+    const w = el.corte.offsetWidth || 600, h = el.corte.offsetHeight || 300;
+    txtW = w; txtH = h;
+    canTxt.width = 2048; canTxt.height = Math.round(2048 * h / w);
+    const g = canTxt.getContext('2d'), fs = canTxt.height / 0.8;
+    g.clearRect(0, 0, canTxt.width, canTxt.height);
+    g.font = `900 ${fs}px "Big Shoulders Display", "Arial Narrow", Impact, sans-serif`;
+    g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+    const m = g.measureText('FIO');
+    const y = canTxt.height / 2 + (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
+    const gr = g.createLinearGradient(0, 0, 0, canTxt.height);
+    gr.addColorStop(0, '#34322f'); gr.addColorStop(0.5, '#292826'); gr.addColorStop(1, '#201f1d');
+    g.fillStyle = gr; g.fillText('FIO', canTxt.width / 2, y);
+    texTxt.needsUpdate = true;
+  }
+
   /* ---------------- hierarquia ---------------- */
   const raiz = new THREE.Group();     // âncora: posição + escala
   const pose = new THREE.Group();     // giros e deslizes
   const pivo = new THREE.Group();     // centraliza a faca
   pivo.add(lamina, cabo, rebites);
-  pose.add(pivo); raiz.add(pose); scene.add(raiz);
+  pose.add(pivo, bigorna, martelo); raiz.add(pose); scene.add(raiz);
+  const topo = new THREE.Mesh(geoTop, new THREE.MeshPhysicalMaterial({ map: TEX.ipe, roughness: 0.55, clearcoat: 0.2 }));
+  topo.position.set(-0.68, 0.03, 0); martCorpo.add(topo);
 
   // pedra de afiar (1000/6000) e papel do teste
   const pedra = new THREE.Group();
@@ -392,7 +471,7 @@ totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*
   addEventListener('pointermove', (e) => { ptr.x = e.clientX / innerWidth * 2 - 1; ptr.y = e.clientY / innerHeight * 2 - 1; }, { passive: true });
 
   const el = { heroi: $('#topo'), corte: $('#corte'), proc: $('#processo'), palcoProc: $('#palco-proc'), monte: $('#monte'), palco: $('#palco') };
-  const passos = $$('.passo'), trilho = $$('.trilho i'), camadasEl = $('#camadas'), antesEl = $('#antes'), brasaEl = $('#brasa');
+  const passos = $$('.passo'), trilho = $$('.trilho i'), camadasEl = $('#camadas'), antesEl = $('#antes');
 
   function mundoPorPx() { return 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / innerHeight; }
   function comprimento() { return P.L + 1.05 * P.HL; }
@@ -408,8 +487,8 @@ totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*
       r = { width: Math.min(W * 0.96, 1180), height: Hh * 0.55 };
       rz = 0.122 + ptr.sy * 0.05; ry = ptr.sx * 0.28; rx = ptr.sy * 0.18;
     } else if (nome === 'proc') {
-      r = el.palcoProc.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height / 2;
-      ry = Math.sin(t * 0.35) * 0.18 - 0.1; rx = 0.12; fw = 0.86; fh = 0.7;
+      r = el.palcoProc.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height * 0.4;
+      ry = Math.sin(t * 0.3) * 0.1 - 0.22; rx = 0.2; fw = 0.74; fh = 0.42;
     } else {
       r = el.palco.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height * 0.47;
       ry = yaw; rx = 0.16;
@@ -517,7 +596,9 @@ totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*
   function tamanho() {
     const w = innerWidth, h = innerHeight;
     renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    composer.setPixelRatio(dpr); composer.setSize(w, h);
     faiscas.m.uniforms.uPx.value = vapor.m.uniforms.uPx.value = h * dpr * 0.5;
+    desenhaTexto();
   }
   addEventListener('resize', tamanho); tamanho();
 
@@ -556,12 +637,16 @@ totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*
     const hv = sstep(0.88, 0.99, f);
 
     // faíscas das marteladas e vapor da têmpera (só rolando pra frente)
-    if (!reduz && fS > fAnt) {
-      for (let k = 0; k < 7; k++) {
-        const lim = 0.43 + k * 0.025;
+    // martelo: 12 pancadas entre f = 0,2 e 0,6, guiadas pela rolagem
+    const NG = 12, fase = clamp((f - 0.2) / 0.4) * NG, kG = Math.min(NG - 1, Math.floor(fase)), sG = fase - kG;
+    const ergue = f <= 0.2 || f >= 0.6 ? 1 : sG < 0.72 ? eio(sG / 0.72) : 1 - Math.pow(clamp((sG - 0.72) / 0.2), 2);
+    const xG = P.L * (0.28 + 0.13 * (kG % 4));
+    if (!reduz && fS > fAnt && ativo === 'proc') {
+      for (let k = 0; k < NG; k++) {
+        const lim = 0.2 + (k + 0.92) / NG * 0.4;
         if (fAnt < lim && fS >= lim) {
-          vtmp.set(P.L * (0.3 + Math.random() * 0.5), P.H * 0.7, 0.05); lamina.localToWorld(vtmp);
-          faiscas.emite(70, vtmp, { esp: 0.25, v0: 3.2, sobe: 1.2, vy: 1.0, vida: 0.9, tam: 0.09, cor: (r) => [1, 0.45 + r * 0.45, 0.1 + r * 0.2] });
+          vtmp.set(P.L * (0.28 + 0.13 * (k % 4)), lerp(P.H * 0.81, P.H, sstep(0.42, 0.6, f)), 0.06); lamina.localToWorld(vtmp);
+          faiscas.emite(90, vtmp, { esp: 0.15, v0: 3.6, sobe: 1.3, vy: 1.2, vida: 0.9, tam: 0.08, cor: (r) => [3, 1.2 + r * 1.4, 0.3 + r * 0.4] });
           tremor = 1;
         }
       }
@@ -585,7 +670,7 @@ totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*
     // intro: a luz corre no fio e corta o FIO
     const ti = intro;
     const sweep = ti < 3 ? lerp(-0.15, 1.2, eio(sstep(0.35, 1.7, ti))) : -1;
-    if (comecou && !cortado && ti > 1.05) { cortado = true; el.corte.classList.add('cortado'); }
+    if (comecou && !cortado && ti > 1.05) { cortado = true; }
     if (comecou && !pronto && ti > 1.3) { pronto = true; document.body.classList.add('pronto'); }
 
     U.uLayers.value = layers; U.uEtch.value = etch; U.uHeat.value = heat; U.uPolish.value = polish;
@@ -611,6 +696,15 @@ totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*
     afiX = amortece(afiX, afiXAlvo, 14, dt);
     const ea = eio(clamp(afi));
     pivo.position.y = lerp(-P.H / 2, 0, ea);
+    const wProc = ativo === 'proc' ? b : anterior === 'proc' ? 1 - b : 0;
+    const vb = wProc * (1 - sstep(0.62, 0.7, f));
+    bigorna.visible = vb > 0.01;
+    bigorna.position.set(0, lerp(0.23 * P.H, 0.02 * P.H, morph) + pivo.position.y - (1 - eio(vb)) * 3, 0);
+    const vm = wProc * sstep(0.12, 0.2, f) * (1 - sstep(0.6, 0.64, f));
+    martelo.visible = vm > 0.01;
+    const yTopoG = lerp(0.81 * P.H, P.H, morph) + pivo.position.y;
+    martelo.position.set(pivo.position.x + xG + 1.35, yTopoG + 0.15 + (1 - eio(vm)) * 3, 0.06);
+    martelo.rotation.z = -ergue * 0.85;
     pedra.visible = afi > 0.01;
     pedra.position.y = lerp(-1.2, 0, ea);
     matP1.opacity = matP2.opacity = clamp(afi * 1.5);
@@ -667,11 +761,35 @@ totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*
     scene.environmentRotation.set(0, 0.6 + giroIntro + ptr.sx * 0.9 + Math.sin(tempo * 0.1) * 0.15 + (envAtual === 'estudio' ? ENV_EST : 0) + (ativo === 'monte' ? yaw * 0.3 : 0), 0);
     scene.environmentIntensity *= (envAtual === 'estudio' ? ENV_INT : 1) * lerp(1, 0.62, ea);
 
-    // brilho da brasa na página
-    vtmp.set(P.L * 0.5, P.H * 0.5, 0); lamina.localToWorld(vtmp); vtmp.project(camera);
-    brasaEl.style.setProperty('--bx', ((vtmp.x + 1) / 2 * 100).toFixed(1) + '%');
-    brasaEl.style.setProperty('--by', ((1 - vtmp.y) / 2 * 100).toFixed(1) + '%');
-    brasaEl.style.opacity = (heat * 0.9).toFixed(3);
+    // brasa: halo atrás da peça
+    vtmp.set(P.L * 0.5, P.H * 0.5, 0); lamina.localToWorld(vtmp);
+    halo.position.set(vtmp.x, vtmp.y, -1.2);
+    halo.scale.setScalar(pz.s * comp * 1.7);
+    halo.material.opacity = heat * 0.32;
+    halo.visible = heat > 0.005;
+
+    // "FIO" 3D: segue o retângulo do .corte; corta na intro e se abre na rolagem
+    {
+      const w = mundoPorPx(), prof = 1.4, k = (camera.position.z + prof) / camera.position.z;
+      const r = el.corte.getBoundingClientRect();
+      const hr = el.heroi.getBoundingClientRect(), hp = clamp(-hr.top / hr.height / 0.6);
+      txt.visible = hr.bottom > 0;
+      txt.position.set((r.left + r.width / 2 - innerWidth / 2) * w * k, -(r.top + r.height / 2 - innerHeight / 2) * w * k, -prof);
+      txt.rotation.z = 0.122;
+      const W = txtW * w * k, Hh = txtH * w * k;
+      const c = reduz ? 1 : eio(sstep(1.05, 2.0, ti));
+      txtA.scale.set(W, Hh * (1 - CORTE), 1); txtB.scale.set(W, Hh * CORTE, 1);
+      const ab = c * 0.022 * W + hp * 0.22 * W;
+      txtA.position.set(-ab, Hh * (CORTE + (1 - CORTE) / 2 - 0.5) + c * 0.012 * W + hp * 0.35 * Hh, -hp * 1.5);
+      txtB.position.set(ab, Hh * (CORTE / 2 - 0.5) - c * 0.012 * W - hp * 0.5 * Hh, hp * 0.4);
+      txtA.rotation.set(-hp * 0.5, 0, hp * 0.06); txtB.rotation.set(hp * 0.6, 0, -hp * 0.05);
+      matTxt.opacity = 1 - sstep(0.5, 1, hp);
+      const fl = reduz ? 0 : sstep(0.95, 1.1, ti) * (1 - sstep(1.2, 2.2, ti));
+      risco.visible = fl > 0.01;
+      risco.scale.set(W * 1.08 * Math.max(0.001, sstep(0.95, 1.25, ti)), Math.max(0.006, Hh * 0.006), 1);
+      risco.position.set(-W * 0.54 * (1 - sstep(0.95, 1.25, ti)), Hh * (CORTE - 0.5), 0.01);
+      risco.material.opacity = fl;
+    }
 
     // textos do processo
     const ip = f < 0.2 ? 0 : f < 0.4 ? 1 : f < 0.6 ? 2 : f < 0.76 ? 3 : 4;
@@ -685,7 +803,8 @@ totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*
     faiscas.passo(dt, 6.5, false);
     vapor.passo(dt, -0.25, true);
 
-    renderer.render(scene, camera);
+    bloom.strength = (0.35 + 0.45 * heat) * (1 - 0.85 * wMonte); bloom.threshold = lerp(1.5, 0.85, Math.max(heat, sweep > 0 && sweep < 1.1 ? 0.6 : 0));
+    composer.render();
 
     // resolução adaptativa
     medias.push(dt); if (medias.length > 40) medias.shift();
@@ -695,12 +814,12 @@ totalEmissiveRadiance += vec3(1.0, 0.92, 0.80) * edgeLine * (sweep*3.0 + uSharp*
     }
   }
 
-  Promise.all([carregaEnv('oficina', hdrOficina), carregaEnv('estudio', hdrEstudio)]).then(() => {
-    scene.environment = envs.oficina; envAtual = 'oficina';
+  setTimeout(() => {
+    carregaEnv('oficina', hdrOficina); carregaEnv('estudio', hdrEstudio);
+    if (envs.oficina) { scene.environment = envs.oficina; envAtual = 'oficina'; }
     comecou = true;
-  });
-  // se o HDRI demorar, não segura o site
-  setTimeout(() => { comecou = true; }, 2500);
+  }, 30);
+  if (document.fonts) document.fonts.ready.then(desenhaTexto);
   requestAnimationFrame(quadro);
 
   window.__fio = { esc, get f() { return fS; }, get ativo() { return ativo; }, renderer };
