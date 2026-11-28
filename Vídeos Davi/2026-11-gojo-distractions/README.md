@@ -1,4 +1,17 @@
-# Gojo · "Distractions" (speed edit estilo tutorial de Photoshop)
+# Gojo · "Distractions"
+
+## v2 (a certa): `gojo-edit-v2.mp4`
+O Davi tinha mandado o vídeo errado como referência. A referência certa é um edit pronto de 44,5 s (Naruto: fala do Kisame/Itachi/Asuma
++ "Distractions") com cada palavra escrita na cena em letra gótica, branca ou vermelha com brilho. A v2 copia os 37 planos, os tempos de cada
+palavra, os cards ("cost", "he", "do") que crescem e viram corte vermelho, o zoom com borrão, os flashes, o quadro dentro do quadro, o pôster
+com o card da música, o vidro quebrando e o final "EDITED BY" (com "DAVI" no lugar do @ do autor e sem o anúncio do kit dele).
+Áudio da referência copiado sem mexer (`-c:a copy`). 1920×1080, 24 fps.
+- Script: `projeto/edit2.py` (lista `SHOTS` = planos e trecho do vídeo do Gojo, `WORDS` = palavras com tempo, posição e cor, `TRANS` = transições).
+  Usa o `edit.py` da v1 pro pôster e pra mesa do PC.
+- Render: `python3 edit2.py <pasta> frames 0 1070` (4 processos ≈ 5 min) e `ffmpeg -framerate 24 -i out2/%05d.jpg -i referencia.mp4 -map 0:v -map 1:a -c:a copy ...`.
+- Lição: o vídeo do Gojo é muito mais claro que o do Naruto. Texto branco sumia; resolveu com tratamento mais escuro + vinheta e halo escuro atrás de cada palavra.
+
+## v1 (referência errada): speed edit estilo tutorial de Photoshop
 
 Pedido do Davi (28/11/2026): pegar o vídeo de referência (tutorial de edit do Kakashi/Itachi com a música
 "Distractions", do Haiti Babii) e fazer o mesmo tipo de edição no vídeo do Gojo, igual ao original e com a mesma música.
