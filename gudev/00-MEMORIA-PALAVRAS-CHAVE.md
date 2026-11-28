@@ -331,3 +331,8 @@ O Davi pediu "um site aleatório pra ver seu nível, use o Poly Haven". Feito `s
 ## 27/11/2026: Fio v2 (faca preta + "você pode mais")
 Palavras: faca preta, tudo preto, CSP, connect-src, fetch de data URL, EXRLoader.parse, RoomEnvironment reserva, bloom, UnrealBloomPass, EffectComposer, bigorna, martelo, pancadas na rolagem, FIO 3D, metades, risco de luz.
 O Davi viu a faca toda preta e não curtiu o site. Causa e regra no `05`; melhorias no README de `sites/fio/`.
+
+## 28/11/2026: edit do Gojo "Distractions" (pessoal, não é GuDev)
+Palavras: Gojo, Jujutsu, Kakashi, Itachi, Distractions, Haiti Babii, speed edit, tutorial de Photoshop, letra na cena, baby, nothing, i can't deny, card de música, olhos brilhando, saindo da tela, rembg, isnet-anime, inpaint.
+O Davi mandou um tutorial de edit (Naruto) e um vídeo do Gojo e pediu a mesma edição, com a mesma música. Feito `Vídeos Davi/2026-11-gojo-distractions/gojo-distractions.mp4` (62 s, 1080p) com os mesmos tempos da referência. Mapa das cenas e lições no README da pasta.
+
