@@ -11,6 +11,7 @@ As edições usam fotos de figuras públicas e música de terceiros. Elas são p
 | `2026-11-nizia-figueira-whiteboard/` | Trabalho de Literatura: documentário de 4 min sobre "Nízia Figueira, sua criada" refeito em whiteboard animation (mão desenhando), áudio original intacto | v2 (mão real, movimentos suavizados) |
 | `2026-11-dk-utilidades/` | Comercial de 45 s "O tempo passa" pra DK Utilidades (relógio, globo, estátuas de mármore, preto e ouro), feito por código com recorte de fundo verde | filme completo de 38 s; produtos ainda são vídeos de banco e falta o contato |
 | `2026-11-aranha-primeira-pessoa/` | Homem-Aranha balançando na teia **em primeira pessoa**, pôr do sol em Nova York, 10 s em 1080p com som. Cidade 3D em WebGL renderizada quadro a quadro (sombras do sol, vidro que reflete, caixas d'água), desfoque de movimento por subquadros, som sintetizado (vento, thwip) | v1 |
+| `2026-11-gojo-distractions/` | Speed edit estilo tutorial de Photoshop no Gojo, mesma estrutura e música ("Distractions") da referência: letra escrita dentro das cenas (óculos, testa, braços abertos), Gojo saindo da tela do PC, pôster vermelho com card da música | v1 |
 
 ## Como fazer uma edição nova a partir de um vídeo de referência
 
