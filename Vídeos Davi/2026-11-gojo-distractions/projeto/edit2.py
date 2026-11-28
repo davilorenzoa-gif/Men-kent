@@ -226,7 +226,7 @@ SHOTS = [
     # 15: virando (rasteja)
     dict(t0=17.45, t1=17.9, src=45.0, spd=1.5, z=(1.3, 1.5), c=(.6, .5), g=dict(sat=.6, con=1.1, tint=(.85, .95, 1.15))),
     # 16: olho com brilho
-    dict(t0=17.9, t1=18.75, src=47.4, spd=1, z=(1.15, 1.3), c=(.45, .5), g=dict(sat=.9, con=1.15, tint=(.85, .95, 1.12)), eye=(.54, .44)),
+    dict(t0=17.9, t1=18.75, src=47.4, spd=1, z=(1.15, 1.3), c=(.45, .5), g=dict(sat=.9, con=1.15, tint=(.85, .95, 1.12)), eye=(.47, .6)),
     # 17: carregando a moça ("lady")
     dict(t0=18.75, t1=19.9, src=56.1, spd=1, z=(1.15, 1.1), c=(.5, .5), g=dict(sat=1.0, con=1.1)),
     # 18: rosto de frente ("might make you mine")
@@ -326,19 +326,36 @@ def _layout():
 _layout()
 
 # transições: (tempo, tipo, meia-duração)
-TRANS = [(3.56, 'zoom', .1), (3.56, 'flashw', .06), (5.7, 'flashw', .1), (7.0, 'cross', .12), (7.88, 'cross', .12),
-         (8.65, 'dark', .12), (12.3, 'red', .05), (12.85, 'zoom', .08), (13.3, 'cross', .1), (14.0, 'zoom', .1),
-         (14.6, 'zoom', .08), (15.22, 'zoom', .08), (16.0, 'zoomin', .1), (16.4, 'zoom', .1), (16.95, 'zoom', .06),
-         (17.45, 'zoom', .06), (17.9, 'zoom', .1), (18.75, 'zoom', .12), (19.9, 'zoom', .12), (25.75, 'zoom', .06),
-         (27.75, 'zoom', .08), (29.62, 'zoom', .06), (31.25, 'red', .05), (31.88, 'zoom', .1), (32.5, 'zoom', .06),
-         (33.12, 'zoom', .1), (33.12, 'flashw', .05), (33.75, 'zoom', .06), (34.3, 'red', .1), (35.45, 'zoom', .1),
-         (36.05, 'zoom', .06), (36.62, 'zoom', .1), (38.98, 'zoom', .1), (40.12, 'zoom', .1), (40.78, 'dark', .05)]
+TRANS = [(3.56, 'spin', .1), (3.56, 'flashw', .06), (5.7, 'flashw', .1), (5.7, 'spin', .1), (7.0, 'spin', .1), (7.88, 'cross', .12),
+         (8.65, 'dark', .12), (12.3, 'red', .05), (12.85, 'spin', .08), (13.3, 'spin', .1), (14.0, 'spin', .1),
+         (14.6, 'spin', .08), (15.22, 'spin', .08), (16.0, 'zoomin', .1), (16.4, 'spin', .1), (16.95, 'spin', .06),
+         (17.45, 'spin', .06), (17.9, 'spin', .1), (18.75, 'spin', .12), (19.9, 'spin', .12), (25.75, 'spin', .06),
+         (27.75, 'spin', .08), (29.62, 'spin', .06), (31.25, 'red', .05), (31.88, 'spin', .1), (32.5, 'spin', .06),
+         (33.12, 'spin', .1), (33.12, 'flashw', .05), (33.75, 'spin', .06), (34.3, 'red', .1), (35.45, 'spin', .1),
+         (36.05, 'spin', .06), (36.62, 'spin', .1), (38.98, 'spin', .1), (40.12, 'spin', .1), (40.78, 'dark', .05)]
 
 @functools.lru_cache(None)
 def vignette():
     yy, xx = np.mgrid[0:H, 0:W]
     r = np.sqrt(((xx - W / 2) / (W / 2)) ** 2 + ((yy - H / 2) / (H / 2)) ** 2)
     return Image.fromarray((255 * np.clip(1.15 - .45 * r ** 2, 0, 1)).astype(np.uint8))
+
+SPIN_D, SPIN_A = .17, 40.0
+BEATS = [2.48, 3.41, 4.37, 5.09, 5.55, 6.97, 8.15, 9.06, 9.87, 10.54, 11.73, 12.91, 13.82, 15.3, 17.55, 21.22, 22.04,
+         22.76, 23.66, 24.43, 25.08, 26.03, 26.61, 27.21, 27.82, 28.42, 29.61, 30.79, 31.95, 33.76, 34.34, 35.5, 36.11,
+         37.78, 39.1, 40.29]
+
+def rot_warp(im, ang, zoom, span):
+    import cv2
+    a = np.asarray(im)
+    n = int(min(10, max(1, abs(span) / 1.2 + 1)))
+    acc = None
+    for i in range(n):
+        an = ang - (span * i / (n - 1) if n > 1 else 0)
+        M = cv2.getRotationMatrix2D((W / 2, H / 2), an, zoom)
+        w = cv2.warpAffine(a, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT_101).astype(np.float32)
+        acc = w if acc is None else acc + w
+    return Image.fromarray((acc / n).astype(np.uint8))
 
 def base_frame(si, t):
     s = SHOTS[si]
@@ -436,6 +453,7 @@ def frame_at(t):
         dt = t - tb
         if abs(dt) > hd * 2.2 and kind not in ('cross',): continue
         k = max(0, 1 - abs(dt) / (hd * 2))
+        if kind == 'spin': continue
         if kind == 'zoom' or kind == 'zoomin':
             im = zoom_blur(im, k * 2.2)
         elif kind == 'flashw':
@@ -448,14 +466,21 @@ def frame_at(t):
             j = next(i for i, s2 in enumerate(SHOTS) if s2['t0'] == tb)
             nxt = base_frame(j, tb + 0.001)
             im = Image.blend(im, nxt, (dt + hd) / hd * .6)
-    # tremida leve nos cortes
-    amp = 0
-    for (tb, kind, hd) in TRANS:
-        if 0 <= t - tb < .25: amp = max(amp, 14 * (1 - (t - tb) / .25))
-    if amp > 0:
-        dx, dy = shake(t, amp)
-        im = im.transform((W, H), Image.AFFINE, (1, 0, -dx, 0, 1, -dy), Image.BILINEAR)
-        im = im.resize((int(W * 1.02), int(H * 1.02))).crop((int(W * .01), int(H * .01), int(W * .01) + W, int(H * .01) + H))
+    # câmera: giro nas transições + pancada nas batidas + balanço
+    ang, zoom, span = .6 * math.sin(t * 1.1 + .7), 1.0, 0.0
+    for i, (tb, kind, hd) in enumerate([x for x in TRANS if x[1] == 'spin']):
+        d = SPIN_D; A = SPIN_A * (1 if i % 2 == 0 else -1)
+        if tb - d <= t < tb:
+            k = (t - (tb - d)) / d
+            ang += A * k * k; zoom *= 1 + .32 * k * k; span = 2 * A * k / d / FPS * .9
+        elif tb <= t < tb + d:
+            k = (t - tb) / d
+            ang += -A * (1 - k) ** 2; zoom *= 1 + .32 * (1 - k) ** 2; span = 2 * A * (1 - k) / d / FPS * .9
+    for j, b in enumerate(BEATS):
+        if 0 <= t - b < .2:
+            e = (1 - (t - b) / .2) ** 2
+            zoom *= 1 + .045 * e; ang += (1.3 if j % 2 else -1.3) * e
+    im = rot_warp(im, ang, zoom, span)
     im = im.filter(ImageFilter.UnsharpMask(2, 60, 2))
     return im
 

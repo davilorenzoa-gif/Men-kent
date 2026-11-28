@@ -1,6 +1,12 @@
 # Gojo · "Distractions"
 
-## v2 (a certa): `gojo-edit-v2.mp4`
+## v3 (atual): `gojo-edit-v3.mp4`
+O Davi achou a v2 ruim e pediu transições com rotação. Mudanças no `edit2.py`: quase todo corte virou giro (`'spin'` em `TRANS`:
+a imagem acelera girando ~40° com zoom e borrão de rotação e a próxima entra girando até parar, sentido alternado, 0,17 s de cada lado,
+borda espelhada pra não aparecer canto preto), pancada de zoom + torção nas batidas fortes da música (`BEATS`) e balanço leve contínuo.
+A v2 foi apagada (substituída pela v3).
+
+## v2: base da v3
 O Davi tinha mandado o vídeo errado como referência. A referência certa é um edit pronto de 44,5 s (Naruto: fala do Kisame/Itachi/Asuma
 + "Distractions") com cada palavra escrita na cena em letra gótica, branca ou vermelha com brilho. A v2 copia os 37 planos, os tempos de cada
 palavra, os cards ("cost", "he", "do") que crescem e viram corte vermelho, o zoom com borrão, os flashes, o quadro dentro do quadro, o pôster
